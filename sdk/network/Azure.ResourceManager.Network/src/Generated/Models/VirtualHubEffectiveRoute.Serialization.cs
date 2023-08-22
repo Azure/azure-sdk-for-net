@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> addressPrefixes = default;
-            Core.Optional<IReadOnlyList<string>> nextHops = default;
-            Core.Optional<string> nextHopType = default;
-            Core.Optional<string> asPath = default;
-            Core.Optional<string> routeOrigin = default;
+            Optional<IReadOnlyList<string>> addressPrefixes = default;
+            Optional<IReadOnlyList<string>> nextHops = default;
+            Optional<string> nextHopType = default;
+            Optional<string> asPath = default;
+            Optional<string> routeOrigin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefixes"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualHubEffectiveRoute(Core.Optional.ToList(addressPrefixes), Core.Optional.ToList(nextHops), nextHopType.Value, asPath.Value, routeOrigin.Value);
+            return new VirtualHubEffectiveRoute(Optional.ToList(addressPrefixes), Optional.ToList(nextHops), nextHopType.Value, asPath.Value, routeOrigin.Value);
         }
     }
 }

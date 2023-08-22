@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppVolumeMount : Core.IUtf8JsonSerializable
+    public partial class ContainerAppVolumeMount : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VolumeName))
+            if (Optional.IsDefined(VolumeName))
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (Core.Optional.IsDefined(MountPath))
+            if (Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
-            if (Core.Optional.IsDefined(SubPath))
+            if (Optional.IsDefined(SubPath))
             {
                 writer.WritePropertyName("subPath"u8);
                 writer.WriteStringValue(SubPath);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> volumeName = default;
-            Core.Optional<string> mountPath = default;
-            Core.Optional<string> subPath = default;
+            Optional<string> volumeName = default;
+            Optional<string> mountPath = default;
+            Optional<string> subPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("volumeName"u8))

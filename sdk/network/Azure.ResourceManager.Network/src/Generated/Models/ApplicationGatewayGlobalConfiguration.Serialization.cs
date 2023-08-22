@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayGlobalConfiguration : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayGlobalConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnableRequestBuffering))
+            if (Optional.IsDefined(EnableRequestBuffering))
             {
                 writer.WritePropertyName("enableRequestBuffering"u8);
                 writer.WriteBooleanValue(EnableRequestBuffering.Value);
             }
-            if (Core.Optional.IsDefined(EnableResponseBuffering))
+            if (Optional.IsDefined(EnableResponseBuffering))
             {
                 writer.WritePropertyName("enableResponseBuffering"u8);
                 writer.WriteBooleanValue(EnableResponseBuffering.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<bool> enableRequestBuffering = default;
-            Core.Optional<bool> enableResponseBuffering = default;
+            Optional<bool> enableRequestBuffering = default;
+            Optional<bool> enableResponseBuffering = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableRequestBuffering"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayGlobalConfiguration(Core.Optional.ToNullable(enableRequestBuffering), Core.Optional.ToNullable(enableResponseBuffering));
+            return new ApplicationGatewayGlobalConfiguration(Optional.ToNullable(enableRequestBuffering), Optional.ToNullable(enableResponseBuffering));
         }
     }
 }

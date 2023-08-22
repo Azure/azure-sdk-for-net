@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ManagedClusterHttpProxyConfig. </summary>
         public ManagedClusterHttpProxyConfig()
         {
-            NoProxy = new Core.ChangeTrackingList<string>();
-            EffectiveNoProxy = new Core.ChangeTrackingList<string>();
+            NoProxy = new ChangeTrackingList<string>();
+            EffectiveNoProxy = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterHttpProxyConfig. </summary>

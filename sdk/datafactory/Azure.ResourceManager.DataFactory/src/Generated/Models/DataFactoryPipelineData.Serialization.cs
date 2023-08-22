@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryPipelineData : Core.IUtf8JsonSerializable
+    public partial class DataFactoryPipelineData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Activities))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Variables))
+            if (Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartObject();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Concurrency))
+            if (Optional.IsDefined(Concurrency))
             {
                 writer.WritePropertyName("concurrency"u8);
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(RunDimensions))
+            if (Optional.IsCollectionDefined(RunDimensions))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Folder))
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
-            if (Core.Optional.IsDefined(Policy))
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -132,20 +132,20 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<PipelineActivity>> activities = default;
-            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Core.Optional<IDictionary<string, PipelineVariableSpecification>> variables = default;
-            Core.Optional<int> concurrency = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
-            Core.Optional<IDictionary<string, BinaryData>> runDimensions = default;
-            Core.Optional<PipelineFolder> folder = default;
-            Core.Optional<DataFactoryPipelinePolicy> policy = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<IList<PipelineActivity>> activities = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IDictionary<string, PipelineVariableSpecification>> variables = default;
+            Optional<int> concurrency = default;
+            Optional<IList<BinaryData>> annotations = default;
+            Optional<IDictionary<string, BinaryData>> runDimensions = default;
+            Optional<PipelineFolder> folder = default;
+            Optional<DataFactoryPipelinePolicy> policy = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineData(id, name, type, systemData.Value, description.Value, Core.Optional.ToList(activities), Core.Optional.ToDictionary(parameters), Core.Optional.ToDictionary(variables), Core.Optional.ToNullable(concurrency), Core.Optional.ToList(annotations), Core.Optional.ToDictionary(runDimensions), folder.Value, policy.Value, Core.Optional.ToNullable(etag), additionalProperties);
+            return new DataFactoryPipelineData(id, name, type, systemData.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, policy.Value, Optional.ToNullable(etag), additionalProperties);
         }
     }
 }

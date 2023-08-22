@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentPublishDates : Core.IUtf8JsonSerializable
+    public partial class SecurityAssessmentPublishDates : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GA))
+            if (Optional.IsDefined(GA))
             {
                 writer.WritePropertyName("GA"u8);
                 writer.WriteStringValue(GA);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> ga = default;
+            Optional<string> ga = default;
             string @public = default;
             foreach (var property in element.EnumerateObject())
             {

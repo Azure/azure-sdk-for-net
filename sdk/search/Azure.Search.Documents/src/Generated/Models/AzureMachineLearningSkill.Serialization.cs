@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AzureMachineLearningSkill : Core.IUtf8JsonSerializable
+    public partial class AzureMachineLearningSkill : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScoringUri))
+            if (Optional.IsDefined(ScoringUri))
             {
                 if (ScoringUri != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Core.Optional.IsDefined(AuthenticationKey))
+            if (Optional.IsDefined(AuthenticationKey))
             {
                 if (AuthenticationKey != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("key");
                 }
             }
-            if (Core.Optional.IsDefined(RawResourceId))
+            if (Optional.IsDefined(RawResourceId))
             {
                 if (RawResourceId != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Core.Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("timeout");
                 }
             }
-            if (Core.Optional.IsDefined(RawLocation))
+            if (Optional.IsDefined(RawLocation))
             {
                 if (RawLocation != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("region");
                 }
             }
-            if (Core.Optional.IsDefined(DegreeOfParallelism))
+            if (Optional.IsDefined(DegreeOfParallelism))
             {
                 if (DegreeOfParallelism != null)
                 {
@@ -91,17 +91,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Context))
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -129,16 +129,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<Uri> uri = default;
-            Core.Optional<string> key = default;
-            Core.Optional<string> resourceId = default;
-            Core.Optional<TimeSpan?> timeout = default;
-            Core.Optional<string> region = default;
-            Core.Optional<int?> degreeOfParallelism = default;
+            Optional<Uri> uri = default;
+            Optional<string> key = default;
+            Optional<string> resourceId = default;
+            Optional<TimeSpan?> timeout = default;
+            Optional<string> region = default;
+            Optional<int?> degreeOfParallelism = default;
             string odataType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> context = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -244,7 +244,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureMachineLearningSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri.Value, key.Value, resourceId.Value, Core.Optional.ToNullable(timeout), region.Value, Core.Optional.ToNullable(degreeOfParallelism));
+            return new AzureMachineLearningSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri.Value, key.Value, resourceId.Value, Optional.ToNullable(timeout), region.Value, Optional.ToNullable(degreeOfParallelism));
         }
     }
 }

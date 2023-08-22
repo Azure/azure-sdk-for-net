@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> name = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> name = default;
             string status = default;
-            Core.Optional<float> percentComplete = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<IReadOnlyList<NetworkCloudOperationStatusResult>> operations = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<float> percentComplete = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<IReadOnlyList<NetworkCloudOperationStatusResult>> operations = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new NetworkCloudOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(operations), error.Value);
+            return new NetworkCloudOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value);
         }
     }
 }

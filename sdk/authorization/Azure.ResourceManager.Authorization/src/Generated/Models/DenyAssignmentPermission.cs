@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
         internal DenyAssignmentPermission()
         {
-            Actions = new Core.ChangeTrackingList<string>();
-            NotActions = new Core.ChangeTrackingList<string>();
-            DataActions = new Core.ChangeTrackingList<string>();
-            NotDataActions = new Core.ChangeTrackingList<string>();
+            Actions = new ChangeTrackingList<string>();
+            NotActions = new ChangeTrackingList<string>();
+            DataActions = new ChangeTrackingList<string>();
+            NotDataActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>

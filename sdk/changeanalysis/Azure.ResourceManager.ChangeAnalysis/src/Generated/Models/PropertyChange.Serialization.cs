@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Core.Optional<ChangeType> changeType = default;
-            Core.Optional<ChangeCategory> changeCategory = default;
-            Core.Optional<string> jsonPath = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<PropertyChangeLevel> level = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> oldValue = default;
-            Core.Optional<string> newValue = default;
-            Core.Optional<bool> isDataMasked = default;
+            Optional<ChangeType> changeType = default;
+            Optional<ChangeCategory> changeCategory = default;
+            Optional<string> jsonPath = default;
+            Optional<string> displayName = default;
+            Optional<PropertyChangeLevel> level = default;
+            Optional<string> description = default;
+            Optional<string> oldValue = default;
+            Optional<string> newValue = default;
+            Optional<bool> isDataMasked = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeType"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     continue;
                 }
             }
-            return new PropertyChange(Core.Optional.ToNullable(changeType), Core.Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Core.Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Core.Optional.ToNullable(isDataMasked));
+            return new PropertyChange(Optional.ToNullable(changeType), Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Optional.ToNullable(isDataMasked));
         }
     }
 }

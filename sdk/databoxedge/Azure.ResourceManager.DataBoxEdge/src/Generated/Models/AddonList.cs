@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AddonList. </summary>
         internal AddonList()
         {
-            Value = new Core.ChangeTrackingList<DataBoxEdgeRoleAddonData>();
+            Value = new ChangeTrackingList<DataBoxEdgeRoleAddonData>();
         }
 
         /// <summary> Initializes a new instance of AddonList. </summary>

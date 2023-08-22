@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class Error : Core.IUtf8JsonSerializable
+    internal partial class Error : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Core.Optional.IsCollectionDefined(Details))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Innererror))
+            if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);
@@ -56,9 +56,9 @@ namespace Azure.AI.TextAnalytics.Models
             }
             ErrorCode code = default;
             string message = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IList<Error>> details = default;
-            Core.Optional<InnerErrorModel> innererror = default;
+            Optional<string> target = default;
+            Optional<IList<Error>> details = default;
+            Optional<InnerErrorModel> innererror = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.AI.TextAnalytics.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Error(code, message, target.Value, Core.Optional.ToList(details), innererror.Value, additionalProperties);
+            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value, additionalProperties);
         }
     }
 }

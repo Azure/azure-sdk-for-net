@@ -14,29 +14,29 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SftpWriteSettingsConverter))]
-    public partial class SftpWriteSettings : Core.IUtf8JsonSerializable
+    public partial class SftpWriteSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OperationTimeout))
+            if (Optional.IsDefined(OperationTimeout))
             {
                 writer.WritePropertyName("operationTimeout"u8);
                 writer.WriteObjectValue(OperationTimeout);
             }
-            if (Core.Optional.IsDefined(UseTempFileRename))
+            if (Optional.IsDefined(UseTempFileRename))
             {
                 writer.WritePropertyName("useTempFileRename"u8);
                 writer.WriteObjectValue(UseTempFileRename);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(CopyBehavior))
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
                 writer.WriteObjectValue(CopyBehavior);
@@ -55,11 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> operationTimeout = default;
-            Core.Optional<object> useTempFileRename = default;
+            Optional<object> operationTimeout = default;
+            Optional<object> useTempFileRename = default;
             string type = default;
-            Core.Optional<object> maxConcurrentConnections = default;
-            Core.Optional<object> copyBehavior = default;
+            Optional<object> maxConcurrentConnections = default;
+            Optional<object> copyBehavior = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

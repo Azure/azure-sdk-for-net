@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of CommunicationServiceResourcePatch. </summary>
         public CommunicationServiceResourcePatch()
         {
-            LinkedDomains = new Core.ChangeTrackingList<string>();
+            LinkedDomains = new ChangeTrackingList<string>();
         }
 
         /// <summary> List of email Domain resource Ids. </summary>

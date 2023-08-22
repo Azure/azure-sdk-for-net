@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of RestorableSqlContainersListResult. </summary>
         internal RestorableSqlContainersListResult()
         {
-            Value = new Core.ChangeTrackingList<RestorableSqlContainer>();
+            Value = new ChangeTrackingList<RestorableSqlContainer>();
         }
 
         /// <summary> Initializes a new instance of RestorableSqlContainersListResult. </summary>

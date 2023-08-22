@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(streamName, nameof(streamName));
 
             StreamName = streamName;
-            Columns = new Core.ChangeTrackingList<string>();
+            Columns = new ChangeTrackingList<string>();
         }
 
         /// <summary> The stream name which is used for preview. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<LoadBalancingRuleData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<LoadBalancingRuleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new LoadBalancerLoadBalancingRuleListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new LoadBalancerLoadBalancingRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

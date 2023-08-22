@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
-            Core.Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
+            Optional<ApplicationGatewayBackendHttpSettings> backendHttpSettings = default;
+            Optional<IReadOnlyList<ApplicationGatewayBackendHealthServer>> servers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendHttpSettings"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, Core.Optional.ToList(servers));
+            return new ApplicationGatewayBackendHealthHttpSettings(backendHttpSettings.Value, Optional.ToList(servers));
         }
     }
 }

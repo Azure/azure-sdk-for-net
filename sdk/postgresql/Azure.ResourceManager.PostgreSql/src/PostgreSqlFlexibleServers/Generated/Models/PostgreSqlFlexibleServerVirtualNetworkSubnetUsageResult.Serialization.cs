@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> subscriptionId = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delegatedSubnetsUsage"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(Core.Optional.ToList(delegatedSubnetsUsage), Core.Optional.ToNullable(location), subscriptionId.Value);
+            return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToList(delegatedSubnetsUsage), Optional.ToNullable(location), subscriptionId.Value);
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Azure.Communication.NetworkTraversal
             }
             string code = default;
             string message = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IReadOnlyList<CommunicationError>> details = default;
-            Core.Optional<CommunicationError> innererror = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<CommunicationError>> details = default;
+            Optional<CommunicationError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.Communication.NetworkTraversal
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, Core.Optional.ToList(details), innererror.Value);
+            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

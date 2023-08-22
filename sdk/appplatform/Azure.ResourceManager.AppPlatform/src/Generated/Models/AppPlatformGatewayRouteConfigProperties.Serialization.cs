@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayRouteConfigProperties : Core.IUtf8JsonSerializable
+    public partial class AppPlatformGatewayRouteConfigProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AppResourceId))
+            if (Optional.IsDefined(AppResourceId))
             {
                 writer.WritePropertyName("appResourceId"u8);
                 writer.WriteStringValue(AppResourceId);
             }
-            if (Core.Optional.IsDefined(OpenApi))
+            if (Optional.IsDefined(OpenApi))
             {
                 writer.WritePropertyName("openApi"u8);
                 writer.WriteObjectValue(OpenApi);
             }
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Routes))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
-            Core.Optional<ResourceIdentifier> appResourceId = default;
-            Core.Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
-            Core.Optional<AppPlatformGatewayRouteConfigProtocol> protocol = default;
-            Core.Optional<IList<AppPlatformGatewayApiRoute>> routes = default;
+            Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> appResourceId = default;
+            Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
+            Optional<AppPlatformGatewayRouteConfigProtocol> protocol = default;
+            Optional<IList<AppPlatformGatewayApiRoute>> routes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformGatewayRouteConfigProperties(Core.Optional.ToNullable(provisioningState), appResourceId.Value, openApi.Value, Core.Optional.ToNullable(protocol), Core.Optional.ToList(routes));
+            return new AppPlatformGatewayRouteConfigProperties(Optional.ToNullable(provisioningState), appResourceId.Value, openApi.Value, Optional.ToNullable(protocol), Optional.ToList(routes));
         }
     }
 }

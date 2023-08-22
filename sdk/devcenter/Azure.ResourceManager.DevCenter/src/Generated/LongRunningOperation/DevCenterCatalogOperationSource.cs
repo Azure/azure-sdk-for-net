@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevCenterCatalogOperationSource : Core.IOperationSource<DevCenterCatalogResource>
+    internal class DevCenterCatalogOperationSource : IOperationSource<DevCenterCatalogResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevCenter
             _client = client;
         }
 
-        DevCenterCatalogResource Core.IOperationSource<DevCenterCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevCenterCatalogResource IOperationSource<DevCenterCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevCenterCatalogData.DeserializeDevCenterCatalogData(document.RootElement);
             return new DevCenterCatalogResource(_client, data);
         }
 
-        async ValueTask<DevCenterCatalogResource> Core.IOperationSource<DevCenterCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevCenterCatalogResource> IOperationSource<DevCenterCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevCenterCatalogData.DeserializeDevCenterCatalogData(document.RootElement);

@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of EventSchema. </summary>
         internal EventSchema()
         {
-            Properties = new Core.ChangeTrackingList<TimeSeriesInsightsEventProperty>();
+            Properties = new ChangeTrackingList<TimeSeriesInsightsEventProperty>();
         }
 
         /// <summary> Initializes a new instance of EventSchema. </summary>

@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
         public AzureFirewallNetworkRule()
         {
-            Protocols = new Core.ChangeTrackingList<AzureFirewallNetworkRuleProtocol>();
-            SourceAddresses = new Core.ChangeTrackingList<string>();
-            DestinationAddresses = new Core.ChangeTrackingList<string>();
-            DestinationPorts = new Core.ChangeTrackingList<string>();
-            DestinationFqdns = new Core.ChangeTrackingList<string>();
-            SourceIPGroups = new Core.ChangeTrackingList<string>();
-            DestinationIPGroups = new Core.ChangeTrackingList<string>();
+            Protocols = new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>();
+            SourceAddresses = new ChangeTrackingList<string>();
+            DestinationAddresses = new ChangeTrackingList<string>();
+            DestinationPorts = new ChangeTrackingList<string>();
+            DestinationFqdns = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
+            DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>

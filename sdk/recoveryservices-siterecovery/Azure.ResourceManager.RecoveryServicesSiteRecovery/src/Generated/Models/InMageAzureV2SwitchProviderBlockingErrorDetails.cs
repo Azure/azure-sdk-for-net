@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>
         internal InMageAzureV2SwitchProviderBlockingErrorDetails()
         {
-            ErrorMessageParameters = new Core.ChangeTrackingDictionary<string, string>();
-            ErrorTags = new Core.ChangeTrackingDictionary<string, string>();
+            ErrorMessageParameters = new ChangeTrackingDictionary<string, string>();
+            ErrorTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderBlockingErrorDetails. </summary>

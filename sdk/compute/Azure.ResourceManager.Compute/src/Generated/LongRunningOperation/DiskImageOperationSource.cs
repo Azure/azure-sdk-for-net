@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal class DiskImageOperationSource : Core.IOperationSource<DiskImageResource>
+    internal class DiskImageOperationSource : IOperationSource<DiskImageResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute
             _client = client;
         }
 
-        DiskImageResource Core.IOperationSource<DiskImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiskImageResource IOperationSource<DiskImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DiskImageData.DeserializeDiskImageData(document.RootElement);
             return new DiskImageResource(_client, data);
         }
 
-        async ValueTask<DiskImageResource> Core.IOperationSource<DiskImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiskImageResource> IOperationSource<DiskImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DiskImageData.DeserializeDiskImageData(document.RootElement);

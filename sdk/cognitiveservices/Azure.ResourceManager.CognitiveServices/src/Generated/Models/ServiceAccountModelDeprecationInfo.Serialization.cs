@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountModelDeprecationInfo : Core.IUtf8JsonSerializable
+    public partial class ServiceAccountModelDeprecationInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FineTuneOn))
+            if (Optional.IsDefined(FineTuneOn))
             {
                 writer.WritePropertyName("fineTune"u8);
                 writer.WriteStringValue(FineTuneOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(InferenceOn))
+            if (Optional.IsDefined(InferenceOn))
             {
                 writer.WritePropertyName("inference"u8);
                 writer.WriteStringValue(InferenceOn.Value, "O");
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> fineTune = default;
-            Core.Optional<DateTimeOffset> inference = default;
+            Optional<DateTimeOffset> fineTune = default;
+            Optional<DateTimeOffset> inference = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fineTune"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new ServiceAccountModelDeprecationInfo(Core.Optional.ToNullable(fineTune), Core.Optional.ToNullable(inference));
+            return new ServiceAccountModelDeprecationInfo(Optional.ToNullable(fineTune), Optional.ToNullable(inference));
         }
     }
 }

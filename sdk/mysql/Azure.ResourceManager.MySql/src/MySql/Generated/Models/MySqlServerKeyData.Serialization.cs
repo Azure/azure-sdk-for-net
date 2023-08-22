@@ -13,19 +13,19 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlServerKeyData : Core.IUtf8JsonSerializable
+    public partial class MySqlServerKeyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServerKeyType))
+            if (Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.MySql
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MySqlServerKeyType> serverKeyType = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
+            Optional<SystemData> systemData = default;
+            Optional<MySqlServerKeyType> serverKeyType = default;
+            Optional<Uri> uri = default;
+            Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MySql
                     continue;
                 }
             }
-            return new MySqlServerKeyData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(serverKeyType), uri.Value, Core.Optional.ToNullable(creationDate));
+            return new MySqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, Optional.ToNullable(creationDate));
         }
     }
 }

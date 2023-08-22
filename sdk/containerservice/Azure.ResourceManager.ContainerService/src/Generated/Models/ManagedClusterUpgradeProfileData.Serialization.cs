@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerService
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             ManagedClusterPoolUpgradeProfile controlPlaneProfile = default;
             IReadOnlyList<ManagedClusterPoolUpgradeProfile> agentPoolProfiles = default;
             foreach (var property in element.EnumerateObject())

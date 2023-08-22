@@ -13,21 +13,21 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppBackupData : Core.IUtf8JsonSerializable
+    public partial class NetAppBackupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Core.Optional.IsDefined(UseExistingSnapshot))
+            if (Optional.IsDefined(UseExistingSnapshot))
             {
                 writer.WritePropertyName("useExistingSnapshot"u8);
                 writer.WriteBooleanValue(UseExistingSnapshot.Value);
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> backupId = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<long> size = default;
-            Core.Optional<string> label = default;
-            Core.Optional<NetAppBackupType> backupType = default;
-            Core.Optional<string> failureReason = default;
-            Core.Optional<string> volumeName = default;
-            Core.Optional<bool> useExistingSnapshot = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> backupId = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<string> provisioningState = default;
+            Optional<long> size = default;
+            Optional<string> label = default;
+            Optional<NetAppBackupType> backupType = default;
+            Optional<string> failureReason = default;
+            Optional<string> volumeName = default;
+            Optional<bool> useExistingSnapshot = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
                     continue;
                 }
             }
-            return new NetAppBackupData(id, name, type, systemData.Value, location, backupId.Value, Core.Optional.ToNullable(creationDate), provisioningState.Value, Core.Optional.ToNullable(size), label.Value, Core.Optional.ToNullable(backupType), failureReason.Value, volumeName.Value, Core.Optional.ToNullable(useExistingSnapshot));
+            return new NetAppBackupData(id, name, type, systemData.Value, location, backupId.Value, Optional.ToNullable(creationDate), provisioningState.Value, Optional.ToNullable(size), label.Value, Optional.ToNullable(backupType), failureReason.Value, volumeName.Value, Optional.ToNullable(useExistingSnapshot));
         }
     }
 }

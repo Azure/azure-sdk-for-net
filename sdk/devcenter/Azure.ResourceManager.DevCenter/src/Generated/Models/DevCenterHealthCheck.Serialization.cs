@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<DevCenterHealthCheckStatus> status = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<DateTimeOffset> startDateTime = default;
-            Core.Optional<DateTimeOffset> endDateTime = default;
-            Core.Optional<string> errorType = default;
-            Core.Optional<string> recommendedAction = default;
-            Core.Optional<string> additionalDetails = default;
+            Optional<DevCenterHealthCheckStatus> status = default;
+            Optional<string> displayName = default;
+            Optional<DateTimeOffset> startDateTime = default;
+            Optional<DateTimeOffset> endDateTime = default;
+            Optional<string> errorType = default;
+            Optional<string> recommendedAction = default;
+            Optional<string> additionalDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterHealthCheck(Core.Optional.ToNullable(status), displayName.Value, Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(endDateTime), errorType.Value, recommendedAction.Value, additionalDetails.Value);
+            return new DevCenterHealthCheck(Optional.ToNullable(status), displayName.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), errorType.Value, recommendedAction.Value, additionalDetails.Value);
         }
     }
 }

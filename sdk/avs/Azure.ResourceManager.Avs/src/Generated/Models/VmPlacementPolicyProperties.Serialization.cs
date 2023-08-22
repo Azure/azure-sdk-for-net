@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class VmPlacementPolicyProperties : Core.IUtf8JsonSerializable
+    public partial class VmPlacementPolicyProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vmMembers"u8);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStringValue(AffinityType.ToString());
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
             PlacementPolicyType type = default;
-            Core.Optional<PlacementPolicyState> state = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            Optional<PlacementPolicyState> state = default;
+            Optional<string> displayName = default;
+            Optional<PlacementPolicyProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmMembers"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new VmPlacementPolicyProperties(type, Core.Optional.ToNullable(state), displayName.Value, Core.Optional.ToNullable(provisioningState), vmMembers, affinityType);
+            return new VmPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, affinityType);
         }
     }
 }

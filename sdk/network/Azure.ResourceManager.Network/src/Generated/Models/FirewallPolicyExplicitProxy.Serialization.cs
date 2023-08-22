@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyExplicitProxy : Core.IUtf8JsonSerializable
+    public partial class FirewallPolicyExplicitProxy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnableExplicitProxy))
+            if (Optional.IsDefined(EnableExplicitProxy))
             {
                 if (EnableExplicitProxy != null)
                 {
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
                     writer.WriteNull("enableExplicitProxy");
                 }
             }
-            if (Core.Optional.IsDefined(HttpPort))
+            if (Optional.IsDefined(HttpPort))
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (Core.Optional.IsDefined(HttpsPort))
+            if (Optional.IsDefined(HttpsPort))
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (Core.Optional.IsDefined(EnablePacFile))
+            if (Optional.IsDefined(EnablePacFile))
             {
                 if (EnablePacFile != null)
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Network.Models
                     writer.WriteNull("enablePacFile");
                 }
             }
-            if (Core.Optional.IsDefined(PacFilePort))
+            if (Optional.IsDefined(PacFilePort))
             {
                 writer.WritePropertyName("pacFilePort"u8);
                 writer.WriteNumberValue(PacFilePort.Value);
             }
-            if (Core.Optional.IsDefined(PacFile))
+            if (Optional.IsDefined(PacFile))
             {
                 writer.WritePropertyName("pacFile"u8);
                 writer.WriteStringValue(PacFile);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<bool?> enableExplicitProxy = default;
-            Core.Optional<int> httpPort = default;
-            Core.Optional<int> httpsPort = default;
-            Core.Optional<bool?> enablePacFile = default;
-            Core.Optional<int> pacFilePort = default;
-            Core.Optional<string> pacFile = default;
+            Optional<bool?> enableExplicitProxy = default;
+            Optional<int> httpPort = default;
+            Optional<int> httpsPort = default;
+            Optional<bool?> enablePacFile = default;
+            Optional<int> pacFilePort = default;
+            Optional<string> pacFile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableExplicitProxy"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyExplicitProxy(Core.Optional.ToNullable(enableExplicitProxy), Core.Optional.ToNullable(httpPort), Core.Optional.ToNullable(httpsPort), Core.Optional.ToNullable(enablePacFile), Core.Optional.ToNullable(pacFilePort), pacFile.Value);
+            return new FirewallPolicyExplicitProxy(Optional.ToNullable(enableExplicitProxy), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enablePacFile), Optional.ToNullable(pacFilePort), pacFile.Value);
         }
     }
 }

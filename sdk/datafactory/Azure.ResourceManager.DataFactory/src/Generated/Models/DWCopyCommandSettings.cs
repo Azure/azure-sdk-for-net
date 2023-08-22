@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DWCopyCommandSettings. </summary>
         public DWCopyCommandSettings()
         {
-            DefaultValues = new Core.ChangeTrackingList<DWCopyCommandDefaultValue>();
-            AdditionalOptions = new Core.ChangeTrackingDictionary<string, string>();
+            DefaultValues = new ChangeTrackingList<DWCopyCommandDefaultValue>();
+            AdditionalOptions = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DWCopyCommandSettings. </summary>

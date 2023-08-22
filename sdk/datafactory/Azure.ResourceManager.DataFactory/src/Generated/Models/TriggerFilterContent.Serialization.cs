@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TriggerFilterContent : Core.IUtf8JsonSerializable
+    public partial class TriggerFilterContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContinuationToken))
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
-            if (Core.Optional.IsDefined(ParentTriggerName))
+            if (Optional.IsDefined(ParentTriggerName))
             {
                 writer.WritePropertyName("parentTriggerName"u8);
                 writer.WriteStringValue(ParentTriggerName);

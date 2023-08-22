@@ -13,17 +13,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PolybaseSettings : Core.IUtf8JsonSerializable
+    public partial class PolybaseSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RejectType))
+            if (Optional.IsDefined(RejectType))
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RejectValue))
+            if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
 #if NET6_0_OR_GREATER
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(RejectValue.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(RejectSampleValue))
+            if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 JsonSerializer.Serialize(writer, RejectSampleValue);
             }
-            if (Core.Optional.IsDefined(UseTypeDefault))
+            if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 JsonSerializer.Serialize(writer, UseTypeDefault);
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<PolybaseSettingsRejectType> rejectType = default;
-            Core.Optional<BinaryData> rejectValue = default;
-            Core.Optional<DataFactoryElement<int>> rejectSampleValue = default;
-            Core.Optional<DataFactoryElement<bool>> useTypeDefault = default;
+            Optional<PolybaseSettingsRejectType> rejectType = default;
+            Optional<BinaryData> rejectValue = default;
+            Optional<DataFactoryElement<int>> rejectSampleValue = default;
+            Optional<DataFactoryElement<bool>> useTypeDefault = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Core.Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
         }
     }
 }

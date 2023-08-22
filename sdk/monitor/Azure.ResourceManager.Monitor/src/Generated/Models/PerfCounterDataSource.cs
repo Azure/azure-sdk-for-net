@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of PerfCounterDataSource. </summary>
         public PerfCounterDataSource()
         {
-            Streams = new Core.ChangeTrackingList<PerfCounterDataSourceStream>();
-            CounterSpecifiers = new Core.ChangeTrackingList<string>();
+            Streams = new ChangeTrackingList<PerfCounterDataSourceStream>();
+            CounterSpecifiers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PerfCounterDataSource. </summary>

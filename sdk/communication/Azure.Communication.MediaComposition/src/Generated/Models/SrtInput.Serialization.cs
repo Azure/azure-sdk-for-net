@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class SrtInput : Core.IUtf8JsonSerializable
+    public partial class SrtInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resolution"u8);
@@ -22,7 +22,7 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStringValue(StreamUrl);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(PlaceholderImageUri))
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -39,7 +39,7 @@ namespace Azure.Communication.MediaComposition
             LayoutResolution resolution = default;
             string streamUrl = default;
             MediaInputType kind = default;
-            Core.Optional<string> placeholderImageUri = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resolution"u8))

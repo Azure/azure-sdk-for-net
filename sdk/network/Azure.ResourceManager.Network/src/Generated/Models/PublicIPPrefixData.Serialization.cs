@@ -15,22 +15,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PublicIPPrefixData : Core.IUtf8JsonSerializable
+    public partial class PublicIPPrefixData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PublicIPAddressVersion))
+            if (Optional.IsDefined(PublicIPAddressVersion))
             {
                 writer.WritePropertyName("publicIPAddressVersion"u8);
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IPTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PrefixLength))
+            if (Optional.IsDefined(PrefixLength))
             {
                 writer.WritePropertyName("prefixLength"u8);
                 writer.WriteNumberValue(PrefixLength.Value);
             }
-            if (Core.Optional.IsDefined(CustomIPPrefix))
+            if (Optional.IsDefined(CustomIPPrefix))
             {
                 writer.WritePropertyName("customIPPrefix"u8);
                 JsonSerializer.Serialize(writer, CustomIPPrefix);
             }
-            if (Core.Optional.IsDefined(NatGateway))
+            if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
                 writer.WriteObjectValue(NatGateway);
@@ -103,25 +103,25 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ExtendedLocation> extendedLocation = default;
-            Core.Optional<PublicIPPrefixSku> sku = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<NetworkIPVersion> publicIPAddressVersion = default;
-            Core.Optional<IList<IPTag>> ipTags = default;
-            Core.Optional<int> prefixLength = default;
-            Core.Optional<string> ipPrefix = default;
-            Core.Optional<IReadOnlyList<SubResource>> publicIPAddresses = default;
-            Core.Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
-            Core.Optional<WritableSubResource> customIPPrefix = default;
-            Core.Optional<Guid> resourceGuid = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<NatGatewayData> natGateway = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<PublicIPPrefixSku> sku = default;
+            Optional<ETag> etag = default;
+            Optional<IList<string>> zones = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<NetworkIPVersion> publicIPAddressVersion = default;
+            Optional<IList<IPTag>> ipTags = default;
+            Optional<int> prefixLength = default;
+            Optional<string> ipPrefix = default;
+            Optional<IReadOnlyList<SubResource>> publicIPAddresses = default;
+            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
+            Optional<WritableSubResource> customIPPrefix = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<NatGatewayData> natGateway = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PublicIPPrefixData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), extendedLocation, sku.Value, Core.Optional.ToNullable(etag), Core.Optional.ToList(zones), Core.Optional.ToNullable(publicIPAddressVersion), Core.Optional.ToList(ipTags), Core.Optional.ToNullable(prefixLength), ipPrefix.Value, Core.Optional.ToList(publicIPAddresses), loadBalancerFrontendIPConfiguration, customIPPrefix, Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIPConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ScopeProperties>> scopes = default;
+            Optional<IReadOnlyList<ScopeProperties>> scopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scopes"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new SubscriptionScopeProperties(Core.Optional.ToList(scopes));
+            return new SubscriptionScopeProperties(Optional.ToList(scopes));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
         internal MaintenanceConfigurationAssignmentListResult()
         {
-            Value = new Core.ChangeTrackingList<MaintenanceConfigurationAssignmentData>();
+            Value = new ChangeTrackingList<MaintenanceConfigurationAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>

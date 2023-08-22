@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> eventCode = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> eventType = default;
-            Core.Optional<string> affectedObjectFriendlyName = default;
-            Core.Optional<string> affectedObjectCorrelationId = default;
-            Core.Optional<string> severity = default;
-            Core.Optional<DateTimeOffset> timeOfOccurrence = default;
-            Core.Optional<ResourceIdentifier> fabricId = default;
-            Core.Optional<SiteRecoveryEventProviderSpecificDetails> providerSpecificDetails = default;
-            Core.Optional<SiteRecoveryEventSpecificDetails> eventSpecificDetails = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Optional<string> eventCode = default;
+            Optional<string> description = default;
+            Optional<string> eventType = default;
+            Optional<string> affectedObjectFriendlyName = default;
+            Optional<string> affectedObjectCorrelationId = default;
+            Optional<string> severity = default;
+            Optional<DateTimeOffset> timeOfOccurrence = default;
+            Optional<ResourceIdentifier> fabricId = default;
+            Optional<SiteRecoveryEventProviderSpecificDetails> providerSpecificDetails = default;
+            Optional<SiteRecoveryEventSpecificDetails> eventSpecificDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventCode"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryEventProperties(eventCode.Value, description.Value, eventType.Value, affectedObjectFriendlyName.Value, affectedObjectCorrelationId.Value, severity.Value, Core.Optional.ToNullable(timeOfOccurrence), fabricId.Value, providerSpecificDetails.Value, eventSpecificDetails.Value, Core.Optional.ToList(healthErrors));
+            return new SiteRecoveryEventProperties(eventCode.Value, description.Value, eventType.Value, affectedObjectFriendlyName.Value, affectedObjectCorrelationId.Value, severity.Value, Optional.ToNullable(timeOfOccurrence), fabricId.Value, providerSpecificDetails.Value, eventSpecificDetails.Value, Optional.ToList(healthErrors));
         }
     }
 }

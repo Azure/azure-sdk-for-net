@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
 
             VirtualMachines = virtualMachines.ToList();
-            Requests = new Core.ChangeTrackingList<JitNetworkAccessRequestInfo>();
+            Requests = new ChangeTrackingList<JitNetworkAccessRequestInfo>();
         }
 
         /// <summary> Initializes a new instance of JitNetworkAccessPolicyData. </summary>

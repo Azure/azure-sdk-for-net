@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of NetAppAccountActiveDirectory. </summary>
         public NetAppAccountActiveDirectory()
         {
-            BackupOperators = new Core.ChangeTrackingList<string>();
-            Administrators = new Core.ChangeTrackingList<string>();
-            SecurityOperators = new Core.ChangeTrackingList<string>();
+            BackupOperators = new ChangeTrackingList<string>();
+            Administrators = new ChangeTrackingList<string>();
+            SecurityOperators = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetAppAccountActiveDirectory. </summary>

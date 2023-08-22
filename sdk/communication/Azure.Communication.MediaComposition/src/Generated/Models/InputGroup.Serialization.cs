@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class InputGroup : Core.IUtf8JsonSerializable
+    public partial class InputGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(Position))
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Core.Optional.IsDefined(Width))
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Core.Optional.IsDefined(Height))
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Core.Optional.IsDefined(Layer))
+            if (Optional.IsDefined(Layer))
             {
                 writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
-            if (Core.Optional.IsDefined(ScalingMode))
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());

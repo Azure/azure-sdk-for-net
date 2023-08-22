@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> type = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

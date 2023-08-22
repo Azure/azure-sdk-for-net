@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci
         /// <summary> Initializes a new instance of ArcSettingData. </summary>
         public ArcSettingData()
         {
-            PerNodeDetails = new Core.ChangeTrackingList<PerNodeArcState>();
+            PerNodeDetails = new ChangeTrackingList<PerNodeArcState>();
         }
 
         /// <summary> Initializes a new instance of ArcSettingData. </summary>

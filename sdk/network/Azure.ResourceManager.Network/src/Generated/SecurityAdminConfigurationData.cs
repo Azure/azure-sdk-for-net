@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of SecurityAdminConfigurationData. </summary>
         public SecurityAdminConfigurationData()
         {
-            ApplyOnNetworkIntentPolicyBasedServices = new Core.ChangeTrackingList<NetworkIntentPolicyBasedService>();
+            ApplyOnNetworkIntentPolicyBasedServices = new ChangeTrackingList<NetworkIntentPolicyBasedService>();
         }
 
         /// <summary> Initializes a new instance of SecurityAdminConfigurationData. </summary>

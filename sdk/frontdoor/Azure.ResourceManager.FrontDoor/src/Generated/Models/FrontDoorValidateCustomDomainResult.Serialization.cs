@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<bool> customDomainValidated = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<string> message = default;
+            Optional<bool> customDomainValidated = default;
+            Optional<string> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDomainValidated"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorValidateCustomDomainResult(Core.Optional.ToNullable(customDomainValidated), reason.Value, message.Value);
+            return new FrontDoorValidateCustomDomainResult(Optional.ToNullable(customDomainValidated), reason.Value, message.Value);
         }
     }
 }

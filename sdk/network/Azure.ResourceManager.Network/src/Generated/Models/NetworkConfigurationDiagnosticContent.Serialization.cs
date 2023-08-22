@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkConfigurationDiagnosticContent : Core.IUtf8JsonSerializable
+    public partial class NetworkConfigurationDiagnosticContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
-            if (Core.Optional.IsDefined(VerbosityLevel))
+            if (Optional.IsDefined(VerbosityLevel))
             {
                 writer.WritePropertyName("verbosityLevel"u8);
                 writer.WriteStringValue(VerbosityLevel.Value.ToString());

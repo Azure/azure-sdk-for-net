@@ -13,57 +13,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineProperties : Core.IUtf8JsonSerializable
+    public partial class MachineProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LocationData))
+            if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
-            if (Core.Optional.IsDefined(ServiceStatuses))
+            if (Optional.IsDefined(ServiceStatuses))
             {
                 writer.WritePropertyName("serviceStatuses"u8);
                 writer.WriteObjectValue(ServiceStatuses);
             }
-            if (Core.Optional.IsDefined(CloudMetadata))
+            if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
                 writer.WriteObjectValue(CloudMetadata);
             }
-            if (Core.Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Core.Optional.IsDefined(VmId))
+            if (Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (Core.Optional.IsDefined(ClientPublicKey))
+            if (Optional.IsDefined(ClientPublicKey))
             {
                 writer.WritePropertyName("clientPublicKey"u8);
                 writer.WriteStringValue(ClientPublicKey);
             }
-            if (Core.Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Core.Optional.IsDefined(PrivateLinkScopeResourceId))
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
             }
-            if (Core.Optional.IsDefined(ParentClusterResourceId))
+            if (Optional.IsDefined(ParentClusterResourceId))
             {
                 writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
-            if (Core.Optional.IsDefined(MssqlDiscovered))
+            if (Optional.IsDefined(MssqlDiscovered))
             {
                 writer.WritePropertyName("mssqlDiscovered"u8);
                 writer.WriteStringValue(MssqlDiscovered);
@@ -77,32 +77,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Core.Optional<LocationData> locationData = default;
-            Core.Optional<AgentConfiguration> agentConfiguration = default;
-            Core.Optional<HybridComputeServiceStatuses> serviceStatuses = default;
-            Core.Optional<CloudMetadata> cloudMetadata = default;
-            Core.Optional<OSProfile> osProfile = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<HybridComputeStatusType> status = default;
-            Core.Optional<DateTimeOffset> lastStatusChange = default;
-            Core.Optional<IReadOnlyList<ResponseError>> errorDetails = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<string> vmId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> machineFqdn = default;
-            Core.Optional<string> clientPublicKey = default;
-            Core.Optional<string> osName = default;
-            Core.Optional<string> osVersion = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<string> vmUuid = default;
-            Core.Optional<string> osSku = default;
-            Core.Optional<string> domainName = default;
-            Core.Optional<string> adFqdn = default;
-            Core.Optional<string> dnsFqdn = default;
-            Core.Optional<string> privateLinkScopeResourceId = default;
-            Core.Optional<string> parentClusterResourceId = default;
-            Core.Optional<string> mssqlDiscovered = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> detectedProperties = default;
+            Optional<LocationData> locationData = default;
+            Optional<AgentConfiguration> agentConfiguration = default;
+            Optional<HybridComputeServiceStatuses> serviceStatuses = default;
+            Optional<CloudMetadata> cloudMetadata = default;
+            Optional<OSProfile> osProfile = default;
+            Optional<string> provisioningState = default;
+            Optional<HybridComputeStatusType> status = default;
+            Optional<DateTimeOffset> lastStatusChange = default;
+            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            Optional<string> agentVersion = default;
+            Optional<string> vmId = default;
+            Optional<string> displayName = default;
+            Optional<string> machineFqdn = default;
+            Optional<string> clientPublicKey = default;
+            Optional<string> osName = default;
+            Optional<string> osVersion = default;
+            Optional<string> osType = default;
+            Optional<string> vmUuid = default;
+            Optional<string> osSku = default;
+            Optional<string> domainName = default;
+            Optional<string> adFqdn = default;
+            Optional<string> dnsFqdn = default;
+            Optional<string> privateLinkScopeResourceId = default;
+            Optional<string> parentClusterResourceId = default;
+            Optional<string> mssqlDiscovered = default;
+            Optional<IReadOnlyDictionary<string, string>> detectedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationData"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new MachineProperties(locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, osProfile.Value, provisioningState.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(lastStatusChange), Core.Optional.ToList(errorDetails), agentVersion.Value, vmId.Value, displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, vmUuid.Value, osSku.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, Core.Optional.ToDictionary(detectedProperties));
+            return new MachineProperties(locationData.Value, agentConfiguration.Value, serviceStatuses.Value, cloudMetadata.Value, osProfile.Value, provisioningState.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), Optional.ToList(errorDetails), agentVersion.Value, vmId.Value, displayName.Value, machineFqdn.Value, clientPublicKey.Value, osName.Value, osVersion.Value, osType.Value, vmUuid.Value, osSku.Value, domainName.Value, adFqdn.Value, dnsFqdn.Value, privateLinkScopeResourceId.Value, parentClusterResourceId.Value, mssqlDiscovered.Value, Optional.ToDictionary(detectedProperties));
         }
     }
 }

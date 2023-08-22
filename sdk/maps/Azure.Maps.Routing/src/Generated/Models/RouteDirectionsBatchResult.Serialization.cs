@@ -19,8 +19,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<RouteDirectionsBatchItem>> batchItems = default;
-            Core.Optional<BatchResultSummary> summary = default;
+            Optional<IReadOnlyList<RouteDirectionsBatchItem>> batchItems = default;
+            Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchItems"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirectionsBatchResult(summary.Value, Core.Optional.ToList(batchItems));
+            return new RouteDirectionsBatchResult(summary.Value, Optional.ToList(batchItems));
         }
     }
 }

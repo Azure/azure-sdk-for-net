@@ -20,10 +20,10 @@ namespace Azure.Communication.JobRouter.Models
                 return null;
             }
             string assignmentId = default;
-            Core.Optional<string> workerId = default;
+            Optional<string> workerId = default;
             DateTimeOffset assignedAt = default;
-            Core.Optional<DateTimeOffset> completedAt = default;
-            Core.Optional<DateTimeOffset> closedAt = default;
+            Optional<DateTimeOffset> completedAt = default;
+            Optional<DateTimeOffset> closedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignmentId"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new RouterJobAssignment(assignmentId, workerId.Value, assignedAt, Core.Optional.ToNullable(completedAt), Core.Optional.ToNullable(closedAt));
+            return new RouterJobAssignment(assignmentId, workerId.Value, assignedAt, Optional.ToNullable(completedAt), Optional.ToNullable(closedAt));
         }
     }
 }

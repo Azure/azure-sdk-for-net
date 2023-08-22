@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDatabricksProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningDatabricksProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DatabricksAccessToken))
+            if (Optional.IsDefined(DatabricksAccessToken))
             {
                 writer.WritePropertyName("databricksAccessToken"u8);
                 writer.WriteStringValue(DatabricksAccessToken);
             }
-            if (Core.Optional.IsDefined(WorkspaceUri))
+            if (Optional.IsDefined(WorkspaceUri))
             {
                 writer.WritePropertyName("workspaceUrl"u8);
                 writer.WriteStringValue(WorkspaceUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> databricksAccessToken = default;
-            Core.Optional<Uri> workspaceUrl = default;
+            Optional<string> databricksAccessToken = default;
+            Optional<Uri> workspaceUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databricksAccessToken"u8))

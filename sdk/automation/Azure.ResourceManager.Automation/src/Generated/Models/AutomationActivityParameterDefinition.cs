@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationActivityParameterDefinition. </summary>
         internal AutomationActivityParameterDefinition()
         {
-            ValidationSet = new Core.ChangeTrackingList<AutomationActivityParameterValidationSet>();
+            ValidationSet = new ChangeTrackingList<AutomationActivityParameterValidationSet>();
         }
 
         /// <summary> Initializes a new instance of AutomationActivityParameterDefinition. </summary>

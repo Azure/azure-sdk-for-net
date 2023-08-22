@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    internal class GuestAgentOperationSource : Core.IOperationSource<GuestAgentResource>
+    internal class GuestAgentOperationSource : IOperationSource<GuestAgentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _client = client;
         }
 
-        GuestAgentResource Core.IOperationSource<GuestAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GuestAgentResource IOperationSource<GuestAgentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GuestAgentData.DeserializeGuestAgentData(document.RootElement);
             return new GuestAgentResource(_client, data);
         }
 
-        async ValueTask<GuestAgentResource> Core.IOperationSource<GuestAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GuestAgentResource> IOperationSource<GuestAgentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GuestAgentData.DeserializeGuestAgentData(document.RootElement);

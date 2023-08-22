@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class CmkKekIdentity : Core.IUtf8JsonSerializable
+    public partial class CmkKekIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UseSystemAssignedIdentity))
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (Core.Optional.IsDefined(UserAssignedIdentity))
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<bool> useSystemAssignedIdentity = default;
-            Core.Optional<ResourceIdentifier> userAssignedIdentity = default;
+            Optional<bool> useSystemAssignedIdentity = default;
+            Optional<ResourceIdentifier> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("useSystemAssignedIdentity"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new CmkKekIdentity(Core.Optional.ToNullable(useSystemAssignedIdentity), userAssignedIdentity.Value);
+            return new CmkKekIdentity(Optional.ToNullable(useSystemAssignedIdentity), userAssignedIdentity.Value);
         }
     }
 }

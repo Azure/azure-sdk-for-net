@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>
         internal MachineLearningVmSize()
         {
-            SupportedComputeTypes = new Core.ChangeTrackingList<string>();
+            SupportedComputeTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningVmSize. </summary>

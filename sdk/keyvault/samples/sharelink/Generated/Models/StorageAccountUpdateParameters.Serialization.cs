@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class StorageAccountUpdateParameters : Core.IUtf8JsonSerializable
+    internal partial class StorageAccountUpdateParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActiveKeyName))
+            if (Optional.IsDefined(ActiveKeyName))
             {
                 writer.WritePropertyName("activeKeyName"u8);
                 writer.WriteStringValue(ActiveKeyName);
             }
-            if (Core.Optional.IsDefined(AutoRegenerateKey))
+            if (Optional.IsDefined(AutoRegenerateKey))
             {
                 writer.WritePropertyName("autoRegenerateKey"u8);
                 writer.WriteBooleanValue(AutoRegenerateKey.Value);
             }
-            if (Core.Optional.IsDefined(RegenerationPeriod))
+            if (Optional.IsDefined(RegenerationPeriod))
             {
                 writer.WritePropertyName("regenerationPeriod"u8);
                 writer.WriteStringValue(RegenerationPeriod);
             }
-            if (Core.Optional.IsDefined(StorageAccountAttributes))
+            if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(StorageAccountAttributes);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

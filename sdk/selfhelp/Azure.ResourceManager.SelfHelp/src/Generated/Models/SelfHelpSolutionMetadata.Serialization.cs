@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpSolutionMetadata : Core.IUtf8JsonSerializable
+    public partial class SelfHelpSolutionMetadata : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SolutionId))
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Core.Optional.IsDefined(SolutionType))
+            if (Optional.IsDefined(SolutionType))
             {
                 writer.WritePropertyName("solutionType"u8);
                 writer.WriteStringValue(SolutionType);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(RequiredParameterSets))
+            if (Optional.IsCollectionDefined(RequiredParameterSets))
             {
                 writer.WritePropertyName("requiredParameterSets"u8);
                 writer.WriteStartArray();
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> solutionId = default;
-            Core.Optional<string> solutionType = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<IList<string>>> requiredParameterSets = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> solutionId = default;
+            Optional<string> solutionType = default;
+            Optional<string> description = default;
+            Optional<IList<IList<string>>> requiredParameterSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutionId.Value, solutionType.Value, description.Value, Core.Optional.ToList(requiredParameterSets));
+            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutionId.Value, solutionType.Value, description.Value, Optional.ToList(requiredParameterSets));
         }
     }
 }

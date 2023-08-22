@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuSetting : Core.IUtf8JsonSerializable
+    public partial class ResourceTypeSkuSetting : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Core.Optional.IsDefined(Family))
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Core.Optional.IsCollectionDefined(Locations))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LocationInfo))
+            if (Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(RequiredQuotaIds))
+            if (Optional.IsCollectionDefined(RequiredQuotaIds))
             {
                 writer.WritePropertyName("requiredQuotaIds"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(RequiredFeatures))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Core.Optional.IsCollectionDefined(Costs))
+            if (Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Capabilities))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<string> size = default;
-            Core.Optional<string> family = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<IList<string>> locations = default;
-            Core.Optional<IList<ResourceTypeSkuLocationInfo>> locationInfo = default;
-            Core.Optional<IList<string>> requiredQuotaIds = default;
-            Core.Optional<IList<string>> requiredFeatures = default;
-            Core.Optional<ResourceTypeSkuCapacity> capacity = default;
-            Core.Optional<IList<ResourceTypeSkuCost>> costs = default;
-            Core.Optional<IList<ResourceSkuCapability>> capabilities = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<string> family = default;
+            Optional<string> kind = default;
+            Optional<IList<string>> locations = default;
+            Optional<IList<ResourceTypeSkuLocationInfo>> locationInfo = default;
+            Optional<IList<string>> requiredQuotaIds = default;
+            Optional<IList<string>> requiredFeatures = default;
+            Optional<ResourceTypeSkuCapacity> capacity = default;
+            Optional<IList<ResourceTypeSkuCost>> costs = default;
+            Optional<IList<ResourceSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, Core.Optional.ToList(locations), Core.Optional.ToList(locationInfo), Core.Optional.ToList(requiredQuotaIds), Core.Optional.ToList(requiredFeatures), capacity.Value, Core.Optional.ToList(costs), Core.Optional.ToList(capabilities));
+            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(requiredQuotaIds), Optional.ToList(requiredFeatures), capacity.Value, Optional.ToList(costs), Optional.ToList(capabilities));
         }
     }
 }

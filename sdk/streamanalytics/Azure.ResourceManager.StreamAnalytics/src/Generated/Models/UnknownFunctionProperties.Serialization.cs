@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    internal partial class UnknownFunctionProperties : Core.IUtf8JsonSerializable
+    internal partial class UnknownFunctionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionPropertiesType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Inputs))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Output))
+            if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (Core.Optional.IsDefined(Binding))
+            if (Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
                 writer.WriteObjectValue(Binding);
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = "Unknown";
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IList<StreamingJobFunctionInput>> inputs = default;
-            Core.Optional<StreamingJobFunctionOutput> output = default;
-            Core.Optional<StreamingJobFunctionBinding> binding = default;
+            Optional<ETag> etag = default;
+            Optional<IList<StreamingJobFunctionInput>> inputs = default;
+            Optional<StreamingJobFunctionOutput> output = default;
+            Optional<StreamingJobFunctionBinding> binding = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new UnknownFunctionProperties(type, Core.Optional.ToNullable(etag), Core.Optional.ToList(inputs), output.Value, binding.Value);
+            return new UnknownFunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of DatabaseServerFullResourceNames. </summary>
         public DatabaseServerFullResourceNames()
         {
-            VirtualMachines = new Core.ChangeTrackingList<VirtualMachineResourceNames>();
+            VirtualMachines = new ChangeTrackingList<VirtualMachineResourceNames>();
         }
 
         /// <summary> Initializes a new instance of DatabaseServerFullResourceNames. </summary>

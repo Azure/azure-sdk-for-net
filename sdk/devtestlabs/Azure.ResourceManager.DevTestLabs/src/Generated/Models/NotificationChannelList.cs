@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>
         internal NotificationChannelList()
         {
-            Value = new Core.ChangeTrackingList<DevTestLabNotificationChannelData>();
+            Value = new ChangeTrackingList<DevTestLabNotificationChannelData>();
         }
 
         /// <summary> Initializes a new instance of NotificationChannelList. </summary>

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppTemplate : Core.IUtf8JsonSerializable
+    public partial class ContainerAppTemplate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RevisionSuffix))
+            if (Optional.IsDefined(RevisionSuffix))
             {
                 writer.WritePropertyName("revisionSuffix"u8);
                 writer.WriteStringValue(RevisionSuffix);
             }
-            if (Core.Optional.IsDefined(TerminationGracePeriodSeconds))
+            if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (Core.Optional.IsCollectionDefined(InitContainers))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Containers))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Scale))
+            if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
             }
-            if (Core.Optional.IsCollectionDefined(Volumes))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceBinds))
+            if (Optional.IsCollectionDefined(ServiceBinds))
             {
                 writer.WritePropertyName("serviceBinds"u8);
                 writer.WriteStartArray();
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> revisionSuffix = default;
-            Core.Optional<long> terminationGracePeriodSeconds = default;
-            Core.Optional<IList<ContainerAppInitContainer>> initContainers = default;
-            Core.Optional<IList<ContainerAppContainer>> containers = default;
-            Core.Optional<ContainerAppScale> scale = default;
-            Core.Optional<IList<ContainerAppVolume>> volumes = default;
-            Core.Optional<IList<ContainerAppServiceBind>> serviceBinds = default;
+            Optional<string> revisionSuffix = default;
+            Optional<long> terminationGracePeriodSeconds = default;
+            Optional<IList<ContainerAppInitContainer>> initContainers = default;
+            Optional<IList<ContainerAppContainer>> containers = default;
+            Optional<ContainerAppScale> scale = default;
+            Optional<IList<ContainerAppVolume>> volumes = default;
+            Optional<IList<ContainerAppServiceBind>> serviceBinds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("revisionSuffix"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppTemplate(revisionSuffix.Value, Core.Optional.ToNullable(terminationGracePeriodSeconds), Core.Optional.ToList(initContainers), Core.Optional.ToList(containers), scale.Value, Core.Optional.ToList(volumes), Core.Optional.ToList(serviceBinds));
+            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToList(initContainers), Optional.ToList(containers), scale.Value, Optional.ToList(volumes), Optional.ToList(serviceBinds));
         }
     }
 }

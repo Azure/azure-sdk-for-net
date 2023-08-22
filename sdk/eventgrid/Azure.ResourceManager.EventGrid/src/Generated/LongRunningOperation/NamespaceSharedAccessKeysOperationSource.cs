@@ -14,15 +14,15 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class NamespaceSharedAccessKeysOperationSource : Core.IOperationSource<NamespaceSharedAccessKeys>
+    internal class NamespaceSharedAccessKeysOperationSource : IOperationSource<NamespaceSharedAccessKeys>
     {
-        NamespaceSharedAccessKeys Core.IOperationSource<NamespaceSharedAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        NamespaceSharedAccessKeys IOperationSource<NamespaceSharedAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NamespaceSharedAccessKeys.DeserializeNamespaceSharedAccessKeys(document.RootElement);
         }
 
-        async ValueTask<NamespaceSharedAccessKeys> Core.IOperationSource<NamespaceSharedAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NamespaceSharedAccessKeys> IOperationSource<NamespaceSharedAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NamespaceSharedAccessKeys.DeserializeNamespaceSharedAccessKeys(document.RootElement);

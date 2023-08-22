@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    internal partial class UnknownEndpointBaseProperties : Core.IUtf8JsonSerializable
+    internal partial class UnknownEndpointBaseProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 return null;
             }
             EndpointType endpointType = "Unknown";
-            Core.Optional<string> description = default;
-            Core.Optional<StorageMoverProvisioningState> provisioningState = default;
+            Optional<string> description = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     continue;
                 }
             }
-            return new UnknownEndpointBaseProperties(endpointType, description.Value, Core.Optional.ToNullable(provisioningState));
+            return new UnknownEndpointBaseProperties(endpointType, description.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallFqdnTagListResult. </summary>
         internal AzureFirewallFqdnTagListResult()
         {
-            Value = new Core.ChangeTrackingList<AzureFirewallFqdnTag>();
+            Value = new ChangeTrackingList<AzureFirewallFqdnTag>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallFqdnTagListResult. </summary>

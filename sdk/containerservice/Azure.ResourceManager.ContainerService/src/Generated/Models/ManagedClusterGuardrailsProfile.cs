@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             Argument.AssertNotNull(version, nameof(version));
 
-            SystemExcludedNamespaces = new Core.ChangeTrackingList<string>();
+            SystemExcludedNamespaces = new ChangeTrackingList<string>();
             Version = version;
             Level = level;
-            ExcludedNamespaces = new Core.ChangeTrackingList<string>();
+            ExcludedNamespaces = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterGuardrailsProfile. </summary>

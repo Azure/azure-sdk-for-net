@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Kind = kind;
             Value = value;
-            Polygon = new Core.ChangeTrackingList<float>();
+            Polygon = new ChangeTrackingList<float>();
             Span = span;
             Confidence = confidence;
         }

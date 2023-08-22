@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(command, nameof(command));
 
             Command = command;
-            ExtendedProperties = new Core.ChangeTrackingDictionary<string, object>();
+            ExtendedProperties = new ChangeTrackingDictionary<string, object>();
             Type = "Custom";
         }
 

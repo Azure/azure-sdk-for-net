@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> testVmName = default;
-            Core.Optional<string> testVmFriendlyName = default;
-            Core.Optional<string> networkConnectionStatus = default;
-            Core.Optional<string> networkFriendlyName = default;
-            Core.Optional<string> subnet = default;
-            Core.Optional<ResourceIdentifier> recoveryPointId = default;
-            Core.Optional<DateTimeOffset> recoveryPointTime = default;
+            Optional<string> name = default;
+            Optional<string> friendlyName = default;
+            Optional<string> testVmName = default;
+            Optional<string> testVmFriendlyName = default;
+            Optional<string> networkConnectionStatus = default;
+            Optional<string> networkFriendlyName = default;
+            Optional<string> subnet = default;
+            Optional<ResourceIdentifier> recoveryPointId = default;
+            Optional<DateTimeOffset> recoveryPointTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new FailoverReplicationProtectedItemDetails(name.Value, friendlyName.Value, testVmName.Value, testVmFriendlyName.Value, networkConnectionStatus.Value, networkFriendlyName.Value, subnet.Value, recoveryPointId.Value, Core.Optional.ToNullable(recoveryPointTime));
+            return new FailoverReplicationProtectedItemDetails(name.Value, friendlyName.Value, testVmName.Value, testVmFriendlyName.Value, networkConnectionStatus.Value, networkFriendlyName.Value, subnet.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime));
         }
     }
 }

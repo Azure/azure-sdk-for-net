@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class CompanyInformation : Core.IUtf8JsonSerializable
+    public partial class CompanyInformation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Url))
+            if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Address))
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Core.Optional.IsDefined(ContactInformation))
+            if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
                 writer.WriteObjectValue(ContactInformation);
             }
-            if (Core.Optional.IsDefined(CustomerCareInformation))
+            if (Optional.IsDefined(CustomerCareInformation))
             {
                 writer.WritePropertyName("customerCareInformation"u8);
                 writer.WriteObjectValue(CustomerCareInformation);
@@ -50,11 +50,11 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<Uri> url = default;
-            Core.Optional<string> address = default;
-            Core.Optional<ContactInformation> contactInformation = default;
-            Core.Optional<CustomerCareInformation> customerCareInformation = default;
+            Optional<string> name = default;
+            Optional<Uri> url = default;
+            Optional<string> address = default;
+            Optional<ContactInformation> contactInformation = default;
+            Optional<CustomerCareInformation> customerCareInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

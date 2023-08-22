@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of SearchMetadata. </summary>
         internal SearchMetadata()
         {
-            CoreSummaries = new Core.ChangeTrackingList<OperationalInsightsSearchCoreSummary>();
-            Sort = new Core.ChangeTrackingList<SearchSort>();
+            CoreSummaries = new ChangeTrackingList<OperationalInsightsSearchCoreSummary>();
+            Sort = new ChangeTrackingList<SearchSort>();
         }
 
         /// <summary> Initializes a new instance of SearchMetadata. </summary>

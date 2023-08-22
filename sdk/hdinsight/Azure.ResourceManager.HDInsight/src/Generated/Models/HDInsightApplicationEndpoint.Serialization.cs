@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightApplicationEndpoint : Core.IUtf8JsonSerializable
+    public partial class HDInsightApplicationEndpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EndpointLocation))
+            if (Optional.IsDefined(EndpointLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
-            if (Core.Optional.IsDefined(DestinationPort))
+            if (Optional.IsDefined(DestinationPort))
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (Core.Optional.IsDefined(PublicPort))
+            if (Optional.IsDefined(PublicPort))
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (Core.Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> location = default;
-            Core.Optional<int> destinationPort = default;
-            Core.Optional<int> publicPort = default;
-            Core.Optional<IPAddress> privateIPAddress = default;
+            Optional<string> location = default;
+            Optional<int> destinationPort = default;
+            Optional<int> publicPort = default;
+            Optional<IPAddress> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightApplicationEndpoint(location.Value, Core.Optional.ToNullable(destinationPort), Core.Optional.ToNullable(publicPort), privateIPAddress.Value);
+            return new HDInsightApplicationEndpoint(location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value);
         }
     }
 }

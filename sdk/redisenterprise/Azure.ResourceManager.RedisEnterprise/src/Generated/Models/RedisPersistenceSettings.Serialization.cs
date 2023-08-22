@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisPersistenceSettings : Core.IUtf8JsonSerializable
+    public partial class RedisPersistenceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsAofEnabled))
+            if (Optional.IsDefined(IsAofEnabled))
             {
                 writer.WritePropertyName("aofEnabled"u8);
                 writer.WriteBooleanValue(IsAofEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsRdbEnabled))
+            if (Optional.IsDefined(IsRdbEnabled))
             {
                 writer.WritePropertyName("rdbEnabled"u8);
                 writer.WriteBooleanValue(IsRdbEnabled.Value);
             }
-            if (Core.Optional.IsDefined(AofFrequency))
+            if (Optional.IsDefined(AofFrequency))
             {
                 writer.WritePropertyName("aofFrequency"u8);
                 writer.WriteStringValue(AofFrequency.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RdbFrequency))
+            if (Optional.IsDefined(RdbFrequency))
             {
                 writer.WritePropertyName("rdbFrequency"u8);
                 writer.WriteStringValue(RdbFrequency.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Core.Optional<bool> aofEnabled = default;
-            Core.Optional<bool> rdbEnabled = default;
-            Core.Optional<PersistenceSettingAofFrequency> aofFrequency = default;
-            Core.Optional<PersistenceSettingRdbFrequency> rdbFrequency = default;
+            Optional<bool> aofEnabled = default;
+            Optional<bool> rdbEnabled = default;
+            Optional<PersistenceSettingAofFrequency> aofFrequency = default;
+            Optional<PersistenceSettingRdbFrequency> rdbFrequency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aofEnabled"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisPersistenceSettings(Core.Optional.ToNullable(aofEnabled), Core.Optional.ToNullable(rdbEnabled), Core.Optional.ToNullable(aofFrequency), Core.Optional.ToNullable(rdbFrequency));
+            return new RedisPersistenceSettings(Optional.ToNullable(aofEnabled), Optional.ToNullable(rdbEnabled), Optional.ToNullable(aofFrequency), Optional.ToNullable(rdbFrequency));
         }
     }
 }

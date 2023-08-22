@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceTagInformationPropertiesFormat. </summary>
         internal ServiceTagInformationPropertiesFormat()
         {
-            AddressPrefixes = new Core.ChangeTrackingList<string>();
+            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServiceTagInformationPropertiesFormat. </summary>

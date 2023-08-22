@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskProperties. </summary>
         public ConnectToSourceMySqlTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<ConnectToSourceNonSqlTaskOutput>();
+            Output = new ChangeTrackingList<ConnectToSourceNonSqlTaskOutput>();
             TaskType = TaskType.ConnectToSourceMySql;
         }
 

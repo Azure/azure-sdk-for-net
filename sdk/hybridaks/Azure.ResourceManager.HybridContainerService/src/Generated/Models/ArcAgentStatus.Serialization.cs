@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<DeploymentState> deploymentState = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<string> onboardingPublicKey = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<long> coreCount = default;
-            Core.Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
-            Core.Optional<DateTimeOffset> lastConnectivityTime = default;
+            Optional<DeploymentState> deploymentState = default;
+            Optional<string> errorMessage = default;
+            Optional<string> onboardingPublicKey = default;
+            Optional<string> agentVersion = default;
+            Optional<long> coreCount = default;
+            Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
+            Optional<DateTimeOffset> lastConnectivityTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deploymentState"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ArcAgentStatus(Core.Optional.ToNullable(deploymentState), errorMessage.Value, onboardingPublicKey.Value, agentVersion.Value, Core.Optional.ToNullable(coreCount), Core.Optional.ToNullable(managedIdentityCertificateExpirationTime), Core.Optional.ToNullable(lastConnectivityTime));
+            return new ArcAgentStatus(Optional.ToNullable(deploymentState), errorMessage.Value, onboardingPublicKey.Value, agentVersion.Value, Optional.ToNullable(coreCount), Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime));
         }
     }
 }

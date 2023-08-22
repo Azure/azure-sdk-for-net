@@ -14,32 +14,32 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ActivityPolicyConverter))]
-    public partial class ActivityPolicy : Core.IUtf8JsonSerializable
+    public partial class ActivityPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteObjectValue(Timeout);
             }
-            if (Core.Optional.IsDefined(Retry))
+            if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
                 writer.WriteObjectValue(Retry);
             }
-            if (Core.Optional.IsDefined(RetryIntervalInSeconds))
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(SecureInput))
+            if (Optional.IsDefined(SecureInput))
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(SecureInput.Value);
             }
-            if (Core.Optional.IsDefined(SecureOutput))
+            if (Optional.IsDefined(SecureOutput))
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
@@ -58,11 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> timeout = default;
-            Core.Optional<object> retry = default;
-            Core.Optional<int> retryIntervalInSeconds = default;
-            Core.Optional<bool> secureInput = default;
-            Core.Optional<bool> secureOutput = default;
+            Optional<object> timeout = default;
+            Optional<object> retry = default;
+            Optional<int> retryIntervalInSeconds = default;
+            Optional<bool> secureInput = default;
+            Optional<bool> secureOutput = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityPolicy(timeout.Value, retry.Value, Core.Optional.ToNullable(retryIntervalInSeconds), Core.Optional.ToNullable(secureInput), Core.Optional.ToNullable(secureOutput), additionalProperties);
+            return new ActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
         }
 
         internal partial class ActivityPolicyConverter : JsonConverter<ActivityPolicy>

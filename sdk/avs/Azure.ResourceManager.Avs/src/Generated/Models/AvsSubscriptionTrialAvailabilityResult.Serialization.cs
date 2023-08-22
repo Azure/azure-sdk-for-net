@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<AvsSubscriptionTrialStatus> status = default;
-            Core.Optional<int> availableHosts = default;
+            Optional<AvsSubscriptionTrialStatus> status = default;
+            Optional<int> availableHosts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new AvsSubscriptionTrialAvailabilityResult(Core.Optional.ToNullable(status), Core.Optional.ToNullable(availableHosts));
+            return new AvsSubscriptionTrialAvailabilityResult(Optional.ToNullable(status), Optional.ToNullable(availableHosts));
         }
     }
 }

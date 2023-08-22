@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> version = default;
-            Core.Optional<string> servicePack = default;
+            Optional<string> version = default;
+            Optional<string> servicePack = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))

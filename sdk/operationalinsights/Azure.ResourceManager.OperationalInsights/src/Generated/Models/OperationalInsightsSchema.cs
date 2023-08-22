@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of OperationalInsightsSchema. </summary>
         public OperationalInsightsSchema()
         {
-            Columns = new Core.ChangeTrackingList<OperationalInsightsColumn>();
-            StandardColumns = new Core.ChangeTrackingList<OperationalInsightsColumn>();
-            Categories = new Core.ChangeTrackingList<string>();
-            Labels = new Core.ChangeTrackingList<string>();
-            Solutions = new Core.ChangeTrackingList<string>();
+            Columns = new ChangeTrackingList<OperationalInsightsColumn>();
+            StandardColumns = new ChangeTrackingList<OperationalInsightsColumn>();
+            Categories = new ChangeTrackingList<string>();
+            Labels = new ChangeTrackingList<string>();
+            Solutions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsSchema. </summary>

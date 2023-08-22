@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class PurchaseRequestPropertiesReservedResourceProperties : Core.IUtf8JsonSerializable
+    internal partial class PurchaseRequestPropertiesReservedResourceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(InstanceFlexibility))
+            if (Optional.IsDefined(InstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
                 writer.WriteStringValue(InstanceFlexibility.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<InstanceFlexibility> instanceFlexibility = default;
+            Optional<InstanceFlexibility> instanceFlexibility = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceFlexibility"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new PurchaseRequestPropertiesReservedResourceProperties(Core.Optional.ToNullable(instanceFlexibility));
+            return new PurchaseRequestPropertiesReservedResourceProperties(Optional.ToNullable(instanceFlexibility));
         }
     }
 }

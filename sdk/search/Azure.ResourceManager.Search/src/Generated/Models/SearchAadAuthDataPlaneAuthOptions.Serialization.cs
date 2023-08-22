@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchAadAuthDataPlaneAuthOptions : Core.IUtf8JsonSerializable
+    public partial class SearchAadAuthDataPlaneAuthOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApiKeyOnly))
+            if (Optional.IsDefined(ApiKeyOnly))
             {
                 writer.WritePropertyName("apiKeyOnly"u8);
 #if NET6_0_OR_GREATER
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Search.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ApiKeyOnly.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(AadOrApiKey))
+            if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
                 writer.WriteObjectValue(AadOrApiKey);
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> apiKeyOnly = default;
-            Core.Optional<DataPlaneAadOrApiKeyAuthOption> aadOrApiKey = default;
+            Optional<BinaryData> apiKeyOnly = default;
+            Optional<DataPlaneAadOrApiKeyAuthOption> aadOrApiKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiKeyOnly"u8))

@@ -22,13 +22,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             string operationId = default;
             DocumentOperationStatus status = default;
-            Core.Optional<int> percentCompleted = default;
+            Optional<int> percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = default;
             Uri resourceLocation = default;
-            Core.Optional<string> apiVersion = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<string> apiVersion = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new OperationSummary(operationId, status, Core.Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Core.Optional.ToDictionary(tags));
+            return new OperationSummary(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags));
         }
     }
 }

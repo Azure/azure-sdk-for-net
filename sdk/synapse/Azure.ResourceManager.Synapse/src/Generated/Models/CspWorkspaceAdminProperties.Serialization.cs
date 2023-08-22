@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    internal partial class CspWorkspaceAdminProperties : Core.IUtf8JsonSerializable
+    internal partial class CspWorkspaceAdminProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(InitialWorkspaceAdminObjectId))
+            if (Optional.IsDefined(InitialWorkspaceAdminObjectId))
             {
                 writer.WritePropertyName("initialWorkspaceAdminObjectId"u8);
                 writer.WriteStringValue(InitialWorkspaceAdminObjectId.Value);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<Guid> initialWorkspaceAdminObjectId = default;
+            Optional<Guid> initialWorkspaceAdminObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initialWorkspaceAdminObjectId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new CspWorkspaceAdminProperties(Core.Optional.ToNullable(initialWorkspaceAdminObjectId));
+            return new CspWorkspaceAdminProperties(Optional.ToNullable(initialWorkspaceAdminObjectId));
         }
     }
 }

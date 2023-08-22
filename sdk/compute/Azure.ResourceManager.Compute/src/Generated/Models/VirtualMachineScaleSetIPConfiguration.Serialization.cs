@@ -12,41 +12,41 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetIPConfiguration : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetIPConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Core.Optional.IsDefined(Primary))
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Core.Optional.IsDefined(PublicIPAddressConfiguration))
+            if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
-            if (Core.Optional.IsDefined(PrivateIPAddressVersion))
+            if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
+            if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LoadBalancerInboundNatPools))
+            if (Optional.IsCollectionDefined(LoadBalancerInboundNatPools))
             {
                 writer.WritePropertyName("loadBalancerInboundNatPools"u8);
                 writer.WriteStartArray();
@@ -97,15 +97,15 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string name = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<WritableSubResource> subnet = default;
-            Core.Optional<bool> primary = default;
-            Core.Optional<VirtualMachineScaleSetPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
-            Core.Optional<IPVersion> privateIPAddressVersion = default;
-            Core.Optional<IList<WritableSubResource>> applicationGatewayBackendAddressPools = default;
-            Core.Optional<IList<WritableSubResource>> applicationSecurityGroups = default;
-            Core.Optional<IList<WritableSubResource>> loadBalancerBackendAddressPools = default;
-            Core.Optional<IList<WritableSubResource>> loadBalancerInboundNatPools = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<bool> primary = default;
+            Optional<VirtualMachineScaleSetPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
+            Optional<IPVersion> privateIPAddressVersion = default;
+            Optional<IList<WritableSubResource>> applicationGatewayBackendAddressPools = default;
+            Optional<IList<WritableSubResource>> applicationSecurityGroups = default;
+            Optional<IList<WritableSubResource>> loadBalancerBackendAddressPools = default;
+            Optional<IList<WritableSubResource>> loadBalancerInboundNatPools = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetIPConfiguration(id.Value, name, subnet, Core.Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Core.Optional.ToNullable(privateIPAddressVersion), Core.Optional.ToList(applicationGatewayBackendAddressPools), Core.Optional.ToList(applicationSecurityGroups), Core.Optional.ToList(loadBalancerBackendAddressPools), Core.Optional.ToList(loadBalancerInboundNatPools));
+            return new VirtualMachineScaleSetIPConfiguration(id.Value, name, subnet, Optional.ToNullable(primary), publicIPAddressConfiguration.Value, Optional.ToNullable(privateIPAddressVersion), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(applicationSecurityGroups), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatPools));
         }
     }
 }

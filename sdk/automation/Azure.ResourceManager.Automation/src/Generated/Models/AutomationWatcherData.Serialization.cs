@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationWatcherData : Core.IUtf8JsonSerializable
+    public partial class AutomationWatcherData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Automation
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExecutionFrequencyInSeconds))
+            if (Optional.IsDefined(ExecutionFrequencyInSeconds))
             {
                 writer.WritePropertyName("executionFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ExecutionFrequencyInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(ScriptName))
+            if (Optional.IsDefined(ScriptName))
             {
                 writer.WritePropertyName("scriptName"u8);
                 writer.WriteStringValue(ScriptName);
             }
-            if (Core.Optional.IsCollectionDefined(ScriptParameters))
+            if (Optional.IsCollectionDefined(ScriptParameters))
             {
                 writer.WritePropertyName("scriptParameters"u8);
                 writer.WriteStartObject();
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ScriptRunOn))
+            if (Optional.IsDefined(ScriptRunOn))
             {
                 writer.WritePropertyName("scriptRunOn"u8);
                 writer.WriteStringValue(ScriptRunOn);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.Automation
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<long> executionFrequencyInSeconds = default;
-            Core.Optional<string> scriptName = default;
-            Core.Optional<IDictionary<string, string>> scriptParameters = default;
-            Core.Optional<string> scriptRunOn = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> lastModifiedBy = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<long> executionFrequencyInSeconds = default;
+            Optional<string> scriptName = default;
+            Optional<IDictionary<string, string>> scriptParameters = default;
+            Optional<string> scriptRunOn = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationWatcherData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(executionFrequencyInSeconds), scriptName.Value, Core.Optional.ToDictionary(scriptParameters), scriptRunOn.Value, status.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, description.Value);
+            return new AutomationWatcherData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(executionFrequencyInSeconds), scriptName.Value, Optional.ToDictionary(scriptParameters), scriptRunOn.Value, status.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, description.Value);
         }
     }
 }

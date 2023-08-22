@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IReadOnlyList<string>> resourceTypes = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<string>> resourceTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Support
                     continue;
                 }
             }
-            return new SupportAzureServiceData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToList(resourceTypes));
+            return new SupportAzureServiceData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes));
         }
     }
 }

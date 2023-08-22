@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> prefix = default;
-            Core.Optional<string> bgpCommunities = default;
-            Core.Optional<string> asPath = default;
+            Optional<string> prefix = default;
+            Optional<string> bgpCommunities = default;
+            Optional<string> asPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))

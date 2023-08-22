@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseWorkloadGroupOperationSource : Core.IOperationSource<SynapseWorkloadGroupResource>
+    internal class SynapseWorkloadGroupOperationSource : IOperationSource<SynapseWorkloadGroupResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseWorkloadGroupResource Core.IOperationSource<SynapseWorkloadGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseWorkloadGroupResource IOperationSource<SynapseWorkloadGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(document.RootElement);
             return new SynapseWorkloadGroupResource(_client, data);
         }
 
-        async ValueTask<SynapseWorkloadGroupResource> Core.IOperationSource<SynapseWorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseWorkloadGroupResource> IOperationSource<SynapseWorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(document.RootElement);

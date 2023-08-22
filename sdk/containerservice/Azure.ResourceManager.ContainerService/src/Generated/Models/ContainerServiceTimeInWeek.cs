@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceTimeInWeek. </summary>
         public ContainerServiceTimeInWeek()
         {
-            HourSlots = new Core.ChangeTrackingList<int>();
+            HourSlots = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceTimeInWeek. </summary>

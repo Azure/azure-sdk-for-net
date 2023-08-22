@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> userName = default;
-            Core.Optional<string> userOrgId = default;
-            Core.Optional<string> userId = default;
+            Optional<string> userName = default;
+            Optional<string> userOrgId = default;
+            Optional<string> userId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userName"u8))

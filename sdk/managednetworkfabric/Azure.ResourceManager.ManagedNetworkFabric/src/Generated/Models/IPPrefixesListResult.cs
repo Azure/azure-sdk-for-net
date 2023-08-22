@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IPPrefixesListResult. </summary>
         internal IPPrefixesListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkFabricIPPrefixData>();
+            Value = new ChangeTrackingList<NetworkFabricIPPrefixData>();
         }
 
         /// <summary> Initializes a new instance of IPPrefixesListResult. </summary>

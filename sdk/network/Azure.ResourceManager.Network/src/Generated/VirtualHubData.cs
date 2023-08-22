@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualHubData. </summary>
         public VirtualHubData()
         {
-            VirtualHubRouteTableV2S = new Core.ChangeTrackingList<VirtualHubRouteTableV2Data>();
-            BgpConnections = new Core.ChangeTrackingList<WritableSubResource>();
-            IPConfigurations = new Core.ChangeTrackingList<WritableSubResource>();
-            RouteMaps = new Core.ChangeTrackingList<WritableSubResource>();
-            VirtualRouterIPs = new Core.ChangeTrackingList<string>();
+            VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
+            BgpConnections = new ChangeTrackingList<WritableSubResource>();
+            IPConfigurations = new ChangeTrackingList<WritableSubResource>();
+            RouteMaps = new ChangeTrackingList<WritableSubResource>();
+            VirtualRouterIPs = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubData. </summary>

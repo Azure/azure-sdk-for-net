@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ForecastingSettings. </summary>
         public ForecastingSettings()
         {
-            TimeSeriesIdColumnNames = new Core.ChangeTrackingList<string>();
+            TimeSeriesIdColumnNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ForecastingSettings. </summary>

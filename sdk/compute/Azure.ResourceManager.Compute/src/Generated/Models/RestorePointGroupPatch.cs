@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RestorePointGroupPatch. </summary>
         public RestorePointGroupPatch()
         {
-            RestorePoints = new Core.ChangeTrackingList<RestorePointData>();
+            RestorePoints = new ChangeTrackingList<RestorePointData>();
         }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>

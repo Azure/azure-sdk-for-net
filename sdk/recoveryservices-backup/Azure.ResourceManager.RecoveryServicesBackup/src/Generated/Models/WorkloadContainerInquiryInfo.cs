@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>
         public WorkloadContainerInquiryInfo()
         {
-            InquiryDetails = new Core.ChangeTrackingList<WorkloadInquiryDetails>();
+            InquiryDetails = new ChangeTrackingList<WorkloadInquiryDetails>();
         }
 
         /// <summary> Initializes a new instance of WorkloadContainerInquiryInfo. </summary>

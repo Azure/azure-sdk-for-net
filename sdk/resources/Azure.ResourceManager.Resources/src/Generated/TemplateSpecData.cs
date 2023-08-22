@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Resources
         public TemplateSpecData(AzureLocation location)
         {
             Location = location;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Versions = new Core.ChangeTrackingDictionary<string, TemplateSpecVersionInfo>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Versions = new ChangeTrackingDictionary<string, TemplateSpecVersionInfo>();
         }
 
         /// <summary> Initializes a new instance of TemplateSpecData. </summary>

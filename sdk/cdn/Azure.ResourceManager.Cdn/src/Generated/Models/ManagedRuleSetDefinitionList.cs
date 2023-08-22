@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ManagedRuleSetDefinitionList. </summary>
         internal ManagedRuleSetDefinitionList()
         {
-            Value = new Core.ChangeTrackingList<ManagedRuleSetDefinition>();
+            Value = new ChangeTrackingList<ManagedRuleSetDefinition>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSetDefinitionList. </summary>

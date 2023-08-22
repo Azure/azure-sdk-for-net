@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of HubRouteTableData. </summary>
         public HubRouteTableData()
         {
-            Routes = new Core.ChangeTrackingList<HubRoute>();
-            Labels = new Core.ChangeTrackingList<string>();
-            AssociatedConnections = new Core.ChangeTrackingList<string>();
-            PropagatingConnections = new Core.ChangeTrackingList<string>();
+            Routes = new ChangeTrackingList<HubRoute>();
+            Labels = new ChangeTrackingList<string>();
+            AssociatedConnections = new ChangeTrackingList<string>();
+            PropagatingConnections = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HubRouteTableData. </summary>

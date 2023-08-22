@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         public ManagedNetworkPeeringPolicyProperties(ConnectivityType connectivityType)
         {
             ConnectivityType = connectivityType;
-            Spokes = new Core.ChangeTrackingList<WritableSubResource>();
-            Mesh = new Core.ChangeTrackingList<WritableSubResource>();
+            Spokes = new ChangeTrackingList<WritableSubResource>();
+            Mesh = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyProperties. </summary>

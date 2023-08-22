@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StaticRoutingEnrichment : Core.IUtf8JsonSerializable
+    public partial class StaticRoutingEnrichment : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Key))
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Core.Optional.IsDefined(ValueType))
+            if (Optional.IsDefined(ValueType))
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<string> key = default;
-            Core.Optional<StaticRoutingEnrichmentType> valueType = default;
+            Optional<string> key = default;
+            Optional<StaticRoutingEnrichmentType> valueType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new StaticRoutingEnrichment(key.Value, Core.Optional.ToNullable(valueType));
+            return new StaticRoutingEnrichment(key.Value, Optional.ToNullable(valueType));
         }
     }
 }

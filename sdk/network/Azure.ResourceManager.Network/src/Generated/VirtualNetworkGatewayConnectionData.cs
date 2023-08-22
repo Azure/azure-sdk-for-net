@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(virtualNetworkGateway1, nameof(virtualNetworkGateway1));
 
             VirtualNetworkGateway1 = virtualNetworkGateway1;
-            IngressNatRules = new Core.ChangeTrackingList<WritableSubResource>();
-            EgressNatRules = new Core.ChangeTrackingList<WritableSubResource>();
+            IngressNatRules = new ChangeTrackingList<WritableSubResource>();
+            EgressNatRules = new ChangeTrackingList<WritableSubResource>();
             ConnectionType = connectionType;
-            TunnelConnectionStatus = new Core.ChangeTrackingList<TunnelConnectionHealth>();
-            GatewayCustomBgpIPAddresses = new Core.ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
-            IPsecPolicies = new Core.ChangeTrackingList<IPsecPolicy>();
-            TrafficSelectorPolicies = new Core.ChangeTrackingList<TrafficSelectorPolicy>();
+            TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
+            GatewayCustomBgpIPAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
+            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionData. </summary>

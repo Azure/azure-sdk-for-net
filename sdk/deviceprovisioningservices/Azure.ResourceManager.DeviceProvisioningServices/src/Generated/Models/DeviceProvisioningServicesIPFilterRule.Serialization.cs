@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesIPFilterRule : Core.IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesIPFilterRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("filterName"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStringValue(Action.ToSerialString());
             writer.WritePropertyName("ipMask"u8);
             writer.WriteStringValue(IPMask);
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target.Value.ToSerialString());
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             string filterName = default;
             DeviceProvisioningServicesIPFilterActionType action = default;
             string ipMask = default;
-            Core.Optional<DeviceProvisioningServicesIPFilterTargetType> target = default;
+            Optional<DeviceProvisioningServicesIPFilterTargetType> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterName"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new DeviceProvisioningServicesIPFilterRule(filterName, action, ipMask, Core.Optional.ToNullable(target));
+            return new DeviceProvisioningServicesIPFilterRule(filterName, action, ipMask, Optional.ToNullable(target));
         }
     }
 }

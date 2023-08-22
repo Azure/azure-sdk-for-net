@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerDataEncryption : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerDataEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (Core.Optional.IsDefined(PrimaryKeyUri))
+            if (Optional.IsDefined(PrimaryKeyUri))
             {
                 writer.WritePropertyName("primaryKeyURI"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(GeoBackupUserAssignedIdentityId))
+            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
             {
                 writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
-            if (Core.Optional.IsDefined(GeoBackupKeyUri))
+            if (Optional.IsDefined(GeoBackupKeyUri))
             {
                 writer.WritePropertyName("geoBackupKeyURI"u8);
                 writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(EncryptionType))
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToSerialString());
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Core.Optional<Uri> primaryKeyUri = default;
-            Core.Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
-            Core.Optional<Uri> geoBackupKeyUri = default;
-            Core.Optional<MySqlFlexibleServerDataEncryptionType> type = default;
+            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
+            Optional<Uri> primaryKeyUri = default;
+            Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
+            Optional<Uri> geoBackupKeyUri = default;
+            Optional<MySqlFlexibleServerDataEncryptionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryUserAssignedIdentityId"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId.Value, primaryKeyUri.Value, geoBackupUserAssignedIdentityId.Value, geoBackupKeyUri.Value, Core.Optional.ToNullable(type));
+            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId.Value, primaryKeyUri.Value, geoBackupUserAssignedIdentityId.Value, geoBackupKeyUri.Value, Optional.ToNullable(type));
         }
     }
 }

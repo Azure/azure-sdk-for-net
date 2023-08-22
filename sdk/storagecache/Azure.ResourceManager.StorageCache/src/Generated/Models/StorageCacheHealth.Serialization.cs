@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<StorageCacheHealthStateType> state = default;
-            Core.Optional<string> statusDescription = default;
-            Core.Optional<IReadOnlyList<OutstandingCondition>> conditions = default;
+            Optional<StorageCacheHealthStateType> state = default;
+            Optional<string> statusDescription = default;
+            Optional<IReadOnlyList<OutstandingCondition>> conditions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheHealth(Core.Optional.ToNullable(state), statusDescription.Value, Core.Optional.ToList(conditions));
+            return new StorageCacheHealth(Optional.ToNullable(state), statusDescription.Value, Optional.ToList(conditions));
         }
     }
 }

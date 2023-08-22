@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendSettings. </summary>
         public ApplicationGatewayBackendSettings()
         {
-            TrustedRootCertificates = new Core.ChangeTrackingList<WritableSubResource>();
+            TrustedRootCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendSettings. </summary>

@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Models
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SuggestResult. </summary>

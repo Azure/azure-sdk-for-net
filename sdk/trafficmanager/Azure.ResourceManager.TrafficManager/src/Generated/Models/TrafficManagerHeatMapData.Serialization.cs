@@ -13,39 +13,39 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    public partial class TrafficManagerHeatMapData : Core.IUtf8JsonSerializable
+    public partial class TrafficManagerHeatMapData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(Endpoints))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TrafficFlows))
+            if (Optional.IsCollectionDefined(TrafficFlows))
             {
                 writer.WritePropertyName("trafficFlows"u8);
                 writer.WriteStartArray();
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<IList<TrafficManagerHeatMapEndpoint>> endpoints = default;
-            Core.Optional<IList<TrafficManagerHeatMapTrafficFlow>> trafficFlows = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<IList<TrafficManagerHeatMapEndpoint>> endpoints = default;
+            Optional<IList<TrafficManagerHeatMapTrafficFlow>> trafficFlows = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.TrafficManager
                     continue;
                 }
             }
-            return new TrafficManagerHeatMapData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(endpoints), Core.Optional.ToList(trafficFlows));
+            return new TrafficManagerHeatMapData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(endpoints), Optional.ToList(trafficFlows));
         }
     }
 }

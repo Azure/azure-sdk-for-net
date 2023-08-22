@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeNodeList. </summary>
         internal DataBoxEdgeNodeList()
         {
-            Value = new Core.ChangeTrackingList<DataBoxEdgeNode>();
+            Value = new ChangeTrackingList<DataBoxEdgeNode>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeNodeList. </summary>

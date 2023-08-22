@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Core.Optional<string> appId = default;
-            Core.Optional<string> instrumentationKey = default;
+            Optional<string> appId = default;
+            Optional<string> instrumentationKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"u8))

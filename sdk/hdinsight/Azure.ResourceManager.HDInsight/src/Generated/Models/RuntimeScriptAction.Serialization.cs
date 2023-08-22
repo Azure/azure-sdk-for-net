@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class RuntimeScriptAction : Core.IUtf8JsonSerializable
+    public partial class RuntimeScriptAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Core.Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             string name = default;
             Uri uri = default;
-            Core.Optional<string> parameters = default;
+            Optional<string> parameters = default;
             IList<string> roles = default;
-            Core.Optional<string> applicationName = default;
+            Optional<string> applicationName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

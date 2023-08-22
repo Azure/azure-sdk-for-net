@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PublicIPDdosProtectionStatusResultOperationSource : Core.IOperationSource<PublicIPDdosProtectionStatusResult>
+    internal class PublicIPDdosProtectionStatusResultOperationSource : IOperationSource<PublicIPDdosProtectionStatusResult>
     {
-        PublicIPDdosProtectionStatusResult Core.IOperationSource<PublicIPDdosProtectionStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        PublicIPDdosProtectionStatusResult IOperationSource<PublicIPDdosProtectionStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return PublicIPDdosProtectionStatusResult.DeserializePublicIPDdosProtectionStatusResult(document.RootElement);
         }
 
-        async ValueTask<PublicIPDdosProtectionStatusResult> Core.IOperationSource<PublicIPDdosProtectionStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PublicIPDdosProtectionStatusResult> IOperationSource<PublicIPDdosProtectionStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return PublicIPDdosProtectionStatusResult.DeserializePublicIPDdosProtectionStatusResult(document.RootElement);

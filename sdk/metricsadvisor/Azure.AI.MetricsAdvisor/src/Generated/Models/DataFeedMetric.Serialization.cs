@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DataFeedMetric : Core.IUtf8JsonSerializable
+    public partial class DataFeedMetric : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("metricDescription"u8);
                 writer.WriteStringValue(Description);
@@ -36,10 +36,10 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> metricId = default;
+            Optional<string> metricId = default;
             string metricName = default;
-            Core.Optional<string> metricDisplayName = default;
-            Core.Optional<string> metricDescription = default;
+            Optional<string> metricDisplayName = default;
+            Optional<string> metricDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricId"u8))

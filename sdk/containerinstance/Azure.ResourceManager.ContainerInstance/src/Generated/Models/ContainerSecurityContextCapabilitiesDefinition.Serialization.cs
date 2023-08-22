@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerSecurityContextCapabilitiesDefinition : Core.IUtf8JsonSerializable
+    public partial class ContainerSecurityContextCapabilitiesDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Add))
+            if (Optional.IsCollectionDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Drop))
+            if (Optional.IsCollectionDefined(Drop))
             {
                 writer.WritePropertyName("drop"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> @add = default;
-            Core.Optional<IList<string>> drop = default;
+            Optional<IList<string>> @add = default;
+            Optional<IList<string>> drop = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("add"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerSecurityContextCapabilitiesDefinition(Core.Optional.ToList(@add), Core.Optional.ToList(drop));
+            return new ContainerSecurityContextCapabilitiesDefinition(Optional.ToList(@add), Optional.ToList(drop));
         }
     }
 }

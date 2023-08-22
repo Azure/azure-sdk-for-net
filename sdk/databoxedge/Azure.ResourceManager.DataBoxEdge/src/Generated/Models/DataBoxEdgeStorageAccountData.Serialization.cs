@@ -12,26 +12,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeStorageAccountData : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeStorageAccountData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(StorageAccountStatus))
+            if (Optional.IsDefined(StorageAccountStatus))
             {
                 writer.WritePropertyName("storageAccountStatus"u8);
                 writer.WriteStringValue(StorageAccountStatus.Value.ToString());
             }
             writer.WritePropertyName("dataPolicy"u8);
             writer.WriteStringValue(DataPolicy.ToString());
-            if (Core.Optional.IsDefined(StorageAccountCredentialId))
+            if (Optional.IsDefined(StorageAccountCredentialId))
             {
                 writer.WritePropertyName("storageAccountCredentialId"u8);
                 writer.WriteStringValue(StorageAccountCredentialId);
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DataBoxEdgeStorageAccountStatus> storageAccountStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<DataBoxEdgeStorageAccountStatus> storageAccountStatus = default;
             DataBoxEdgeDataPolicy dataPolicy = default;
-            Core.Optional<ResourceIdentifier> storageAccountCredentialId = default;
-            Core.Optional<string> blobEndpoint = default;
-            Core.Optional<int> containerCount = default;
+            Optional<ResourceIdentifier> storageAccountCredentialId = default;
+            Optional<string> blobEndpoint = default;
+            Optional<int> containerCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeStorageAccountData(id, name, type, systemData.Value, description.Value, Core.Optional.ToNullable(storageAccountStatus), dataPolicy, storageAccountCredentialId.Value, blobEndpoint.Value, Core.Optional.ToNullable(containerCount));
+            return new DataBoxEdgeStorageAccountData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(storageAccountStatus), dataPolicy, storageAccountCredentialId.Value, blobEndpoint.Value, Optional.ToNullable(containerCount));
         }
     }
 }

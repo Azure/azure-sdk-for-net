@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of DnsForwardingRulePatch. </summary>
         public DnsForwardingRulePatch()
         {
-            TargetDnsServers = new Core.ChangeTrackingList<TargetDnsServer>();
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            TargetDnsServers = new ChangeTrackingList<TargetDnsServer>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> DNS servers to forward the DNS query to. </summary>

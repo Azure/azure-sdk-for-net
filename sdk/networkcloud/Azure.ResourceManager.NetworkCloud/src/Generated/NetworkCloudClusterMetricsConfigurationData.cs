@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.NetworkCloud
 
             ExtendedLocation = extendedLocation;
             CollectionInterval = collectionInterval;
-            DisabledMetrics = new Core.ChangeTrackingList<string>();
-            EnabledMetrics = new Core.ChangeTrackingList<string>();
+            DisabledMetrics = new ChangeTrackingList<string>();
+            EnabledMetrics = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudClusterMetricsConfigurationData. </summary>

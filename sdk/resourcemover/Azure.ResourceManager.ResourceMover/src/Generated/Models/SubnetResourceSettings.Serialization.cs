@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class SubnetResourceSettings : Core.IUtf8JsonSerializable
+    public partial class SubnetResourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(AddressPrefix))
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Core.Optional.IsDefined(NetworkSecurityGroup))
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 if (NetworkSecurityGroup != null)
                 {
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> addressPrefix = default;
-            Core.Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;
+            Optional<string> name = default;
+            Optional<string> addressPrefix = default;
+            Optional<NetworkSecurityGroupResourceReferenceInfo> networkSecurityGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

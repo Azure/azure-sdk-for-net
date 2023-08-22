@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of DatadogHostListResponse. </summary>
         internal DatadogHostListResponse()
         {
-            Value = new Core.ChangeTrackingList<DatadogHost>();
+            Value = new ChangeTrackingList<DatadogHost>();
         }
 
         /// <summary> Initializes a new instance of DatadogHostListResponse. </summary>

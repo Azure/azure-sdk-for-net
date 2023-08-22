@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of JitNetworkAccessPoliciesList. </summary>
         internal JitNetworkAccessPoliciesList()
         {
-            Value = new Core.ChangeTrackingList<JitNetworkAccessPolicyData>();
+            Value = new ChangeTrackingList<JitNetworkAccessPolicyData>();
         }
 
         /// <summary> Initializes a new instance of JitNetworkAccessPoliciesList. </summary>

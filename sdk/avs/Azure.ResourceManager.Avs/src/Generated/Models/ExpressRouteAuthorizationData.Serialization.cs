@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class ExpressRouteAuthorizationData : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteAuthorizationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExpressRouteId))
+            if (Optional.IsDefined(ExpressRouteId))
             {
                 writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ExpressRouteAuthorizationProvisioningState> provisioningState = default;
-            Core.Optional<ResourceIdentifier> expressRouteAuthorizationId = default;
-            Core.Optional<string> expressRouteAuthorizationKey = default;
-            Core.Optional<ResourceIdentifier> expressRouteId = default;
+            Optional<SystemData> systemData = default;
+            Optional<ExpressRouteAuthorizationProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> expressRouteAuthorizationId = default;
+            Optional<string> expressRouteAuthorizationKey = default;
+            Optional<ResourceIdentifier> expressRouteId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new ExpressRouteAuthorizationData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), expressRouteAuthorizationId.Value, expressRouteAuthorizationKey.Value, expressRouteId.Value);
+            return new ExpressRouteAuthorizationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), expressRouteAuthorizationId.Value, expressRouteAuthorizationKey.Value, expressRouteId.Value);
         }
     }
 }

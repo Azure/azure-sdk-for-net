@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ConflictResolutionPolicy : Core.IUtf8JsonSerializable
+    public partial class ConflictResolutionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ConflictResolutionPath))
+            if (Optional.IsDefined(ConflictResolutionPath))
             {
                 writer.WritePropertyName("conflictResolutionPath"u8);
                 writer.WriteStringValue(ConflictResolutionPath);
             }
-            if (Core.Optional.IsDefined(ConflictResolutionProcedure))
+            if (Optional.IsDefined(ConflictResolutionProcedure))
             {
                 writer.WritePropertyName("conflictResolutionProcedure"u8);
                 writer.WriteStringValue(ConflictResolutionProcedure);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<ConflictResolutionMode> mode = default;
-            Core.Optional<string> conflictResolutionPath = default;
-            Core.Optional<string> conflictResolutionProcedure = default;
+            Optional<ConflictResolutionMode> mode = default;
+            Optional<string> conflictResolutionPath = default;
+            Optional<string> conflictResolutionProcedure = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ConflictResolutionPolicy(Core.Optional.ToNullable(mode), conflictResolutionPath.Value, conflictResolutionProcedure.Value);
+            return new ConflictResolutionPolicy(Optional.ToNullable(mode), conflictResolutionPath.Value, conflictResolutionProcedure.Value);
         }
     }
 }

@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundSecurityRule : Core.IUtf8JsonSerializable
+    public partial class InboundSecurityRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<IList<InboundSecurityRules>> rules = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<IList<InboundSecurityRules>> rules = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new InboundSecurityRule(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToList(rules), Core.Optional.ToNullable(provisioningState));
+            return new InboundSecurityRule(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(rules), Optional.ToNullable(provisioningState));
         }
     }
 }

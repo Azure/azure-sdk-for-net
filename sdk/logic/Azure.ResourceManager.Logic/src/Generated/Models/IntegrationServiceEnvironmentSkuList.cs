@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>
         internal IntegrationServiceEnvironmentSkuList()
         {
-            Value = new Core.ChangeTrackingList<IntegrationServiceEnvironmentSkuDefinition>();
+            Value = new ChangeTrackingList<IntegrationServiceEnvironmentSkuDefinition>();
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>

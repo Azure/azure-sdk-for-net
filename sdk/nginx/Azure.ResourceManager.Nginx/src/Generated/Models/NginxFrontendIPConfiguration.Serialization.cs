@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxFrontendIPConfiguration : Core.IUtf8JsonSerializable
+    public partial class NginxFrontendIPConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PublicIPAddresses))
+            if (Optional.IsCollectionDefined(PublicIPAddresses))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PrivateIPAddresses))
+            if (Optional.IsCollectionDefined(PrivateIPAddresses))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<IList<WritableSubResource>> publicIPAddresses = default;
-            Core.Optional<IList<NginxPrivateIPAddress>> privateIPAddresses = default;
+            Optional<IList<WritableSubResource>> publicIPAddresses = default;
+            Optional<IList<NginxPrivateIPAddress>> privateIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPAddresses"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new NginxFrontendIPConfiguration(Core.Optional.ToList(publicIPAddresses), Core.Optional.ToList(privateIPAddresses));
+            return new NginxFrontendIPConfiguration(Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses));
         }
     }
 }

@@ -13,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupJobProperties : Core.IUtf8JsonSerializable
+    public partial class DataProtectionBackupJobProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("activityID"u8);
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(DataSourceLocation);
             writer.WritePropertyName("dataSourceName"u8);
             writer.WriteStringValue(DataSourceName);
-            if (Core.Optional.IsDefined(DataSourceSetName))
+            if (Optional.IsDefined(DataSourceSetName))
             {
                 writer.WritePropertyName("dataSourceSetName"u8);
                 writer.WriteStringValue(DataSourceSetName);
             }
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType);
-            if (Core.Optional.IsDefined(Duration))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteEndArray();
             writer.WritePropertyName("vaultName"u8);
             writer.WriteStringValue(VaultName);
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SourceDataStoreName))
+            if (Optional.IsDefined(SourceDataStoreName))
             {
                 writer.WritePropertyName("sourceDataStoreName"u8);
                 writer.WriteStringValue(SourceDataStoreName);
             }
-            if (Core.Optional.IsDefined(DestinationDataStoreName))
+            if (Optional.IsDefined(DestinationDataStoreName))
             {
                 writer.WritePropertyName("destinationDataStoreName"u8);
                 writer.WriteStringValue(DestinationDataStoreName);
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             string activityId = default;
             string backupInstanceFriendlyName = default;
-            Core.Optional<ResourceIdentifier> backupInstanceId = default;
+            Optional<ResourceIdentifier> backupInstanceId = default;
             ResourceIdentifier dataSourceId = default;
             AzureLocation dataSourceLocation = default;
             string dataSourceName = default;
-            Core.Optional<string> dataSourceSetName = default;
+            Optional<string> dataSourceSetName = default;
             string dataSourceType = default;
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<IReadOnlyList<ResponseError>> errorDetails = default;
-            Core.Optional<BackupJobExtendedInfo> extendedInfo = default;
+            Optional<TimeSpan> duration = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            Optional<BackupJobExtendedInfo> extendedInfo = default;
             bool isUserTriggered = default;
             string operation = default;
             string operationCategory = default;
-            Core.Optional<ResourceIdentifier> policyId = default;
-            Core.Optional<string> policyName = default;
+            Optional<ResourceIdentifier> policyId = default;
+            Optional<string> policyName = default;
             bool progressEnabled = default;
-            Core.Optional<Uri> progressUrl = default;
-            Core.Optional<string> restoreType = default;
+            Optional<Uri> progressUrl = default;
+            Optional<string> restoreType = default;
             string sourceResourceGroup = default;
             string sourceSubscriptionId = default;
             DateTimeOffset startTime = default;
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string subscriptionId = default;
             IList<string> supportedActions = default;
             string vaultName = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<string> sourceDataStoreName = default;
-            Core.Optional<string> destinationDataStoreName = default;
+            Optional<ETag> etag = default;
+            Optional<string> sourceDataStoreName = default;
+            Optional<string> destinationDataStoreName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activityID"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Core.Optional.ToNullable(duration), Core.Optional.ToNullable(endTime), Core.Optional.ToList(errorDetails), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Core.Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value);
+            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Optional.ToNullable(duration), Optional.ToNullable(endTime), Optional.ToList(errorDetails), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value);
         }
     }
 }

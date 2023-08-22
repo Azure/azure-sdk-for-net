@@ -11,31 +11,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DeletedDataProtectionBackupInstanceProperties : Core.IUtf8JsonSerializable
+    public partial class DeletedDataProtectionBackupInstanceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("dataSourceInfo"u8);
             writer.WriteObjectValue(DataSourceInfo);
-            if (Core.Optional.IsDefined(DataSourceSetInfo))
+            if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("dataSourceSetInfo"u8);
                 writer.WriteObjectValue(DataSourceSetInfo);
             }
             writer.WritePropertyName("policyInfo"u8);
             writer.WriteObjectValue(PolicyInfo);
-            if (Core.Optional.IsDefined(DataSourceAuthCredentials))
+            if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
                 writer.WriteObjectValue(DataSourceAuthCredentials);
             }
-            if (Core.Optional.IsDefined(ValidationType))
+            if (Optional.IsDefined(ValidationType))
             {
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupInstanceDeletionInfo> deletionInfo = default;
-            Core.Optional<string> friendlyName = default;
+            Optional<BackupInstanceDeletionInfo> deletionInfo = default;
+            Optional<string> friendlyName = default;
             DataSourceInfo dataSourceInfo = default;
-            Core.Optional<DataSourceSetInfo> dataSourceSetInfo = default;
+            Optional<DataSourceSetInfo> dataSourceSetInfo = default;
             BackupInstancePolicyInfo policyInfo = default;
-            Core.Optional<BackupInstanceProtectionStatusDetails> protectionStatus = default;
-            Core.Optional<CurrentProtectionState> currentProtectionState = default;
-            Core.Optional<ResponseError> protectionErrorDetails = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
-            Core.Optional<BackupValidationType> validationType = default;
+            Optional<BackupInstanceProtectionStatusDetails> protectionStatus = default;
+            Optional<CurrentProtectionState> currentProtectionState = default;
+            Optional<ResponseError> protectionErrorDetails = default;
+            Optional<string> provisioningState = default;
+            Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
+            Optional<BackupValidationType> validationType = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DeletedDataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Core.Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Core.Optional.ToNullable(validationType), objectType, deletionInfo.Value);
+            return new DeletedDataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), objectType, deletionInfo.Value);
         }
     }
 }

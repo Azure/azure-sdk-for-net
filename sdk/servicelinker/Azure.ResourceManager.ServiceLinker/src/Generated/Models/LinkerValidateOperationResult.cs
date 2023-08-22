@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
         internal LinkerValidateOperationResult()
         {
-            ValidationDetail = new Core.ChangeTrackingList<LinkerValidationResultItemInfo>();
+            ValidationDetail = new ChangeTrackingList<LinkerValidationResultItemInfo>();
         }
 
         /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>

@@ -14,37 +14,37 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class VirtualWorkspaceData : Core.IUtf8JsonSerializable
+    public partial class VirtualWorkspaceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ManagedBy))
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Plan))
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationGroupReferences))
+            if (Optional.IsCollectionDefined(ApplicationGroupReferences))
             {
                 writer.WritePropertyName("applicationGroupReferences"u8);
                 writer.WriteStartArray();
@@ -89,23 +89,23 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> managedBy = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<DesktopVirtualizationSku> sku = default;
-            Core.Optional<ArmPlan> plan = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ResourceIdentifier> managedBy = default;
+            Optional<string> kind = default;
+            Optional<ETag> etag = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DesktopVirtualizationSku> sku = default;
+            Optional<ArmPlan> plan = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> objectId = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<IList<string>> applicationGroupReferences = default;
-            Core.Optional<bool> cloudPCResource = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> objectId = default;
+            Optional<string> description = default;
+            Optional<string> friendlyName = default;
+            Optional<IList<string>> applicationGroupReferences = default;
+            Optional<bool> cloudPCResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     continue;
                 }
             }
-            return new VirtualWorkspaceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, Core.Optional.ToList(applicationGroupReferences), Core.Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Core.Optional.ToNullable(etag), identity, sku.Value, plan);
+            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

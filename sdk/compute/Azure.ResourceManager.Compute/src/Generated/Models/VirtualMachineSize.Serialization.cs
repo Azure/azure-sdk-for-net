@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<int> numberOfCores = default;
-            Core.Optional<int> osDiskSizeInMB = default;
-            Core.Optional<int> resourceDiskSizeInMB = default;
-            Core.Optional<int> memoryInMB = default;
-            Core.Optional<int> maxDataDiskCount = default;
+            Optional<string> name = default;
+            Optional<int> numberOfCores = default;
+            Optional<int> osDiskSizeInMB = default;
+            Optional<int> resourceDiskSizeInMB = default;
+            Optional<int> memoryInMB = default;
+            Optional<int> maxDataDiskCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineSize(name.Value, Core.Optional.ToNullable(numberOfCores), Core.Optional.ToNullable(osDiskSizeInMB), Core.Optional.ToNullable(resourceDiskSizeInMB), Core.Optional.ToNullable(memoryInMB), Core.Optional.ToNullable(maxDataDiskCount));
+            return new VirtualMachineSize(name.Value, Optional.ToNullable(numberOfCores), Optional.ToNullable(osDiskSizeInMB), Optional.ToNullable(resourceDiskSizeInMB), Optional.ToNullable(memoryInMB), Optional.ToNullable(maxDataDiskCount));
         }
     }
 }

@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DetectorAbnormalTimePeriod : Core.IUtf8JsonSerializable
+    public partial class DetectorAbnormalTimePeriod : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Message))
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Core.Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Core.Optional.IsCollectionDefined(MetaData))
+            if (Optional.IsCollectionDefined(MetaData))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IssueType))
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(Solutions))
+            if (Optional.IsCollectionDefined(Solutions))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> source = default;
-            Core.Optional<double> priority = default;
-            Core.Optional<IList<IList<AppServiceNameValuePair>>> metaData = default;
-            Core.Optional<DetectorIssueType> type = default;
-            Core.Optional<IList<DiagnosticSolution>> solutions = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> message = default;
+            Optional<string> source = default;
+            Optional<double> priority = default;
+            Optional<IList<IList<AppServiceNameValuePair>>> metaData = default;
+            Optional<DetectorIssueType> type = default;
+            Optional<IList<DiagnosticSolution>> solutions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DetectorAbnormalTimePeriod(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), message.Value, source.Value, Core.Optional.ToNullable(priority), Core.Optional.ToList(metaData), Core.Optional.ToNullable(type), Core.Optional.ToList(solutions));
+            return new DetectorAbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), message.Value, source.Value, Optional.ToNullable(priority), Optional.ToList(metaData), Optional.ToNullable(type), Optional.ToList(solutions));
         }
     }
 }

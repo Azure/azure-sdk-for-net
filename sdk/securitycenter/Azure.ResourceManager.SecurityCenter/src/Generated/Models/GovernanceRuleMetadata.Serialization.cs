@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GovernanceRuleMetadata : Core.IUtf8JsonSerializable
+    public partial class GovernanceRuleMetadata : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> createdBy = default;
-            Core.Optional<DateTimeOffset> createdOn = default;
-            Core.Optional<string> updatedBy = default;
-            Core.Optional<DateTimeOffset> updatedOn = default;
+            Optional<string> createdBy = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<string> updatedBy = default;
+            Optional<DateTimeOffset> updatedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new GovernanceRuleMetadata(createdBy.Value, Core.Optional.ToNullable(createdOn), updatedBy.Value, Core.Optional.ToNullable(updatedOn));
+            return new GovernanceRuleMetadata(createdBy.Value, Optional.ToNullable(createdOn), updatedBy.Value, Optional.ToNullable(updatedOn));
         }
     }
 }

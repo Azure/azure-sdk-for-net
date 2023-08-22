@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ResourceSet. </summary>
         public ResourceSet()
         {
-            Subscriptions = new Core.ChangeTrackingList<string>();
+            Subscriptions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceSet. </summary>

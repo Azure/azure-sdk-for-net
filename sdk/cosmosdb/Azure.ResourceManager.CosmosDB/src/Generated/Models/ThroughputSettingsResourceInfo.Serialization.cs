@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ThroughputSettingsResourceInfo : Core.IUtf8JsonSerializable
+    public partial class ThroughputSettingsResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Throughput))
+            if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (Core.Optional.IsDefined(AutoscaleSettings))
+            if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<int> throughput = default;
-            Core.Optional<AutoscaleSettingsResourceInfo> autoscaleSettings = default;
-            Core.Optional<string> minimumThroughput = default;
-            Core.Optional<string> offerReplacePending = default;
+            Optional<int> throughput = default;
+            Optional<AutoscaleSettingsResourceInfo> autoscaleSettings = default;
+            Optional<string> minimumThroughput = default;
+            Optional<string> offerReplacePending = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ThroughputSettingsResourceInfo(Core.Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value);
+            return new ThroughputSettingsResourceInfo(Optional.ToNullable(throughput), autoscaleSettings.Value, minimumThroughput.Value, offerReplacePending.Value);
         }
     }
 }

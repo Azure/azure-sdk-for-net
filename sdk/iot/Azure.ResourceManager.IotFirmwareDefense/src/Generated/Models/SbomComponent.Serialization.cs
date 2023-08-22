@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<string> componentId = default;
-            Core.Optional<string> componentName = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> license = default;
-            Core.Optional<DateTimeOffset> releaseDate = default;
-            Core.Optional<IReadOnlyList<string>> paths = default;
-            Core.Optional<IsUpdateAvailable> isUpdateAvailable = default;
+            Optional<string> componentId = default;
+            Optional<string> componentName = default;
+            Optional<string> version = default;
+            Optional<string> license = default;
+            Optional<DateTimeOffset> releaseDate = default;
+            Optional<IReadOnlyList<string>> paths = default;
+            Optional<IsUpdateAvailable> isUpdateAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("componentId"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new SbomComponent(componentId.Value, componentName.Value, version.Value, license.Value, Core.Optional.ToNullable(releaseDate), Core.Optional.ToList(paths), Core.Optional.ToNullable(isUpdateAvailable));
+            return new SbomComponent(componentId.Value, componentName.Value, version.Value, license.Value, Optional.ToNullable(releaseDate), Optional.ToList(paths), Optional.ToNullable(isUpdateAvailable));
         }
     }
 }

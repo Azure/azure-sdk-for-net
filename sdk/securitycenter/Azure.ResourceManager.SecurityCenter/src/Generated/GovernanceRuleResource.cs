@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _governanceRuleRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _governanceRuleRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _governanceRuleRestClient.ExecuteAsync(Id.Parent, Id.Name, executeGovernanceRuleParams, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent, Id.Name, executeGovernanceRuleParams).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _governanceRuleRestClient.Execute(Id.Parent, Id.Name, executeGovernanceRuleParams, cancellationToken);
-                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent, Id.Name, executeGovernanceRuleParams).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new SecurityCenterArmOperation(_governanceRuleClientDiagnostics, Pipeline, _governanceRuleRestClient.CreateExecuteRequest(Id.Parent, Id.Name, executeGovernanceRuleParams).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

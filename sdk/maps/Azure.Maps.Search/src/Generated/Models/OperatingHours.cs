@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of OperatingHours. </summary>
         internal OperatingHours()
         {
-            TimeRanges = new Core.ChangeTrackingList<OperatingHoursTimeRange>();
+            TimeRanges = new ChangeTrackingList<OperatingHoursTimeRange>();
         }
 
         /// <summary> Initializes a new instance of OperatingHours. </summary>

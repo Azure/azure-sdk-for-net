@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorEndpoint : Core.IUtf8JsonSerializable
+    public partial class ConnectionMonitorEndpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(EndpointType))
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(Address))
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Core.Optional.IsDefined(Filter))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (Core.Optional.IsDefined(CoverageLevel))
+            if (Optional.IsDefined(CoverageLevel))
             {
                 writer.WritePropertyName("coverageLevel"u8);
                 writer.WriteStringValue(CoverageLevel.Value.ToString());
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Core.Optional<ConnectionMonitorEndpointType> type = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> address = default;
-            Core.Optional<ConnectionMonitorEndpointFilter> filter = default;
-            Core.Optional<ConnectionMonitorEndpointScope> scope = default;
-            Core.Optional<CoverageLevel> coverageLevel = default;
+            Optional<ConnectionMonitorEndpointType> type = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> address = default;
+            Optional<ConnectionMonitorEndpointFilter> filter = default;
+            Optional<ConnectionMonitorEndpointScope> scope = default;
+            Optional<CoverageLevel> coverageLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorEndpoint(name, Core.Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Core.Optional.ToNullable(coverageLevel));
+            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownEarlyTerminationPolicy : Core.IUtf8JsonSerializable
+    internal partial class UnknownEarlyTerminationPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DelayEvaluation))
+            if (Optional.IsDefined(DelayEvaluation))
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Core.Optional.IsDefined(EvaluationInterval))
+            if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> delayEvaluation = default;
-            Core.Optional<int> evaluationInterval = default;
+            Optional<int> delayEvaluation = default;
+            Optional<int> evaluationInterval = default;
             EarlyTerminationPolicyType policyType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new UnknownEarlyTerminationPolicy(Core.Optional.ToNullable(delayEvaluation), Core.Optional.ToNullable(evaluationInterval), policyType);
+            return new UnknownEarlyTerminationPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType);
         }
     }
 }

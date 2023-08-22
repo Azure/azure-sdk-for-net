@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class KikChannelProperties : Core.IUtf8JsonSerializable
+    public partial class KikChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
-            if (Core.Optional.IsDefined(ApiKey))
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Core.Optional.IsDefined(IsValidated))
+            if (Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.BotService.Models
                 return null;
             }
             string userName = default;
-            Core.Optional<string> apiKey = default;
-            Core.Optional<bool> isValidated = default;
+            Optional<string> apiKey = default;
+            Optional<bool> isValidated = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new KikChannelProperties(userName, apiKey.Value, Core.Optional.ToNullable(isValidated), isEnabled);
+            return new KikChannelProperties(userName, apiKey.Value, Optional.ToNullable(isValidated), isEnabled);
         }
     }
 }

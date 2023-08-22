@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             WorkspaceId = workspaceId;
             WorkspaceKey = workspaceKey;
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ContainerGroupLogAnalytics. </summary>

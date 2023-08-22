@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataProtectionBackupJobData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DataProtectionBackupJobData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new AzureBackupJobResourceList(Core.Optional.ToList(value), nextLink.Value);
+            return new AzureBackupJobResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

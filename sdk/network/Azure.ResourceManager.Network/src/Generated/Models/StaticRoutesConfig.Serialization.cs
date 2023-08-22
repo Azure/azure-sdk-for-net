@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class StaticRoutesConfig : Core.IUtf8JsonSerializable
+    public partial class StaticRoutesConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VnetLocalRouteOverrideCriteria))
+            if (Optional.IsDefined(VnetLocalRouteOverrideCriteria))
             {
                 writer.WritePropertyName("vnetLocalRouteOverrideCriteria"u8);
                 writer.WriteStringValue(VnetLocalRouteOverrideCriteria.Value.ToString());
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<bool> propagateStaticRoutes = default;
-            Core.Optional<VnetLocalRouteOverrideCriterion> vnetLocalRouteOverrideCriteria = default;
+            Optional<bool> propagateStaticRoutes = default;
+            Optional<VnetLocalRouteOverrideCriterion> vnetLocalRouteOverrideCriteria = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propagateStaticRoutes"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new StaticRoutesConfig(Core.Optional.ToNullable(propagateStaticRoutes), Core.Optional.ToNullable(vnetLocalRouteOverrideCriteria));
+            return new StaticRoutesConfig(Optional.ToNullable(propagateStaticRoutes), Optional.ToNullable(vnetLocalRouteOverrideCriteria));
         }
     }
 }

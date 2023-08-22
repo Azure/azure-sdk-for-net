@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorTcpConfiguration : Core.IUtf8JsonSerializable
+    public partial class ConnectionMonitorTcpConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Core.Optional.IsDefined(DisableTraceRoute))
+            if (Optional.IsDefined(DisableTraceRoute))
             {
                 writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
             }
-            if (Core.Optional.IsDefined(DestinationPortBehavior))
+            if (Optional.IsDefined(DestinationPortBehavior))
             {
                 writer.WritePropertyName("destinationPortBehavior"u8);
                 writer.WriteStringValue(DestinationPortBehavior.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<int> port = default;
-            Core.Optional<bool> disableTraceRoute = default;
-            Core.Optional<DestinationPortBehavior> destinationPortBehavior = default;
+            Optional<int> port = default;
+            Optional<bool> disableTraceRoute = default;
+            Optional<DestinationPortBehavior> destinationPortBehavior = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorTcpConfiguration(Core.Optional.ToNullable(port), Core.Optional.ToNullable(disableTraceRoute), Core.Optional.ToNullable(destinationPortBehavior));
+            return new ConnectionMonitorTcpConfiguration(Optional.ToNullable(port), Optional.ToNullable(disableTraceRoute), Optional.ToNullable(destinationPortBehavior));
         }
     }
 }

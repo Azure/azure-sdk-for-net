@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of KeyVaultPatchProperties. </summary>
         public KeyVaultPatchProperties()
         {
-            AccessPolicies = new Core.ChangeTrackingList<KeyVaultAccessPolicy>();
+            AccessPolicies = new ChangeTrackingList<KeyVaultAccessPolicy>();
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </summary>

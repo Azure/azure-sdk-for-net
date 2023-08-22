@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class DailyRetentionFormat : Core.IUtf8JsonSerializable
+    internal partial class DailyRetentionFormat : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DaysOfTheMonth))
+            if (Optional.IsCollectionDefined(DaysOfTheMonth))
             {
                 writer.WritePropertyName("daysOfTheMonth"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<BackupDay>> daysOfTheMonth = default;
+            Optional<IList<BackupDay>> daysOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfTheMonth"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new DailyRetentionFormat(Core.Optional.ToList(daysOfTheMonth));
+            return new DailyRetentionFormat(Optional.ToList(daysOfTheMonth));
         }
     }
 }

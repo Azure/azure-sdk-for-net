@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AADProfile : Core.IUtf8JsonSerializable
+    public partial class AADProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AdminGroupObjectIds))
+            if (Optional.IsCollectionDefined(AdminGroupObjectIds))
             {
                 writer.WritePropertyName("adminGroupObjectIDs"u8);
                 writer.WriteStartArray();
@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ClientAppId))
+            if (Optional.IsDefined(ClientAppId))
             {
                 writer.WritePropertyName("clientAppID"u8);
                 writer.WriteStringValue(ClientAppId);
             }
-            if (Core.Optional.IsDefined(EnableAzureRbac))
+            if (Optional.IsDefined(EnableAzureRbac))
             {
                 writer.WritePropertyName("enableAzureRbac"u8);
                 writer.WriteBooleanValue(EnableAzureRbac.Value);
             }
-            if (Core.Optional.IsDefined(Managed))
+            if (Optional.IsDefined(Managed))
             {
                 writer.WritePropertyName("managed"u8);
                 writer.WriteBooleanValue(Managed.Value);
             }
-            if (Core.Optional.IsDefined(ServerAppId))
+            if (Optional.IsDefined(ServerAppId))
             {
                 writer.WritePropertyName("serverAppID"u8);
                 writer.WriteStringValue(ServerAppId);
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantID"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(ServerAppSecret))
+            if (Optional.IsDefined(ServerAppSecret))
             {
                 writer.WritePropertyName("serverAppSecret"u8);
                 writer.WriteStringValue(ServerAppSecret);
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> adminGroupObjectIds = default;
-            Core.Optional<string> clientAppId = default;
-            Core.Optional<bool> enableAzureRbac = default;
-            Core.Optional<bool> managed = default;
-            Core.Optional<string> serverAppId = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> serverAppSecret = default;
+            Optional<IList<string>> adminGroupObjectIds = default;
+            Optional<string> clientAppId = default;
+            Optional<bool> enableAzureRbac = default;
+            Optional<bool> managed = default;
+            Optional<string> serverAppId = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> serverAppSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminGroupObjectIDs"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new AADProfile(serverAppSecret.Value, Core.Optional.ToList(adminGroupObjectIds), clientAppId.Value, Core.Optional.ToNullable(enableAzureRbac), Core.Optional.ToNullable(managed), serverAppId.Value, Core.Optional.ToNullable(tenantId));
+            return new AADProfile(serverAppSecret.Value, Optional.ToList(adminGroupObjectIds), clientAppId.Value, Optional.ToNullable(enableAzureRbac), Optional.ToNullable(managed), serverAppId.Value, Optional.ToNullable(tenantId));
         }
     }
 }

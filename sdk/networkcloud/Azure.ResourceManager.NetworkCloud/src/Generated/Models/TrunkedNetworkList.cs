@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of TrunkedNetworkList. </summary>
         internal TrunkedNetworkList()
         {
-            Value = new Core.ChangeTrackingList<NetworkCloudTrunkedNetworkData>();
+            Value = new ChangeTrackingList<NetworkCloudTrunkedNetworkData>();
         }
 
         /// <summary> Initializes a new instance of TrunkedNetworkList. </summary>

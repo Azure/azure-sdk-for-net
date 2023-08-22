@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> sourceServerBrandVersion = default;
-            Core.Optional<ServerProperties> serverProperties = default;
-            Core.Optional<IReadOnlyList<string>> databases = default;
-            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Optional<string> id = default;
+            Optional<string> sourceServerBrandVersion = default;
+            Optional<ServerProperties> serverProperties = default;
+            Optional<IReadOnlyList<string>> databases = default;
+            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, Core.Optional.ToList(databases), Core.Optional.ToList(validationErrors));
+            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, Optional.ToList(databases), Optional.ToList(validationErrors));
         }
     }
 }

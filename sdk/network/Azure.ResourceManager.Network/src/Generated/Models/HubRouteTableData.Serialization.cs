@@ -13,24 +13,24 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class HubRouteTableData : Core.IUtf8JsonSerializable
+    public partial class HubRouteTableData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Routes))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<IList<HubRoute>> routes = default;
-            Core.Optional<IList<string>> labels = default;
-            Core.Optional<IReadOnlyList<string>> associatedConnections = default;
-            Core.Optional<IReadOnlyList<string>> propagatingConnections = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<IList<HubRoute>> routes = default;
+            Optional<IList<string>> labels = default;
+            Optional<IReadOnlyList<string>> associatedConnections = default;
+            Optional<IReadOnlyList<string>> propagatingConnections = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new HubRouteTableData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToList(routes), Core.Optional.ToList(labels), Core.Optional.ToList(associatedConnections), Core.Optional.ToList(propagatingConnections), Core.Optional.ToNullable(provisioningState));
+            return new HubRouteTableData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(routes), Optional.ToList(labels), Optional.ToList(associatedConnections), Optional.ToList(propagatingConnections), Optional.ToNullable(provisioningState));
         }
     }
 }

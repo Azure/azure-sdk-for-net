@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> dataFlowName = default;
-            Core.Optional<string> computeType = default;
-            Core.Optional<int> coreCount = default;
-            Core.Optional<int> nodeCount = default;
-            Core.Optional<string> integrationRuntimeName = default;
-            Core.Optional<Guid> sessionId = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<int> timeToLiveInMinutes = default;
-            Core.Optional<DateTimeOffset> lastActivityTime = default;
+            Optional<string> dataFlowName = default;
+            Optional<string> computeType = default;
+            Optional<int> coreCount = default;
+            Optional<int> nodeCount = default;
+            Optional<string> integrationRuntimeName = default;
+            Optional<Guid> sessionId = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<int> timeToLiveInMinutes = default;
+            Optional<DateTimeOffset> lastActivityTime = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Core.Optional.ToNullable(coreCount), Core.Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Core.Optional.ToNullable(sessionId), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(timeToLiveInMinutes), Core.Optional.ToNullable(lastActivityTime), additionalProperties);
+            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(startTime), Optional.ToNullable(timeToLiveInMinutes), Optional.ToNullable(lastActivityTime), additionalProperties);
         }
     }
 }

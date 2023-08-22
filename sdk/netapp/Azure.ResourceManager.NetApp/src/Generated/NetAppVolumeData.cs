@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNull(creationToken, nameof(creationToken));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
-            Zones = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
             CreationToken = creationToken;
             UsageThreshold = usageThreshold;
-            ProtocolTypes = new Core.ChangeTrackingList<string>();
+            ProtocolTypes = new ChangeTrackingList<string>();
             SubnetId = subnetId;
-            MountTargets = new Core.ChangeTrackingList<NetAppVolumeMountTarget>();
-            DataStoreResourceId = new Core.ChangeTrackingList<ResourceIdentifier>();
-            PlacementRules = new Core.ChangeTrackingList<NetAppVolumePlacementRule>();
+            MountTargets = new ChangeTrackingList<NetAppVolumeMountTarget>();
+            DataStoreResourceId = new ChangeTrackingList<ResourceIdentifier>();
+            PlacementRules = new ChangeTrackingList<NetAppVolumePlacementRule>();
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeData. </summary>

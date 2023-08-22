@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeSkuLocationInfo. </summary>
         internal DataBoxEdgeSkuLocationInfo()
         {
-            Zones = new Core.ChangeTrackingList<string>();
-            Sites = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
+            Sites = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeSkuLocationInfo. </summary>

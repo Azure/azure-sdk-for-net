@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<bool> isSubdomainAvailable = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<string> subdomainName = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> kind = default;
+            Optional<bool> isSubdomainAvailable = default;
+            Optional<string> reason = default;
+            Optional<string> subdomainName = default;
+            Optional<string> type = default;
+            Optional<string> kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSubdomainAvailable"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesDomainAvailabilityList(Core.Optional.ToNullable(isSubdomainAvailable), reason.Value, subdomainName.Value, type.Value, kind.Value);
+            return new CognitiveServicesDomainAvailabilityList(Optional.ToNullable(isSubdomainAvailable), reason.Value, subdomainName.Value, type.Value, kind.Value);
         }
     }
 }

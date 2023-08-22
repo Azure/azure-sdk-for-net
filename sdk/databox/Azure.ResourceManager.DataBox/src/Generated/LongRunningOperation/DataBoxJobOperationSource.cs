@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBox
 {
-    internal class DataBoxJobOperationSource : Core.IOperationSource<DataBoxJobResource>
+    internal class DataBoxJobOperationSource : IOperationSource<DataBoxJobResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataBox
             _client = client;
         }
 
-        DataBoxJobResource Core.IOperationSource<DataBoxJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataBoxJobResource IOperationSource<DataBoxJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataBoxJobData.DeserializeDataBoxJobData(document.RootElement);
             return new DataBoxJobResource(_client, data);
         }
 
-        async ValueTask<DataBoxJobResource> Core.IOperationSource<DataBoxJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataBoxJobResource> IOperationSource<DataBoxJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataBoxJobData.DeserializeDataBoxJobData(document.RootElement);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ConfidentialLedger
 {
-    internal class ConfidentialLedgerOperationSource : Core.IOperationSource<ConfidentialLedgerResource>
+    internal class ConfidentialLedgerOperationSource : IOperationSource<ConfidentialLedgerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
             _client = client;
         }
 
-        ConfidentialLedgerResource Core.IOperationSource<ConfidentialLedgerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConfidentialLedgerResource IOperationSource<ConfidentialLedgerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ConfidentialLedgerData.DeserializeConfidentialLedgerData(document.RootElement);
             return new ConfidentialLedgerResource(_client, data);
         }
 
-        async ValueTask<ConfidentialLedgerResource> Core.IOperationSource<ConfidentialLedgerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConfidentialLedgerResource> IOperationSource<ConfidentialLedgerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ConfidentialLedgerData.DeserializeConfidentialLedgerData(document.RootElement);

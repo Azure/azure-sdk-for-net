@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of ResetSkillsOptions. </summary>
         public ResetSkillsOptions()
         {
-            SkillNames = new Core.ChangeTrackingList<string>();
+            SkillNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> the names of skills to be reset. </summary>

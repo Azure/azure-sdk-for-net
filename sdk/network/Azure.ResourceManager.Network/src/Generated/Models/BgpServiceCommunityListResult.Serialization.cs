@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BgpServiceCommunity>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<BgpServiceCommunity>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BgpServiceCommunityListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new BgpServiceCommunityListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

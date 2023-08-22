@@ -21,15 +21,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> deleteTime = default;
-            Core.Optional<string> messageId = default;
-            Core.Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
-            Core.Optional<string> senderDisplayName = default;
-            Core.Optional<DateTimeOffset> composeTime = default;
-            Core.Optional<string> type = default;
-            Core.Optional<long> version = default;
-            Core.Optional<string> transactionId = default;
-            Core.Optional<string> threadId = default;
+            Optional<DateTimeOffset> deleteTime = default;
+            Optional<string> messageId = default;
+            Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
+            Optional<string> senderDisplayName = default;
+            Optional<DateTimeOffset> composeTime = default;
+            Optional<string> type = default;
+            Optional<long> version = default;
+            Optional<string> transactionId = default;
+            Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deleteTime"u8))
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatMessageDeletedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Core.Optional.ToNullable(composeTime), type.Value, Core.Optional.ToNullable(version), Core.Optional.ToNullable(deleteTime));
+            return new AcsChatMessageDeletedInThreadEventData(transactionId.Value, threadId.Value, messageId.Value, senderCommunicationIdentifier.Value, senderDisplayName.Value, Optional.ToNullable(composeTime), type.Value, Optional.ToNullable(version), Optional.ToNullable(deleteTime));
         }
 
         internal partial class AcsChatMessageDeletedInThreadEventDataConverter : JsonConverter<AcsChatMessageDeletedInThreadEventData>

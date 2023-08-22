@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDedicatedSqlMinimalTlsSettingData : Core.IUtf8JsonSerializable
+    public partial class SynapseDedicatedSqlMinimalTlsSettingData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinimalTlsVersion))
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion);
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> minimalTlsVersion = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> minimalTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), minimalTlsVersion.Value);
+            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, type, systemData.Value, Optional.ToNullable(location), minimalTlsVersion.Value);
         }
     }
 }

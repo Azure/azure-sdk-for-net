@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
-            Core.Optional<IReadOnlyList<string>> sites = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<string>> sites = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeSkuLocationInfo(Core.Optional.ToNullable(location), Core.Optional.ToList(zones), Core.Optional.ToList(sites));
+            return new DataBoxEdgeSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(sites));
         }
     }
 }

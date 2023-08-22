@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnOriginGroupPatch : Core.IUtf8JsonSerializable
+    public partial class CdnOriginGroupPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HealthProbeSettings))
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 if (HealthProbeSettings != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("healthProbeSettings");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Origins))
+            if (Optional.IsCollectionDefined(Origins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
                 if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Core.Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
+            if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {

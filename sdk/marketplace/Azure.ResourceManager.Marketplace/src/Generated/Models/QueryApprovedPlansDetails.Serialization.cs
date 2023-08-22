@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<string> planId = default;
-            Core.Optional<IReadOnlyList<string>> subscriptionIds = default;
-            Core.Optional<bool> allSubscriptions = default;
+            Optional<string> planId = default;
+            Optional<IReadOnlyList<string>> subscriptionIds = default;
+            Optional<bool> allSubscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("planId"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new QueryApprovedPlansDetails(planId.Value, Core.Optional.ToList(subscriptionIds), Core.Optional.ToNullable(allSubscriptions));
+            return new QueryApprovedPlansDetails(planId.Value, Optional.ToList(subscriptionIds), Optional.ToNullable(allSubscriptions));
         }
     }
 }

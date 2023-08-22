@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of DnsResourceReference. </summary>
         internal DnsResourceReference()
         {
-            DnsResources = new Core.ChangeTrackingList<WritableSubResource>();
+            DnsResources = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of DnsResourceReference. </summary>

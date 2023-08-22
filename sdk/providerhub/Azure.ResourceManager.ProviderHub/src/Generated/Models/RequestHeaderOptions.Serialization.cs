@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class RequestHeaderOptions : Core.IUtf8JsonSerializable
+    internal partial class RequestHeaderOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OptInHeaders))
+            if (Optional.IsDefined(OptInHeaders))
             {
                 writer.WritePropertyName("optInHeaders"u8);
                 writer.WriteStringValue(OptInHeaders.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<OptInHeaderType> optInHeaders = default;
+            Optional<OptInHeaderType> optInHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("optInHeaders"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new RequestHeaderOptions(Core.Optional.ToNullable(optInHeaders));
+            return new RequestHeaderOptions(Optional.ToNullable(optInHeaders));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>
         internal FollowerDatabaseListResult()
         {
-            Value = new Core.ChangeTrackingList<KustoFollowerDatabaseDefinition>();
+            Value = new ChangeTrackingList<KustoFollowerDatabaseDefinition>();
         }
 
         /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>

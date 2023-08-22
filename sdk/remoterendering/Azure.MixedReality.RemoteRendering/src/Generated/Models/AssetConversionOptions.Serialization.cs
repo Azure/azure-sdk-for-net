@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class AssetConversionOptions : Core.IUtf8JsonSerializable
+    public partial class AssetConversionOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputLocation"u8);

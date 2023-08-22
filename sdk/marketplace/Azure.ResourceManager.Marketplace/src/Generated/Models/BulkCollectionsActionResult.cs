@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>
         internal BulkCollectionsActionResult()
         {
-            Succeeded = new Core.ChangeTrackingList<PrivateStoreCollectionDetails>();
-            Failed = new Core.ChangeTrackingList<PrivateStoreCollectionDetails>();
+            Succeeded = new ChangeTrackingList<PrivateStoreCollectionDetails>();
+            Failed = new ChangeTrackingList<PrivateStoreCollectionDetails>();
         }
 
         /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>

@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAssessmentSchedule : Core.IUtf8JsonSerializable
+    public partial class SqlVmAssessmentSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(WeeklyInterval))
+            if (Optional.IsDefined(WeeklyInterval))
             {
                 writer.WritePropertyName("weeklyInterval"u8);
                 writer.WriteNumberValue(WeeklyInterval.Value);
             }
-            if (Core.Optional.IsDefined(MonthlyOccurrence))
+            if (Optional.IsDefined(MonthlyOccurrence))
             {
                 writer.WritePropertyName("monthlyOccurrence"u8);
                 writer.WriteNumberValue(MonthlyOccurrence.Value);
             }
-            if (Core.Optional.IsDefined(DayOfWeek))
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<bool> enable = default;
-            Core.Optional<int> weeklyInterval = default;
-            Core.Optional<int> monthlyOccurrence = default;
-            Core.Optional<SqlVmAssessmentDayOfWeek> dayOfWeek = default;
-            Core.Optional<string> startTime = default;
+            Optional<bool> enable = default;
+            Optional<int> weeklyInterval = default;
+            Optional<int> monthlyOccurrence = default;
+            Optional<SqlVmAssessmentDayOfWeek> dayOfWeek = default;
+            Optional<string> startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlVmAssessmentSchedule(Core.Optional.ToNullable(enable), Core.Optional.ToNullable(weeklyInterval), Core.Optional.ToNullable(monthlyOccurrence), Core.Optional.ToNullable(dayOfWeek), startTime.Value);
+            return new SqlVmAssessmentSchedule(Optional.ToNullable(enable), Optional.ToNullable(weeklyInterval), Optional.ToNullable(monthlyOccurrence), Optional.ToNullable(dayOfWeek), startTime.Value);
         }
     }
 }

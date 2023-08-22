@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<DateTimeOffset> startedTimestamp = default;
-            Core.Optional<int> percentProgress = default;
-            Core.Optional<long> downloadedBytes = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<DateTimeOffset> startedTimestamp = default;
+            Optional<int> percentProgress = default;
+            Optional<long> downloadedBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new ServerEndpointBackgroundDataDownloadActivity(Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(startedTimestamp), Core.Optional.ToNullable(percentProgress), Core.Optional.ToNullable(downloadedBytes));
+            return new ServerEndpointBackgroundDataDownloadActivity(Optional.ToNullable(timestamp), Optional.ToNullable(startedTimestamp), Optional.ToNullable(percentProgress), Optional.ToNullable(downloadedBytes));
         }
     }
 }

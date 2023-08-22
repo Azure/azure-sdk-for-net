@@ -14,15 +14,15 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    internal class DataFactoryDataFlowCreateDebugSessionResultOperationSource : Core.IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>
+    internal class DataFactoryDataFlowCreateDebugSessionResultOperationSource : IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>
     {
-        DataFactoryDataFlowCreateDebugSessionResult Core.IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataFactoryDataFlowCreateDebugSessionResult IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataFactoryDataFlowCreateDebugSessionResult.DeserializeDataFactoryDataFlowCreateDebugSessionResult(document.RootElement);
         }
 
-        async ValueTask<DataFactoryDataFlowCreateDebugSessionResult> Core.IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataFactoryDataFlowCreateDebugSessionResult> IOperationSource<DataFactoryDataFlowCreateDebugSessionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataFactoryDataFlowCreateDebugSessionResult.DeserializeDataFactoryDataFlowCreateDebugSessionResult(document.RootElement);

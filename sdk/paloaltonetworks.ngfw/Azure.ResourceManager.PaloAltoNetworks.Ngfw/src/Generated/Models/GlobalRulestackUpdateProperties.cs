@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of GlobalRulestackUpdateProperties. </summary>
         public GlobalRulestackUpdateProperties()
         {
-            AssociatedSubscriptions = new Core.ChangeTrackingList<string>();
+            AssociatedSubscriptions = new ChangeTrackingList<string>();
         }
 
         /// <summary> PanEtag info. </summary>

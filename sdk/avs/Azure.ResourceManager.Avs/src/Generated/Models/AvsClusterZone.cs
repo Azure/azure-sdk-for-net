@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of AvsClusterZone. </summary>
         internal AvsClusterZone()
         {
-            Hosts = new Core.ChangeTrackingList<string>();
+            Hosts = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AvsClusterZone. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Parameters = new Core.ChangeTrackingDictionary<string, string>();
+            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the name of the webhook. </summary>

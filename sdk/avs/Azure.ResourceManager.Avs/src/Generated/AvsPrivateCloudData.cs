@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Avs
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            IdentitySources = new Core.ChangeTrackingList<SingleSignOnIdentitySource>();
-            ExternalCloudLinks = new Core.ChangeTrackingList<ResourceIdentifier>();
+            IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
+            ExternalCloudLinks = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of AvsPrivateCloudData. </summary>

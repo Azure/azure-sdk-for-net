@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformSsoProperties : Core.IUtf8JsonSerializable
+    public partial class AppPlatformSsoProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Scope))
+            if (Optional.IsCollectionDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Core.Optional.IsDefined(IssuerUri))
+            if (Optional.IsDefined(IssuerUri))
             {
                 writer.WritePropertyName("issuerUri"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> scope = default;
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> clientSecret = default;
-            Core.Optional<Uri> issuerUri = default;
+            Optional<IList<string>> scope = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
+            Optional<Uri> issuerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformSsoProperties(Core.Optional.ToList(scope), clientId.Value, clientSecret.Value, issuerUri.Value);
+            return new AppPlatformSsoProperties(Optional.ToList(scope), clientId.Value, clientSecret.Value, issuerUri.Value);
         }
     }
 }

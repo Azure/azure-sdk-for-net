@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> queuedDateTime = default;
-            Core.Optional<string> taskExecutionId = default;
+            Optional<DateTimeOffset> queuedDateTime = default;
+            Optional<string> taskExecutionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queuedDateTime"u8))
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageTaskQueuedEventData(Core.Optional.ToNullable(queuedDateTime), taskExecutionId.Value);
+            return new StorageTaskQueuedEventData(Optional.ToNullable(queuedDateTime), taskExecutionId.Value);
         }
 
         internal partial class StorageTaskQueuedEventDataConverter : JsonConverter<StorageTaskQueuedEventData>

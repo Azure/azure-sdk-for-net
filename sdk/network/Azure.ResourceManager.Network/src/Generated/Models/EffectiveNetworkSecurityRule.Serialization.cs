@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<EffectiveSecurityRuleProtocol> protocol = default;
-            Core.Optional<string> sourcePortRange = default;
-            Core.Optional<string> destinationPortRange = default;
-            Core.Optional<IReadOnlyList<string>> sourcePortRanges = default;
-            Core.Optional<IReadOnlyList<string>> destinationPortRanges = default;
-            Core.Optional<string> sourceAddressPrefix = default;
-            Core.Optional<string> destinationAddressPrefix = default;
-            Core.Optional<IReadOnlyList<string>> sourceAddressPrefixes = default;
-            Core.Optional<IReadOnlyList<string>> destinationAddressPrefixes = default;
-            Core.Optional<IReadOnlyList<string>> expandedSourceAddressPrefix = default;
-            Core.Optional<IReadOnlyList<string>> expandedDestinationAddressPrefix = default;
-            Core.Optional<SecurityRuleAccess> access = default;
-            Core.Optional<int> priority = default;
-            Core.Optional<SecurityRuleDirection> direction = default;
+            Optional<string> name = default;
+            Optional<EffectiveSecurityRuleProtocol> protocol = default;
+            Optional<string> sourcePortRange = default;
+            Optional<string> destinationPortRange = default;
+            Optional<IReadOnlyList<string>> sourcePortRanges = default;
+            Optional<IReadOnlyList<string>> destinationPortRanges = default;
+            Optional<string> sourceAddressPrefix = default;
+            Optional<string> destinationAddressPrefix = default;
+            Optional<IReadOnlyList<string>> sourceAddressPrefixes = default;
+            Optional<IReadOnlyList<string>> destinationAddressPrefixes = default;
+            Optional<IReadOnlyList<string>> expandedSourceAddressPrefix = default;
+            Optional<IReadOnlyList<string>> expandedDestinationAddressPrefix = default;
+            Optional<SecurityRuleAccess> access = default;
+            Optional<int> priority = default;
+            Optional<SecurityRuleDirection> direction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityRule(name.Value, Core.Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, Core.Optional.ToList(sourcePortRanges), Core.Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, Core.Optional.ToList(sourceAddressPrefixes), Core.Optional.ToList(destinationAddressPrefixes), Core.Optional.ToList(expandedSourceAddressPrefix), Core.Optional.ToList(expandedDestinationAddressPrefix), Core.Optional.ToNullable(access), Core.Optional.ToNullable(priority), Core.Optional.ToNullable(direction));
+            return new EffectiveNetworkSecurityRule(name.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(expandedSourceAddressPrefix), Optional.ToList(expandedDestinationAddressPrefix), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction));
         }
     }
 }

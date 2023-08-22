@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWorkflowRunListResult. </summary>
         internal LogicWorkflowRunListResult()
         {
-            Value = new Core.ChangeTrackingList<LogicWorkflowRunData>();
+            Value = new ChangeTrackingList<LogicWorkflowRunData>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunListResult. </summary>

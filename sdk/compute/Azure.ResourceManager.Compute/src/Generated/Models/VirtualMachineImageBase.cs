@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Models
 
             Name = name;
             Location = location;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineImageBase. </summary>

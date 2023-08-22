@@ -14,9 +14,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryGlobalParameterData : Core.IUtf8JsonSerializable
+    public partial class DataFactoryGlobalParameterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataFactory
                 return null;
             }
             IDictionary<string, DataFactoryGlobalParameterProperties> properties = default;
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryGlobalParameterData(id, name, type, systemData.Value, properties, Core.Optional.ToNullable(etag));
+            return new DataFactoryGlobalParameterData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
         }
     }
 }

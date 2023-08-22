@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CommitmentTierListResult. </summary>
         internal CommitmentTierListResult()
         {
-            Value = new Core.ChangeTrackingList<CommitmentTier>();
+            Value = new ChangeTrackingList<CommitmentTier>();
         }
 
         /// <summary> Initializes a new instance of CommitmentTierListResult. </summary>

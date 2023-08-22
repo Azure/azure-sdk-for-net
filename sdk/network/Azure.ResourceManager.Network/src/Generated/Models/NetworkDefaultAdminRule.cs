@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkDefaultAdminRule. </summary>
         public NetworkDefaultAdminRule()
         {
-            Sources = new Core.ChangeTrackingList<AddressPrefixItem>();
-            Destinations = new Core.ChangeTrackingList<AddressPrefixItem>();
-            SourcePortRanges = new Core.ChangeTrackingList<string>();
-            DestinationPortRanges = new Core.ChangeTrackingList<string>();
+            Sources = new ChangeTrackingList<AddressPrefixItem>();
+            Destinations = new ChangeTrackingList<AddressPrefixItem>();
+            SourcePortRanges = new ChangeTrackingList<string>();
+            DestinationPortRanges = new ChangeTrackingList<string>();
             Kind = AdminRuleKind.Default;
         }
 

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> extension = default;
-            Core.Optional<string> typeHandlerVersion = default;
-            Core.Optional<NodeExtensionState> state = default;
-            Core.Optional<HciExtensionInstanceView> instanceView = default;
+            Optional<string> name = default;
+            Optional<string> extension = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<NodeExtensionState> state = default;
+            Optional<HciExtensionInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Core.Optional.ToNullable(state), instanceView.Value);
+            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value);
         }
     }
 }

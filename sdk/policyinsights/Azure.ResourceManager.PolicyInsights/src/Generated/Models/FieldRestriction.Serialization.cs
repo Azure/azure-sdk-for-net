@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<FieldRestrictionResult> result = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<PolicyReference> policy = default;
+            Optional<FieldRestrictionResult> result = default;
+            Optional<string> defaultValue = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<PolicyReference> policy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new FieldRestriction(Core.Optional.ToNullable(result), defaultValue.Value, Core.Optional.ToList(values), policy.Value);
+            return new FieldRestriction(Optional.ToNullable(result), defaultValue.Value, Optional.ToList(values), policy.Value);
         }
     }
 }

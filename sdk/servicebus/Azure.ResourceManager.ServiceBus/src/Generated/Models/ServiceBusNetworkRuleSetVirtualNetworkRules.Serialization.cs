@@ -11,17 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : Core.IUtf8JsonSerializable
+    public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Core.Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> subnet = default;
-            Core.Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnet"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnet, Core.Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
+            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnet, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
         }
     }
 }

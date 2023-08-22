@@ -14,34 +14,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SConnectionConfiguration : Core.IUtf8JsonSerializable
+    public partial class P2SConnectionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VpnClientAddressPool))
+            if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
                 writer.WriteObjectValue(VpnClientAddressPool);
             }
-            if (Core.Optional.IsDefined(RoutingConfiguration))
+            if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration);
             }
-            if (Core.Optional.IsDefined(EnableInternetSecurity))
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AddressSpace> vpnClientAddressPool = default;
-            Core.Optional<RoutingConfiguration> routingConfiguration = default;
-            Core.Optional<bool> enableInternetSecurity = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> configurationPolicyGroupAssociations = default;
-            Core.Optional<IReadOnlyList<VpnServerConfigurationPolicyGroupData>> previousConfigurationPolicyGroupAssociations = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AddressSpace> vpnClientAddressPool = default;
+            Optional<RoutingConfiguration> routingConfiguration = default;
+            Optional<bool> enableInternetSecurity = default;
+            Optional<IReadOnlyList<WritableSubResource>> configurationPolicyGroupAssociations = default;
+            Optional<IReadOnlyList<VpnServerConfigurationPolicyGroupData>> previousConfigurationPolicyGroupAssociations = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new P2SConnectionConfiguration(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Core.Optional.ToNullable(enableInternetSecurity), Core.Optional.ToList(configurationPolicyGroupAssociations), Core.Optional.ToList(previousConfigurationPolicyGroupAssociations), Core.Optional.ToNullable(provisioningState));
+            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), Optional.ToList(configurationPolicyGroupAssociations), Optional.ToList(previousConfigurationPolicyGroupAssociations), Optional.ToNullable(provisioningState));
         }
     }
 }

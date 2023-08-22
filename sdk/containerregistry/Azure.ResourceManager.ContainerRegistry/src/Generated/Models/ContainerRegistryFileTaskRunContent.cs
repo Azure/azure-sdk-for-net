@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(platform, nameof(platform));
 
             TaskFilePath = taskFilePath;
-            Values = new Core.ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
+            Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
             Platform = platform;
             RunRequestType = "FileTaskRunRequest";
         }

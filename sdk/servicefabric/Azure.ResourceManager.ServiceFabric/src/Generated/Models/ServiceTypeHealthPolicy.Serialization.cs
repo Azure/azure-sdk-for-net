@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceTypeHealthPolicy : Core.IUtf8JsonSerializable
+    public partial class ServiceTypeHealthPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxPercentUnhealthyServices))
+            if (Optional.IsDefined(MaxPercentUnhealthyServices))
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<int> maxPercentUnhealthyServices = default;
+            Optional<int> maxPercentUnhealthyServices = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentUnhealthyServices"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServiceTypeHealthPolicy(Core.Optional.ToNullable(maxPercentUnhealthyServices));
+            return new ServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices));
         }
     }
 }

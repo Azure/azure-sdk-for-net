@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CustomContextInternal : Core.IUtf8JsonSerializable
+    internal partial class CustomContextInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VoipHeaders))
+            if (Optional.IsCollectionDefined(VoipHeaders))
             {
                 writer.WritePropertyName("voipHeaders"u8);
                 writer.WriteStartObject();
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(SipHeaders))
+            if (Optional.IsCollectionDefined(SipHeaders))
             {
                 writer.WritePropertyName("sipHeaders"u8);
                 writer.WriteStartObject();

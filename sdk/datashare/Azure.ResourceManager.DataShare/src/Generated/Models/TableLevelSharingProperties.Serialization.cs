@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class TableLevelSharingProperties : Core.IUtf8JsonSerializable
+    public partial class TableLevelSharingProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ExternalTablesToExclude))
+            if (Optional.IsCollectionDefined(ExternalTablesToExclude))
             {
                 writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExternalTablesToInclude))
+            if (Optional.IsCollectionDefined(ExternalTablesToInclude))
             {
                 writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(MaterializedViewsToExclude))
+            if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
             {
                 writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(MaterializedViewsToInclude))
+            if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
             {
                 writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TablesToExclude))
+            if (Optional.IsCollectionDefined(TablesToExclude))
             {
                 writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TablesToInclude))
+            if (Optional.IsCollectionDefined(TablesToInclude))
             {
                 writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> externalTablesToExclude = default;
-            Core.Optional<IList<string>> externalTablesToInclude = default;
-            Core.Optional<IList<string>> materializedViewsToExclude = default;
-            Core.Optional<IList<string>> materializedViewsToInclude = default;
-            Core.Optional<IList<string>> tablesToExclude = default;
-            Core.Optional<IList<string>> tablesToInclude = default;
+            Optional<IList<string>> externalTablesToExclude = default;
+            Optional<IList<string>> externalTablesToInclude = default;
+            Optional<IList<string>> materializedViewsToExclude = default;
+            Optional<IList<string>> materializedViewsToInclude = default;
+            Optional<IList<string>> tablesToExclude = default;
+            Optional<IList<string>> tablesToInclude = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("externalTablesToExclude"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new TableLevelSharingProperties(Core.Optional.ToList(externalTablesToExclude), Core.Optional.ToList(externalTablesToInclude), Core.Optional.ToList(materializedViewsToExclude), Core.Optional.ToList(materializedViewsToInclude), Core.Optional.ToList(tablesToExclude), Core.Optional.ToList(tablesToInclude));
+            return new TableLevelSharingProperties(Optional.ToList(externalTablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(materializedViewsToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(tablesToExclude), Optional.ToList(tablesToInclude));
         }
     }
 }

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityCenterFileProtectionMode : Core.IUtf8JsonSerializable
+    public partial class SecurityCenterFileProtectionMode : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Exe))
+            if (Optional.IsDefined(Exe))
             {
                 writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Msi))
+            if (Optional.IsDefined(Msi))
             {
                 writer.WritePropertyName("msi"u8);
                 writer.WriteStringValue(Msi.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Script))
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Executable))
+            if (Optional.IsDefined(Executable))
             {
                 writer.WritePropertyName("executable"u8);
                 writer.WriteStringValue(Executable.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<AdaptiveApplicationControlEnforcementMode> exe = default;
-            Core.Optional<AdaptiveApplicationControlEnforcementMode> msi = default;
-            Core.Optional<AdaptiveApplicationControlEnforcementMode> script = default;
-            Core.Optional<AdaptiveApplicationControlEnforcementMode> executable = default;
+            Optional<AdaptiveApplicationControlEnforcementMode> exe = default;
+            Optional<AdaptiveApplicationControlEnforcementMode> msi = default;
+            Optional<AdaptiveApplicationControlEnforcementMode> script = default;
+            Optional<AdaptiveApplicationControlEnforcementMode> executable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exe"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityCenterFileProtectionMode(Core.Optional.ToNullable(exe), Core.Optional.ToNullable(msi), Core.Optional.ToNullable(script), Core.Optional.ToNullable(executable));
+            return new SecurityCenterFileProtectionMode(Optional.ToNullable(exe), Optional.ToNullable(msi), Optional.ToNullable(script), Optional.ToNullable(executable));
         }
     }
 }

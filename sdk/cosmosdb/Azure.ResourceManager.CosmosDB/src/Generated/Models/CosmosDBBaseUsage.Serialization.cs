@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<CosmosDBMetricUnitType> unit = default;
-            Core.Optional<CosmosDBMetricName> name = default;
-            Core.Optional<string> quotaPeriod = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<long> currentValue = default;
+            Optional<CosmosDBMetricUnitType> unit = default;
+            Optional<CosmosDBMetricName> name = default;
+            Optional<string> quotaPeriod = default;
+            Optional<long> limit = default;
+            Optional<long> currentValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBBaseUsage(Core.Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Core.Optional.ToNullable(limit), Core.Optional.ToNullable(currentValue));
+            return new CosmosDBBaseUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue));
         }
     }
 }

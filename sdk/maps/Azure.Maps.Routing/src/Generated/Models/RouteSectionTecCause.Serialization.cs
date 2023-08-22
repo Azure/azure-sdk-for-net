@@ -18,8 +18,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<int> mainCauseCode = default;
-            Core.Optional<int> subCauseCode = default;
+            Optional<int> mainCauseCode = default;
+            Optional<int> subCauseCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mainCauseCode"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSectionTecCause(Core.Optional.ToNullable(mainCauseCode), Core.Optional.ToNullable(subCauseCode));
+            return new RouteSectionTecCause(Optional.ToNullable(mainCauseCode), Optional.ToNullable(subCauseCode));
         }
     }
 }

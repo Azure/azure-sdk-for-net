@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class GitHubActionConfiguration : Core.IUtf8JsonSerializable
+    public partial class GitHubActionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CodeConfiguration))
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
                 writer.WriteObjectValue(CodeConfiguration);
             }
-            if (Core.Optional.IsDefined(ContainerConfiguration))
+            if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
                 writer.WriteObjectValue(ContainerConfiguration);
             }
-            if (Core.Optional.IsDefined(IsLinux))
+            if (Optional.IsDefined(IsLinux))
             {
                 writer.WritePropertyName("isLinux"u8);
                 writer.WriteBooleanValue(IsLinux.Value);
             }
-            if (Core.Optional.IsDefined(GenerateWorkflowFile))
+            if (Optional.IsDefined(GenerateWorkflowFile))
             {
                 writer.WritePropertyName("generateWorkflowFile"u8);
                 writer.WriteBooleanValue(GenerateWorkflowFile.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<GitHubActionCodeConfiguration> codeConfiguration = default;
-            Core.Optional<GitHubActionContainerConfiguration> containerConfiguration = default;
-            Core.Optional<bool> isLinux = default;
-            Core.Optional<bool> generateWorkflowFile = default;
+            Optional<GitHubActionCodeConfiguration> codeConfiguration = default;
+            Optional<GitHubActionContainerConfiguration> containerConfiguration = default;
+            Optional<bool> isLinux = default;
+            Optional<bool> generateWorkflowFile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeConfiguration"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new GitHubActionConfiguration(codeConfiguration.Value, containerConfiguration.Value, Core.Optional.ToNullable(isLinux), Core.Optional.ToNullable(generateWorkflowFile));
+            return new GitHubActionConfiguration(codeConfiguration.Value, containerConfiguration.Value, Optional.ToNullable(isLinux), Optional.ToNullable(generateWorkflowFile));
         }
     }
 }

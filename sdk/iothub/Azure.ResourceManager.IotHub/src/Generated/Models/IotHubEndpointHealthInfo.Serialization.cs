@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<string> endpointId = default;
-            Core.Optional<IotHubEndpointHealthStatus> healthStatus = default;
-            Core.Optional<string> lastKnownError = default;
-            Core.Optional<DateTimeOffset> lastKnownErrorTime = default;
-            Core.Optional<DateTimeOffset> lastSuccessfulSendAttemptTime = default;
-            Core.Optional<DateTimeOffset> lastSendAttemptTime = default;
+            Optional<string> endpointId = default;
+            Optional<IotHubEndpointHealthStatus> healthStatus = default;
+            Optional<string> lastKnownError = default;
+            Optional<DateTimeOffset> lastKnownErrorTime = default;
+            Optional<DateTimeOffset> lastSuccessfulSendAttemptTime = default;
+            Optional<DateTimeOffset> lastSendAttemptTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointId"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubEndpointHealthInfo(endpointId.Value, Core.Optional.ToNullable(healthStatus), lastKnownError.Value, Core.Optional.ToNullable(lastKnownErrorTime), Core.Optional.ToNullable(lastSuccessfulSendAttemptTime), Core.Optional.ToNullable(lastSendAttemptTime));
+            return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime));
         }
     }
 }

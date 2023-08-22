@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    internal partial class UnknownDigitalTwinsEndpointResourceProperties : Core.IUtf8JsonSerializable
+    internal partial class UnknownDigitalTwinsEndpointResourceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Core.Optional.IsDefined(AuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DeadLetterSecret))
+            if (Optional.IsDefined(DeadLetterSecret))
             {
                 if (DeadLetterSecret != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterSecret");
                 }
             }
-            if (Core.Optional.IsDefined(DeadLetterUri))
+            if (Optional.IsDefined(DeadLetterUri))
             {
                 if (DeadLetterUri != null)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 return null;
             }
             EndpointType endpointType = "Unknown";
-            Core.Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
-            Core.Optional<DateTimeOffset?> createdTime = default;
-            Core.Optional<DigitalTwinsAuthenticationType> authenticationType = default;
-            Core.Optional<string> deadLetterSecret = default;
-            Core.Optional<Uri> deadLetterUri = default;
-            Core.Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
+            Optional<DateTimeOffset?> createdTime = default;
+            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
+            Optional<string> deadLetterSecret = default;
+            Optional<Uri> deadLetterUri = default;
+            Optional<DigitalTwinsManagedIdentityReference> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     continue;
                 }
             }
-            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value);
+            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value);
         }
     }
 }

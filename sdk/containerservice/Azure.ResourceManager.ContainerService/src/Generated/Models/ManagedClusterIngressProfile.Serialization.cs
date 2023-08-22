@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterIngressProfile : Core.IUtf8JsonSerializable
+    internal partial class ManagedClusterIngressProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WebAppRouting))
+            if (Optional.IsDefined(WebAppRouting))
             {
                 writer.WritePropertyName("webAppRouting"u8);
                 writer.WriteObjectValue(WebAppRouting);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ManagedClusterIngressProfileWebAppRouting> webAppRouting = default;
+            Optional<ManagedClusterIngressProfileWebAppRouting> webAppRouting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webAppRouting"u8))

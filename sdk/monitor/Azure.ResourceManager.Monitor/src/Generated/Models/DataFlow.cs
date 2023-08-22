@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataFlow. </summary>
         public DataFlow()
         {
-            Streams = new Core.ChangeTrackingList<DataFlowStream>();
-            Destinations = new Core.ChangeTrackingList<string>();
+            Streams = new ChangeTrackingList<DataFlowStream>();
+            Destinations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataFlow. </summary>

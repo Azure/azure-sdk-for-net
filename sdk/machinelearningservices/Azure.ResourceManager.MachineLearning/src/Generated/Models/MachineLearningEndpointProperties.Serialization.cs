@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningEndpointProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsDefined(Keys))
+            if (Optional.IsDefined(Keys))
             {
                 if (Keys != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("keys");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningEndpointAuthMode authMode = default;
-            Core.Optional<string> description = default;
-            Core.Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
-            Core.Optional<Uri> scoringUri = default;
-            Core.Optional<Uri> swaggerUri = default;
+            Optional<string> description = default;
+            Optional<MachineLearningEndpointAuthKeys> keys = default;
+            Optional<IDictionary<string, string>> properties = default;
+            Optional<Uri> scoringUri = default;
+            Optional<Uri> swaggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authMode"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningEndpointProperties(authMode, description.Value, keys.Value, Core.Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value);
+            return new MachineLearningEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value);
         }
     }
 }

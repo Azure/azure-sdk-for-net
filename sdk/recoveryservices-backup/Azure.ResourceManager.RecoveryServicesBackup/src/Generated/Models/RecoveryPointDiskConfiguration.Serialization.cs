@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointDiskConfiguration : Core.IUtf8JsonSerializable
+    public partial class RecoveryPointDiskConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NumberOfDisksIncludedInBackup))
+            if (Optional.IsDefined(NumberOfDisksIncludedInBackup))
             {
                 writer.WritePropertyName("numberOfDisksIncludedInBackup"u8);
                 writer.WriteNumberValue(NumberOfDisksIncludedInBackup.Value);
             }
-            if (Core.Optional.IsDefined(NumberOfDisksAttachedToVm))
+            if (Optional.IsDefined(NumberOfDisksAttachedToVm))
             {
                 writer.WritePropertyName("numberOfDisksAttachedToVm"u8);
                 writer.WriteNumberValue(NumberOfDisksAttachedToVm.Value);
             }
-            if (Core.Optional.IsCollectionDefined(IncludedDiskList))
+            if (Optional.IsCollectionDefined(IncludedDiskList))
             {
                 writer.WritePropertyName("includedDiskList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExcludedDiskList))
+            if (Optional.IsCollectionDefined(ExcludedDiskList))
             {
                 writer.WritePropertyName("excludedDiskList"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<int> numberOfDisksIncludedInBackup = default;
-            Core.Optional<int> numberOfDisksAttachedToVm = default;
-            Core.Optional<IList<DiskInformation>> includedDiskList = default;
-            Core.Optional<IList<DiskInformation>> excludedDiskList = default;
+            Optional<int> numberOfDisksIncludedInBackup = default;
+            Optional<int> numberOfDisksAttachedToVm = default;
+            Optional<IList<DiskInformation>> includedDiskList = default;
+            Optional<IList<DiskInformation>> excludedDiskList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("numberOfDisksIncludedInBackup"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new RecoveryPointDiskConfiguration(Core.Optional.ToNullable(numberOfDisksIncludedInBackup), Core.Optional.ToNullable(numberOfDisksAttachedToVm), Core.Optional.ToList(includedDiskList), Core.Optional.ToList(excludedDiskList));
+            return new RecoveryPointDiskConfiguration(Optional.ToNullable(numberOfDisksIncludedInBackup), Optional.ToNullable(numberOfDisksAttachedToVm), Optional.ToList(includedDiskList), Optional.ToList(excludedDiskList));
         }
     }
 }

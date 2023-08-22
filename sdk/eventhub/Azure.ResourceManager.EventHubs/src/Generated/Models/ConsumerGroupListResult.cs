@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>
         internal ConsumerGroupListResult()
         {
-            Value = new Core.ChangeTrackingList<EventHubsConsumerGroupData>();
+            Value = new ChangeTrackingList<EventHubsConsumerGroupData>();
         }
 
         /// <summary> Initializes a new instance of ConsumerGroupListResult. </summary>

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class BatchQueryRequest : Core.IUtf8JsonSerializable
+    internal partial class BatchQueryRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Core.Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();

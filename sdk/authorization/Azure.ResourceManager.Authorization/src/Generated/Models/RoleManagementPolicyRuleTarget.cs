@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPolicyRuleTarget. </summary>
         public RoleManagementPolicyRuleTarget()
         {
-            Operations = new Core.ChangeTrackingList<string>();
-            TargetObjects = new Core.ChangeTrackingList<string>();
-            InheritableSettings = new Core.ChangeTrackingList<string>();
-            EnforcedSettings = new Core.ChangeTrackingList<string>();
+            Operations = new ChangeTrackingList<string>();
+            TargetObjects = new ChangeTrackingList<string>();
+            InheritableSettings = new ChangeTrackingList<string>();
+            EnforcedSettings = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyRuleTarget. </summary>

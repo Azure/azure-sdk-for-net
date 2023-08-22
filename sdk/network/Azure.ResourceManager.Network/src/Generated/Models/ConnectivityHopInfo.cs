@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityHopInfo. </summary>
         internal ConnectivityHopInfo()
         {
-            NextHopIds = new Core.ChangeTrackingList<string>();
-            PreviousHopIds = new Core.ChangeTrackingList<string>();
-            Links = new Core.ChangeTrackingList<HopLink>();
-            PreviousLinks = new Core.ChangeTrackingList<HopLink>();
-            Issues = new Core.ChangeTrackingList<ConnectivityIssueInfo>();
+            NextHopIds = new ChangeTrackingList<string>();
+            PreviousHopIds = new ChangeTrackingList<string>();
+            Links = new ChangeTrackingList<HopLink>();
+            PreviousLinks = new ChangeTrackingList<HopLink>();
+            Issues = new ChangeTrackingList<ConnectivityIssueInfo>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityHopInfo. </summary>

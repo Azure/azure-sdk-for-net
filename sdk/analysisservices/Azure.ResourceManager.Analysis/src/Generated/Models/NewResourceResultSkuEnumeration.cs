@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>
         internal NewResourceResultSkuEnumeration()
         {
-            Value = new Core.ChangeTrackingList<AnalysisResourceSku>();
+            Value = new ChangeTrackingList<AnalysisResourceSku>();
         }
 
         /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>

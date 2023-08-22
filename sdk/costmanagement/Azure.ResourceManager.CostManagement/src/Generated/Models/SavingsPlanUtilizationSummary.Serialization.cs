@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class SavingsPlanUtilizationSummary : Core.IUtf8JsonSerializable
+    public partial class SavingsPlanUtilizationSummary : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BenefitType))
+            if (Optional.IsDefined(BenefitType))
             {
                 writer.WritePropertyName("benefitType"u8);
                 writer.WriteStringValue(BenefitType.Value.ToString());
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> armSkuName = default;
-            Core.Optional<string> benefitId = default;
-            Core.Optional<string> benefitOrderId = default;
-            Core.Optional<BillingAccountBenefitKind> benefitType = default;
-            Core.Optional<DateTimeOffset> usageDate = default;
-            Core.Optional<decimal> avgUtilizationPercentage = default;
-            Core.Optional<decimal> minUtilizationPercentage = default;
-            Core.Optional<decimal> maxUtilizationPercentage = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> armSkuName = default;
+            Optional<string> benefitId = default;
+            Optional<string> benefitOrderId = default;
+            Optional<BillingAccountBenefitKind> benefitType = default;
+            Optional<DateTimeOffset> usageDate = default;
+            Optional<decimal> avgUtilizationPercentage = default;
+            Optional<decimal> minUtilizationPercentage = default;
+            Optional<decimal> maxUtilizationPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Core.Optional.ToNullable(benefitType), Core.Optional.ToNullable(usageDate), Core.Optional.ToNullable(avgUtilizationPercentage), Core.Optional.ToNullable(minUtilizationPercentage), Core.Optional.ToNullable(maxUtilizationPercentage));
+            return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage));
         }
     }
 }

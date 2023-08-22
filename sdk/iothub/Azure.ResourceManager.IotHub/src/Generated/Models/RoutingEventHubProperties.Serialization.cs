@@ -11,49 +11,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingEventHubProperties : Core.IUtf8JsonSerializable
+    public partial class RoutingEventHubProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Core.Optional.IsDefined(ConnectionString))
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Core.Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Core.Optional.IsDefined(EntityPath))
+            if (Optional.IsDefined(EntityPath))
             {
                 writer.WritePropertyName("entityPath"u8);
                 writer.WriteStringValue(EntityPath);
             }
-            if (Core.Optional.IsDefined(AuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Core.Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
@@ -67,15 +67,15 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<Guid> id = default;
-            Core.Optional<string> connectionString = default;
-            Core.Optional<string> endpointUri = default;
-            Core.Optional<string> entityPath = default;
-            Core.Optional<IotHubAuthenticationType> authenticationType = default;
-            Core.Optional<ManagedIdentity> identity = default;
+            Optional<Guid> id = default;
+            Optional<string> connectionString = default;
+            Optional<string> endpointUri = default;
+            Optional<string> entityPath = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
+            Optional<ManagedIdentity> identity = default;
             string name = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> resourceGroup = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> resourceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RoutingEventHubProperties(Core.Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Core.Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
+            return new RoutingEventHubProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class TagScoringFunction : Core.IUtf8JsonSerializable
+    public partial class TagScoringFunction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tag"u8);
@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
-            if (Core.Optional.IsDefined(Interpolation))
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string type = default;
             string fieldName = default;
             double boost = default;
-            Core.Optional<ScoringFunctionInterpolation> interpolation = default;
+            Optional<ScoringFunctionInterpolation> interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tag"u8))
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new TagScoringFunction(type, fieldName, boost, Core.Optional.ToNullable(interpolation), tag);
+            return new TagScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation), tag);
         }
     }
 }

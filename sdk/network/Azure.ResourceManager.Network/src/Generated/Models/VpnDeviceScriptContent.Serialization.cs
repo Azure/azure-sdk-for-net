@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnDeviceScriptContent : Core.IUtf8JsonSerializable
+    public partial class VpnDeviceScriptContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Vendor))
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Core.Optional.IsDefined(DeviceFamily))
+            if (Optional.IsDefined(DeviceFamily))
             {
                 writer.WritePropertyName("deviceFamily"u8);
                 writer.WriteStringValue(DeviceFamily);
             }
-            if (Core.Optional.IsDefined(FirmwareVersion))
+            if (Optional.IsDefined(FirmwareVersion))
             {
                 writer.WritePropertyName("firmwareVersion"u8);
                 writer.WriteStringValue(FirmwareVersion);

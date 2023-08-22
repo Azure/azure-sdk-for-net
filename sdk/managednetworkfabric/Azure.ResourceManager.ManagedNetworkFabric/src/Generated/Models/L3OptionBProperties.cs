@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of L3OptionBProperties. </summary>
         public L3OptionBProperties()
         {
-            ImportRouteTargets = new Core.ChangeTrackingList<string>();
-            ExportRouteTargets = new Core.ChangeTrackingList<string>();
+            ImportRouteTargets = new ChangeTrackingList<string>();
+            ExportRouteTargets = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of L3OptionBProperties. </summary>

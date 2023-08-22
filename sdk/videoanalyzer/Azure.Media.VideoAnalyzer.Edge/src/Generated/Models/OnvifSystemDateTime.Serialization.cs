@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OnvifSystemDateTime : Core.IUtf8JsonSerializable
+    public partial class OnvifSystemDateTime : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Type))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Time))
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (Core.Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -39,9 +39,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<OnvifSystemDateTimeType> type = default;
-            Core.Optional<string> time = default;
-            Core.Optional<string> timeZone = default;
+            Optional<OnvifSystemDateTimeType> type = default;
+            Optional<string> time = default;
+            Optional<string> timeZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifSystemDateTime(Core.Optional.ToNullable(type), time.Value, timeZone.Value);
+            return new OnvifSystemDateTime(Optional.ToNullable(type), time.Value, timeZone.Value);
         }
     }
 }

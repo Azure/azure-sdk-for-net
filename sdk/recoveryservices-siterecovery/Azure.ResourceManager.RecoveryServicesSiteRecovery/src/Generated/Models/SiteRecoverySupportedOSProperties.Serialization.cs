@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SiteRecoverySupportedOSProperty>> supportedOSList = default;
+            Optional<IReadOnlyList<SiteRecoverySupportedOSProperty>> supportedOSList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedOsList"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoverySupportedOSProperties(Core.Optional.ToList(supportedOSList));
+            return new SiteRecoverySupportedOSProperties(Optional.ToList(supportedOSList));
         }
     }
 }

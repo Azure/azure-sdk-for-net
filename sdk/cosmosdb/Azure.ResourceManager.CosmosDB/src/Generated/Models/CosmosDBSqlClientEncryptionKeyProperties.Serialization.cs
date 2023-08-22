@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBSqlClientEncryptionKeyProperties : Core.IUtf8JsonSerializable
+    public partial class CosmosDBSqlClientEncryptionKeyProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(EncryptionAlgorithm))
+            if (Optional.IsDefined(EncryptionAlgorithm))
             {
                 writer.WritePropertyName("encryptionAlgorithm"u8);
                 writer.WriteStringValue(EncryptionAlgorithm);
             }
-            if (Core.Optional.IsDefined(WrappedDataEncryptionKey))
+            if (Optional.IsDefined(WrappedDataEncryptionKey))
             {
                 writer.WritePropertyName("wrappedDataEncryptionKey"u8);
                 writer.WriteBase64StringValue(WrappedDataEncryptionKey, "D");
             }
-            if (Core.Optional.IsDefined(KeyWrapMetadata))
+            if (Optional.IsDefined(KeyWrapMetadata))
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
                 writer.WriteObjectValue(KeyWrapMetadata);
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> rid = default;
-            Core.Optional<float> ts = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> encryptionAlgorithm = default;
-            Core.Optional<byte[]> wrappedDataEncryptionKey = default;
-            Core.Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
+            Optional<string> rid = default;
+            Optional<float> ts = default;
+            Optional<ETag> etag = default;
+            Optional<string> id = default;
+            Optional<string> encryptionAlgorithm = default;
+            Optional<byte[]> wrappedDataEncryptionKey = default;
+            Optional<CosmosDBKeyWrapMetadata> keyWrapMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBSqlClientEncryptionKeyProperties(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value, rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
+            return new CosmosDBSqlClientEncryptionKeyProperties(id.Value, encryptionAlgorithm.Value, wrappedDataEncryptionKey.Value, keyWrapMetadata.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

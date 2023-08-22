@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceWindowsPatchSettings : Core.IUtf8JsonSerializable
+    public partial class MaintenanceWindowsPatchSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(KbNumbersToExclude))
+            if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(KbNumbersToInclude))
+            if (Optional.IsCollectionDefined(KbNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ClassificationsToInclude))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsExcludeKbsRebootRequired))
+            if (Optional.IsDefined(IsExcludeKbsRebootRequired))
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(IsExcludeKbsRebootRequired.Value);
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> kbNumbersToExclude = default;
-            Core.Optional<IList<string>> kbNumbersToInclude = default;
-            Core.Optional<IList<string>> classificationsToInclude = default;
-            Core.Optional<bool> excludeKbsRequiringReboot = default;
+            Optional<IList<string>> kbNumbersToExclude = default;
+            Optional<IList<string>> kbNumbersToInclude = default;
+            Optional<IList<string>> classificationsToInclude = default;
+            Optional<bool> excludeKbsRequiringReboot = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kbNumbersToExclude"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new MaintenanceWindowsPatchSettings(Core.Optional.ToList(kbNumbersToExclude), Core.Optional.ToList(kbNumbersToInclude), Core.Optional.ToList(classificationsToInclude), Core.Optional.ToNullable(excludeKbsRequiringReboot));
+            return new MaintenanceWindowsPatchSettings(Optional.ToList(kbNumbersToExclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(classificationsToInclude), Optional.ToNullable(excludeKbsRequiringReboot));
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> zone = default;
-            Core.Optional<IReadOnlyList<string>> supportedHAMode = default;
-            Core.Optional<IReadOnlyList<string>> supportedGeoBackupRegions = default;
-            Core.Optional<IReadOnlyList<MySqlFlexibleServerEditionCapability>> supportedFlexibleServerEditions = default;
+            Optional<string> zone = default;
+            Optional<IReadOnlyList<string>> supportedHAMode = default;
+            Optional<IReadOnlyList<string>> supportedGeoBackupRegions = default;
+            Optional<IReadOnlyList<MySqlFlexibleServerEditionCapability>> supportedFlexibleServerEditions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerCapabilityProperties(zone.Value, Core.Optional.ToList(supportedHAMode), Core.Optional.ToList(supportedGeoBackupRegions), Core.Optional.ToList(supportedFlexibleServerEditions));
+            return new MySqlFlexibleServerCapabilityProperties(zone.Value, Optional.ToList(supportedHAMode), Optional.ToList(supportedGeoBackupRegions), Optional.ToList(supportedFlexibleServerEditions));
         }
     }
 }

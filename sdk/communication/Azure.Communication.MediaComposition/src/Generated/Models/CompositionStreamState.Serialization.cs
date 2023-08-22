@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class CompositionStreamState : Core.IUtf8JsonSerializable
+    public partial class CompositionStreamState : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Core.Optional<StreamStatus> status = default;
+            Optional<StreamStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -42,7 +42,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CompositionStreamState(Core.Optional.ToNullable(status));
+            return new CompositionStreamState(Optional.ToNullable(status));
         }
     }
 }

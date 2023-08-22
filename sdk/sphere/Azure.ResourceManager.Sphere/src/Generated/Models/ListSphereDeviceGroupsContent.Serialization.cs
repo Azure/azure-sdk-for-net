@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class ListSphereDeviceGroupsContent : Core.IUtf8JsonSerializable
+    public partial class ListSphereDeviceGroupsContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeviceGroupName))
+            if (Optional.IsDefined(DeviceGroupName))
             {
                 writer.WritePropertyName("deviceGroupName"u8);
                 writer.WriteStringValue(DeviceGroupName);

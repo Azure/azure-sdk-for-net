@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoverySupportedOSDetails. </summary>
         internal SiteRecoverySupportedOSDetails()
         {
-            OSVersions = new Core.ChangeTrackingList<SiteRecoveryOSVersionWrapper>();
+            OSVersions = new ChangeTrackingList<SiteRecoveryOSVersionWrapper>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoverySupportedOSDetails. </summary>

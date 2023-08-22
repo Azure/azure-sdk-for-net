@@ -16,8 +16,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
         public KeyVaultRoleDefinition()
         {
-            Permissions = new Core.ChangeTrackingList<KeyVaultPermission>();
-            AssignableScopes = new Core.ChangeTrackingList<KeyVaultRoleScope>();
+            Permissions = new ChangeTrackingList<KeyVaultPermission>();
+            AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
         }
 
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>

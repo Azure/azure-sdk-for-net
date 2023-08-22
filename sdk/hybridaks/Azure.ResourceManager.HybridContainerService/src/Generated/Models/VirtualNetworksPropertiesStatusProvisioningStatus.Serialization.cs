@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<VirtualNetworksPropertiesStatusProvisioningStatusError> error = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<string> phase = default;
-            Core.Optional<string> status = default;
+            Optional<VirtualNetworksPropertiesStatusProvisioningStatusError> error = default;
+            Optional<string> operationId = default;
+            Optional<string> phase = default;
+            Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

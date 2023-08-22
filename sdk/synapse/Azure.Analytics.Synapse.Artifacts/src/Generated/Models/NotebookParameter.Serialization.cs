@@ -13,12 +13,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookParameterConverter))]
-    public partial class NotebookParameter : Core.IUtf8JsonSerializable
+    public partial class NotebookParameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("value");
                 }
             }
-            if (Core.Optional.IsDefined(Type))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
@@ -44,8 +44,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> value = default;
-            Core.Optional<NotebookParameterType> type = default;
+            Optional<object> value = default;
+            Optional<NotebookParameterType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookParameter(value.Value, Core.Optional.ToNullable(type));
+            return new NotebookParameter(value.Value, Optional.ToNullable(type));
         }
 
         internal partial class NotebookParameterConverter : JsonConverter<NotebookParameter>

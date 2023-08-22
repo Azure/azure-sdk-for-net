@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.MixedReality.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))

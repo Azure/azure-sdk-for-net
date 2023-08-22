@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    internal class MobileNetworkPacketCaptureOperationSource : Core.IOperationSource<MobileNetworkPacketCaptureResource>
+    internal class MobileNetworkPacketCaptureOperationSource : IOperationSource<MobileNetworkPacketCaptureResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork
             _client = client;
         }
 
-        MobileNetworkPacketCaptureResource Core.IOperationSource<MobileNetworkPacketCaptureResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MobileNetworkPacketCaptureResource IOperationSource<MobileNetworkPacketCaptureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(document.RootElement);
             return new MobileNetworkPacketCaptureResource(_client, data);
         }
 
-        async ValueTask<MobileNetworkPacketCaptureResource> Core.IOperationSource<MobileNetworkPacketCaptureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MobileNetworkPacketCaptureResource> IOperationSource<MobileNetworkPacketCaptureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(document.RootElement);

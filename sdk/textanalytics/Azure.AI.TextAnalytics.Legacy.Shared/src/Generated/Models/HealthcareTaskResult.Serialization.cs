@@ -19,8 +19,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Core.Optional<HealthcareResult> results = default;
-            Core.Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
+            Optional<HealthcareResult> results = default;
+            Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareTaskResult(results.Value, Core.Optional.ToList(errors));
+            return new HealthcareTaskResult(results.Value, Optional.ToList(errors));
         }
     }
 }

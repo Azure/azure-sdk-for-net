@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomEntitiesTaskParameters : Core.IUtf8JsonSerializable
+    internal partial class CustomEntitiesTaskParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StringIndexType))
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
-            if (Core.Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -38,10 +38,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<StringIndexType> stringIndexType = default;
+            Optional<StringIndexType> stringIndexType = default;
             string projectName = default;
             string deploymentName = default;
-            Core.Optional<bool> loggingOptOut = default;
+            Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stringIndexType"u8))
@@ -73,7 +73,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomEntitiesTaskParameters(Core.Optional.ToNullable(loggingOptOut), projectName, deploymentName, Core.Optional.ToNullable(stringIndexType));
+            return new CustomEntitiesTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName, Optional.ToNullable(stringIndexType));
         }
     }
 }

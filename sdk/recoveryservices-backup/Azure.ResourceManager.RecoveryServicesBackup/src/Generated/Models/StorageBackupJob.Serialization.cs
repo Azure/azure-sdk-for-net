@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class StorageBackupJob : Core.IUtf8JsonSerializable
+    public partial class StorageBackupJob : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Duration))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Core.Optional.IsCollectionDefined(ActionsInfo))
+            if (Optional.IsCollectionDefined(ActionsInfo))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ErrorDetails))
+            if (Optional.IsCollectionDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -42,57 +42,57 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StorageAccountName))
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (Core.Optional.IsDefined(StorageAccountVersion))
+            if (Optional.IsDefined(StorageAccountVersion))
             {
                 writer.WritePropertyName("storageAccountVersion"u8);
                 writer.WriteStringValue(StorageAccountVersion);
             }
-            if (Core.Optional.IsDefined(ExtendedInfo))
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Core.Optional.IsDefined(IsUserTriggered))
+            if (Optional.IsDefined(IsUserTriggered))
             {
                 writer.WritePropertyName("isUserTriggered"u8);
                 writer.WriteBooleanValue(IsUserTriggered.Value);
             }
-            if (Core.Optional.IsDefined(EntityFriendlyName))
+            if (Optional.IsDefined(EntityFriendlyName))
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Operation))
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ActivityId))
+            if (Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -108,20 +108,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Core.Optional<IList<StorageErrorInfo>> errorDetails = default;
-            Core.Optional<string> storageAccountName = default;
-            Core.Optional<string> storageAccountVersion = default;
-            Core.Optional<StorageBackupJobExtendedInfo> extendedInfo = default;
-            Core.Optional<bool> isUserTriggered = default;
-            Core.Optional<string> entityFriendlyName = default;
-            Core.Optional<BackupManagementType> backupManagementType = default;
-            Core.Optional<string> operation = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> activityId = default;
+            Optional<TimeSpan> duration = default;
+            Optional<IList<JobSupportedAction>> actionsInfo = default;
+            Optional<IList<StorageErrorInfo>> errorDetails = default;
+            Optional<string> storageAccountName = default;
+            Optional<string> storageAccountVersion = default;
+            Optional<StorageBackupJobExtendedInfo> extendedInfo = default;
+            Optional<bool> isUserTriggered = default;
+            Optional<string> entityFriendlyName = default;
+            Optional<BackupManagementType> backupManagementType = default;
+            Optional<string> operation = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> activityId = default;
             string jobType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new StorageBackupJob(entityFriendlyName.Value, Core.Optional.ToNullable(backupManagementType), operation.Value, status.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), activityId.Value, jobType, Core.Optional.ToNullable(duration), Core.Optional.ToList(actionsInfo), Core.Optional.ToList(errorDetails), storageAccountName.Value, storageAccountVersion.Value, extendedInfo.Value, Core.Optional.ToNullable(isUserTriggered));
+            return new StorageBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), storageAccountName.Value, storageAccountVersion.Value, extendedInfo.Value, Optional.ToNullable(isUserTriggered));
         }
     }
 }

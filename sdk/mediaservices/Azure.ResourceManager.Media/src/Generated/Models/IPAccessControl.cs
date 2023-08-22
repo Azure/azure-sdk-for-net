@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of IPAccessControl. </summary>
         public IPAccessControl()
         {
-            AllowedIPs = new Core.ChangeTrackingList<IPRange>();
+            AllowedIPs = new ChangeTrackingList<IPRange>();
         }
 
         /// <summary> Initializes a new instance of IPAccessControl. </summary>

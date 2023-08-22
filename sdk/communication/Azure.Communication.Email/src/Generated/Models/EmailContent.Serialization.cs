@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class EmailContent : Core.IUtf8JsonSerializable
+    public partial class EmailContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
-            if (Core.Optional.IsDefined(PlainText))
+            if (Optional.IsDefined(PlainText))
             {
                 writer.WritePropertyName("plainText"u8);
                 writer.WriteStringValue(PlainText);
             }
-            if (Core.Optional.IsDefined(Html))
+            if (Optional.IsDefined(Html))
             {
                 writer.WritePropertyName("html"u8);
                 writer.WriteStringValue(Html);

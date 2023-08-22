@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
         public IntegrationRuntimeDataFlowProperties()
         {
-            CustomProperties = new Core.ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            CustomProperties = new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>

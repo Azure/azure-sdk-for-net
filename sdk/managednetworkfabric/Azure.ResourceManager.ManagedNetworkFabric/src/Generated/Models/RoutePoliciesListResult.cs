@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>
         internal RoutePoliciesListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkFabricRoutePolicyData>();
+            Value = new ChangeTrackingList<NetworkFabricRoutePolicyData>();
         }
 
         /// <summary> Initializes a new instance of RoutePoliciesListResult. </summary>

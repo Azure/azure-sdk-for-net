@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of SearchAddressBatchResult. </summary>
         internal SearchAddressBatchResult()
         {
-            BatchItems = new Core.ChangeTrackingList<SearchAddressBatchItem>();
+            BatchItems = new ChangeTrackingList<SearchAddressBatchItem>();
         }
     }
 }

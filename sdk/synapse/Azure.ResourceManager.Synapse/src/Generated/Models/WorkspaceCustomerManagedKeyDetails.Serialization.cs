@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class WorkspaceCustomerManagedKeyDetails : Core.IUtf8JsonSerializable
+    public partial class WorkspaceCustomerManagedKeyDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Key))
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
-            if (Core.Optional.IsDefined(KekIdentity))
+            if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
                 writer.WriteObjectValue(KekIdentity);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<SynapseWorkspaceKeyDetails> key = default;
-            Core.Optional<KekIdentityProperties> kekIdentity = default;
+            Optional<string> status = default;
+            Optional<SynapseWorkspaceKeyDetails> key = default;
+            Optional<KekIdentityProperties> kekIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

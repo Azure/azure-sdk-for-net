@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of MetricSeriesList. </summary>
         internal MetricSeriesList()
         {
-            Value = new Core.ChangeTrackingList<MetricSeriesDefinition>();
+            Value = new ChangeTrackingList<MetricSeriesDefinition>();
         }
 
         /// <summary> Initializes a new instance of MetricSeriesList. </summary>

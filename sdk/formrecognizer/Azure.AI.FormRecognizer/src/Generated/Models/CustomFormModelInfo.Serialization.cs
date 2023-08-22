@@ -23,8 +23,8 @@ namespace Azure.AI.FormRecognizer.Training
             CustomFormModelStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
-            Core.Optional<string> modelName = default;
-            Core.Optional<CustomFormModelProperties> attributes = default;
+            Optional<string> modelName = default;
+            Optional<CustomFormModelProperties> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))

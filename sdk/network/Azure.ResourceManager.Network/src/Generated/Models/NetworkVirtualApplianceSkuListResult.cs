@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuListResult. </summary>
         internal NetworkVirtualApplianceSkuListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkVirtualApplianceSkuData>();
+            Value = new ChangeTrackingList<NetworkVirtualApplianceSkuData>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuListResult. </summary>

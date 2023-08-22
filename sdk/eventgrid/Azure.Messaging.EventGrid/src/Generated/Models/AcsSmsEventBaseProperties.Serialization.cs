@@ -18,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> messageId = default;
-            Core.Optional<string> @from = default;
-            Core.Optional<string> to = default;
+            Optional<string> messageId = default;
+            Optional<string> @from = default;
+            Optional<string> to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))

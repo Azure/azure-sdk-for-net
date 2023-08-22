@@ -13,9 +13,9 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereCertificateData : Core.IUtf8JsonSerializable
+    public partial class SphereCertificateData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> certificate = default;
-            Core.Optional<SphereCertificateStatus> status = default;
-            Core.Optional<string> subject = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<DateTimeOffset> expiryUtc = default;
-            Core.Optional<DateTimeOffset> notBeforeUtc = default;
-            Core.Optional<SphereProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> certificate = default;
+            Optional<SphereCertificateStatus> status = default;
+            Optional<string> subject = default;
+            Optional<string> thumbprint = default;
+            Optional<DateTimeOffset> expiryUtc = default;
+            Optional<DateTimeOffset> notBeforeUtc = default;
+            Optional<SphereProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sphere
                     continue;
                 }
             }
-            return new SphereCertificateData(id, name, type, systemData.Value, certificate.Value, Core.Optional.ToNullable(status), subject.Value, thumbprint.Value, Core.Optional.ToNullable(expiryUtc), Core.Optional.ToNullable(notBeforeUtc), Core.Optional.ToNullable(provisioningState));
+            return new SphereCertificateData(id, name, type, systemData.Value, certificate.Value, Optional.ToNullable(status), subject.Value, thumbprint.Value, Optional.ToNullable(expiryUtc), Optional.ToNullable(notBeforeUtc), Optional.ToNullable(provisioningState));
         }
     }
 }

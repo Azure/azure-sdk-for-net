@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class AutoGridInputGroup : Core.IUtf8JsonSerializable
+    public partial class AutoGridInputGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputIds"u8);
@@ -26,27 +26,27 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(Position))
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Core.Optional.IsDefined(Width))
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Core.Optional.IsDefined(Height))
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Core.Optional.IsDefined(Layer))
+            if (Optional.IsDefined(Layer))
             {
                 writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
-            if (Core.Optional.IsDefined(ScalingMode))
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -62,11 +62,11 @@ namespace Azure.Communication.MediaComposition
             }
             IList<string> inputIds = default;
             InputGroupType kind = default;
-            Core.Optional<InputPosition> position = default;
-            Core.Optional<string> width = default;
-            Core.Optional<string> height = default;
-            Core.Optional<string> layer = default;
-            Core.Optional<ScalingMode> scalingMode = default;
+            Optional<InputPosition> position = default;
+            Optional<string> width = default;
+            Optional<string> height = default;
+            Optional<string> layer = default;
+            Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputIds"u8))
@@ -118,7 +118,7 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new AutoGridInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Core.Optional.ToNullable(scalingMode), inputIds);
+            return new AutoGridInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode), inputIds);
         }
     }
 }

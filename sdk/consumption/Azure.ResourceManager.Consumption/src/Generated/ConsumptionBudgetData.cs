@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption
         /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>
         public ConsumptionBudgetData()
         {
-            Notifications = new Core.ChangeTrackingDictionary<string, BudgetAssociatedNotification>();
+            Notifications = new ChangeTrackingDictionary<string, BudgetAssociatedNotification>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionBudgetData. </summary>

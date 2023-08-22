@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of Models. </summary>
         internal Models()
         {
-            ModelList = new Core.ChangeTrackingList<CustomFormModelInfo>();
+            ModelList = new ChangeTrackingList<CustomFormModelInfo>();
         }
 
         /// <summary> Initializes a new instance of Models. </summary>

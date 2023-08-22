@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
         internal ProtectionContainerMappingProperties()
         {
-            HealthErrorDetails = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkProfileListResult. </summary>
         internal NetworkProfileListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkProfileData>();
+            Value = new ChangeTrackingList<NetworkProfileData>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfileListResult. </summary>

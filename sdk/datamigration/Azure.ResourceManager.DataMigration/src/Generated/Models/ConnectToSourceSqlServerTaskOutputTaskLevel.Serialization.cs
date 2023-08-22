@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> databases = default;
-            Core.Optional<string> logins = default;
-            Core.Optional<string> agentJobs = default;
-            Core.Optional<string> databaseTdeCertificateMapping = default;
-            Core.Optional<string> sourceServerVersion = default;
-            Core.Optional<string> sourceServerBrandVersion = default;
-            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
-            Core.Optional<string> id = default;
+            Optional<string> databases = default;
+            Optional<string> logins = default;
+            Optional<string> agentJobs = default;
+            Optional<string> databaseTdeCertificateMapping = default;
+            Optional<string> sourceServerVersion = default;
+            Optional<string> sourceServerBrandVersion = default;
+            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Core.Optional.ToList(validationErrors));
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
         }
     }
 }

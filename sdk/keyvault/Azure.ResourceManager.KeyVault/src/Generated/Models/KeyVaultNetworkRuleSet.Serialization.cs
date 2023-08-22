@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultNetworkRuleSet : Core.IUtf8JsonSerializable
+    public partial class KeyVaultNetworkRuleSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Bypass))
+            if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass"u8);
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DefaultAction))
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Core.Optional<KeyVaultNetworkRuleBypassOption> bypass = default;
-            Core.Optional<KeyVaultNetworkRuleAction> defaultAction = default;
-            Core.Optional<IList<KeyVaultIPRule>> ipRules = default;
-            Core.Optional<IList<KeyVaultVirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<KeyVaultNetworkRuleBypassOption> bypass = default;
+            Optional<KeyVaultNetworkRuleAction> defaultAction = default;
+            Optional<IList<KeyVaultIPRule>> ipRules = default;
+            Optional<IList<KeyVaultVirtualNetworkRule>> virtualNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultNetworkRuleSet(Core.Optional.ToNullable(bypass), Core.Optional.ToNullable(defaultAction), Core.Optional.ToList(ipRules), Core.Optional.ToList(virtualNetworkRules));
+            return new KeyVaultNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
         }
     }
 }

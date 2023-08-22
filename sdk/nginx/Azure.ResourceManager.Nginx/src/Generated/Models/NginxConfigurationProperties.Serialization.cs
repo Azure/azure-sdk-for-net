@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxConfigurationProperties : Core.IUtf8JsonSerializable
+    public partial class NginxConfigurationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Files))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ProtectedFiles))
+            if (Optional.IsCollectionDefined(ProtectedFiles))
             {
                 writer.WritePropertyName("protectedFiles"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Package))
+            if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
                 writer.WriteObjectValue(Package);
             }
-            if (Core.Optional.IsDefined(RootFile))
+            if (Optional.IsDefined(RootFile))
             {
                 writer.WritePropertyName("rootFile"u8);
                 writer.WriteStringValue(RootFile);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<IList<NginxConfigurationFile>> files = default;
-            Core.Optional<IList<NginxConfigurationFile>> protectedFiles = default;
-            Core.Optional<NginxConfigurationPackage> package = default;
-            Core.Optional<string> rootFile = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<IList<NginxConfigurationFile>> files = default;
+            Optional<IList<NginxConfigurationFile>> protectedFiles = default;
+            Optional<NginxConfigurationPackage> package = default;
+            Optional<string> rootFile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new NginxConfigurationProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(files), Core.Optional.ToList(protectedFiles), package.Value, rootFile.Value);
+            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), Optional.ToList(files), Optional.ToList(protectedFiles), package.Value, rootFile.Value);
         }
     }
 }

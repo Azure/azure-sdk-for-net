@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of BgpConfiguration. </summary>
         public BgpConfiguration()
         {
-            IPv4ListenRangePrefixes = new Core.ChangeTrackingList<string>();
-            IPv6ListenRangePrefixes = new Core.ChangeTrackingList<string>();
-            IPv4NeighborAddress = new Core.ChangeTrackingList<NeighborAddress>();
-            IPv6NeighborAddress = new Core.ChangeTrackingList<NeighborAddress>();
+            IPv4ListenRangePrefixes = new ChangeTrackingList<string>();
+            IPv6ListenRangePrefixes = new ChangeTrackingList<string>();
+            IPv4NeighborAddress = new ChangeTrackingList<NeighborAddress>();
+            IPv6NeighborAddress = new ChangeTrackingList<NeighborAddress>();
         }
 
         /// <summary> Initializes a new instance of BgpConfiguration. </summary>

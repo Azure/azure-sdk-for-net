@@ -12,39 +12,39 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnSiteLinkData : Core.IUtf8JsonSerializable
+    public partial class VpnSiteLinkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkProperties))
+            if (Optional.IsDefined(LinkProperties))
             {
                 writer.WritePropertyName("linkProperties"u8);
                 writer.WriteObjectValue(LinkProperties);
             }
-            if (Core.Optional.IsDefined(IPAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Core.Optional.IsDefined(Fqdn))
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Core.Optional.IsDefined(BgpProperties))
+            if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
                 writer.WriteObjectValue(BgpProperties);
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<VpnLinkProviderProperties> linkProperties = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<string> fqdn = default;
-            Core.Optional<VpnLinkBgpSettings> bgpProperties = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<VpnLinkProviderProperties> linkProperties = default;
+            Optional<string> ipAddress = default;
+            Optional<string> fqdn = default;
+            Optional<VpnLinkBgpSettings> bgpProperties = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnSiteLinkData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Core.Optional.ToNullable(provisioningState));
+            return new VpnSiteLinkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

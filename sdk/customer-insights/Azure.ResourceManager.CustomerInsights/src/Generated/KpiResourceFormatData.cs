@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>
         public KpiResourceFormatData()
         {
-            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
-            Description = new Core.ChangeTrackingDictionary<string, string>();
-            GroupBy = new Core.ChangeTrackingList<string>();
-            GroupByMetadata = new Core.ChangeTrackingList<KpiGroupByMetadata>();
-            ParticipantProfilesMetadata = new Core.ChangeTrackingList<KpiParticipantProfilesMetadata>();
-            Aliases = new Core.ChangeTrackingList<KpiAlias>();
-            Extracts = new Core.ChangeTrackingList<KpiExtract>();
+            DisplayName = new ChangeTrackingDictionary<string, string>();
+            Description = new ChangeTrackingDictionary<string, string>();
+            GroupBy = new ChangeTrackingList<string>();
+            GroupByMetadata = new ChangeTrackingList<KpiGroupByMetadata>();
+            ParticipantProfilesMetadata = new ChangeTrackingList<KpiParticipantProfilesMetadata>();
+            Aliases = new ChangeTrackingList<KpiAlias>();
+            Extracts = new ChangeTrackingList<KpiExtract>();
         }
 
         /// <summary> Initializes a new instance of KpiResourceFormatData. </summary>

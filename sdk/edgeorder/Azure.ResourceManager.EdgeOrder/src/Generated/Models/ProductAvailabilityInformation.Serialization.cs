@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<ProductAvailabilityStage> availabilityStage = default;
-            Core.Optional<ProductDisabledReason> disabledReason = default;
-            Core.Optional<string> disabledReasonMessage = default;
+            Optional<ProductAvailabilityStage> availabilityStage = default;
+            Optional<ProductDisabledReason> disabledReason = default;
+            Optional<string> disabledReasonMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityStage"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ProductAvailabilityInformation(Core.Optional.ToNullable(availabilityStage), Core.Optional.ToNullable(disabledReason), disabledReasonMessage.Value);
+            return new ProductAvailabilityInformation(Optional.ToNullable(availabilityStage), Optional.ToNullable(disabledReason), disabledReasonMessage.Value);
         }
     }
 }

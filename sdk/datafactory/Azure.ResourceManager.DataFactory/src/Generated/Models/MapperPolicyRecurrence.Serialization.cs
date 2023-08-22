@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperPolicyRecurrence : Core.IUtf8JsonSerializable
+    public partial class MapperPolicyRecurrence : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Frequency))
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Interval))
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<MapperPolicyRecurrenceFrequencyType> frequency = default;
-            Core.Optional<int> interval = default;
+            Optional<MapperPolicyRecurrenceFrequencyType> frequency = default;
+            Optional<int> interval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequency"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperPolicyRecurrence(Core.Optional.ToNullable(frequency), Core.Optional.ToNullable(interval));
+            return new MapperPolicyRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval));
         }
     }
 }

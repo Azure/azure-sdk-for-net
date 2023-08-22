@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WeeklyRetentionFormat : Core.IUtf8JsonSerializable
+    public partial class WeeklyRetentionFormat : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DaysOfTheWeek))
+            if (Optional.IsCollectionDefined(DaysOfTheWeek))
             {
                 writer.WritePropertyName("daysOfTheWeek"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(WeeksOfTheMonth))
+            if (Optional.IsCollectionDefined(WeeksOfTheMonth))
             {
                 writer.WritePropertyName("weeksOfTheMonth"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
-            Core.Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
+            Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
+            Optional<IList<BackupWeekOfMonth>> weeksOfTheMonth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfTheWeek"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WeeklyRetentionFormat(Core.Optional.ToList(daysOfTheWeek), Core.Optional.ToList(weeksOfTheMonth));
+            return new WeeklyRetentionFormat(Optional.ToList(daysOfTheWeek), Optional.ToList(weeksOfTheMonth));
         }
     }
 }

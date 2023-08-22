@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> nicId = default;
-            Core.Optional<string> isPrimaryNic = default;
-            Core.Optional<IPAddress> sourceIPAddress = default;
-            Core.Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
-            Core.Optional<ResourceIdentifier> sourceNetworkId = default;
-            Core.Optional<IPAddress> targetIPAddress = default;
-            Core.Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
-            Core.Optional<string> targetSubnetName = default;
-            Core.Optional<ResourceIdentifier> testNetworkId = default;
-            Core.Optional<string> testSubnetName = default;
-            Core.Optional<IPAddress> testIPAddress = default;
-            Core.Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
-            Core.Optional<string> targetNicName = default;
-            Core.Optional<string> isSelectedForMigration = default;
+            Optional<string> nicId = default;
+            Optional<string> isPrimaryNic = default;
+            Optional<IPAddress> sourceIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
+            Optional<ResourceIdentifier> sourceNetworkId = default;
+            Optional<IPAddress> targetIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
+            Optional<string> targetSubnetName = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
+            Optional<string> testSubnetName = default;
+            Optional<IPAddress> testIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
+            Optional<string> targetNicName = default;
+            Optional<string> isSelectedForMigration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareCbtNicDetails(nicId.Value, isPrimaryNic.Value, sourceIPAddress.Value, Core.Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, targetIPAddress.Value, Core.Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testNetworkId.Value, testSubnetName.Value, testIPAddress.Value, Core.Optional.ToNullable(testIPAddressType), targetNicName.Value, isSelectedForMigration.Value);
+            return new VMwareCbtNicDetails(nicId.Value, isPrimaryNic.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testNetworkId.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), targetNicName.Value, isSelectedForMigration.Value);
         }
     }
 }

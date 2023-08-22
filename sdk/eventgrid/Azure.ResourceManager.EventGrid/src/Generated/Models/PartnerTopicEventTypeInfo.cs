@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of PartnerTopicEventTypeInfo. </summary>
         public PartnerTopicEventTypeInfo()
         {
-            InlineEventTypes = new Core.ChangeTrackingDictionary<string, InlineEventProperties>();
+            InlineEventTypes = new ChangeTrackingDictionary<string, InlineEventProperties>();
         }
 
         /// <summary> Initializes a new instance of PartnerTopicEventTypeInfo. </summary>

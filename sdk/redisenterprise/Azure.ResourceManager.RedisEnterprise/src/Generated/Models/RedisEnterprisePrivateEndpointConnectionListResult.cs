@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RedisEnterprisePrivateEndpointConnectionListResult. </summary>
         internal RedisEnterprisePrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of RedisEnterprisePrivateEndpointConnectionListResult. </summary>

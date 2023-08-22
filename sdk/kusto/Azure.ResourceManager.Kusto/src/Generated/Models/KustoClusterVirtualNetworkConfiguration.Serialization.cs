@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoClusterVirtualNetworkConfiguration : Core.IUtf8JsonSerializable
+    public partial class KustoClusterVirtualNetworkConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);

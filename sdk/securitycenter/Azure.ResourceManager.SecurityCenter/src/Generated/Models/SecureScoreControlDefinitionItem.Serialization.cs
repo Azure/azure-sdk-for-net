@@ -13,9 +13,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecureScoreControlDefinitionItem : Core.IUtf8JsonSerializable
+    public partial class SecureScoreControlDefinitionItem : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<int> maxScore = default;
-            Core.Optional<SecureScoreControlDefinitionSource> source = default;
-            Core.Optional<IReadOnlyList<SubResource>> assessmentDefinitions = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<int> maxScore = default;
+            Optional<SecureScoreControlDefinitionSource> source = default;
+            Optional<IReadOnlyList<SubResource>> assessmentDefinitions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecureScoreControlDefinitionItem(id, name, type, systemData.Value, displayName.Value, description.Value, Core.Optional.ToNullable(maxScore), source.Value, Core.Optional.ToList(assessmentDefinitions));
+            return new SecureScoreControlDefinitionItem(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(maxScore), source.Value, Optional.ToList(assessmentDefinitions));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of FileshareProtectedItem. </summary>
         public FileshareProtectedItem()
         {
-            KpisHealths = new Core.ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
+            KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             ProtectedItemType = "AzureFileShareProtectedItem";
         }
 

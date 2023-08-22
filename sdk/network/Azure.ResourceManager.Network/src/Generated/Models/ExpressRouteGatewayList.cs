@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>
         internal ExpressRouteGatewayList()
         {
-            Value = new Core.ChangeTrackingList<ExpressRouteGatewayData>();
+            Value = new ChangeTrackingList<ExpressRouteGatewayData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteGatewayList. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of SelfHelpDiscoverySolutionResult. </summary>
         internal SelfHelpDiscoverySolutionResult()
         {
-            Value = new Core.ChangeTrackingList<SelfHelpSolutionMetadata>();
+            Value = new ChangeTrackingList<SelfHelpSolutionMetadata>();
         }
 
         /// <summary> Initializes a new instance of SelfHelpDiscoverySolutionResult. </summary>

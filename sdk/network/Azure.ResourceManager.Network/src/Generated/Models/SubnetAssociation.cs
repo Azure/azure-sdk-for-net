@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
         internal SubnetAssociation()
         {
-            SecurityRules = new Core.ChangeTrackingList<SecurityRuleData>();
+            SecurityRules = new ChangeTrackingList<SecurityRuleData>();
         }
 
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>

@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> time = default;
-            Core.Optional<string> code = default;
-            Core.Optional<IReadOnlyList<string>> parameters = default;
-            Core.Optional<string> message = default;
+            Optional<DateTimeOffset> time = default;
+            Optional<string> code = default;
+            Optional<IReadOnlyList<string>> parameters = default;
+            Optional<string> message = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeError(Core.Optional.ToNullable(time), code.Value, Core.Optional.ToList(parameters), message.Value, additionalProperties);
+            return new ManagedIntegrationRuntimeError(Optional.ToNullable(time), code.Value, Optional.ToList(parameters), message.Value, additionalProperties);
         }
     }
 }

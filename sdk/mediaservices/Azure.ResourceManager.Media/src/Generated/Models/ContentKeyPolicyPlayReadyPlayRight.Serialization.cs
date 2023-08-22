@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyPlayRight : Core.IUtf8JsonSerializable
+    public partial class ContentKeyPolicyPlayReadyPlayRight : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FirstPlayExpiration))
+            if (Optional.IsDefined(FirstPlayExpiration))
             {
                 writer.WritePropertyName("firstPlayExpiration"u8);
                 writer.WriteStringValue(FirstPlayExpiration.Value, "P");
             }
-            if (Core.Optional.IsDefined(ScmsRestriction))
+            if (Optional.IsDefined(ScmsRestriction))
             {
                 writer.WritePropertyName("scmsRestriction"u8);
                 writer.WriteNumberValue(ScmsRestriction.Value);
             }
-            if (Core.Optional.IsDefined(AgcAndColorStripeRestriction))
+            if (Optional.IsDefined(AgcAndColorStripeRestriction))
             {
                 writer.WritePropertyName("agcAndColorStripeRestriction"u8);
                 writer.WriteNumberValue(AgcAndColorStripeRestriction.Value);
             }
-            if (Core.Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
+            if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
             {
                 writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
                 writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
@@ -44,27 +44,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteBooleanValue(HasImageConstraintForAnalogComputerMonitorRestriction);
             writer.WritePropertyName("allowPassingVideoContentToUnknownOutput"u8);
             writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToString());
-            if (Core.Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
+            if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("uncompressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (Core.Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
+            if (Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("compressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (Core.Optional.IsDefined(AnalogVideoOutputProtectionLevel))
+            if (Optional.IsDefined(AnalogVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("analogVideoOpl"u8);
                 writer.WriteNumberValue(AnalogVideoOutputProtectionLevel.Value);
             }
-            if (Core.Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
+            if (Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
             {
                 writer.WritePropertyName("compressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalAudioOutputProtectionLevel.Value);
             }
-            if (Core.Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
+            if (Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
             {
                 writer.WritePropertyName("uncompressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalAudioOutputProtectionLevel.Value);
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> firstPlayExpiration = default;
-            Core.Optional<int> scmsRestriction = default;
-            Core.Optional<int> agcAndColorStripeRestriction = default;
-            Core.Optional<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction> explicitAnalogTelevisionOutputRestriction = default;
+            Optional<TimeSpan> firstPlayExpiration = default;
+            Optional<int> scmsRestriction = default;
+            Optional<int> agcAndColorStripeRestriction = default;
+            Optional<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction> explicitAnalogTelevisionOutputRestriction = default;
             bool digitalVideoOnlyContentRestriction = default;
             bool imageConstraintForAnalogComponentVideoRestriction = default;
             bool imageConstraintForAnalogComputerMonitorRestriction = default;
             ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput = default;
-            Core.Optional<int> uncompressedDigitalVideoOpl = default;
-            Core.Optional<int> compressedDigitalVideoOpl = default;
-            Core.Optional<int> analogVideoOpl = default;
-            Core.Optional<int> compressedDigitalAudioOpl = default;
-            Core.Optional<int> uncompressedDigitalAudioOpl = default;
+            Optional<int> uncompressedDigitalVideoOpl = default;
+            Optional<int> compressedDigitalVideoOpl = default;
+            Optional<int> analogVideoOpl = default;
+            Optional<int> compressedDigitalAudioOpl = default;
+            Optional<int> uncompressedDigitalAudioOpl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstPlayExpiration"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ContentKeyPolicyPlayReadyPlayRight(Core.Optional.ToNullable(firstPlayExpiration), Core.Optional.ToNullable(scmsRestriction), Core.Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Core.Optional.ToNullable(uncompressedDigitalVideoOpl), Core.Optional.ToNullable(compressedDigitalVideoOpl), Core.Optional.ToNullable(analogVideoOpl), Core.Optional.ToNullable(compressedDigitalAudioOpl), Core.Optional.ToNullable(uncompressedDigitalAudioOpl));
+            return new ContentKeyPolicyPlayReadyPlayRight(Optional.ToNullable(firstPlayExpiration), Optional.ToNullable(scmsRestriction), Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Optional.ToNullable(uncompressedDigitalVideoOpl), Optional.ToNullable(compressedDigitalVideoOpl), Optional.ToNullable(analogVideoOpl), Optional.ToNullable(compressedDigitalAudioOpl), Optional.ToNullable(uncompressedDigitalAudioOpl));
         }
     }
 }

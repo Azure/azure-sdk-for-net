@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeDeviceCapacityInfo : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceCapacityInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TimeStamp))
+            if (Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (Core.Optional.IsDefined(ClusterStorageCapacityInfo))
+            if (Optional.IsDefined(ClusterStorageCapacityInfo))
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterStorageCapacityInfo);
             }
-            if (Core.Optional.IsDefined(ClusterComputeCapacityInfo))
+            if (Optional.IsDefined(ClusterComputeCapacityInfo))
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterComputeCapacityInfo);
             }
-            if (Core.Optional.IsCollectionDefined(NodeCapacityInfos))
+            if (Optional.IsCollectionDefined(NodeCapacityInfos))
             {
                 writer.WritePropertyName("nodeCapacityInfos"u8);
                 writer.WriteStartObject();
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> timeStamp = default;
-            Core.Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
-            Core.Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
-            Core.Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> timeStamp = default;
+            Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
+            Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
+            Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, Core.Optional.ToNullable(timeStamp), clusterStorageCapacityInfo.Value, clusterComputeCapacityInfo.Value, Core.Optional.ToDictionary(nodeCapacityInfos));
+            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, Optional.ToNullable(timeStamp), clusterStorageCapacityInfo.Value, clusterComputeCapacityInfo.Value, Optional.ToDictionary(nodeCapacityInfos));
         }
     }
 }

@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppBackupPolicyBackupPoliciesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppBackupPolicyBackupPoliciesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppBackupPolicyBackupPoliciesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppBackupPolicyBackupPoliciesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

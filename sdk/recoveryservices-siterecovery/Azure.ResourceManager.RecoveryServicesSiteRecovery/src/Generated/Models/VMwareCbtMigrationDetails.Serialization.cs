@@ -20,48 +20,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> vmwareMachineId = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<string> osName = default;
-            Core.Optional<string> firmwareType = default;
-            Core.Optional<string> targetGeneration = default;
-            Core.Optional<string> licenseType = default;
-            Core.Optional<string> sqlServerLicenseType = default;
-            Core.Optional<ResourceIdentifier> dataMoverRunAsAccountId = default;
-            Core.Optional<ResourceIdentifier> snapshotRunAsAccountId = default;
-            Core.Optional<ResourceIdentifier> storageAccountId = default;
-            Core.Optional<string> targetVmName = default;
-            Core.Optional<string> targetVmSize = default;
-            Core.Optional<string> targetLocation = default;
-            Core.Optional<ResourceIdentifier> targetResourceGroupId = default;
-            Core.Optional<ResourceIdentifier> targetAvailabilitySetId = default;
-            Core.Optional<string> targetAvailabilityZone = default;
-            Core.Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Core.Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
-            Core.Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
-            Core.Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Core.Optional<IReadOnlyList<VMwareCbtProtectedDiskDetails>> protectedDisks = default;
-            Core.Optional<ResourceIdentifier> targetNetworkId = default;
-            Core.Optional<ResourceIdentifier> testNetworkId = default;
-            Core.Optional<IReadOnlyList<VMwareCbtNicDetails>> vmNics = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
-            Core.Optional<ResourceIdentifier> migrationRecoveryPointId = default;
-            Core.Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Core.Optional<ResourceIdentifier> lastRecoveryPointId = default;
-            Core.Optional<int> initialSeedingProgressPercentage = default;
-            Core.Optional<int> migrationProgressPercentage = default;
-            Core.Optional<int> resyncProgressPercentage = default;
-            Core.Optional<int> resumeProgressPercentage = default;
-            Core.Optional<long> initialSeedingRetryCount = default;
-            Core.Optional<long> resyncRetryCount = default;
-            Core.Optional<long> resumeRetryCount = default;
-            Core.Optional<string> resyncRequired = default;
-            Core.Optional<SiteRecoveryResyncState> resyncState = default;
-            Core.Optional<string> performAutoResync = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> seedDiskTags = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> targetDiskTags = default;
-            Core.Optional<IReadOnlyList<string>> supportedOSVersions = default;
+            Optional<ResourceIdentifier> vmwareMachineId = default;
+            Optional<string> osType = default;
+            Optional<string> osName = default;
+            Optional<string> firmwareType = default;
+            Optional<string> targetGeneration = default;
+            Optional<string> licenseType = default;
+            Optional<string> sqlServerLicenseType = default;
+            Optional<ResourceIdentifier> dataMoverRunAsAccountId = default;
+            Optional<ResourceIdentifier> snapshotRunAsAccountId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
+            Optional<string> targetVmName = default;
+            Optional<string> targetVmSize = default;
+            Optional<string> targetLocation = default;
+            Optional<ResourceIdentifier> targetResourceGroupId = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
+            Optional<string> targetAvailabilityZone = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
+            Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
+            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
+            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
+            Optional<IReadOnlyList<VMwareCbtProtectedDiskDetails>> protectedDisks = default;
+            Optional<ResourceIdentifier> targetNetworkId = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
+            Optional<IReadOnlyList<VMwareCbtNicDetails>> vmNics = default;
+            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
+            Optional<ResourceIdentifier> migrationRecoveryPointId = default;
+            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
+            Optional<ResourceIdentifier> lastRecoveryPointId = default;
+            Optional<int> initialSeedingProgressPercentage = default;
+            Optional<int> migrationProgressPercentage = default;
+            Optional<int> resyncProgressPercentage = default;
+            Optional<int> resumeProgressPercentage = default;
+            Optional<long> initialSeedingRetryCount = default;
+            Optional<long> resyncRetryCount = default;
+            Optional<long> resumeRetryCount = default;
+            Optional<string> resyncRequired = default;
+            Optional<SiteRecoveryResyncState> resyncState = default;
+            Optional<string> performAutoResync = default;
+            Optional<IReadOnlyDictionary<string, string>> seedDiskTags = default;
+            Optional<IReadOnlyDictionary<string, string>> targetDiskTags = default;
+            Optional<IReadOnlyList<string>> supportedOSVersions = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareCbtMigrationDetails(instanceType, vmwareMachineId.Value, osType.Value, osName.Value, firmwareType.Value, targetGeneration.Value, licenseType.Value, sqlServerLicenseType.Value, dataMoverRunAsAccountId.Value, snapshotRunAsAccountId.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetLocation.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, confidentialVmKeyVaultId.Value, targetVmSecurityProfile.Value, targetBootDiagnosticsStorageAccountId.Value, Core.Optional.ToDictionary(targetVmTags), Core.Optional.ToList(protectedDisks), targetNetworkId.Value, testNetworkId.Value, Core.Optional.ToList(vmNics), Core.Optional.ToDictionary(targetNicTags), migrationRecoveryPointId.Value, Core.Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Core.Optional.ToNullable(initialSeedingProgressPercentage), Core.Optional.ToNullable(migrationProgressPercentage), Core.Optional.ToNullable(resyncProgressPercentage), Core.Optional.ToNullable(resumeProgressPercentage), Core.Optional.ToNullable(initialSeedingRetryCount), Core.Optional.ToNullable(resyncRetryCount), Core.Optional.ToNullable(resumeRetryCount), resyncRequired.Value, Core.Optional.ToNullable(resyncState), performAutoResync.Value, Core.Optional.ToDictionary(seedDiskTags), Core.Optional.ToDictionary(targetDiskTags), Core.Optional.ToList(supportedOSVersions));
+            return new VMwareCbtMigrationDetails(instanceType, vmwareMachineId.Value, osType.Value, osName.Value, firmwareType.Value, targetGeneration.Value, licenseType.Value, sqlServerLicenseType.Value, dataMoverRunAsAccountId.Value, snapshotRunAsAccountId.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetLocation.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, confidentialVmKeyVaultId.Value, targetVmSecurityProfile.Value, targetBootDiagnosticsStorageAccountId.Value, Optional.ToDictionary(targetVmTags), Optional.ToList(protectedDisks), targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToDictionary(targetNicTags), migrationRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Optional.ToNullable(initialSeedingProgressPercentage), Optional.ToNullable(migrationProgressPercentage), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resumeProgressPercentage), Optional.ToNullable(initialSeedingRetryCount), Optional.ToNullable(resyncRetryCount), Optional.ToNullable(resumeRetryCount), resyncRequired.Value, Optional.ToNullable(resyncState), performAutoResync.Value, Optional.ToDictionary(seedDiskTags), Optional.ToDictionary(targetDiskTags), Optional.ToList(supportedOSVersions));
         }
     }
 }

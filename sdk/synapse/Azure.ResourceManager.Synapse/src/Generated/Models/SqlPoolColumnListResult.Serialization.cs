@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SynapseSqlPoolColumnData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SynapseSqlPoolColumnData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SqlPoolColumnListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SqlPoolColumnListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

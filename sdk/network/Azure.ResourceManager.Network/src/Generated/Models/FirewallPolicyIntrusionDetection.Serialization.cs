@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyIntrusionDetection : Core.IUtf8JsonSerializable
+    public partial class FirewallPolicyIntrusionDetection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<FirewallPolicyIntrusionDetectionStateType> mode = default;
-            Core.Optional<FirewallPolicyIntrusionDetectionConfiguration> configuration = default;
+            Optional<FirewallPolicyIntrusionDetectionStateType> mode = default;
+            Optional<FirewallPolicyIntrusionDetectionConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyIntrusionDetection(Core.Optional.ToNullable(mode), configuration.Value);
+            return new FirewallPolicyIntrusionDetection(Optional.ToNullable(mode), configuration.Value);
         }
     }
 }

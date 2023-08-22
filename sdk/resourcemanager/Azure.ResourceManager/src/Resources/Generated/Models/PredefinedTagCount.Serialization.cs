@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<int> value = default;
+            Optional<string> type = default;
+            Optional<int> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PredefinedTagCount(type.Value, Core.Optional.ToNullable(value));
+            return new PredefinedTagCount(type.Value, Optional.ToNullable(value));
         }
     }
 }

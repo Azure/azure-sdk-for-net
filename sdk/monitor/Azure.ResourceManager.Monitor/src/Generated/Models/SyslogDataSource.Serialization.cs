@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class SyslogDataSource : Core.IUtf8JsonSerializable
+    public partial class SyslogDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Streams))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(FacilityNames))
+            if (Optional.IsCollectionDefined(FacilityNames))
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LogLevels))
+            if (Optional.IsCollectionDefined(LogLevels))
             {
                 writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IList<SyslogDataSourceStream>> streams = default;
-            Core.Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
-            Core.Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
-            Core.Optional<string> name = default;
+            Optional<IList<SyslogDataSourceStream>> streams = default;
+            Optional<IList<SyslogDataSourceFacilityName>> facilityNames = default;
+            Optional<IList<SyslogDataSourceLogLevel>> logLevels = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new SyslogDataSource(Core.Optional.ToList(streams), Core.Optional.ToList(facilityNames), Core.Optional.ToList(logLevels), name.Value);
+            return new SyslogDataSource(Optional.ToList(streams), Optional.ToList(facilityNames), Optional.ToList(logLevels), name.Value);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of DeleteRepositoryResult. </summary>
         internal DeleteRepositoryResult()
         {
-            DeletedManifests = new Core.ChangeTrackingList<string>();
-            DeletedTags = new Core.ChangeTrackingList<string>();
+            DeletedManifests = new ChangeTrackingList<string>();
+            DeletedTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> SHA of the deleted image. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> name = default;
-            Core.Optional<IReadOnlyList<AppPlatformSkuCapabilities>> capabilities = default;
+            Optional<IReadOnlyList<string>> name = default;
+            Optional<IReadOnlyList<AppPlatformSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformSkuZoneDetails(Core.Optional.ToList(name), Core.Optional.ToList(capabilities));
+            return new AppPlatformSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
         }
     }
 }

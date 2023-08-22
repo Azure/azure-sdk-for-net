@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>
         public CognitiveServicesAccountDeploymentProperties()
         {
-            Capabilities = new Core.ChangeTrackingDictionary<string, string>();
-            RateLimits = new Core.ChangeTrackingList<ServiceAccountThrottlingRule>();
+            Capabilities = new ChangeTrackingDictionary<string, string>();
+            RateLimits = new ChangeTrackingList<ServiceAccountThrottlingRule>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>

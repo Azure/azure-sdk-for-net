@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VirtualDisk : Core.IUtf8JsonSerializable
+    public partial class VirtualDisk : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(DiskSizeGB))
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Core.Optional.IsDefined(DeviceKey))
+            if (Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (Core.Optional.IsDefined(DiskMode))
+            if (Optional.IsDefined(DiskMode))
             {
                 writer.WritePropertyName("diskMode"u8);
                 writer.WriteStringValue(DiskMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ControllerKey))
+            if (Optional.IsDefined(ControllerKey))
             {
                 writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
-            if (Core.Optional.IsDefined(UnitNumber))
+            if (Optional.IsDefined(UnitNumber))
             {
                 writer.WritePropertyName("unitNumber"u8);
                 writer.WriteNumberValue(UnitNumber.Value);
             }
-            if (Core.Optional.IsDefined(DeviceName))
+            if (Optional.IsDefined(DeviceName))
             {
                 writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
-            if (Core.Optional.IsDefined(DiskType))
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> label = default;
-            Core.Optional<string> diskObjectId = default;
-            Core.Optional<int> diskSizeGB = default;
-            Core.Optional<int> deviceKey = default;
-            Core.Optional<DiskMode> diskMode = default;
-            Core.Optional<int> controllerKey = default;
-            Core.Optional<int> unitNumber = default;
-            Core.Optional<string> deviceName = default;
-            Core.Optional<DiskType> diskType = default;
+            Optional<string> name = default;
+            Optional<string> label = default;
+            Optional<string> diskObjectId = default;
+            Optional<int> diskSizeGB = default;
+            Optional<int> deviceKey = default;
+            Optional<DiskMode> diskMode = default;
+            Optional<int> controllerKey = default;
+            Optional<int> unitNumber = default;
+            Optional<string> deviceName = default;
+            Optional<DiskType> diskType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new VirtualDisk(name.Value, label.Value, diskObjectId.Value, Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(deviceKey), Core.Optional.ToNullable(diskMode), Core.Optional.ToNullable(controllerKey), Core.Optional.ToNullable(unitNumber), deviceName.Value, Core.Optional.ToNullable(diskType));
+            return new VirtualDisk(name.Value, label.Value, diskObjectId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(deviceKey), Optional.ToNullable(diskMode), Optional.ToNullable(controllerKey), Optional.ToNullable(unitNumber), deviceName.Value, Optional.ToNullable(diskType));
         }
     }
 }

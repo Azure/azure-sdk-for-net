@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             long usage = default;
-            Core.Optional<long?> quota = default;
+            Optional<long?> quota = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usage"u8))
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchResourceCounter(usage, Core.Optional.ToNullable(quota));
+            return new SearchResourceCounter(usage, Optional.ToNullable(quota));
         }
     }
 }

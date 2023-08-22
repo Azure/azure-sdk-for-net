@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
         public ApplicationGatewaySslProfile()
         {
-            TrustedClientCertificates = new Core.ChangeTrackingList<WritableSubResource>();
+            TrustedClientCertificates = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>

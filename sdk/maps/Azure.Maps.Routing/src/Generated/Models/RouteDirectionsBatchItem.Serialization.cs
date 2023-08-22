@@ -18,8 +18,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<RouteDirectionsBatchItemResponse> response = default;
-            Core.Optional<int> statusCode = default;
+            Optional<RouteDirectionsBatchItemResponse> response = default;
+            Optional<int> statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("response"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirectionsBatchItem(Core.Optional.ToNullable(statusCode), response.Value);
+            return new RouteDirectionsBatchItem(Optional.ToNullable(statusCode), response.Value);
         }
     }
 }

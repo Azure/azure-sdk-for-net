@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
         public DevTestLabArtifactInstallInfo()
         {
-            Parameters = new Core.ChangeTrackingList<DevTestLabArtifactParameter>();
+            Parameters = new ChangeTrackingList<DevTestLabArtifactParameter>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>

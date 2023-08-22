@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DiskExclusionProperties. </summary>
         public DiskExclusionProperties()
         {
-            DiskLunList = new Core.ChangeTrackingList<int>();
+            DiskLunList = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of DiskExclusionProperties. </summary>

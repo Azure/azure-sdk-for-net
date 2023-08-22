@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyOption : Core.IUtf8JsonSerializable
+    public partial class ContentKeyPolicyOption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<Guid> policyOptionId = default;
-            Core.Optional<string> name = default;
+            Optional<Guid> policyOptionId = default;
+            Optional<string> name = default;
             ContentKeyPolicyConfiguration configuration = default;
             ContentKeyPolicyRestriction restriction = default;
             foreach (var property in element.EnumerateObject())
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ContentKeyPolicyOption(Core.Optional.ToNullable(policyOptionId), name.Value, configuration, restriction);
+            return new ContentKeyPolicyOption(Optional.ToNullable(policyOptionId), name.Value, configuration, restriction);
         }
     }
 }

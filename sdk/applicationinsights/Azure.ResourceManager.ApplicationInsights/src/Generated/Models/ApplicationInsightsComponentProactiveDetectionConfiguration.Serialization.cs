@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentProactiveDetectionConfiguration : Core.IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentProactiveDetectionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("Enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(SendEmailsToSubscriptionOwners))
+            if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
             {
                 writer.WritePropertyName("SendEmailsToSubscriptionOwners"u8);
                 writer.WriteBooleanValue(SendEmailsToSubscriptionOwners.Value);
             }
-            if (Core.Optional.IsCollectionDefined(CustomEmails))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("CustomEmails"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(LastUpdatedTime))
+            if (Optional.IsDefined(LastUpdatedTime))
             {
                 writer.WritePropertyName("LastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedTime);
             }
-            if (Core.Optional.IsDefined(RuleDefinitions))
+            if (Optional.IsDefined(RuleDefinitions))
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
                 writer.WriteObjectValue(RuleDefinitions);
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<bool> sendEmailsToSubscriptionOwners = default;
-            Core.Optional<IList<string>> customEmails = default;
-            Core.Optional<string> lastUpdatedTime = default;
-            Core.Optional<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions> ruleDefinitions = default;
+            Optional<string> name = default;
+            Optional<bool> enabled = default;
+            Optional<bool> sendEmailsToSubscriptionOwners = default;
+            Optional<IList<string>> customEmails = default;
+            Optional<string> lastUpdatedTime = default;
+            Optional<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions> ruleDefinitions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentProactiveDetectionConfiguration(name.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(sendEmailsToSubscriptionOwners), Core.Optional.ToList(customEmails), lastUpdatedTime.Value, ruleDefinitions.Value);
+            return new ApplicationInsightsComponentProactiveDetectionConfiguration(name.Value, Optional.ToNullable(enabled), Optional.ToNullable(sendEmailsToSubscriptionOwners), Optional.ToList(customEmails), lastUpdatedTime.Value, ruleDefinitions.Value);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 return null;
             }
-            Core.Optional<string> label = default;
+            Optional<string> label = default;
             KeyValueElement key = default;
             KeyValueElement value = default;
             float confidence = default;

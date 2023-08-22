@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetAppSubscriptionQuotaItem>> value = default;
+            Optional<IReadOnlyList<NetAppSubscriptionQuotaItem>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new SubscriptionQuotaItemList(Core.Optional.ToList(value));
+            return new SubscriptionQuotaItemList(Optional.ToList(value));
         }
     }
 }

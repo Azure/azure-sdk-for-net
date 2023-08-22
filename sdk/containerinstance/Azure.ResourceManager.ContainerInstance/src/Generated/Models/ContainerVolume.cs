@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Secret = new Core.ChangeTrackingDictionary<string, string>();
+            Secret = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ContainerVolume. </summary>

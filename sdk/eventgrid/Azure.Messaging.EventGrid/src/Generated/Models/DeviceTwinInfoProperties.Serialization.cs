@@ -18,8 +18,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<DeviceTwinProperties> desired = default;
-            Core.Optional<DeviceTwinProperties> reported = default;
+            Optional<DeviceTwinProperties> desired = default;
+            Optional<DeviceTwinProperties> reported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("desired"u8))

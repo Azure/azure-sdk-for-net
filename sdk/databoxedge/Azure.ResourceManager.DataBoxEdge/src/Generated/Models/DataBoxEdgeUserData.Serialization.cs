@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeUserData : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeUserData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EncryptedPassword))
+            if (Optional.IsDefined(EncryptedPassword))
             {
                 writer.WritePropertyName("encryptedPassword"u8);
                 writer.WriteObjectValue(EncryptedPassword);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<AsymmetricEncryptedSecret> encryptedPassword = default;
-            Core.Optional<IReadOnlyList<ShareAccessRight>> shareAccessRights = default;
+            Optional<SystemData> systemData = default;
+            Optional<AsymmetricEncryptedSecret> encryptedPassword = default;
+            Optional<IReadOnlyList<ShareAccessRight>> shareAccessRights = default;
             DataBoxEdgeUserType userType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeUserData(id, name, type, systemData.Value, encryptedPassword.Value, Core.Optional.ToList(shareAccessRights), userType);
+            return new DataBoxEdgeUserData(id, name, type, systemData.Value, encryptedPassword.Value, Optional.ToList(shareAccessRights), userType);
         }
     }
 }

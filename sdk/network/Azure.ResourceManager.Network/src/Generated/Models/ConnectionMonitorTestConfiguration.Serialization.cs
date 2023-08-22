@@ -10,41 +10,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorTestConfiguration : Core.IUtf8JsonSerializable
+    public partial class ConnectionMonitorTestConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(TestFrequencySec))
+            if (Optional.IsDefined(TestFrequencySec))
             {
                 writer.WritePropertyName("testFrequencySec"u8);
                 writer.WriteNumberValue(TestFrequencySec.Value);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Core.Optional.IsDefined(PreferredIPVersion))
+            if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HttpConfiguration))
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration"u8);
                 writer.WriteObjectValue(HttpConfiguration);
             }
-            if (Core.Optional.IsDefined(TcpConfiguration))
+            if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
                 writer.WriteObjectValue(TcpConfiguration);
             }
-            if (Core.Optional.IsDefined(IcmpConfiguration))
+            if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
                 writer.WriteObjectValue(IcmpConfiguration);
             }
-            if (Core.Optional.IsDefined(SuccessThreshold))
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteObjectValue(SuccessThreshold);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Core.Optional<int> testFrequencySec = default;
+            Optional<int> testFrequencySec = default;
             ConnectionMonitorTestConfigurationProtocol protocol = default;
-            Core.Optional<TestEvalPreferredIPVersion> preferredIPVersion = default;
-            Core.Optional<ConnectionMonitorHttpConfiguration> httpConfiguration = default;
-            Core.Optional<ConnectionMonitorTcpConfiguration> tcpConfiguration = default;
-            Core.Optional<ConnectionMonitorIcmpConfiguration> icmpConfiguration = default;
-            Core.Optional<ConnectionMonitorSuccessThreshold> successThreshold = default;
+            Optional<TestEvalPreferredIPVersion> preferredIPVersion = default;
+            Optional<ConnectionMonitorHttpConfiguration> httpConfiguration = default;
+            Optional<ConnectionMonitorTcpConfiguration> tcpConfiguration = default;
+            Optional<ConnectionMonitorIcmpConfiguration> icmpConfiguration = default;
+            Optional<ConnectionMonitorSuccessThreshold> successThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorTestConfiguration(name, Core.Optional.ToNullable(testFrequencySec), protocol, Core.Optional.ToNullable(preferredIPVersion), httpConfiguration.Value, tcpConfiguration.Value, icmpConfiguration.Value, successThreshold.Value);
+            return new ConnectionMonitorTestConfiguration(name, Optional.ToNullable(testFrequencySec), protocol, Optional.ToNullable(preferredIPVersion), httpConfiguration.Value, tcpConfiguration.Value, icmpConfiguration.Value, successThreshold.Value);
         }
     }
 }

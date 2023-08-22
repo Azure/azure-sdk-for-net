@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicyEvaluationDetails. </summary>
         internal PolicyEvaluationDetails()
         {
-            EvaluatedExpressions = new Core.ChangeTrackingList<ExpressionEvaluationDetails>();
+            EvaluatedExpressions = new ChangeTrackingList<ExpressionEvaluationDetails>();
         }
 
         /// <summary> Initializes a new instance of PolicyEvaluationDetails. </summary>

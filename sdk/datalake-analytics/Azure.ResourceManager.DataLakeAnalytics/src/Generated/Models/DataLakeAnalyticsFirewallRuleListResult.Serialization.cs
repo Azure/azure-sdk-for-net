@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsFirewallRuleListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DataLakeAnalyticsFirewallRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

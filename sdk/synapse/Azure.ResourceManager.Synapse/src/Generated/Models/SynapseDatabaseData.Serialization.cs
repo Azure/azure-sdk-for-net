@@ -12,12 +12,12 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDatabaseData : Core.IUtf8JsonSerializable
+    public partial class SynapseDatabaseData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Synapse
                     case "ReadWrite": return SynapseReadWriteDatabase.DeserializeSynapseReadWriteDatabase(element);
                 }
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseDatabaseData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind);
+            return new SynapseDatabaseData(id, name, type, systemData.Value, Optional.ToNullable(location), kind);
         }
     }
 }

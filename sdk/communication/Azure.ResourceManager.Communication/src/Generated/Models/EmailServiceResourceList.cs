@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of EmailServiceResourceList. </summary>
         internal EmailServiceResourceList()
         {
-            Value = new Core.ChangeTrackingList<EmailServiceResourceData>();
+            Value = new ChangeTrackingList<EmailServiceResourceData>();
         }
 
         /// <summary> Initializes a new instance of EmailServiceResourceList. </summary>

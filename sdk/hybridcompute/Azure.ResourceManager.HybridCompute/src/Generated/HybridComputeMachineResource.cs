@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = await _defaultRestClient.UpgradeExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new HybridComputeArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = _defaultRestClient.UpgradeExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters, cancellationToken);
-                var operation = new HybridComputeArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new HybridComputeArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

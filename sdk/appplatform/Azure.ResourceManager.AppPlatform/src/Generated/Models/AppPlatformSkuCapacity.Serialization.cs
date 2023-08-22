@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             int minimum = default;
-            Core.Optional<int> maximum = default;
-            Core.Optional<int> @default = default;
-            Core.Optional<AppPlatformSkuScaleType> scaleType = default;
+            Optional<int> maximum = default;
+            Optional<int> @default = default;
+            Optional<AppPlatformSkuScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformSkuCapacity(minimum, Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(@default), Core.Optional.ToNullable(scaleType));
+            return new AppPlatformSkuCapacity(minimum, Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

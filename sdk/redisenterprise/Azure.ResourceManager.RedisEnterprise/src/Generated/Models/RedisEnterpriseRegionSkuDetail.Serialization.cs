@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Core.Optional<ResourceType> resourceType = default;
-            Core.Optional<RedisEnterpriseLocationInfo> locationInfo = default;
-            Core.Optional<SkuDetail> skuDetails = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<RedisEnterpriseLocationInfo> locationInfo = default;
+            Optional<SkuDetail> skuDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseRegionSkuDetail(Core.Optional.ToNullable(resourceType), locationInfo.Value, skuDetails.Value);
+            return new RedisEnterpriseRegionSkuDetail(Optional.ToNullable(resourceType), locationInfo.Value, skuDetails.Value);
         }
     }
 }

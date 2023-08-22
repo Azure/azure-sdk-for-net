@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesEligibleAuthorization : Core.IUtf8JsonSerializable
+    public partial class ManagedServicesEligibleAuthorization : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Core.Optional.IsDefined(PrincipalIdDisplayName))
+            if (Optional.IsDefined(PrincipalIdDisplayName))
             {
                 writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
             }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
-            if (Core.Optional.IsDefined(JustInTimeAccessPolicy))
+            if (Optional.IsDefined(JustInTimeAccessPolicy))
             {
                 writer.WritePropertyName("justInTimeAccessPolicy"u8);
                 writer.WriteObjectValue(JustInTimeAccessPolicy);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Guid principalId = default;
-            Core.Optional<string> principalIdDisplayName = default;
+            Optional<string> principalIdDisplayName = default;
             string roleDefinitionId = default;
-            Core.Optional<ManagedServicesJustInTimeAccessPolicy> justInTimeAccessPolicy = default;
+            Optional<ManagedServicesJustInTimeAccessPolicy> justInTimeAccessPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))

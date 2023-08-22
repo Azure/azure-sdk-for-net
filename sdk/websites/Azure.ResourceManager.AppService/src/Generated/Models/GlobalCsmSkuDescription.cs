@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of GlobalCsmSkuDescription. </summary>
         internal GlobalCsmSkuDescription()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            Capabilities = new Core.ChangeTrackingList<AppServiceSkuCapability>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Capabilities = new ChangeTrackingList<AppServiceSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of GlobalCsmSkuDescription. </summary>

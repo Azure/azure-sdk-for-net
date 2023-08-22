@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of ReportResourceList. </summary>
         internal ReportResourceList()
         {
-            Value = new Core.ChangeTrackingList<ReportResourceData>();
+            Value = new ChangeTrackingList<ReportResourceData>();
         }
 
         /// <summary> Initializes a new instance of ReportResourceList. </summary>

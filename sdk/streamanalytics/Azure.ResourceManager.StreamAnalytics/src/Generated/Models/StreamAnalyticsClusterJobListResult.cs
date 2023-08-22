@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsClusterJobListResult. </summary>
         internal StreamAnalyticsClusterJobListResult()
         {
-            Value = new Core.ChangeTrackingList<StreamAnalyticsClusterJob>();
+            Value = new ChangeTrackingList<StreamAnalyticsClusterJob>();
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsClusterJobListResult. </summary>

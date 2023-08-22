@@ -10,41 +10,41 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class OracleConnectionInfo : Core.IUtf8JsonSerializable
+    public partial class OracleConnectionInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            if (Core.Optional.IsDefined(ServerName))
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Core.Optional.IsDefined(ServerVersion))
+            if (Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Core.Optional.IsDefined(Authentication))
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string dataSource = default;
-            Core.Optional<string> serverName = default;
-            Core.Optional<string> serverVersion = default;
-            Core.Optional<int> port = default;
-            Core.Optional<AuthenticationType> authentication = default;
+            Optional<string> serverName = default;
+            Optional<string> serverVersion = default;
+            Optional<int> port = default;
+            Optional<AuthenticationType> authentication = default;
             string type = default;
-            Core.Optional<string> userName = default;
-            Core.Optional<string> password = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new OracleConnectionInfo(type, userName.Value, password.Value, dataSource, serverName.Value, serverVersion.Value, Core.Optional.ToNullable(port), Core.Optional.ToNullable(authentication));
+            return new OracleConnectionInfo(type, userName.Value, password.Value, dataSource, serverName.Value, serverVersion.Value, Optional.ToNullable(port), Optional.ToNullable(authentication));
         }
     }
 }

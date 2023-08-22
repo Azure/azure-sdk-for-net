@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Grafana
         /// <summary> Initializes a new instance of GrafanaPrivateEndpointConnectionData. </summary>
         public GrafanaPrivateEndpointConnectionData()
         {
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of GrafanaPrivateEndpointConnectionData. </summary>

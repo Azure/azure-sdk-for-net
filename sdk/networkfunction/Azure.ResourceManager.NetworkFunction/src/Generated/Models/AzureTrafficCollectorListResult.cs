@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Initializes a new instance of AzureTrafficCollectorListResult. </summary>
         internal AzureTrafficCollectorListResult()
         {
-            Value = new Core.ChangeTrackingList<AzureTrafficCollectorData>();
+            Value = new ChangeTrackingList<AzureTrafficCollectorData>();
         }
 
         /// <summary> Initializes a new instance of AzureTrafficCollectorListResult. </summary>

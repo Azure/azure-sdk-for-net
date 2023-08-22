@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkFabricIPExtendedCommunityOperationSource : Core.IOperationSource<NetworkFabricIPExtendedCommunityResource>
+    internal class NetworkFabricIPExtendedCommunityOperationSource : IOperationSource<NetworkFabricIPExtendedCommunityResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _client = client;
         }
 
-        NetworkFabricIPExtendedCommunityResource Core.IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFabricIPExtendedCommunityResource IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(document.RootElement);
             return new NetworkFabricIPExtendedCommunityResource(_client, data);
         }
 
-        async ValueTask<NetworkFabricIPExtendedCommunityResource> Core.IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFabricIPExtendedCommunityResource> IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(document.RootElement);

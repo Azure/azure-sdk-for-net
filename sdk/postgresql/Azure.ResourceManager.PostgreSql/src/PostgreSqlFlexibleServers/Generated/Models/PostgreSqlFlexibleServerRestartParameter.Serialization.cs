@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerRestartParameter : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerRestartParameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RestartWithFailover))
+            if (Optional.IsDefined(RestartWithFailover))
             {
                 writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteBooleanValue(RestartWithFailover.Value);
             }
-            if (Core.Optional.IsDefined(FailoverMode))
+            if (Optional.IsDefined(FailoverMode))
             {
                 writer.WritePropertyName("failoverMode"u8);
                 writer.WriteStringValue(FailoverMode.Value.ToString());

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputePublicIPAddressSku : Core.IUtf8JsonSerializable
+    public partial class ComputePublicIPAddressSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ComputePublicIPAddressSkuName> name = default;
-            Core.Optional<ComputePublicIPAddressSkuTier> tier = default;
+            Optional<ComputePublicIPAddressSkuName> name = default;
+            Optional<ComputePublicIPAddressSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputePublicIPAddressSku(Core.Optional.ToNullable(name), Core.Optional.ToNullable(tier));
+            return new ComputePublicIPAddressSku(Optional.ToNullable(name), Optional.ToNullable(tier));
         }
     }
 }

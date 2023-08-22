@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of TrafficRegions. </summary>
         public TrafficRegions()
         {
-            Regions = new Core.ChangeTrackingList<AzureLocation>();
+            Regions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of TrafficRegions. </summary>

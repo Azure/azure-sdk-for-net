@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<AccountKeyMetadata> primaryMasterKey = default;
-            Core.Optional<AccountKeyMetadata> secondaryMasterKey = default;
-            Core.Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;
-            Core.Optional<AccountKeyMetadata> secondaryReadonlyMasterKey = default;
+            Optional<AccountKeyMetadata> primaryMasterKey = default;
+            Optional<AccountKeyMetadata> secondaryMasterKey = default;
+            Optional<AccountKeyMetadata> primaryReadonlyMasterKey = default;
+            Optional<AccountKeyMetadata> secondaryReadonlyMasterKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMasterKey"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string instanceType = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new AsrJobDetails(instanceType, Core.Optional.ToDictionary(affectedObjectDetails));
+            return new AsrJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails));
         }
     }
 }

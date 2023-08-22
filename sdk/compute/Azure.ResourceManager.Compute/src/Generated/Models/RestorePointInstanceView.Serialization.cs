@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DiskRestorePointInstanceView>> diskRestorePoints = default;
-            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<IReadOnlyList<DiskRestorePointInstanceView>> diskRestorePoints = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskRestorePoints"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RestorePointInstanceView(Core.Optional.ToList(diskRestorePoints), Core.Optional.ToList(statuses));
+            return new RestorePointInstanceView(Optional.ToList(diskRestorePoints), Optional.ToList(statuses));
         }
     }
 }

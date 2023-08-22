@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SingleServerFullResourceNames : Core.IUtf8JsonSerializable
+    public partial class SingleServerFullResourceNames : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualMachine))
+            if (Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
                 writer.WriteObjectValue(VirtualMachine);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<VirtualMachineResourceNames> virtualMachine = default;
+            Optional<VirtualMachineResourceNames> virtualMachine = default;
             SapNamingPatternType namingPatternType = default;
             foreach (var property in element.EnumerateObject())
             {

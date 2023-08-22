@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Core.Optional<string> priority = default;
-            Core.Optional<string> ruleStackName = default;
-            Core.Optional<string> ruleListName = default;
-            Core.Optional<string> firewallName = default;
-            Core.Optional<string> ruleName = default;
+            Optional<string> priority = default;
+            Optional<string> ruleStackName = default;
+            Optional<string> ruleListName = default;
+            Optional<string> firewallName = default;
+            Optional<string> ruleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))

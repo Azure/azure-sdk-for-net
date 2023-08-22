@@ -14,19 +14,19 @@ using Azure.ResourceManager.SignalR.Models;
 
 namespace Azure.ResourceManager.SignalR
 {
-    public partial class SignalRPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class SignalRPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (Core.Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.SignalR
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SignalRProvisioningState> provisioningState = default;
-            Core.Optional<WritableSubResource> privateEndpoint = default;
-            Core.Optional<IReadOnlyList<string>> groupIds = default;
-            Core.Optional<SignalRPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<SystemData> systemData = default;
+            Optional<SignalRProvisioningState> provisioningState = default;
+            Optional<WritableSubResource> privateEndpoint = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
+            Optional<SignalRPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SignalR
                     continue;
                 }
             }
-            return new SignalRPrivateEndpointConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), privateEndpoint, Core.Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
+            return new SignalRPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value);
         }
     }
 }

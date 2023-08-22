@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Core.Optional<JobExecutionRunningState> status = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<ContainerAppJobExecutionTemplate> template = default;
+            Optional<JobExecutionRunningState> status = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<ContainerAppJobExecutionTemplate> template = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppJobExecutionData(id, name, type, systemData.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), template.Value);
+            return new ContainerAppJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value);
         }
     }
 }

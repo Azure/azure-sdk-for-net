@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Name = name;
             Time = time;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Envelope version. For internal use only. By assigning this the default, it will not be serialized within the payload unless changed to a value other than #1. </summary>

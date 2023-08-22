@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppStack : Core.IUtf8JsonSerializable
+    public partial class WebAppStack : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayText = default;
-            Core.Optional<string> value = default;
-            Core.Optional<IReadOnlyList<WebAppMajorVersion>> majorVersions = default;
-            Core.Optional<StackPreferredOS> preferredOS = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayText = default;
+            Optional<string> value = default;
+            Optional<IReadOnlyList<WebAppMajorVersion>> majorVersions = default;
+            Optional<StackPreferredOS> preferredOS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new WebAppStack(id, name, type, systemData.Value, Core.Optional.ToNullable(location), displayText.Value, value.Value, Core.Optional.ToList(majorVersions), Core.Optional.ToNullable(preferredOS), kind.Value);
+            return new WebAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOS), kind.Value);
         }
     }
 }

@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuLocationInfo : Core.IUtf8JsonSerializable
+    public partial class ResourceTypeSkuLocationInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ZoneDetails))
+            if (Optional.IsCollectionDefined(ZoneDetails))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExtendedLocations))
+            if (Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ExtendedLocationType))
+            if (Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationType.Value.ToSerialString());
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             AzureLocation location = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IList<ResourceTypeSkuZoneDetail>> zoneDetails = default;
-            Core.Optional<IList<string>> extendedLocations = default;
-            Core.Optional<ProviderHubExtendedLocationType> type = default;
+            Optional<IList<string>> zones = default;
+            Optional<IList<ResourceTypeSkuZoneDetail>> zoneDetails = default;
+            Optional<IList<string>> extendedLocations = default;
+            Optional<ProviderHubExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeSkuLocationInfo(location, Core.Optional.ToList(zones), Core.Optional.ToList(zoneDetails), Core.Optional.ToList(extendedLocations), Core.Optional.ToNullable(type));
+            return new ResourceTypeSkuLocationInfo(location, Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type));
         }
     }
 }

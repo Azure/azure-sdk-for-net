@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Core.Optional<SessionHostHealthCheckName> healthCheckName = default;
-            Core.Optional<SessionHostHealthCheckResult> healthCheckResult = default;
-            Core.Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
+            Optional<SessionHostHealthCheckName> healthCheckName = default;
+            Optional<SessionHostHealthCheckResult> healthCheckResult = default;
+            Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthCheckName"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new SessionHostHealthCheckReport(Core.Optional.ToNullable(healthCheckName), Core.Optional.ToNullable(healthCheckResult), additionalFailureDetails.Value);
+            return new SessionHostHealthCheckReport(Optional.ToNullable(healthCheckName), Optional.ToNullable(healthCheckResult), additionalFailureDetails.Value);
         }
     }
 }

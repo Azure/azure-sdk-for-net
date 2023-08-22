@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IotHubReplicaRoleType> role = default;
+            Optional<AzureLocation> location = default;
+            Optional<IotHubReplicaRoleType> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubLocationDescription(Core.Optional.ToNullable(location), Core.Optional.ToNullable(role));
+            return new IotHubLocationDescription(Optional.ToNullable(location), Optional.ToNullable(role));
         }
     }
 }

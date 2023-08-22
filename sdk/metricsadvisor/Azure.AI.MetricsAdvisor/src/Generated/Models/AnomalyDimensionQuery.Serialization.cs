@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class AnomalyDimensionQuery : Core.IUtf8JsonSerializable
+    internal partial class AnomalyDimensionQuery : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(EndTime, "O");
             writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(DimensionName);
-            if (Core.Optional.IsDefined(DimensionFilter))
+            if (Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteObjectValue(DimensionFilter);

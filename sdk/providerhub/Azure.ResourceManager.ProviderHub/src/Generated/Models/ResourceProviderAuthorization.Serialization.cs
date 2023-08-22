@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderAuthorization : Core.IUtf8JsonSerializable
+    public partial class ResourceProviderAuthorization : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApplicationId))
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Core.Optional.IsDefined(RoleDefinitionId))
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Core.Optional.IsDefined(ManagedByRoleDefinitionId))
+            if (Optional.IsDefined(ManagedByRoleDefinitionId))
             {
                 writer.WritePropertyName("managedByRoleDefinitionId"u8);
                 writer.WriteStringValue(ManagedByRoleDefinitionId);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<string> applicationId = default;
-            Core.Optional<string> roleDefinitionId = default;
-            Core.Optional<string> managedByRoleDefinitionId = default;
+            Optional<string> applicationId = default;
+            Optional<string> roleDefinitionId = default;
+            Optional<string> managedByRoleDefinitionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))

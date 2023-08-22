@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of RecoveryPointsRecommendedForMoveContent. </summary>
         public RecoveryPointsRecommendedForMoveContent()
         {
-            ExcludedRPList = new Core.ChangeTrackingList<string>();
+            ExcludedRPList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Gets the class type. </summary>

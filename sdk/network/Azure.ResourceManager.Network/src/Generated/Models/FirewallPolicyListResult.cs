@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyListResult. </summary>
         internal FirewallPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<FirewallPolicyData>();
+            Value = new ChangeTrackingList<FirewallPolicyData>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyListResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceList. </summary>
         internal DataBoxEdgeDeviceList()
         {
-            Value = new Core.ChangeTrackingList<DataBoxEdgeDeviceData>();
+            Value = new ChangeTrackingList<DataBoxEdgeDeviceData>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceList. </summary>

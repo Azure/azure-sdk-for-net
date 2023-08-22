@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<int> databaseCount = default;
-            Core.Optional<MigrationState> state = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<string> sourceServerName = default;
-            Core.Optional<string> sourceServerVersion = default;
-            Core.Optional<string> sourceServerBrandVersion = default;
-            Core.Optional<string> targetServerName = default;
-            Core.Optional<string> targetServerVersion = default;
-            Core.Optional<string> targetServerBrandVersion = default;
-            Core.Optional<int> databaseErrorCount = default;
-            Core.Optional<string> id = default;
+            Optional<int> databaseCount = default;
+            Optional<MigrationState> state = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<string> sourceServerName = default;
+            Optional<string> sourceServerVersion = default;
+            Optional<string> sourceServerBrandVersion = default;
+            Optional<string> targetServerName = default;
+            Optional<string> targetServerVersion = default;
+            Optional<string> targetServerBrandVersion = default;
+            Optional<int> databaseErrorCount = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, Core.Optional.ToNullable(databaseCount), Core.Optional.ToNullable(state), Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Core.Optional.ToNullable(databaseErrorCount));
+            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(databaseCount), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToNullable(databaseErrorCount));
         }
     }
 }

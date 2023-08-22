@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> unavailableOccuredTime = default;
-            Core.Optional<DateTimeOffset> resolvedTime = default;
-            Core.Optional<string> unavailableSummary = default;
+            Optional<DateTimeOffset> unavailableOccuredTime = default;
+            Optional<DateTimeOffset> resolvedTime = default;
+            Optional<string> unavailableSummary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unavailableOccuredTime"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthAvailabilityStateRecentlyResolved(Core.Optional.ToNullable(unavailableOccuredTime), Core.Optional.ToNullable(resolvedTime), unavailableSummary.Value);
+            return new ResourceHealthAvailabilityStateRecentlyResolved(Optional.ToNullable(unavailableOccuredTime), Optional.ToNullable(resolvedTime), unavailableSummary.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of MigrationConfigListResult. </summary>
         internal MigrationConfigListResult()
         {
-            Value = new Core.ChangeTrackingList<MigrationConfigurationData>();
+            Value = new ChangeTrackingList<MigrationConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of MigrationConfigListResult. </summary>

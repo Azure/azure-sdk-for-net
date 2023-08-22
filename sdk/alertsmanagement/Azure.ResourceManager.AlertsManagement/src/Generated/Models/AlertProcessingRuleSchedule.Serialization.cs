@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleSchedule : Core.IUtf8JsonSerializable
+    public partial class AlertProcessingRuleSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EffectiveFrom))
+            if (Optional.IsDefined(EffectiveFrom))
             {
                 writer.WritePropertyName("effectiveFrom"u8);
                 writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
-            if (Core.Optional.IsDefined(EffectiveUntil))
+            if (Optional.IsDefined(EffectiveUntil))
             {
                 writer.WritePropertyName("effectiveUntil"u8);
                 writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
-            if (Core.Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Core.Optional.IsCollectionDefined(Recurrences))
+            if (Optional.IsCollectionDefined(Recurrences))
             {
                 writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> effectiveFrom = default;
-            Core.Optional<DateTimeOffset> effectiveUntil = default;
-            Core.Optional<string> timeZone = default;
-            Core.Optional<IList<AlertProcessingRuleRecurrence>> recurrences = default;
+            Optional<DateTimeOffset> effectiveFrom = default;
+            Optional<DateTimeOffset> effectiveUntil = default;
+            Optional<string> timeZone = default;
+            Optional<IList<AlertProcessingRuleRecurrence>> recurrences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("effectiveFrom"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     continue;
                 }
             }
-            return new AlertProcessingRuleSchedule(Core.Optional.ToNullable(effectiveFrom), Core.Optional.ToNullable(effectiveUntil), timeZone.Value, Core.Optional.ToList(recurrences));
+            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, Optional.ToList(recurrences));
         }
     }
 }

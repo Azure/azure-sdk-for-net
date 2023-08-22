@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GovernanceAssignmentAdditionalInfo : Core.IUtf8JsonSerializable
+    public partial class GovernanceAssignmentAdditionalInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TicketNumber))
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteNumberValue(TicketNumber.Value);
             }
-            if (Core.Optional.IsDefined(TicketLink))
+            if (Optional.IsDefined(TicketLink))
             {
                 writer.WritePropertyName("ticketLink"u8);
                 writer.WriteStringValue(TicketLink);
             }
-            if (Core.Optional.IsDefined(TicketStatus))
+            if (Optional.IsDefined(TicketStatus))
             {
                 writer.WritePropertyName("ticketStatus"u8);
                 writer.WriteStringValue(TicketStatus);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<int> ticketNumber = default;
-            Core.Optional<string> ticketLink = default;
-            Core.Optional<string> ticketStatus = default;
+            Optional<int> ticketNumber = default;
+            Optional<string> ticketLink = default;
+            Optional<string> ticketStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ticketNumber"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new GovernanceAssignmentAdditionalInfo(Core.Optional.ToNullable(ticketNumber), ticketLink.Value, ticketStatus.Value);
+            return new GovernanceAssignmentAdditionalInfo(Optional.ToNullable(ticketNumber), ticketLink.Value, ticketStatus.Value);
         }
     }
 }

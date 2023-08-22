@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Core.Optional<Guid> subscriptionId = default;
-            Core.Optional<DataLakeStoreSubscriptionState> state = default;
-            Core.Optional<int> maxAccountCount = default;
-            Core.Optional<int> accountCount = default;
-            Core.Optional<bool> migrationState = default;
+            Optional<Guid> subscriptionId = default;
+            Optional<DataLakeStoreSubscriptionState> state = default;
+            Optional<int> maxAccountCount = default;
+            Optional<int> accountCount = default;
+            Optional<bool> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     continue;
                 }
             }
-            return new DataLakeStoreCapabilityInformation(Core.Optional.ToNullable(subscriptionId), Core.Optional.ToNullable(state), Core.Optional.ToNullable(maxAccountCount), Core.Optional.ToNullable(accountCount), Core.Optional.ToNullable(migrationState));
+            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState));
         }
     }
 }

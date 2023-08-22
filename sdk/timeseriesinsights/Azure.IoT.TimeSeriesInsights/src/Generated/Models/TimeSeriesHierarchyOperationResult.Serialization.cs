@@ -18,8 +18,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<TimeSeriesHierarchy> hierarchy = default;
-            Core.Optional<TimeSeriesOperationError> error = default;
+            Optional<TimeSeriesHierarchy> hierarchy = default;
+            Optional<TimeSeriesOperationError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hierarchy"u8))

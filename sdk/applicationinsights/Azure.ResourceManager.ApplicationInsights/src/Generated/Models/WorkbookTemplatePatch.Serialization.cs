@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkbookTemplatePatch : Core.IUtf8JsonSerializable
+    public partial class WorkbookTemplatePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Core.Optional.IsDefined(Author))
+            if (Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Core.Optional.IsDefined(TemplateData))
+            if (Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(TemplateData.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsCollectionDefined(Galleries))
+            if (Optional.IsCollectionDefined(Galleries))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Localized))
+            if (Optional.IsCollectionDefined(Localized))
             {
                 writer.WritePropertyName("localized"u8);
                 writer.WriteStartObject();

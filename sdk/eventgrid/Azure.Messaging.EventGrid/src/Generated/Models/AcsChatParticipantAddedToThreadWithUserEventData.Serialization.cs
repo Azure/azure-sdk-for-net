@@ -21,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> time = default;
-            Core.Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
-            Core.Optional<AcsChatThreadParticipantProperties> participantAdded = default;
-            Core.Optional<DateTimeOffset> createTime = default;
-            Core.Optional<long> version = default;
-            Core.Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Core.Optional<string> transactionId = default;
-            Core.Optional<string> threadId = default;
+            Optional<DateTimeOffset> time = default;
+            Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
+            Optional<AcsChatThreadParticipantProperties> participantAdded = default;
+            Optional<DateTimeOffset> createTime = default;
+            Optional<long> version = default;
+            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
+            Optional<string> transactionId = default;
+            Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatParticipantAddedToThreadWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Core.Optional.ToNullable(createTime), Core.Optional.ToNullable(version), Core.Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value);
+            return new AcsChatParticipantAddedToThreadWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value);
         }
 
         internal partial class AcsChatParticipantAddedToThreadWithUserEventDataConverter : JsonConverter<AcsChatParticipantAddedToThreadWithUserEventData>

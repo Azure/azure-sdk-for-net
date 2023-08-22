@@ -14,17 +14,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TriggerPipelineReferenceConverter))]
-    public partial class TriggerPipelineReference : Core.IUtf8JsonSerializable
+    public partial class TriggerPipelineReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PipelineReference))
+            if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
                 writer.WriteObjectValue(PipelineReference);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,8 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<PipelineReference> pipelineReference = default;
-            Core.Optional<IDictionary<string, object>> parameters = default;
+            Optional<PipelineReference> pipelineReference = default;
+            Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineReference"u8))
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TriggerPipelineReference(pipelineReference.Value, Core.Optional.ToDictionary(parameters));
+            return new TriggerPipelineReference(pipelineReference.Value, Optional.ToDictionary(parameters));
         }
 
         internal partial class TriggerPipelineReferenceConverter : JsonConverter<TriggerPipelineReference>

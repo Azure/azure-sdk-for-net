@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class LayoutResolution : Core.IUtf8JsonSerializable
+    public partial class LayoutResolution : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("width"u8);

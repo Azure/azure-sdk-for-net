@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             Priority = priority;
             RuleType = ruleType;
             MatchConditions = matchConditions.ToList();
-            GroupByUserSession = new Core.ChangeTrackingList<GroupByUserSession>();
+            GroupByUserSession = new ChangeTrackingList<GroupByUserSession>();
             Action = action;
         }
 

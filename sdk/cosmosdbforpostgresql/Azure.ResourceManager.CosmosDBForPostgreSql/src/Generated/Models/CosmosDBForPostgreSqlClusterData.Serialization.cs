@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlClusterData : Core.IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,97 +34,97 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AdministratorLoginPassword))
+            if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Core.Optional.IsDefined(PostgresqlVersion))
+            if (Optional.IsDefined(PostgresqlVersion))
             {
                 writer.WritePropertyName("postgresqlVersion"u8);
                 writer.WriteStringValue(PostgresqlVersion);
             }
-            if (Core.Optional.IsDefined(CitusVersion))
+            if (Optional.IsDefined(CitusVersion))
             {
                 writer.WritePropertyName("citusVersion"u8);
                 writer.WriteStringValue(CitusVersion);
             }
-            if (Core.Optional.IsDefined(MaintenanceWindow))
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (Core.Optional.IsDefined(PreferredPrimaryZone))
+            if (Optional.IsDefined(PreferredPrimaryZone))
             {
                 writer.WritePropertyName("preferredPrimaryZone"u8);
                 writer.WriteStringValue(PreferredPrimaryZone);
             }
-            if (Core.Optional.IsDefined(IsShardsOnCoordinatorEnabled))
+            if (Optional.IsDefined(IsShardsOnCoordinatorEnabled))
             {
                 writer.WritePropertyName("enableShardsOnCoordinator"u8);
                 writer.WriteBooleanValue(IsShardsOnCoordinatorEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsHAEnabled))
+            if (Optional.IsDefined(IsHAEnabled))
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(IsHAEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CoordinatorServerEdition))
+            if (Optional.IsDefined(CoordinatorServerEdition))
             {
                 writer.WritePropertyName("coordinatorServerEdition"u8);
                 writer.WriteStringValue(CoordinatorServerEdition);
             }
-            if (Core.Optional.IsDefined(CoordinatorStorageQuotaInMb))
+            if (Optional.IsDefined(CoordinatorStorageQuotaInMb))
             {
                 writer.WritePropertyName("coordinatorStorageQuotaInMb"u8);
                 writer.WriteNumberValue(CoordinatorStorageQuotaInMb.Value);
             }
-            if (Core.Optional.IsDefined(CoordinatorVCores))
+            if (Optional.IsDefined(CoordinatorVCores))
             {
                 writer.WritePropertyName("coordinatorVCores"u8);
                 writer.WriteNumberValue(CoordinatorVCores.Value);
             }
-            if (Core.Optional.IsDefined(IsCoordinatorPublicIPAccessEnabled))
+            if (Optional.IsDefined(IsCoordinatorPublicIPAccessEnabled))
             {
                 writer.WritePropertyName("coordinatorEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsCoordinatorPublicIPAccessEnabled.Value);
             }
-            if (Core.Optional.IsDefined(NodeServerEdition))
+            if (Optional.IsDefined(NodeServerEdition))
             {
                 writer.WritePropertyName("nodeServerEdition"u8);
                 writer.WriteStringValue(NodeServerEdition);
             }
-            if (Core.Optional.IsDefined(NodeCount))
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Core.Optional.IsDefined(NodeStorageQuotaInMb))
+            if (Optional.IsDefined(NodeStorageQuotaInMb))
             {
                 writer.WritePropertyName("nodeStorageQuotaInMb"u8);
                 writer.WriteNumberValue(NodeStorageQuotaInMb.Value);
             }
-            if (Core.Optional.IsDefined(NodeVCores))
+            if (Optional.IsDefined(NodeVCores))
             {
                 writer.WritePropertyName("nodeVCores"u8);
                 writer.WriteNumberValue(NodeVCores.Value);
             }
-            if (Core.Optional.IsDefined(IsNodePublicIPAccessEnabled))
+            if (Optional.IsDefined(IsNodePublicIPAccessEnabled))
             {
                 writer.WritePropertyName("nodeEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsNodePublicIPAccessEnabled.Value);
             }
-            if (Core.Optional.IsDefined(SourceResourceId))
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Core.Optional.IsDefined(SourceLocation))
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation.Value);
             }
-            if (Core.Optional.IsDefined(PointInTimeUTC))
+            if (Optional.IsDefined(PointInTimeUTC))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
@@ -139,38 +139,38 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> administratorLogin = default;
-            Core.Optional<string> administratorLoginPassword = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> state = default;
-            Core.Optional<string> postgresqlVersion = default;
-            Core.Optional<string> citusVersion = default;
-            Core.Optional<CosmosDBForPostgreSqlMaintenanceWindow> maintenanceWindow = default;
-            Core.Optional<string> preferredPrimaryZone = default;
-            Core.Optional<bool> enableShardsOnCoordinator = default;
-            Core.Optional<bool> enableHa = default;
-            Core.Optional<string> coordinatorServerEdition = default;
-            Core.Optional<int> coordinatorStorageQuotaInMb = default;
-            Core.Optional<int> coordinatorVCores = default;
-            Core.Optional<bool> coordinatorEnablePublicIPAccess = default;
-            Core.Optional<string> nodeServerEdition = default;
-            Core.Optional<int> nodeCount = default;
-            Core.Optional<int> nodeStorageQuotaInMb = default;
-            Core.Optional<int> nodeVCores = default;
-            Core.Optional<bool> nodeEnablePublicIPAccess = default;
-            Core.Optional<IReadOnlyList<ServerNameItem>> serverNames = default;
-            Core.Optional<ResourceIdentifier> sourceResourceId = default;
-            Core.Optional<AzureLocation> sourceLocation = default;
-            Core.Optional<DateTimeOffset> pointInTimeUTC = default;
-            Core.Optional<IReadOnlyList<string>> readReplicas = default;
-            Core.Optional<DateTimeOffset> earliestRestoreTime = default;
-            Core.Optional<IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> administratorLogin = default;
+            Optional<string> administratorLoginPassword = default;
+            Optional<string> provisioningState = default;
+            Optional<string> state = default;
+            Optional<string> postgresqlVersion = default;
+            Optional<string> citusVersion = default;
+            Optional<CosmosDBForPostgreSqlMaintenanceWindow> maintenanceWindow = default;
+            Optional<string> preferredPrimaryZone = default;
+            Optional<bool> enableShardsOnCoordinator = default;
+            Optional<bool> enableHa = default;
+            Optional<string> coordinatorServerEdition = default;
+            Optional<int> coordinatorStorageQuotaInMb = default;
+            Optional<int> coordinatorVCores = default;
+            Optional<bool> coordinatorEnablePublicIPAccess = default;
+            Optional<string> nodeServerEdition = default;
+            Optional<int> nodeCount = default;
+            Optional<int> nodeStorageQuotaInMb = default;
+            Optional<int> nodeVCores = default;
+            Optional<bool> nodeEnablePublicIPAccess = default;
+            Optional<IReadOnlyList<ServerNameItem>> serverNames = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<AzureLocation> sourceLocation = default;
+            Optional<DateTimeOffset> pointInTimeUTC = default;
+            Optional<IReadOnlyList<string>> readReplicas = default;
+            Optional<DateTimeOffset> earliestRestoreTime = default;
+            Optional<IReadOnlyList<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Core.Optional.ToNullable(enableShardsOnCoordinator), Core.Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Core.Optional.ToNullable(coordinatorStorageQuotaInMb), Core.Optional.ToNullable(coordinatorVCores), Core.Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Core.Optional.ToNullable(nodeCount), Core.Optional.ToNullable(nodeStorageQuotaInMb), Core.Optional.ToNullable(nodeVCores), Core.Optional.ToNullable(nodeEnablePublicIPAccess), Core.Optional.ToList(serverNames), sourceResourceId.Value, Core.Optional.ToNullable(sourceLocation), Core.Optional.ToNullable(pointInTimeUTC), Core.Optional.ToList(readReplicas), Core.Optional.ToNullable(earliestRestoreTime), Core.Optional.ToList(privateEndpointConnections));
+            return new CosmosDBForPostgreSqlClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, administratorLogin.Value, administratorLoginPassword.Value, provisioningState.Value, state.Value, postgresqlVersion.Value, citusVersion.Value, maintenanceWindow.Value, preferredPrimaryZone.Value, Optional.ToNullable(enableShardsOnCoordinator), Optional.ToNullable(enableHa), coordinatorServerEdition.Value, Optional.ToNullable(coordinatorStorageQuotaInMb), Optional.ToNullable(coordinatorVCores), Optional.ToNullable(coordinatorEnablePublicIPAccess), nodeServerEdition.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(nodeStorageQuotaInMb), Optional.ToNullable(nodeVCores), Optional.ToNullable(nodeEnablePublicIPAccess), Optional.ToList(serverNames), sourceResourceId.Value, Optional.ToNullable(sourceLocation), Optional.ToNullable(pointInTimeUTC), Optional.ToList(readReplicas), Optional.ToNullable(earliestRestoreTime), Optional.ToList(privateEndpointConnections));
         }
     }
 }

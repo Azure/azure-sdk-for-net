@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class PrivateLinkServiceConnection : Core.IUtf8JsonSerializable
+    public partial class PrivateLinkServiceConnection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(GroupIds))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RequestMessage))
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IList<string>> groupIds = default;
-            Core.Optional<string> requestMessage = default;
+            Optional<string> name = default;
+            Optional<IList<string>> groupIds = default;
+            Optional<string> requestMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceConnection(name.Value, Core.Optional.ToList(groupIds), requestMessage.Value);
+            return new PrivateLinkServiceConnection(name.Value, Optional.ToList(groupIds), requestMessage.Value);
         }
     }
 }

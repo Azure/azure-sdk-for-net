@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticSolution. </summary>
         public DiagnosticSolution()
         {
-            Data = new Core.ChangeTrackingList<IList<AppServiceNameValuePair>>();
-            Metadata = new Core.ChangeTrackingList<IList<AppServiceNameValuePair>>();
+            Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
+            Metadata = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticSolution. </summary>

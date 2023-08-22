@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkResourceData. </summary>
         internal ContainerRegistryPrivateLinkResourceData()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkResourceData. </summary>

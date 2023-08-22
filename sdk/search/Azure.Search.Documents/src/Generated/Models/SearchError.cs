@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Models
             Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
-            Details = new Core.ChangeTrackingList<SearchError>();
+            Details = new ChangeTrackingList<SearchError>();
         }
 
         /// <summary> Initializes a new instance of SearchError. </summary>

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<RouteErrorPosition> start = default;
-            Core.Optional<RouteErrorPosition> end = default;
+            Optional<RouteErrorPosition> start = default;
+            Optional<RouteErrorPosition> end = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("start"u8))

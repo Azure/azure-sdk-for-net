@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationConnectionPatch. </summary>
         public AutomationConnectionPatch()
         {
-            FieldDefinitionValues = new Core.ChangeTrackingDictionary<string, string>();
+            FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the name of the connection. </summary>

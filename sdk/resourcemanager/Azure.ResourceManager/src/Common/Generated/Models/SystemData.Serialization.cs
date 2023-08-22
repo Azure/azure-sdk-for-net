@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(SystemDataConverter))]
-    public partial class SystemData : Core.IUtf8JsonSerializable
+    public partial class SystemData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Core.Optional<string> createdBy = default;
-            Core.Optional<CreatedByType> createdByType = default;
-            Core.Optional<DateTimeOffset> createdAt = default;
-            Core.Optional<string> lastModifiedBy = default;
-            Core.Optional<CreatedByType> lastModifiedByType = default;
-            Core.Optional<DateTimeOffset> lastModifiedAt = default;
+            Optional<string> createdBy = default;
+            Optional<CreatedByType> createdByType = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<CreatedByType> lastModifiedByType = default;
+            Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new SystemData(createdBy.Value, Core.Optional.ToNullable(createdByType), Core.Optional.ToNullable(createdAt), lastModifiedBy.Value, Core.Optional.ToNullable(lastModifiedByType), Core.Optional.ToNullable(lastModifiedAt));
+            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
 
         internal partial class SystemDataConverter : JsonConverter<SystemData>

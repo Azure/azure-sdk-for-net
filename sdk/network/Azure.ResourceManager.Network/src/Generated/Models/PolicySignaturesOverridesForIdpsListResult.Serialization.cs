@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PolicySignaturesOverridesForIdpsData>> value = default;
+            Optional<IReadOnlyList<PolicySignaturesOverridesForIdpsData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PolicySignaturesOverridesForIdpsListResult(Core.Optional.ToList(value));
+            return new PolicySignaturesOverridesForIdpsListResult(Optional.ToList(value));
         }
     }
 }

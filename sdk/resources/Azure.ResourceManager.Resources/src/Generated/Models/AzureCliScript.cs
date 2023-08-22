@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Argument.AssertNotNull(azCliVersion, nameof(azCliVersion));
 
-            SupportingScriptUris = new Core.ChangeTrackingList<Uri>();
-            EnvironmentVariables = new Core.ChangeTrackingList<ScriptEnvironmentVariable>();
+            SupportingScriptUris = new ChangeTrackingList<Uri>();
+            EnvironmentVariables = new ChangeTrackingList<ScriptEnvironmentVariable>();
             RetentionInterval = retentionInterval;
             AzCliVersion = azCliVersion;
             Kind = ScriptType.AzureCLI;

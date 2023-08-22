@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetVmData : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetVmData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Plan))
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,62 +44,62 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HardwareProfile))
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (Core.Optional.IsDefined(StorageProfile))
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Core.Optional.IsDefined(AdditionalCapabilities))
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (Core.Optional.IsDefined(OSProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (Core.Optional.IsDefined(SecurityProfile))
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Core.Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Core.Optional.IsDefined(NetworkProfileConfiguration))
+            if (Optional.IsDefined(NetworkProfileConfiguration))
             {
                 writer.WritePropertyName("networkProfileConfiguration"u8);
                 writer.WriteObjectValue(NetworkProfileConfiguration);
             }
-            if (Core.Optional.IsDefined(DiagnosticsProfile))
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
                 writer.WriteObjectValue(DiagnosticsProfile);
             }
-            if (Core.Optional.IsDefined(AvailabilitySet))
+            if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet"u8);
                 JsonSerializer.Serialize(writer, AvailabilitySet);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (Core.Optional.IsDefined(ProtectionPolicy))
+            if (Optional.IsDefined(ProtectionPolicy))
             {
                 writer.WritePropertyName("protectionPolicy"u8);
                 writer.WriteObjectValue(ProtectionPolicy);
             }
-            if (Core.Optional.IsDefined(UserData))
+            if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
@@ -114,35 +114,35 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<string> instanceId = default;
-            Core.Optional<ComputeSku> sku = default;
-            Core.Optional<ComputePlan> plan = default;
-            Core.Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<string> instanceId = default;
+            Optional<ComputeSku> sku = default;
+            Optional<ComputePlan> plan = default;
+            Optional<IReadOnlyList<VirtualMachineExtensionData>> resources = default;
+            Optional<IReadOnlyList<string>> zones = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> latestModelApplied = default;
-            Core.Optional<string> vmId = default;
-            Core.Optional<VirtualMachineScaleSetVmInstanceView> instanceView = default;
-            Core.Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
-            Core.Optional<VirtualMachineStorageProfile> storageProfile = default;
-            Core.Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Core.Optional<VirtualMachineOSProfile> osProfile = default;
-            Core.Optional<SecurityProfile> securityProfile = default;
-            Core.Optional<VirtualMachineNetworkProfile> networkProfile = default;
-            Core.Optional<VirtualMachineScaleSetVmNetworkProfileConfiguration> networkProfileConfiguration = default;
-            Core.Optional<DiagnosticsProfile> diagnosticsProfile = default;
-            Core.Optional<WritableSubResource> availabilitySet = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> licenseType = default;
-            Core.Optional<string> modelDefinitionApplied = default;
-            Core.Optional<VirtualMachineScaleSetVmProtectionPolicy> protectionPolicy = default;
-            Core.Optional<string> userData = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> latestModelApplied = default;
+            Optional<string> vmId = default;
+            Optional<VirtualMachineScaleSetVmInstanceView> instanceView = default;
+            Optional<VirtualMachineHardwareProfile> hardwareProfile = default;
+            Optional<VirtualMachineStorageProfile> storageProfile = default;
+            Optional<AdditionalCapabilities> additionalCapabilities = default;
+            Optional<VirtualMachineOSProfile> osProfile = default;
+            Optional<SecurityProfile> securityProfile = default;
+            Optional<VirtualMachineNetworkProfile> networkProfile = default;
+            Optional<VirtualMachineScaleSetVmNetworkProfileConfiguration> networkProfileConfiguration = default;
+            Optional<DiagnosticsProfile> diagnosticsProfile = default;
+            Optional<WritableSubResource> availabilitySet = default;
+            Optional<string> provisioningState = default;
+            Optional<string> licenseType = default;
+            Optional<string> modelDefinitionApplied = default;
+            Optional<VirtualMachineScaleSetVmProtectionPolicy> protectionPolicy = default;
+            Optional<string> userData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceId"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, instanceId.Value, sku.Value, plan.Value, Core.Optional.ToList(resources), Core.Optional.ToList(zones), identity, Core.Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, securityProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value, userData.Value);
+            return new VirtualMachineScaleSetVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceId.Value, sku.Value, plan.Value, Optional.ToList(resources), Optional.ToList(zones), identity, Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, securityProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value, userData.Value);
         }
     }
 }

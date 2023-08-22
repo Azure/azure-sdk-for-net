@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<HDInsightVersionSpec>> available = default;
+            Optional<IReadOnlyList<HDInsightVersionSpec>> available = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightVersionsCapability(Core.Optional.ToList(available));
+            return new HDInsightVersionsCapability(Optional.ToList(available));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecureScoreControlDefinitionList. </summary>
         internal SecureScoreControlDefinitionList()
         {
-            Value = new Core.ChangeTrackingList<SecureScoreControlDefinitionItem>();
+            Value = new ChangeTrackingList<SecureScoreControlDefinitionItem>();
         }
 
         /// <summary> Initializes a new instance of SecureScoreControlDefinitionList. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsClusterAssociatedWorkspace : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsClusterAssociatedWorkspace : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<Guid> workspaceId = default;
-            Core.Optional<string> workspaceName = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<DateTimeOffset> associateDate = default;
+            Optional<Guid> workspaceId = default;
+            Optional<string> workspaceName = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<DateTimeOffset> associateDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsClusterAssociatedWorkspace(Core.Optional.ToNullable(workspaceId), workspaceName.Value, resourceId.Value, Core.Optional.ToNullable(associateDate));
+            return new OperationalInsightsClusterAssociatedWorkspace(Optional.ToNullable(workspaceId), workspaceName.Value, resourceId.Value, Optional.ToNullable(associateDate));
         }
     }
 }

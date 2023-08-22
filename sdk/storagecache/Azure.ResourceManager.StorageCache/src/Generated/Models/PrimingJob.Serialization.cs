@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class PrimingJob : Core.IUtf8JsonSerializable
+    public partial class PrimingJob : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("primingJobName"u8);
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             string primingJobName = default;
             Uri primingManifestUrl = default;
-            Core.Optional<string> primingJobId = default;
-            Core.Optional<PrimingJobState> primingJobState = default;
-            Core.Optional<string> primingJobStatus = default;
-            Core.Optional<string> primingJobDetails = default;
-            Core.Optional<double> primingJobPercentComplete = default;
+            Optional<string> primingJobId = default;
+            Optional<PrimingJobState> primingJobState = default;
+            Optional<string> primingJobStatus = default;
+            Optional<string> primingJobDetails = default;
+            Optional<double> primingJobPercentComplete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primingJobName"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new PrimingJob(primingJobName, primingManifestUrl, primingJobId.Value, Core.Optional.ToNullable(primingJobState), primingJobStatus.Value, primingJobDetails.Value, Core.Optional.ToNullable(primingJobPercentComplete));
+            return new PrimingJob(primingJobName, primingManifestUrl, primingJobId.Value, Optional.ToNullable(primingJobState), primingJobStatus.Value, primingJobDetails.Value, Optional.ToNullable(primingJobPercentComplete));
         }
     }
 }

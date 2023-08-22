@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>
         internal PointOfInterestClassification()
         {
-            Names = new Core.ChangeTrackingList<ClassificationName>();
+            Names = new ChangeTrackingList<ClassificationName>();
         }
 
         /// <summary> Initializes a new instance of PointOfInterestClassification. </summary>

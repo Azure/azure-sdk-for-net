@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceSshSettings : Core.IUtf8JsonSerializable
+    public partial class MachineLearningComputeInstanceSshSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SshPublicAccess))
+            if (Optional.IsDefined(SshPublicAccess))
             {
                 writer.WritePropertyName("sshPublicAccess"u8);
                 writer.WriteStringValue(SshPublicAccess.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AdminPublicKey))
+            if (Optional.IsDefined(AdminPublicKey))
             {
                 writer.WritePropertyName("adminPublicKey"u8);
                 writer.WriteStringValue(AdminPublicKey);
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningSshPublicAccess> sshPublicAccess = default;
-            Core.Optional<string> adminUserName = default;
-            Core.Optional<int> sshPort = default;
-            Core.Optional<string> adminPublicKey = default;
+            Optional<MachineLearningSshPublicAccess> sshPublicAccess = default;
+            Optional<string> adminUserName = default;
+            Optional<int> sshPort = default;
+            Optional<string> adminPublicKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sshPublicAccess"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeInstanceSshSettings(Core.Optional.ToNullable(sshPublicAccess), adminUserName.Value, Core.Optional.ToNullable(sshPort), adminPublicKey.Value);
+            return new MachineLearningComputeInstanceSshSettings(Optional.ToNullable(sshPublicAccess), adminUserName.Value, Optional.ToNullable(sshPort), adminPublicKey.Value);
         }
     }
 }

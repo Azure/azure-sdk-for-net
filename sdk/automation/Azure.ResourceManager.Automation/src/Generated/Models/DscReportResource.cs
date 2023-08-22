@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DscReportResource. </summary>
         internal DscReportResource()
         {
-            DependsOn = new Core.ChangeTrackingList<DscReportResourceNavigation>();
+            DependsOn = new ChangeTrackingList<DscReportResourceNavigation>();
         }
 
         /// <summary> Initializes a new instance of DscReportResource. </summary>

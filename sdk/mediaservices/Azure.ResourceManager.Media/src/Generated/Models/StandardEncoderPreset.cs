@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
             Argument.AssertNotNull(codecs, nameof(codecs));
             Argument.AssertNotNull(formats, nameof(formats));
 
-            ExperimentalOptions = new Core.ChangeTrackingDictionary<string, string>();
+            ExperimentalOptions = new ChangeTrackingDictionary<string, string>();
             Codecs = codecs.ToList();
             Formats = formats.ToList();
             OdataType = "#Microsoft.Media.StandardEncoderPreset";

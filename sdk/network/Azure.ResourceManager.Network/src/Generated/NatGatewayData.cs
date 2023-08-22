@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NatGatewayData. </summary>
         public NatGatewayData()
         {
-            Zones = new Core.ChangeTrackingList<string>();
-            PublicIPAddresses = new Core.ChangeTrackingList<WritableSubResource>();
-            PublicIPPrefixes = new Core.ChangeTrackingList<WritableSubResource>();
-            Subnets = new Core.ChangeTrackingList<WritableSubResource>();
+            Zones = new ChangeTrackingList<string>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
+            PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
+            Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of NatGatewayData. </summary>

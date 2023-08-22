@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of WebChatChannelProperties. </summary>
         public WebChatChannelProperties()
         {
-            Sites = new Core.ChangeTrackingList<WebChatSite>();
+            Sites = new ChangeTrackingList<WebChatSite>();
         }
 
         /// <summary> Initializes a new instance of WebChatChannelProperties. </summary>

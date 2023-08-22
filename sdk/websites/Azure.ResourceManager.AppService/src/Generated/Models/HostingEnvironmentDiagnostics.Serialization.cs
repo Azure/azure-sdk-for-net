@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> diagnosticsOutput = default;
+            Optional<string> name = default;
+            Optional<string> diagnosticsOutput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

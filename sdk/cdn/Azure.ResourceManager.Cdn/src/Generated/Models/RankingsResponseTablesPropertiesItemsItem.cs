@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsItem. </summary>
         internal RankingsResponseTablesPropertiesItemsItem()
         {
-            Metrics = new Core.ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem>();
+            Metrics = new ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem>();
         }
 
         /// <summary> Initializes a new instance of RankingsResponseTablesPropertiesItemsItem. </summary>

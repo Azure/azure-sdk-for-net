@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class PostgreSqlConfigurationData : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.PostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> value = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<string> dataType = default;
-            Core.Optional<string> allowedValues = default;
-            Core.Optional<string> source = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> value = default;
+            Optional<string> description = default;
+            Optional<string> defaultValue = default;
+            Optional<string> dataType = default;
+            Optional<string> allowedValues = default;
+            Optional<string> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

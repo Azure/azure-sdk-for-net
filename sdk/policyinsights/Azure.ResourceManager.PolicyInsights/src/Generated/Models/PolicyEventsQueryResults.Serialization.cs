@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> odataContext = default;
-            Core.Optional<int> odataCount = default;
-            Core.Optional<string> odataNextLink = default;
-            Core.Optional<IReadOnlyList<PolicyEvent>> value = default;
+            Optional<string> odataContext = default;
+            Optional<int> odataCount = default;
+            Optional<string> odataNextLink = default;
+            Optional<IReadOnlyList<PolicyEvent>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.context"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new PolicyEventsQueryResults(odataContext.Value, Core.Optional.ToNullable(odataCount), odataNextLink.Value, Core.Optional.ToList(value));
+            return new PolicyEventsQueryResults(odataContext.Value, Optional.ToNullable(odataCount), odataNextLink.Value, Optional.ToList(value));
         }
     }
 }

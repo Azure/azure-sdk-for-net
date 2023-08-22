@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of SqlVmAutoBackupSettings. </summary>
         public SqlVmAutoBackupSettings()
         {
-            DaysOfWeek = new Core.ChangeTrackingList<SqlVmAutoBackupDayOfWeek>();
+            DaysOfWeek = new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>();
         }
 
         /// <summary> Initializes a new instance of SqlVmAutoBackupSettings. </summary>

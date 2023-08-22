@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmPolicyCreationContent : Core.IUtf8JsonSerializable
+    public partial class InMageRcmPolicyCreationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecoveryPointHistoryInMinutes))
+            if (Optional.IsDefined(RecoveryPointHistoryInMinutes))
             {
                 writer.WritePropertyName("recoveryPointHistoryInMinutes"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(EnableMultiVmSync))
+            if (Optional.IsDefined(EnableMultiVmSync))
             {
                 writer.WritePropertyName("enableMultiVmSync"u8);
                 writer.WriteStringValue(EnableMultiVmSync);

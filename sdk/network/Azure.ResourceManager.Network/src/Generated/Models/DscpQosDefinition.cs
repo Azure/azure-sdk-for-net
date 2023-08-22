@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of DscpQosDefinition. </summary>
         public DscpQosDefinition()
         {
-            Markings = new Core.ChangeTrackingList<int>();
-            SourceIPRanges = new Core.ChangeTrackingList<QosIPRange>();
-            DestinationIPRanges = new Core.ChangeTrackingList<QosIPRange>();
-            SourcePortRanges = new Core.ChangeTrackingList<QosPortRange>();
-            DestinationPortRanges = new Core.ChangeTrackingList<QosPortRange>();
+            Markings = new ChangeTrackingList<int>();
+            SourceIPRanges = new ChangeTrackingList<QosIPRange>();
+            DestinationIPRanges = new ChangeTrackingList<QosIPRange>();
+            SourcePortRanges = new ChangeTrackingList<QosPortRange>();
+            DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
         }
 
         /// <summary> Initializes a new instance of DscpQosDefinition. </summary>

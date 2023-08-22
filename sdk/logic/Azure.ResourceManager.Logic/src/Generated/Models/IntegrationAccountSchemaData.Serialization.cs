@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationAccountSchemaData : Core.IUtf8JsonSerializable
+    public partial class IntegrationAccountSchemaData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStartObject();
             writer.WritePropertyName("schemaType"u8);
             writer.WriteStringValue(SchemaType.ToString());
-            if (Core.Optional.IsDefined(TargetNamespace))
+            if (Optional.IsDefined(TargetNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
-            if (Core.Optional.IsDefined(DocumentName))
+            if (Optional.IsDefined(DocumentName))
             {
                 writer.WritePropertyName("documentName"u8);
                 writer.WriteStringValue(DocumentName);
             }
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Core.Optional.IsDefined(Metadata))
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Content))
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             IntegrationAccountSchemaType schemaType = default;
-            Core.Optional<string> targetNamespace = default;
-            Core.Optional<string> documentName = default;
-            Core.Optional<string> fileName = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> changedTime = default;
-            Core.Optional<BinaryData> metadata = default;
-            Core.Optional<BinaryData> content = default;
-            Core.Optional<ContentType> contentType = default;
-            Core.Optional<LogicContentLink> contentLink = default;
+            Optional<string> targetNamespace = default;
+            Optional<string> documentName = default;
+            Optional<string> fileName = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> changedTime = default;
+            Optional<BinaryData> metadata = default;
+            Optional<BinaryData> content = default;
+            Optional<ContentType> contentType = default;
+            Optional<LogicContentLink> contentLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Logic
                     continue;
                 }
             }
-            return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(changedTime), metadata.Value, content.Value, Core.Optional.ToNullable(contentType), contentLink.Value);
+            return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value);
         }
     }
 }

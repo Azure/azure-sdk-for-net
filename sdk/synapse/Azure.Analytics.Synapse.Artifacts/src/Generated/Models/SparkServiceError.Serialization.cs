@@ -21,9 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<string> errorCode = default;
-            Core.Optional<SparkErrorSource> source = default;
+            Optional<string> message = default;
+            Optional<string> errorCode = default;
+            Optional<SparkErrorSource> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkServiceError(message.Value, errorCode.Value, Core.Optional.ToNullable(source));
+            return new SparkServiceError(message.Value, errorCode.Value, Optional.ToNullable(source));
         }
 
         internal partial class SparkServiceErrorConverter : JsonConverter<SparkServiceError>

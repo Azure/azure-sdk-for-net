@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<CognitiveServicesSkuRestrictions>> restrictions = default;
+            Optional<string> resourceType = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<string> kind = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<CognitiveServicesSkuRestrictions>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new AvailableCognitiveServicesSku(resourceType.Value, name.Value, tier.Value, kind.Value, Core.Optional.ToList(locations), Core.Optional.ToList(restrictions));
+            return new AvailableCognitiveServicesSku(resourceType.Value, name.Value, tier.Value, kind.Value, Optional.ToList(locations), Optional.ToList(restrictions));
         }
     }
 }

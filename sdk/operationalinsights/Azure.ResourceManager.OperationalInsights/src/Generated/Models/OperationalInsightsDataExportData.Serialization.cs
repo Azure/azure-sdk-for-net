@@ -14,19 +14,19 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsDataExportData : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsDataExportData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataExportId))
+            if (Optional.IsDefined(DataExportId))
             {
                 writer.WritePropertyName("dataExportId"u8);
                 writer.WriteStringValue(DataExportId.Value);
             }
-            if (Core.Optional.IsCollectionDefined(TableNames))
+            if (Optional.IsCollectionDefined(TableNames))
             {
                 writer.WritePropertyName("tableNames"u8);
                 writer.WriteStartArray();
@@ -36,31 +36,31 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (Core.Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDate"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "R");
             }
             writer.WritePropertyName("destination"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("metaData"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EventHubName))
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> dataExportId = default;
-            Core.Optional<IList<string>> tableNames = default;
-            Core.Optional<bool> enable = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<DateTimeOffset> lastModifiedDate = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<OperationalInsightsDataExportDestinationType> type0 = default;
-            Core.Optional<string> eventHubName = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> dataExportId = default;
+            Optional<IList<string>> tableNames = default;
+            Optional<bool> enable = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<DateTimeOffset> lastModifiedDate = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<OperationalInsightsDataExportDestinationType> type0 = default;
+            Optional<string> eventHubName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsDataExportData(id, name, type, systemData.Value, Core.Optional.ToNullable(dataExportId), Core.Optional.ToList(tableNames), Core.Optional.ToNullable(enable), Core.Optional.ToNullable(createdDate), Core.Optional.ToNullable(lastModifiedDate), resourceId.Value, Core.Optional.ToNullable(type0), eventHubName.Value);
+            return new OperationalInsightsDataExportData(id, name, type, systemData.Value, Optional.ToNullable(dataExportId), Optional.ToList(tableNames), Optional.ToNullable(enable), Optional.ToNullable(createdDate), Optional.ToNullable(lastModifiedDate), resourceId.Value, Optional.ToNullable(type0), eventHubName.Value);
         }
     }
 }

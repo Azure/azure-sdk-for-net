@@ -21,11 +21,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<DateTimeOffset> receivedTimestamp = default;
-            Core.Optional<string> messageId = default;
-            Core.Optional<string> @from = default;
-            Core.Optional<string> to = default;
+            Optional<string> message = default;
+            Optional<DateTimeOffset> receivedTimestamp = default;
+            Optional<string> messageId = default;
+            Optional<string> @from = default;
+            Optional<string> to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsSmsReceivedEventData(messageId.Value, @from.Value, to.Value, message.Value, Core.Optional.ToNullable(receivedTimestamp));
+            return new AcsSmsReceivedEventData(messageId.Value, @from.Value, to.Value, message.Value, Optional.ToNullable(receivedTimestamp));
         }
 
         internal partial class AcsSmsReceivedEventDataConverter : JsonConverter<AcsSmsReceivedEventData>

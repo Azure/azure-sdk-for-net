@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    public partial class BlobAccessPolicy : Core.IXmlSerializable
+    public partial class BlobAccessPolicy : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (Core.Optional.IsDefined(PolicyStartsOn))
+            if (Optional.IsDefined(PolicyStartsOn))
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(PolicyStartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(PolicyExpiresOn))
+            if (Optional.IsDefined(PolicyExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
                 writer.WriteValue(PolicyExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(Permissions))
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);

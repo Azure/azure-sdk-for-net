@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StorageSyncPrivateLinkResource>> value = default;
+            Optional<IReadOnlyList<StorageSyncPrivateLinkResource>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new StorageSyncPrivateLinkResourceListResult(Core.Optional.ToList(value));
+            return new StorageSyncPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

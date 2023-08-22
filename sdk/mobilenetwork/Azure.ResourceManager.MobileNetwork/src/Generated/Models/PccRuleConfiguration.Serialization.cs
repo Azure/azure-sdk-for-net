@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PccRuleConfiguration : Core.IUtf8JsonSerializable
+    public partial class PccRuleConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
             writer.WritePropertyName("rulePrecedence"u8);
             writer.WriteNumberValue(RulePrecedence);
-            if (Core.Optional.IsDefined(RuleQosPolicy))
+            if (Optional.IsDefined(RuleQosPolicy))
             {
                 writer.WritePropertyName("ruleQosPolicy"u8);
                 writer.WriteObjectValue(RuleQosPolicy);
             }
-            if (Core.Optional.IsDefined(TrafficControl))
+            if (Optional.IsDefined(TrafficControl))
             {
                 writer.WritePropertyName("trafficControl"u8);
                 writer.WriteStringValue(TrafficControl.Value.ToString());
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             string ruleName = default;
             int rulePrecedence = default;
-            Core.Optional<PccRuleQosPolicy> ruleQosPolicy = default;
-            Core.Optional<MobileNetworkTrafficControlPermission> trafficControl = default;
+            Optional<PccRuleQosPolicy> ruleQosPolicy = default;
+            Optional<MobileNetworkTrafficControlPermission> trafficControl = default;
             IList<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Core.Optional.ToNullable(trafficControl), serviceDataFlowTemplates);
+            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Optional.ToNullable(trafficControl), serviceDataFlowTemplates);
         }
     }
 }

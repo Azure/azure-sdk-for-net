@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of GovernanceRuleList. </summary>
         internal GovernanceRuleList()
         {
-            Value = new Core.ChangeTrackingList<GovernanceRuleData>();
+            Value = new ChangeTrackingList<GovernanceRuleData>();
         }
 
         /// <summary> Initializes a new instance of GovernanceRuleList. </summary>

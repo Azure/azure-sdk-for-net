@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> sourceResourceType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<ContainerServiceTrustedAccessRoleRule>> rules = default;
+            Optional<string> sourceResourceType = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<ContainerServiceTrustedAccessRoleRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceType"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceTrustedAccessRole(sourceResourceType.Value, name.Value, Core.Optional.ToList(rules));
+            return new ContainerServiceTrustedAccessRole(sourceResourceType.Value, name.Value, Optional.ToList(rules));
         }
     }
 }

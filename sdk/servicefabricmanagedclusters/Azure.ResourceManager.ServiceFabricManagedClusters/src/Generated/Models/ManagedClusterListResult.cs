@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
         internal ManagedClusterListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceFabricManagedClusterData>();
+            Value = new ChangeTrackingList<ServiceFabricManagedClusterData>();
         }
 
         /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>

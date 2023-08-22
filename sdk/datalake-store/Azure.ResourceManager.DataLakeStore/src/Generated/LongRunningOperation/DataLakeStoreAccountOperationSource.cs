@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
-    internal class DataLakeStoreAccountOperationSource : Core.IOperationSource<DataLakeStoreAccountResource>
+    internal class DataLakeStoreAccountOperationSource : IOperationSource<DataLakeStoreAccountResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataLakeStore
             _client = client;
         }
 
-        DataLakeStoreAccountResource Core.IOperationSource<DataLakeStoreAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataLakeStoreAccountResource IOperationSource<DataLakeStoreAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DataLakeStoreAccountData.DeserializeDataLakeStoreAccountData(document.RootElement);
             return new DataLakeStoreAccountResource(_client, data);
         }
 
-        async ValueTask<DataLakeStoreAccountResource> Core.IOperationSource<DataLakeStoreAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataLakeStoreAccountResource> IOperationSource<DataLakeStoreAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DataLakeStoreAccountData.DeserializeDataLakeStoreAccountData(document.RootElement);

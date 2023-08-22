@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualNetworkPeeringOperationSource : Core.IOperationSource<VirtualNetworkPeeringResource>
+    internal class VirtualNetworkPeeringOperationSource : IOperationSource<VirtualNetworkPeeringResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualNetworkPeeringResource Core.IOperationSource<VirtualNetworkPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualNetworkPeeringResource IOperationSource<VirtualNetworkPeeringResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);
             return new VirtualNetworkPeeringResource(_client, data);
         }
 
-        async ValueTask<VirtualNetworkPeeringResource> Core.IOperationSource<VirtualNetworkPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualNetworkPeeringResource> IOperationSource<VirtualNetworkPeeringResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualNetworkPeeringData.DeserializeVirtualNetworkPeeringData(document.RootElement);

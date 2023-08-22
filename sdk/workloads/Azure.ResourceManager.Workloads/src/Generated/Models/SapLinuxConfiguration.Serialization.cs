@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapLinuxConfiguration : Core.IUtf8JsonSerializable
+    public partial class SapLinuxConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisablePasswordAuthentication))
+            if (Optional.IsDefined(DisablePasswordAuthentication))
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
             }
-            if (Core.Optional.IsDefined(Ssh))
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (Core.Optional.IsDefined(SshKeyPair))
+            if (Optional.IsDefined(SshKeyPair))
             {
                 writer.WritePropertyName("sshKeyPair"u8);
                 writer.WriteObjectValue(SshKeyPair);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<bool> disablePasswordAuthentication = default;
-            Core.Optional<SapSshConfiguration> ssh = default;
-            Core.Optional<SapSshKeyPair> sshKeyPair = default;
+            Optional<bool> disablePasswordAuthentication = default;
+            Optional<SapSshConfiguration> ssh = default;
+            Optional<SapSshKeyPair> sshKeyPair = default;
             SapOSType osType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapLinuxConfiguration(osType, Core.Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value);
+            return new SapLinuxConfiguration(osType, Optional.ToNullable(disablePasswordAuthentication), ssh.Value, sshKeyPair.Value);
         }
     }
 }

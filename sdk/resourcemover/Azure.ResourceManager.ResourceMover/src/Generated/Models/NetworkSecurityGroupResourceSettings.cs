@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         {
             Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
 
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            SecurityRules = new Core.ChangeTrackingList<NetworkSecurityGroupSecurityRule>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            SecurityRules = new ChangeTrackingList<NetworkSecurityGroupSecurityRule>();
             ResourceType = "Microsoft.Network/networkSecurityGroups";
         }
 

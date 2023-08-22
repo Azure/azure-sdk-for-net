@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<string> portDescription = default;
-            Core.Optional<string> portName = default;
-            Core.Optional<string> systemDescription = default;
-            Core.Optional<string> systemName = default;
+            Optional<string> portDescription = default;
+            Optional<string> portName = default;
+            Optional<string> systemDescription = default;
+            Optional<string> systemName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portDescription"u8))

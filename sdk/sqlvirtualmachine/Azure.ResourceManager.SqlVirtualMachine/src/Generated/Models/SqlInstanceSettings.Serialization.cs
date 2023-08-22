@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlInstanceSettings : Core.IUtf8JsonSerializable
+    public partial class SqlInstanceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Collation))
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Core.Optional.IsDefined(MaxDop))
+            if (Optional.IsDefined(MaxDop))
             {
                 writer.WritePropertyName("maxDop"u8);
                 writer.WriteNumberValue(MaxDop.Value);
             }
-            if (Core.Optional.IsDefined(IsOptimizeForAdHocWorkloadsEnabled))
+            if (Optional.IsDefined(IsOptimizeForAdHocWorkloadsEnabled))
             {
                 writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled"u8);
                 writer.WriteBooleanValue(IsOptimizeForAdHocWorkloadsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(MinServerMemoryInMB))
+            if (Optional.IsDefined(MinServerMemoryInMB))
             {
                 writer.WritePropertyName("minServerMemoryMB"u8);
                 writer.WriteNumberValue(MinServerMemoryInMB.Value);
             }
-            if (Core.Optional.IsDefined(MaxServerMemoryInMB))
+            if (Optional.IsDefined(MaxServerMemoryInMB))
             {
                 writer.WritePropertyName("maxServerMemoryMB"u8);
                 writer.WriteNumberValue(MaxServerMemoryInMB.Value);
             }
-            if (Core.Optional.IsDefined(IsLpimEnabled))
+            if (Optional.IsDefined(IsLpimEnabled))
             {
                 writer.WritePropertyName("isLpimEnabled"u8);
                 writer.WriteBooleanValue(IsLpimEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsIfiEnabled))
+            if (Optional.IsDefined(IsIfiEnabled))
             {
                 writer.WritePropertyName("isIfiEnabled"u8);
                 writer.WriteBooleanValue(IsIfiEnabled.Value);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<string> collation = default;
-            Core.Optional<int> maxDop = default;
-            Core.Optional<bool> isOptimizeForAdHocWorkloadsEnabled = default;
-            Core.Optional<int> minServerMemoryMB = default;
-            Core.Optional<int> maxServerMemoryMB = default;
-            Core.Optional<bool> isLpimEnabled = default;
-            Core.Optional<bool> isIfiEnabled = default;
+            Optional<string> collation = default;
+            Optional<int> maxDop = default;
+            Optional<bool> isOptimizeForAdHocWorkloadsEnabled = default;
+            Optional<int> minServerMemoryMB = default;
+            Optional<int> maxServerMemoryMB = default;
+            Optional<bool> isLpimEnabled = default;
+            Optional<bool> isIfiEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("collation"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlInstanceSettings(collation.Value, Core.Optional.ToNullable(maxDop), Core.Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Core.Optional.ToNullable(minServerMemoryMB), Core.Optional.ToNullable(maxServerMemoryMB), Core.Optional.ToNullable(isLpimEnabled), Core.Optional.ToNullable(isIfiEnabled));
+            return new SqlInstanceSettings(collation.Value, Optional.ToNullable(maxDop), Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Optional.ToNullable(minServerMemoryMB), Optional.ToNullable(maxServerMemoryMB), Optional.ToNullable(isLpimEnabled), Optional.ToNullable(isIfiEnabled));
         }
     }
 }

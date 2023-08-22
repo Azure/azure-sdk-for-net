@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Batch.Models
 
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
-            DataDisks = new Core.ChangeTrackingList<BatchVmDataDisk>();
-            Extensions = new Core.ChangeTrackingList<BatchVmExtension>();
+            DataDisks = new ChangeTrackingList<BatchVmDataDisk>();
+            Extensions = new ChangeTrackingList<BatchVmExtension>();
         }
 
         /// <summary> Initializes a new instance of BatchVmConfiguration. </summary>

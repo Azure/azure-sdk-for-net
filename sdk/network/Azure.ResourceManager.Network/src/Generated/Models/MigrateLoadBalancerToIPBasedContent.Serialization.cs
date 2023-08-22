@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class MigrateLoadBalancerToIPBasedContent : Core.IUtf8JsonSerializable
+    public partial class MigrateLoadBalancerToIPBasedContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Pools))
+            if (Optional.IsCollectionDefined(Pools))
             {
                 writer.WritePropertyName("pools"u8);
                 writer.WriteStartArray();

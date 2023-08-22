@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceUsageId = default;
+            Optional<string> resourceUsageId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceUsageId"u8))

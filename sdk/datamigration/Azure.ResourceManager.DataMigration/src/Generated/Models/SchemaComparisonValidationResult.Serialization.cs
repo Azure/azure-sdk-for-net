@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<SchemaComparisonValidationResultType> schemaDifferences = default;
-            Core.Optional<ValidationError> validationErrors = default;
-            Core.Optional<IReadOnlyDictionary<string, long>> sourceDatabaseObjectCount = default;
-            Core.Optional<IReadOnlyDictionary<string, long>> targetDatabaseObjectCount = default;
+            Optional<SchemaComparisonValidationResultType> schemaDifferences = default;
+            Optional<ValidationError> validationErrors = default;
+            Optional<IReadOnlyDictionary<string, long>> sourceDatabaseObjectCount = default;
+            Optional<IReadOnlyDictionary<string, long>> targetDatabaseObjectCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaDifferences"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, Core.Optional.ToDictionary(sourceDatabaseObjectCount), Core.Optional.ToDictionary(targetDatabaseObjectCount));
+            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, Optional.ToDictionary(sourceDatabaseObjectCount), Optional.ToDictionary(targetDatabaseObjectCount));
         }
     }
 }

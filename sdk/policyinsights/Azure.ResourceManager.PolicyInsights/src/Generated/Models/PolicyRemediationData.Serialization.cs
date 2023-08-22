@@ -13,44 +13,44 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class PolicyRemediationData : Core.IUtf8JsonSerializable
+    public partial class PolicyRemediationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PolicyAssignmentId))
+            if (Optional.IsDefined(PolicyAssignmentId))
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
-            if (Core.Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Core.Optional.IsDefined(ResourceDiscoveryMode))
+            if (Optional.IsDefined(ResourceDiscoveryMode))
             {
                 writer.WritePropertyName("resourceDiscoveryMode"u8);
                 writer.WriteStringValue(ResourceDiscoveryMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Filter))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (Core.Optional.IsDefined(ResourceCount))
+            if (Optional.IsDefined(ResourceCount))
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (Core.Optional.IsDefined(ParallelDeployments))
+            if (Optional.IsDefined(ParallelDeployments))
             {
                 writer.WritePropertyName("parallelDeployments"u8);
                 writer.WriteNumberValue(ParallelDeployments.Value);
             }
-            if (Core.Optional.IsDefined(FailureThreshold))
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteObjectValue(FailureThreshold);
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> policyAssignmentId = default;
-            Core.Optional<string> policyDefinitionReferenceId = default;
-            Core.Optional<ResourceDiscoveryMode> resourceDiscoveryMode = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<DateTimeOffset> createdOn = default;
-            Core.Optional<DateTimeOffset> lastUpdatedOn = default;
-            Core.Optional<RemediationFilters> filters = default;
-            Core.Optional<RemediationDeploymentSummary> deploymentStatus = default;
-            Core.Optional<string> statusMessage = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<int> resourceCount = default;
-            Core.Optional<int> parallelDeployments = default;
-            Core.Optional<RemediationPropertiesFailureThreshold> failureThreshold = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> policyAssignmentId = default;
+            Optional<string> policyDefinitionReferenceId = default;
+            Optional<ResourceDiscoveryMode> resourceDiscoveryMode = default;
+            Optional<string> provisioningState = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<DateTimeOffset> lastUpdatedOn = default;
+            Optional<RemediationFilters> filters = default;
+            Optional<RemediationDeploymentSummary> deploymentStatus = default;
+            Optional<string> statusMessage = default;
+            Optional<string> correlationId = default;
+            Optional<int> resourceCount = default;
+            Optional<int> parallelDeployments = default;
+            Optional<RemediationPropertiesFailureThreshold> failureThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     continue;
                 }
             }
-            return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Core.Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Core.Optional.ToNullable(createdOn), Core.Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Core.Optional.ToNullable(resourceCount), Core.Optional.ToNullable(parallelDeployments), failureThreshold.Value);
+            return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value);
         }
     }
 }

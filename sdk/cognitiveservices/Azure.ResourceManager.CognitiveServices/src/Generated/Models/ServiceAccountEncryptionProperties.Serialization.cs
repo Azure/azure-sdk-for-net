@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountEncryptionProperties : Core.IUtf8JsonSerializable
+    public partial class ServiceAccountEncryptionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Core.Optional.IsDefined(KeySource))
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<CognitiveServicesKeyVaultProperties> keyVaultProperties = default;
-            Core.Optional<ServiceAccountEncryptionKeySource> keySource = default;
+            Optional<CognitiveServicesKeyVaultProperties> keyVaultProperties = default;
+            Optional<ServiceAccountEncryptionKeySource> keySource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new ServiceAccountEncryptionProperties(keyVaultProperties.Value, Core.Optional.ToNullable(keySource));
+            return new ServiceAccountEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource));
         }
     }
 }

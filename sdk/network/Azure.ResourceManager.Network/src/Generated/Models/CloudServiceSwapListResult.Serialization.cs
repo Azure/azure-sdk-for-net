@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CloudServiceSwapData>> value = default;
+            Optional<IReadOnlyList<CloudServiceSwapData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new CloudServiceSwapListResult(Core.Optional.ToList(value));
+            return new CloudServiceSwapListResult(Optional.ToList(value));
         }
     }
 }

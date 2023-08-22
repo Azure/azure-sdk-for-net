@@ -14,15 +14,15 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class ValidateConfigurationResultOperationSource : Core.IOperationSource<ValidateConfigurationResult>
+    internal class ValidateConfigurationResultOperationSource : IOperationSource<ValidateConfigurationResult>
     {
-        ValidateConfigurationResult Core.IOperationSource<ValidateConfigurationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        ValidateConfigurationResult IOperationSource<ValidateConfigurationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ValidateConfigurationResult.DeserializeValidateConfigurationResult(document.RootElement);
         }
 
-        async ValueTask<ValidateConfigurationResult> Core.IOperationSource<ValidateConfigurationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ValidateConfigurationResult> IOperationSource<ValidateConfigurationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ValidateConfigurationResult.DeserializeValidateConfigurationResult(document.RootElement);

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudAgentConfiguration : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudAgentConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hugepagesCount"u8);
             writer.WriteNumberValue(HugepagesCount);
-            if (Core.Optional.IsDefined(HugepagesSize))
+            if (Optional.IsDefined(HugepagesSize))
             {
                 writer.WritePropertyName("hugepagesSize"u8);
                 writer.WriteStringValue(HugepagesSize.Value.ToString());
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             long hugepagesCount = default;
-            Core.Optional<HugepagesSize> hugepagesSize = default;
+            Optional<HugepagesSize> hugepagesSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hugepagesCount"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new NetworkCloudAgentConfiguration(hugepagesCount, Core.Optional.ToNullable(hugepagesSize));
+            return new NetworkCloudAgentConfiguration(hugepagesCount, Optional.ToNullable(hugepagesSize));
         }
     }
 }

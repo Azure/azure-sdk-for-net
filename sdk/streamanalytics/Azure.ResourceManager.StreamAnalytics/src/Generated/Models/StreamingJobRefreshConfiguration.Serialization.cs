@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamingJobRefreshConfiguration : Core.IUtf8JsonSerializable
+    public partial class StreamingJobRefreshConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PathPattern))
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (Core.Optional.IsDefined(DateFormat))
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (Core.Optional.IsDefined(TimeFormat))
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (Core.Optional.IsDefined(RefreshInterval))
+            if (Optional.IsDefined(RefreshInterval))
             {
                 writer.WritePropertyName("refreshInterval"u8);
                 writer.WriteStringValue(RefreshInterval);
             }
-            if (Core.Optional.IsDefined(RefreshType))
+            if (Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<string> pathPattern = default;
-            Core.Optional<string> dateFormat = default;
-            Core.Optional<string> timeFormat = default;
-            Core.Optional<string> refreshInterval = default;
-            Core.Optional<DataRefreshType> refreshType = default;
+            Optional<string> pathPattern = default;
+            Optional<string> dateFormat = default;
+            Optional<string> timeFormat = default;
+            Optional<string> refreshInterval = default;
+            Optional<DataRefreshType> refreshType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pathPattern"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobRefreshConfiguration(pathPattern.Value, dateFormat.Value, timeFormat.Value, refreshInterval.Value, Core.Optional.ToNullable(refreshType));
+            return new StreamingJobRefreshConfiguration(pathPattern.Value, dateFormat.Value, timeFormat.Value, refreshInterval.Value, Optional.ToNullable(refreshType));
         }
     }
 }

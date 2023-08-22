@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppHttpRequestInfo : Core.IUtf8JsonSerializable
+    public partial class ContainerAppHttpRequestInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Host))
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Core.Optional.IsCollectionDefined(HttpHeaders))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Core.Optional.IsDefined(Scheme))
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> host = default;
-            Core.Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
-            Core.Optional<string> path = default;
+            Optional<string> host = default;
+            Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
+            Optional<string> path = default;
             int port = default;
-            Core.Optional<ContainerAppHttpScheme> scheme = default;
+            Optional<ContainerAppHttpScheme> scheme = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppHttpRequestInfo(host.Value, Core.Optional.ToList(httpHeaders), path.Value, port, Core.Optional.ToNullable(scheme));
+            return new ContainerAppHttpRequestInfo(host.Value, Optional.ToList(httpHeaders), path.Value, port, Optional.ToNullable(scheme));
         }
     }
 }

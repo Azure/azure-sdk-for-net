@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfo. </summary>
         internal ContainerAppCustomDomainVerificationFailureInfo()
         {
-            Details = new Core.ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>();
+            Details = new ChangeTrackingList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfo. </summary>

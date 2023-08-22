@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of FileServiceItems. </summary>
         internal FileServiceItems()
         {
-            Value = new Core.ChangeTrackingList<FileServiceData>();
+            Value = new ChangeTrackingList<FileServiceData>();
         }
 
         /// <summary> Initializes a new instance of FileServiceItems. </summary>

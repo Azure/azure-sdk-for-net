@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         public AccessControlListPortCondition(Layer4Protocol layer4Protocol) : base(layer4Protocol)
         {
-            Flags = new Core.ChangeTrackingList<string>();
+            Flags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AccessControlListPortCondition. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBIndex : Core.IUtf8JsonSerializable
+    public partial class MongoDBIndex : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Key))
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteObjectValue(Key);
             }
-            if (Core.Optional.IsDefined(Options))
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<MongoIndexKeys> key = default;
-            Core.Optional<MongoDBIndexConfig> options = default;
+            Optional<MongoIndexKeys> key = default;
+            Optional<MongoDBIndexConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))

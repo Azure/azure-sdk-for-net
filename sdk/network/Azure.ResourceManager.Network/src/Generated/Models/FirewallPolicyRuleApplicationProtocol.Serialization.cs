@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyRuleApplicationProtocol : Core.IUtf8JsonSerializable
+    public partial class FirewallPolicyRuleApplicationProtocol : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProtocolType))
+            if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<FirewallPolicyRuleApplicationProtocolType> protocolType = default;
-            Core.Optional<int> port = default;
+            Optional<FirewallPolicyRuleApplicationProtocolType> protocolType = default;
+            Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocolType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyRuleApplicationProtocol(Core.Optional.ToNullable(protocolType), Core.Optional.ToNullable(port));
+            return new FirewallPolicyRuleApplicationProtocol(Optional.ToNullable(protocolType), Optional.ToNullable(port));
         }
     }
 }

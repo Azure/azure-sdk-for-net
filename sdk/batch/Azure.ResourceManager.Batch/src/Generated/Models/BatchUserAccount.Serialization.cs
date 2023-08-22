@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchUserAccount : Core.IUtf8JsonSerializable
+    public partial class BatchUserAccount : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("password"u8);
             writer.WriteStringValue(Password);
-            if (Core.Optional.IsDefined(ElevationLevel))
+            if (Optional.IsDefined(ElevationLevel))
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(LinuxUserConfiguration))
+            if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
                 writer.WriteObjectValue(LinuxUserConfiguration);
             }
-            if (Core.Optional.IsDefined(WindowsUserConfiguration))
+            if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
                 writer.WriteObjectValue(WindowsUserConfiguration);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             string password = default;
-            Core.Optional<BatchUserAccountElevationLevel> elevationLevel = default;
-            Core.Optional<BatchLinuxUserConfiguration> linuxUserConfiguration = default;
-            Core.Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
+            Optional<BatchUserAccountElevationLevel> elevationLevel = default;
+            Optional<BatchLinuxUserConfiguration> linuxUserConfiguration = default;
+            Optional<BatchWindowsUserConfiguration> windowsUserConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchUserAccount(name, password, Core.Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value);
+            return new BatchUserAccount(name, password, Optional.ToNullable(elevationLevel), linuxUserConfiguration.Value, windowsUserConfiguration.Value);
         }
     }
 }

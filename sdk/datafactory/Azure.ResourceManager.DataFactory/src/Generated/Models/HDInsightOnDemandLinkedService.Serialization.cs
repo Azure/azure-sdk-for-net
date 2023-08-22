@@ -13,24 +13,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class HDInsightOnDemandLinkedService : Core.IUtf8JsonSerializable
+    public partial class HDInsightOnDemandLinkedService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Core.Optional.IsDefined(ConnectVia))
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName); writer.WritePropertyName("hostSubscriptionId"u8);
             JsonSerializer.Serialize(writer, HostSubscriptionId);
-            if (Core.Optional.IsDefined(ServicePrincipalId))
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
-            if (Core.Optional.IsDefined(ServicePrincipalKey))
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
@@ -85,32 +85,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, Tenant);
             writer.WritePropertyName("clusterResourceGroup"u8);
             JsonSerializer.Serialize(writer, ClusterResourceGroup);
-            if (Core.Optional.IsDefined(ClusterNamePrefix))
+            if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix"u8);
                 JsonSerializer.Serialize(writer, ClusterNamePrefix);
             }
-            if (Core.Optional.IsDefined(ClusterUserName))
+            if (Optional.IsDefined(ClusterUserName))
             {
                 writer.WritePropertyName("clusterUserName"u8);
                 JsonSerializer.Serialize(writer, ClusterUserName);
             }
-            if (Core.Optional.IsDefined(ClusterPassword))
+            if (Optional.IsDefined(ClusterPassword))
             {
                 writer.WritePropertyName("clusterPassword"u8);
                 JsonSerializer.Serialize(writer, ClusterPassword);
             }
-            if (Core.Optional.IsDefined(ClusterSshUserName))
+            if (Optional.IsDefined(ClusterSshUserName))
             {
                 writer.WritePropertyName("clusterSshUserName"u8);
                 JsonSerializer.Serialize(writer, ClusterSshUserName);
             }
-            if (Core.Optional.IsDefined(ClusterSshPassword))
+            if (Optional.IsDefined(ClusterSshPassword))
             {
                 writer.WritePropertyName("clusterSshPassword"u8);
                 JsonSerializer.Serialize(writer, ClusterSshPassword);
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
+            if (Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
             {
                 writer.WritePropertyName("additionalLinkedServiceNames"u8);
                 writer.WriteStartArray();
@@ -120,22 +120,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(HcatalogLinkedServiceName))
+            if (Optional.IsDefined(HcatalogLinkedServiceName))
             {
                 writer.WritePropertyName("hcatalogLinkedServiceName"u8);
                 JsonSerializer.Serialize(writer, HcatalogLinkedServiceName);
             }
-            if (Core.Optional.IsDefined(ClusterType))
+            if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
                 JsonSerializer.Serialize(writer, ClusterType);
             }
-            if (Core.Optional.IsDefined(SparkVersion))
+            if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
                 JsonSerializer.Serialize(writer, SparkVersion);
             }
-            if (Core.Optional.IsDefined(CoreConfiguration))
+            if (Optional.IsDefined(CoreConfiguration))
             {
                 writer.WritePropertyName("coreConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(CoreConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(HBaseConfiguration))
+            if (Optional.IsDefined(HBaseConfiguration))
             {
                 writer.WritePropertyName("hBaseConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(HBaseConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(HdfsConfiguration))
+            if (Optional.IsDefined(HdfsConfiguration))
             {
                 writer.WritePropertyName("hdfsConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(HdfsConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(HiveConfiguration))
+            if (Optional.IsDefined(HiveConfiguration))
             {
                 writer.WritePropertyName("hiveConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(HiveConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(MapReduceConfiguration))
+            if (Optional.IsDefined(MapReduceConfiguration))
             {
                 writer.WritePropertyName("mapReduceConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(MapReduceConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(OozieConfiguration))
+            if (Optional.IsDefined(OozieConfiguration))
             {
                 writer.WritePropertyName("oozieConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(OozieConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(StormConfiguration))
+            if (Optional.IsDefined(StormConfiguration))
             {
                 writer.WritePropertyName("stormConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(StormConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(YarnConfiguration))
+            if (Optional.IsDefined(YarnConfiguration))
             {
                 writer.WritePropertyName("yarnConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(YarnConfiguration.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(EncryptedCredential))
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (Core.Optional.IsDefined(HeadNodeSize))
+            if (Optional.IsDefined(HeadNodeSize))
             {
                 writer.WritePropertyName("headNodeSize"u8);
 #if NET6_0_OR_GREATER
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(HeadNodeSize.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(DataNodeSize))
+            if (Optional.IsDefined(DataNodeSize))
             {
                 writer.WritePropertyName("dataNodeSize"u8);
 #if NET6_0_OR_GREATER
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(DataNodeSize.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(ZookeeperNodeSize))
+            if (Optional.IsDefined(ZookeeperNodeSize))
             {
                 writer.WritePropertyName("zookeeperNodeSize"u8);
 #if NET6_0_OR_GREATER
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ZookeeperNodeSize.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsCollectionDefined(ScriptActions))
+            if (Optional.IsCollectionDefined(ScriptActions))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();
@@ -249,17 +249,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(VirtualNetworkId))
+            if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 JsonSerializer.Serialize(writer, VirtualNetworkId);
             }
-            if (Core.Optional.IsDefined(SubnetName))
+            if (Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName"u8);
                 JsonSerializer.Serialize(writer, SubnetName);
             }
-            if (Core.Optional.IsDefined(Credential))
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -284,44 +284,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Core.Optional<IntegrationRuntimeReference> connectVia = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Core.Optional<IList<BinaryData>> annotations = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> clusterSize = default;
             DataFactoryElement<string> timeToLive = default;
             DataFactoryElement<string> version = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> hostSubscriptionId = default;
-            Core.Optional<DataFactoryElement<string>> servicePrincipalId = default;
-            Core.Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactoryElement<string>> servicePrincipalId = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> clusterResourceGroup = default;
-            Core.Optional<DataFactoryElement<string>> clusterNamePrefix = default;
-            Core.Optional<DataFactoryElement<string>> clusterUserName = default;
-            Core.Optional<DataFactorySecretBaseDefinition> clusterPassword = default;
-            Core.Optional<DataFactoryElement<string>> clusterSshUserName = default;
-            Core.Optional<DataFactorySecretBaseDefinition> clusterSshPassword = default;
-            Core.Optional<IList<DataFactoryLinkedServiceReference>> additionalLinkedServiceNames = default;
-            Core.Optional<DataFactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
-            Core.Optional<DataFactoryElement<string>> clusterType = default;
-            Core.Optional<DataFactoryElement<string>> sparkVersion = default;
-            Core.Optional<BinaryData> coreConfiguration = default;
-            Core.Optional<BinaryData> hBaseConfiguration = default;
-            Core.Optional<BinaryData> hdfsConfiguration = default;
-            Core.Optional<BinaryData> hiveConfiguration = default;
-            Core.Optional<BinaryData> mapReduceConfiguration = default;
-            Core.Optional<BinaryData> oozieConfiguration = default;
-            Core.Optional<BinaryData> stormConfiguration = default;
-            Core.Optional<BinaryData> yarnConfiguration = default;
-            Core.Optional<string> encryptedCredential = default;
-            Core.Optional<BinaryData> headNodeSize = default;
-            Core.Optional<BinaryData> dataNodeSize = default;
-            Core.Optional<BinaryData> zookeeperNodeSize = default;
-            Core.Optional<IList<DataFactoryScriptAction>> scriptActions = default;
-            Core.Optional<DataFactoryElement<string>> virtualNetworkId = default;
-            Core.Optional<DataFactoryElement<string>> subnetName = default;
-            Core.Optional<DataFactoryCredentialReference> credential = default;
+            Optional<DataFactoryElement<string>> clusterNamePrefix = default;
+            Optional<DataFactoryElement<string>> clusterUserName = default;
+            Optional<DataFactorySecretBaseDefinition> clusterPassword = default;
+            Optional<DataFactoryElement<string>> clusterSshUserName = default;
+            Optional<DataFactorySecretBaseDefinition> clusterSshPassword = default;
+            Optional<IList<DataFactoryLinkedServiceReference>> additionalLinkedServiceNames = default;
+            Optional<DataFactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
+            Optional<DataFactoryElement<string>> clusterType = default;
+            Optional<DataFactoryElement<string>> sparkVersion = default;
+            Optional<BinaryData> coreConfiguration = default;
+            Optional<BinaryData> hBaseConfiguration = default;
+            Optional<BinaryData> hdfsConfiguration = default;
+            Optional<BinaryData> hiveConfiguration = default;
+            Optional<BinaryData> mapReduceConfiguration = default;
+            Optional<BinaryData> oozieConfiguration = default;
+            Optional<BinaryData> stormConfiguration = default;
+            Optional<BinaryData> yarnConfiguration = default;
+            Optional<string> encryptedCredential = default;
+            Optional<BinaryData> headNodeSize = default;
+            Optional<BinaryData> dataNodeSize = default;
+            Optional<BinaryData> zookeeperNodeSize = default;
+            Optional<IList<DataFactoryScriptAction>> scriptActions = default;
+            Optional<DataFactoryElement<string>> virtualNetworkId = default;
+            Optional<DataFactoryElement<string>> subnetName = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword, clusterSshUserName.Value, clusterSshPassword, Core.Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Core.Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value, credential.Value);
+            return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword, clusterSshUserName.Value, clusterSshPassword, Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value, credential.Value);
         }
     }
 }

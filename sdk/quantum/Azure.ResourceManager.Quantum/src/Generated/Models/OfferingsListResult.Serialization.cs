@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ProviderDescription>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ProviderDescription>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new OfferingsListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new OfferingsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

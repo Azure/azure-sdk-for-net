@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicySummary. </summary>
         internal PolicySummary()
         {
-            PolicyAssignments = new Core.ChangeTrackingList<PolicyAssignmentSummary>();
+            PolicyAssignments = new ChangeTrackingList<PolicyAssignmentSummary>();
         }
 
         /// <summary> Initializes a new instance of PolicySummary. </summary>

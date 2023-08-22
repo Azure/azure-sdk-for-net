@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ApplicationStackResource. </summary>
         public ApplicationStackResource()
         {
-            MajorVersions = new Core.ChangeTrackingList<StackMajorVersion>();
-            Frameworks = new Core.ChangeTrackingList<ApplicationStack>();
-            IsDeprecated = new Core.ChangeTrackingList<ApplicationStack>();
+            MajorVersions = new ChangeTrackingList<StackMajorVersion>();
+            Frameworks = new ChangeTrackingList<ApplicationStack>();
+            IsDeprecated = new ChangeTrackingList<ApplicationStack>();
         }
 
         /// <summary> Initializes a new instance of ApplicationStackResource. </summary>

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<bool> nameAvailable = default;
-            Core.Optional<PostgreSqlFlexibleServerNameUnavailableReason> reason = default;
-            Core.Optional<string> message = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<bool> nameAvailable = default;
+            Optional<PostgreSqlFlexibleServerNameUnavailableReason> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason), message.Value, name.Value, Core.Optional.ToNullable(type));
+            return new PostgreSqlFlexibleServerNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, name.Value, Optional.ToNullable(type));
         }
     }
 }

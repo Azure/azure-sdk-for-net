@@ -11,16 +11,16 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DistcpSettings : Core.IUtf8JsonSerializable
+    public partial class DistcpSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
             JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
             JsonSerializer.Serialize(writer, TempScriptPath);
-            if (Core.Optional.IsDefined(DistcpOptions))
+            if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
                 JsonSerializer.Serialize(writer, DistcpOptions);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> resourceManagerEndpoint = default;
             DataFactoryElement<string> tempScriptPath = default;
-            Core.Optional<DataFactoryElement<string>> distcpOptions = default;
+            Optional<DataFactoryElement<string>> distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))

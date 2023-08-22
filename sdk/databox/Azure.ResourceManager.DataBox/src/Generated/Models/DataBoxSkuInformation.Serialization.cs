@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<DataBoxSku> sku = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<IReadOnlyList<DataLocationToServiceLocationMap>> dataLocationToServiceLocationMap = default;
-            Core.Optional<DataBoxSkuCapacity> capacity = default;
-            Core.Optional<IReadOnlyList<DataBoxSkuCost>> costs = default;
-            Core.Optional<IReadOnlyList<string>> apiVersions = default;
-            Core.Optional<SkuDisabledReason> disabledReason = default;
-            Core.Optional<string> disabledReasonMessage = default;
-            Core.Optional<string> requiredFeature = default;
-            Core.Optional<IReadOnlyList<string>> countriesWithinCommerceBoundary = default;
+            Optional<DataBoxSku> sku = default;
+            Optional<bool> enabled = default;
+            Optional<IReadOnlyList<DataLocationToServiceLocationMap>> dataLocationToServiceLocationMap = default;
+            Optional<DataBoxSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<DataBoxSkuCost>> costs = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<SkuDisabledReason> disabledReason = default;
+            Optional<string> disabledReasonMessage = default;
+            Optional<string> requiredFeature = default;
+            Optional<IReadOnlyList<string>> countriesWithinCommerceBoundary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxSkuInformation(sku.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Core.Optional.ToList(costs), Core.Optional.ToList(apiVersions), Core.Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Core.Optional.ToList(countriesWithinCommerceBoundary));
+            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary));
         }
     }
 }

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class NetworkManagerCommitOperationSource : Core.IOperationSource<NetworkManagerCommit>
+    internal class NetworkManagerCommitOperationSource : IOperationSource<NetworkManagerCommit>
     {
-        NetworkManagerCommit Core.IOperationSource<NetworkManagerCommit>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkManagerCommit IOperationSource<NetworkManagerCommit>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NetworkManagerCommit.DeserializeNetworkManagerCommit(document.RootElement);
         }
 
-        async ValueTask<NetworkManagerCommit> Core.IOperationSource<NetworkManagerCommit>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkManagerCommit> IOperationSource<NetworkManagerCommit>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NetworkManagerCommit.DeserializeNetworkManagerCommit(document.RootElement);

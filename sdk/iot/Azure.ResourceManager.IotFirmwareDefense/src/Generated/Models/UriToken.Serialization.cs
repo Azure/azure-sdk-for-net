@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<Uri> url = default;
-            Core.Optional<Uri> uploadUrl = default;
+            Optional<Uri> url = default;
+            Optional<Uri> uploadUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))

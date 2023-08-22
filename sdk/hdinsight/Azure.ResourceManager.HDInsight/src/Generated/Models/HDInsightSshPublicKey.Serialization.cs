@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightSshPublicKey : Core.IUtf8JsonSerializable
+    public partial class HDInsightSshPublicKey : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CertificateData))
+            if (Optional.IsDefined(CertificateData))
             {
                 writer.WritePropertyName("certificateData"u8);
                 writer.WriteStringValue(CertificateData);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> certificateData = default;
+            Optional<string> certificateData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateData"u8))

@@ -12,34 +12,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebhookPartnerDestinationInfo : Core.IUtf8JsonSerializable
+    public partial class WebhookPartnerDestinationInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AzureSubscriptionId))
+            if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (Core.Optional.IsDefined(ResourceGroupName))
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Core.Optional.IsDefined(EndpointServiceContext))
+            if (Optional.IsDefined(EndpointServiceContext))
             {
                 writer.WritePropertyName("endpointServiceContext"u8);
                 writer.WriteStringValue(EndpointServiceContext);
             }
-            if (Core.Optional.IsCollectionDefined(ResourceMoveChangeHistory))
+            if (Optional.IsCollectionDefined(ResourceMoveChangeHistory))
             {
                 writer.WritePropertyName("resourceMoveChangeHistory"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(EndpointBaseUri))
+            if (Optional.IsDefined(EndpointBaseUri))
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ClientAuthentication))
+            if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<string> azureSubscriptionId = default;
-            Core.Optional<string> resourceGroupName = default;
-            Core.Optional<string> name = default;
+            Optional<string> azureSubscriptionId = default;
+            Optional<string> resourceGroupName = default;
+            Optional<string> name = default;
             PartnerEndpointType endpointType = default;
-            Core.Optional<string> endpointServiceContext = default;
-            Core.Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
-            Core.Optional<Uri> endpointUri = default;
-            Core.Optional<Uri> endpointBaseUri = default;
-            Core.Optional<PartnerClientAuthentication> clientAuthentication = default;
+            Optional<string> endpointServiceContext = default;
+            Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
+            Optional<Uri> endpointUri = default;
+            Optional<Uri> endpointBaseUri = default;
+            Optional<PartnerClientAuthentication> clientAuthentication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureSubscriptionId"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new WebhookPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Core.Optional.ToList(resourceMoveChangeHistory), endpointUri.Value, endpointBaseUri.Value, clientAuthentication.Value);
+            return new WebhookPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Optional.ToList(resourceMoveChangeHistory), endpointUri.Value, endpointBaseUri.Value, clientAuthentication.Value);
         }
     }
 }

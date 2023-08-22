@@ -16,7 +16,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Initializes a new instance of RouteSectionTec. </summary>
         internal RouteSectionTec()
         {
-            Causes = new Core.ChangeTrackingList<RouteSectionTecCause>();
+            Causes = new ChangeTrackingList<RouteSectionTecCause>();
         }
 
         /// <summary> Initializes a new instance of RouteSectionTec. </summary>

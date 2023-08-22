@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _adminRuleGroupAdminRuleCollectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, _adminRuleGroupAdminRuleCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, _adminRuleGroupAdminRuleCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _adminRuleGroupAdminRuleCollectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var operation = new NetworkArmOperation(_adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, _adminRuleGroupAdminRuleCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_adminRuleGroupAdminRuleCollectionsClientDiagnostics, Pipeline, _adminRuleGroupAdminRuleCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

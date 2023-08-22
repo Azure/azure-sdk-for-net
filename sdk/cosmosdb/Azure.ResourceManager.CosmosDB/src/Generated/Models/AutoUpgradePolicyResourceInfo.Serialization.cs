@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class AutoUpgradePolicyResourceInfo : Core.IUtf8JsonSerializable
+    internal partial class AutoUpgradePolicyResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ThroughputPolicy))
+            if (Optional.IsDefined(ThroughputPolicy))
             {
                 writer.WritePropertyName("throughputPolicy"u8);
                 writer.WriteObjectValue(ThroughputPolicy);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<ThroughputPolicyResourceInfo> throughputPolicy = default;
+            Optional<ThroughputPolicyResourceInfo> throughputPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughputPolicy"u8))

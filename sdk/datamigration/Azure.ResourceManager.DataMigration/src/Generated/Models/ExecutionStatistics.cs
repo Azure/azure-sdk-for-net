@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ExecutionStatistics. </summary>
         internal ExecutionStatistics()
         {
-            WaitStats = new Core.ChangeTrackingDictionary<string, WaitStatistics>();
-            SqlErrors = new Core.ChangeTrackingList<string>();
+            WaitStats = new ChangeTrackingDictionary<string, WaitStatistics>();
+            SqlErrors = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExecutionStatistics. </summary>

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteMapAction : Core.IUtf8JsonSerializable
+    public partial class RouteMapAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActionType))
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<RouteMapActionType> type = default;
-            Core.Optional<IList<RouteMapActionParameter>> parameters = default;
+            Optional<RouteMapActionType> type = default;
+            Optional<IList<RouteMapActionParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RouteMapAction(Core.Optional.ToNullable(type), Core.Optional.ToList(parameters));
+            return new RouteMapAction(Optional.ToNullable(type), Optional.ToList(parameters));
         }
     }
 }

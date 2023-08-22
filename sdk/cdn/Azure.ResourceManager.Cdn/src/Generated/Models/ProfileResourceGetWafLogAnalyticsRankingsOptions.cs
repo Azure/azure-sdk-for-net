@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Cdn.Models
             DateTimeEnd = dateTimeEnd;
             MaxRanking = maxRanking;
             Rankings = rankings.ToList();
-            Actions = new Core.ChangeTrackingList<WafAction>();
-            RuleTypes = new Core.ChangeTrackingList<WafRuleType>();
+            Actions = new ChangeTrackingList<WafAction>();
+            RuleTypes = new ChangeTrackingList<WafRuleType>();
         }
 
         /// <summary> The ArrayOfWafMetric to use. </summary>

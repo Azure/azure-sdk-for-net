@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryDiskEncryptionInfo : Core.IUtf8JsonSerializable
+    public partial class SiteRecoveryDiskEncryptionInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DiskEncryptionKeyInfo))
+            if (Optional.IsDefined(DiskEncryptionKeyInfo))
             {
                 writer.WritePropertyName("diskEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionKeyInfo);
             }
-            if (Core.Optional.IsDefined(KeyEncryptionKeyInfo))
+            if (Optional.IsDefined(KeyEncryptionKeyInfo))
             {
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
                 writer.WriteObjectValue(KeyEncryptionKeyInfo);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<SiteRecoveryDiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
-            Core.Optional<SiteRecoveryKeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
+            Optional<SiteRecoveryDiskEncryptionKeyInfo> diskEncryptionKeyInfo = default;
+            Optional<SiteRecoveryKeyEncryptionKeyInfo> keyEncryptionKeyInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskEncryptionKeyInfo"u8))

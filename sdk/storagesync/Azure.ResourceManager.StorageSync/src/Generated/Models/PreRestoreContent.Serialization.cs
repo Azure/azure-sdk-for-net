@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class PreRestoreContent : Core.IUtf8JsonSerializable
+    public partial class PreRestoreContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Partition))
+            if (Optional.IsDefined(Partition))
             {
                 writer.WritePropertyName("partition"u8);
                 writer.WriteStringValue(Partition);
             }
-            if (Core.Optional.IsDefined(ReplicaGroup))
+            if (Optional.IsDefined(ReplicaGroup))
             {
                 writer.WritePropertyName("replicaGroup"u8);
                 writer.WriteStringValue(ReplicaGroup);
             }
-            if (Core.Optional.IsDefined(RequestId))
+            if (Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (Core.Optional.IsDefined(AzureFileShareUri))
+            if (Optional.IsDefined(AzureFileShareUri))
             {
                 writer.WritePropertyName("azureFileShareUri"u8);
                 writer.WriteStringValue(AzureFileShareUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Core.Optional.IsDefined(SourceAzureFileShareUri))
+            if (Optional.IsDefined(SourceAzureFileShareUri))
             {
                 writer.WritePropertyName("sourceAzureFileShareUri"u8);
                 writer.WriteStringValue(SourceAzureFileShareUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(BackupMetadataPropertyBag))
+            if (Optional.IsDefined(BackupMetadataPropertyBag))
             {
                 writer.WritePropertyName("backupMetadataPropertyBag"u8);
                 writer.WriteStringValue(BackupMetadataPropertyBag);
             }
-            if (Core.Optional.IsCollectionDefined(RestoreFileSpec))
+            if (Optional.IsCollectionDefined(RestoreFileSpec))
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PauseWaitForSyncDrainTimePeriodInSeconds))
+            if (Optional.IsDefined(PauseWaitForSyncDrainTimePeriodInSeconds))
             {
                 writer.WritePropertyName("pauseWaitForSyncDrainTimePeriodInSeconds"u8);
                 writer.WriteNumberValue(PauseWaitForSyncDrainTimePeriodInSeconds.Value);

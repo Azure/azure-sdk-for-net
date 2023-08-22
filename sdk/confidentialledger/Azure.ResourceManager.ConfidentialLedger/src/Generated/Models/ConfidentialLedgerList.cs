@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of ConfidentialLedgerList. </summary>
         internal ConfidentialLedgerList()
         {
-            Value = new Core.ChangeTrackingList<ConfidentialLedgerData>();
+            Value = new ChangeTrackingList<ConfidentialLedgerData>();
         }
 
         /// <summary> Initializes a new instance of ConfidentialLedgerList. </summary>

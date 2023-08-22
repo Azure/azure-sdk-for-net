@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of BlobOutputDataSource. </summary>
         public BlobOutputDataSource()
         {
-            StorageAccounts = new Core.ChangeTrackingList<StreamAnalyticsStorageAccount>();
+            StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
             OutputDataSourceType = "Microsoft.Storage/Blob";
         }
 

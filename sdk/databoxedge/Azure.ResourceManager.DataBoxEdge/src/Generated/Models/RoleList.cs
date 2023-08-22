@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of RoleList. </summary>
         internal RoleList()
         {
-            Value = new Core.ChangeTrackingList<DataBoxEdgeRoleData>();
+            Value = new ChangeTrackingList<DataBoxEdgeRoleData>();
         }
 
         /// <summary> Initializes a new instance of RoleList. </summary>

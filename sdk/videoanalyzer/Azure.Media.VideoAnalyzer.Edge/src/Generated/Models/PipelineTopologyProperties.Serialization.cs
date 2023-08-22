@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class PipelineTopologyProperties : Core.IUtf8JsonSerializable
+    public partial class PipelineTopologyProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Sources))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Processors))
+            if (Optional.IsCollectionDefined(Processors))
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Sinks))
+            if (Optional.IsCollectionDefined(Sinks))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
@@ -70,11 +70,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<IList<ParameterDeclaration>> parameters = default;
-            Core.Optional<IList<SourceNodeBase>> sources = default;
-            Core.Optional<IList<ProcessorNodeBase>> processors = default;
-            Core.Optional<IList<SinkNodeBase>> sinks = default;
+            Optional<string> description = default;
+            Optional<IList<ParameterDeclaration>> parameters = default;
+            Optional<IList<SourceNodeBase>> sources = default;
+            Optional<IList<ProcessorNodeBase>> processors = default;
+            Optional<IList<SinkNodeBase>> sinks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -139,7 +139,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new PipelineTopologyProperties(description.Value, Core.Optional.ToList(parameters), Core.Optional.ToList(sources), Core.Optional.ToList(processors), Core.Optional.ToList(sinks));
+            return new PipelineTopologyProperties(description.Value, Optional.ToList(parameters), Optional.ToList(sources), Optional.ToList(processors), Optional.ToList(sinks));
         }
     }
 }

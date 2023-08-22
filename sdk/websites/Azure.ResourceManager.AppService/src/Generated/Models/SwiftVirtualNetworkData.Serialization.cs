@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SwiftVirtualNetworkData : Core.IUtf8JsonSerializable
+    public partial class SwiftVirtualNetworkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SubnetResourceId))
+            if (Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
             }
-            if (Core.Optional.IsDefined(IsSwiftSupported))
+            if (Optional.IsDefined(IsSwiftSupported))
             {
                 writer.WritePropertyName("swiftSupported"u8);
                 writer.WriteBooleanValue(IsSwiftSupported.Value);
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> subnetResourceId = default;
-            Core.Optional<bool> swiftSupported = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> subnetResourceId = default;
+            Optional<bool> swiftSupported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SwiftVirtualNetworkData(id, name, type, systemData.Value, subnetResourceId.Value, Core.Optional.ToNullable(swiftSupported), kind.Value);
+            return new SwiftVirtualNetworkData(id, name, type, systemData.Value, subnetResourceId.Value, Optional.ToNullable(swiftSupported), kind.Value);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            AttachedTo = new Core.ChangeTrackingList<string>();
+            AttachedTo = new ChangeTrackingList<string>();
             SizeInMiB = sizeInMiB;
         }
 

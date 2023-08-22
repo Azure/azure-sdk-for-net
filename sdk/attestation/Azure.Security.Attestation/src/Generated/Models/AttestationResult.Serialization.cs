@@ -21,40 +21,40 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Core.Optional<string> jti = default;
-            Core.Optional<string> iss = default;
-            Core.Optional<double> iat = default;
-            Core.Optional<double> exp = default;
-            Core.Optional<double> nbf = default;
-            Core.Optional<object> cnf = default;
-            Core.Optional<string> nonce = default;
-            Core.Optional<string> xMsVer = default;
-            Core.Optional<object> xMsRuntime = default;
-            Core.Optional<object> xMsInittime = default;
-            Core.Optional<object> xMsPolicy = default;
-            Core.Optional<string> xMsAttestationType = default;
-            Core.Optional<JsonWebKey> xMsPolicySigner = default;
-            Core.Optional<string> xMsPolicyHash = default;
-            Core.Optional<bool> xMsSgxIsDebuggable = default;
-            Core.Optional<float> xMsSgxProductId = default;
-            Core.Optional<string> xMsSgxMrenclave = default;
-            Core.Optional<string> xMsSgxMrsigner = default;
-            Core.Optional<float> xMsSgxSvn = default;
-            Core.Optional<string> xMsSgxEhd = default;
-            Core.Optional<object> xMsSgxCollateral = default;
-            Core.Optional<string> ver = default;
-            Core.Optional<bool> isDebuggable = default;
-            Core.Optional<object> maaAttestationcollateral = default;
-            Core.Optional<string> aasEhd = default;
-            Core.Optional<string> maaEhd = default;
-            Core.Optional<float> productId = default;
-            Core.Optional<string> sgxMrenclave = default;
-            Core.Optional<string> sgxMrsigner = default;
-            Core.Optional<float> svn = default;
-            Core.Optional<string> tee = default;
-            Core.Optional<JsonWebKey> policySigner = default;
-            Core.Optional<string> policyHash = default;
-            Core.Optional<string> rpData = default;
+            Optional<string> jti = default;
+            Optional<string> iss = default;
+            Optional<double> iat = default;
+            Optional<double> exp = default;
+            Optional<double> nbf = default;
+            Optional<object> cnf = default;
+            Optional<string> nonce = default;
+            Optional<string> xMsVer = default;
+            Optional<object> xMsRuntime = default;
+            Optional<object> xMsInittime = default;
+            Optional<object> xMsPolicy = default;
+            Optional<string> xMsAttestationType = default;
+            Optional<JsonWebKey> xMsPolicySigner = default;
+            Optional<string> xMsPolicyHash = default;
+            Optional<bool> xMsSgxIsDebuggable = default;
+            Optional<float> xMsSgxProductId = default;
+            Optional<string> xMsSgxMrenclave = default;
+            Optional<string> xMsSgxMrsigner = default;
+            Optional<float> xMsSgxSvn = default;
+            Optional<string> xMsSgxEhd = default;
+            Optional<object> xMsSgxCollateral = default;
+            Optional<string> ver = default;
+            Optional<bool> isDebuggable = default;
+            Optional<object> maaAttestationcollateral = default;
+            Optional<string> aasEhd = default;
+            Optional<string> maaEhd = default;
+            Optional<float> productId = default;
+            Optional<string> sgxMrenclave = default;
+            Optional<string> sgxMrsigner = default;
+            Optional<float> svn = default;
+            Optional<string> tee = default;
+            Optional<JsonWebKey> policySigner = default;
+            Optional<string> policyHash = default;
+            Optional<string> rpData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jti"u8))
@@ -296,7 +296,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new AttestationResult(jti.Value, iss.Value, Core.Optional.ToNullable(iat), Core.Optional.ToNullable(exp), Core.Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Core.Optional.ToNullable(xMsSgxIsDebuggable), Core.Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Core.Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Core.Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Core.Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Core.Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+            return new AttestationResult(jti.Value, iss.Value, Optional.ToNullable(iat), Optional.ToNullable(exp), Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
         }
 
         internal partial class AttestationResultConverter : JsonConverter<AttestationResult>

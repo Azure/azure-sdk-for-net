@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of RecoveryServicesVaultListResult. </summary>
         internal RecoveryServicesVaultListResult()
         {
-            Value = new Core.ChangeTrackingList<RecoveryServicesVaultData>();
+            Value = new ChangeTrackingList<RecoveryServicesVaultData>();
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesVaultListResult. </summary>

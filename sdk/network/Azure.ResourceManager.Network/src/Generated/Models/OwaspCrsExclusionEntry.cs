@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
-            ExclusionManagedRuleSets = new Core.ChangeTrackingList<ExclusionManagedRuleSet>();
+            ExclusionManagedRuleSets = new ChangeTrackingList<ExclusionManagedRuleSet>();
         }
 
         /// <summary> Initializes a new instance of OwaspCrsExclusionEntry. </summary>

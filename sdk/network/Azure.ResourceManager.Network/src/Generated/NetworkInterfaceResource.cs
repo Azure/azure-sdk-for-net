@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkInterfaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkInterfaceRestClient.GetEffectiveRouteTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfaceRestClient.GetEffectiveRouteTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkInterfaceRestClient.ListEffectiveNetworkSecurityGroupsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<EffectiveNetworkSecurityGroupListResult>(new EffectiveNetworkSecurityGroupListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveNetworkSecurityGroupListResult>(new EffectiveNetworkSecurityGroupListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkInterfaceRestClient.ListEffectiveNetworkSecurityGroups(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<EffectiveNetworkSecurityGroupListResult>(new EffectiveNetworkSecurityGroupListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveNetworkSecurityGroupListResult>(new EffectiveNetworkSecurityGroupListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateListEffectiveNetworkSecurityGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

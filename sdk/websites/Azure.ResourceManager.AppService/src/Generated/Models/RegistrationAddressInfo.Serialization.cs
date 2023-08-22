@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RegistrationAddressInfo : Core.IUtf8JsonSerializable
+    public partial class RegistrationAddressInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("address1"u8);
             writer.WriteStringValue(Address1);
-            if (Core.Optional.IsDefined(Address2))
+            if (Optional.IsDefined(Address2))
             {
                 writer.WritePropertyName("address2"u8);
                 writer.WriteStringValue(Address2);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string address1 = default;
-            Core.Optional<string> address2 = default;
+            Optional<string> address2 = default;
             string city = default;
             string country = default;
             string postalCode = default;

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    internal class AssociationOperationSource : Core.IOperationSource<AssociationResource>
+    internal class AssociationOperationSource : IOperationSource<AssociationResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ServiceNetworking
             _client = client;
         }
 
-        AssociationResource Core.IOperationSource<AssociationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AssociationResource IOperationSource<AssociationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AssociationData.DeserializeAssociationData(document.RootElement);
             return new AssociationResource(_client, data);
         }
 
-        async ValueTask<AssociationResource> Core.IOperationSource<AssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AssociationResource> IOperationSource<AssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AssociationData.DeserializeAssociationData(document.RootElement);

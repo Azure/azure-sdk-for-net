@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> network = default;
-            Core.Optional<string> nextHop = default;
-            Core.Optional<string> locPrf = default;
-            Core.Optional<int> weight = default;
-            Core.Optional<string> path = default;
+            Optional<string> network = default;
+            Optional<string> nextHop = default;
+            Optional<string> locPrf = default;
+            Optional<int> weight = default;
+            Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("network"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitRoutesTable(network.Value, nextHop.Value, locPrf.Value, Core.Optional.ToNullable(weight), path.Value);
+            return new ExpressRouteCircuitRoutesTable(network.Value, nextHop.Value, locPrf.Value, Optional.ToNullable(weight), path.Value);
         }
     }
 }

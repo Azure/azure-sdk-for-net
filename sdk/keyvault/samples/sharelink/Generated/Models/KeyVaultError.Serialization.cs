@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Core.Optional<Error> error = default;
+            Optional<Error> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

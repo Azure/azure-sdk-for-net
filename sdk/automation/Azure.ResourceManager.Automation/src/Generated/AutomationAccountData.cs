@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The location. </param>
         public AutomationAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<AutomationPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<AutomationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of AutomationAccountData. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
             {
                 return null;
             }
-            Core.Optional<bool> nameAvailable = default;
-            Core.Optional<VoiceServicesNameUnavailableReason> reason = default;
-            Core.Optional<string> message = default;
+            Optional<bool> nameAvailable = default;
+            Optional<VoiceServicesNameUnavailableReason> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     continue;
                 }
             }
-            return new VoiceServicesCheckNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason), message.Value);
+            return new VoiceServicesCheckNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value);
         }
     }
 }

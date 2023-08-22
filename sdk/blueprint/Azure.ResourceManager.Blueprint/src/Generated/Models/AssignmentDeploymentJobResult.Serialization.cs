@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class AssignmentDeploymentJobResult : Core.IUtf8JsonSerializable
+    public partial class AssignmentDeploymentJobResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Core.Optional.IsCollectionDefined(Resources))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Core.Optional<AzureResourceManagerError> error = default;
-            Core.Optional<IList<AssignmentJobCreatedResource>> resources = default;
+            Optional<AzureResourceManagerError> error = default;
+            Optional<IList<AssignmentJobCreatedResource>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new AssignmentDeploymentJobResult(error.Value, Core.Optional.ToList(resources));
+            return new AssignmentDeploymentJobResult(error.Value, Optional.ToList(resources));
         }
     }
 }

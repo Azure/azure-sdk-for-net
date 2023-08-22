@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeQuotaRulePatch : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumeQuotaRulePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QuotaSizeInKiBs))
+            if (Optional.IsDefined(QuotaSizeInKiBs))
             {
                 writer.WritePropertyName("quotaSizeInKiBs"u8);
                 writer.WriteNumberValue(QuotaSizeInKiBs.Value);
             }
-            if (Core.Optional.IsDefined(QuotaType))
+            if (Optional.IsDefined(QuotaType))
             {
                 writer.WritePropertyName("quotaType"u8);
                 writer.WriteStringValue(QuotaType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(QuotaTarget))
+            if (Optional.IsDefined(QuotaTarget))
             {
                 writer.WritePropertyName("quotaTarget"u8);
                 writer.WriteStringValue(QuotaTarget);

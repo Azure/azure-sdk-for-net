@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareEntityInternal : Core.IUtf8JsonSerializable
+    internal partial class HealthcareEntityInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
-            if (Core.Optional.IsDefined(Subcategory))
+            if (Optional.IsDefined(Subcategory))
             {
                 writer.WritePropertyName("subcategory"u8);
                 writer.WriteStringValue(Subcategory);
@@ -32,17 +32,17 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteNumberValue(Length);
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
-            if (Core.Optional.IsDefined(Assertion))
+            if (Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
                 writer.WriteObjectValue(Assertion);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(Links))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -63,13 +63,13 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string text = default;
             HealthcareEntityCategory category = default;
-            Core.Optional<string> subcategory = default;
+            Optional<string> subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
-            Core.Optional<HealthcareEntityAssertion> assertion = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IList<EntityDataSource>> links = default;
+            Optional<HealthcareEntityAssertion> assertion = default;
+            Optional<string> name = default;
+            Optional<IList<EntityDataSource>> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -131,7 +131,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Core.Optional.ToList(links));
+            return new HealthcareEntityInternal(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, Optional.ToList(links));
         }
     }
 }

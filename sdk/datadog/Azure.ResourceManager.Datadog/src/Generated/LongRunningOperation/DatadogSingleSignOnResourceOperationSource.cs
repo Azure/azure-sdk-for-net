@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Datadog
 {
-    internal class DatadogSingleSignOnResourceOperationSource : Core.IOperationSource<DatadogSingleSignOnResource>
+    internal class DatadogSingleSignOnResourceOperationSource : IOperationSource<DatadogSingleSignOnResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Datadog
             _client = client;
         }
 
-        DatadogSingleSignOnResource Core.IOperationSource<DatadogSingleSignOnResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatadogSingleSignOnResource IOperationSource<DatadogSingleSignOnResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(document.RootElement);
             return new DatadogSingleSignOnResource(_client, data);
         }
 
-        async ValueTask<DatadogSingleSignOnResource> Core.IOperationSource<DatadogSingleSignOnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatadogSingleSignOnResource> IOperationSource<DatadogSingleSignOnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DatadogSingleSignOnResourceData.DeserializeDatadogSingleSignOnResourceData(document.RootElement);

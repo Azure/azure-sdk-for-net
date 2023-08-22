@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class PipelineElapsedTimeMetricPolicy : Core.IUtf8JsonSerializable
+    internal partial class PipelineElapsedTimeMetricPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Duration))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
 #if NET6_0_OR_GREATER
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> duration = default;
+            Optional<BinaryData> duration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))

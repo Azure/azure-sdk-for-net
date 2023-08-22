@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppGlobalValidation. </summary>
         public ContainerAppGlobalValidation()
         {
-            ExcludedPaths = new Core.ChangeTrackingList<string>();
+            ExcludedPaths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppGlobalValidation. </summary>

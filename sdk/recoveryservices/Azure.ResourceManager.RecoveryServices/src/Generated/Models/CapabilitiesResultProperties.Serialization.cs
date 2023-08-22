@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class CapabilitiesResultProperties : Core.IUtf8JsonSerializable
+    internal partial class CapabilitiesResultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DnsZones))
+            if (Optional.IsCollectionDefined(DnsZones))
             {
                 writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<IList<DnsZoneResult>> dnsZones = default;
+            Optional<IList<DnsZoneResult>> dnsZones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsZones"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new CapabilitiesResultProperties(Core.Optional.ToList(dnsZones));
+            return new CapabilitiesResultProperties(Optional.ToList(dnsZones));
         }
     }
 }

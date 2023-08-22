@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<TimeSpan> blobDuration = default;
-            Core.Optional<string> logFilterPattern = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<TimeSpan> blobDuration = default;
+            Optional<string> logFilterPattern = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new LogSpecification(name.Value, displayName.Value, Core.Optional.ToNullable(blobDuration), logFilterPattern.Value);
+            return new LogSpecification(name.Value, displayName.Value, Optional.ToNullable(blobDuration), logFilterPattern.Value);
         }
     }
 }

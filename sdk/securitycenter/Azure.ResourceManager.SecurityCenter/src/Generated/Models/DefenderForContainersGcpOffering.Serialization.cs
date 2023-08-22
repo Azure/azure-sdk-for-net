@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForContainersGcpOffering : Core.IUtf8JsonSerializable
+    public partial class DefenderForContainersGcpOffering : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NativeCloudConnection))
+            if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
                 writer.WriteObjectValue(NativeCloudConnection);
             }
-            if (Core.Optional.IsDefined(DataPipelineNativeCloudConnection))
+            if (Optional.IsDefined(DataPipelineNativeCloudConnection))
             {
                 writer.WritePropertyName("dataPipelineNativeCloudConnection"u8);
                 writer.WriteObjectValue(DataPipelineNativeCloudConnection);
             }
-            if (Core.Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
+            if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("auditLogsAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsAuditLogsAutoProvisioningEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsDefenderAgentAutoProvisioningEnabled))
+            if (Optional.IsDefined(IsDefenderAgentAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("defenderAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsDefenderAgentAutoProvisioningEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsPolicyAgentAutoProvisioningEnabled))
+            if (Optional.IsDefined(IsPolicyAgentAutoProvisioningEnabled))
             {
                 writer.WritePropertyName("policyAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsPolicyAgentAutoProvisioningEnabled.Value);
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
-            Core.Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
-            Core.Optional<bool> auditLogsAutoProvisioningFlag = default;
-            Core.Optional<bool> defenderAgentAutoProvisioningFlag = default;
-            Core.Optional<bool> policyAgentAutoProvisioningFlag = default;
+            Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
+            Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
+            Optional<bool> auditLogsAutoProvisioningFlag = default;
+            Optional<bool> defenderAgentAutoProvisioningFlag = default;
+            Optional<bool> policyAgentAutoProvisioningFlag = default;
             OfferingType offeringType = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nativeCloudConnection"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForContainersGcpOffering(offeringType, description.Value, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Core.Optional.ToNullable(auditLogsAutoProvisioningFlag), Core.Optional.ToNullable(defenderAgentAutoProvisioningFlag), Core.Optional.ToNullable(policyAgentAutoProvisioningFlag));
+            return new DefenderForContainersGcpOffering(offeringType, description.Value, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag));
         }
     }
 }

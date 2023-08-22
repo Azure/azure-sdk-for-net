@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTriggerProperties : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryTriggerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(TimerTriggers))
+            if (Optional.IsCollectionDefined(TimerTriggers))
             {
                 writer.WritePropertyName("timerTriggers"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourceTriggers))
+            if (Optional.IsCollectionDefined(SourceTriggers))
             {
                 writer.WritePropertyName("sourceTriggers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BaseImageTrigger))
+            if (Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
                 writer.WriteObjectValue(BaseImageTrigger);
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<IList<ContainerRegistryTimerTrigger>> timerTriggers = default;
-            Core.Optional<IList<ContainerRegistrySourceTrigger>> sourceTriggers = default;
-            Core.Optional<ContainerRegistryBaseImageTrigger> baseImageTrigger = default;
+            Optional<IList<ContainerRegistryTimerTrigger>> timerTriggers = default;
+            Optional<IList<ContainerRegistrySourceTrigger>> sourceTriggers = default;
+            Optional<ContainerRegistryBaseImageTrigger> baseImageTrigger = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timerTriggers"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryTriggerProperties(Core.Optional.ToList(timerTriggers), Core.Optional.ToList(sourceTriggers), baseImageTrigger.Value);
+            return new ContainerRegistryTriggerProperties(Optional.ToList(timerTriggers), Optional.ToList(sourceTriggers), baseImageTrigger.Value);
         }
     }
 }

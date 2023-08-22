@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class ManagedRuleSetDefinition : Core.IUtf8JsonSerializable
+    public partial class ManagedRuleSetDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> ruleSetId = default;
-            Core.Optional<string> ruleSetType = default;
-            Core.Optional<string> ruleSetVersion = default;
-            Core.Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> provisioningState = default;
+            Optional<string> ruleSetId = default;
+            Optional<string> ruleSetType = default;
+            Optional<string> ruleSetVersion = default;
+            Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, Core.Optional.ToList(ruleGroups));
+            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
         }
     }
 }

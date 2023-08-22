@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<DateTimeOffset> timeStamp = default;
-            Core.Optional<IReadOnlyList<string>> initiatedByList = default;
-            Core.Optional<ChangeType> changeType = default;
-            Core.Optional<IReadOnlyList<PropertyChange>> propertyChanges = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<DateTimeOffset> timeStamp = default;
+            Optional<IReadOnlyList<string>> initiatedByList = default;
+            Optional<ChangeType> changeType = default;
+            Optional<IReadOnlyList<PropertyChange>> propertyChanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     continue;
                 }
             }
-            return new ChangeProperties(resourceId.Value, Core.Optional.ToNullable(timeStamp), Core.Optional.ToList(initiatedByList), Core.Optional.ToNullable(changeType), Core.Optional.ToList(propertyChanges));
+            return new ChangeProperties(resourceId.Value, Optional.ToNullable(timeStamp), Optional.ToList(initiatedByList), Optional.ToNullable(changeType), Optional.ToList(propertyChanges));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<double> lat = default;
-            Core.Optional<double> lon = default;
+            Optional<double> lat = default;
+            Optional<double> lon = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lat"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new LatLongPairAbbreviated(Core.Optional.ToNullable(lat), Core.Optional.ToNullable(lon));
+            return new LatLongPairAbbreviated(Optional.ToNullable(lat), Optional.ToNullable(lon));
         }
     }
 }

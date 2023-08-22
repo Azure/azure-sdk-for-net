@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<IReadOnlyList<string>> apiVersions = default;
-            Core.Optional<Uri> endpointUri = default;
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<string>> requiredFeatures = default;
-            Core.Optional<FeaturesRule> featuresRule = default;
-            Core.Optional<TimeSpan> timeout = default;
+            Optional<bool> enabled = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<Uri> endpointUri = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<string>> requiredFeatures = default;
+            Optional<FeaturesRule> featuresRule = default;
+            Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceProviderEndpoint(Core.Optional.ToNullable(enabled), Core.Optional.ToList(apiVersions), endpointUri.Value, Core.Optional.ToList(locations), Core.Optional.ToList(requiredFeatures), featuresRule.Value, Core.Optional.ToNullable(timeout));
+            return new ResourceProviderEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), endpointUri.Value, Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(timeout));
         }
     }
 }

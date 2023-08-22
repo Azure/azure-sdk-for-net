@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class SecretStoreBasedAuthCredentials : Core.IUtf8JsonSerializable
+    public partial class SecretStoreBasedAuthCredentials : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecretStoreResource))
+            if (Optional.IsDefined(SecretStoreResource))
             {
                 writer.WritePropertyName("secretStoreResource"u8);
                 writer.WriteObjectValue(SecretStoreResource);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<SecretStoreResourceInfo> secretStoreResource = default;
+            Optional<SecretStoreResourceInfo> secretStoreResource = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {

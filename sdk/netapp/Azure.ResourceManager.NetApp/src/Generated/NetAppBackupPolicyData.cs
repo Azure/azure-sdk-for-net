@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyData(AzureLocation location) : base(location)
         {
-            VolumeBackups = new Core.ChangeTrackingList<NetAppVolumeBackupDetail>();
+            VolumeBackups = new ChangeTrackingList<NetAppVolumeBackupDetail>();
         }
 
         /// <summary> Initializes a new instance of NetAppBackupPolicyData. </summary>

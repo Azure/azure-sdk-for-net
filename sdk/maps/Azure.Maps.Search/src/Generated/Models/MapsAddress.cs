@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of MapsAddress. </summary>
         internal MapsAddress()
         {
-            RouteNumbers = new Core.ChangeTrackingList<string>();
+            RouteNumbers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MapsAddress. </summary>

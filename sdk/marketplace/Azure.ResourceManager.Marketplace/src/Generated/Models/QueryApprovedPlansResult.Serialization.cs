@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<QueryApprovedPlansDetails>> details = default;
+            Optional<IReadOnlyList<QueryApprovedPlansDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new QueryApprovedPlansResult(Core.Optional.ToList(details));
+            return new QueryApprovedPlansResult(Optional.ToList(details));
         }
     }
 }

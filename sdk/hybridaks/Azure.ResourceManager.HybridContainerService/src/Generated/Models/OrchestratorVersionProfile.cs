@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of OrchestratorVersionProfile. </summary>
         internal OrchestratorVersionProfile()
         {
-            Upgrades = new Core.ChangeTrackingList<OrchestratorProfile>();
+            Upgrades = new ChangeTrackingList<OrchestratorProfile>();
         }
 
         /// <summary> Initializes a new instance of OrchestratorVersionProfile. </summary>

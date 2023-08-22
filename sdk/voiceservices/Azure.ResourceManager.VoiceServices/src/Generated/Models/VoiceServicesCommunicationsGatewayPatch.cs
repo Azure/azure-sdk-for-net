@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
         /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayPatch. </summary>
         public VoiceServicesCommunicationsGatewayPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

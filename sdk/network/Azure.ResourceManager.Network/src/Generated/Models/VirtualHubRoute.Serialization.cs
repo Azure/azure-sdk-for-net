@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualHubRoute : Core.IUtf8JsonSerializable
+    public partial class VirtualHubRoute : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AddressPrefixes))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NextHopIPAddress))
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> addressPrefixes = default;
-            Core.Optional<string> nextHopIPAddress = default;
+            Optional<IList<string>> addressPrefixes = default;
+            Optional<string> nextHopIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefixes"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualHubRoute(Core.Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
+            return new VirtualHubRoute(Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
         }
     }
 }

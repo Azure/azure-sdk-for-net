@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of USProgramBriefs. </summary>
         internal USProgramBriefs()
         {
-            ProgramBriefs = new Core.ChangeTrackingList<USProgramBrief>();
+            ProgramBriefs = new ChangeTrackingList<USProgramBrief>();
         }
 
         /// <summary> Initializes a new instance of USProgramBriefs. </summary>

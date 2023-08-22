@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of EventGridStreamInputDataSource. </summary>
         public EventGridStreamInputDataSource()
         {
-            StorageAccounts = new Core.ChangeTrackingList<StreamAnalyticsStorageAccount>();
-            EventTypes = new Core.ChangeTrackingList<string>();
+            StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
+            EventTypes = new ChangeTrackingList<string>();
             StreamInputDataSourceType = "Microsoft.EventGrid/EventSubscriptions";
         }
 

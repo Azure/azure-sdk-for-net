@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class JobDeliveryInfo : Core.IUtf8JsonSerializable
+    internal partial class JobDeliveryInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScheduledOn))
+            if (Optional.IsDefined(ScheduledOn))
             {
                 writer.WritePropertyName("scheduledDateTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> scheduledDateTime = default;
+            Optional<DateTimeOffset> scheduledDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduledDateTime"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new JobDeliveryInfo(Core.Optional.ToNullable(scheduledDateTime));
+            return new JobDeliveryInfo(Optional.ToNullable(scheduledDateTime));
         }
     }
 }

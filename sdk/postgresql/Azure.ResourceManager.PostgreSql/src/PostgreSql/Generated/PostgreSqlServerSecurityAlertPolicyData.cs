@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyData. </summary>
         public PostgreSqlServerSecurityAlertPolicyData()
         {
-            DisabledAlerts = new Core.ChangeTrackingList<string>();
-            EmailAddresses = new Core.ChangeTrackingList<string>();
+            DisabledAlerts = new ChangeTrackingList<string>();
+            EmailAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyData. </summary>

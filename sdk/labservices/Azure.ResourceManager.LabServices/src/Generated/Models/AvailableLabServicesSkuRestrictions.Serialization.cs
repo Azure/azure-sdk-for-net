@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<LabServicesSkuRestrictionType> type = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<LabServicesSkuRestrictionReasonCode> reasonCode = default;
+            Optional<LabServicesSkuRestrictionType> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<LabServicesSkuRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new AvailableLabServicesSkuRestrictions(Core.Optional.ToNullable(type), Core.Optional.ToList(values), Core.Optional.ToNullable(reasonCode));
+            return new AvailableLabServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), Optional.ToNullable(reasonCode));
         }
     }
 }

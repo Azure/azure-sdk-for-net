@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlPerformanceTierListResult. </summary>
         internal MySqlPerformanceTierListResult()
         {
-            Value = new Core.ChangeTrackingList<MySqlPerformanceTier>();
+            Value = new ChangeTrackingList<MySqlPerformanceTier>();
         }
 
         /// <summary> Initializes a new instance of MySqlPerformanceTierListResult. </summary>

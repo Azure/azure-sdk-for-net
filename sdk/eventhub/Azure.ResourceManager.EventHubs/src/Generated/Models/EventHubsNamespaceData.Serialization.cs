@@ -14,22 +14,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsNamespaceData : Core.IUtf8JsonSerializable
+    public partial class EventHubsNamespaceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,47 +44,47 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinimumTlsVersion))
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ClusterArmId))
+            if (Optional.IsDefined(ClusterArmId))
             {
                 writer.WritePropertyName("clusterArmId"u8);
                 writer.WriteStringValue(ClusterArmId);
             }
-            if (Core.Optional.IsDefined(IsAutoInflateEnabled))
+            if (Optional.IsDefined(IsAutoInflateEnabled))
             {
                 writer.WritePropertyName("isAutoInflateEnabled"u8);
                 writer.WriteBooleanValue(IsAutoInflateEnabled.Value);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MaximumThroughputUnits))
+            if (Optional.IsDefined(MaximumThroughputUnits))
             {
                 writer.WritePropertyName("maximumThroughputUnits"u8);
                 writer.WriteNumberValue(MaximumThroughputUnits.Value);
             }
-            if (Core.Optional.IsDefined(KafkaEnabled))
+            if (Optional.IsDefined(KafkaEnabled))
             {
                 writer.WritePropertyName("kafkaEnabled"u8);
                 writer.WriteBooleanValue(KafkaEnabled.Value);
             }
-            if (Core.Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(ZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(ZoneRedundant.Value);
             }
-            if (Core.Optional.IsDefined(Encryption))
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Core.Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Core.Optional.IsDefined(AlternateName))
+            if (Optional.IsDefined(AlternateName))
             {
                 writer.WritePropertyName("alternateName"u8);
                 writer.WriteStringValue(AlternateName);
@@ -114,31 +114,31 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Core.Optional<EventHubsSku> sku = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<EventHubsSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<EventHubsTlsVersion> minimumTlsVersion = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> createdAt = default;
-            Core.Optional<DateTimeOffset> updatedAt = default;
-            Core.Optional<string> serviceBusEndpoint = default;
-            Core.Optional<ResourceIdentifier> clusterArmId = default;
-            Core.Optional<string> metricId = default;
-            Core.Optional<bool> isAutoInflateEnabled = default;
-            Core.Optional<EventHubsPublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<int> maximumThroughputUnits = default;
-            Core.Optional<bool> kafkaEnabled = default;
-            Core.Optional<bool> zoneRedundant = default;
-            Core.Optional<EventHubsEncryption> encryption = default;
-            Core.Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<bool> disableLocalAuth = default;
-            Core.Optional<string> alternateName = default;
+            Optional<SystemData> systemData = default;
+            Optional<EventHubsTlsVersion> minimumTlsVersion = default;
+            Optional<string> provisioningState = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<string> serviceBusEndpoint = default;
+            Optional<ResourceIdentifier> clusterArmId = default;
+            Optional<string> metricId = default;
+            Optional<bool> isAutoInflateEnabled = default;
+            Optional<EventHubsPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<int> maximumThroughputUnits = default;
+            Optional<bool> kafkaEnabled = default;
+            Optional<bool> zoneRedundant = default;
+            Optional<EventHubsEncryption> encryption = default;
+            Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<string> alternateName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsNamespaceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, identity, Core.Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Core.Optional.ToNullable(isAutoInflateEnabled), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(maximumThroughputUnits), Core.Optional.ToNullable(kafkaEnabled), Core.Optional.ToNullable(zoneRedundant), encryption.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(disableLocalAuth), alternateName.Value);
+            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value);
         }
     }
 }

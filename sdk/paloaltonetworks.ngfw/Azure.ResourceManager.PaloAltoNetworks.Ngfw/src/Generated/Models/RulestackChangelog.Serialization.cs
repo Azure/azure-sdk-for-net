@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             IReadOnlyList<string> changes = default;
-            Core.Optional<DateTimeOffset> lastCommitted = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
+            Optional<DateTimeOffset> lastCommitted = default;
+            Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changes"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new RulestackChangelog(changes, Core.Optional.ToNullable(lastCommitted), Core.Optional.ToNullable(lastModified));
+            return new RulestackChangelog(changes, Optional.ToNullable(lastCommitted), Optional.ToNullable(lastModified));
         }
     }
 }

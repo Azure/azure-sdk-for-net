@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class HcxEnterpriseSiteData : Core.IUtf8JsonSerializable
+    public partial class HcxEnterpriseSiteData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> activationKey = default;
-            Core.Optional<HcxEnterpriseSiteStatus> status = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> activationKey = default;
+            Optional<HcxEnterpriseSiteStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new HcxEnterpriseSiteData(id, name, type, systemData.Value, activationKey.Value, Core.Optional.ToNullable(status));
+            return new HcxEnterpriseSiteData(id, name, type, systemData.Value, activationKey.Value, Optional.ToNullable(status));
         }
     }
 }

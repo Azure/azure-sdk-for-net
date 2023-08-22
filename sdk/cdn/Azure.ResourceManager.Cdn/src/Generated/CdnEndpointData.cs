@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="location"> The location. </param>
         public CdnEndpointData(AzureLocation location) : base(location)
         {
-            ContentTypesToCompress = new Core.ChangeTrackingList<string>();
-            GeoFilters = new Core.ChangeTrackingList<GeoFilter>();
-            UriSigningKeys = new Core.ChangeTrackingList<UriSigningKey>();
-            Origins = new Core.ChangeTrackingList<DeepCreatedOrigin>();
-            OriginGroups = new Core.ChangeTrackingList<DeepCreatedOriginGroup>();
-            CustomDomains = new Core.ChangeTrackingList<CdnCustomDomainData>();
+            ContentTypesToCompress = new ChangeTrackingList<string>();
+            GeoFilters = new ChangeTrackingList<GeoFilter>();
+            UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
+            Origins = new ChangeTrackingList<DeepCreatedOrigin>();
+            OriginGroups = new ChangeTrackingList<DeepCreatedOriginGroup>();
+            CustomDomains = new ChangeTrackingList<CdnCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of CdnEndpointData. </summary>

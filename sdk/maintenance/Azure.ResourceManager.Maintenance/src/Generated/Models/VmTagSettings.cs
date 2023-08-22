@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of VmTagSettings. </summary>
         public VmTagSettings()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, IList<string>>();
+            Tags = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of VmTagSettings. </summary>

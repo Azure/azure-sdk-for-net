@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkIPConfigurationBgpPeeringAddress. </summary>
         public NetworkIPConfigurationBgpPeeringAddress()
         {
-            DefaultBgpIPAddresses = new Core.ChangeTrackingList<string>();
-            CustomBgpIPAddresses = new Core.ChangeTrackingList<string>();
-            TunnelIPAddresses = new Core.ChangeTrackingList<string>();
+            DefaultBgpIPAddresses = new ChangeTrackingList<string>();
+            CustomBgpIPAddresses = new ChangeTrackingList<string>();
+            TunnelIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkIPConfigurationBgpPeeringAddress. </summary>

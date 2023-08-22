@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PolygonObject>> additionalData = default;
+            Optional<IReadOnlyList<PolygonObject>> additionalData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalData"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PolygonResult(Core.Optional.ToList(additionalData));
+            return new PolygonResult(Optional.ToList(additionalData));
         }
     }
 }

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> product = default;
-            Core.Optional<string> promotionCode = default;
-            Core.Optional<string> version = default;
+            Optional<string> name = default;
+            Optional<string> publisher = default;
+            Optional<string> product = default;
+            Optional<string> promotionCode = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

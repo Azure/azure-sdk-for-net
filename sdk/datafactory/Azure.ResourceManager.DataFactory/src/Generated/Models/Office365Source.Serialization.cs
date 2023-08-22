@@ -13,59 +13,59 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class Office365Source : Core.IUtf8JsonSerializable
+    public partial class Office365Source : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AllowedGroups))
+            if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
                 JsonSerializer.Serialize(writer, AllowedGroups);
             }
-            if (Core.Optional.IsDefined(UserScopeFilterUri))
+            if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
                 JsonSerializer.Serialize(writer, UserScopeFilterUri);
             }
-            if (Core.Optional.IsDefined(DateFilterColumn))
+            if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
                 JsonSerializer.Serialize(writer, DateFilterColumn);
             }
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 JsonSerializer.Serialize(writer, StartOn);
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 JsonSerializer.Serialize(writer, EndOn);
             }
-            if (Core.Optional.IsDefined(OutputColumns))
+            if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns"u8);
                 JsonSerializer.Serialize(writer, OutputColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Core.Optional.IsDefined(SourceRetryCount))
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Core.Optional.IsDefined(SourceRetryWait))
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(DisableMetricsCollection))
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<IList<string>>> allowedGroups = default;
-            Core.Optional<DataFactoryElement<string>> userScopeFilterUri = default;
-            Core.Optional<DataFactoryElement<string>> dateFilterColumn = default;
-            Core.Optional<DataFactoryElement<string>> startTime = default;
-            Core.Optional<DataFactoryElement<string>> endTime = default;
-            Core.Optional<DataFactoryElement<IList<Office365TableOutputColumn>>> outputColumns = default;
+            Optional<DataFactoryElement<IList<string>>> allowedGroups = default;
+            Optional<DataFactoryElement<string>> userScopeFilterUri = default;
+            Optional<DataFactoryElement<string>> dateFilterColumn = default;
+            Optional<DataFactoryElement<string>> startTime = default;
+            Optional<DataFactoryElement<string>> endTime = default;
+            Optional<DataFactoryElement<IList<Office365TableOutputColumn>>> outputColumns = default;
             string type = default;
-            Core.Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Core.Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> sourceRetryCount = default;
+            Optional<DataFactoryElement<string>> sourceRetryWait = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

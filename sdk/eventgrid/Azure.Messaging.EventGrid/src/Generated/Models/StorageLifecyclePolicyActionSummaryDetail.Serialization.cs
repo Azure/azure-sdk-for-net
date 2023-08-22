@@ -18,9 +18,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<long> totalObjectsCount = default;
-            Core.Optional<long> successCount = default;
-            Core.Optional<string> errorList = default;
+            Optional<long> totalObjectsCount = default;
+            Optional<long> successCount = default;
+            Optional<string> errorList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalObjectsCount"u8))
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageLifecyclePolicyActionSummaryDetail(Core.Optional.ToNullable(totalObjectsCount), Core.Optional.ToNullable(successCount), errorList.Value);
+            return new StorageLifecyclePolicyActionSummaryDetail(Optional.ToNullable(totalObjectsCount), Optional.ToNullable(successCount), errorList.Value);
         }
     }
 }

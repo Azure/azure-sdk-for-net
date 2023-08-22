@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DataLakeStorageAccountDetailsConverter))]
-    public partial class DataLakeStorageAccountDetails : Core.IUtf8JsonSerializable
+    public partial class DataLakeStorageAccountDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountUrl))
+            if (Optional.IsDefined(AccountUrl))
             {
                 writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUrl);
             }
-            if (Core.Optional.IsDefined(Filesystem))
+            if (Optional.IsDefined(Filesystem))
             {
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> accountUrl = default;
-            Core.Optional<string> filesystem = default;
+            Optional<string> accountUrl = default;
+            Optional<string> filesystem = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountUrl"u8))

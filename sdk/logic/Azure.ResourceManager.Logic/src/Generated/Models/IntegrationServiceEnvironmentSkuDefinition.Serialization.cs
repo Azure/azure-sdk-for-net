@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<ResourceType> resourceType = default;
-            Core.Optional<IntegrationServiceEnvironmentSkuDefinitionSku> sku = default;
-            Core.Optional<IntegrationServiceEnvironmentSkuCapacity> capacity = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<IntegrationServiceEnvironmentSkuDefinitionSku> sku = default;
+            Optional<IntegrationServiceEnvironmentSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentSkuDefinition(Core.Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new IntegrationServiceEnvironmentSkuDefinition(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

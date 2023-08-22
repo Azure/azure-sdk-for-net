@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
 
             RuleGroupName = ruleGroupName;
-            Rules = new Core.ChangeTrackingList<ExclusionManagedRule>();
+            Rules = new ChangeTrackingList<ExclusionManagedRule>();
         }
 
         /// <summary> Initializes a new instance of ExclusionManagedRuleGroup. </summary>

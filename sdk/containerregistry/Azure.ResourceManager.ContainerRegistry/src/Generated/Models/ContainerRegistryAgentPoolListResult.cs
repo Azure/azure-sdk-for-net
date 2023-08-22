@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryAgentPoolListResult. </summary>
         internal ContainerRegistryAgentPoolListResult()
         {
-            Value = new Core.ChangeTrackingList<ContainerRegistryAgentPoolData>();
+            Value = new ChangeTrackingList<ContainerRegistryAgentPoolData>();
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryAgentPoolListResult. </summary>

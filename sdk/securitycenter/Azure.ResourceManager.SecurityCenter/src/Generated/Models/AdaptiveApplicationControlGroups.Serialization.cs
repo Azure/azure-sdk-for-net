@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AdaptiveApplicationControlGroupData>> value = default;
+            Optional<IReadOnlyList<AdaptiveApplicationControlGroupData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new AdaptiveApplicationControlGroups(Core.Optional.ToList(value));
+            return new AdaptiveApplicationControlGroups(Optional.ToList(value));
         }
     }
 }

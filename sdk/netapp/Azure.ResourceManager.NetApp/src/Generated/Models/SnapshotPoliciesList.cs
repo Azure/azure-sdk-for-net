@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SnapshotPoliciesList. </summary>
         internal SnapshotPoliciesList()
         {
-            Value = new Core.ChangeTrackingList<SnapshotPolicyData>();
+            Value = new ChangeTrackingList<SnapshotPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SnapshotPoliciesList. </summary>

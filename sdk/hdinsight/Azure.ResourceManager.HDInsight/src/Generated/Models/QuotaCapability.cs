@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of QuotaCapability. </summary>
         internal QuotaCapability()
         {
-            RegionalQuotas = new Core.ChangeTrackingList<RegionalQuotaCapability>();
+            RegionalQuotas = new ChangeTrackingList<RegionalQuotaCapability>();
         }
 
         /// <summary> Initializes a new instance of QuotaCapability. </summary>

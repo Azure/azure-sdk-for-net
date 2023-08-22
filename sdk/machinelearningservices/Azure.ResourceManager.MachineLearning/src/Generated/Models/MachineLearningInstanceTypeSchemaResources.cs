@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchemaResources. </summary>
         public MachineLearningInstanceTypeSchemaResources()
         {
-            Requests = new Core.ChangeTrackingDictionary<string, string>();
-            Limits = new Core.ChangeTrackingDictionary<string, string>();
+            Requests = new ChangeTrackingDictionary<string, string>();
+            Limits = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchemaResources. </summary>

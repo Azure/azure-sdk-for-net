@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    internal partial class ExportExecutionListResult : Core.IUtf8JsonSerializable
+    internal partial class ExportExecutionListResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ExportRun>> value = default;
+            Optional<IReadOnlyList<ExportRun>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ExportExecutionListResult(Core.Optional.ToList(value));
+            return new ExportExecutionListResult(Optional.ToList(value));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
         internal LogicWorkflowTriggerCallbackUri()
         {
-            RelativePathParameters = new Core.ChangeTrackingList<string>();
+            RelativePathParameters = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>

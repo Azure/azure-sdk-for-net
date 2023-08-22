@@ -12,19 +12,19 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerConfigurationData : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -42,18 +42,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> value = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> defaultValue = default;
-            Core.Optional<PostgreSqlFlexibleServerConfigurationDataType> dataType = default;
-            Core.Optional<string> allowedValues = default;
-            Core.Optional<string> source = default;
-            Core.Optional<bool> isDynamicConfig = default;
-            Core.Optional<bool> isReadOnly = default;
-            Core.Optional<bool> isConfigPendingRestart = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<string> documentationLink = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> value = default;
+            Optional<string> description = default;
+            Optional<string> defaultValue = default;
+            Optional<PostgreSqlFlexibleServerConfigurationDataType> dataType = default;
+            Optional<string> allowedValues = default;
+            Optional<string> source = default;
+            Optional<bool> isDynamicConfig = default;
+            Optional<bool> isReadOnly = default;
+            Optional<bool> isConfigPendingRestart = default;
+            Optional<string> unit = default;
+            Optional<string> documentationLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, Core.Optional.ToNullable(dataType), allowedValues.Value, source.Value, Core.Optional.ToNullable(isDynamicConfig), Core.Optional.ToNullable(isReadOnly), Core.Optional.ToNullable(isConfigPendingRestart), unit.Value, documentationLink.Value);
+            return new PostgreSqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, Optional.ToNullable(dataType), allowedValues.Value, source.Value, Optional.ToNullable(isDynamicConfig), Optional.ToNullable(isReadOnly), Optional.ToNullable(isConfigPendingRestart), unit.Value, documentationLink.Value);
         }
     }
 }

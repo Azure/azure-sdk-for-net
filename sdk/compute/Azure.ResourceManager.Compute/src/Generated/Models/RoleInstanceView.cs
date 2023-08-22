@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RoleInstanceView. </summary>
         internal RoleInstanceView()
         {
-            Statuses = new Core.ChangeTrackingList<ResourceInstanceViewStatus>();
+            Statuses = new ChangeTrackingList<ResourceInstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of RoleInstanceView. </summary>

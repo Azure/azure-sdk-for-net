@@ -11,49 +11,49 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubApnsCredential : Core.IUtf8JsonSerializable
+    public partial class NotificationHubApnsCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApnsCertificate))
+            if (Optional.IsDefined(ApnsCertificate))
             {
                 writer.WritePropertyName("apnsCertificate"u8);
                 writer.WriteStringValue(ApnsCertificate);
             }
-            if (Core.Optional.IsDefined(CertificateKey))
+            if (Optional.IsDefined(CertificateKey))
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Core.Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ThumbprintString))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Core.Optional.IsDefined(KeyId))
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (Core.Optional.IsDefined(AppName))
+            if (Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (Core.Optional.IsDefined(AppId))
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Core.Optional.IsDefined(Token))
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Core.Optional<string> apnsCertificate = default;
-            Core.Optional<string> certificateKey = default;
-            Core.Optional<Uri> endpoint = default;
-            Core.Optional<string> thumbprint = default;
-            Core.Optional<string> keyId = default;
-            Core.Optional<string> appName = default;
-            Core.Optional<string> appId = default;
-            Core.Optional<string> token = default;
+            Optional<string> apnsCertificate = default;
+            Optional<string> certificateKey = default;
+            Optional<Uri> endpoint = default;
+            Optional<string> thumbprint = default;
+            Optional<string> keyId = default;
+            Optional<string> appName = default;
+            Optional<string> appId = default;
+            Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

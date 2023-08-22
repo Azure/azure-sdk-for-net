@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of SecurityPinContent. </summary>
         public SecurityPinContent()
         {
-            ResourceGuardOperationRequests = new Core.ChangeTrackingList<string>();
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
         /// <summary> ResourceGuard Operation Requests. </summary>

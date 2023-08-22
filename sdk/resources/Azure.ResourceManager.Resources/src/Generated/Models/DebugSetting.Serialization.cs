@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class DebugSetting : Core.IUtf8JsonSerializable
+    internal partial class DebugSetting : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DetailLevel))
+            if (Optional.IsDefined(DetailLevel))
             {
                 writer.WritePropertyName("detailLevel"u8);
                 writer.WriteStringValue(DetailLevel);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> detailLevel = default;
+            Optional<string> detailLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detailLevel"u8))

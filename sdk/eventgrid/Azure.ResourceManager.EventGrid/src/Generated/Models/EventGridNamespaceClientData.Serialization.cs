@@ -14,39 +14,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridNamespaceClientData : Core.IUtf8JsonSerializable
+    public partial class EventGridNamespaceClientData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(AuthenticationName))
+            if (Optional.IsDefined(AuthenticationName))
             {
                 writer.WritePropertyName("authenticationName"u8);
                 writer.WriteStringValue(AuthenticationName);
             }
-            if (Core.Optional.IsDefined(Authentication))
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Core.Optional.IsDefined(ClientCertificateAuthentication))
+            if (Optional.IsDefined(ClientCertificateAuthentication))
             {
                 writer.WritePropertyName("clientCertificateAuthentication"u8);
                 writer.WriteObjectValue(ClientCertificateAuthentication);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Attributes))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> authenticationName = default;
-            Core.Optional<EventGridNamespaceClientAuthentication> authentication = default;
-            Core.Optional<ClientCertificateAuthentication> clientCertificateAuthentication = default;
-            Core.Optional<EventGridNamespaceClientState> state = default;
-            Core.Optional<IDictionary<string, BinaryData>> attributes = default;
-            Core.Optional<EventGridNamespaceClientProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> authenticationName = default;
+            Optional<EventGridNamespaceClientAuthentication> authentication = default;
+            Optional<ClientCertificateAuthentication> clientCertificateAuthentication = default;
+            Optional<EventGridNamespaceClientState> state = default;
+            Optional<IDictionary<string, BinaryData>> attributes = default;
+            Optional<EventGridNamespaceClientProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, authentication.Value, clientCertificateAuthentication.Value, Core.Optional.ToNullable(state), Core.Optional.ToDictionary(attributes), Core.Optional.ToNullable(provisioningState));
+            return new EventGridNamespaceClientData(id, name, type, systemData.Value, description.Value, authenticationName.Value, authentication.Value, clientCertificateAuthentication.Value, Optional.ToNullable(state), Optional.ToDictionary(attributes), Optional.ToNullable(provisioningState));
         }
     }
 }

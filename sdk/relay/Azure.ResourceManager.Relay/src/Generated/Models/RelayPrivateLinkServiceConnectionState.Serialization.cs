@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    public partial class RelayPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
+    public partial class RelayPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Core.Optional<RelayPrivateLinkConnectionStatus> status = default;
-            Core.Optional<string> description = default;
+            Optional<RelayPrivateLinkConnectionStatus> status = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Relay.Models
                     continue;
                 }
             }
-            return new RelayPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value);
+            return new RelayPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value);
         }
     }
 }

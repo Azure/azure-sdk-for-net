@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AllowedConnectionsList. </summary>
         internal AllowedConnectionsList()
         {
-            Value = new Core.ChangeTrackingList<SecurityCenterAllowedConnection>();
+            Value = new ChangeTrackingList<SecurityCenterAllowedConnection>();
         }
 
         /// <summary> Initializes a new instance of AllowedConnectionsList. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ActiveConfigurationContent. </summary>
         public ActiveConfigurationContent()
         {
-            Regions = new Core.ChangeTrackingList<AzureLocation>();
+            Regions = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> List of regions. </summary>

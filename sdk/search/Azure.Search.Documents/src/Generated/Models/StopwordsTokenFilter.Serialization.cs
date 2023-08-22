@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class StopwordsTokenFilter : Core.IUtf8JsonSerializable
+    public partial class StopwordsTokenFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Stopwords))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -26,17 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StopwordsList))
+            if (Optional.IsDefined(StopwordsList))
             {
                 writer.WritePropertyName("stopwordsList"u8);
                 writer.WriteStringValue(StopwordsList.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(IgnoreCase))
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Core.Optional.IsDefined(RemoveTrailingStopWords))
+            if (Optional.IsDefined(RemoveTrailingStopWords))
             {
                 writer.WritePropertyName("removeTrailing"u8);
                 writer.WriteBooleanValue(RemoveTrailingStopWords.Value);
@@ -54,10 +54,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> stopwords = default;
-            Core.Optional<StopwordsList> stopwordsList = default;
-            Core.Optional<bool> ignoreCase = default;
-            Core.Optional<bool> removeTrailing = default;
+            Optional<IList<string>> stopwords = default;
+            Optional<StopwordsList> stopwordsList = default;
+            Optional<bool> ignoreCase = default;
+            Optional<bool> removeTrailing = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new StopwordsTokenFilter(odataType, name, Core.Optional.ToList(stopwords), Core.Optional.ToNullable(stopwordsList), Core.Optional.ToNullable(ignoreCase), Core.Optional.ToNullable(removeTrailing));
+            return new StopwordsTokenFilter(odataType, name, Optional.ToList(stopwords), Optional.ToNullable(stopwordsList), Optional.ToNullable(ignoreCase), Optional.ToNullable(removeTrailing));
         }
     }
 }

@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StackMajorVersion : Core.IUtf8JsonSerializable
+    public partial class StackMajorVersion : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayVersion))
+            if (Optional.IsDefined(DisplayVersion))
             {
                 writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
-            if (Core.Optional.IsDefined(RuntimeVersion))
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Core.Optional.IsDefined(IsDefault))
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Core.Optional.IsCollectionDefined(MinorVersions))
+            if (Optional.IsCollectionDefined(MinorVersions))
             {
                 writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();
@@ -42,27 +42,27 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsApplicationInsights))
+            if (Optional.IsDefined(IsApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteBooleanValue(IsApplicationInsights.Value);
             }
-            if (Core.Optional.IsDefined(IsPreview))
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (Core.Optional.IsDefined(IsDeprecated))
+            if (Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (Core.Optional.IsDefined(IsHidden))
+            if (Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (Core.Optional.IsCollectionDefined(AppSettingsDictionary))
+            if (Optional.IsCollectionDefined(AppSettingsDictionary))
             {
                 writer.WritePropertyName("appSettingsDictionary"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
+            if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
             {
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
                 writer.WriteStartObject();
@@ -111,16 +111,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> displayVersion = default;
-            Core.Optional<string> runtimeVersion = default;
-            Core.Optional<bool> isDefault = default;
-            Core.Optional<IList<StackMinorVersion>> minorVersions = default;
-            Core.Optional<bool> applicationInsights = default;
-            Core.Optional<bool> isPreview = default;
-            Core.Optional<bool> isDeprecated = default;
-            Core.Optional<bool> isHidden = default;
-            Core.Optional<IDictionary<string, BinaryData>> appSettingsDictionary = default;
-            Core.Optional<IDictionary<string, BinaryData>> siteConfigPropertiesDictionary = default;
+            Optional<string> displayVersion = default;
+            Optional<string> runtimeVersion = default;
+            Optional<bool> isDefault = default;
+            Optional<IList<StackMinorVersion>> minorVersions = default;
+            Optional<bool> applicationInsights = default;
+            Optional<bool> isPreview = default;
+            Optional<bool> isDeprecated = default;
+            Optional<bool> isHidden = default;
+            Optional<IDictionary<string, BinaryData>> appSettingsDictionary = default;
+            Optional<IDictionary<string, BinaryData>> siteConfigPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayVersion"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Core.Optional.ToNullable(isDefault), Core.Optional.ToList(minorVersions), Core.Optional.ToNullable(applicationInsights), Core.Optional.ToNullable(isPreview), Core.Optional.ToNullable(isDeprecated), Core.Optional.ToNullable(isHidden), Core.Optional.ToDictionary(appSettingsDictionary), Core.Optional.ToDictionary(siteConfigPropertiesDictionary));
+            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToList(minorVersions), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToDictionary(appSettingsDictionary), Optional.ToDictionary(siteConfigPropertiesDictionary));
         }
     }
 }

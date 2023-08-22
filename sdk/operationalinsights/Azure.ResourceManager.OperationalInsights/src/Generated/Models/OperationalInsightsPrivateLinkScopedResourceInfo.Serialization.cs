@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<string> scopeId = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> scopeId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))

@@ -14,14 +14,14 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class LocalRulestackPrefixData : Core.IUtf8JsonSerializable
+    public partial class LocalRulestackPrefixData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AuditComment))
+            if (Optional.IsDefined(AuditComment))
             {
                 writer.WritePropertyName("auditComment"u8);
                 writer.WriteStringValue(AuditComment);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
             IList<string> prefixList = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<string> auditComment = default;
-            Core.Optional<FirewallProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<string> auditComment = default;
+            Optional<FirewallProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     continue;
                 }
             }
-            return new LocalRulestackPrefixData(id, name, type, systemData.Value, description.Value, prefixList, Core.Optional.ToNullable(etag), auditComment.Value, Core.Optional.ToNullable(provisioningState));
+            return new LocalRulestackPrefixData(id, name, type, systemData.Value, description.Value, prefixList, Optional.ToNullable(etag), auditComment.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

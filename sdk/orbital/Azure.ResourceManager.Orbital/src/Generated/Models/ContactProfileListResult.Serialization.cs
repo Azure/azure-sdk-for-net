@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OrbitalContactProfileData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<OrbitalContactProfileData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new ContactProfileListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ContactProfileListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BillingPaymentMethodData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<BillingPaymentMethodData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new PaymentMethodsListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PaymentMethodsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

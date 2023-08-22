@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> instanceType = default;
-            Core.Optional<IReadOnlyList<SiteRecoverySupportedOSDetails>> supportedOS = default;
+            Optional<string> instanceType = default;
+            Optional<IReadOnlyList<SiteRecoverySupportedOSDetails>> supportedOS = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoverySupportedOSProperty(instanceType.Value, Core.Optional.ToList(supportedOS));
+            return new SiteRecoverySupportedOSProperty(instanceType.Value, Optional.ToList(supportedOS));
         }
     }
 }

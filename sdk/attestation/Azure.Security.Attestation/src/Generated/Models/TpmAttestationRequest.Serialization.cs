@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    public partial class TpmAttestationRequest : Core.IUtf8JsonSerializable
+    public partial class TpmAttestationRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(InternalData))
+            if (Optional.IsDefined(InternalData))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(InternalData);

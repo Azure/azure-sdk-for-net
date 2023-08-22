@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of StorageSyncPrivateLinkResource. </summary>
         public StorageSyncPrivateLinkResource()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StorageSyncPrivateLinkResource. </summary>

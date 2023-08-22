@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             IReadOnlyList<DocumentEntities> documents = default;
             IReadOnlyList<DocumentError> errors = default;
-            Core.Optional<RequestStatistics> statistics = default;
+            Optional<RequestStatistics> statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {

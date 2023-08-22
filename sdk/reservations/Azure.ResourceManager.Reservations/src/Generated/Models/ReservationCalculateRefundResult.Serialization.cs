@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<ReservationRefundResponseProperties> properties = default;
+            Optional<string> id = default;
+            Optional<ReservationRefundResponseProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

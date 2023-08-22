@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<RedisEnterpriseDatabaseData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<RedisEnterpriseDatabaseData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseDatabaseList(Core.Optional.ToList(value), nextLink.Value);
+            return new RedisEnterpriseDatabaseList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

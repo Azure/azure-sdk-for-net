@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableVerticalLimitSettings : Core.IUtf8JsonSerializable
+    public partial class TableVerticalLimitSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnableEarlyTermination))
+            if (Optional.IsDefined(EnableEarlyTermination))
             {
                 writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
             }
-            if (Core.Optional.IsDefined(ExitScore))
+            if (Optional.IsDefined(ExitScore))
             {
                 if (ExitScore != null)
                 {
@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("exitScore");
                 }
             }
-            if (Core.Optional.IsDefined(MaxConcurrentTrials))
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
-            if (Core.Optional.IsDefined(MaxCoresPerTrial))
+            if (Optional.IsDefined(MaxCoresPerTrial))
             {
                 writer.WritePropertyName("maxCoresPerTrial"u8);
                 writer.WriteNumberValue(MaxCoresPerTrial.Value);
             }
-            if (Core.Optional.IsDefined(MaxTrials))
+            if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (Core.Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (Core.Optional.IsDefined(TrialTimeout))
+            if (Optional.IsDefined(TrialTimeout))
             {
                 writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<bool> enableEarlyTermination = default;
-            Core.Optional<double?> exitScore = default;
-            Core.Optional<int> maxConcurrentTrials = default;
-            Core.Optional<int> maxCoresPerTrial = default;
-            Core.Optional<int> maxTrials = default;
-            Core.Optional<TimeSpan> timeout = default;
-            Core.Optional<TimeSpan> trialTimeout = default;
+            Optional<bool> enableEarlyTermination = default;
+            Optional<double?> exitScore = default;
+            Optional<int> maxConcurrentTrials = default;
+            Optional<int> maxCoresPerTrial = default;
+            Optional<int> maxTrials = default;
+            Optional<TimeSpan> timeout = default;
+            Optional<TimeSpan> trialTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableEarlyTermination"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TableVerticalLimitSettings(Core.Optional.ToNullable(enableEarlyTermination), Core.Optional.ToNullable(exitScore), Core.Optional.ToNullable(maxConcurrentTrials), Core.Optional.ToNullable(maxCoresPerTrial), Core.Optional.ToNullable(maxTrials), Core.Optional.ToNullable(timeout), Core.Optional.ToNullable(trialTimeout));
+            return new TableVerticalLimitSettings(Optional.ToNullable(enableEarlyTermination), Optional.ToNullable(exitScore), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxCoresPerTrial), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout));
         }
     }
 }

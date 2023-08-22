@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
-            Details = new Core.ChangeTrackingList<SearchServiceError>();
+            Details = new ChangeTrackingList<SearchServiceError>();
         }
 
         /// <summary> Initializes a new instance of SearchServiceError. </summary>

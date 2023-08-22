@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<NewRelicObservabilitySendingMetricsStatus> sendingMetrics = default;
-            Core.Optional<string> reasonForMetricsStatus = default;
-            Core.Optional<NewRelicObservabilitySendingLogsStatus> sendingLogs = default;
-            Core.Optional<string> reasonForLogsStatus = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<NewRelicObservabilitySendingMetricsStatus> sendingMetrics = default;
+            Optional<string> reasonForMetricsStatus = default;
+            Optional<NewRelicObservabilitySendingLogsStatus> sendingLogs = default;
+            Optional<string> reasonForLogsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     continue;
                 }
             }
-            return new NewRelicResourceMonitorResult(id.Value, Core.Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Core.Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
+            return new NewRelicResourceMonitorResult(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value);
         }
     }
 }

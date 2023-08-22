@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    public partial class TableRetentionPolicy : Core.IXmlSerializable
+    public partial class TableRetentionPolicy : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "RetentionPolicy");
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Core.Optional.IsDefined(Days))
+            if (Optional.IsDefined(Days))
             {
                 writer.WriteStartElement("Days");
                 writer.WriteValue(Days.Value);

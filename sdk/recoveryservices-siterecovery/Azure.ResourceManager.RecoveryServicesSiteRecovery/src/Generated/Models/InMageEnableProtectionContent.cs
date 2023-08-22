@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RetentionDrive = retentionDrive;
             MultiVmGroupId = multiVmGroupId;
             MultiVmGroupName = multiVmGroupName;
-            DisksToInclude = new Core.ChangeTrackingList<string>();
+            DisksToInclude = new ChangeTrackingList<string>();
             InstanceType = "InMage";
         }
 

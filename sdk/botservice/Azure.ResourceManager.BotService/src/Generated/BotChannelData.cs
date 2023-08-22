@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="location"> The location. </param>
         public BotChannelData(AzureLocation location) : base(location)
         {
-            Zones = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BotChannelData. </summary>

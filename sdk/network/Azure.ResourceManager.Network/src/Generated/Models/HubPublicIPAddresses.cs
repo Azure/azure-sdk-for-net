@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of HubPublicIPAddresses. </summary>
         public HubPublicIPAddresses()
         {
-            Addresses = new Core.ChangeTrackingList<AzureFirewallPublicIPAddress>();
+            Addresses = new ChangeTrackingList<AzureFirewallPublicIPAddress>();
         }
 
         /// <summary> Initializes a new instance of HubPublicIPAddresses. </summary>

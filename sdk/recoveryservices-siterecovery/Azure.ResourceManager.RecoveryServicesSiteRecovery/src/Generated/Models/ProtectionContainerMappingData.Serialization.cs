@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 return null;
             }
-            Core.Optional<ProtectionContainerMappingProperties> properties = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<ProtectionContainerMappingProperties> properties = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     continue;
                 }
             }
-            return new ProtectionContainerMappingData(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(location));
+            return new ProtectionContainerMappingData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
         }
     }
 }

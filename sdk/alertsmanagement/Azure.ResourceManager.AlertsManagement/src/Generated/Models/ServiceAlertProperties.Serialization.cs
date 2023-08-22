@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertProperties : Core.IUtf8JsonSerializable
+    public partial class ServiceAlertProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Essentials))
+            if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
                 writer.WriteObjectValue(Essentials);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Core.Optional<ServiceAlertEssentials> essentials = default;
-            Core.Optional<BinaryData> context = default;
-            Core.Optional<BinaryData> egressConfig = default;
+            Optional<ServiceAlertEssentials> essentials = default;
+            Optional<BinaryData> context = default;
+            Optional<BinaryData> egressConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("essentials"u8))

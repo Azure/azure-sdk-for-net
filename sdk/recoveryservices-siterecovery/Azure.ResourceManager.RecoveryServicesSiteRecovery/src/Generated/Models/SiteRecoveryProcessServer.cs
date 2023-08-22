@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
         internal SiteRecoveryProcessServer()
         {
-            MobilityServiceUpdates = new Core.ChangeTrackingList<MobilityServiceUpdate>();
-            HealthErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            MobilityServiceUpdates = new ChangeTrackingList<MobilityServiceUpdate>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>

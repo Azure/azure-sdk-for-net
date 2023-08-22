@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of AzureFirewallData. </summary>
         public AzureFirewallData()
         {
-            Zones = new Core.ChangeTrackingList<string>();
-            ApplicationRuleCollections = new Core.ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>();
-            NatRuleCollections = new Core.ChangeTrackingList<AzureFirewallNatRuleCollectionData>();
-            NetworkRuleCollections = new Core.ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>();
-            IPConfigurations = new Core.ChangeTrackingList<AzureFirewallIPConfiguration>();
-            IPGroups = new Core.ChangeTrackingList<AzureFirewallIPGroups>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, string>();
+            Zones = new ChangeTrackingList<string>();
+            ApplicationRuleCollections = new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>();
+            NatRuleCollections = new ChangeTrackingList<AzureFirewallNatRuleCollectionData>();
+            NetworkRuleCollections = new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>();
+            IPConfigurations = new ChangeTrackingList<AzureFirewallIPConfiguration>();
+            IPGroups = new ChangeTrackingList<AzureFirewallIPGroups>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallData. </summary>

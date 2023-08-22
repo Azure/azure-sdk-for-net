@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabCustomImagePlan : Core.IUtf8JsonSerializable
+    public partial class DevTestLabCustomImagePlan : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Publisher))
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Core.Optional.IsDefined(Offer))
+            if (Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> offer = default;
+            Optional<string> id = default;
+            Optional<string> publisher = default;
+            Optional<string> offer = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaLimitObject : Core.IUtf8JsonSerializable
+    public partial class QuotaLimitObject : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            if (Core.Optional.IsDefined(LimitType))
+            if (Optional.IsDefined(LimitType))
             {
                 writer.WritePropertyName("limitType"u8);
                 writer.WriteStringValue(LimitType.Value.ToString());
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Quota.Models
                 return null;
             }
             int value = default;
-            Core.Optional<QuotaLimitType> limitType = default;
+            Optional<QuotaLimitType> limitType = default;
             LimitType limitObjectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new QuotaLimitObject(limitObjectType, value, Core.Optional.ToNullable(limitType));
+            return new QuotaLimitObject(limitObjectType, value, Optional.ToNullable(limitType));
         }
     }
 }

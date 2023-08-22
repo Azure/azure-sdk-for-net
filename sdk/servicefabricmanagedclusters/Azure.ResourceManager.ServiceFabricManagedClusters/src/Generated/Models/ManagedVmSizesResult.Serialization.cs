@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ManagedVmSizesResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagedVmSizesResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

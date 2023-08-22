@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmProtectedItemExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class DpmProtectedItemExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ProtectableObjectLoadPath))
+            if (Optional.IsCollectionDefined(ProtectableObjectLoadPath))
             {
                 writer.WritePropertyName("protectableObjectLoadPath"u8);
                 writer.WriteStartObject();
@@ -28,67 +28,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(IsProtected))
+            if (Optional.IsDefined(IsProtected))
             {
                 writer.WritePropertyName("protected"u8);
                 writer.WriteBooleanValue(IsProtected.Value);
             }
-            if (Core.Optional.IsDefined(IsPresentOnCloud))
+            if (Optional.IsDefined(IsPresentOnCloud))
             {
                 writer.WritePropertyName("isPresentOnCloud"u8);
                 writer.WriteBooleanValue(IsPresentOnCloud.Value);
             }
-            if (Core.Optional.IsDefined(LastBackupStatus))
+            if (Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
-            if (Core.Optional.IsDefined(LastRefreshedOn))
+            if (Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(OldestRecoverOn))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecoveryPointCount))
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Core.Optional.IsDefined(OnPremiseOldestRecoverOn))
+            if (Optional.IsDefined(OnPremiseOldestRecoverOn))
             {
                 writer.WritePropertyName("onPremiseOldestRecoveryPoint"u8);
                 writer.WriteStringValue(OnPremiseOldestRecoverOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(OnPremiseLatestRecoverOn))
+            if (Optional.IsDefined(OnPremiseLatestRecoverOn))
             {
                 writer.WritePropertyName("onPremiseLatestRecoveryPoint"u8);
                 writer.WriteStringValue(OnPremiseLatestRecoverOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(OnPremiseRecoveryPointCount))
+            if (Optional.IsDefined(OnPremiseRecoveryPointCount))
             {
                 writer.WritePropertyName("onPremiseRecoveryPointCount"u8);
                 writer.WriteNumberValue(OnPremiseRecoveryPointCount.Value);
             }
-            if (Core.Optional.IsDefined(IsCollocated))
+            if (Optional.IsDefined(IsCollocated))
             {
                 writer.WritePropertyName("isCollocated"u8);
                 writer.WriteBooleanValue(IsCollocated.Value);
             }
-            if (Core.Optional.IsDefined(ProtectionGroupName))
+            if (Optional.IsDefined(ProtectionGroupName))
             {
                 writer.WritePropertyName("protectionGroupName"u8);
                 writer.WriteStringValue(ProtectionGroupName);
             }
-            if (Core.Optional.IsDefined(DiskStorageUsedInBytes))
+            if (Optional.IsDefined(DiskStorageUsedInBytes))
             {
                 writer.WritePropertyName("diskStorageUsedInBytes"u8);
                 writer.WriteStringValue(DiskStorageUsedInBytes);
             }
-            if (Core.Optional.IsDefined(TotalDiskStorageSizeInBytes))
+            if (Optional.IsDefined(TotalDiskStorageSizeInBytes))
             {
                 writer.WritePropertyName("totalDiskStorageSizeInBytes"u8);
                 writer.WriteStringValue(TotalDiskStorageSizeInBytes);
@@ -102,20 +102,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
-            Core.Optional<bool> @protected = default;
-            Core.Optional<bool> isPresentOnCloud = default;
-            Core.Optional<string> lastBackupStatus = default;
-            Core.Optional<DateTimeOffset> lastRefreshedAt = default;
-            Core.Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Core.Optional<int> recoveryPointCount = default;
-            Core.Optional<DateTimeOffset> onPremiseOldestRecoveryPoint = default;
-            Core.Optional<DateTimeOffset> onPremiseLatestRecoveryPoint = default;
-            Core.Optional<int> onPremiseRecoveryPointCount = default;
-            Core.Optional<bool> isCollocated = default;
-            Core.Optional<string> protectionGroupName = default;
-            Core.Optional<string> diskStorageUsedInBytes = default;
-            Core.Optional<string> totalDiskStorageSizeInBytes = default;
+            Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
+            Optional<bool> @protected = default;
+            Optional<bool> isPresentOnCloud = default;
+            Optional<string> lastBackupStatus = default;
+            Optional<DateTimeOffset> lastRefreshedAt = default;
+            Optional<DateTimeOffset> oldestRecoveryPoint = default;
+            Optional<int> recoveryPointCount = default;
+            Optional<DateTimeOffset> onPremiseOldestRecoveryPoint = default;
+            Optional<DateTimeOffset> onPremiseLatestRecoveryPoint = default;
+            Optional<int> onPremiseRecoveryPointCount = default;
+            Optional<bool> isCollocated = default;
+            Optional<string> protectionGroupName = default;
+            Optional<string> diskStorageUsedInBytes = default;
+            Optional<string> totalDiskStorageSizeInBytes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectableObjectLoadPath"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new DpmProtectedItemExtendedInfo(Core.Optional.ToDictionary(protectableObjectLoadPath), Core.Optional.ToNullable(@protected), Core.Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Core.Optional.ToNullable(lastRefreshedAt), Core.Optional.ToNullable(oldestRecoveryPoint), Core.Optional.ToNullable(recoveryPointCount), Core.Optional.ToNullable(onPremiseOldestRecoveryPoint), Core.Optional.ToNullable(onPremiseLatestRecoveryPoint), Core.Optional.ToNullable(onPremiseRecoveryPointCount), Core.Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value);
+            return new DpmProtectedItemExtendedInfo(Optional.ToDictionary(protectableObjectLoadPath), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value);
         }
     }
 }

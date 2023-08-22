@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of QuotaOperationListResult. </summary>
         internal QuotaOperationListResult()
         {
-            Value = new Core.ChangeTrackingList<QuotaOperationResult>();
+            Value = new ChangeTrackingList<QuotaOperationResult>();
         }
 
         /// <summary> Initializes a new instance of QuotaOperationListResult. </summary>

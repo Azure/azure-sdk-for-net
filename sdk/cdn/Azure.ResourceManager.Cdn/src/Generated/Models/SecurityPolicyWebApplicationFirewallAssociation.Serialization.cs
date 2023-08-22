@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyWebApplicationFirewallAssociation : Core.IUtf8JsonSerializable
+    public partial class SecurityPolicyWebApplicationFirewallAssociation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Domains))
+            if (Optional.IsCollectionDefined(Domains))
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PatternsToMatch))
+            if (Optional.IsCollectionDefined(PatternsToMatch))
             {
                 writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<IList<FrontDoorActivatedResourceInfo>> domains = default;
-            Core.Optional<IList<string>> patternsToMatch = default;
+            Optional<IList<FrontDoorActivatedResourceInfo>> domains = default;
+            Optional<IList<string>> patternsToMatch = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domains"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SecurityPolicyWebApplicationFirewallAssociation(Core.Optional.ToList(domains), Core.Optional.ToList(patternsToMatch));
+            return new SecurityPolicyWebApplicationFirewallAssociation(Optional.ToList(domains), Optional.ToList(patternsToMatch));
         }
     }
 }

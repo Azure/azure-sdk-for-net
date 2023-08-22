@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Min))
+            if (Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (Core.Optional.IsDefined(Max))
+            if (Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<int> min = default;
-            Core.Optional<int> max = default;
+            Optional<int> min = default;
+            Optional<int> max = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(Core.Optional.ToNullable(min), Core.Optional.ToNullable(max));
+            return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(Optional.ToNullable(min), Optional.ToNullable(max));
         }
     }
 }

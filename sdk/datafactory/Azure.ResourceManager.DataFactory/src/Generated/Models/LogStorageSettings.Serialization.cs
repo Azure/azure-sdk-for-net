@@ -13,23 +13,23 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class LogStorageSettings : Core.IUtf8JsonSerializable
+    public partial class LogStorageSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); if (Core.Optional.IsDefined(Path))
+            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
             }
-            if (Core.Optional.IsDefined(LogLevel))
+            if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 JsonSerializer.Serialize(writer, LogLevel);
             }
-            if (Core.Optional.IsDefined(EnableReliableLogging))
+            if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 JsonSerializer.Serialize(writer, EnableReliableLogging);
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryLinkedServiceReference linkedServiceName = default;
-            Core.Optional<DataFactoryElement<string>> path = default;
-            Core.Optional<DataFactoryElement<string>> logLevel = default;
-            Core.Optional<DataFactoryElement<bool>> enableReliableLogging = default;
+            Optional<DataFactoryElement<string>> path = default;
+            Optional<DataFactoryElement<string>> logLevel = default;
+            Optional<DataFactoryElement<bool>> enableReliableLogging = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

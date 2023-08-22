@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ManagementEventRuleCondition : Core.IUtf8JsonSerializable
+    public partial class ManagementEventRuleCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Aggregation))
+            if (Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteObjectValue(Aggregation);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsDefined(DataSource))
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<ManagementEventAggregationCondition> aggregation = default;
+            Optional<ManagementEventAggregationCondition> aggregation = default;
             string odataType = default;
-            Core.Optional<RuleDataSource> dataSource = default;
+            Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregation"u8))

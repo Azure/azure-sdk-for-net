@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string key = default;
-            Core.Optional<string> errorMessage = default;
+            Optional<string> errorMessage = default;
             bool status = default;
             int statusCode = default;
             foreach (var property in element.EnumerateObject())

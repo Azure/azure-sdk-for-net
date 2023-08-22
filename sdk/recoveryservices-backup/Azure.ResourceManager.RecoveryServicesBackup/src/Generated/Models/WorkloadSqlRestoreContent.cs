@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadSqlRestoreContent. </summary>
         public WorkloadSqlRestoreContent()
         {
-            AlternateDirectoryPaths = new Core.ChangeTrackingList<SqlDataDirectoryMapping>();
+            AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
             ObjectType = "AzureWorkloadSQLRestoreRequest";
         }
 

@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationSku : Core.IUtf8JsonSerializable
+    public partial class AutomationSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Core.Optional.IsDefined(Family))
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             AutomationSkuName name = default;
-            Core.Optional<string> family = default;
-            Core.Optional<int> capacity = default;
+            Optional<string> family = default;
+            Optional<int> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationSku(name, family.Value, Core.Optional.ToNullable(capacity));
+            return new AutomationSku(name, family.Value, Optional.ToNullable(capacity));
         }
     }
 }

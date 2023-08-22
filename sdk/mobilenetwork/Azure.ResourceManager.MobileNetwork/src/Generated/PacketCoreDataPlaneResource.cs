@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = await _packetCoreDataPlaneRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MobileNetworkArmOperation(_packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MobileNetwork
             try
             {
                 var response = _packetCoreDataPlaneRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MobileNetworkArmOperation(_packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MobileNetworkArmOperation(_packetCoreDataPlaneClientDiagnostics, Pipeline, _packetCoreDataPlaneRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

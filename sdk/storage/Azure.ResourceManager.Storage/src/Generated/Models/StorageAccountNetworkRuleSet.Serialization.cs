@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountNetworkRuleSet : Core.IUtf8JsonSerializable
+    public partial class StorageAccountNetworkRuleSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Bypass))
+            if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass"u8);
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ResourceAccessRules))
+            if (Optional.IsCollectionDefined(ResourceAccessRules))
             {
                 writer.WritePropertyName("resourceAccessRules"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<StorageNetworkBypass> bypass = default;
-            Core.Optional<IList<StorageAccountResourceAccessRule>> resourceAccessRules = default;
-            Core.Optional<IList<StorageAccountVirtualNetworkRule>> virtualNetworkRules = default;
-            Core.Optional<IList<StorageAccountIPRule>> ipRules = default;
+            Optional<StorageNetworkBypass> bypass = default;
+            Optional<IList<StorageAccountResourceAccessRule>> resourceAccessRules = default;
+            Optional<IList<StorageAccountVirtualNetworkRule>> virtualNetworkRules = default;
+            Optional<IList<StorageAccountIPRule>> ipRules = default;
             StorageNetworkDefaultAction defaultAction = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountNetworkRuleSet(Core.Optional.ToNullable(bypass), Core.Optional.ToList(resourceAccessRules), Core.Optional.ToList(virtualNetworkRules), Core.Optional.ToList(ipRules), defaultAction);
+            return new StorageAccountNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToList(resourceAccessRules), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), defaultAction);
         }
     }
 }

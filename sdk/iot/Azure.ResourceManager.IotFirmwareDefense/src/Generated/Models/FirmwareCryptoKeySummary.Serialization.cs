@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<long> totalKeys = default;
-            Core.Optional<long> publicKeys = default;
-            Core.Optional<long> privateKeys = default;
-            Core.Optional<long> pairedKeys = default;
-            Core.Optional<long> shortKeySize = default;
+            Optional<long> totalKeys = default;
+            Optional<long> publicKeys = default;
+            Optional<long> privateKeys = default;
+            Optional<long> pairedKeys = default;
+            Optional<long> shortKeySize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalKeys"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new FirmwareCryptoKeySummary(Core.Optional.ToNullable(totalKeys), Core.Optional.ToNullable(publicKeys), Core.Optional.ToNullable(privateKeys), Core.Optional.ToNullable(pairedKeys), Core.Optional.ToNullable(shortKeySize));
+            return new FirmwareCryptoKeySummary(Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize));
         }
     }
 }

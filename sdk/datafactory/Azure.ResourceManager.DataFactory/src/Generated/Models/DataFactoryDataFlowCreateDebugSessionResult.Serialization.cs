@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<Guid> sessionId = default;
+            Optional<string> status = default;
+            Optional<Guid> sessionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new DataFactoryDataFlowCreateDebugSessionResult(status.Value, Core.Optional.ToNullable(sessionId));
+            return new DataFactoryDataFlowCreateDebugSessionResult(status.Value, Optional.ToNullable(sessionId));
         }
     }
 }

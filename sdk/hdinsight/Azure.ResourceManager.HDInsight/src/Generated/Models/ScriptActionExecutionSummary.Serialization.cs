@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<int> instanceCount = default;
+            Optional<string> status = default;
+            Optional<int> instanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new ScriptActionExecutionSummary(status.Value, Core.Optional.ToNullable(instanceCount));
+            return new ScriptActionExecutionSummary(status.Value, Optional.ToNullable(instanceCount));
         }
     }
 }

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> operationId = default;
-            Core.Optional<DateTimeOffset> startTimeUtc = default;
-            Core.Optional<DateTimeOffset> completionTimeUtc = default;
-            Core.Optional<string> sourceResourcePath = default;
-            Core.Optional<string> targetResourcePath = default;
+            Optional<string> operationId = default;
+            Optional<DateTimeOffset> startTimeUtc = default;
+            Optional<DateTimeOffset> completionTimeUtc = default;
+            Optional<string> sourceResourcePath = default;
+            Optional<string> targetResourcePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupVaultResourceMoveDetails(operationId.Value, Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(completionTimeUtc), sourceResourcePath.Value, targetResourcePath.Value);
+            return new BackupVaultResourceMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourcePath.Value, targetResourcePath.Value);
         }
     }
 }

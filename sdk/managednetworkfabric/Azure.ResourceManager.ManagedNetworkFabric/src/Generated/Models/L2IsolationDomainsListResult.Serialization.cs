@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetworkFabricL2IsolationDomainData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<NetworkFabricL2IsolationDomainData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new L2IsolationDomainsListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new L2IsolationDomainsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

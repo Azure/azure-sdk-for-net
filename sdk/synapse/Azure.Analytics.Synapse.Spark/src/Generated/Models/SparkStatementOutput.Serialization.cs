@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
+            Optional<string> status = default;
             int executionCount = default;
-            Core.Optional<object> data = default;
-            Core.Optional<string> ename = default;
-            Core.Optional<string> evalue = default;
-            Core.Optional<IReadOnlyList<string>> traceback = default;
+            Optional<object> data = default;
+            Optional<string> ename = default;
+            Optional<string> evalue = default;
+            Optional<IReadOnlyList<string>> traceback = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkStatementOutput(status.Value, executionCount, data.Value, ename.Value, evalue.Value, Core.Optional.ToList(traceback));
+            return new SparkStatementOutput(status.Value, executionCount, data.Value, ename.Value, evalue.Value, Optional.ToList(traceback));
         }
     }
 }

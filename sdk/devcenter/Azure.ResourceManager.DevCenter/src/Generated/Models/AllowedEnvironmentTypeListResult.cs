@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of AllowedEnvironmentTypeListResult. </summary>
         internal AllowedEnvironmentTypeListResult()
         {
-            Value = new Core.ChangeTrackingList<AllowedEnvironmentTypeData>();
+            Value = new ChangeTrackingList<AllowedEnvironmentTypeData>();
         }
 
         /// <summary> Initializes a new instance of AllowedEnvironmentTypeListResult. </summary>

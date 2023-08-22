@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CallParticipantInternal>> values = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<CallParticipantInternal>> values = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new GetParticipantsResponseInternal(Core.Optional.ToList(values), nextLink.Value);
+            return new GetParticipantsResponseInternal(Optional.ToList(values), nextLink.Value);
         }
     }
 }

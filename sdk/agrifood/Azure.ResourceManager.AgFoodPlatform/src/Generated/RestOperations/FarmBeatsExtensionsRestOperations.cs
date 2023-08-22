@@ -46,28 +46,28 @@ namespace Azure.ResourceManager.AgFoodPlatform
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions", false);
-            if (farmBeatsExtensionIds != null && Core.Optional.IsCollectionDefined(farmBeatsExtensionIds))
+            if (farmBeatsExtensionIds != null && Optional.IsCollectionDefined(farmBeatsExtensionIds))
             {
                 foreach (var param in farmBeatsExtensionIds)
                 {
                     uri.AppendQuery("farmBeatsExtensionIds", param, true);
                 }
             }
-            if (farmBeatsExtensionNames != null && Core.Optional.IsCollectionDefined(farmBeatsExtensionNames))
+            if (farmBeatsExtensionNames != null && Optional.IsCollectionDefined(farmBeatsExtensionNames))
             {
                 foreach (var param in farmBeatsExtensionNames)
                 {
                     uri.AppendQuery("farmBeatsExtensionNames", param, true);
                 }
             }
-            if (extensionCategories != null && Core.Optional.IsCollectionDefined(extensionCategories))
+            if (extensionCategories != null && Optional.IsCollectionDefined(extensionCategories))
             {
                 foreach (var param in extensionCategories)
                 {
                     uri.AppendQuery("extensionCategories", param, true);
                 }
             }
-            if (publisherIds != null && Core.Optional.IsCollectionDefined(publisherIds))
+            if (publisherIds != null && Optional.IsCollectionDefined(publisherIds))
             {
                 foreach (var param in publisherIds)
                 {

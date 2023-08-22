@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    public partial class DataFlowDebugPackageDebugSettings : Core.IUtf8JsonSerializable
+    public partial class DataFlowDebugPackageDebugSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SourceSettings))
+            if (Optional.IsCollectionDefined(SourceSettings))
             {
                 writer.WritePropertyName("sourceSettings"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(DatasetParameters))
+            if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters"u8);
                 writer.WriteObjectValue(DatasetParameters);
@@ -56,9 +56,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
-            Core.Optional<IDictionary<string, object>> parameters = default;
-            Core.Optional<object> datasetParameters = default;
+            Optional<IList<DataFlowSourceSetting>> sourceSettings = default;
+            Optional<IDictionary<string, object>> parameters = default;
+            Optional<object> datasetParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceSettings"u8))
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugPackageDebugSettings(Core.Optional.ToList(sourceSettings), Core.Optional.ToDictionary(parameters), datasetParameters.Value);
+            return new DataFlowDebugPackageDebugSettings(Optional.ToList(sourceSettings), Optional.ToDictionary(parameters), datasetParameters.Value);
         }
     }
 }

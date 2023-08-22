@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> domainName = default;
-            Core.Optional<IReadOnlyList<ContainerServiceEndpointDetail>> endpointDetails = default;
+            Optional<string> domainName = default;
+            Optional<IReadOnlyList<ContainerServiceEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceEndpointDependency(domainName.Value, Core.Optional.ToList(endpointDetails));
+            return new ContainerServiceEndpointDependency(domainName.Value, Optional.ToList(endpointDetails));
         }
     }
 }

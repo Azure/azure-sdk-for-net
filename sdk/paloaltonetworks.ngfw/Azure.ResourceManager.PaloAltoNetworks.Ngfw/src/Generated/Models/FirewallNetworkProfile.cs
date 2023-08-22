@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             NetworkType = networkType;
             PublicIPs = publicIPs.ToList();
             EnableEgressNat = enableEgressNat;
-            EgressNatIP = new Core.ChangeTrackingList<IPAddressInfo>();
+            EgressNatIP = new ChangeTrackingList<IPAddressInfo>();
         }
 
         /// <summary> Initializes a new instance of FirewallNetworkProfile. </summary>

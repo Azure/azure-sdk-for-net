@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceMonitorResourceLogRules : Core.IUtf8JsonSerializable
+    public partial class DynatraceMonitorResourceLogRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SendAadLogs))
+            if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteStringValue(SendAadLogs.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SendSubscriptionLogs))
+            if (Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteStringValue(SendSubscriptionLogs.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SendActivityLogs))
+            if (Optional.IsDefined(SendActivityLogs))
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteStringValue(SendActivityLogs.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(FilteringTags))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<AadLogsSendingStatus> sendAadLogs = default;
-            Core.Optional<SubscriptionLogsSendingStatus> sendSubscriptionLogs = default;
-            Core.Optional<ActivityLogsSendingStatus> sendActivityLogs = default;
-            Core.Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
+            Optional<AadLogsSendingStatus> sendAadLogs = default;
+            Optional<SubscriptionLogsSendingStatus> sendSubscriptionLogs = default;
+            Optional<ActivityLogsSendingStatus> sendActivityLogs = default;
+            Optional<IList<DynatraceMonitorResourceFilteringTag>> filteringTags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendAadLogs"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceMonitorResourceLogRules(Core.Optional.ToNullable(sendAadLogs), Core.Optional.ToNullable(sendSubscriptionLogs), Core.Optional.ToNullable(sendActivityLogs), Core.Optional.ToList(filteringTags));
+            return new DynatraceMonitorResourceLogRules(Optional.ToNullable(sendAadLogs), Optional.ToNullable(sendSubscriptionLogs), Optional.ToNullable(sendActivityLogs), Optional.ToList(filteringTags));
         }
     }
 }

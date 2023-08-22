@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of OCIIndex. </summary>
         internal OCIIndex()
         {
-            Manifests = new Core.ChangeTrackingList<ManifestListAttributes>();
+            Manifests = new ChangeTrackingList<ManifestListAttributes>();
         }
 
         /// <summary> Initializes a new instance of OCIIndex. </summary>

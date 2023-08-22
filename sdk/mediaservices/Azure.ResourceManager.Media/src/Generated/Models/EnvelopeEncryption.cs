@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of EnvelopeEncryption. </summary>
         public EnvelopeEncryption()
         {
-            ClearTracks = new Core.ChangeTrackingList<MediaTrackSelection>();
+            ClearTracks = new ChangeTrackingList<MediaTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of EnvelopeEncryption. </summary>

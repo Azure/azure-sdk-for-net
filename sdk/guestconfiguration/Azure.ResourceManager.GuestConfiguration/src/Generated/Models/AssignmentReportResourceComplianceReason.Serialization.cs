@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class AssignmentReportResourceComplianceReason : Core.IUtf8JsonSerializable
+    public partial class AssignmentReportResourceComplianceReason : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> phrase = default;
-            Core.Optional<string> code = default;
+            Optional<string> phrase = default;
+            Optional<string> code = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phrase"u8))

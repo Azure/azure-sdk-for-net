@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DscConfigurationPatch. </summary>
         public DscConfigurationPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Parameters = new Core.ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
         /// <summary> Gets or sets name of the resource. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
         internal WebPubSubResourceList()
         {
-            Value = new Core.ChangeTrackingList<WebPubSubData>();
+            Value = new ChangeTrackingList<WebPubSubData>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>

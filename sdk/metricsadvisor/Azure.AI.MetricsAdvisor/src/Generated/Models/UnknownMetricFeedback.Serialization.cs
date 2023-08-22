@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UnknownMetricFeedback : Core.IUtf8JsonSerializable
+    internal partial class UnknownMetricFeedback : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("feedbackType"u8);
@@ -33,9 +33,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             MetricFeedbackKind feedbackType = "Unknown";
-            Core.Optional<string> feedbackId = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<string> userPrincipal = default;
+            Optional<string> feedbackId = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -75,7 +75,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new UnknownMetricFeedback(feedbackType, feedbackId.Value, Core.Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
+            return new UnknownMetricFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
         }
     }
 }

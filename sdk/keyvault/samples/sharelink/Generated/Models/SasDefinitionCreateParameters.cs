@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             TemplateUri = templateUri;
             SasType = sasType;
             ValidityPeriod = validityPeriod;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of DynatraceMonitorResourceMetricRules. </summary>
         public DynatraceMonitorResourceMetricRules()
         {
-            FilteringTags = new Core.ChangeTrackingList<DynatraceMonitorResourceFilteringTag>();
+            FilteringTags = new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>();
         }
 
         /// <summary> Initializes a new instance of DynatraceMonitorResourceMetricRules. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ConditionalQueueSelectorAttachment : Core.IUtf8JsonSerializable
+    public partial class ConditionalQueueSelectorAttachment : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("condition"u8);

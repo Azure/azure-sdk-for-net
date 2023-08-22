@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of EndpointDependency. </summary>
         public EndpointDependency()
         {
-            EndpointDetails = new Core.ChangeTrackingList<EndpointDetail>();
+            EndpointDetails = new ChangeTrackingList<EndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of EndpointDependency. </summary>

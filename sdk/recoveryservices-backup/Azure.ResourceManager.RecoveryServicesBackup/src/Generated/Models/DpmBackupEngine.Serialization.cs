@@ -10,69 +10,69 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmBackupEngine : Core.IUtf8JsonSerializable
+    public partial class DpmBackupEngine : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RegistrationStatus))
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Core.Optional.IsDefined(BackupEngineState))
+            if (Optional.IsDefined(BackupEngineState))
             {
                 writer.WritePropertyName("backupEngineState"u8);
                 writer.WriteStringValue(BackupEngineState);
             }
-            if (Core.Optional.IsDefined(HealthStatus))
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("backupEngineType"u8);
             writer.WriteStringValue(BackupEngineType.ToString());
-            if (Core.Optional.IsDefined(CanReRegister))
+            if (Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (Core.Optional.IsDefined(BackupEngineId))
+            if (Optional.IsDefined(BackupEngineId))
             {
                 writer.WritePropertyName("backupEngineId"u8);
                 writer.WriteStringValue(BackupEngineId);
             }
-            if (Core.Optional.IsDefined(DpmVersion))
+            if (Optional.IsDefined(DpmVersion))
             {
                 writer.WritePropertyName("dpmVersion"u8);
                 writer.WriteStringValue(DpmVersion);
             }
-            if (Core.Optional.IsDefined(AzureBackupAgentVersion))
+            if (Optional.IsDefined(AzureBackupAgentVersion))
             {
                 writer.WritePropertyName("azureBackupAgentVersion"u8);
                 writer.WriteStringValue(AzureBackupAgentVersion);
             }
-            if (Core.Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
+            if (Optional.IsDefined(IsAzureBackupAgentUpgradeAvailable))
             {
                 writer.WritePropertyName("isAzureBackupAgentUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsAzureBackupAgentUpgradeAvailable.Value);
             }
-            if (Core.Optional.IsDefined(IsDpmUpgradeAvailable))
+            if (Optional.IsDefined(IsDpmUpgradeAvailable))
             {
                 writer.WritePropertyName("isDpmUpgradeAvailable"u8);
                 writer.WriteBooleanValue(IsDpmUpgradeAvailable.Value);
             }
-            if (Core.Optional.IsDefined(ExtendedInfo))
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<BackupManagementType> backupManagementType = default;
-            Core.Optional<string> registrationStatus = default;
-            Core.Optional<string> backupEngineState = default;
-            Core.Optional<string> healthStatus = default;
+            Optional<string> friendlyName = default;
+            Optional<BackupManagementType> backupManagementType = default;
+            Optional<string> registrationStatus = default;
+            Optional<string> backupEngineState = default;
+            Optional<string> healthStatus = default;
             BackupEngineType backupEngineType = default;
-            Core.Optional<bool> canReRegister = default;
-            Core.Optional<string> backupEngineId = default;
-            Core.Optional<string> dpmVersion = default;
-            Core.Optional<string> azureBackupAgentVersion = default;
-            Core.Optional<bool> isAzureBackupAgentUpgradeAvailable = default;
-            Core.Optional<bool> isDpmUpgradeAvailable = default;
-            Core.Optional<BackupEngineExtendedInfo> extendedInfo = default;
+            Optional<bool> canReRegister = default;
+            Optional<string> backupEngineId = default;
+            Optional<string> dpmVersion = default;
+            Optional<string> azureBackupAgentVersion = default;
+            Optional<bool> isAzureBackupAgentUpgradeAvailable = default;
+            Optional<bool> isDpmUpgradeAvailable = default;
+            Optional<BackupEngineExtendedInfo> extendedInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new DpmBackupEngine(friendlyName.Value, Core.Optional.ToNullable(backupManagementType), registrationStatus.Value, backupEngineState.Value, healthStatus.Value, backupEngineType, Core.Optional.ToNullable(canReRegister), backupEngineId.Value, dpmVersion.Value, azureBackupAgentVersion.Value, Core.Optional.ToNullable(isAzureBackupAgentUpgradeAvailable), Core.Optional.ToNullable(isDpmUpgradeAvailable), extendedInfo.Value);
+            return new DpmBackupEngine(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, backupEngineState.Value, healthStatus.Value, backupEngineType, Optional.ToNullable(canReRegister), backupEngineId.Value, dpmVersion.Value, azureBackupAgentVersion.Value, Optional.ToNullable(isAzureBackupAgentUpgradeAvailable), Optional.ToNullable(isDpmUpgradeAvailable), extendedInfo.Value);
         }
     }
 }

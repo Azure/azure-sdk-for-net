@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of QueryDatasetConfiguration. </summary>
         public QueryDatasetConfiguration()
         {
-            Columns = new Core.ChangeTrackingList<string>();
+            Columns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Array of column names to be included in the query. Any valid query column name is allowed. If not provided, then query includes all columns. </summary>

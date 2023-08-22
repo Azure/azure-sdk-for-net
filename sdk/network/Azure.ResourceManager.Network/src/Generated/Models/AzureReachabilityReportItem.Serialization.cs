@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> provider = default;
-            Core.Optional<AzureLocation> azureLocation = default;
-            Core.Optional<IReadOnlyList<AzureReachabilityReportLatencyInfo>> latencies = default;
+            Optional<string> provider = default;
+            Optional<AzureLocation> azureLocation = default;
+            Optional<IReadOnlyList<AzureReachabilityReportLatencyInfo>> latencies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provider"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureReachabilityReportItem(provider.Value, Core.Optional.ToNullable(azureLocation), Core.Optional.ToList(latencies));
+            return new AzureReachabilityReportItem(provider.Value, Optional.ToNullable(azureLocation), Optional.ToList(latencies));
         }
     }
 }

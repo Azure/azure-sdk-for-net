@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         public NetworkFabricIPPrefixData(AzureLocation location) : base(location)
         {
-            IPPrefixRules = new Core.ChangeTrackingList<IPPrefixRule>();
+            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricIPPrefixData. </summary>

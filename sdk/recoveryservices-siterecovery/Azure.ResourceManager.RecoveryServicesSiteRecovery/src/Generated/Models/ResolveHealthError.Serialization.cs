@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ResolveHealthError : Core.IUtf8JsonSerializable
+    public partial class ResolveHealthError : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HealthErrorId))
+            if (Optional.IsDefined(HealthErrorId))
             {
                 writer.WritePropertyName("healthErrorId"u8);
                 writer.WriteStringValue(HealthErrorId);

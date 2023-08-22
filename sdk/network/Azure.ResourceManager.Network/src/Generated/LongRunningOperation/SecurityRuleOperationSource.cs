@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class SecurityRuleOperationSource : Core.IOperationSource<SecurityRuleResource>
+    internal class SecurityRuleOperationSource : IOperationSource<SecurityRuleResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        SecurityRuleResource Core.IOperationSource<SecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SecurityRuleResource IOperationSource<SecurityRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);
             return new SecurityRuleResource(_client, data);
         }
 
-        async ValueTask<SecurityRuleResource> Core.IOperationSource<SecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SecurityRuleResource> IOperationSource<SecurityRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SecurityRuleData.DeserializeSecurityRuleData(document.RootElement);

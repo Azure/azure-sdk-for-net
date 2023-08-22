@@ -11,31 +11,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class MecRole : Core.IUtf8JsonSerializable
+    public partial class MecRole : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectionString))
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue(ConnectionString);
             }
-            if (Core.Optional.IsDefined(ControllerEndpoint))
+            if (Optional.IsDefined(ControllerEndpoint))
             {
                 writer.WritePropertyName("controllerEndpoint"u8);
                 writer.WriteStringValue(ControllerEndpoint);
             }
-            if (Core.Optional.IsDefined(ResourceUniqueId))
+            if (Optional.IsDefined(ResourceUniqueId))
             {
                 writer.WritePropertyName("resourceUniqueId"u8);
                 writer.WriteStringValue(ResourceUniqueId);
             }
-            if (Core.Optional.IsDefined(RoleStatus))
+            if (Optional.IsDefined(RoleStatus))
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<AsymmetricEncryptedSecret> connectionString = default;
-            Core.Optional<string> controllerEndpoint = default;
-            Core.Optional<string> resourceUniqueId = default;
-            Core.Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<AsymmetricEncryptedSecret> connectionString = default;
+            Optional<string> controllerEndpoint = default;
+            Optional<string> resourceUniqueId = default;
+            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new MecRole(id, name, type, systemData.Value, kind, connectionString.Value, controllerEndpoint.Value, resourceUniqueId.Value, Core.Optional.ToNullable(roleStatus));
+            return new MecRole(id, name, type, systemData.Value, kind, connectionString.Value, controllerEndpoint.Value, resourceUniqueId.Value, Optional.ToNullable(roleStatus));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
-            Core.Optional<ApplicationGatewayBackendHealthHttpSettings> backendHealthHttpSettings = default;
+            Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
+            Optional<ApplicationGatewayBackendHealthHttpSettings> backendHealthHttpSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendAddressPool"u8))

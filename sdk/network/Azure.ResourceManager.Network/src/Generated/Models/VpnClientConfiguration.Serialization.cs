@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientConfiguration : Core.IUtf8JsonSerializable
+    public partial class VpnClientConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VpnClientAddressPool))
+            if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
                 writer.WriteObjectValue(VpnClientAddressPool);
             }
-            if (Core.Optional.IsCollectionDefined(VpnClientRootCertificates))
+            if (Optional.IsCollectionDefined(VpnClientRootCertificates))
             {
                 writer.WritePropertyName("vpnClientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VpnClientRevokedCertificates))
+            if (Optional.IsCollectionDefined(VpnClientRevokedCertificates))
             {
                 writer.WritePropertyName("vpnClientRevokedCertificates"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VpnClientProtocols))
+            if (Optional.IsCollectionDefined(VpnClientProtocols))
             {
                 writer.WritePropertyName("vpnClientProtocols"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VpnAuthenticationTypes))
+            if (Optional.IsCollectionDefined(VpnAuthenticationTypes))
             {
                 writer.WritePropertyName("vpnAuthenticationTypes"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VpnClientIPsecPolicies))
+            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies"u8);
                 writer.WriteStartArray();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RadiusServerAddress))
+            if (Optional.IsDefined(RadiusServerAddress))
             {
                 writer.WritePropertyName("radiusServerAddress"u8);
                 writer.WriteStringValue(RadiusServerAddress);
             }
-            if (Core.Optional.IsDefined(RadiusServerSecret))
+            if (Optional.IsDefined(RadiusServerSecret))
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
             }
-            if (Core.Optional.IsCollectionDefined(RadiusServers))
+            if (Optional.IsCollectionDefined(RadiusServers))
             {
                 writer.WritePropertyName("radiusServers"u8);
                 writer.WriteStartArray();
@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AadTenant))
+            if (Optional.IsDefined(AadTenant))
             {
                 writer.WritePropertyName("aadTenant"u8);
                 writer.WriteStringValue(AadTenant);
             }
-            if (Core.Optional.IsDefined(AadAudience))
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
-            if (Core.Optional.IsDefined(AadIssuer))
+            if (Optional.IsDefined(AadIssuer))
             {
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
             }
-            if (Core.Optional.IsCollectionDefined(VngClientConnectionConfigurations))
+            if (Optional.IsCollectionDefined(VngClientConnectionConfigurations))
             {
                 writer.WritePropertyName("vngClientConnectionConfigurations"u8);
                 writer.WriteStartArray();
@@ -125,19 +125,19 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<AddressSpace> vpnClientAddressPool = default;
-            Core.Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
-            Core.Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
-            Core.Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
-            Core.Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
-            Core.Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
-            Core.Optional<string> radiusServerAddress = default;
-            Core.Optional<string> radiusServerSecret = default;
-            Core.Optional<IList<RadiusServer>> radiusServers = default;
-            Core.Optional<string> aadTenant = default;
-            Core.Optional<string> aadAudience = default;
-            Core.Optional<string> aadIssuer = default;
-            Core.Optional<IList<VngClientConnectionConfiguration>> vngClientConnectionConfigurations = default;
+            Optional<AddressSpace> vpnClientAddressPool = default;
+            Optional<IList<VpnClientRootCertificate>> vpnClientRootCertificates = default;
+            Optional<IList<VpnClientRevokedCertificate>> vpnClientRevokedCertificates = default;
+            Optional<IList<VpnClientProtocol>> vpnClientProtocols = default;
+            Optional<IList<VpnAuthenticationType>> vpnAuthenticationTypes = default;
+            Optional<IList<IPsecPolicy>> vpnClientIPsecPolicies = default;
+            Optional<string> radiusServerAddress = default;
+            Optional<string> radiusServerSecret = default;
+            Optional<IList<RadiusServer>> radiusServers = default;
+            Optional<string> aadTenant = default;
+            Optional<string> aadAudience = default;
+            Optional<string> aadIssuer = default;
+            Optional<IList<VngClientConnectionConfiguration>> vngClientConnectionConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnClientAddressPool"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, Core.Optional.ToList(vpnClientRootCertificates), Core.Optional.ToList(vpnClientRevokedCertificates), Core.Optional.ToList(vpnClientProtocols), Core.Optional.ToList(vpnAuthenticationTypes), Core.Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Core.Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value, Core.Optional.ToList(vngClientConnectionConfigurations));
+            return new VpnClientConfiguration(vpnClientAddressPool.Value, Optional.ToList(vpnClientRootCertificates), Optional.ToList(vpnClientRevokedCertificates), Optional.ToList(vpnClientProtocols), Optional.ToList(vpnAuthenticationTypes), Optional.ToList(vpnClientIPsecPolicies), radiusServerAddress.Value, radiusServerSecret.Value, Optional.ToList(radiusServers), aadTenant.Value, aadAudience.Value, aadIssuer.Value, Optional.ToList(vngClientConnectionConfigurations));
         }
     }
 }

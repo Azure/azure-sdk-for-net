@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> accountId = default;
-            Core.Optional<DataLakeStoreAccountStatus> provisioningState = default;
-            Core.Optional<DataLakeStoreAccountState> state = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> endpoint = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> accountId = default;
+            Optional<DataLakeStoreAccountStatus> provisioningState = default;
+            Optional<DataLakeStoreAccountState> state = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     continue;
                 }
             }
-            return new DataLakeStoreAccountBasicData(id, name, type, systemData.Value, Core.Optional.ToNullable(accountId), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), endpoint.Value, Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags));
+            return new DataLakeStoreAccountBasicData(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

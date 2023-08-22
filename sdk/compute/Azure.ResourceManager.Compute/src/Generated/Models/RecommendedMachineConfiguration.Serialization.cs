@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RecommendedMachineConfiguration : Core.IUtf8JsonSerializable
+    public partial class RecommendedMachineConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VCpus))
+            if (Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
                 writer.WriteObjectValue(VCpus);
             }
-            if (Core.Optional.IsDefined(Memory))
+            if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteObjectValue(Memory);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ResourceRange> vCpus = default;
-            Core.Optional<ResourceRange> memory = default;
+            Optional<ResourceRange> vCpus = default;
+            Optional<ResourceRange> memory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vCPUs"u8))

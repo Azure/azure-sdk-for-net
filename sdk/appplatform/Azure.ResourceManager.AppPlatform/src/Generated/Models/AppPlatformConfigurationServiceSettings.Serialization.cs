@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformConfigurationServiceSettings : Core.IUtf8JsonSerializable
+    public partial class AppPlatformConfigurationServiceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GitProperty))
+            if (Optional.IsDefined(GitProperty))
             {
                 writer.WritePropertyName("gitProperty"u8);
                 writer.WriteObjectValue(GitProperty);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<ConfigurationServiceGitProperty> gitProperty = default;
+            Optional<ConfigurationServiceGitProperty> gitProperty = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gitProperty"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <summary> Initializes a new instance of FluidRelayServerPatch. </summary>
         public FluidRelayServerPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

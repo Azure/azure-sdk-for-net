@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    internal class MySqlFlexibleServerAadAdministratorOperationSource : Core.IOperationSource<MySqlFlexibleServerAadAdministratorResource>
+    internal class MySqlFlexibleServerAadAdministratorOperationSource : IOperationSource<MySqlFlexibleServerAadAdministratorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _client = client;
         }
 
-        MySqlFlexibleServerAadAdministratorResource Core.IOperationSource<MySqlFlexibleServerAadAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MySqlFlexibleServerAadAdministratorResource IOperationSource<MySqlFlexibleServerAadAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MySqlFlexibleServerAadAdministratorData.DeserializeMySqlFlexibleServerAadAdministratorData(document.RootElement);
             return new MySqlFlexibleServerAadAdministratorResource(_client, data);
         }
 
-        async ValueTask<MySqlFlexibleServerAadAdministratorResource> Core.IOperationSource<MySqlFlexibleServerAadAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MySqlFlexibleServerAadAdministratorResource> IOperationSource<MySqlFlexibleServerAadAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MySqlFlexibleServerAadAdministratorData.DeserializeMySqlFlexibleServerAadAdministratorData(document.RootElement);

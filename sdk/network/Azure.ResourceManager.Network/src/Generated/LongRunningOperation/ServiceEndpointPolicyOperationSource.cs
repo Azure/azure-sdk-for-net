@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ServiceEndpointPolicyOperationSource : Core.IOperationSource<ServiceEndpointPolicyResource>
+    internal class ServiceEndpointPolicyOperationSource : IOperationSource<ServiceEndpointPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ServiceEndpointPolicyResource Core.IOperationSource<ServiceEndpointPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceEndpointPolicyResource IOperationSource<ServiceEndpointPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement);
             return new ServiceEndpointPolicyResource(_client, data);
         }
 
-        async ValueTask<ServiceEndpointPolicyResource> Core.IOperationSource<ServiceEndpointPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceEndpointPolicyResource> IOperationSource<ServiceEndpointPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(document.RootElement);

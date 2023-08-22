@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchVmContainerConfiguration(BatchVmContainerType containerType)
         {
             ContainerType = containerType;
-            ContainerImageNames = new Core.ChangeTrackingList<string>();
-            ContainerRegistries = new Core.ChangeTrackingList<BatchVmContainerRegistry>();
+            ContainerImageNames = new ChangeTrackingList<string>();
+            ContainerRegistries = new ChangeTrackingList<BatchVmContainerRegistry>();
         }
 
         /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>

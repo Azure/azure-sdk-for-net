@@ -20,16 +20,16 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Core.Optional<string> recoveryId = default;
-            Core.Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Core.Optional<DateTimeOffset> deletedDate = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> sid = default;
-            Core.Optional<string> templateUri = default;
-            Core.Optional<SasTokenType> sasType = default;
-            Core.Optional<string> validityPeriod = default;
-            Core.Optional<SasDefinitionAttributes> attributes = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<string> recoveryId = default;
+            Optional<DateTimeOffset> scheduledPurgeDate = default;
+            Optional<DateTimeOffset> deletedDate = default;
+            Optional<string> id = default;
+            Optional<string> sid = default;
+            Optional<string> templateUri = default;
+            Optional<SasTokenType> sasType = default;
+            Optional<string> validityPeriod = default;
+            Optional<SasDefinitionAttributes> attributes = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryId"u8))
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedSasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Core.Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, Core.Optional.ToDictionary(tags), recoveryId.Value, Core.Optional.ToNullable(scheduledPurgeDate), Core.Optional.ToNullable(deletedDate));
+            return new DeletedSasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
         }
     }
 }

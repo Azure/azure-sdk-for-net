@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ClientEncryptionKeysListResult. </summary>
         internal ClientEncryptionKeysListResult()
         {
-            Value = new Core.ChangeTrackingList<CosmosDBSqlClientEncryptionKeyData>();
+            Value = new ChangeTrackingList<CosmosDBSqlClientEncryptionKeyData>();
         }
 
         /// <summary> Initializes a new instance of ClientEncryptionKeysListResult. </summary>

@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<string> sasKeyForLabel = default;
-            Core.Optional<string> carrierName = default;
-            Core.Optional<string> carrierDisplayName = default;
-            Core.Optional<string> trackingId = default;
-            Core.Optional<Uri> trackingUrl = default;
+            Optional<string> sasKeyForLabel = default;
+            Optional<string> carrierName = default;
+            Optional<string> carrierDisplayName = default;
+            Optional<string> trackingId = default;
+            Optional<Uri> trackingUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasKeyForLabel"u8))

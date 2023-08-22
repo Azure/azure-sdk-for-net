@@ -20,12 +20,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> dataFeedId = default;
-            Core.Optional<string> metricId = default;
-            Core.Optional<string> anomalyDetectionConfigurationId = default;
+            Optional<string> dataFeedId = default;
+            Optional<string> metricId = default;
+            Optional<string> anomalyDetectionConfigurationId = default;
             DateTimeOffset timestamp = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<DateTimeOffset> modifiedTime = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> modifiedTime = default;
             IReadOnlyDictionary<string, string> dimension = default;
             AnomalyProperty property = default;
             foreach (var property0 in element.EnumerateObject())
@@ -84,7 +84,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(modifiedTime), dimension, property);
+            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
         }
     }
 }

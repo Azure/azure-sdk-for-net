@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
         internal BillingBenefitsSavingsPlanUtilization()
         {
-            Aggregates = new Core.ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>();
+            Aggregates = new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>();
         }
 
         /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>

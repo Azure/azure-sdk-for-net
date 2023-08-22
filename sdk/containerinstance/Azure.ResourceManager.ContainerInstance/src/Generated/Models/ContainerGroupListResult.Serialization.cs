@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ContainerGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ContainerGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerGroupListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ContainerGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

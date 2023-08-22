@@ -12,24 +12,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorBackendPool : Core.IUtf8JsonSerializable
+    public partial class FrontDoorBackendPool : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Backends))
+            if (Optional.IsCollectionDefined(Backends))
             {
                 writer.WritePropertyName("backends"u8);
                 writer.WriteStartArray();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(LoadBalancingSettings))
+            if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 JsonSerializer.Serialize(writer, LoadBalancingSettings);
             }
-            if (Core.Optional.IsDefined(HealthProbeSettings))
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 JsonSerializer.Serialize(writer, HealthProbeSettings);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<IList<FrontDoorBackend>> backends = default;
-            Core.Optional<WritableSubResource> loadBalancingSettings = default;
-            Core.Optional<WritableSubResource> healthProbeSettings = default;
-            Core.Optional<FrontDoorResourceState> resourceState = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<IList<FrontDoorBackend>> backends = default;
+            Optional<WritableSubResource> loadBalancingSettings = default;
+            Optional<WritableSubResource> healthProbeSettings = default;
+            Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorBackendPool(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Core.Optional.ToNullable(resourceState));
+            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
         }
     }
 }

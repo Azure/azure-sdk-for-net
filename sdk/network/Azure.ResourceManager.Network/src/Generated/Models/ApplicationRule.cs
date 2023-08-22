@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationRule. </summary>
         public ApplicationRule()
         {
-            SourceAddresses = new Core.ChangeTrackingList<string>();
-            DestinationAddresses = new Core.ChangeTrackingList<string>();
-            Protocols = new Core.ChangeTrackingList<FirewallPolicyRuleApplicationProtocol>();
-            TargetFqdns = new Core.ChangeTrackingList<string>();
-            TargetUrls = new Core.ChangeTrackingList<string>();
-            FqdnTags = new Core.ChangeTrackingList<string>();
-            SourceIPGroups = new Core.ChangeTrackingList<string>();
-            WebCategories = new Core.ChangeTrackingList<string>();
-            HttpHeadersToInsert = new Core.ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>();
+            SourceAddresses = new ChangeTrackingList<string>();
+            DestinationAddresses = new ChangeTrackingList<string>();
+            Protocols = new ChangeTrackingList<FirewallPolicyRuleApplicationProtocol>();
+            TargetFqdns = new ChangeTrackingList<string>();
+            TargetUrls = new ChangeTrackingList<string>();
+            FqdnTags = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
+            WebCategories = new ChangeTrackingList<string>();
+            HttpHeadersToInsert = new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>();
             RuleType = FirewallPolicyRuleType.ApplicationRule;
         }
 

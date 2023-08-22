@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ReservationDetailData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ReservationDetailData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationList(Core.Optional.ToList(value), nextLink.Value);
+            return new ReservationList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

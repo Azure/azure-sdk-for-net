@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerInstanceUsageListResult. </summary>
         internal ContainerInstanceUsageListResult()
         {
-            Value = new Core.ChangeTrackingList<ContainerInstanceUsage>();
+            Value = new ChangeTrackingList<ContainerInstanceUsage>();
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceUsageListResult. </summary>

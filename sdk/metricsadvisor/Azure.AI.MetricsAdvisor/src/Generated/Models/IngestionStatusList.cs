@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of IngestionStatusList. </summary>
         internal IngestionStatusList()
         {
-            Value = new Core.ChangeTrackingList<DataFeedIngestionStatus>();
+            Value = new ChangeTrackingList<DataFeedIngestionStatus>();
         }
 
         /// <summary> Initializes a new instance of IngestionStatusList. </summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SqlVulnerabilityAssessmentScanData>> value = default;
+            Optional<IReadOnlyList<SqlVulnerabilityAssessmentScanData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new Scans(Core.Optional.ToList(value));
+            return new Scans(Optional.ToList(value));
         }
     }
 }

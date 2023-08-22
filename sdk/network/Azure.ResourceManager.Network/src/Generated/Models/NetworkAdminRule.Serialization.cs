@@ -14,26 +14,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkAdminRule : Core.IUtf8JsonSerializable
+    public partial class NetworkAdminRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Sources))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Destinations))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourcePortRanges))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationPortRanges))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Access))
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Core.Optional.IsDefined(Direction))
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
@@ -99,22 +99,22 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AdminRuleKind kind = default;
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<SecurityConfigurationRuleProtocol> protocol = default;
-            Core.Optional<IList<AddressPrefixItem>> sources = default;
-            Core.Optional<IList<AddressPrefixItem>> destinations = default;
-            Core.Optional<IList<string>> sourcePortRanges = default;
-            Core.Optional<IList<string>> destinationPortRanges = default;
-            Core.Optional<SecurityConfigurationRuleAccess> access = default;
-            Core.Optional<int> priority = default;
-            Core.Optional<SecurityConfigurationRuleDirection> direction = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<Guid> resourceGuid = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<SecurityConfigurationRuleProtocol> protocol = default;
+            Optional<IList<AddressPrefixItem>> sources = default;
+            Optional<IList<AddressPrefixItem>> destinations = default;
+            Optional<IList<string>> sourcePortRanges = default;
+            Optional<IList<string>> destinationPortRanges = default;
+            Optional<SecurityConfigurationRuleAccess> access = default;
+            Optional<int> priority = default;
+            Optional<SecurityConfigurationRuleDirection> direction = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkAdminRule(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), description.Value, Core.Optional.ToNullable(protocol), Core.Optional.ToList(sources), Core.Optional.ToList(destinations), Core.Optional.ToList(sourcePortRanges), Core.Optional.ToList(destinationPortRanges), Core.Optional.ToNullable(access), Core.Optional.ToNullable(priority), Core.Optional.ToNullable(direction), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceGuid));
+            return new NetworkAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

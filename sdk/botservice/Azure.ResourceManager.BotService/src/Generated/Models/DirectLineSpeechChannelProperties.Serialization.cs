@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class DirectLineSpeechChannelProperties : Core.IUtf8JsonSerializable
+    public partial class DirectLineSpeechChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CognitiveServiceResourceId))
+            if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 writer.WritePropertyName("cognitiveServiceResourceId"u8);
                 writer.WriteStringValue(CognitiveServiceResourceId);
             }
-            if (Core.Optional.IsDefined(CognitiveServiceRegion))
+            if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (Core.Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CustomVoiceDeploymentId))
+            if (Optional.IsDefined(CustomVoiceDeploymentId))
             {
                 writer.WritePropertyName("customVoiceDeploymentId"u8);
                 writer.WriteStringValue(CustomVoiceDeploymentId);
             }
-            if (Core.Optional.IsDefined(CustomSpeechModelId))
+            if (Optional.IsDefined(CustomSpeechModelId))
             {
                 writer.WritePropertyName("customSpeechModelId"u8);
                 writer.WriteStringValue(CustomSpeechModelId);
             }
-            if (Core.Optional.IsDefined(IsDefaultBotForCogSvcAccount))
+            if (Optional.IsDefined(IsDefaultBotForCogSvcAccount))
             {
                 writer.WritePropertyName("isDefaultBotForCogSvcAccount"u8);
                 writer.WriteBooleanValue(IsDefaultBotForCogSvcAccount.Value);
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Core.Optional<string> cognitiveServiceRegion = default;
-            Core.Optional<string> cognitiveServiceSubscriptionKey = default;
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<string> customVoiceDeploymentId = default;
-            Core.Optional<string> customSpeechModelId = default;
-            Core.Optional<bool> isDefaultBotForCogSvcAccount = default;
+            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
+            Optional<string> cognitiveServiceRegion = default;
+            Optional<string> cognitiveServiceSubscriptionKey = default;
+            Optional<bool> isEnabled = default;
+            Optional<string> customVoiceDeploymentId = default;
+            Optional<string> customSpeechModelId = default;
+            Optional<bool> isDefaultBotForCogSvcAccount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cognitiveServiceResourceId"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new DirectLineSpeechChannelProperties(cognitiveServiceResourceId.Value, cognitiveServiceRegion.Value, cognitiveServiceSubscriptionKey.Value, Core.Optional.ToNullable(isEnabled), customVoiceDeploymentId.Value, customSpeechModelId.Value, Core.Optional.ToNullable(isDefaultBotForCogSvcAccount));
+            return new DirectLineSpeechChannelProperties(cognitiveServiceResourceId.Value, cognitiveServiceRegion.Value, cognitiveServiceSubscriptionKey.Value, Optional.ToNullable(isEnabled), customVoiceDeploymentId.Value, customSpeechModelId.Value, Optional.ToNullable(isDefaultBotForCogSvcAccount));
         }
     }
 }

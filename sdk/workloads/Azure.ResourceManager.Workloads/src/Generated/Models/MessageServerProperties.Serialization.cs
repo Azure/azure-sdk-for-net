@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class MessageServerProperties : Core.IUtf8JsonSerializable
+    public partial class MessageServerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<long?> msPort = default;
-            Core.Optional<long?> internalMsPort = default;
-            Core.Optional<long?> httpPort = default;
-            Core.Optional<long?> httpsPort = default;
-            Core.Optional<string> hostname = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<SapHealthState> health = default;
+            Optional<long?> msPort = default;
+            Optional<long?> internalMsPort = default;
+            Optional<long?> httpPort = default;
+            Optional<long?> httpsPort = default;
+            Optional<string> hostname = default;
+            Optional<string> ipAddress = default;
+            Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("msPort"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new MessageServerProperties(Core.Optional.ToNullable(msPort), Core.Optional.ToNullable(internalMsPort), Core.Optional.ToNullable(httpPort), Core.Optional.ToNullable(httpsPort), hostname.Value, ipAddress.Value, Core.Optional.ToNullable(health));
+            return new MessageServerProperties(Optional.ToNullable(msPort), Optional.ToNullable(internalMsPort), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), hostname.Value, ipAddress.Value, Optional.ToNullable(health));
         }
     }
 }

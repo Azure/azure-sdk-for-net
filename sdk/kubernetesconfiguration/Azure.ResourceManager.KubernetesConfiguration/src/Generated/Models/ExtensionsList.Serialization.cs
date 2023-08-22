@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<KubernetesClusterExtensionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<KubernetesClusterExtensionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new ExtensionsList(Core.Optional.ToList(value), nextLink.Value);
+            return new ExtensionsList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>
         public SecurityInsightsBookmarkData()
         {
-            Labels = new Core.ChangeTrackingList<string>();
+            Labels = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>

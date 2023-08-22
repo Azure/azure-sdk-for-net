@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DscNodeConfigurationCreateOrUpdateContent. </summary>
         public DscNodeConfigurationCreateOrUpdateContent()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Name of the node configuration. </summary>

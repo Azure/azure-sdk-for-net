@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> databaseName = default;
-            Core.Optional<MigrationState> state = default;
-            Core.Optional<SchemaMigrationStage> stage = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<string> databaseErrorResultPrefix = default;
-            Core.Optional<string> schemaErrorResultPrefix = default;
-            Core.Optional<long> numberOfSuccessfulOperations = default;
-            Core.Optional<long> numberOfFailedOperations = default;
-            Core.Optional<string> fileId = default;
-            Core.Optional<string> id = default;
+            Optional<string> databaseName = default;
+            Optional<MigrationState> state = default;
+            Optional<SchemaMigrationStage> stage = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<string> databaseErrorResultPrefix = default;
+            Optional<string> schemaErrorResultPrefix = default;
+            Optional<long> numberOfSuccessfulOperations = default;
+            Optional<long> numberOfFailedOperations = default;
+            Optional<string> fileId = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(stage), Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Core.Optional.ToNullable(numberOfSuccessfulOperations), Core.Optional.ToNullable(numberOfFailedOperations), fileId.Value);
+            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Optional.ToNullable(numberOfSuccessfulOperations), Optional.ToNullable(numberOfFailedOperations), fileId.Value);
         }
     }
 }

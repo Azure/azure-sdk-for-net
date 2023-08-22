@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of AgentConfiguration. </summary>
         internal AgentConfiguration()
         {
-            IncomingConnectionsPorts = new Core.ChangeTrackingList<string>();
-            ExtensionsAllowList = new Core.ChangeTrackingList<ConfigurationExtension>();
-            ExtensionsBlockList = new Core.ChangeTrackingList<ConfigurationExtension>();
-            ProxyBypass = new Core.ChangeTrackingList<string>();
+            IncomingConnectionsPorts = new ChangeTrackingList<string>();
+            ExtensionsAllowList = new ChangeTrackingList<ConfigurationExtension>();
+            ExtensionsBlockList = new ChangeTrackingList<ConfigurationExtension>();
+            ProxyBypass = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AgentConfiguration. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DedicatedHostInstanceViewWithName>> hosts = default;
+            Optional<IReadOnlyList<DedicatedHostInstanceViewWithName>> hosts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hosts"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DedicatedHostGroupInstanceView(Core.Optional.ToList(hosts));
+            return new DedicatedHostGroupInstanceView(Optional.ToList(hosts));
         }
     }
 }

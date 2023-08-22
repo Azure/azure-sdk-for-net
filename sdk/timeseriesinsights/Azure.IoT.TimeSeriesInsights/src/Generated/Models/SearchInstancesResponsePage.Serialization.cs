@@ -18,8 +18,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<SearchInstancesResponse> instances = default;
-            Core.Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
+            Optional<SearchInstancesResponse> instances = default;
+            Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instances"u8))

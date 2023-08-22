@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
         /// <summary> Initializes a new instance of HealthMonitorStateChangeList. </summary>
         internal HealthMonitorStateChangeList()
         {
-            Value = new Core.ChangeTrackingList<HealthMonitorStateChangeData>();
+            Value = new ChangeTrackingList<HealthMonitorStateChangeData>();
         }
 
         /// <summary> Initializes a new instance of HealthMonitorStateChangeList. </summary>

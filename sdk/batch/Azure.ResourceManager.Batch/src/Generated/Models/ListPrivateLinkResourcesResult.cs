@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListPrivateLinkResourcesResult. </summary>
         internal ListPrivateLinkResourcesResult()
         {
-            Value = new Core.ChangeTrackingList<BatchPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<BatchPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of ListPrivateLinkResourcesResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of ComputeProfile. </summary>
         public ComputeProfile()
         {
-            Roles = new Core.ChangeTrackingList<HDInsightClusterRole>();
+            Roles = new ChangeTrackingList<HDInsightClusterRole>();
         }
 
         /// <summary> Initializes a new instance of ComputeProfile. </summary>

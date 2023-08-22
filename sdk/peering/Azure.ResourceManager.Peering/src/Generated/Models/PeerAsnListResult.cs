@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of PeerAsnListResult. </summary>
         internal PeerAsnListResult()
         {
-            Value = new Core.ChangeTrackingList<PeerAsnData>();
+            Value = new ChangeTrackingList<PeerAsnData>();
         }
 
         /// <summary> Initializes a new instance of PeerAsnListResult. </summary>

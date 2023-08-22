@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    internal partial class PlaySourceInternal : Core.IUtf8JsonSerializable
+    internal partial class PlaySourceInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
-            if (Core.Optional.IsDefined(PlaySourceId))
+            if (Optional.IsDefined(PlaySourceId))
             {
                 writer.WritePropertyName("playSourceId"u8);
                 writer.WriteStringValue(PlaySourceId);
             }
-            if (Core.Optional.IsDefined(FileSource))
+            if (Optional.IsDefined(FileSource))
             {
                 writer.WritePropertyName("fileSource"u8);
                 writer.WriteObjectValue(FileSource);

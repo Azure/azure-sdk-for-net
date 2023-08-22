@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of SbomComponent. </summary>
         internal SbomComponent()
         {
-            Paths = new Core.ChangeTrackingList<string>();
+            Paths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SbomComponent. </summary>

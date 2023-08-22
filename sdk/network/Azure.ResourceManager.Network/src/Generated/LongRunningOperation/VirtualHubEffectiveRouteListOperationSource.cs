@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualHubEffectiveRouteListOperationSource : Core.IOperationSource<VirtualHubEffectiveRouteList>
+    internal class VirtualHubEffectiveRouteListOperationSource : IOperationSource<VirtualHubEffectiveRouteList>
     {
-        VirtualHubEffectiveRouteList Core.IOperationSource<VirtualHubEffectiveRouteList>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualHubEffectiveRouteList IOperationSource<VirtualHubEffectiveRouteList>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return VirtualHubEffectiveRouteList.DeserializeVirtualHubEffectiveRouteList(document.RootElement);
         }
 
-        async ValueTask<VirtualHubEffectiveRouteList> Core.IOperationSource<VirtualHubEffectiveRouteList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualHubEffectiveRouteList> IOperationSource<VirtualHubEffectiveRouteList>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return VirtualHubEffectiveRouteList.DeserializeVirtualHubEffectiveRouteList(document.RootElement);

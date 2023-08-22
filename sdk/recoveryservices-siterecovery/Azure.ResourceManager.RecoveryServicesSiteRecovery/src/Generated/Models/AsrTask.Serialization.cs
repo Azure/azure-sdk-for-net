@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> taskId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<IReadOnlyList<string>> allowedActions = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> state = default;
-            Core.Optional<string> stateDescription = default;
-            Core.Optional<string> taskType = default;
-            Core.Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
-            Core.Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
+            Optional<string> taskId = default;
+            Optional<string> name = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<IReadOnlyList<string>> allowedActions = default;
+            Optional<string> friendlyName = default;
+            Optional<string> state = default;
+            Optional<string> stateDescription = default;
+            Optional<string> taskType = default;
+            Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
+            Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskId"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new AsrTask(taskId.Value, name.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Core.Optional.ToList(errors));
+            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Optional.ToList(errors));
         }
     }
 }

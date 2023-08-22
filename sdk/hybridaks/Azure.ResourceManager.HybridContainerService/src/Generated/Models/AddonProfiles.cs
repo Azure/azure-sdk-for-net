@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of AddonProfiles. </summary>
         public AddonProfiles()
         {
-            Config = new Core.ChangeTrackingDictionary<string, string>();
+            Config = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of AddonProfiles. </summary>

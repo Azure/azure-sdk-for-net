@@ -21,10 +21,10 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
-            Core.Optional<IReadOnlyList<CustomFormModelField>> fields = default;
-            Core.Optional<float> averageModelAccuracy = default;
-            Core.Optional<string> modelId = default;
-            Core.Optional<IReadOnlyList<FormRecognizerError>> errors = default;
+            Optional<IReadOnlyList<CustomFormModelField>> fields = default;
+            Optional<float> averageModelAccuracy = default;
+            Optional<string> modelId = default;
+            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trainingDocuments"u8))
@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TrainResult(trainingDocuments, Core.Optional.ToList(fields), Core.Optional.ToNullable(averageModelAccuracy), modelId.Value, Core.Optional.ToList(errors));
+            return new TrainResult(trainingDocuments, Optional.ToList(fields), Optional.ToNullable(averageModelAccuracy), modelId.Value, Optional.ToList(errors));
         }
     }
 }

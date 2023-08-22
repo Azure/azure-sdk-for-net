@@ -16,7 +16,7 @@ namespace Azure.Maps.Rendering
         /// <summary> Initializes a new instance of MapAttribution. </summary>
         internal MapAttribution()
         {
-            Copyrights = new Core.ChangeTrackingList<string>();
+            Copyrights = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MapAttribution. </summary>

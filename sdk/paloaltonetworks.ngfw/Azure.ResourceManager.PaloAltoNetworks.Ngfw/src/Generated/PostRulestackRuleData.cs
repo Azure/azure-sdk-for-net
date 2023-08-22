@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Argument.AssertNotNull(ruleName, nameof(ruleName));
 
             RuleName = ruleName;
-            Applications = new Core.ChangeTrackingList<string>();
-            ProtocolPortList = new Core.ChangeTrackingList<string>();
-            Tags = new Core.ChangeTrackingList<RulestackTagInfo>();
+            Applications = new ChangeTrackingList<string>();
+            ProtocolPortList = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingList<RulestackTagInfo>();
         }
 
         /// <summary> Initializes a new instance of PostRulestackRuleData. </summary>

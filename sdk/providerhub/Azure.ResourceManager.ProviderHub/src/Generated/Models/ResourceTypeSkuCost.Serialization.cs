@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuCost : Core.IUtf8JsonSerializable
+    public partial class ResourceTypeSkuCost : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("meterId"u8);
             writer.WriteStringValue(MeterId);
-            if (Core.Optional.IsDefined(Quantity))
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Core.Optional.IsDefined(ExtendedUnit))
+            if (Optional.IsDefined(ExtendedUnit))
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             string meterId = default;
-            Core.Optional<int> quantity = default;
-            Core.Optional<string> extendedUnit = default;
+            Optional<int> quantity = default;
+            Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeSkuCost(meterId, Core.Optional.ToNullable(quantity), extendedUnit.Value);
+            return new ResourceTypeSkuCost(meterId, Optional.ToNullable(quantity), extendedUnit.Value);
         }
     }
 }

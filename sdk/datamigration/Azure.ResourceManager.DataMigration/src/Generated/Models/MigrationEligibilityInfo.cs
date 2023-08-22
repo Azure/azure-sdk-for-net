@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrationEligibilityInfo. </summary>
         internal MigrationEligibilityInfo()
         {
-            ValidationMessages = new Core.ChangeTrackingList<string>();
+            ValidationMessages = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MigrationEligibilityInfo. </summary>

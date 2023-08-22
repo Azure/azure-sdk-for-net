@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
         public HDInsightAutoScaleRecurrence()
         {
-            Schedule = new Core.ChangeTrackingList<HDInsightAutoScaleSchedule>();
+            Schedule = new ChangeTrackingList<HDInsightAutoScaleSchedule>();
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>

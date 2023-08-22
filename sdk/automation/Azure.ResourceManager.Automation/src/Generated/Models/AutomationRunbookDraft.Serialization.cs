@@ -12,32 +12,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationRunbookDraft : Core.IUtf8JsonSerializable
+    public partial class AutomationRunbookDraft : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsInEditMode))
+            if (Optional.IsDefined(IsInEditMode))
             {
                 writer.WritePropertyName("inEdit"u8);
                 writer.WriteBooleanValue(IsInEditMode.Value);
             }
-            if (Core.Optional.IsDefined(DraftContentLink))
+            if (Optional.IsDefined(DraftContentLink))
             {
                 writer.WritePropertyName("draftContentLink"u8);
                 writer.WriteObjectValue(DraftContentLink);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(OutputTypes))
+            if (Optional.IsCollectionDefined(OutputTypes))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<bool> inEdit = default;
-            Core.Optional<AutomationContentLink> draftContentLink = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
-            Core.Optional<IList<string>> outputTypes = default;
+            Optional<bool> inEdit = default;
+            Optional<AutomationContentLink> draftContentLink = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
+            Optional<IList<string>> outputTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inEdit"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationRunbookDraft(Core.Optional.ToNullable(inEdit), draftContentLink.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToDictionary(parameters), Core.Optional.ToList(outputTypes));
+            return new AutomationRunbookDraft(Optional.ToNullable(inEdit), draftContentLink.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(parameters), Optional.ToList(outputTypes));
         }
     }
 }

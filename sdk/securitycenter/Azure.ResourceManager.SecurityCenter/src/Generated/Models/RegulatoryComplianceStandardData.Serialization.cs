@@ -12,14 +12,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class RegulatoryComplianceStandardData : Core.IUtf8JsonSerializable
+    public partial class RegulatoryComplianceStandardData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<RegulatoryComplianceState> state = default;
-            Core.Optional<int> passedControls = default;
-            Core.Optional<int> failedControls = default;
-            Core.Optional<int> skippedControls = default;
-            Core.Optional<int> unsupportedControls = default;
+            Optional<SystemData> systemData = default;
+            Optional<RegulatoryComplianceState> state = default;
+            Optional<int> passedControls = default;
+            Optional<int> failedControls = default;
+            Optional<int> skippedControls = default;
+            Optional<int> unsupportedControls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new RegulatoryComplianceStandardData(id, name, type, systemData.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(passedControls), Core.Optional.ToNullable(failedControls), Core.Optional.ToNullable(skippedControls), Core.Optional.ToNullable(unsupportedControls));
+            return new RegulatoryComplianceStandardData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToNullable(passedControls), Optional.ToNullable(failedControls), Optional.ToNullable(skippedControls), Optional.ToNullable(unsupportedControls));
         }
     }
 }

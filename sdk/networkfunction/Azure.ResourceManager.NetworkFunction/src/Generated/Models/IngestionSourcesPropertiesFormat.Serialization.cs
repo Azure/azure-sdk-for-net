@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    public partial class IngestionSourcesPropertiesFormat : Core.IUtf8JsonSerializable
+    public partial class IngestionSourcesPropertiesFormat : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceType))
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             {
                 return null;
             }
-            Core.Optional<IngestionSourceType> sourceType = default;
-            Core.Optional<string> resourceId = default;
+            Optional<IngestionSourceType> sourceType = default;
+            Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceType"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     continue;
                 }
             }
-            return new IngestionSourcesPropertiesFormat(Core.Optional.ToNullable(sourceType), resourceId.Value);
+            return new IngestionSourcesPropertiesFormat(Optional.ToNullable(sourceType), resourceId.Value);
         }
     }
 }

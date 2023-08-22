@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkDeviceSkusListResult. </summary>
         internal NetworkDeviceSkusListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkDeviceSkuData>();
+            Value = new ChangeTrackingList<NetworkDeviceSkuData>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkusListResult. </summary>

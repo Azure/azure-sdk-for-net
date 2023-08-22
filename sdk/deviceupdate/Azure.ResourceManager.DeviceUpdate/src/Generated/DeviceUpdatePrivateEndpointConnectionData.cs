@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Argument.AssertNotNull(connectionState, nameof(connectionState));
 
             ConnectionState = connectionState;
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>

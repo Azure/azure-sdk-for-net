@@ -59,7 +59,7 @@ namespace Azure.Storage.Queues
             if (queueMessage != null)
             {
                 request.Headers.Add("Content-Type", "application/xml");
-                var content = new Core.XmlWriterContent();
+                var content = new XmlWriterContent();
                 content.XmlWriter.WriteObjectValue(queueMessage, "QueueMessage");
                 request.Content = content;
             }
@@ -74,7 +74,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MessageIdUpdateHeaders>> UpdateAsync(string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MessageIdUpdateHeaders>> UpdateAsync(string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
         {
             if (messageid == null)
             {
@@ -91,7 +91,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,7 +105,7 @@ namespace Azure.Storage.Queues
         /// <param name="queueMessage"> A Message object which can be stored in a Queue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
-        public Core.ResponseWithHeaders<MessageIdUpdateHeaders> Update(string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MessageIdUpdateHeaders> Update(string messageid, string popReceipt, int visibilitytimeout, int? timeout = null, QueueMessage queueMessage = null, CancellationToken cancellationToken = default)
         {
             if (messageid == null)
             {
@@ -122,7 +122,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -154,7 +154,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<MessageIdDeleteHeaders>> DeleteAsync(string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<MessageIdDeleteHeaders>> DeleteAsync(string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (messageid == null)
             {
@@ -171,7 +171,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -183,7 +183,7 @@ namespace Azure.Storage.Queues
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageid"/> or <paramref name="popReceipt"/> is null. </exception>
-        public Core.ResponseWithHeaders<MessageIdDeleteHeaders> Delete(string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<MessageIdDeleteHeaders> Delete(string messageid, string popReceipt, int? timeout = null, CancellationToken cancellationToken = default)
         {
             if (messageid == null)
             {
@@ -200,7 +200,7 @@ namespace Azure.Storage.Queues
             switch (message.Response.Status)
             {
                 case 204:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabNotificationChannelData : Core.IUtf8JsonSerializable
+    public partial class DevTestLabNotificationChannelData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WebHookUri))
+            if (Optional.IsDefined(WebHookUri))
             {
                 writer.WritePropertyName("webHookUrl"u8);
                 writer.WriteStringValue(WebHookUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(EmailRecipient))
+            if (Optional.IsDefined(EmailRecipient))
             {
                 writer.WritePropertyName("emailRecipient"u8);
                 writer.WriteStringValue(EmailRecipient);
             }
-            if (Core.Optional.IsDefined(NotificationLocale))
+            if (Optional.IsDefined(NotificationLocale))
             {
                 writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Events))
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> webHookUrl = default;
-            Core.Optional<string> emailRecipient = default;
-            Core.Optional<string> notificationLocale = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<DevTestLabNotificationChannelEvent>> events = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<Guid> uniqueIdentifier = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> webHookUrl = default;
+            Optional<string> emailRecipient = default;
+            Optional<string> notificationLocale = default;
+            Optional<string> description = default;
+            Optional<IList<DevTestLabNotificationChannelEvent>> events = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<string> provisioningState = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabNotificationChannelData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, webHookUrl.Value, emailRecipient.Value, notificationLocale.Value, description.Value, Core.Optional.ToList(events), Core.Optional.ToNullable(createdDate), provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabNotificationChannelData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, webHookUrl.Value, emailRecipient.Value, notificationLocale.Value, description.Value, Optional.ToList(events), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

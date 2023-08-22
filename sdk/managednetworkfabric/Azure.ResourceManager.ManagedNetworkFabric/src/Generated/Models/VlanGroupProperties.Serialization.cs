@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class VlanGroupProperties : Core.IUtf8JsonSerializable
+    public partial class VlanGroupProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(Vlans))
+            if (Optional.IsCollectionDefined(Vlans))
             {
                 writer.WritePropertyName("vlans"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IList<string>> vlans = default;
+            Optional<string> name = default;
+            Optional<IList<string>> vlans = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new VlanGroupProperties(name.Value, Core.Optional.ToList(vlans));
+            return new VlanGroupProperties(name.Value, Optional.ToList(vlans));
         }
     }
 }

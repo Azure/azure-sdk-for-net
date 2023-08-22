@@ -12,44 +12,44 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateLinkServiceIPConfiguration : Core.IUtf8JsonSerializable
+    public partial class PrivateLinkServiceIPConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Core.Optional.IsDefined(PrivateIPAllocationMethod))
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Core.Optional.IsDefined(Primary))
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Core.Optional.IsDefined(PrivateIPAddressVersion))
+            if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> privateIPAddress = default;
-            Core.Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Core.Optional<SubnetData> subnet = default;
-            Core.Optional<bool> primary = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<NetworkIPVersion> privateIPAddressVersion = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> privateIPAddress = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<SubnetData> subnet = default;
+            Optional<bool> primary = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<NetworkIPVersion> privateIPAddressVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceIPConfiguration(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), privateIPAddress.Value, Core.Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Core.Optional.ToNullable(primary), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(privateIPAddressVersion));
+            return new PrivateLinkServiceIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet.Value, Optional.ToNullable(primary), Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAddressVersion));
         }
     }
 }

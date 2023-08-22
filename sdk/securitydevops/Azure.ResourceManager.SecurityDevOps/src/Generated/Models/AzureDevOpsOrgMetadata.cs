@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         /// <summary> Initializes a new instance of AzureDevOpsOrgMetadata. </summary>
         public AzureDevOpsOrgMetadata()
         {
-            Projects = new Core.ChangeTrackingList<AzureDevOpsProjectMetadata>();
+            Projects = new ChangeTrackingList<AzureDevOpsProjectMetadata>();
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsOrgMetadata. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<KustoSku> sku = default;
-            Core.Optional<KustoCapacity> capacity = default;
+            Optional<string> resourceType = default;
+            Optional<KustoSku> sku = default;
+            Optional<KustoCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))

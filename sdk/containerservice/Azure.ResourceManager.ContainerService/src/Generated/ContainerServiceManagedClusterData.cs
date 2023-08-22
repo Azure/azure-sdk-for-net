@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The location. </param>
         public ContainerServiceManagedClusterData(AzureLocation location) : base(location)
         {
-            AgentPoolProfiles = new Core.ChangeTrackingList<ManagedClusterAgentPoolProfile>();
-            AddonProfiles = new Core.ChangeTrackingDictionary<string, ManagedClusterAddonProfile>();
-            IdentityProfile = new Core.ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>();
-            PrivateLinkResources = new Core.ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
+            AgentPoolProfiles = new ChangeTrackingList<ManagedClusterAgentPoolProfile>();
+            AddonProfiles = new ChangeTrackingDictionary<string, ManagedClusterAddonProfile>();
+            IdentityProfile = new ChangeTrackingDictionary<string, ContainerServiceUserAssignedIdentity>();
+            PrivateLinkResources = new ChangeTrackingList<ContainerServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceManagedClusterData. </summary>

@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Cdn
         /// <summary> Initializes a new instance of FrontDoorRouteData. </summary>
         public FrontDoorRouteData()
         {
-            CustomDomains = new Core.ChangeTrackingList<FrontDoorActivatedResourceInfo>();
-            RuleSets = new Core.ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new Core.ChangeTrackingList<FrontDoorEndpointProtocol>();
-            PatternsToMatch = new Core.ChangeTrackingList<string>();
+            CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
+            RuleSets = new ChangeTrackingList<WritableSubResource>();
+            SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
+            PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorRouteData. </summary>

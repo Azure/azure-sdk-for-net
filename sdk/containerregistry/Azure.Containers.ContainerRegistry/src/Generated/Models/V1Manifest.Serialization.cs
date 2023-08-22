@@ -19,13 +19,13 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<string> architecture = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> tag = default;
-            Core.Optional<IReadOnlyList<FsLayer>> fsLayers = default;
-            Core.Optional<IReadOnlyList<History>> history = default;
-            Core.Optional<IReadOnlyList<ImageSignature>> signatures = default;
-            Core.Optional<int> schemaVersion = default;
+            Optional<string> architecture = default;
+            Optional<string> name = default;
+            Optional<string> tag = default;
+            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
+            Optional<IReadOnlyList<History>> history = default;
+            Optional<IReadOnlyList<ImageSignature>> signatures = default;
+            Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("architecture"u8))
@@ -95,7 +95,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new V1Manifest(Core.Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Core.Optional.ToList(fsLayers), Core.Optional.ToList(history), Core.Optional.ToList(signatures));
+            return new V1Manifest(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
         }
     }
 }

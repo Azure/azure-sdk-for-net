@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class DeviceProvisioningServicesCertificateProperties : Core.IUtf8JsonSerializable
+    public partial class DeviceProvisioningServicesCertificateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsVerified))
+            if (Optional.IsDefined(IsVerified))
             {
                 writer.WritePropertyName("isVerified"u8);
                 writer.WriteBooleanValue(IsVerified.Value);
             }
-            if (Core.Optional.IsDefined(Certificate))
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Core.Optional<string> subject = default;
-            Core.Optional<DateTimeOffset> expiry = default;
-            Core.Optional<BinaryData> thumbprint = default;
-            Core.Optional<bool> isVerified = default;
-            Core.Optional<BinaryData> certificate = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> updated = default;
+            Optional<string> subject = default;
+            Optional<DateTimeOffset> expiry = default;
+            Optional<BinaryData> thumbprint = default;
+            Optional<bool> isVerified = default;
+            Optional<BinaryData> certificate = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subject"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new DeviceProvisioningServicesCertificateProperties(subject.Value, Core.Optional.ToNullable(expiry), thumbprint.Value, Core.Optional.ToNullable(isVerified), certificate.Value, Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated));
+            return new DeviceProvisioningServicesCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated));
         }
     }
 }

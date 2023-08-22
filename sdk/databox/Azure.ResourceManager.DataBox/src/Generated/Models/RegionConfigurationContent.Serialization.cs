@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class RegionConfigurationContent : Core.IUtf8JsonSerializable
+    public partial class RegionConfigurationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScheduleAvailabilityRequest))
+            if (Optional.IsDefined(ScheduleAvailabilityRequest))
             {
                 writer.WritePropertyName("scheduleAvailabilityRequest"u8);
                 writer.WriteObjectValue(ScheduleAvailabilityRequest);
             }
-            if (Core.Optional.IsDefined(TransportAvailabilityRequest))
+            if (Optional.IsDefined(TransportAvailabilityRequest))
             {
                 writer.WritePropertyName("transportAvailabilityRequest"u8);
                 writer.WriteObjectValue(TransportAvailabilityRequest);
             }
-            if (Core.Optional.IsDefined(DataCenterAddressRequest))
+            if (Optional.IsDefined(DataCenterAddressRequest))
             {
                 writer.WritePropertyName("datacenterAddressRequest"u8);
                 writer.WriteObjectValue(DataCenterAddressRequest);

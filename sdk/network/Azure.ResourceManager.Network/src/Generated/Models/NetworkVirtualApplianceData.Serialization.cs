@@ -15,27 +15,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkVirtualApplianceData : Core.IUtf8JsonSerializable
+    public partial class NetworkVirtualApplianceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NvaSku))
+            if (Optional.IsDefined(NvaSku))
             {
                 writer.WritePropertyName("nvaSku"u8);
                 writer.WriteObjectValue(NvaSku);
             }
-            if (Core.Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
+            if (Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
             {
                 writer.WritePropertyName("bootStrapConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(VirtualHub))
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (Core.Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
+            if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
             {
                 writer.WritePropertyName("cloudInitConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(CloudInitConfiguration))
+            if (Optional.IsDefined(CloudInitConfiguration))
             {
                 writer.WritePropertyName("cloudInitConfiguration"u8);
                 writer.WriteStringValue(CloudInitConfiguration);
             }
-            if (Core.Optional.IsDefined(VirtualApplianceAsn))
+            if (Optional.IsDefined(VirtualApplianceAsn))
             {
                 writer.WritePropertyName("virtualApplianceAsn"u8);
                 writer.WriteNumberValue(VirtualApplianceAsn.Value);
             }
-            if (Core.Optional.IsDefined(SshPublicKey))
+            if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteStringValue(SshPublicKey);
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalNics))
+            if (Optional.IsCollectionDefined(AdditionalNics))
             {
                 writer.WritePropertyName("additionalNics"u8);
                 writer.WriteStartArray();
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Delegation))
+            if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
                 writer.WriteObjectValue(Delegation);
             }
-            if (Core.Optional.IsDefined(PartnerManagedResource))
+            if (Optional.IsDefined(PartnerManagedResource))
             {
                 writer.WritePropertyName("partnerManagedResource"u8);
                 writer.WriteObjectValue(PartnerManagedResource);
@@ -123,30 +123,30 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<VirtualApplianceSkuProperties> nvaSku = default;
-            Core.Optional<string> addressPrefix = default;
-            Core.Optional<IList<string>> bootStrapConfigurationBlobs = default;
-            Core.Optional<WritableSubResource> virtualHub = default;
-            Core.Optional<IList<string>> cloudInitConfigurationBlobs = default;
-            Core.Optional<string> cloudInitConfiguration = default;
-            Core.Optional<long> virtualApplianceAsn = default;
-            Core.Optional<string> sshPublicKey = default;
-            Core.Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
-            Core.Optional<IList<VirtualApplianceAdditionalNicProperties>> additionalNics = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> virtualApplianceSites = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> virtualApplianceConnections = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<string> deploymentType = default;
-            Core.Optional<VirtualApplianceDelegationProperties> delegation = default;
-            Core.Optional<PartnerManagedResourceProperties> partnerManagedResource = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<VirtualApplianceSkuProperties> nvaSku = default;
+            Optional<string> addressPrefix = default;
+            Optional<IList<string>> bootStrapConfigurationBlobs = default;
+            Optional<WritableSubResource> virtualHub = default;
+            Optional<IList<string>> cloudInitConfigurationBlobs = default;
+            Optional<string> cloudInitConfiguration = default;
+            Optional<long> virtualApplianceAsn = default;
+            Optional<string> sshPublicKey = default;
+            Optional<IReadOnlyList<VirtualApplianceNicProperties>> virtualApplianceNics = default;
+            Optional<IList<VirtualApplianceAdditionalNicProperties>> additionalNics = default;
+            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceSites = default;
+            Optional<IReadOnlyList<WritableSubResource>> virtualApplianceConnections = default;
+            Optional<IReadOnlyList<WritableSubResource>> inboundSecurityRules = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<string> deploymentType = default;
+            Optional<VirtualApplianceDelegationProperties> delegation = default;
+            Optional<PartnerManagedResourceProperties> partnerManagedResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), identity, Core.Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Core.Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Core.Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Core.Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Core.Optional.ToList(virtualApplianceNics), Core.Optional.ToList(additionalNics), Core.Optional.ToList(virtualApplianceSites), Core.Optional.ToList(virtualApplianceConnections), Core.Optional.ToList(inboundSecurityRules), Core.Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
+            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, Optional.ToList(bootStrapConfigurationBlobs), virtualHub, Optional.ToList(cloudInitConfigurationBlobs), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, Optional.ToList(virtualApplianceNics), Optional.ToList(additionalNics), Optional.ToList(virtualApplianceSites), Optional.ToList(virtualApplianceConnections), Optional.ToList(inboundSecurityRules), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
         }
     }
 }

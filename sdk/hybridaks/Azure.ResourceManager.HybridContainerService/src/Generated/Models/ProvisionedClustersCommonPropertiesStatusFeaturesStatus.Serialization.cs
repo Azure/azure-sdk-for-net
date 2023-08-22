@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ArcAgentStatus> arcAgentStatus = default;
+            Optional<ArcAgentStatus> arcAgentStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAgentStatus"u8))

@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class LineChannel : Core.IUtf8JsonSerializable
+    public partial class LineChannel : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<LineChannelProperties> properties = default;
+            Optional<LineChannelProperties> properties = default;
             string channelName = default;
-            Core.Optional<ETag?> etag = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<ETag?> etag = default;
+            Optional<string> provisioningState = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new LineChannel(channelName, Core.Optional.ToNullable(etag), provisioningState.Value, Core.Optional.ToNullable(location), properties.Value);
+            return new LineChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), properties.Value);
         }
     }
 }

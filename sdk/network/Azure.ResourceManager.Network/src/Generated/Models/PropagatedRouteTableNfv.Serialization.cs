@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PropagatedRouteTableNfv : Core.IUtf8JsonSerializable
+    public partial class PropagatedRouteTableNfv : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Ids))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> labels = default;
-            Core.Optional<IList<RoutingConfigurationNfvSubResource>> ids = default;
+            Optional<IList<string>> labels = default;
+            Optional<IList<RoutingConfigurationNfvSubResource>> ids = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labels"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PropagatedRouteTableNfv(Core.Optional.ToList(labels), Core.Optional.ToList(ids));
+            return new PropagatedRouteTableNfv(Optional.ToList(labels), Optional.ToList(ids));
         }
     }
 }

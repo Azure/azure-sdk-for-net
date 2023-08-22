@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    internal class ManagedNetworkPeeringPolicyOperationSource : Core.IOperationSource<ManagedNetworkPeeringPolicyResource>
+    internal class ManagedNetworkPeeringPolicyOperationSource : IOperationSource<ManagedNetworkPeeringPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetwork
             _client = client;
         }
 
-        ManagedNetworkPeeringPolicyResource Core.IOperationSource<ManagedNetworkPeeringPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedNetworkPeeringPolicyResource IOperationSource<ManagedNetworkPeeringPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(document.RootElement);
             return new ManagedNetworkPeeringPolicyResource(_client, data);
         }
 
-        async ValueTask<ManagedNetworkPeeringPolicyResource> Core.IOperationSource<ManagedNetworkPeeringPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedNetworkPeeringPolicyResource> IOperationSource<ManagedNetworkPeeringPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(document.RootElement);

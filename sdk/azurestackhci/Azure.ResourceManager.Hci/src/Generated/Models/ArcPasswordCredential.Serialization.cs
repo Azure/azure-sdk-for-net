@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<string> secretText = default;
-            Core.Optional<string> keyId = default;
-            Core.Optional<DateTimeOffset> startDateTime = default;
-            Core.Optional<DateTimeOffset> endDateTime = default;
+            Optional<string> secretText = default;
+            Optional<string> keyId = default;
+            Optional<DateTimeOffset> startDateTime = default;
+            Optional<DateTimeOffset> endDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretText"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new ArcPasswordCredential(secretText.Value, keyId.Value, Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(endDateTime));
+            return new ArcPasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime));
         }
     }
 }

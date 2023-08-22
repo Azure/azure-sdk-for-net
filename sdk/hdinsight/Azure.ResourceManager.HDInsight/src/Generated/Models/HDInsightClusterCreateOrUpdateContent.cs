@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateContent. </summary>
         public HDInsightClusterCreateOrUpdateContent()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Zones = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> The location of the cluster. </summary>

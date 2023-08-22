@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of DeliveryAttributeListResult. </summary>
         internal DeliveryAttributeListResult()
         {
-            Value = new Core.ChangeTrackingList<DeliveryAttributeMapping>();
+            Value = new ChangeTrackingList<DeliveryAttributeMapping>();
         }
 
         /// <summary> Initializes a new instance of DeliveryAttributeListResult. </summary>

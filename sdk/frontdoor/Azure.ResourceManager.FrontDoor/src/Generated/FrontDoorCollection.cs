@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = await _frontDoorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.FrontDoor
             try
             {
                 var response = _frontDoorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data, cancellationToken);
-                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

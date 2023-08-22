@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryAlertResource(Client, SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(e)), _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics, Pipeline, "SiteRecoveryAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryAlertResource(Client, SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(e)), _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics, Pipeline, "SiteRecoveryAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryAlertReplicationAlertSettingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryAlertResource(Client, SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(e)), _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics, Pipeline, "SiteRecoveryAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryAlertResource(Client, SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(e)), _siteRecoveryAlertReplicationAlertSettingsClientDiagnostics, Pipeline, "SiteRecoveryAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

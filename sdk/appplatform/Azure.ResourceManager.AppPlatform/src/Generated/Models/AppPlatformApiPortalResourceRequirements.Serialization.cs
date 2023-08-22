@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> cpu = default;
-            Core.Optional<string> memory = default;
+            Optional<string> cpu = default;
+            Optional<string> memory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))

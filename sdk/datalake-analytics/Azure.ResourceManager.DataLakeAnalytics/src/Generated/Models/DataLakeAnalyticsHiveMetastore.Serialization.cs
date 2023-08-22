@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> serverUri = default;
-            Core.Optional<string> databaseName = default;
-            Core.Optional<string> runtimeVersion = default;
-            Core.Optional<string> userName = default;
-            Core.Optional<string> password = default;
-            Core.Optional<NestedResourceProvisioningState> nestedResourceProvisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> serverUri = default;
+            Optional<string> databaseName = default;
+            Optional<string> runtimeVersion = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
+            Optional<NestedResourceProvisioningState> nestedResourceProvisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsHiveMetastore(id, name, type, systemData.Value, serverUri.Value, databaseName.Value, runtimeVersion.Value, userName.Value, password.Value, Core.Optional.ToNullable(nestedResourceProvisioningState));
+            return new DataLakeAnalyticsHiveMetastore(id, name, type, systemData.Value, serverUri.Value, databaseName.Value, runtimeVersion.Value, userName.Value, password.Value, Optional.ToNullable(nestedResourceProvisioningState));
         }
     }
 }

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class FlowLogInformationOperationSource : Core.IOperationSource<FlowLogInformation>
+    internal class FlowLogInformationOperationSource : IOperationSource<FlowLogInformation>
     {
-        FlowLogInformation Core.IOperationSource<FlowLogInformation>.CreateResult(Response response, CancellationToken cancellationToken)
+        FlowLogInformation IOperationSource<FlowLogInformation>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);
         }
 
-        async ValueTask<FlowLogInformation> Core.IOperationSource<FlowLogInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FlowLogInformation> IOperationSource<FlowLogInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);

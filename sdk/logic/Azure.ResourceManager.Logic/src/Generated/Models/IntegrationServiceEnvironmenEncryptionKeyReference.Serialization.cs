@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmenEncryptionKeyReference : Core.IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmenEncryptionKeyReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVault);
             }
-            if (Core.Optional.IsDefined(KeyName))
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Core.Optional.IsDefined(KeyVersion))
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<LogicResourceReference> keyVault = default;
-            Core.Optional<string> keyName = default;
-            Core.Optional<string> keyVersion = default;
+            Optional<LogicResourceReference> keyVault = default;
+            Optional<string> keyName = default;
+            Optional<string> keyVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVault"u8))

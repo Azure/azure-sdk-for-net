@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of AppConfigurationStoreListResult. </summary>
         internal AppConfigurationStoreListResult()
         {
-            Value = new Core.ChangeTrackingList<AppConfigurationStoreData>();
+            Value = new ChangeTrackingList<AppConfigurationStoreData>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationStoreListResult. </summary>

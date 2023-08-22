@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<string> ruleId = default;
-            Core.Optional<ManagedRuleEnabledState> defaultState = default;
-            Core.Optional<RuleMatchActionType> defaultAction = default;
-            Core.Optional<string> description = default;
+            Optional<string> ruleId = default;
+            Optional<ManagedRuleEnabledState> defaultState = default;
+            Optional<RuleMatchActionType> defaultAction = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ManagedRuleDefinition(ruleId.Value, Core.Optional.ToNullable(defaultState), Core.Optional.ToNullable(defaultAction), description.Value);
+            return new ManagedRuleDefinition(ruleId.Value, Optional.ToNullable(defaultState), Optional.ToNullable(defaultAction), description.Value);
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
 {
-    public partial class InputPosition : Core.IUtf8JsonSerializable
+    public partial class InputPosition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("x"u8);

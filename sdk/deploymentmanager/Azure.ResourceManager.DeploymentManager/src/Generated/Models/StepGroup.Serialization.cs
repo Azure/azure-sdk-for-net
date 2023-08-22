@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class StepGroup : Core.IUtf8JsonSerializable
+    public partial class StepGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsCollectionDefined(DependsOnStepGroups))
+            if (Optional.IsCollectionDefined(DependsOnStepGroups))
             {
                 writer.WritePropertyName("dependsOnStepGroups"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PreDeploymentSteps))
+            if (Optional.IsCollectionDefined(PreDeploymentSteps))
             {
                 writer.WritePropertyName("preDeploymentSteps"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             }
             writer.WritePropertyName("deploymentTargetId"u8);
             writer.WriteStringValue(DeploymentTargetId);
-            if (Core.Optional.IsCollectionDefined(PostDeploymentSteps))
+            if (Optional.IsCollectionDefined(PostDeploymentSteps))
             {
                 writer.WritePropertyName("postDeploymentSteps"u8);
                 writer.WriteStartArray();
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 return null;
             }
             string name = default;
-            Core.Optional<IList<string>> dependsOnStepGroups = default;
-            Core.Optional<IList<PrePostStep>> preDeploymentSteps = default;
+            Optional<IList<string>> dependsOnStepGroups = default;
+            Optional<IList<PrePostStep>> preDeploymentSteps = default;
             string deploymentTargetId = default;
-            Core.Optional<IList<PrePostStep>> postDeploymentSteps = default;
+            Optional<IList<PrePostStep>> postDeploymentSteps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new StepGroup(name, Core.Optional.ToList(dependsOnStepGroups), Core.Optional.ToList(preDeploymentSteps), deploymentTargetId, Core.Optional.ToList(postDeploymentSteps));
+            return new StepGroup(name, Optional.ToList(dependsOnStepGroups), Optional.ToList(preDeploymentSteps), deploymentTargetId, Optional.ToList(postDeploymentSteps));
         }
     }
 }

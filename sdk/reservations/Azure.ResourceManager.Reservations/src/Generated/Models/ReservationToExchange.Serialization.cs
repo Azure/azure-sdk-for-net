@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> reservationId = default;
-            Core.Optional<int> quantity = default;
-            Core.Optional<PurchasePrice> billingRefundAmount = default;
-            Core.Optional<BillingInformation> billingInformation = default;
+            Optional<ResourceIdentifier> reservationId = default;
+            Optional<int> quantity = default;
+            Optional<PurchasePrice> billingRefundAmount = default;
+            Optional<BillingInformation> billingInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationId"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationToExchange(reservationId.Value, Core.Optional.ToNullable(quantity), billingRefundAmount.Value, billingInformation.Value);
+            return new ReservationToExchange(reservationId.Value, Optional.ToNullable(quantity), billingRefundAmount.Value, billingInformation.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHealth. </summary>
         internal ApplicationGatewayBackendHealth()
         {
-            BackendAddressPools = new Core.ChangeTrackingList<ApplicationGatewayBackendHealthPool>();
+            BackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendHealthPool>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendHealth. </summary>

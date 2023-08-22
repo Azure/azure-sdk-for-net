@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestListResult. </summary>
         internal ApplicationGatewayWafDynamicManifestListResult()
         {
-            Value = new Core.ChangeTrackingList<ApplicationGatewayWafDynamicManifestData>();
+            Value = new ChangeTrackingList<ApplicationGatewayWafDynamicManifestData>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestListResult. </summary>

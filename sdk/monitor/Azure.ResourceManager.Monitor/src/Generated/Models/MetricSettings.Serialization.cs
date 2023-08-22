@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricSettings : Core.IUtf8JsonSerializable
+    public partial class MetricSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TimeGrain))
+            if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value, "P");
             }
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Core.Optional.IsDefined(RetentionPolicy))
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> timeGrain = default;
-            Core.Optional<string> category = default;
+            Optional<TimeSpan> timeGrain = default;
+            Optional<string> category = default;
             bool enabled = default;
-            Core.Optional<RetentionPolicy> retentionPolicy = default;
+            Optional<RetentionPolicy> retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrain"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricSettings(Core.Optional.ToNullable(timeGrain), category.Value, enabled, retentionPolicy.Value);
+            return new MetricSettings(Optional.ToNullable(timeGrain), category.Value, enabled, retentionPolicy.Value);
         }
     }
 }

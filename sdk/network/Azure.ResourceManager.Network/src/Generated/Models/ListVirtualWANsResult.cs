@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVirtualWANsResult. </summary>
         internal ListVirtualWANsResult()
         {
-            Value = new Core.ChangeTrackingList<VirtualWanData>();
+            Value = new ChangeTrackingList<VirtualWanData>();
         }
 
         /// <summary> Initializes a new instance of ListVirtualWANsResult. </summary>

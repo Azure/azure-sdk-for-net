@@ -18,9 +18,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<object> detail = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<object> detail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

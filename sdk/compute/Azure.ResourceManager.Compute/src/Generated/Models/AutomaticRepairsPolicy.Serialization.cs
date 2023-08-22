@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AutomaticRepairsPolicy : Core.IUtf8JsonSerializable
+    public partial class AutomaticRepairsPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Core.Optional.IsDefined(GracePeriod))
+            if (Optional.IsDefined(GracePeriod))
             {
                 writer.WritePropertyName("gracePeriod"u8);
                 writer.WriteStringValue(GracePeriod);
             }
-            if (Core.Optional.IsDefined(RepairAction))
+            if (Optional.IsDefined(RepairAction))
             {
                 writer.WritePropertyName("repairAction"u8);
                 writer.WriteStringValue(RepairAction.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> gracePeriod = default;
-            Core.Optional<RepairAction> repairAction = default;
+            Optional<bool> enabled = default;
+            Optional<string> gracePeriod = default;
+            Optional<RepairAction> repairAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new AutomaticRepairsPolicy(Core.Optional.ToNullable(enabled), gracePeriod.Value, Core.Optional.ToNullable(repairAction));
+            return new AutomaticRepairsPolicy(Optional.ToNullable(enabled), gracePeriod.Value, Optional.ToNullable(repairAction));
         }
     }
 }

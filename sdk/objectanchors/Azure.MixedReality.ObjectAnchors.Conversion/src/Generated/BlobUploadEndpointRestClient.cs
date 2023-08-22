@@ -62,7 +62,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<AssetUploadUriResult, BlobUploadEndpointGetHeaders>> GetAsync(Guid accountId, string xMrcCv = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AssetUploadUriResult, BlobUploadEndpointGetHeaders>> GetAsync(Guid accountId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, xMrcCv);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -74,7 +74,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         AssetUploadUriResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = AssetUploadUriResult.DeserializeAssetUploadUriResult(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -85,7 +85,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountId"> Identifier for the Azure Object Anchors account. </param>
         /// <param name="xMrcCv"> The client request correlation vector, which should be set to a new value for each request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<AssetUploadUriResult, BlobUploadEndpointGetHeaders> Get(Guid accountId, string xMrcCv = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AssetUploadUriResult, BlobUploadEndpointGetHeaders> Get(Guid accountId, string xMrcCv = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest(accountId, xMrcCv);
             _pipeline.Send(message, cancellationToken);
@@ -97,7 +97,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                         AssetUploadUriResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = AssetUploadUriResult.DeserializeAssetUploadUriResult(document.RootElement);
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

@@ -14,44 +14,44 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PeerExpressRouteCircuitConnectionData : Core.IUtf8JsonSerializable
+    public partial class PeerExpressRouteCircuitConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExpressRouteCircuitPeering))
+            if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
             }
-            if (Core.Optional.IsDefined(PeerExpressRouteCircuitPeering))
+            if (Optional.IsDefined(PeerExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("peerExpressRouteCircuitPeering"u8);
                 JsonSerializer.Serialize(writer, PeerExpressRouteCircuitPeering);
             }
-            if (Core.Optional.IsDefined(AddressPrefix))
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Core.Optional.IsDefined(ConnectionName))
+            if (Optional.IsDefined(ConnectionName))
             {
                 writer.WritePropertyName("connectionName"u8);
                 writer.WriteStringValue(ConnectionName);
             }
-            if (Core.Optional.IsDefined(AuthResourceGuid))
+            if (Optional.IsDefined(AuthResourceGuid))
             {
                 writer.WritePropertyName("authResourceGuid"u8);
                 writer.WriteStringValue(AuthResourceGuid.Value);
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<WritableSubResource> expressRouteCircuitPeering = default;
-            Core.Optional<WritableSubResource> peerExpressRouteCircuitPeering = default;
-            Core.Optional<string> addressPrefix = default;
-            Core.Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
-            Core.Optional<string> connectionName = default;
-            Core.Optional<Guid> authResourceGuid = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<WritableSubResource> expressRouteCircuitPeering = default;
+            Optional<WritableSubResource> peerExpressRouteCircuitPeering = default;
+            Optional<string> addressPrefix = default;
+            Optional<CircuitConnectionStatus> circuitConnectionStatus = default;
+            Optional<string> connectionName = default;
+            Optional<Guid> authResourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Core.Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Core.Optional.ToNullable(authResourceGuid), Core.Optional.ToNullable(provisioningState));
+            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Optional.ToNullable(authResourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>
         internal ComputePrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<ComputePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<ComputePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of ComputePrivateLinkResourceListResult. </summary>

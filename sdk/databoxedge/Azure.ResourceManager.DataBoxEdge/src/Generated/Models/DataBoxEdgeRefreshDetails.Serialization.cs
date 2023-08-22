@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeRefreshDetails : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeRefreshDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(InProgressRefreshJobId))
+            if (Optional.IsDefined(InProgressRefreshJobId))
             {
                 writer.WritePropertyName("inProgressRefreshJobId"u8);
                 writer.WriteStringValue(InProgressRefreshJobId);
             }
-            if (Core.Optional.IsDefined(LastCompletedRefreshJobTimeInUtc))
+            if (Optional.IsDefined(LastCompletedRefreshJobTimeInUtc))
             {
                 writer.WritePropertyName("lastCompletedRefreshJobTimeInUTC"u8);
                 writer.WriteStringValue(LastCompletedRefreshJobTimeInUtc.Value, "O");
             }
-            if (Core.Optional.IsDefined(ErrorManifestFile))
+            if (Optional.IsDefined(ErrorManifestFile))
             {
                 writer.WritePropertyName("errorManifestFile"u8);
                 writer.WriteStringValue(ErrorManifestFile);
             }
-            if (Core.Optional.IsDefined(LastJob))
+            if (Optional.IsDefined(LastJob))
             {
                 writer.WritePropertyName("lastJob"u8);
                 writer.WriteStringValue(LastJob);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> inProgressRefreshJobId = default;
-            Core.Optional<DateTimeOffset> lastCompletedRefreshJobTimeInUtc = default;
-            Core.Optional<string> errorManifestFile = default;
-            Core.Optional<string> lastJob = default;
+            Optional<ResourceIdentifier> inProgressRefreshJobId = default;
+            Optional<DateTimeOffset> lastCompletedRefreshJobTimeInUtc = default;
+            Optional<string> errorManifestFile = default;
+            Optional<string> lastJob = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inProgressRefreshJobId"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeRefreshDetails(inProgressRefreshJobId.Value, Core.Optional.ToNullable(lastCompletedRefreshJobTimeInUtc), errorManifestFile.Value, lastJob.Value);
+            return new DataBoxEdgeRefreshDetails(inProgressRefreshJobId.Value, Optional.ToNullable(lastCompletedRefreshJobTimeInUtc), errorManifestFile.Value, lastJob.Value);
         }
     }
 }

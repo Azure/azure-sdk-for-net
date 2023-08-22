@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class LivePipelineCollection : Core.IUtf8JsonSerializable
+    public partial class LivePipelineCollection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ContinuationToken))
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -40,8 +40,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<IList<LivePipeline>> value = default;
-            Core.Optional<string> continuationToken = default;
+            Optional<IList<LivePipeline>> value = default;
+            Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineCollection(Core.Optional.ToList(value), continuationToken.Value);
+            return new LivePipelineCollection(Optional.ToList(value), continuationToken.Value);
         }
     }
 }

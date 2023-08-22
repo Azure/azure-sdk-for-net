@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableServiceProperties : Core.IXmlSerializable
+    public partial class TableServiceProperties : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
-            if (Core.Optional.IsDefined(Logging))
+            if (Optional.IsDefined(Logging))
             {
                 writer.WriteObjectValue(Logging, "Logging");
             }
-            if (Core.Optional.IsDefined(HourMetrics))
+            if (Optional.IsDefined(HourMetrics))
             {
                 writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-            if (Core.Optional.IsDefined(MinuteMetrics))
+            if (Optional.IsDefined(MinuteMetrics))
             {
                 writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            if (Core.Optional.IsCollectionDefined(Cors))
+            if (Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (var item in Cors)

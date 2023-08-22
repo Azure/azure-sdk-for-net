@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> tunnel = default;
-            Core.Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
-            Core.Optional<long> ingressBytesTransferred = default;
-            Core.Optional<long> egressBytesTransferred = default;
-            Core.Optional<string> lastConnectionEstablishedUtcTime = default;
+            Optional<string> tunnel = default;
+            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
+            Optional<long> ingressBytesTransferred = default;
+            Optional<long> egressBytesTransferred = default;
+            Optional<string> lastConnectionEstablishedUtcTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tunnel"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TunnelConnectionHealth(tunnel.Value, Core.Optional.ToNullable(connectionStatus), Core.Optional.ToNullable(ingressBytesTransferred), Core.Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value);
+            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value);
         }
     }
 }

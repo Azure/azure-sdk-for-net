@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class TransferConfiguration : Core.IUtf8JsonSerializable
+    public partial class TransferConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfigurationType"u8);
             writer.WriteStringValue(TransferConfigurationType.ToSerialString());
-            if (Core.Optional.IsDefined(TransferFilterDetails))
+            if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
                 writer.WriteObjectValue(TransferFilterDetails);
             }
-            if (Core.Optional.IsDefined(TransferAllDetails))
+            if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
                 writer.WriteObjectValue(TransferAllDetails);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             TransferConfigurationType transferConfigurationType = default;
-            Core.Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
-            Core.Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
+            Optional<TransferConfigurationTransferFilterDetails> transferFilterDetails = default;
+            Optional<TransferConfigurationTransferAllDetails> transferAllDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferConfigurationType"u8))

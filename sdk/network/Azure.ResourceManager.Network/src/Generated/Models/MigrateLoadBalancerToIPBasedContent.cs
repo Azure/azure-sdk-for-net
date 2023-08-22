@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of MigrateLoadBalancerToIPBasedContent. </summary>
         public MigrateLoadBalancerToIPBasedContent()
         {
-            Pools = new Core.ChangeTrackingList<string>();
+            Pools = new ChangeTrackingList<string>();
         }
 
         /// <summary> A list of pool names that should be migrated from Nic based to IP based pool. </summary>

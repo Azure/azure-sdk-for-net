@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class GraphicalRunbookContent : Core.IUtf8JsonSerializable
+    public partial class GraphicalRunbookContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RawContent))
+            if (Optional.IsDefined(RawContent))
             {
                 if (RawContent != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("rawContent");
                 }
             }
-            if (Core.Optional.IsDefined(GraphRunbookJson))
+            if (Optional.IsDefined(GraphRunbookJson))
             {
                 if (GraphRunbookJson != null)
                 {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<RawGraphicalRunbookContent> rawContent = default;
-            Core.Optional<string> graphRunbookJson = default;
+            Optional<RawGraphicalRunbookContent> rawContent = default;
+            Optional<string> graphRunbookJson = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawContent"u8))

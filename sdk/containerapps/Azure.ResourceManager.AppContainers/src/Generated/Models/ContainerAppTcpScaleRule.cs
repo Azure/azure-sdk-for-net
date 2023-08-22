@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppTcpScaleRule. </summary>
         public ContainerAppTcpScaleRule()
         {
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
-            Auth = new Core.ChangeTrackingList<ContainerAppScaleRuleAuth>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
+            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppTcpScaleRule. </summary>

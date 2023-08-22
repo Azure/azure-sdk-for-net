@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>
         internal LoadBalancerOutboundRuleListResult()
         {
-            Value = new Core.ChangeTrackingList<OutboundRuleData>();
+            Value = new ChangeTrackingList<OutboundRuleData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerOutboundRuleListResult. </summary>

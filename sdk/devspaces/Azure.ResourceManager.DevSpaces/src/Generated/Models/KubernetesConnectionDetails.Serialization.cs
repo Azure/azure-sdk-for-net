@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Core.Optional<string> kubeConfig = default;
+            Optional<string> kubeConfig = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

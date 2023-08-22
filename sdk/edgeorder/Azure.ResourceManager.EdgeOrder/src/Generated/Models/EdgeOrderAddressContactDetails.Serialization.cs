@@ -11,21 +11,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderAddressContactDetails : Core.IUtf8JsonSerializable
+    public partial class EdgeOrderAddressContactDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("contactName"u8);
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (Core.Optional.IsDefined(PhoneExtension))
+            if (Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Core.Optional.IsDefined(Mobile))
+            if (Optional.IsDefined(Mobile))
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             string contactName = default;
             string phone = default;
-            Core.Optional<string> phoneExtension = default;
-            Core.Optional<string> mobile = default;
+            Optional<string> phoneExtension = default;
+            Optional<string> mobile = default;
             IList<string> emailList = default;
             foreach (var property in element.EnumerateObject())
             {

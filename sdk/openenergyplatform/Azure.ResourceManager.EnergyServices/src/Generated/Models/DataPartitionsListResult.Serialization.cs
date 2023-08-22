@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DataPartition>> dataPartitionInfo = default;
+            Optional<IReadOnlyList<DataPartition>> dataPartitionInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataPartitionInfo"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     continue;
                 }
             }
-            return new DataPartitionsListResult(Core.Optional.ToList(dataPartitionInfo));
+            return new DataPartitionsListResult(Optional.ToList(dataPartitionInfo));
         }
     }
 }

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a KQL Script. </summary>
-    public partial class KqlScriptCreateOrUpdateOperation : Operation<KqlScriptResource>, Core.IOperationSource<KqlScriptResource>
+    public partial class KqlScriptCreateOrUpdateOperation : Operation<KqlScriptResource>, IOperationSource<KqlScriptResource>
     {
         private readonly OperationInternal<KqlScriptResource> _operation;
 
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal KqlScriptCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<KqlScriptResource> nextLinkOperation = Core.NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
+            IOperation<KqlScriptResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
             _operation = new OperationInternal<KqlScriptResource>(nextLinkOperation, clientDiagnostics, response, "KqlScriptCreateOrUpdateOperation");
         }
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<KqlScriptResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        KqlScriptResource Core.IOperationSource<KqlScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KqlScriptResource IOperationSource<KqlScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);
         }
 
-        async ValueTask<KqlScriptResource> Core.IOperationSource<KqlScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KqlScriptResource> IOperationSource<KqlScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);

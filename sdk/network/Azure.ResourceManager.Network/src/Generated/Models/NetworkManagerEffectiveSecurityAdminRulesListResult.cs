@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkManagerEffectiveSecurityAdminRulesListResult. </summary>
         internal NetworkManagerEffectiveSecurityAdminRulesListResult()
         {
-            Value = new Core.ChangeTrackingList<EffectiveBaseSecurityAdminRule>();
+            Value = new ChangeTrackingList<EffectiveBaseSecurityAdminRule>();
         }
 
         /// <summary> Initializes a new instance of NetworkManagerEffectiveSecurityAdminRulesListResult. </summary>

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppBaseContainer : Core.IUtf8JsonSerializable
+    public partial class ContainerAppBaseContainer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Image))
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(Command))
+            if (Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Args))
+            if (Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Env))
+            if (Optional.IsCollectionDefined(Env))
             {
                 writer.WritePropertyName("env"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Resources))
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
             }
-            if (Core.Optional.IsCollectionDefined(VolumeMounts))
+            if (Optional.IsCollectionDefined(VolumeMounts))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> image = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IList<string>> command = default;
-            Core.Optional<IList<string>> args = default;
-            Core.Optional<IList<ContainerAppEnvironmentVariable>> env = default;
-            Core.Optional<AppContainerResources> resources = default;
-            Core.Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
+            Optional<string> image = default;
+            Optional<string> name = default;
+            Optional<IList<string>> command = default;
+            Optional<IList<string>> args = default;
+            Optional<IList<ContainerAppEnvironmentVariable>> env = default;
+            Optional<AppContainerResources> resources = default;
+            Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("image"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppBaseContainer(image.Value, name.Value, Core.Optional.ToList(command), Core.Optional.ToList(args), Core.Optional.ToList(env), resources.Value, Core.Optional.ToList(volumeMounts));
+            return new ContainerAppBaseContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(volumeMounts));
         }
     }
 }

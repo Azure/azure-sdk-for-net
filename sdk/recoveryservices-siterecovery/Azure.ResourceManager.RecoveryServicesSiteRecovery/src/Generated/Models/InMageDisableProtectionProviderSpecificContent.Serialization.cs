@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageDisableProtectionProviderSpecificContent : Core.IUtf8JsonSerializable
+    public partial class InMageDisableProtectionProviderSpecificContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ReplicaVmDeletionStatus))
+            if (Optional.IsDefined(ReplicaVmDeletionStatus))
             {
                 writer.WritePropertyName("replicaVmDeletionStatus"u8);
                 writer.WriteStringValue(ReplicaVmDeletionStatus);

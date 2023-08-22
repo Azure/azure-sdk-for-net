@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<long> vCores = default;
-            Core.Optional<long> supportedIops = default;
-            Core.Optional<long> supportedMemoryPerVCoreMB = default;
+            Optional<string> name = default;
+            Optional<long> vCores = default;
+            Optional<long> supportedIops = default;
+            Optional<long> supportedMemoryPerVCoreMB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerSkuCapability(name.Value, Core.Optional.ToNullable(vCores), Core.Optional.ToNullable(supportedIops), Core.Optional.ToNullable(supportedMemoryPerVCoreMB));
+            return new MySqlFlexibleServerSkuCapability(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB));
         }
     }
 }

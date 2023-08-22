@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceValidateContent : Core.IUtf8JsonSerializable
+    public partial class AppServiceValidateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -23,72 +23,72 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServerFarmId))
+            if (Optional.IsDefined(ServerFarmId))
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (Core.Optional.IsDefined(SkuName))
+            if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (Core.Optional.IsDefined(NeedLinuxWorkers))
+            if (Optional.IsDefined(NeedLinuxWorkers))
             {
                 writer.WritePropertyName("needLinuxWorkers"u8);
                 writer.WriteBooleanValue(NeedLinuxWorkers.Value);
             }
-            if (Core.Optional.IsDefined(IsSpot))
+            if (Optional.IsDefined(IsSpot))
             {
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Core.Optional.IsDefined(HostingEnvironment))
+            if (Optional.IsDefined(HostingEnvironment))
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
-            if (Core.Optional.IsDefined(IsXenon))
+            if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Core.Optional.IsDefined(ContainerRegistryBaseUri))
+            if (Optional.IsDefined(ContainerRegistryBaseUri))
             {
                 writer.WritePropertyName("containerRegistryBaseUrl"u8);
                 writer.WriteStringValue(ContainerRegistryBaseUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ContainerRegistryUsername))
+            if (Optional.IsDefined(ContainerRegistryUsername))
             {
                 writer.WritePropertyName("containerRegistryUsername"u8);
                 writer.WriteStringValue(ContainerRegistryUsername);
             }
-            if (Core.Optional.IsDefined(ContainerRegistryPassword))
+            if (Optional.IsDefined(ContainerRegistryPassword))
             {
                 writer.WritePropertyName("containerRegistryPassword"u8);
                 writer.WriteStringValue(ContainerRegistryPassword);
             }
-            if (Core.Optional.IsDefined(ContainerImageRepository))
+            if (Optional.IsDefined(ContainerImageRepository))
             {
                 writer.WritePropertyName("containerImageRepository"u8);
                 writer.WriteStringValue(ContainerImageRepository);
             }
-            if (Core.Optional.IsDefined(ContainerImageTag))
+            if (Optional.IsDefined(ContainerImageTag))
             {
                 writer.WritePropertyName("containerImageTag"u8);
                 writer.WriteStringValue(ContainerImageTag);
             }
-            if (Core.Optional.IsDefined(ContainerImagePlatform))
+            if (Optional.IsDefined(ContainerImagePlatform))
             {
                 writer.WritePropertyName("containerImagePlatform"u8);
                 writer.WriteStringValue(ContainerImagePlatform);
             }
-            if (Core.Optional.IsDefined(AppServiceEnvironment))
+            if (Optional.IsDefined(AppServiceEnvironment))
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
                 writer.WriteObjectValue(AppServiceEnvironment);

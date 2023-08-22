@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class AzureDevOpsOrgMetadata : Core.IUtf8JsonSerializable
+    public partial class AzureDevOpsOrgMetadata : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(AutoDiscovery))
+            if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Projects))
+            if (Optional.IsCollectionDefined(Projects))
             {
                 writer.WritePropertyName("projects"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AutoDiscovery> autoDiscovery = default;
-            Core.Optional<IList<AzureDevOpsProjectMetadata>> projects = default;
+            Optional<string> name = default;
+            Optional<AutoDiscovery> autoDiscovery = default;
+            Optional<IList<AzureDevOpsProjectMetadata>> projects = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsOrgMetadata(name.Value, Core.Optional.ToNullable(autoDiscovery), Core.Optional.ToList(projects));
+            return new AzureDevOpsOrgMetadata(name.Value, Optional.ToNullable(autoDiscovery), Optional.ToList(projects));
         }
     }
 }

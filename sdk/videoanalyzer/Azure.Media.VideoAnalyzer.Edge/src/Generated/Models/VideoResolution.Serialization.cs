@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class VideoResolution : Core.IUtf8JsonSerializable
+    public partial class VideoResolution : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Width))
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (Core.Optional.IsDefined(Height))
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<float> width = default;
-            Core.Optional<float> height = default;
+            Optional<float> width = default;
+            Optional<float> height = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("width"u8))
@@ -57,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoResolution(Core.Optional.ToNullable(width), Core.Optional.ToNullable(height));
+            return new VideoResolution(Optional.ToNullable(width), Optional.ToNullable(height));
         }
     }
 }

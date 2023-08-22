@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Core.Optional<string> verificationCode = default;
-            Core.Optional<string> subject = default;
-            Core.Optional<DateTimeOffset> expiry = default;
-            Core.Optional<BinaryData> thumbprint = default;
-            Core.Optional<bool> isVerified = default;
-            Core.Optional<BinaryData> certificate = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> updated = default;
+            Optional<string> verificationCode = default;
+            Optional<string> subject = default;
+            Optional<DateTimeOffset> expiry = default;
+            Optional<BinaryData> thumbprint = default;
+            Optional<bool> isVerified = default;
+            Optional<BinaryData> certificate = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verificationCode"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, Core.Optional.ToNullable(expiry), thumbprint.Value, Core.Optional.ToNullable(isVerified), certificate.Value, Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated));
+            return new CertificateVerificationCodeProperties(verificationCode.Value, subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), certificate.Value, Optional.ToNullable(created), Optional.ToNullable(updated));
         }
     }
 }

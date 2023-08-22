@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string content = default;
-            Core.Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentKeyValueElement(content, Core.Optional.ToList(boundingRegions), spans);
+            return new DocumentKeyValueElement(content, Optional.ToList(boundingRegions), spans);
         }
     }
 }

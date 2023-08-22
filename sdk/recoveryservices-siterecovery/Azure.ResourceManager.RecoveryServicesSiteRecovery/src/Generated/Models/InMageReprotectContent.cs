@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProcessServerId = processServerId;
             RetentionDrive = retentionDrive;
             ProfileId = profileId;
-            DisksToInclude = new Core.ChangeTrackingList<string>();
+            DisksToInclude = new ChangeTrackingList<string>();
             InstanceType = "InMage";
         }
 

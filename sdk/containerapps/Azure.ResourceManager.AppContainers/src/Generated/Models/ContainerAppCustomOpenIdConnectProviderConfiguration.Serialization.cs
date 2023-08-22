@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : Core.IUtf8JsonSerializable
+    public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Registration))
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Core.Optional.IsDefined(Login))
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<ContainerAppOpenIdConnectRegistration> registration = default;
-            Core.Optional<ContainerAppOpenIdConnectLogin> login = default;
+            Optional<bool> enabled = default;
+            Optional<ContainerAppOpenIdConnectRegistration> registration = default;
+            Optional<ContainerAppOpenIdConnectLogin> login = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCustomOpenIdConnectProviderConfiguration(Core.Optional.ToNullable(enabled), registration.Value, login.Value);
+            return new ContainerAppCustomOpenIdConnectProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value);
         }
     }
 }

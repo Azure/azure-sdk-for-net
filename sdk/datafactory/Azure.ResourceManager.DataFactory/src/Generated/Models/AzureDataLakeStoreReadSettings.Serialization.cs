@@ -13,74 +13,74 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDataLakeStoreReadSettings : Core.IUtf8JsonSerializable
+    public partial class AzureDataLakeStoreReadSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Recursive))
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (Core.Optional.IsDefined(WildcardFolderPath))
+            if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
-            if (Core.Optional.IsDefined(WildcardFileName))
+            if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 JsonSerializer.Serialize(writer, WildcardFileName);
             }
-            if (Core.Optional.IsDefined(FileListPath))
+            if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
                 JsonSerializer.Serialize(writer, FileListPath);
             }
-            if (Core.Optional.IsDefined(ListAfter))
+            if (Optional.IsDefined(ListAfter))
             {
                 writer.WritePropertyName("listAfter"u8);
                 JsonSerializer.Serialize(writer, ListAfter);
             }
-            if (Core.Optional.IsDefined(ListBefore))
+            if (Optional.IsDefined(ListBefore))
             {
                 writer.WritePropertyName("listBefore"u8);
                 JsonSerializer.Serialize(writer, ListBefore);
             }
-            if (Core.Optional.IsDefined(EnablePartitionDiscovery))
+            if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
-            if (Core.Optional.IsDefined(PartitionRootPath))
+            if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 JsonSerializer.Serialize(writer, PartitionRootPath);
             }
-            if (Core.Optional.IsDefined(DeleteFilesAfterCompletion))
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
-            if (Core.Optional.IsDefined(ModifiedDatetimeStart))
+            if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
-            if (Core.Optional.IsDefined(ModifiedDatetimeEnd))
+            if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(DisableMetricsCollection))
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -103,20 +103,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<bool>> recursive = default;
-            Core.Optional<DataFactoryElement<string>> wildcardFolderPath = default;
-            Core.Optional<DataFactoryElement<string>> wildcardFileName = default;
-            Core.Optional<DataFactoryElement<string>> fileListPath = default;
-            Core.Optional<DataFactoryElement<string>> listAfter = default;
-            Core.Optional<DataFactoryElement<string>> listBefore = default;
-            Core.Optional<DataFactoryElement<bool>> enablePartitionDiscovery = default;
-            Core.Optional<DataFactoryElement<string>> partitionRootPath = default;
-            Core.Optional<DataFactoryElement<bool>> deleteFilesAfterCompletion = default;
-            Core.Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
-            Core.Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
+            Optional<DataFactoryElement<bool>> recursive = default;
+            Optional<DataFactoryElement<string>> wildcardFolderPath = default;
+            Optional<DataFactoryElement<string>> wildcardFileName = default;
+            Optional<DataFactoryElement<string>> fileListPath = default;
+            Optional<DataFactoryElement<string>> listAfter = default;
+            Optional<DataFactoryElement<string>> listBefore = default;
+            Optional<DataFactoryElement<bool>> enablePartitionDiscovery = default;
+            Optional<DataFactoryElement<string>> partitionRootPath = default;
+            Optional<DataFactoryElement<bool>> deleteFilesAfterCompletion = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
             string type = default;
-            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DiskExclusionProperties : Core.IUtf8JsonSerializable
+    public partial class DiskExclusionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DiskLunList))
+            if (Optional.IsCollectionDefined(DiskLunList))
             {
                 writer.WritePropertyName("diskLunList"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsInclusionList))
+            if (Optional.IsDefined(IsInclusionList))
             {
                 writer.WritePropertyName("isInclusionList"u8);
                 writer.WriteBooleanValue(IsInclusionList.Value);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<int>> diskLunList = default;
-            Core.Optional<bool> isInclusionList = default;
+            Optional<IList<int>> diskLunList = default;
+            Optional<bool> isInclusionList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskLunList"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new DiskExclusionProperties(Core.Optional.ToList(diskLunList), Core.Optional.ToNullable(isInclusionList));
+            return new DiskExclusionProperties(Optional.ToList(diskLunList), Optional.ToNullable(isInclusionList));
         }
     }
 }

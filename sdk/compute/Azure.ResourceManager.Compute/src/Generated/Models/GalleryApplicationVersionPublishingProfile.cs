@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
-            AdvancedSettings = new Core.ChangeTrackingDictionary<string, string>();
-            CustomActions = new Core.ChangeTrackingList<GalleryApplicationCustomAction>();
+            AdvancedSettings = new ChangeTrackingDictionary<string, string>();
+            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>

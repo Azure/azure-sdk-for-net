@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class FlowLogOperationSource : Core.IOperationSource<FlowLogResource>
+    internal class FlowLogOperationSource : IOperationSource<FlowLogResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        FlowLogResource Core.IOperationSource<FlowLogResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FlowLogResource IOperationSource<FlowLogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FlowLogData.DeserializeFlowLogData(document.RootElement);
             return new FlowLogResource(_client, data);
         }
 
-        async ValueTask<FlowLogResource> Core.IOperationSource<FlowLogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FlowLogResource> IOperationSource<FlowLogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FlowLogData.DeserializeFlowLogData(document.RootElement);

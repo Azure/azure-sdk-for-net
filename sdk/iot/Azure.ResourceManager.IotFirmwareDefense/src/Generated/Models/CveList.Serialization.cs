@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<FirmwareCve>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<FirmwareCve>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new CveList(Core.Optional.ToList(value), nextLink.Value);
+            return new CveList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

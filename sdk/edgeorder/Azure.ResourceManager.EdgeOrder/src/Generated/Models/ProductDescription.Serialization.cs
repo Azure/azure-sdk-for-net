@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<ProductDescriptionType> descriptionType = default;
-            Core.Optional<string> shortDescription = default;
-            Core.Optional<string> longDescription = default;
-            Core.Optional<IReadOnlyList<string>> keywords = default;
-            Core.Optional<IReadOnlyList<string>> attributes = default;
-            Core.Optional<IReadOnlyList<ProductLink>> links = default;
+            Optional<ProductDescriptionType> descriptionType = default;
+            Optional<string> shortDescription = default;
+            Optional<string> longDescription = default;
+            Optional<IReadOnlyList<string>> keywords = default;
+            Optional<IReadOnlyList<string>> attributes = default;
+            Optional<IReadOnlyList<ProductLink>> links = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("descriptionType"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ProductDescription(Core.Optional.ToNullable(descriptionType), shortDescription.Value, longDescription.Value, Core.Optional.ToList(keywords), Core.Optional.ToList(attributes), Core.Optional.ToList(links));
+            return new ProductDescription(Optional.ToNullable(descriptionType), shortDescription.Value, longDescription.Value, Optional.ToList(keywords), Optional.ToList(attributes), Optional.ToList(links));
         }
     }
 }

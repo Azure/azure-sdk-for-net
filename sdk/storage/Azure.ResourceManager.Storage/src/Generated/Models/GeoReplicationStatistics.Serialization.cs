@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<GeoReplicationStatus> status = default;
-            Core.Optional<DateTimeOffset> lastSyncTime = default;
-            Core.Optional<bool> canFailover = default;
+            Optional<GeoReplicationStatus> status = default;
+            Optional<DateTimeOffset> lastSyncTime = default;
+            Optional<bool> canFailover = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new GeoReplicationStatistics(Core.Optional.ToNullable(status), Core.Optional.ToNullable(lastSyncTime), Core.Optional.ToNullable(canFailover));
+            return new GeoReplicationStatistics(Optional.ToNullable(status), Optional.ToNullable(lastSyncTime), Optional.ToNullable(canFailover));
         }
     }
 }

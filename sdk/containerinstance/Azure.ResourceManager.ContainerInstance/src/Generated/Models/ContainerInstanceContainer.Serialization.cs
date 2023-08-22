@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerInstanceContainer : Core.IUtf8JsonSerializable
+    public partial class ContainerInstanceContainer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
             writer.WriteStringValue(Image);
-            if (Core.Optional.IsCollectionDefined(Command))
+            if (Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Ports))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources);
-            if (Core.Optional.IsCollectionDefined(VolumeMounts))
+            if (Optional.IsCollectionDefined(VolumeMounts))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(LivenessProbe))
+            if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
                 writer.WriteObjectValue(LivenessProbe);
             }
-            if (Core.Optional.IsDefined(ReadinessProbe))
+            if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
             }
-            if (Core.Optional.IsDefined(SecurityContext))
+            if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
                 writer.WriteObjectValue(SecurityContext);
@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string image = default;
-            Core.Optional<IList<string>> command = default;
-            Core.Optional<IList<ContainerPort>> ports = default;
-            Core.Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
-            Core.Optional<ContainerInstanceView> instanceView = default;
+            Optional<IList<string>> command = default;
+            Optional<IList<ContainerPort>> ports = default;
+            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
+            Optional<ContainerInstanceView> instanceView = default;
             ContainerResourceRequirements resources = default;
-            Core.Optional<IList<ContainerVolumeMount>> volumeMounts = default;
-            Core.Optional<ContainerProbe> livenessProbe = default;
-            Core.Optional<ContainerProbe> readinessProbe = default;
-            Core.Optional<ContainerSecurityContextDefinition> securityContext = default;
+            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
+            Optional<ContainerProbe> livenessProbe = default;
+            Optional<ContainerProbe> readinessProbe = default;
+            Optional<ContainerSecurityContextDefinition> securityContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerInstanceContainer(name, image, Core.Optional.ToList(command), Core.Optional.ToList(ports), Core.Optional.ToList(environmentVariables), instanceView.Value, resources, Core.Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value, securityContext.Value);
+            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value, securityContext.Value);
         }
     }
 }

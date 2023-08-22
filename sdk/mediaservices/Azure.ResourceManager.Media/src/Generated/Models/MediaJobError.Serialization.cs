@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<MediaJobErrorCode> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<MediaJobErrorCategory> category = default;
-            Core.Optional<MediaJobRetry> retry = default;
-            Core.Optional<IReadOnlyList<MediaJobErrorDetail>> details = default;
+            Optional<MediaJobErrorCode> code = default;
+            Optional<string> message = default;
+            Optional<MediaJobErrorCategory> category = default;
+            Optional<MediaJobRetry> retry = default;
+            Optional<IReadOnlyList<MediaJobErrorDetail>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaJobError(Core.Optional.ToNullable(code), message.Value, Core.Optional.ToNullable(category), Core.Optional.ToNullable(retry), Core.Optional.ToList(details));
+            return new MediaJobError(Optional.ToNullable(code), message.Value, Optional.ToNullable(category), Optional.ToNullable(retry), Optional.ToList(details));
         }
     }
 }

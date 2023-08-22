@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummaryInternal : Core.IUtf8JsonSerializable
+    internal partial class AbstractiveSummaryInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Core.Optional.IsCollectionDefined(Contexts))
+            if (Optional.IsCollectionDefined(Contexts))
             {
                 writer.WritePropertyName("contexts"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             string text = default;
-            Core.Optional<IList<SummaryContextInternal>> contexts = default;
+            Optional<IList<SummaryContextInternal>> contexts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummaryInternal(text, Core.Optional.ToList(contexts));
+            return new AbstractiveSummaryInternal(text, Optional.ToList(contexts));
         }
     }
 }

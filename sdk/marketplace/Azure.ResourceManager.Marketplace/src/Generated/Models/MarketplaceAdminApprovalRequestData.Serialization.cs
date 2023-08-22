@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class MarketplaceAdminApprovalRequestData : Core.IUtf8JsonSerializable
+    public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OfferId))
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (Core.Optional.IsDefined(PublisherId))
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Core.Optional.IsDefined(AdminAction))
+            if (Optional.IsDefined(AdminAction))
             {
                 writer.WritePropertyName("adminAction"u8);
                 writer.WriteStringValue(AdminAction.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ApprovedPlans))
+            if (Optional.IsCollectionDefined(ApprovedPlans))
             {
                 writer.WritePropertyName("approvedPlans"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Comment))
+            if (Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
-            if (Core.Optional.IsDefined(Administrator))
+            if (Optional.IsDefined(Administrator))
             {
                 writer.WritePropertyName("administrator"u8);
                 writer.WriteStringValue(Administrator);
             }
-            if (Core.Optional.IsCollectionDefined(CollectionIds))
+            if (Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.Marketplace
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> offerId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> publisherId = default;
-            Core.Optional<MarketplaceAdminAction> adminAction = default;
-            Core.Optional<IList<string>> approvedPlans = default;
-            Core.Optional<string> comment = default;
-            Core.Optional<string> administrator = default;
-            Core.Optional<IReadOnlyList<PlanRequesterDetails>> plans = default;
-            Core.Optional<IList<Guid>> collectionIds = default;
-            Core.Optional<Uri> icon = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> offerId = default;
+            Optional<string> displayName = default;
+            Optional<string> publisherId = default;
+            Optional<MarketplaceAdminAction> adminAction = default;
+            Optional<IList<string>> approvedPlans = default;
+            Optional<string> comment = default;
+            Optional<string> administrator = default;
+            Optional<IReadOnlyList<PlanRequesterDetails>> plans = default;
+            Optional<IList<Guid>> collectionIds = default;
+            Optional<Uri> icon = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Core.Optional.ToNullable(adminAction), Core.Optional.ToList(approvedPlans), comment.Value, administrator.Value, Core.Optional.ToList(plans), Core.Optional.ToList(collectionIds), icon.Value);
+            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value);
         }
     }
 }

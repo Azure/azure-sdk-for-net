@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of RoleListResult. </summary>
         internal RoleListResult()
         {
-            Value = new Core.ChangeTrackingList<RoleResourceFormat>();
+            Value = new ChangeTrackingList<RoleResourceFormat>();
         }
 
         /// <summary> Initializes a new instance of RoleListResult. </summary>

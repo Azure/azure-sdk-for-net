@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchAccountData : Core.IUtf8JsonSerializable
+    public partial class BatchAccountData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (Core.Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 if (NetworkProfile != null)
                 {
@@ -70,30 +70,30 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> accountEndpoint = default;
-            Core.Optional<string> nodeManagementEndpoint = default;
-            Core.Optional<BatchProvisioningState> provisioningState = default;
-            Core.Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
-            Core.Optional<BatchKeyVaultReference> keyVaultReference = default;
-            Core.Optional<BatchPublicNetworkAccess?> publicNetworkAccess = default;
-            Core.Optional<BatchNetworkProfile> networkProfile = default;
-            Core.Optional<IReadOnlyList<BatchPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<BatchAccountAutoStorageConfiguration> autoStorage = default;
-            Core.Optional<BatchAccountEncryptionConfiguration> encryption = default;
-            Core.Optional<int?> dedicatedCoreQuota = default;
-            Core.Optional<int?> lowPriorityCoreQuota = default;
-            Core.Optional<IReadOnlyList<BatchVmFamilyCoreQuota>> dedicatedCoreQuotaPerVmFamily = default;
-            Core.Optional<bool> dedicatedCoreQuotaPerVmFamilyEnforced = default;
-            Core.Optional<int> poolQuota = default;
-            Core.Optional<int> activeJobAndJobScheduleQuota = default;
-            Core.Optional<IReadOnlyList<BatchAuthenticationMode>> allowedAuthenticationModes = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> accountEndpoint = default;
+            Optional<string> nodeManagementEndpoint = default;
+            Optional<BatchProvisioningState> provisioningState = default;
+            Optional<BatchAccountPoolAllocationMode> poolAllocationMode = default;
+            Optional<BatchKeyVaultReference> keyVaultReference = default;
+            Optional<BatchPublicNetworkAccess?> publicNetworkAccess = default;
+            Optional<BatchNetworkProfile> networkProfile = default;
+            Optional<IReadOnlyList<BatchPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<BatchAccountAutoStorageConfiguration> autoStorage = default;
+            Optional<BatchAccountEncryptionConfiguration> encryption = default;
+            Optional<int?> dedicatedCoreQuota = default;
+            Optional<int?> lowPriorityCoreQuota = default;
+            Optional<IReadOnlyList<BatchVmFamilyCoreQuota>> dedicatedCoreQuotaPerVmFamily = default;
+            Optional<bool> dedicatedCoreQuotaPerVmFamilyEnforced = default;
+            Optional<int> poolQuota = default;
+            Optional<int> activeJobAndJobScheduleQuota = default;
+            Optional<IReadOnlyList<BatchAuthenticationMode>> allowedAuthenticationModes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Core.Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Core.Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Core.Optional.ToNullable(dedicatedCoreQuota), Core.Optional.ToNullable(lowPriorityCoreQuota), Core.Optional.ToList(dedicatedCoreQuotaPerVmFamily), Core.Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Core.Optional.ToNullable(poolQuota), Core.Optional.ToNullable(activeJobAndJobScheduleQuota), Core.Optional.ToList(allowedAuthenticationModes), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags));
+            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags));
         }
     }
 }

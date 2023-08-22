@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AwsOrganizationalDataMaster. </summary>
         public AwsOrganizationalDataMaster()
         {
-            ExcludedAccountIds = new Core.ChangeTrackingList<string>();
+            ExcludedAccountIds = new ChangeTrackingList<string>();
             OrganizationMembershipType = OrganizationMembershipType.Organization;
         }
 

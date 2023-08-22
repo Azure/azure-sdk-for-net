@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionBypassTrafficSpecifications. </summary>
         public FirewallPolicyIntrusionDetectionBypassTrafficSpecifications()
         {
-            SourceAddresses = new Core.ChangeTrackingList<string>();
-            DestinationAddresses = new Core.ChangeTrackingList<string>();
-            DestinationPorts = new Core.ChangeTrackingList<string>();
-            SourceIPGroups = new Core.ChangeTrackingList<string>();
-            DestinationIPGroups = new Core.ChangeTrackingList<string>();
+            SourceAddresses = new ChangeTrackingList<string>();
+            DestinationAddresses = new ChangeTrackingList<string>();
+            DestinationPorts = new ChangeTrackingList<string>();
+            SourceIPGroups = new ChangeTrackingList<string>();
+            DestinationIPGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionBypassTrafficSpecifications. </summary>

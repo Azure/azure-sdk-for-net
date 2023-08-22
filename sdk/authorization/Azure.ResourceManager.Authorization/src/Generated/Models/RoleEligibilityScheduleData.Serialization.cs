@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<ResourceIdentifier> roleDefinitionId = default;
-            Core.Optional<Guid> principalId = default;
-            Core.Optional<RoleManagementPrincipalType> principalType = default;
-            Core.Optional<ResourceIdentifier> roleEligibilityScheduleRequestId = default;
-            Core.Optional<RoleManagementScheduleMemberType> memberType = default;
-            Core.Optional<RoleManagementScheduleStatus> status = default;
-            Core.Optional<DateTimeOffset> startDateTime = default;
-            Core.Optional<DateTimeOffset> endDateTime = default;
-            Core.Optional<string> condition = default;
-            Core.Optional<string> conditionVersion = default;
-            Core.Optional<DateTimeOffset> createdOn = default;
-            Core.Optional<DateTimeOffset> updatedOn = default;
-            Core.Optional<RoleManagementExpandedProperties> expandedProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> scope = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<Guid> principalId = default;
+            Optional<RoleManagementPrincipalType> principalType = default;
+            Optional<ResourceIdentifier> roleEligibilityScheduleRequestId = default;
+            Optional<RoleManagementScheduleMemberType> memberType = default;
+            Optional<RoleManagementScheduleStatus> status = default;
+            Optional<DateTimeOffset> startDateTime = default;
+            Optional<DateTimeOffset> endDateTime = default;
+            Optional<string> condition = default;
+            Optional<string> conditionVersion = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<DateTimeOffset> updatedOn = default;
+            Optional<RoleManagementExpandedProperties> expandedProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Authorization
                     continue;
                 }
             }
-            return new RoleEligibilityScheduleData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Core.Optional.ToNullable(principalId), Core.Optional.ToNullable(principalType), roleEligibilityScheduleRequestId.Value, Core.Optional.ToNullable(memberType), Core.Optional.ToNullable(status), Core.Optional.ToNullable(startDateTime), Core.Optional.ToNullable(endDateTime), condition.Value, conditionVersion.Value, Core.Optional.ToNullable(createdOn), Core.Optional.ToNullable(updatedOn), expandedProperties.Value);
+            return new RoleEligibilityScheduleData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleEligibilityScheduleRequestId.Value, Optional.ToNullable(memberType), Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), expandedProperties.Value);
         }
     }
 }

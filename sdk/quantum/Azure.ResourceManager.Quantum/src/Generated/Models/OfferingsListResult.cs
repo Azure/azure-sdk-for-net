@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Initializes a new instance of OfferingsListResult. </summary>
         internal OfferingsListResult()
         {
-            Value = new Core.ChangeTrackingList<ProviderDescription>();
+            Value = new ChangeTrackingList<ProviderDescription>();
         }
 
         /// <summary> Initializes a new instance of OfferingsListResult. </summary>

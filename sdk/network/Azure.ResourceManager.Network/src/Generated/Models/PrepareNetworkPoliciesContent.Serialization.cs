@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrepareNetworkPoliciesContent : Core.IUtf8JsonSerializable
+    public partial class PrepareNetworkPoliciesContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceName))
+            if (Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (Core.Optional.IsCollectionDefined(NetworkIntentPolicyConfigurations))
+            if (Optional.IsCollectionDefined(NetworkIntentPolicyConfigurations))
             {
                 writer.WritePropertyName("networkIntentPolicyConfigurations"u8);
                 writer.WriteStartArray();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<int> count = default;
+            Optional<int> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscNodeCountProperties(Core.Optional.ToNullable(count));
+            return new DscNodeCountProperties(Optional.ToNullable(count));
         }
     }
 }

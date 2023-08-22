@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class UseCase : Core.IUtf8JsonSerializable
+    public partial class UseCase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContentCategory))
+            if (Optional.IsDefined(ContentCategory))
             {
                 writer.WritePropertyName("contentCategory"u8);
                 writer.WriteStringValue(ContentCategory.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Examples))
+            if (Optional.IsCollectionDefined(Examples))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Core.Optional<MessageContentCategory> contentCategory = default;
-            Core.Optional<IList<MessageExampleSequence>> examples = default;
+            Optional<MessageContentCategory> contentCategory = default;
+            Optional<IList<MessageExampleSequence>> examples = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentCategory"u8))
@@ -68,7 +68,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new UseCase(Core.Optional.ToNullable(contentCategory), Core.Optional.ToList(examples));
+            return new UseCase(Optional.ToNullable(contentCategory), Optional.ToList(examples));
         }
     }
 }

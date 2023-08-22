@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class VirtualNetworksPropertiesInfraVnetProfileVmware : Core.IUtf8JsonSerializable
+    internal partial class VirtualNetworksPropertiesInfraVnetProfileVmware : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SegmentName))
+            if (Optional.IsDefined(SegmentName))
             {
                 writer.WritePropertyName("segmentName"u8);
                 writer.WriteStringValue(SegmentName);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> segmentName = default;
+            Optional<string> segmentName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("segmentName"u8))

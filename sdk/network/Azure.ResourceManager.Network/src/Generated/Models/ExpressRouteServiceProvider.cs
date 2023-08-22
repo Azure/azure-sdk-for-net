@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
         public ExpressRouteServiceProvider()
         {
-            PeeringLocations = new Core.ChangeTrackingList<string>();
-            BandwidthsOffered = new Core.ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered>();
+            PeeringLocations = new ChangeTrackingList<string>();
+            BandwidthsOffered = new ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>

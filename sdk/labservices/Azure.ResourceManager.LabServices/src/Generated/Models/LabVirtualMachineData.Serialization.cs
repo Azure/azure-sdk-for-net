@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabVirtualMachineData : Core.IUtf8JsonSerializable
+    public partial class LabVirtualMachineData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.LabServices
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<LabServicesProvisioningState> provisioningState = default;
-            Core.Optional<LabVirtualMachineState> state = default;
-            Core.Optional<LabVirtualMachineConnectionProfile> connectionProfile = default;
-            Core.Optional<string> claimedByUserId = default;
-            Core.Optional<LabVirtualMachineType> vmType = default;
+            Optional<SystemData> systemData = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
+            Optional<LabVirtualMachineState> state = default;
+            Optional<LabVirtualMachineConnectionProfile> connectionProfile = default;
+            Optional<string> claimedByUserId = default;
+            Optional<LabVirtualMachineType> vmType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LabServices
                     continue;
                 }
             }
-            return new LabVirtualMachineData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(state), connectionProfile.Value, claimedByUserId.Value, Core.Optional.ToNullable(vmType));
+            return new LabVirtualMachineData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), connectionProfile.Value, claimedByUserId.Value, Optional.ToNullable(vmType));
         }
     }
 }

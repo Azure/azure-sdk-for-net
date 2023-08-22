@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class BatchRequestItemInternal : Core.IUtf8JsonSerializable
+    internal partial class BatchRequestItemInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Query))
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);

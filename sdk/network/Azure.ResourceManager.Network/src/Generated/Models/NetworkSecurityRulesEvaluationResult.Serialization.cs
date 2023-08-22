@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<bool> protocolMatched = default;
-            Core.Optional<bool> sourceMatched = default;
-            Core.Optional<bool> sourcePortMatched = default;
-            Core.Optional<bool> destinationMatched = default;
-            Core.Optional<bool> destinationPortMatched = default;
+            Optional<string> name = default;
+            Optional<bool> protocolMatched = default;
+            Optional<bool> sourceMatched = default;
+            Optional<bool> sourcePortMatched = default;
+            Optional<bool> destinationMatched = default;
+            Optional<bool> destinationPortMatched = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkSecurityRulesEvaluationResult(name.Value, Core.Optional.ToNullable(protocolMatched), Core.Optional.ToNullable(sourceMatched), Core.Optional.ToNullable(sourcePortMatched), Core.Optional.ToNullable(destinationMatched), Core.Optional.ToNullable(destinationPortMatched));
+            return new NetworkSecurityRulesEvaluationResult(name.Value, Optional.ToNullable(protocolMatched), Optional.ToNullable(sourceMatched), Optional.ToNullable(sourcePortMatched), Optional.ToNullable(destinationMatched), Optional.ToNullable(destinationPortMatched));
         }
     }
 }

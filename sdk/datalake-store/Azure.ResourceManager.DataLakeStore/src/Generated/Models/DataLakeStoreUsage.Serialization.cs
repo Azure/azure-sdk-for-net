@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Core.Optional<DataLakeStoreUsageUnit> unit = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<int> currentValue = default;
-            Core.Optional<int> limit = default;
-            Core.Optional<DataLakeStoreUsageName> name = default;
+            Optional<DataLakeStoreUsageUnit> unit = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<int> currentValue = default;
+            Optional<int> limit = default;
+            Optional<DataLakeStoreUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     continue;
                 }
             }
-            return new DataLakeStoreUsage(Core.Optional.ToNullable(unit), id.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value);
+            return new DataLakeStoreUsage(Optional.ToNullable(unit), id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

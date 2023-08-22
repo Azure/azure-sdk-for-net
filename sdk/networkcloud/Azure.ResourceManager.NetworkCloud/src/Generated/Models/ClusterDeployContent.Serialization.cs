@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ClusterDeployContent : Core.IUtf8JsonSerializable
+    public partial class ClusterDeployContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SkipValidationsForMachines))
+            if (Optional.IsCollectionDefined(SkipValidationsForMachines))
             {
                 writer.WritePropertyName("skipValidationsForMachines"u8);
                 writer.WriteStartArray();

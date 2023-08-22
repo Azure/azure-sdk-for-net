@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerMemoryStatistics : Core.IUtf8JsonSerializable
+    public partial class ContainerMemoryStatistics : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Usage))
+            if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
             }
-            if (Core.Optional.IsDefined(MaxUsage))
+            if (Optional.IsDefined(MaxUsage))
             {
                 writer.WritePropertyName("maxUsage"u8);
                 writer.WriteNumberValue(MaxUsage.Value);
             }
-            if (Core.Optional.IsDefined(Limit))
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<long> usage = default;
-            Core.Optional<long> maxUsage = default;
-            Core.Optional<long> limit = default;
+            Optional<long> usage = default;
+            Optional<long> maxUsage = default;
+            Optional<long> limit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usage"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ContainerMemoryStatistics(Core.Optional.ToNullable(usage), Core.Optional.ToNullable(maxUsage), Core.Optional.ToNullable(limit));
+            return new ContainerMemoryStatistics(Optional.ToNullable(usage), Optional.ToNullable(maxUsage), Optional.ToNullable(limit));
         }
     }
 }

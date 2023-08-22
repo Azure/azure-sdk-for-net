@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CosmosDBPercentileMetric>> value = default;
+            Optional<IReadOnlyList<CosmosDBPercentileMetric>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PercentileMetricListResult(Core.Optional.ToList(value));
+            return new PercentileMetricListResult(Optional.ToList(value));
         }
     }
 }

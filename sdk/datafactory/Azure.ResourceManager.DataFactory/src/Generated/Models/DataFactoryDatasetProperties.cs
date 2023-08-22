@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             LinkedServiceName = linkedServiceName;
-            Parameters = new Core.ChangeTrackingDictionary<string, EntityParameterSpecification>();
-            Annotations = new Core.ChangeTrackingList<BinaryData>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
+            Annotations = new ChangeTrackingList<BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryDatasetProperties. </summary>

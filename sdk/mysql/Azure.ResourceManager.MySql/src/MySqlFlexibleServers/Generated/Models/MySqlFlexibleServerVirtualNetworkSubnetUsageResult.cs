@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
         internal MySqlFlexibleServerVirtualNetworkSubnetUsageResult()
         {
-            DelegatedSubnetsUsage = new Core.ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage>();
+            DelegatedSubnetsUsage = new ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>

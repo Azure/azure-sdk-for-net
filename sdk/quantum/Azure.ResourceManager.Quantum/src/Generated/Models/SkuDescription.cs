@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Initializes a new instance of SkuDescription. </summary>
         internal SkuDescription()
         {
-            Targets = new Core.ChangeTrackingList<string>();
-            QuotaDimensions = new Core.ChangeTrackingList<QuotaDimension>();
-            PricingDetails = new Core.ChangeTrackingList<PricingDetail>();
+            Targets = new ChangeTrackingList<string>();
+            QuotaDimensions = new ChangeTrackingList<QuotaDimension>();
+            PricingDetails = new ChangeTrackingList<PricingDetail>();
         }
 
         /// <summary> Initializes a new instance of SkuDescription. </summary>

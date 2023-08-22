@@ -34,12 +34,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             StringIndexType = stringIndexType;
             Content = content;
             Pages = pages.ToList();
-            Paragraphs = new Core.ChangeTrackingList<DocumentParagraph>();
-            Tables = new Core.ChangeTrackingList<DocumentTable>();
-            KeyValuePairs = new Core.ChangeTrackingList<DocumentKeyValuePair>();
-            Styles = new Core.ChangeTrackingList<DocumentStyle>();
-            Languages = new Core.ChangeTrackingList<DocumentLanguage>();
-            Documents = new Core.ChangeTrackingList<AnalyzedDocument>();
+            Paragraphs = new ChangeTrackingList<DocumentParagraph>();
+            Tables = new ChangeTrackingList<DocumentTable>();
+            KeyValuePairs = new ChangeTrackingList<DocumentKeyValuePair>();
+            Styles = new ChangeTrackingList<DocumentStyle>();
+            Languages = new ChangeTrackingList<DocumentLanguage>();
+            Documents = new ChangeTrackingList<AnalyzedDocument>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>

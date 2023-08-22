@@ -12,54 +12,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
-    public partial class MarketplaceAgreementTermData : Core.IUtf8JsonSerializable
+    public partial class MarketplaceAgreementTermData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Publisher))
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Core.Optional.IsDefined(Product))
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Core.Optional.IsDefined(Plan))
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (Core.Optional.IsDefined(LicenseTextLink))
+            if (Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(PrivacyPolicyLink))
+            if (Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(MarketplaceTermsLink))
+            if (Optional.IsDefined(MarketplaceTermsLink))
             {
                 writer.WritePropertyName("marketplaceTermsLink"u8);
                 writer.WriteStringValue(MarketplaceTermsLink.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(RetrievedOn))
+            if (Optional.IsDefined(RetrievedOn))
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrievedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Signature))
+            if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Core.Optional.IsDefined(IsAccepted))
+            if (Optional.IsDefined(IsAccepted))
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(IsAccepted.Value);
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> product = default;
-            Core.Optional<string> plan = default;
-            Core.Optional<Uri> licenseTextLink = default;
-            Core.Optional<Uri> privacyPolicyLink = default;
-            Core.Optional<Uri> marketplaceTermsLink = default;
-            Core.Optional<DateTimeOffset> retrieveDatetime = default;
-            Core.Optional<string> signature = default;
-            Core.Optional<bool> accepted = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> publisher = default;
+            Optional<string> product = default;
+            Optional<string> plan = default;
+            Optional<Uri> licenseTextLink = default;
+            Optional<Uri> privacyPolicyLink = default;
+            Optional<Uri> marketplaceTermsLink = default;
+            Optional<DateTimeOffset> retrieveDatetime = default;
+            Optional<string> signature = default;
+            Optional<bool> accepted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                     continue;
                 }
             }
-            return new MarketplaceAgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Core.Optional.ToNullable(retrieveDatetime), signature.Value, Core.Optional.ToNullable(accepted));
+            return new MarketplaceAgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
         }
     }
 }

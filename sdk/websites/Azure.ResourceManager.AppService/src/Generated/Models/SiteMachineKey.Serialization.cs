@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> validation = default;
-            Core.Optional<string> validationKey = default;
-            Core.Optional<string> decryption = default;
-            Core.Optional<string> decryptionKey = default;
+            Optional<string> validation = default;
+            Optional<string> validationKey = default;
+            Optional<string> decryption = default;
+            Optional<string> decryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validation"u8))

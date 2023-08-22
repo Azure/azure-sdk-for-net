@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomScaleRule : Core.IUtf8JsonSerializable
+    public partial class ContainerAppCustomScaleRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CustomScaleRuleType))
+            if (Optional.IsDefined(CustomScaleRuleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CustomScaleRuleType);
             }
-            if (Core.Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Auth))
+            if (Optional.IsCollectionDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<IDictionary<string, string>> metadata = default;
-            Core.Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            Optional<string> type = default;
+            Optional<IDictionary<string, string>> metadata = default;
+            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCustomScaleRule(type.Value, Core.Optional.ToDictionary(metadata), Core.Optional.ToList(auth));
+            return new ContainerAppCustomScaleRule(type.Value, Optional.ToDictionary(metadata), Optional.ToList(auth));
         }
     }
 }

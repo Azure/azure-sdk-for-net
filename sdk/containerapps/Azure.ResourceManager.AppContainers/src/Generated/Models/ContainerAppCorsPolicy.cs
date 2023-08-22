@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
 
             AllowedOrigins = allowedOrigins.ToList();
-            AllowedMethods = new Core.ChangeTrackingList<string>();
-            AllowedHeaders = new Core.ChangeTrackingList<string>();
-            ExposeHeaders = new Core.ChangeTrackingList<string>();
+            AllowedMethods = new ChangeTrackingList<string>();
+            AllowedHeaders = new ChangeTrackingList<string>();
+            ExposeHeaders = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppCorsPolicy. </summary>

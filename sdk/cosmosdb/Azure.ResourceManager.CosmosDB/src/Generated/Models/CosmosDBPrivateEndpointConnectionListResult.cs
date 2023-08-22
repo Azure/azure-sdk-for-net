@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionListResult. </summary>
         internal CosmosDBPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBPrivateEndpointConnectionListResult. </summary>

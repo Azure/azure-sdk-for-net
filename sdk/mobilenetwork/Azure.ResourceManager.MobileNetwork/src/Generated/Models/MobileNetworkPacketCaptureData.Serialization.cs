@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkPacketCaptureData : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkPacketCaptureData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(NetworkInterfaces))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BytesToCapturePerPacket))
+            if (Optional.IsDefined(BytesToCapturePerPacket))
             {
                 writer.WritePropertyName("bytesToCapturePerPacket"u8);
                 writer.WriteNumberValue(BytesToCapturePerPacket.Value);
             }
-            if (Core.Optional.IsDefined(TotalBytesPerSession))
+            if (Optional.IsDefined(TotalBytesPerSession))
             {
                 writer.WritePropertyName("totalBytesPerSession"u8);
                 writer.WriteNumberValue(TotalBytesPerSession.Value);
             }
-            if (Core.Optional.IsDefined(TimeLimitInSeconds))
+            if (Optional.IsDefined(TimeLimitInSeconds))
             {
                 writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Core.Optional<MobileNetworkPacketCaptureStatus> status = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<DateTimeOffset> captureStartTime = default;
-            Core.Optional<IList<string>> networkInterfaces = default;
-            Core.Optional<long> bytesToCapturePerPacket = default;
-            Core.Optional<long> totalBytesPerSession = default;
-            Core.Optional<int> timeLimitInSeconds = default;
+            Optional<SystemData> systemData = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<MobileNetworkPacketCaptureStatus> status = default;
+            Optional<string> reason = default;
+            Optional<DateTimeOffset> captureStartTime = default;
+            Optional<IList<string>> networkInterfaces = default;
+            Optional<long> bytesToCapturePerPacket = default;
+            Optional<long> totalBytesPerSession = default;
+            Optional<int> timeLimitInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new MobileNetworkPacketCaptureData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(status), reason.Value, Core.Optional.ToNullable(captureStartTime), Core.Optional.ToList(networkInterfaces), Core.Optional.ToNullable(bytesToCapturePerPacket), Core.Optional.ToNullable(totalBytesPerSession), Core.Optional.ToNullable(timeLimitInSeconds));
+            return new MobileNetworkPacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), reason.Value, Optional.ToNullable(captureStartTime), Optional.ToList(networkInterfaces), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds));
         }
     }
 }

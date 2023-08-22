@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of DataIntegrityValidationResult. </summary>
         internal DataIntegrityValidationResult()
         {
-            FailedObjects = new Core.ChangeTrackingDictionary<string, string>();
+            FailedObjects = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataIntegrityValidationResult. </summary>

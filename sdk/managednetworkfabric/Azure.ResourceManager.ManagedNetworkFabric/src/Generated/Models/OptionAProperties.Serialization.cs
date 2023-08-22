@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class OptionAProperties : Core.IUtf8JsonSerializable
+    public partial class OptionAProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Mtu))
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Core.Optional.IsDefined(VlanId))
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Core.Optional.IsDefined(PeerAsn))
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Core.Optional.IsDefined(BfdConfiguration))
+            if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<int> mtu = default;
-            Core.Optional<int> vlanId = default;
-            Core.Optional<long> peerAsn = default;
-            Core.Optional<BfdConfiguration> bfdConfiguration = default;
+            Optional<int> mtu = default;
+            Optional<int> vlanId = default;
+            Optional<long> peerAsn = default;
+            Optional<BfdConfiguration> bfdConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new OptionAProperties(Core.Optional.ToNullable(mtu), Core.Optional.ToNullable(vlanId), Core.Optional.ToNullable(peerAsn), bfdConfiguration.Value);
+            return new OptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerAsn), bfdConfiguration.Value);
         }
     }
 }

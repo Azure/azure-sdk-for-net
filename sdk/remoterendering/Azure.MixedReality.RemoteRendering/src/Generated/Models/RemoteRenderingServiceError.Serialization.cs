@@ -21,9 +21,9 @@ namespace Azure.MixedReality.RemoteRendering
             }
             string code = default;
             string message = default;
-            Core.Optional<IReadOnlyList<RemoteRenderingServiceError>> details = default;
-            Core.Optional<string> target = default;
-            Core.Optional<RemoteRenderingServiceError> innerError = default;
+            Optional<IReadOnlyList<RemoteRenderingServiceError>> details = default;
+            Optional<string> target = default;
+            Optional<RemoteRenderingServiceError> innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.MixedReality.RemoteRendering
                     continue;
                 }
             }
-            return new RemoteRenderingServiceError(code, message, Core.Optional.ToList(details), target.Value, innerError.Value);
+            return new RemoteRenderingServiceError(code, message, Optional.ToList(details), target.Value, innerError.Value);
         }
     }
 }

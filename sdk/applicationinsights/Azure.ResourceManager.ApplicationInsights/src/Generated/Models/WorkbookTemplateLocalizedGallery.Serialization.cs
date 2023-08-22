@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkbookTemplateLocalizedGallery : Core.IUtf8JsonSerializable
+    public partial class WorkbookTemplateLocalizedGallery : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TemplateData))
+            if (Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(TemplateData.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsCollectionDefined(Galleries))
+            if (Optional.IsCollectionDefined(Galleries))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> templateData = default;
-            Core.Optional<IList<WorkbookTemplateGallery>> galleries = default;
+            Optional<BinaryData> templateData = default;
+            Optional<IList<WorkbookTemplateGallery>> galleries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateData"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WorkbookTemplateLocalizedGallery(templateData.Value, Core.Optional.ToList(galleries));
+            return new WorkbookTemplateLocalizedGallery(templateData.Value, Optional.ToList(galleries));
         }
     }
 }

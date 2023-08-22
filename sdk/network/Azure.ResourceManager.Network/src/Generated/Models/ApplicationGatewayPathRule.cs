@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         public ApplicationGatewayPathRule()
         {
-            Paths = new Core.ChangeTrackingList<string>();
+            Paths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>

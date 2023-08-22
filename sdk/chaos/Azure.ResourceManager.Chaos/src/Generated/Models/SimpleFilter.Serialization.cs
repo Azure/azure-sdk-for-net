@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    public partial class SimpleFilter : Core.IUtf8JsonSerializable
+    public partial class SimpleFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Core.Optional<SimpleFilterParameters> parameters = default;
+            Optional<SimpleFilterParameters> parameters = default;
             FilterType type = default;
             foreach (var property in element.EnumerateObject())
             {

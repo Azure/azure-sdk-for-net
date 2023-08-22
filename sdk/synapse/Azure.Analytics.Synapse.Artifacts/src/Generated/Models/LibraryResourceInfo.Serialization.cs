@@ -21,15 +21,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<int> recordId = default;
-            Core.Optional<string> state = default;
-            Core.Optional<string> created = default;
-            Core.Optional<string> changed = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> operationId = default;
-            Core.Optional<string> artifactId = default;
+            Optional<string> id = default;
+            Optional<int> recordId = default;
+            Optional<string> state = default;
+            Optional<string> created = default;
+            Optional<string> changed = default;
+            Optional<string> type = default;
+            Optional<string> name = default;
+            Optional<string> operationId = default;
+            Optional<string> artifactId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LibraryResourceInfo(id.Value, Core.Optional.ToNullable(recordId), state.Value, created.Value, changed.Value, type.Value, name.Value, operationId.Value, artifactId.Value);
+            return new LibraryResourceInfo(id.Value, Optional.ToNullable(recordId), state.Value, created.Value, changed.Value, type.Value, name.Value, operationId.Value, artifactId.Value);
         }
 
         internal partial class LibraryResourceInfoConverter : JsonConverter<LibraryResourceInfo>

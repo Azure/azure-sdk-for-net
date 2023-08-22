@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <summary> Initializes a new instance of ControllerList. </summary>
         internal ControllerList()
         {
-            Value = new Core.ChangeTrackingList<ControllerData>();
+            Value = new ChangeTrackingList<ControllerData>();
         }
 
         /// <summary> Initializes a new instance of ControllerList. </summary>

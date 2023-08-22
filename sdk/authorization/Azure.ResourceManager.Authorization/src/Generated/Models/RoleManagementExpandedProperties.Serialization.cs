@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<Guid> id = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> email = default;
-            Core.Optional<RoleManagementPrincipalType> type = default;
-            Core.Optional<ResourceIdentifier> id0 = default;
-            Core.Optional<string> displayName0 = default;
-            Core.Optional<AuthorizationRoleType> type0 = default;
-            Core.Optional<ResourceIdentifier> id1 = default;
-            Core.Optional<string> displayName1 = default;
-            Core.Optional<RoleManagementScopeType> type1 = default;
+            Optional<Guid> id = default;
+            Optional<string> displayName = default;
+            Optional<string> email = default;
+            Optional<RoleManagementPrincipalType> type = default;
+            Optional<ResourceIdentifier> id0 = default;
+            Optional<string> displayName0 = default;
+            Optional<AuthorizationRoleType> type0 = default;
+            Optional<ResourceIdentifier> id1 = default;
+            Optional<string> displayName1 = default;
+            Optional<RoleManagementScopeType> type1 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principal"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementExpandedProperties(Core.Optional.ToNullable(id), displayName.Value, email.Value, Core.Optional.ToNullable(type), id0.Value, displayName0.Value, Core.Optional.ToNullable(type0), id1.Value, displayName1.Value, Core.Optional.ToNullable(type1));
+            return new RoleManagementExpandedProperties(Optional.ToNullable(id), displayName.Value, email.Value, Optional.ToNullable(type), id0.Value, displayName0.Value, Optional.ToNullable(type0), id1.Value, displayName1.Value, Optional.ToNullable(type1));
         }
     }
 }

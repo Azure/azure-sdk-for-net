@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<double> confidence = default;
-            Core.Optional<string> providerName = default;
-            Core.Optional<string> reportLink = default;
-            Core.Optional<string> threatDescription = default;
-            Core.Optional<string> threatName = default;
-            Core.Optional<string> threatType = default;
+            Optional<double> confidence = default;
+            Optional<string> providerName = default;
+            Optional<string> reportLink = default;
+            Optional<string> threatDescription = default;
+            Optional<string> threatName = default;
+            Optional<string> threatType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidence"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsThreatIntelligence(Core.Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value);
+            return new SecurityInsightsThreatIntelligence(Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value);
         }
     }
 }

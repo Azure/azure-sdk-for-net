@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<int> currentCapacity = default;
-            Core.Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
+            Optional<int> currentCapacity = default;
+            Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentCapacity"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CapacityReservationUtilization(Core.Optional.ToNullable(currentCapacity), Core.Optional.ToList(virtualMachinesAllocated));
+            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), Optional.ToList(virtualMachinesAllocated));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             Failed = failed;
             InProgress = inProgress;
             Total = total;
-            Items = new Core.ChangeTrackingList<AnalyzeTextLROResult>();
+            Items = new ChangeTrackingList<AnalyzeTextLROResult>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeTasks. </summary>

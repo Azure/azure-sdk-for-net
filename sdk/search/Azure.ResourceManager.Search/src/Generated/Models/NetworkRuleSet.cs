@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
         public NetworkRuleSet()
         {
-            IPRules = new Core.ChangeTrackingList<SearchServiceIPRule>();
+            IPRules = new ChangeTrackingList<SearchServiceIPRule>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    internal partial class SignalRCorsSettings : Core.IUtf8JsonSerializable
+    internal partial class SignalRCorsSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AllowedOrigins))
+            if (Optional.IsCollectionDefined(AllowedOrigins))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> allowedOrigins = default;
+            Optional<IList<string>> allowedOrigins = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRCorsSettings(Core.Optional.ToList(allowedOrigins));
+            return new SignalRCorsSettings(Optional.ToList(allowedOrigins));
         }
     }
 }

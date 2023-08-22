@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeVnetProperties : Core.IUtf8JsonSerializable
+    public partial class IntegrationRuntimeVnetProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VnetId))
+            if (Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Core.Optional.IsCollectionDefined(PublicIPs))
+            if (Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<Guid> vnetId = default;
-            Core.Optional<string> subnet = default;
-            Core.Optional<IList<string>> publicIPs = default;
-            Core.Optional<ResourceIdentifier> subnetId = default;
+            Optional<Guid> vnetId = default;
+            Optional<string> subnet = default;
+            Optional<IList<string>> publicIPs = default;
+            Optional<ResourceIdentifier> subnetId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeVnetProperties(Core.Optional.ToNullable(vnetId), subnet.Value, Core.Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
+            return new IntegrationRuntimeVnetProperties(Optional.ToNullable(vnetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
         }
     }
 }

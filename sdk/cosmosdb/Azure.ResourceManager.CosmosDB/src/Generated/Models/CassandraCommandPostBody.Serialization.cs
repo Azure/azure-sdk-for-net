@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraCommandPostBody : Core.IUtf8JsonSerializable
+    public partial class CassandraCommandPostBody : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Core.Optional.IsCollectionDefined(Arguments))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
-            if (Core.Optional.IsDefined(CassandraStopStart))
+            if (Optional.IsDefined(CassandraStopStart))
             {
                 writer.WritePropertyName("cassandra-stop-start"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (Core.Optional.IsDefined(AllowWrite))
+            if (Optional.IsDefined(AllowWrite))
             {
                 writer.WritePropertyName("readwrite"u8);
                 writer.WriteBooleanValue(AllowWrite.Value);

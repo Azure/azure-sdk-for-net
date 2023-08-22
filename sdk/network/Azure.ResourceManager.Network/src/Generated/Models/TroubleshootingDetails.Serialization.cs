@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> reasonType = default;
-            Core.Optional<string> summary = default;
-            Core.Optional<string> detail = default;
-            Core.Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
+            Optional<string> id = default;
+            Optional<string> reasonType = default;
+            Optional<string> summary = default;
+            Optional<string> detail = default;
+            Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Core.Optional.ToList(recommendedActions));
+            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, Optional.ToList(recommendedActions));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class ApiProperties : Core.IUtf8JsonSerializable
+    internal partial class ApiProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServerVersion))
+            if (Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<CosmosDBServerVersion> serverVersion = default;
+            Optional<CosmosDBServerVersion> serverVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverVersion"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ApiProperties(Core.Optional.ToNullable(serverVersion));
+            return new ApiProperties(Optional.ToNullable(serverVersion));
         }
     }
 }

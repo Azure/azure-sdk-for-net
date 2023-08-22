@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources.Models
         public ArmApplicationJitAccessPolicy(bool jitAccessEnabled)
         {
             JitAccessEnabled = jitAccessEnabled;
-            JitApprovers = new Core.ChangeTrackingList<JitApprover>();
+            JitApprovers = new ChangeTrackingList<JitApprover>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationJitAccessPolicy. </summary>

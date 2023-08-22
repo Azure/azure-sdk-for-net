@@ -13,9 +13,9 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobRunData : Core.IUtf8JsonSerializable
+    public partial class JobRunData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.StorageMover
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<JobRunStatus> status = default;
-            Core.Optional<JobRunScanStatus> scanStatus = default;
-            Core.Optional<string> agentName = default;
-            Core.Optional<ResourceIdentifier> agentResourceId = default;
-            Core.Optional<DateTimeOffset> executionStartTime = default;
-            Core.Optional<DateTimeOffset> executionEndTime = default;
-            Core.Optional<DateTimeOffset> lastStatusUpdate = default;
-            Core.Optional<long> itemsScanned = default;
-            Core.Optional<long> itemsExcluded = default;
-            Core.Optional<long> itemsUnsupported = default;
-            Core.Optional<long> itemsNoTransferNeeded = default;
-            Core.Optional<long> itemsFailed = default;
-            Core.Optional<long> itemsTransferred = default;
-            Core.Optional<long> bytesScanned = default;
-            Core.Optional<long> bytesExcluded = default;
-            Core.Optional<long> bytesUnsupported = default;
-            Core.Optional<long> bytesNoTransferNeeded = default;
-            Core.Optional<long> bytesFailed = default;
-            Core.Optional<long> bytesTransferred = default;
-            Core.Optional<string> sourceName = default;
-            Core.Optional<ResourceIdentifier> sourceResourceId = default;
-            Core.Optional<BinaryData> sourceProperties = default;
-            Core.Optional<string> targetName = default;
-            Core.Optional<ResourceIdentifier> targetResourceId = default;
-            Core.Optional<BinaryData> targetProperties = default;
-            Core.Optional<BinaryData> jobDefinitionProperties = default;
-            Core.Optional<JobRunError> error = default;
-            Core.Optional<StorageMoverProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<JobRunStatus> status = default;
+            Optional<JobRunScanStatus> scanStatus = default;
+            Optional<string> agentName = default;
+            Optional<ResourceIdentifier> agentResourceId = default;
+            Optional<DateTimeOffset> executionStartTime = default;
+            Optional<DateTimeOffset> executionEndTime = default;
+            Optional<DateTimeOffset> lastStatusUpdate = default;
+            Optional<long> itemsScanned = default;
+            Optional<long> itemsExcluded = default;
+            Optional<long> itemsUnsupported = default;
+            Optional<long> itemsNoTransferNeeded = default;
+            Optional<long> itemsFailed = default;
+            Optional<long> itemsTransferred = default;
+            Optional<long> bytesScanned = default;
+            Optional<long> bytesExcluded = default;
+            Optional<long> bytesUnsupported = default;
+            Optional<long> bytesNoTransferNeeded = default;
+            Optional<long> bytesFailed = default;
+            Optional<long> bytesTransferred = default;
+            Optional<string> sourceName = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<BinaryData> sourceProperties = default;
+            Optional<string> targetName = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
+            Optional<BinaryData> targetProperties = default;
+            Optional<BinaryData> jobDefinitionProperties = default;
+            Optional<JobRunError> error = default;
+            Optional<StorageMoverProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.StorageMover
                     continue;
                 }
             }
-            return new JobRunData(id, name, type, systemData.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Core.Optional.ToNullable(executionStartTime), Core.Optional.ToNullable(executionEndTime), Core.Optional.ToNullable(lastStatusUpdate), Core.Optional.ToNullable(itemsScanned), Core.Optional.ToNullable(itemsExcluded), Core.Optional.ToNullable(itemsUnsupported), Core.Optional.ToNullable(itemsNoTransferNeeded), Core.Optional.ToNullable(itemsFailed), Core.Optional.ToNullable(itemsTransferred), Core.Optional.ToNullable(bytesScanned), Core.Optional.ToNullable(bytesExcluded), Core.Optional.ToNullable(bytesUnsupported), Core.Optional.ToNullable(bytesNoTransferNeeded), Core.Optional.ToNullable(bytesFailed), Core.Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Core.Optional.ToNullable(provisioningState));
+            return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

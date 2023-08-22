@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceAssociationLinksListResult. </summary>
         internal ServiceAssociationLinksListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceAssociationLink>();
+            Value = new ChangeTrackingList<ServiceAssociationLink>();
         }
 
         /// <summary> Initializes a new instance of ServiceAssociationLinksListResult. </summary>

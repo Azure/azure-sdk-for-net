@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesVirtualNetworkRule : Core.IUtf8JsonSerializable
+    public partial class CognitiveServicesVirtualNetworkRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Core.Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Core.Optional<string> state = default;
-            Core.Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            Optional<string> state = default;
+            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesVirtualNetworkRule(id, state.Value, Core.Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
+            return new CognitiveServicesVirtualNetworkRule(id, state.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
         }
     }
 }

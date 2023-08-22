@@ -14,17 +14,17 @@ using Azure.ResourceManager.Quantum.Models;
 
 namespace Azure.ResourceManager.Quantum
 {
-    public partial class QuantumWorkspaceData : Core.IUtf8JsonSerializable
+    public partial class QuantumWorkspaceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quantum
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Providers))
+            if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quantum
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StorageAccount))
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.Quantum
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<Provider>> providers = default;
-            Core.Optional<UsableStatus> usable = default;
-            Core.Optional<ProvisioningStatus> provisioningState = default;
-            Core.Optional<string> storageAccount = default;
-            Core.Optional<Uri> endpointUri = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<Provider>> providers = default;
+            Optional<UsableStatus> usable = default;
+            Optional<ProvisioningStatus> provisioningState = default;
+            Optional<string> storageAccount = default;
+            Optional<Uri> endpointUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Quantum
                     continue;
                 }
             }
-            return new QuantumWorkspaceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToList(providers), Core.Optional.ToNullable(usable), Core.Optional.ToNullable(provisioningState), storageAccount.Value, endpointUri.Value);
+            return new QuantumWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToList(providers), Optional.ToNullable(usable), Optional.ToNullable(provisioningState), storageAccount.Value, endpointUri.Value);
         }
     }
 }

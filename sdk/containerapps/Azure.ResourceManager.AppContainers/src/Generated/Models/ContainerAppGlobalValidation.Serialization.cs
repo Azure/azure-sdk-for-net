@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppGlobalValidation : Core.IUtf8JsonSerializable
+    public partial class ContainerAppGlobalValidation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UnauthenticatedClientAction))
+            if (Optional.IsDefined(UnauthenticatedClientAction))
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(RedirectToProvider))
+            if (Optional.IsDefined(RedirectToProvider))
             {
                 writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
-            if (Core.Optional.IsCollectionDefined(ExcludedPaths))
+            if (Optional.IsCollectionDefined(ExcludedPaths))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<ContainerAppUnauthenticatedClientActionV2> unauthenticatedClientAction = default;
-            Core.Optional<string> redirectToProvider = default;
-            Core.Optional<IList<string>> excludedPaths = default;
+            Optional<ContainerAppUnauthenticatedClientActionV2> unauthenticatedClientAction = default;
+            Optional<string> redirectToProvider = default;
+            Optional<IList<string>> excludedPaths = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unauthenticatedClientAction"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppGlobalValidation(Core.Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, Core.Optional.ToList(excludedPaths));
+            return new ContainerAppGlobalValidation(Optional.ToNullable(unauthenticatedClientAction), redirectToProvider.Value, Optional.ToList(excludedPaths));
         }
     }
 }

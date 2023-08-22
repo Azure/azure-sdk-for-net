@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebooksByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebooksByWorkspaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists Notebooks. </summary>
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebooksByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebooksByWorkspaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists a summary of Notebooks. </summary>
@@ -123,7 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebookSummaryByWorkSpaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebookSummaryByWorkSpaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists a summary of Notebooks. </summary>
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebookSummaryByWorkSpaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebookSummaryByWorkSpaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a Note Book. </summary>

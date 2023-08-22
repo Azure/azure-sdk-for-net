@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class ProximityPlacementGroupData : Core.IUtf8JsonSerializable
+    public partial class ProximityPlacementGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProximityPlacementGroupType))
+            if (Optional.IsDefined(ProximityPlacementGroupType))
             {
                 writer.WritePropertyName("proximityPlacementGroupType"u8);
                 writer.WriteStringValue(ProximityPlacementGroupType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ColocationStatus))
+            if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
                 writer.WriteObjectValue(ColocationStatus);
             }
-            if (Core.Optional.IsDefined(Intent))
+            if (Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteObjectValue(Intent);
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> zones = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
-            Core.Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachines = default;
-            Core.Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
-            Core.Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
-            Core.Optional<InstanceViewStatus> colocationStatus = default;
-            Core.Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
+            Optional<SystemData> systemData = default;
+            Optional<ProximityPlacementGroupType> proximityPlacementGroupType = default;
+            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachines = default;
+            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> virtualMachineScaleSets = default;
+            Optional<IReadOnlyList<ComputeSubResourceDataWithColocationStatus>> availabilitySets = default;
+            Optional<InstanceViewStatus> colocationStatus = default;
+            Optional<ProximityPlacementGroupPropertiesIntent> intent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToList(zones), Core.Optional.ToNullable(proximityPlacementGroupType), Core.Optional.ToList(virtualMachines), Core.Optional.ToList(virtualMachineScaleSets), Core.Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value);
+            return new ProximityPlacementGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(proximityPlacementGroupType), Optional.ToList(virtualMachines), Optional.ToList(virtualMachineScaleSets), Optional.ToList(availabilitySets), colocationStatus.Value, intent.Value);
         }
     }
 }

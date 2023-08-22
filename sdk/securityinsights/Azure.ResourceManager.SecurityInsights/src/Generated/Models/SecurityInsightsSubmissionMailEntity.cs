@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsSubmissionMailEntity. </summary>
         public SecurityInsightsSubmissionMailEntity()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.SubmissionMail;
         }
 

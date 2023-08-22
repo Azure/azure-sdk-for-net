@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<float> onDemandCost = default;
-            Core.Optional<float> overageCost = default;
-            Core.Optional<float> quantity = default;
-            Core.Optional<float> reservationCost = default;
-            Core.Optional<float> totalReservationCost = default;
-            Core.Optional<float> reservedUnitCount = default;
-            Core.Optional<float> savings = default;
+            Optional<float> onDemandCost = default;
+            Optional<float> overageCost = default;
+            Optional<float> quantity = default;
+            Optional<float> reservationCost = default;
+            Optional<float> totalReservationCost = default;
+            Optional<float> reservedUnitCount = default;
+            Optional<float> savings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("onDemandCost"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionCalculatedSavingsProperties(Core.Optional.ToNullable(onDemandCost), Core.Optional.ToNullable(overageCost), Core.Optional.ToNullable(quantity), Core.Optional.ToNullable(reservationCost), Core.Optional.ToNullable(totalReservationCost), Core.Optional.ToNullable(reservedUnitCount), Core.Optional.ToNullable(savings));
+            return new ConsumptionCalculatedSavingsProperties(Optional.ToNullable(onDemandCost), Optional.ToNullable(overageCost), Optional.ToNullable(quantity), Optional.ToNullable(reservationCost), Optional.ToNullable(totalReservationCost), Optional.ToNullable(reservedUnitCount), Optional.ToNullable(savings));
         }
     }
 }

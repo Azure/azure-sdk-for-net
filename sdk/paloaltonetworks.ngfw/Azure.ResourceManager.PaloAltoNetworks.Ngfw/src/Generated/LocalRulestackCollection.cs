@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _localRulestackRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<LocalRulestackResource>(new LocalRulestackOperationSource(Client), _localRulestackClientDiagnostics, Pipeline, _localRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<LocalRulestackResource>(new LocalRulestackOperationSource(Client), _localRulestackClientDiagnostics, Pipeline, _localRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _localRulestackRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, data, cancellationToken);
-                var operation = new NgfwArmOperation<LocalRulestackResource>(new LocalRulestackOperationSource(Client), _localRulestackClientDiagnostics, Pipeline, _localRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<LocalRulestackResource>(new LocalRulestackOperationSource(Client), _localRulestackClientDiagnostics, Pipeline, _localRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), _localRulestackClientDiagnostics, Pipeline, "LocalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

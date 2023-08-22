@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService
         /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>
         public BotServicePrivateEndpointConnectionData()
         {
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BotServicePrivateEndpointConnectionData. </summary>

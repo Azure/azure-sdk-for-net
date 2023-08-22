@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsSoaRecordInfo : Core.IUtf8JsonSerializable
+    public partial class DnsSoaRecordInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Host))
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Core.Optional.IsDefined(Email))
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Core.Optional.IsDefined(SerialNumber))
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (Core.Optional.IsDefined(RefreshTimeInSeconds))
+            if (Optional.IsDefined(RefreshTimeInSeconds))
             {
                 writer.WritePropertyName("refreshTime"u8);
                 writer.WriteNumberValue(RefreshTimeInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(RetryTimeInSeconds))
+            if (Optional.IsDefined(RetryTimeInSeconds))
             {
                 writer.WritePropertyName("retryTime"u8);
                 writer.WriteNumberValue(RetryTimeInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(ExpireTimeInSeconds))
+            if (Optional.IsDefined(ExpireTimeInSeconds))
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(MinimumTtlInSeconds))
+            if (Optional.IsDefined(MinimumTtlInSeconds))
             {
                 writer.WritePropertyName("minimumTTL"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            Core.Optional<string> host = default;
-            Core.Optional<string> email = default;
-            Core.Optional<long> serialNumber = default;
-            Core.Optional<long> refreshTime = default;
-            Core.Optional<long> retryTime = default;
-            Core.Optional<long> expireTime = default;
-            Core.Optional<long> minimumTTL = default;
+            Optional<string> host = default;
+            Optional<string> email = default;
+            Optional<long> serialNumber = default;
+            Optional<long> refreshTime = default;
+            Optional<long> retryTime = default;
+            Optional<long> expireTime = default;
+            Optional<long> minimumTTL = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Dns.Models
                     continue;
                 }
             }
-            return new DnsSoaRecordInfo(host.Value, email.Value, Core.Optional.ToNullable(serialNumber), Core.Optional.ToNullable(refreshTime), Core.Optional.ToNullable(retryTime), Core.Optional.ToNullable(expireTime), Core.Optional.ToNullable(minimumTTL));
+            return new DnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTTL));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of KubeletConfig. </summary>
         public KubeletConfig()
         {
-            AllowedUnsafeSysctls = new Core.ChangeTrackingList<string>();
+            AllowedUnsafeSysctls = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KubeletConfig. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <summary> Initializes a new instance of UserAssignedIdentitiesListResult. </summary>
         internal UserAssignedIdentitiesListResult()
         {
-            Value = new Core.ChangeTrackingList<UserAssignedIdentityData>();
+            Value = new ChangeTrackingList<UserAssignedIdentityData>();
         }
 
         /// <summary> Initializes a new instance of UserAssignedIdentitiesListResult. </summary>

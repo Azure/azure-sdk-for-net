@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class CapacityPoolOperationSource : Core.IOperationSource<CapacityPoolResource>
+    internal class CapacityPoolOperationSource : IOperationSource<CapacityPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetApp
             _client = client;
         }
 
-        CapacityPoolResource Core.IOperationSource<CapacityPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CapacityPoolResource IOperationSource<CapacityPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CapacityPoolData.DeserializeCapacityPoolData(document.RootElement);
             return new CapacityPoolResource(_client, data);
         }
 
-        async ValueTask<CapacityPoolResource> Core.IOperationSource<CapacityPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CapacityPoolResource> IOperationSource<CapacityPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CapacityPoolData.DeserializeCapacityPoolData(document.RootElement);

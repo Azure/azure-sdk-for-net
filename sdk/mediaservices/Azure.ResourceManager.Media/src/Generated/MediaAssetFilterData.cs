@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>
         public MediaAssetFilterData()
         {
-            Tracks = new Core.ChangeTrackingList<FilterTrackSelection>();
+            Tracks = new ChangeTrackingList<FilterTrackSelection>();
         }
 
         /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>

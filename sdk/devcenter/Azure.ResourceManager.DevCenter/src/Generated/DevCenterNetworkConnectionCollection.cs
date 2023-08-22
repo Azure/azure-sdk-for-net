@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = await _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DevCenter
             try
             {
                 var response = _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data, cancellationToken);
-                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new DevCenterArmOperation<DevCenterNetworkConnectionResource>(new DevCenterNetworkConnectionOperationSource(Client), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterNetworkConnectionNetworkConnectionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterNetworkConnectionResource(Client, DevCenterNetworkConnectionData.DeserializeDevCenterNetworkConnectionData(e)), _devCenterNetworkConnectionNetworkConnectionsClientDiagnostics, Pipeline, "DevCenterNetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

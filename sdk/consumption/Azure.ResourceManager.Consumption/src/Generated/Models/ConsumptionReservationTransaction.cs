@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionReservationTransaction. </summary>
         internal ConsumptionReservationTransaction()
         {
-            Tags = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionReservationTransaction. </summary>

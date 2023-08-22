@@ -11,17 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineDiskSecurityProfile : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineDiskSecurityProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecurityEncryptionType))
+            if (Optional.IsDefined(SecurityEncryptionType))
             {
                 writer.WritePropertyName("securityEncryptionType"u8);
                 writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DiskEncryptionSet))
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<SecurityEncryptionType> securityEncryptionType = default;
-            Core.Optional<WritableSubResource> diskEncryptionSet = default;
+            Optional<SecurityEncryptionType> securityEncryptionType = default;
+            Optional<WritableSubResource> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityEncryptionType"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineDiskSecurityProfile(Core.Optional.ToNullable(securityEncryptionType), diskEncryptionSet);
+            return new VirtualMachineDiskSecurityProfile(Optional.ToNullable(securityEncryptionType), diskEncryptionSet);
         }
     }
 }

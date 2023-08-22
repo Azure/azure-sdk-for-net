@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultVirtualNetworkRule : Core.IUtf8JsonSerializable
+    public partial class KeyVaultVirtualNetworkRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Core.Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVnetServiceEndpoint"u8);
                 writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             string id = default;
-            Core.Optional<bool> ignoreMissingVnetServiceEndpoint = default;
+            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new KeyVaultVirtualNetworkRule(id, Core.Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
+            return new KeyVaultVirtualNetworkRule(id, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
         }
     }
 }

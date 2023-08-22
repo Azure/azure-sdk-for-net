@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchema. </summary>
         public MachineLearningInstanceTypeSchema()
         {
-            NodeSelector = new Core.ChangeTrackingDictionary<string, string>();
+            NodeSelector = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningInstanceTypeSchema. </summary>

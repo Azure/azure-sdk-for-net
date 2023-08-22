@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of CommunicationServiceResourceList. </summary>
         internal CommunicationServiceResourceList()
         {
-            Value = new Core.ChangeTrackingList<CommunicationServiceResourceData>();
+            Value = new ChangeTrackingList<CommunicationServiceResourceData>();
         }
 
         /// <summary> Initializes a new instance of CommunicationServiceResourceList. </summary>

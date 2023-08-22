@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of EdgeKubernetesNodeInfo. </summary>
         internal EdgeKubernetesNodeInfo()
         {
-            IPConfiguration = new Core.ChangeTrackingList<EdgeKubernetesIPConfiguration>();
+            IPConfiguration = new ChangeTrackingList<EdgeKubernetesIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of EdgeKubernetesNodeInfo. </summary>

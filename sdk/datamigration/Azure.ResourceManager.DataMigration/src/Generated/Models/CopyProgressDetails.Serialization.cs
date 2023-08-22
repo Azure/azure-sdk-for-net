@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> tableName = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> parallelCopyType = default;
-            Core.Optional<int> usedParallelCopies = default;
-            Core.Optional<long> dataRead = default;
-            Core.Optional<long> dataWritten = default;
-            Core.Optional<long> rowsRead = default;
-            Core.Optional<long> rowsCopied = default;
-            Core.Optional<DateTimeOffset> copyStart = default;
-            Core.Optional<double> copyThroughput = default;
-            Core.Optional<int> copyDuration = default;
+            Optional<string> tableName = default;
+            Optional<string> status = default;
+            Optional<string> parallelCopyType = default;
+            Optional<int> usedParallelCopies = default;
+            Optional<long> dataRead = default;
+            Optional<long> dataWritten = default;
+            Optional<long> rowsRead = default;
+            Optional<long> rowsCopied = default;
+            Optional<DateTimeOffset> copyStart = default;
+            Optional<double> copyThroughput = default;
+            Optional<int> copyDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Core.Optional.ToNullable(usedParallelCopies), Core.Optional.ToNullable(dataRead), Core.Optional.ToNullable(dataWritten), Core.Optional.ToNullable(rowsRead), Core.Optional.ToNullable(rowsCopied), Core.Optional.ToNullable(copyStart), Core.Optional.ToNullable(copyThroughput), Core.Optional.ToNullable(copyDuration));
+            return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Optional.ToNullable(usedParallelCopies), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(rowsRead), Optional.ToNullable(rowsCopied), Optional.ToNullable(copyStart), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration));
         }
     }
 }

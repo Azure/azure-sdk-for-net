@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of AccessControlListMatchCondition. </summary>
         public AccessControlListMatchCondition()
         {
-            EtherTypes = new Core.ChangeTrackingList<string>();
-            Fragments = new Core.ChangeTrackingList<string>();
-            IPLengths = new Core.ChangeTrackingList<string>();
-            TtlValues = new Core.ChangeTrackingList<string>();
-            DscpMarkings = new Core.ChangeTrackingList<string>();
+            EtherTypes = new ChangeTrackingList<string>();
+            Fragments = new ChangeTrackingList<string>();
+            IPLengths = new ChangeTrackingList<string>();
+            TtlValues = new ChangeTrackingList<string>();
+            DscpMarkings = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AccessControlListMatchCondition. </summary>

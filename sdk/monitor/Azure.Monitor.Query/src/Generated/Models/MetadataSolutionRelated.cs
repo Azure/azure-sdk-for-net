@@ -23,10 +23,10 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(tables, nameof(tables));
 
             Tables = tables.ToList();
-            Functions = new Core.ChangeTrackingList<string>();
-            Categories = new Core.ChangeTrackingList<string>();
-            Queries = new Core.ChangeTrackingList<string>();
-            Workspaces = new Core.ChangeTrackingList<string>();
+            Functions = new ChangeTrackingList<string>();
+            Categories = new ChangeTrackingList<string>();
+            Queries = new ChangeTrackingList<string>();
+            Workspaces = new ChangeTrackingList<string>();
         }
 
         /// <summary> The tables related to the Log Analytics solution. </summary>

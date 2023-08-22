@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPortRange : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkPortRange : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinPort))
+            if (Optional.IsDefined(MinPort))
             {
                 writer.WritePropertyName("minPort"u8);
                 writer.WriteNumberValue(MinPort.Value);
             }
-            if (Core.Optional.IsDefined(MaxPort))
+            if (Optional.IsDefined(MaxPort))
             {
                 writer.WritePropertyName("maxPort"u8);
                 writer.WriteNumberValue(MaxPort.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<int> minPort = default;
-            Core.Optional<int> maxPort = default;
+            Optional<int> minPort = default;
+            Optional<int> maxPort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minPort"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkPortRange(Core.Optional.ToNullable(minPort), Core.Optional.ToNullable(maxPort));
+            return new MobileNetworkPortRange(Optional.ToNullable(minPort), Optional.ToNullable(maxPort));
         }
     }
 }

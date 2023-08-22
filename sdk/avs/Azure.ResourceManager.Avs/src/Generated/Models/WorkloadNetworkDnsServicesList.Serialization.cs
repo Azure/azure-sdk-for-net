@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<WorkloadNetworkDnsServiceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<WorkloadNetworkDnsServiceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new WorkloadNetworkDnsServicesList(Core.Optional.ToList(value), nextLink.Value);
+            return new WorkloadNetworkDnsServicesList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

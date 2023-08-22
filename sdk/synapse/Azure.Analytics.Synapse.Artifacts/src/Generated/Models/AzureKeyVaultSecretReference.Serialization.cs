@@ -13,16 +13,16 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureKeyVaultSecretReferenceConverter))]
-    public partial class AzureKeyVaultSecretReference : Core.IUtf8JsonSerializable
+    public partial class AzureKeyVaultSecretReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("store"u8);
             writer.WriteObjectValue(Store);
             writer.WritePropertyName("secretName"u8);
             writer.WriteObjectValue(SecretName);
-            if (Core.Optional.IsDefined(SecretVersion))
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteObjectValue(SecretVersion);
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             LinkedServiceReference store = default;
             object secretName = default;
-            Core.Optional<object> secretVersion = default;
+            Optional<object> secretVersion = default;
             string type = default;
             foreach (var property in element.EnumerateObject())
             {

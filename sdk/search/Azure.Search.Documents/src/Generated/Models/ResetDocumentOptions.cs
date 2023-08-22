@@ -16,8 +16,8 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of ResetDocumentOptions. </summary>
         public ResetDocumentOptions()
         {
-            DocumentKeys = new Core.ChangeTrackingList<string>();
-            DataSourceDocumentIds = new Core.ChangeTrackingList<string>();
+            DocumentKeys = new ChangeTrackingList<string>();
+            DataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> document keys to be reset. </summary>

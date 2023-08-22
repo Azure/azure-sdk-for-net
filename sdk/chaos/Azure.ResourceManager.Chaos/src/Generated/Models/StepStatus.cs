@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of StepStatus. </summary>
         internal StepStatus()
         {
-            Branches = new Core.ChangeTrackingList<BranchStatus>();
+            Branches = new ChangeTrackingList<BranchStatus>();
         }
 
         /// <summary> Initializes a new instance of StepStatus. </summary>

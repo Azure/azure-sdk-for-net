@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CostManagementViewData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<CostManagementViewData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new ViewListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ViewListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

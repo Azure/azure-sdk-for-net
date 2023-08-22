@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
             NetworkFabricId = networkFabricId;
-            NetworkDeviceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
-            SourceInterfaceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
-            NetworkTapIds = new Core.ChangeTrackingList<ResourceIdentifier>();
-            NeighborGroupIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            NetworkDeviceIds = new ChangeTrackingList<ResourceIdentifier>();
+            SourceInterfaceIds = new ChangeTrackingList<ResourceIdentifier>();
+            NetworkTapIds = new ChangeTrackingList<ResourceIdentifier>();
+            NeighborGroupIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkPacketBrokerData. </summary>

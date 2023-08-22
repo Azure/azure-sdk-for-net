@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of ConfluentOrganizationListResult. </summary>
         internal ConfluentOrganizationListResult()
         {
-            Value = new Core.ChangeTrackingList<ConfluentOrganizationData>();
+            Value = new ChangeTrackingList<ConfluentOrganizationData>();
         }
 
         /// <summary> Initializes a new instance of ConfluentOrganizationListResult. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanPurchaseValidateContent : Core.IUtf8JsonSerializable
+    public partial class SavingsPlanPurchaseValidateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Benefits))
+            if (Optional.IsCollectionDefined(Benefits))
             {
                 writer.WritePropertyName("benefits"u8);
                 writer.WriteStartArray();

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             PostgreSqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
-            Core.Optional<PostgreSqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
+            Optional<PostgreSqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, Core.Optional.ToNullable(actionsRequired));
+            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired));
         }
     }
 }

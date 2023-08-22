@@ -13,31 +13,31 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class GlobalRulestackCertificateObjectData : Core.IUtf8JsonSerializable
+    public partial class GlobalRulestackCertificateObjectData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CertificateSignerResourceId))
+            if (Optional.IsDefined(CertificateSignerResourceId))
             {
                 writer.WritePropertyName("certificateSignerResourceId"u8);
                 writer.WriteStringValue(CertificateSignerResourceId);
             }
             writer.WritePropertyName("certificateSelfSigned"u8);
             writer.WriteStringValue(CertificateSelfSigned.ToString());
-            if (Core.Optional.IsDefined(AuditComment))
+            if (Optional.IsDefined(AuditComment))
             {
                 writer.WritePropertyName("auditComment"u8);
                 writer.WriteStringValue(AuditComment);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> certificateSignerResourceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> certificateSignerResourceId = default;
             FirewallBooleanType certificateSelfSigned = default;
-            Core.Optional<string> auditComment = default;
-            Core.Optional<string> description = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<FirewallProvisioningState> provisioningState = default;
+            Optional<string> auditComment = default;
+            Optional<string> description = default;
+            Optional<ETag> etag = default;
+            Optional<FirewallProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     continue;
                 }
             }
-            return new GlobalRulestackCertificateObjectData(id, name, type, systemData.Value, certificateSignerResourceId.Value, certificateSelfSigned, auditComment.Value, description.Value, Core.Optional.ToNullable(etag), Core.Optional.ToNullable(provisioningState));
+            return new GlobalRulestackCertificateObjectData(id, name, type, systemData.Value, certificateSignerResourceId.Value, certificateSelfSigned, auditComment.Value, description.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState));
         }
     }
 }

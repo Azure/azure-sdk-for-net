@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class QueryRequest : Core.IUtf8JsonSerializable
+    internal partial class QueryRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GetEvents))
+            if (Optional.IsDefined(GetEvents))
             {
                 writer.WritePropertyName("getEvents"u8);
                 writer.WriteObjectValue(GetEvents);
             }
-            if (Core.Optional.IsDefined(GetSeries))
+            if (Optional.IsDefined(GetSeries))
             {
                 writer.WritePropertyName("getSeries"u8);
                 writer.WriteObjectValue(GetSeries);
             }
-            if (Core.Optional.IsDefined(AggregateSeries))
+            if (Optional.IsDefined(AggregateSeries))
             {
                 writer.WritePropertyName("aggregateSeries"u8);
                 writer.WriteObjectValue(AggregateSeries);

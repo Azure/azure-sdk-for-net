@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<TrafficManagerProfileData>> value = default;
+            Optional<IReadOnlyList<TrafficManagerProfileData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerProfileListResult(Core.Optional.ToList(value));
+            return new TrafficManagerProfileListResult(Optional.ToList(value));
         }
     }
 }

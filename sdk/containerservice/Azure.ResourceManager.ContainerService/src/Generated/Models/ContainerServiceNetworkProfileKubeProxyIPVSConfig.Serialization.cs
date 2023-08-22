@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfileKubeProxyIPVSConfig : Core.IUtf8JsonSerializable
+    public partial class ContainerServiceNetworkProfileKubeProxyIPVSConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Scheduler))
+            if (Optional.IsDefined(Scheduler))
             {
                 writer.WritePropertyName("scheduler"u8);
                 writer.WriteStringValue(Scheduler.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TcpTimeoutSeconds))
+            if (Optional.IsDefined(TcpTimeoutSeconds))
             {
                 writer.WritePropertyName("tcpTimeoutSeconds"u8);
                 writer.WriteNumberValue(TcpTimeoutSeconds.Value);
             }
-            if (Core.Optional.IsDefined(TcpFinTimeoutSeconds))
+            if (Optional.IsDefined(TcpFinTimeoutSeconds))
             {
                 writer.WritePropertyName("tcpFinTimeoutSeconds"u8);
                 writer.WriteNumberValue(TcpFinTimeoutSeconds.Value);
             }
-            if (Core.Optional.IsDefined(UdpTimeoutSeconds))
+            if (Optional.IsDefined(UdpTimeoutSeconds))
             {
                 writer.WritePropertyName("udpTimeoutSeconds"u8);
                 writer.WriteNumberValue(UdpTimeoutSeconds.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ContainerServiceNetworkProfileKubeProxyIPVSScheduler> scheduler = default;
-            Core.Optional<int> tcpTimeoutSeconds = default;
-            Core.Optional<int> tcpFinTimeoutSeconds = default;
-            Core.Optional<int> udpTimeoutSeconds = default;
+            Optional<ContainerServiceNetworkProfileKubeProxyIPVSScheduler> scheduler = default;
+            Optional<int> tcpTimeoutSeconds = default;
+            Optional<int> tcpFinTimeoutSeconds = default;
+            Optional<int> udpTimeoutSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduler"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceNetworkProfileKubeProxyIPVSConfig(Core.Optional.ToNullable(scheduler), Core.Optional.ToNullable(tcpTimeoutSeconds), Core.Optional.ToNullable(tcpFinTimeoutSeconds), Core.Optional.ToNullable(udpTimeoutSeconds));
+            return new ContainerServiceNetworkProfileKubeProxyIPVSConfig(Optional.ToNullable(scheduler), Optional.ToNullable(tcpTimeoutSeconds), Optional.ToNullable(tcpFinTimeoutSeconds), Optional.ToNullable(udpTimeoutSeconds));
         }
     }
 }

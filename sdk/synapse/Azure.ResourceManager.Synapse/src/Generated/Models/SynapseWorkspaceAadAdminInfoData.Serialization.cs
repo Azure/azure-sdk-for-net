@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseWorkspaceAadAdminInfoData : Core.IUtf8JsonSerializable
+    public partial class SynapseWorkspaceAadAdminInfoData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(Login))
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
-            if (Core.Optional.IsDefined(AdministratorType))
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType);
             }
-            if (Core.Optional.IsDefined(Sid))
+            if (Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> login = default;
-            Core.Optional<string> administratorType = default;
-            Core.Optional<string> sid = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> login = default;
+            Optional<string> administratorType = default;
+            Optional<string> sid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseWorkspaceAadAdminInfoData(id, name, type, systemData.Value, Core.Optional.ToNullable(tenantId), login.Value, administratorType.Value, sid.Value);
+            return new SynapseWorkspaceAadAdminInfoData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), login.Value, administratorType.Value, sid.Value);
         }
     }
 }

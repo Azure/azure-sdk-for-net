@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="runbookType"> Gets or sets the type of the runbook. </param>
         public AutomationRunbookCreateOrUpdateContent(AutomationRunbookType runbookType)
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             RunbookType = runbookType;
         }
 

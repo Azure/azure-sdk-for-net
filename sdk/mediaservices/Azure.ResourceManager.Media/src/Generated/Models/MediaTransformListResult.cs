@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaTransformListResult. </summary>
         internal MediaTransformListResult()
         {
-            Value = new Core.ChangeTrackingList<MediaTransformData>();
+            Value = new ChangeTrackingList<MediaTransformData>();
         }
 
         /// <summary> Initializes a new instance of MediaTransformListResult. </summary>

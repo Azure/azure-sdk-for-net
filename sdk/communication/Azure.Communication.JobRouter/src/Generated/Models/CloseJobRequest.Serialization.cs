@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    internal partial class CloseJobRequest : Core.IUtf8JsonSerializable
+    internal partial class CloseJobRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("assignmentId"u8);
             writer.WriteStringValue(AssignmentId);
-            if (Core.Optional.IsDefined(DispositionCode))
+            if (Optional.IsDefined(DispositionCode))
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            if (Core.Optional.IsDefined(CloseAt))
+            if (Optional.IsDefined(CloseAt))
             {
                 writer.WritePropertyName("closeAt"u8);
                 writer.WriteStringValue(CloseAt.Value, "O");
             }
-            if (Core.Optional.IsDefined(Note))
+            if (Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);

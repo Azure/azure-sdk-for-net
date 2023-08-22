@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Argument.AssertNotNull(field, nameof(field));
 
             Field = field;
-            Values = new Core.ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
         }
 
         /// <summary> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </summary>

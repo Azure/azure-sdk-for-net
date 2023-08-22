@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsListResult. </summary>
         internal PolicySignaturesOverridesForIdpsListResult()
         {
-            Value = new Core.ChangeTrackingList<PolicySignaturesOverridesForIdpsData>();
+            Value = new ChangeTrackingList<PolicySignaturesOverridesForIdpsData>();
         }
 
         /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsListResult. </summary>

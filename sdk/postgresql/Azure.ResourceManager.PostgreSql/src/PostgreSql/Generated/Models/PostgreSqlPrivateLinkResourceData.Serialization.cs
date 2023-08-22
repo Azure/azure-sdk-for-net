@@ -12,9 +12,9 @@ using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class PostgreSqlPrivateLinkResourceData : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlPrivateLinkResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 return null;
             }
-            Core.Optional<PostgreSqlPrivateLinkResourceProperties> properties = default;
+            Optional<PostgreSqlPrivateLinkResourceProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>
         public AutomationRunbookDraft()
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, RunbookParameterDefinition>();
-            OutputTypes = new Core.ChangeTrackingList<string>();
+            Parameters = new ChangeTrackingDictionary<string, RunbookParameterDefinition>();
+            OutputTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ContinentsResponse. </summary>
         internal ContinentsResponse()
         {
-            Continents = new Core.ChangeTrackingList<ContinentsResponseContinentsItem>();
-            CountryOrRegions = new Core.ChangeTrackingList<ContinentsResponseCountryOrRegionsItem>();
+            Continents = new ChangeTrackingList<ContinentsResponseContinentsItem>();
+            CountryOrRegions = new ChangeTrackingList<ContinentsResponseCountryOrRegionsItem>();
         }
 
         /// <summary> Initializes a new instance of ContinentsResponse. </summary>

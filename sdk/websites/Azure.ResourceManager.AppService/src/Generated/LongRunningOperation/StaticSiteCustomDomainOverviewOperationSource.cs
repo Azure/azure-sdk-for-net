@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
-    internal class StaticSiteCustomDomainOverviewOperationSource : Core.IOperationSource<StaticSiteCustomDomainOverviewResource>
+    internal class StaticSiteCustomDomainOverviewOperationSource : IOperationSource<StaticSiteCustomDomainOverviewResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService
             _client = client;
         }
 
-        StaticSiteCustomDomainOverviewResource Core.IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        StaticSiteCustomDomainOverviewResource IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(document.RootElement);
             return new StaticSiteCustomDomainOverviewResource(_client, data);
         }
 
-        async ValueTask<StaticSiteCustomDomainOverviewResource> Core.IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StaticSiteCustomDomainOverviewResource> IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(document.RootElement);

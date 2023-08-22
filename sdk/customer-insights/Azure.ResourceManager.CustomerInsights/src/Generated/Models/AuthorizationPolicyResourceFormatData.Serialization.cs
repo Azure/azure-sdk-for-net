@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class AuthorizationPolicyResourceFormatData : Core.IUtf8JsonSerializable
+    public partial class AuthorizationPolicyResourceFormatData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Permissions))
+            if (Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PrimaryKey))
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Core.Optional.IsDefined(SecondaryKey))
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> policyName = default;
-            Core.Optional<IList<PermissionType>> permissions = default;
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> policyName = default;
+            Optional<IList<PermissionType>> permissions = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new AuthorizationPolicyResourceFormatData(id, name, type, systemData.Value, policyName.Value, Core.Optional.ToList(permissions), primaryKey.Value, secondaryKey.Value);
+            return new AuthorizationPolicyResourceFormatData(id, name, type, systemData.Value, policyName.Value, Optional.ToList(permissions), primaryKey.Value, secondaryKey.Value);
         }
     }
 }

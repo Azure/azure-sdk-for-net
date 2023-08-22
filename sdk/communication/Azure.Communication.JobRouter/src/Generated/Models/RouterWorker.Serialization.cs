@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterWorker : Core.IUtf8JsonSerializable
+    public partial class RouterWorker : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(_queueAssignments))
+            if (Optional.IsCollectionDefined(_queueAssignments))
             {
                 writer.WritePropertyName("queueAssignments"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(TotalCapacity))
+            if (Optional.IsDefined(TotalCapacity))
             {
                 writer.WritePropertyName("totalCapacity"u8);
                 writer.WriteNumberValue(TotalCapacity.Value);
             }
-            if (Core.Optional.IsCollectionDefined(_labels))
+            if (Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(_tags))
+            if (Optional.IsCollectionDefined(_tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(_channelConfigurations))
+            if (Optional.IsCollectionDefined(_channelConfigurations))
             {
                 writer.WritePropertyName("channelConfigurations"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(AvailableForOffers))
+            if (Optional.IsDefined(AvailableForOffers))
             {
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
@@ -95,17 +95,17 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<RouterWorkerState> state = default;
-            Core.Optional<IDictionary<string, object>> queueAssignments = default;
-            Core.Optional<int> totalCapacity = default;
-            Core.Optional<IDictionary<string, object>> labels = default;
-            Core.Optional<IDictionary<string, object>> tags = default;
-            Core.Optional<IDictionary<string, ChannelConfiguration>> channelConfigurations = default;
-            Core.Optional<IReadOnlyList<RouterJobOffer>> offers = default;
-            Core.Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
-            Core.Optional<double> loadRatio = default;
-            Core.Optional<bool> availableForOffers = default;
+            Optional<string> id = default;
+            Optional<RouterWorkerState> state = default;
+            Optional<IDictionary<string, object>> queueAssignments = default;
+            Optional<int> totalCapacity = default;
+            Optional<IDictionary<string, object>> labels = default;
+            Optional<IDictionary<string, object>> tags = default;
+            Optional<IDictionary<string, ChannelConfiguration>> channelConfigurations = default;
+            Optional<IReadOnlyList<RouterJobOffer>> offers = default;
+            Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
+            Optional<double> loadRatio = default;
+            Optional<bool> availableForOffers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -255,7 +255,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new RouterWorker(id.Value, Core.Optional.ToNullable(state), Core.Optional.ToDictionary(queueAssignments), Core.Optional.ToNullable(totalCapacity), Core.Optional.ToDictionary(labels), Core.Optional.ToDictionary(tags), Core.Optional.ToDictionary(channelConfigurations), Core.Optional.ToList(offers), Core.Optional.ToList(assignedJobs), Core.Optional.ToNullable(loadRatio), Core.Optional.ToNullable(availableForOffers));
+            return new RouterWorker(id.Value, Optional.ToNullable(state), Optional.ToDictionary(queueAssignments), Optional.ToNullable(totalCapacity), Optional.ToDictionary(labels), Optional.ToDictionary(tags), Optional.ToDictionary(channelConfigurations), Optional.ToList(offers), Optional.ToList(assignedJobs), Optional.ToNullable(loadRatio), Optional.ToNullable(availableForOffers));
         }
     }
 }

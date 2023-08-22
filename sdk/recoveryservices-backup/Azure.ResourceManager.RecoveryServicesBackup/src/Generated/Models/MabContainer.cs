@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of MabContainer. </summary>
         public MabContainer()
         {
-            MabContainerHealthDetails = new Core.ChangeTrackingList<MabContainerHealthDetails>();
+            MabContainerHealthDetails = new ChangeTrackingList<MabContainerHealthDetails>();
             ContainerType = ProtectableContainerType.Windows;
         }
 

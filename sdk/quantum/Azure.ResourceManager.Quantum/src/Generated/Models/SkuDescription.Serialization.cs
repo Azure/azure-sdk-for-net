@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> restrictedAccessUri = default;
-            Core.Optional<bool> autoAdd = default;
-            Core.Optional<IReadOnlyList<string>> targets = default;
-            Core.Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
-            Core.Optional<IReadOnlyList<PricingDetail>> pricingDetails = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> version = default;
+            Optional<string> description = default;
+            Optional<Uri> restrictedAccessUri = default;
+            Optional<bool> autoAdd = default;
+            Optional<IReadOnlyList<string>> targets = default;
+            Optional<IReadOnlyList<QuotaDimension>> quotaDimensions = default;
+            Optional<IReadOnlyList<PricingDetail>> pricingDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new SkuDescription(id.Value, name.Value, version.Value, description.Value, restrictedAccessUri.Value, Core.Optional.ToNullable(autoAdd), Core.Optional.ToList(targets), Core.Optional.ToList(quotaDimensions), Core.Optional.ToList(pricingDetails));
+            return new SkuDescription(id.Value, name.Value, version.Value, description.Value, restrictedAccessUri.Value, Optional.ToNullable(autoAdd), Optional.ToList(targets), Optional.ToList(quotaDimensions), Optional.ToList(pricingDetails));
         }
     }
 }

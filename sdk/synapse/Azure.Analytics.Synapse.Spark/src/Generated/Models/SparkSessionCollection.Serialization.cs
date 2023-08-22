@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             int @from = default;
             int total = default;
-            Core.Optional<IReadOnlyList<SparkSession>> sessions = default;
+            Optional<IReadOnlyList<SparkSession>> sessions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("from"u8))
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSessionCollection(@from, total, Core.Optional.ToList(sessions));
+            return new SparkSessionCollection(@from, total, Optional.ToList(sessions));
         }
     }
 }

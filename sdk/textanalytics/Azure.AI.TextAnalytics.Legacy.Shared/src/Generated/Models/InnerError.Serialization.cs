@@ -22,9 +22,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             InnerErrorCodeValue code = default;
             string message = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> details = default;
-            Core.Optional<string> target = default;
-            Core.Optional<InnerError> innererror = default;
+            Optional<IReadOnlyDictionary<string, string>> details = default;
+            Optional<string> target = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -66,7 +66,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new InnerError(code, message, Core.Optional.ToDictionary(details), target.Value, innererror.Value);
+            return new InnerError(code, message, Optional.ToDictionary(details), target.Value, innererror.Value);
         }
     }
 }

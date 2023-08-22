@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryRepoContent : Core.IUtf8JsonSerializable
+    public partial class FactoryRepoContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FactoryResourceId))
+            if (Optional.IsDefined(FactoryResourceId))
             {
                 writer.WritePropertyName("factoryResourceId"u8);
                 writer.WriteStringValue(FactoryResourceId);
             }
-            if (Core.Optional.IsDefined(RepoConfiguration))
+            if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);

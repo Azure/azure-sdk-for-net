@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>
         internal HDInsightPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>

@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ThreatIntelligenceFilteringCriteria. </summary>
         public ThreatIntelligenceFilteringCriteria()
         {
-            SortBy = new Core.ChangeTrackingList<ThreatIntelligenceSortingCriteria>();
-            Sources = new Core.ChangeTrackingList<string>();
-            PatternTypes = new Core.ChangeTrackingList<string>();
-            ThreatTypes = new Core.ChangeTrackingList<string>();
-            Ids = new Core.ChangeTrackingList<string>();
-            Keywords = new Core.ChangeTrackingList<string>();
+            SortBy = new ChangeTrackingList<ThreatIntelligenceSortingCriteria>();
+            Sources = new ChangeTrackingList<string>();
+            PatternTypes = new ChangeTrackingList<string>();
+            ThreatTypes = new ChangeTrackingList<string>();
+            Ids = new ChangeTrackingList<string>();
+            Keywords = new ChangeTrackingList<string>();
         }
 
         /// <summary> Page size. </summary>

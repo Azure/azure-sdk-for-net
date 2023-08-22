@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             Action = action;
             SequenceNumber = sequenceNumber;
-            WellKnownCommunities = new Core.ChangeTrackingList<WellKnownCommunity>();
+            WellKnownCommunities = new ChangeTrackingList<WellKnownCommunity>();
             CommunityMembers = communityMembers.ToList();
         }
 

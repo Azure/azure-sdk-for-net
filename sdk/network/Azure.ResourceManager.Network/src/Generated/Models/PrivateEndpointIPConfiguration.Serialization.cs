@@ -12,29 +12,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateEndpointIPConfiguration : Core.IUtf8JsonSerializable
+    public partial class PrivateEndpointIPConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Core.Optional.IsDefined(MemberName))
+            if (Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (Core.Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> type = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> memberName = default;
-            Core.Optional<IPAddress> privateIPAddress = default;
+            Optional<string> name = default;
+            Optional<string> type = default;
+            Optional<ETag> etag = default;
+            Optional<string> groupId = default;
+            Optional<string> memberName = default;
+            Optional<IPAddress> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateEndpointIPConfiguration(name.Value, type.Value, Core.Optional.ToNullable(etag), groupId.Value, memberName.Value, privateIPAddress.Value);
+            return new PrivateEndpointIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), groupId.Value, memberName.Value, privateIPAddress.Value);
         }
     }
 }

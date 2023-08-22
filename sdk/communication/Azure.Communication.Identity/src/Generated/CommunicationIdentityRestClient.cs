@@ -65,7 +65,7 @@ namespace Azure.Communication.Identity
                 }
             }
             var model = communicationIdentityCreateRequest;
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
@@ -247,7 +247,7 @@ namespace Azure.Communication.Identity
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var model = new TeamsUserExchangeTokenRequest(token, appId, userId);
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
@@ -345,7 +345,7 @@ namespace Azure.Communication.Identity
             {
                 ExpiresInMinutes = expiresInMinutes
             };
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;

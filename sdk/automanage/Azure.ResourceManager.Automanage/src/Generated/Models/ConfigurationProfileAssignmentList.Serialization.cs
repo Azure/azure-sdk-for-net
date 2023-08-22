@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AutomanageConfigurationProfileAssignmentData>> value = default;
+            Optional<IReadOnlyList<AutomanageConfigurationProfileAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     continue;
                 }
             }
-            return new ConfigurationProfileAssignmentList(Core.Optional.ToList(value));
+            return new ConfigurationProfileAssignmentList(Optional.ToList(value));
         }
     }
 }

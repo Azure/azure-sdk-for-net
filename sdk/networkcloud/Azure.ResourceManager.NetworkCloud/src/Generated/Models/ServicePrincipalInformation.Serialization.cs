@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ServicePrincipalInformation : Core.IUtf8JsonSerializable
+    public partial class ServicePrincipalInformation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string applicationId = default;
-            Core.Optional<string> password = default;
+            Optional<string> password = default;
             string principalId = default;
             string tenantId = default;
             foreach (var property in element.EnumerateObject())

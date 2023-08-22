@@ -13,21 +13,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudClusterData : Core.IUtf8JsonSerializable
+    public partial class AvsPrivateCloudClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClusterSize))
+            if (Optional.IsDefined(ClusterSize))
             {
                 writer.WritePropertyName("clusterSize"u8);
                 writer.WriteNumberValue(ClusterSize.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Hosts))
+            if (Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> clusterSize = default;
-            Core.Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
-            Core.Optional<int> clusterId = default;
-            Core.Optional<IList<string>> hosts = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> clusterSize = default;
+            Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
+            Optional<int> clusterId = default;
+            Optional<IList<string>> hosts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new AvsPrivateCloudClusterData(id, name, type, systemData.Value, sku, Core.Optional.ToNullable(clusterSize), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(clusterId), Core.Optional.ToList(hosts));
+            return new AvsPrivateCloudClusterData(id, name, type, systemData.Value, sku, Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), Optional.ToList(hosts));
         }
     }
 }

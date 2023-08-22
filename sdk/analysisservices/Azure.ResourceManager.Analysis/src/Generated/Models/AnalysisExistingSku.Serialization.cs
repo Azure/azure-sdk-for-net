@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Core.Optional<AnalysisResourceSku> sku = default;
-            Core.Optional<ResourceType> resourceType = default;
+            Optional<AnalysisResourceSku> sku = default;
+            Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new AnalysisExistingSku(sku.Value, Core.Optional.ToNullable(resourceType));
+            return new AnalysisExistingSku(sku.Value, Optional.ToNullable(resourceType));
         }
     }
 }

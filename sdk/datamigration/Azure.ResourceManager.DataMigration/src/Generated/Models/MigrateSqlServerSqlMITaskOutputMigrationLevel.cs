@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSqlServerSqlMITaskOutputMigrationLevel. </summary>
         internal MigrateSqlServerSqlMITaskOutputMigrationLevel()
         {
-            OrphanedUsersInfo = new Core.ChangeTrackingList<OrphanedUserInfo>();
-            ExceptionsAndWarnings = new Core.ChangeTrackingList<ReportableException>();
+            OrphanedUsersInfo = new ChangeTrackingList<OrphanedUserInfo>();
+            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 

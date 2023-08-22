@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class DirectPeeringLocationProperties : Core.IUtf8JsonSerializable
+    public partial class DirectPeeringLocationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PeeringFacilities))
+            if (Optional.IsCollectionDefined(PeeringFacilities))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(BandwidthOffers))
+            if (Optional.IsCollectionDefined(BandwidthOffers))
             {
                 writer.WritePropertyName("bandwidthOffers"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Core.Optional<IList<DirectPeeringFacility>> peeringFacilities = default;
-            Core.Optional<IList<PeeringBandwidthOffer>> bandwidthOffers = default;
+            Optional<IList<DirectPeeringFacility>> peeringFacilities = default;
+            Optional<IList<PeeringBandwidthOffer>> bandwidthOffers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peeringFacilities"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new DirectPeeringLocationProperties(Core.Optional.ToList(peeringFacilities), Core.Optional.ToList(bandwidthOffers));
+            return new DirectPeeringLocationProperties(Optional.ToList(peeringFacilities), Optional.ToList(bandwidthOffers));
         }
     }
 }

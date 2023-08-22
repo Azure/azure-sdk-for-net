@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitSku : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Family))
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ExpressRouteCircuitSkuTier> tier = default;
-            Core.Optional<ExpressRouteCircuitSkuFamily> family = default;
+            Optional<string> name = default;
+            Optional<ExpressRouteCircuitSkuTier> tier = default;
+            Optional<ExpressRouteCircuitSkuFamily> family = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitSku(name.Value, Core.Optional.ToNullable(tier), Core.Optional.ToNullable(family));
+            return new ExpressRouteCircuitSku(name.Value, Optional.ToNullable(tier), Optional.ToNullable(family));
         }
     }
 }

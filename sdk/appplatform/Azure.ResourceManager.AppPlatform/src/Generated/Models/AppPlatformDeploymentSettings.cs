@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformDeploymentSettings. </summary>
         public AppPlatformDeploymentSettings()
         {
-            EnvironmentVariables = new Core.ChangeTrackingDictionary<string, string>();
-            AddonConfigs = new Core.ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            AddonConfigs = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformDeploymentSettings. </summary>

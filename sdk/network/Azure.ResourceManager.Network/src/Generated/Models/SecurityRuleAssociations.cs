@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityRuleAssociations. </summary>
         internal SecurityRuleAssociations()
         {
-            DefaultSecurityRules = new Core.ChangeTrackingList<SecurityRuleData>();
-            EffectiveSecurityRules = new Core.ChangeTrackingList<EffectiveNetworkSecurityRule>();
+            DefaultSecurityRules = new ChangeTrackingList<SecurityRuleData>();
+            EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
         }
 
         /// <summary> Initializes a new instance of SecurityRuleAssociations. </summary>

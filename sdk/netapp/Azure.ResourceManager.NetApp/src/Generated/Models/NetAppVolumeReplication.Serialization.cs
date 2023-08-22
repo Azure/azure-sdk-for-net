@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<NetAppEndpointType> endpointType = default;
-            Core.Optional<NetAppReplicationSchedule> replicationSchedule = default;
+            Optional<NetAppEndpointType> endpointType = default;
+            Optional<NetAppReplicationSchedule> replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
-            Core.Optional<string> remoteVolumeRegion = default;
+            Optional<string> remoteVolumeRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeReplication(Core.Optional.ToNullable(endpointType), Core.Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value);
+            return new NetAppVolumeReplication(Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value);
         }
     }
 }

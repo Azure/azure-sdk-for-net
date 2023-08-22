@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.NetworkTraversal
 {
-    internal partial class CommunicationRelayConfigurationRequest : Core.IUtf8JsonSerializable
+    internal partial class CommunicationRelayConfigurationRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(RouteType))
+            if (Optional.IsDefined(RouteType))
             {
                 writer.WritePropertyName("routeType"u8);
                 writer.WriteStringValue(RouteType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Ttl))
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);

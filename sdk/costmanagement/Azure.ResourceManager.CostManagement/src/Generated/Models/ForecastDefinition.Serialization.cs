@@ -10,28 +10,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ForecastDefinition : Core.IUtf8JsonSerializable
+    public partial class ForecastDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ForecastType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (Core.Optional.IsDefined(TimePeriod))
+            if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset);
-            if (Core.Optional.IsDefined(IncludeActualCost))
+            if (Optional.IsDefined(IncludeActualCost))
             {
                 writer.WritePropertyName("includeActualCost"u8);
                 writer.WriteBooleanValue(IncludeActualCost.Value);
             }
-            if (Core.Optional.IsDefined(IncludeFreshPartialCost))
+            if (Optional.IsDefined(IncludeFreshPartialCost))
             {
                 writer.WritePropertyName("includeFreshPartialCost"u8);
                 writer.WriteBooleanValue(IncludeFreshPartialCost.Value);

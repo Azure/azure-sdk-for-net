@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> upsellNotification = default;
+            Optional<string> name = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<IReadOnlyDictionary<string, string>> upsellNotification = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new RedisUpgradeNotification(name.Value, Core.Optional.ToNullable(timestamp), Core.Optional.ToDictionary(upsellNotification));
+            return new RedisUpgradeNotification(name.Value, Optional.ToNullable(timestamp), Optional.ToDictionary(upsellNotification));
         }
     }
 }

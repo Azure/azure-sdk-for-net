@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class CloudToDeviceMethodRequest : Core.IUtf8JsonSerializable
+    public partial class CloudToDeviceMethodRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MethodName))
+            if (Optional.IsDefined(MethodName))
             {
                 writer.WritePropertyName("methodName"u8);
                 writer.WriteStringValue(MethodName);
             }
-            if (Core.Optional.IsDefined(Payload))
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteObjectValue(Payload);
             }
-            if (Core.Optional.IsDefined(ResponseTimeoutInSeconds))
+            if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
                 writer.WritePropertyName("responseTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ResponseTimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(ConnectTimeoutInSeconds))
+            if (Optional.IsDefined(ConnectTimeoutInSeconds))
             {
                 writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);
@@ -44,10 +44,10 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<string> methodName = default;
-            Core.Optional<object> payload = default;
-            Core.Optional<int> responseTimeoutInSeconds = default;
-            Core.Optional<int> connectTimeoutInSeconds = default;
+            Optional<string> methodName = default;
+            Optional<object> payload = default;
+            Optional<int> responseTimeoutInSeconds = default;
+            Optional<int> connectTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -83,7 +83,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Core.Optional.ToNullable(responseTimeoutInSeconds), Core.Optional.ToNullable(connectTimeoutInSeconds));
+            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Optional.ToNullable(responseTimeoutInSeconds), Optional.ToNullable(connectTimeoutInSeconds));
         }
     }
 }

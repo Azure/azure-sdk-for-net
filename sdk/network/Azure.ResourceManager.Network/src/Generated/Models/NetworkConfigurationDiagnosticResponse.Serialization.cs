@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetworkConfigurationDiagnosticResult>> results = default;
+            Optional<IReadOnlyList<NetworkConfigurationDiagnosticResult>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkConfigurationDiagnosticResponse(Core.Optional.ToList(results));
+            return new NetworkConfigurationDiagnosticResponse(Optional.ToList(results));
         }
     }
 }

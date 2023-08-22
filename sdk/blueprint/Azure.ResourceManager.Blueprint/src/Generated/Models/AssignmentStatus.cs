@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of AssignmentStatus. </summary>
         internal AssignmentStatus()
         {
-            ManagedResources = new Core.ChangeTrackingList<string>();
+            ManagedResources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AssignmentStatus. </summary>

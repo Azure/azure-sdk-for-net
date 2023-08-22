@@ -14,22 +14,22 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class RouteTableData : Core.IUtf8JsonSerializable
+    public partial class RouteTableData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Routes))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DisableBgpRoutePropagation))
+            if (Optional.IsDefined(DisableBgpRoutePropagation))
             {
                 writer.WritePropertyName("disableBgpRoutePropagation"u8);
                 writer.WriteBooleanValue(DisableBgpRoutePropagation.Value);
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<IList<RouteData>> routes = default;
-            Core.Optional<IReadOnlyList<SubnetData>> subnets = default;
-            Core.Optional<bool> disableBgpRoutePropagation = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<Guid> resourceGuid = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<RouteData>> routes = default;
+            Optional<IReadOnlyList<SubnetData>> subnets = default;
+            Optional<bool> disableBgpRoutePropagation = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteTableData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), Core.Optional.ToList(routes), Core.Optional.ToList(subnets), Core.Optional.ToNullable(disableBgpRoutePropagation), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceGuid));
+            return new RouteTableData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(routes), Optional.ToList(subnets), Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

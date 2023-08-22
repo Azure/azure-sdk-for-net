@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<StoragePrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StoragePrivateEndpointConnectionListResult(Core.Optional.ToList(value));
+            return new StoragePrivateEndpointConnectionListResult(Optional.ToList(value));
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<MarketplaceSubscriptionState> state = default;
+            Optional<string> id = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> displayName = default;
+            Optional<MarketplaceSubscriptionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new MarketplaceSubscription(id.Value, subscriptionId.Value, displayName.Value, Core.Optional.ToNullable(state));
+            return new MarketplaceSubscription(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(state));
         }
     }
 }

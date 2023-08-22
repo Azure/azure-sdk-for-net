@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class RedisEnterpriseLinkedDatabase : Core.IUtf8JsonSerializable
+    public partial class RedisEnterpriseLinkedDatabase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<RedisEnterpriseDatabaseLinkState> state = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<RedisEnterpriseDatabaseLinkState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     continue;
                 }
             }
-            return new RedisEnterpriseLinkedDatabase(id.Value, Core.Optional.ToNullable(state));
+            return new RedisEnterpriseLinkedDatabase(id.Value, Optional.ToNullable(state));
         }
     }
 }

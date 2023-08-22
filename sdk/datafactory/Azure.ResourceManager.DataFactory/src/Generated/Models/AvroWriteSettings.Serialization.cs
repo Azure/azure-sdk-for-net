@@ -13,27 +13,27 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AvroWriteSettings : Core.IUtf8JsonSerializable
+    public partial class AvroWriteSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecordName))
+            if (Optional.IsDefined(RecordName))
             {
                 writer.WritePropertyName("recordName"u8);
                 writer.WriteStringValue(RecordName);
             }
-            if (Core.Optional.IsDefined(RecordNamespace))
+            if (Optional.IsDefined(RecordNamespace))
             {
                 writer.WritePropertyName("recordNamespace"u8);
                 writer.WriteStringValue(RecordNamespace);
             }
-            if (Core.Optional.IsDefined(MaxRowsPerFile))
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
-            if (Core.Optional.IsDefined(FileNamePrefix))
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 JsonSerializer.Serialize(writer, FileNamePrefix);
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> recordName = default;
-            Core.Optional<string> recordNamespace = default;
-            Core.Optional<DataFactoryElement<int>> maxRowsPerFile = default;
-            Core.Optional<DataFactoryElement<string>> fileNamePrefix = default;
+            Optional<string> recordName = default;
+            Optional<string> recordNamespace = default;
+            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
+            Optional<DataFactoryElement<string>> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

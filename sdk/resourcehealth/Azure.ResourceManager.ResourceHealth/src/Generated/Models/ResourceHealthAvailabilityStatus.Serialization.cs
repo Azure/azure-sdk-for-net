@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<ResourceHealthAvailabilityStatusProperties> properties = default;
+            Optional<AzureLocation> location = default;
+            Optional<ResourceHealthAvailabilityStatusProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     continue;
                 }
             }
-            return new ResourceHealthAvailabilityStatus(id, name, type, systemData.Value, Core.Optional.ToNullable(location), properties.Value);
+            return new ResourceHealthAvailabilityStatus(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of QueryResult. </summary>
         internal QueryResult()
         {
-            Items = new Core.ChangeTrackingList<object>();
+            Items = new ChangeTrackingList<object>();
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>

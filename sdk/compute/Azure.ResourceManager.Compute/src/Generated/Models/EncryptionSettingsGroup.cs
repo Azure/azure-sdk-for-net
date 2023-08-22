@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         public EncryptionSettingsGroup(bool enabled)
         {
             Enabled = enabled;
-            EncryptionSettings = new Core.ChangeTrackingList<EncryptionSettingsElement>();
+            EncryptionSettings = new ChangeTrackingList<EncryptionSettingsElement>();
         }
 
         /// <summary> Initializes a new instance of EncryptionSettingsGroup. </summary>

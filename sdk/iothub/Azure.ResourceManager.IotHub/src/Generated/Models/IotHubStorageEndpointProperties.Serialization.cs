@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubStorageEndpointProperties : Core.IUtf8JsonSerializable
+    public partial class IotHubStorageEndpointProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SasTtlAsIso8601))
+            if (Optional.IsDefined(SasTtlAsIso8601))
             {
                 writer.WritePropertyName("sasTtlAsIso8601"u8);
                 writer.WriteStringValue(SasTtlAsIso8601.Value, "P");
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Core.Optional.IsDefined(AuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> sasTtlAsIso8601 = default;
+            Optional<TimeSpan> sasTtlAsIso8601 = default;
             string connectionString = default;
             string containerName = default;
-            Core.Optional<IotHubAuthenticationType> authenticationType = default;
-            Core.Optional<ManagedIdentity> identity = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
+            Optional<ManagedIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasTtlAsIso8601"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubStorageEndpointProperties(Core.Optional.ToNullable(sasTtlAsIso8601), connectionString, containerName, Core.Optional.ToNullable(authenticationType), identity.Value);
+            return new IotHubStorageEndpointProperties(Optional.ToNullable(sasTtlAsIso8601), connectionString, containerName, Optional.ToNullable(authenticationType), identity.Value);
         }
     }
 }

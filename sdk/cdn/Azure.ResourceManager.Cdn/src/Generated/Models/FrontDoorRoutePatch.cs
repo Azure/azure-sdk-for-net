@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of FrontDoorRoutePatch. </summary>
         public FrontDoorRoutePatch()
         {
-            CustomDomains = new Core.ChangeTrackingList<FrontDoorActivatedResourceInfo>();
-            RuleSets = new Core.ChangeTrackingList<WritableSubResource>();
-            SupportedProtocols = new Core.ChangeTrackingList<FrontDoorEndpointProtocol>();
-            PatternsToMatch = new Core.ChangeTrackingList<string>();
+            CustomDomains = new ChangeTrackingList<FrontDoorActivatedResourceInfo>();
+            RuleSets = new ChangeTrackingList<WritableSubResource>();
+            SupportedProtocols = new ChangeTrackingList<FrontDoorEndpointProtocol>();
+            PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> The name of the endpoint which holds the route. </summary>

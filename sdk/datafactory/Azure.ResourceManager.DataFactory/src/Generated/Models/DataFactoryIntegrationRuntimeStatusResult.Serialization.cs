@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
+            Optional<string> name = default;
             IntegrationRuntimeStatus properties = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageAzureV2UpdateReplicationProtectedItemContent. </summary>
         public InMageAzureV2UpdateReplicationProtectedItemContent()
         {
-            TargetVmTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetNicTags = new Core.ChangeTrackingDictionary<string, string>();
-            VmDisks = new Core.ChangeTrackingList<UpdateDiskContent>();
+            TargetVmTags = new ChangeTrackingDictionary<string, string>();
+            TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new ChangeTrackingDictionary<string, string>();
+            VmDisks = new ChangeTrackingList<UpdateDiskContent>();
             InstanceType = "InMageAzureV2";
         }
 

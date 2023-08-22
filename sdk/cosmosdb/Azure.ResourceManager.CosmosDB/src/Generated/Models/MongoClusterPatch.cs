@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoClusterPatch. </summary>
         public MongoClusterPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            NodeGroupSpecs = new Core.ChangeTrackingList<NodeGroupSpec>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>

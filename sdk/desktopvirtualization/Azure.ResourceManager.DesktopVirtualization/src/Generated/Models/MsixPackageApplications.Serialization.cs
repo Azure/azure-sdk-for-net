@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MsixPackageApplications : Core.IUtf8JsonSerializable
+    public partial class MsixPackageApplications : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AppId))
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(AppUserModelId))
+            if (Optional.IsDefined(AppUserModelId))
             {
                 writer.WritePropertyName("appUserModelID"u8);
                 writer.WriteStringValue(AppUserModelId);
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(IconImageName))
+            if (Optional.IsDefined(IconImageName))
             {
                 writer.WritePropertyName("iconImageName"u8);
                 writer.WriteStringValue(IconImageName);
             }
-            if (Core.Optional.IsDefined(RawIcon))
+            if (Optional.IsDefined(RawIcon))
             {
                 writer.WritePropertyName("rawIcon"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(RawIcon.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(RawPng))
+            if (Optional.IsDefined(RawPng))
             {
                 writer.WritePropertyName("rawPng"u8);
 #if NET6_0_OR_GREATER
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Core.Optional<string> appId = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> appUserModelId = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> iconImageName = default;
-            Core.Optional<BinaryData> rawIcon = default;
-            Core.Optional<BinaryData> rawPng = default;
+            Optional<string> appId = default;
+            Optional<string> description = default;
+            Optional<string> appUserModelId = default;
+            Optional<string> friendlyName = default;
+            Optional<string> iconImageName = default;
+            Optional<BinaryData> rawIcon = default;
+            Optional<BinaryData> rawPng = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"u8))

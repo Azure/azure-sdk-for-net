@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of NewRelicMonitorResourcePatch. </summary>
         public NewRelicMonitorResourcePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>

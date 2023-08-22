@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteLinkMacSecConfig : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteLinkMacSecConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CknSecretIdentifier))
+            if (Optional.IsDefined(CknSecretIdentifier))
             {
                 writer.WritePropertyName("cknSecretIdentifier"u8);
                 writer.WriteStringValue(CknSecretIdentifier);
             }
-            if (Core.Optional.IsDefined(CakSecretIdentifier))
+            if (Optional.IsDefined(CakSecretIdentifier))
             {
                 writer.WritePropertyName("cakSecretIdentifier"u8);
                 writer.WriteStringValue(CakSecretIdentifier);
             }
-            if (Core.Optional.IsDefined(Cipher))
+            if (Optional.IsDefined(Cipher))
             {
                 writer.WritePropertyName("cipher"u8);
                 writer.WriteStringValue(Cipher.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SciState))
+            if (Optional.IsDefined(SciState))
             {
                 writer.WritePropertyName("sciState"u8);
                 writer.WriteStringValue(SciState.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> cknSecretIdentifier = default;
-            Core.Optional<string> cakSecretIdentifier = default;
-            Core.Optional<ExpressRouteLinkMacSecCipher> cipher = default;
-            Core.Optional<ExpressRouteLinkMacSecSciState> sciState = default;
+            Optional<string> cknSecretIdentifier = default;
+            Optional<string> cakSecretIdentifier = default;
+            Optional<ExpressRouteLinkMacSecCipher> cipher = default;
+            Optional<ExpressRouteLinkMacSecSciState> sciState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cknSecretIdentifier"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Core.Optional.ToNullable(cipher), Core.Optional.ToNullable(sciState));
+            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher), Optional.ToNullable(sciState));
         }
     }
 }

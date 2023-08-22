@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ConditionType = conditionType;
             UriFileNameOperator = uriFileNameOperator;
-            MatchValues = new Core.ChangeTrackingList<string>();
-            Transforms = new Core.ChangeTrackingList<PreTransformCategory>();
+            MatchValues = new ChangeTrackingList<string>();
+            Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of UriFileNameMatchCondition. </summary>

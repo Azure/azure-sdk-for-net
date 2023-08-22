@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Publisher = publisher;
             VmssExtensionPropertiesType = vmssExtensionPropertiesType;
             TypeHandlerVersion = typeHandlerVersion;
-            ProvisionAfterExtensions = new Core.ChangeTrackingList<string>();
+            ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>

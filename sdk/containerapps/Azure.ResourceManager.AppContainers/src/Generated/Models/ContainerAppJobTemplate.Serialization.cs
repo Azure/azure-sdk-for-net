@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobTemplate : Core.IUtf8JsonSerializable
+    public partial class ContainerAppJobTemplate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(InitContainers))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Containers))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Volumes))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<IList<ContainerAppInitContainer>> initContainers = default;
-            Core.Optional<IList<ContainerAppContainer>> containers = default;
-            Core.Optional<IList<ContainerAppVolume>> volumes = default;
+            Optional<IList<ContainerAppInitContainer>> initContainers = default;
+            Optional<IList<ContainerAppContainer>> containers = default;
+            Optional<IList<ContainerAppVolume>> volumes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initContainers"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJobTemplate(Core.Optional.ToList(initContainers), Core.Optional.ToList(containers), Core.Optional.ToList(volumes));
+            return new ContainerAppJobTemplate(Optional.ToList(initContainers), Optional.ToList(containers), Optional.ToList(volumes));
         }
     }
 }

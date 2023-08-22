@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _topicSpaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicSpaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<TopicSpaceResource>(new TopicSpaceOperationSource(Client), _topicSpaceClientDiagnostics, Pipeline, _topicSpaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicSpaceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<TopicSpaceResource>(new TopicSpaceOperationSource(Client), _topicSpaceClientDiagnostics, Pipeline, _topicSpaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicSpaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _topicSpaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicSpaceName, data, cancellationToken);
-                var operation = new EventGridArmOperation<TopicSpaceResource>(new TopicSpaceOperationSource(Client), _topicSpaceClientDiagnostics, Pipeline, _topicSpaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicSpaceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<TopicSpaceResource>(new TopicSpaceOperationSource(Client), _topicSpaceClientDiagnostics, Pipeline, _topicSpaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicSpaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicSpaceRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topicSpaceRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicSpaceRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topicSpaceRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TopicSpaceResource(Client, TopicSpaceData.DeserializeTopicSpaceData(e)), _topicSpaceClientDiagnostics, Pipeline, "TopicSpaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

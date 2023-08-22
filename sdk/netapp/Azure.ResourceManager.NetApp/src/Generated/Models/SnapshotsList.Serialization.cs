@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetAppVolumeSnapshotData>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeSnapshotData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new SnapshotsList(Core.Optional.ToList(value));
+            return new SnapshotsList(Optional.ToList(value));
         }
     }
 }

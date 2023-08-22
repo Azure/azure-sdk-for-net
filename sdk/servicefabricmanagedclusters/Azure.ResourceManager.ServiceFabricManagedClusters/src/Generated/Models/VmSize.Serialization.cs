@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Core.Optional<string> size = default;
+            Optional<string> size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("size"u8))

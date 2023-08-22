@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public AppServiceCertificateOrderData(AzureLocation location) : base(location)
         {
-            Certificates = new Core.ChangeTrackingDictionary<string, AppServiceCertificateProperties>();
-            AppServiceCertificateNotRenewableReasons = new Core.ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
+            Certificates = new ChangeTrackingDictionary<string, AppServiceCertificateProperties>();
+            AppServiceCertificateNotRenewableReasons = new ChangeTrackingList<AppServiceCertificateNotRenewableReason>();
         }
 
         /// <summary> Initializes a new instance of AppServiceCertificateOrderData. </summary>

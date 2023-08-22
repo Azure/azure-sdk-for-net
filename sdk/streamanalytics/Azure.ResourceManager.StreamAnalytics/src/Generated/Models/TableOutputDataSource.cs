@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of TableOutputDataSource. </summary>
         public TableOutputDataSource()
         {
-            ColumnsToRemove = new Core.ChangeTrackingList<string>();
+            ColumnsToRemove = new ChangeTrackingList<string>();
             OutputDataSourceType = "Microsoft.Storage/Table";
         }
 

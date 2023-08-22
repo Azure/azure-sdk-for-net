@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class EncryptionScopeKeyVaultProperties : Core.IUtf8JsonSerializable
+    public partial class EncryptionScopeKeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyUri))
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<Uri> keyUri = default;
-            Core.Optional<string> currentVersionedKeyIdentifier = default;
-            Core.Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Optional<Uri> keyUri = default;
+            Optional<string> currentVersionedKeyIdentifier = default;
+            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUri"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new EncryptionScopeKeyVaultProperties(keyUri.Value, currentVersionedKeyIdentifier.Value, Core.Optional.ToNullable(lastKeyRotationTimestamp));
+            return new EncryptionScopeKeyVaultProperties(keyUri.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp));
         }
     }
 }

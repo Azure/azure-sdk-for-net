@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = await _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingOperationSource(Client), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingOperationSource(Client), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             try
             {
                 var response = _siteRecoveryVaultSettingReplicationVaultSettingRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingOperationSource(Client), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVaultSettingResource>(new SiteRecoveryVaultSettingOperationSource(Client), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, vaultSettingName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryVaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVaultSettingResource(Client, SiteRecoveryVaultSettingData.DeserializeSiteRecoveryVaultSettingData(e)), _siteRecoveryVaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "SiteRecoveryVaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

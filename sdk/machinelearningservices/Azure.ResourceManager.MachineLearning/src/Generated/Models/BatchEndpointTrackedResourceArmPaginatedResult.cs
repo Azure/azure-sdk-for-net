@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
         internal BatchEndpointTrackedResourceArmPaginatedResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningBatchEndpointData>();
+            Value = new ChangeTrackingList<MachineLearningBatchEndpointData>();
         }
 
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>

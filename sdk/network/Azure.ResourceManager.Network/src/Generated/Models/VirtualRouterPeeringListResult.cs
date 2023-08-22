@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualRouterPeeringListResult. </summary>
         internal VirtualRouterPeeringListResult()
         {
-            Value = new Core.ChangeTrackingList<VirtualRouterPeeringData>();
+            Value = new ChangeTrackingList<VirtualRouterPeeringData>();
         }
 
         /// <summary> Initializes a new instance of VirtualRouterPeeringListResult. </summary>

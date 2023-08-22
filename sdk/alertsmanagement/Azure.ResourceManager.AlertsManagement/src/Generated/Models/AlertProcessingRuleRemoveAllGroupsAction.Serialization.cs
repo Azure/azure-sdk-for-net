@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleRemoveAllGroupsAction : Core.IUtf8JsonSerializable
+    public partial class AlertProcessingRuleRemoveAllGroupsAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("actionType"u8);

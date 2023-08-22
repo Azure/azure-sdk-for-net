@@ -20,39 +20,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SiteRecoveryVmDiskDetails>> azureVmDiskDetails = default;
-            Core.Optional<string> recoveryAzureVmName = default;
-            Core.Optional<string> recoveryAzureVmSize = default;
-            Core.Optional<string> recoveryAzureStorageAccount = default;
-            Core.Optional<ResourceIdentifier> recoveryAzureLogStorageAccountId = default;
-            Core.Optional<DateTimeOffset> lastReplicatedTime = default;
-            Core.Optional<long> rpoInSeconds = default;
-            Core.Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Core.Optional<string> vmId = default;
-            Core.Optional<string> vmProtectionState = default;
-            Core.Optional<string> vmProtectionStateDescription = default;
-            Core.Optional<InitialReplicationDetails> initialReplicationDetails = default;
-            Core.Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
-            Core.Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
-            Core.Optional<string> selectedSourceNicId = default;
-            Core.Optional<string> encryption = default;
-            Core.Optional<SiteRecoveryOSDetails> osDetails = default;
-            Core.Optional<int> sourceVmRamSizeInMB = default;
-            Core.Optional<int> sourceVmCpuCount = default;
-            Core.Optional<string> enableRdpOnTargetOption = default;
-            Core.Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
-            Core.Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
-            Core.Optional<string> targetAvailabilityZone = default;
-            Core.Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Core.Optional<string> useManagedDisks = default;
-            Core.Optional<string> licenseType = default;
-            Core.Optional<string> sqlServerLicenseType = default;
-            Core.Optional<DateTimeOffset> lastRecoveryPointReceived = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> seedManagedDiskTags = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> targetManagedDiskTags = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
-            Core.Optional<IReadOnlyList<HyperVReplicaAzureManagedDiskDetails>> protectedManagedDisks = default;
+            Optional<IReadOnlyList<SiteRecoveryVmDiskDetails>> azureVmDiskDetails = default;
+            Optional<string> recoveryAzureVmName = default;
+            Optional<string> recoveryAzureVmSize = default;
+            Optional<string> recoveryAzureStorageAccount = default;
+            Optional<ResourceIdentifier> recoveryAzureLogStorageAccountId = default;
+            Optional<DateTimeOffset> lastReplicatedTime = default;
+            Optional<long> rpoInSeconds = default;
+            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
+            Optional<string> vmId = default;
+            Optional<string> vmProtectionState = default;
+            Optional<string> vmProtectionStateDescription = default;
+            Optional<InitialReplicationDetails> initialReplicationDetails = default;
+            Optional<IReadOnlyList<VmNicDetails>> vmNics = default;
+            Optional<ResourceIdentifier> selectedRecoveryAzureNetworkId = default;
+            Optional<string> selectedSourceNicId = default;
+            Optional<string> encryption = default;
+            Optional<SiteRecoveryOSDetails> osDetails = default;
+            Optional<int> sourceVmRamSizeInMB = default;
+            Optional<int> sourceVmCpuCount = default;
+            Optional<string> enableRdpOnTargetOption = default;
+            Optional<ResourceIdentifier> recoveryAzureResourceGroupId = default;
+            Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
+            Optional<string> targetAvailabilityZone = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
+            Optional<string> useManagedDisks = default;
+            Optional<string> licenseType = default;
+            Optional<string> sqlServerLicenseType = default;
+            Optional<DateTimeOffset> lastRecoveryPointReceived = default;
+            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
+            Optional<IReadOnlyDictionary<string, string>> seedManagedDiskTags = default;
+            Optional<IReadOnlyDictionary<string, string>> targetManagedDiskTags = default;
+            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
+            Optional<IReadOnlyList<HyperVReplicaAzureManagedDiskDetails>> protectedManagedDisks = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new HyperVReplicaAzureReplicationDetails(instanceType, Core.Optional.ToList(azureVmDiskDetails), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Core.Optional.ToNullable(lastReplicatedTime), Core.Optional.ToNullable(rpoInSeconds), Core.Optional.ToNullable(lastRpoCalculatedTime), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Core.Optional.ToList(vmNics), selectedRecoveryAzureNetworkId.Value, selectedSourceNicId.Value, encryption.Value, osDetails.Value, Core.Optional.ToNullable(sourceVmRamSizeInMB), Core.Optional.ToNullable(sourceVmCpuCount), enableRdpOnTargetOption.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Core.Optional.ToNullable(lastRecoveryPointReceived), Core.Optional.ToDictionary(targetVmTags), Core.Optional.ToDictionary(seedManagedDiskTags), Core.Optional.ToDictionary(targetManagedDiskTags), Core.Optional.ToDictionary(targetNicTags), Core.Optional.ToList(protectedManagedDisks));
+            return new HyperVReplicaAzureReplicationDetails(instanceType, Optional.ToList(azureVmDiskDetails), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Optional.ToNullable(lastReplicatedTime), Optional.ToNullable(rpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, Optional.ToList(vmNics), selectedRecoveryAzureNetworkId.Value, selectedSourceNicId.Value, encryption.Value, osDetails.Value, Optional.ToNullable(sourceVmRamSizeInMB), Optional.ToNullable(sourceVmCpuCount), enableRdpOnTargetOption.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToList(protectedManagedDisks));
         }
     }
 }

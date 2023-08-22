@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class NamespaceTopicData : Core.IUtf8JsonSerializable
+    public partial class NamespaceTopicData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PublisherType))
+            if (Optional.IsDefined(PublisherType))
             {
                 writer.WritePropertyName("publisherType"u8);
                 writer.WriteStringValue(PublisherType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(InputSchema))
+            if (Optional.IsDefined(InputSchema))
             {
                 writer.WritePropertyName("inputSchema"u8);
                 writer.WriteStringValue(InputSchema.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EventRetentionInDays))
+            if (Optional.IsDefined(EventRetentionInDays))
             {
                 writer.WritePropertyName("eventRetentionInDays"u8);
                 writer.WriteNumberValue(EventRetentionInDays.Value);
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<NamespaceTopicProvisioningState> provisioningState = default;
-            Core.Optional<PublisherType> publisherType = default;
-            Core.Optional<EventInputSchema> inputSchema = default;
-            Core.Optional<int> eventRetentionInDays = default;
+            Optional<SystemData> systemData = default;
+            Optional<NamespaceTopicProvisioningState> provisioningState = default;
+            Optional<PublisherType> publisherType = default;
+            Optional<EventInputSchema> inputSchema = default;
+            Optional<int> eventRetentionInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new NamespaceTopicData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(publisherType), Core.Optional.ToNullable(inputSchema), Core.Optional.ToNullable(eventRetentionInDays));
+            return new NamespaceTopicData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(publisherType), Optional.ToNullable(inputSchema), Optional.ToNullable(eventRetentionInDays));
         }
     }
 }

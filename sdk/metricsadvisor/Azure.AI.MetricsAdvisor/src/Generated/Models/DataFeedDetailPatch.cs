@@ -21,9 +21,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of DataFeedDetailPatch. </summary>
         public DataFeedDetailPatch()
         {
-            RollUpColumns = new Core.ChangeTrackingList<string>();
-            Admins = new Core.ChangeTrackingList<string>();
-            Viewers = new Core.ChangeTrackingList<string>();
+            RollUpColumns = new ChangeTrackingList<string>();
+            Admins = new ChangeTrackingList<string>();
+            Viewers = new ChangeTrackingList<string>();
         }
 
         /// <summary> data source type. </summary>

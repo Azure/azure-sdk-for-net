@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuCapacity : Core.IUtf8JsonSerializable
+    public partial class ResourceTypeSkuCapacity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("minimum"u8);
             writer.WriteNumberValue(Minimum);
-            if (Core.Optional.IsDefined(Maximum))
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Core.Optional.IsDefined(Default))
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (Core.Optional.IsDefined(ScaleType))
+            if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             int minimum = default;
-            Core.Optional<int> maximum = default;
-            Core.Optional<int> @default = default;
-            Core.Optional<ResourceTypeSkuScaleType> scaleType = default;
+            Optional<int> maximum = default;
+            Optional<int> @default = default;
+            Optional<ResourceTypeSkuScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     continue;
                 }
             }
-            return new ResourceTypeSkuCapacity(minimum, Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(@default), Core.Optional.ToNullable(scaleType));
+            return new ResourceTypeSkuCapacity(minimum, Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType));
         }
     }
 }

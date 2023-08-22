@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class WebPubSubNetworkAcls : Core.IUtf8JsonSerializable
+    public partial class WebPubSubNetworkAcls : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DefaultAction))
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PublicNetwork))
+            if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
                 writer.WriteObjectValue(PublicNetwork);
             }
-            if (Core.Optional.IsCollectionDefined(PrivateEndpoints))
+            if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Core.Optional<AclAction> defaultAction = default;
-            Core.Optional<PublicNetworkAcls> publicNetwork = default;
-            Core.Optional<IList<PrivateEndpointAcl>> privateEndpoints = default;
+            Optional<AclAction> defaultAction = default;
+            Optional<PublicNetworkAcls> publicNetwork = default;
+            Optional<IList<PrivateEndpointAcl>> privateEndpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubNetworkAcls(Core.Optional.ToNullable(defaultAction), publicNetwork.Value, Core.Optional.ToList(privateEndpoints));
+            return new WebPubSubNetworkAcls(Optional.ToNullable(defaultAction), publicNetwork.Value, Optional.ToList(privateEndpoints));
         }
     }
 }

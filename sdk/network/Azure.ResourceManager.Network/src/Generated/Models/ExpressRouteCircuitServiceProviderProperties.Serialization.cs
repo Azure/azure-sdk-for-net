@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitServiceProviderProperties : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitServiceProviderProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceProviderName))
+            if (Optional.IsDefined(ServiceProviderName))
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (Core.Optional.IsDefined(PeeringLocation))
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (Core.Optional.IsDefined(BandwidthInMbps))
+            if (Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> serviceProviderName = default;
-            Core.Optional<string> peeringLocation = default;
-            Core.Optional<int> bandwidthInMbps = default;
+            Optional<string> serviceProviderName = default;
+            Optional<string> peeringLocation = default;
+            Optional<int> bandwidthInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceProviderName"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName.Value, peeringLocation.Value, Core.Optional.ToNullable(bandwidthInMbps));
+            return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName.Value, peeringLocation.Value, Optional.ToNullable(bandwidthInMbps));
         }
     }
 }

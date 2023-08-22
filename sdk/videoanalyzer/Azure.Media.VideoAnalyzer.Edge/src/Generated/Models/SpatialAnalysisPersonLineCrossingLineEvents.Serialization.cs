@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SpatialAnalysisPersonLineCrossingLineEvents : Core.IUtf8JsonSerializable
+    public partial class SpatialAnalysisPersonLineCrossingLineEvents : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("line"u8);
             writer.WriteObjectValue(Line);
-            if (Core.Optional.IsCollectionDefined(Events))
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             NamedLineBase line = default;
-            Core.Optional<IList<SpatialAnalysisPersonLineCrossingEvent>> events = default;
+            Optional<IList<SpatialAnalysisPersonLineCrossingEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("line"u8))
@@ -61,7 +61,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonLineCrossingLineEvents(line, Core.Optional.ToList(events));
+            return new SpatialAnalysisPersonLineCrossingLineEvents(line, Optional.ToList(events));
         }
     }
 }

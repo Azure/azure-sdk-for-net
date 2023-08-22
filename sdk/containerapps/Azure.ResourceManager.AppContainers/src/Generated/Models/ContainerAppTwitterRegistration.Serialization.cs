@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppTwitterRegistration : Core.IUtf8JsonSerializable
+    public partial class ContainerAppTwitterRegistration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConsumerKey))
+            if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
                 writer.WriteStringValue(ConsumerKey);
             }
-            if (Core.Optional.IsDefined(ConsumerSecretSettingName))
+            if (Optional.IsDefined(ConsumerSecretSettingName))
             {
                 writer.WritePropertyName("consumerSecretSettingName"u8);
                 writer.WriteStringValue(ConsumerSecretSettingName);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> consumerKey = default;
-            Core.Optional<string> consumerSecretSettingName = default;
+            Optional<string> consumerKey = default;
+            Optional<string> consumerSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consumerKey"u8))

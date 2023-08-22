@@ -13,22 +13,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class ManagedHsmData : Core.IUtf8JsonSerializable
+    public partial class ManagedHsmData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.KeyVault
             {
                 return null;
             }
-            Core.Optional<ManagedHsmProperties> properties = default;
-            Core.Optional<ManagedHsmSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedHsmProperties> properties = default;
+            Optional<ManagedHsmSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KeyVault
                     continue;
                 }
             }
-            return new ManagedHsmData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, properties.Value, sku.Value);
+            return new ManagedHsmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value);
         }
     }
 }

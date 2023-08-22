@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestData. </summary>
         internal ApplicationGatewayWafDynamicManifestData()
         {
-            AvailableRuleSets = new Core.ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>();
+            AvailableRuleSets = new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestData. </summary>

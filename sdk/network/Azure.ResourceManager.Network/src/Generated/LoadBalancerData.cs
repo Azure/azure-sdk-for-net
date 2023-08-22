@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of LoadBalancerData. </summary>
         public LoadBalancerData()
         {
-            FrontendIPConfigurations = new Core.ChangeTrackingList<FrontendIPConfigurationData>();
-            BackendAddressPools = new Core.ChangeTrackingList<BackendAddressPoolData>();
-            LoadBalancingRules = new Core.ChangeTrackingList<LoadBalancingRuleData>();
-            Probes = new Core.ChangeTrackingList<ProbeData>();
-            InboundNatRules = new Core.ChangeTrackingList<InboundNatRuleData>();
-            InboundNatPools = new Core.ChangeTrackingList<LoadBalancerInboundNatPool>();
-            OutboundRules = new Core.ChangeTrackingList<OutboundRuleData>();
+            FrontendIPConfigurations = new ChangeTrackingList<FrontendIPConfigurationData>();
+            BackendAddressPools = new ChangeTrackingList<BackendAddressPoolData>();
+            LoadBalancingRules = new ChangeTrackingList<LoadBalancingRuleData>();
+            Probes = new ChangeTrackingList<ProbeData>();
+            InboundNatRules = new ChangeTrackingList<InboundNatRuleData>();
+            InboundNatPools = new ChangeTrackingList<LoadBalancerInboundNatPool>();
+            OutboundRules = new ChangeTrackingList<OutboundRuleData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerData. </summary>

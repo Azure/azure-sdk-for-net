@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>
         public AppPlatformDeploymentProperties()
         {
-            Instances = new Core.ChangeTrackingList<AppPlatformDeploymentInstance>();
+            Instances = new ChangeTrackingList<AppPlatformDeploymentInstance>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>

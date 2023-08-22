@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<int> signatureId = default;
-            Core.Optional<FirewallPolicyIdpsSignatureMode> mode = default;
-            Core.Optional<FirewallPolicyIdpsSignatureSeverity> severity = default;
-            Core.Optional<FirewallPolicyIdpsSignatureDirection> direction = default;
-            Core.Optional<string> group = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> protocol = default;
-            Core.Optional<IReadOnlyList<string>> sourcePorts = default;
-            Core.Optional<IReadOnlyList<string>> destinationPorts = default;
-            Core.Optional<string> lastUpdated = default;
-            Core.Optional<bool> inheritedFromParentPolicy = default;
+            Optional<int> signatureId = default;
+            Optional<FirewallPolicyIdpsSignatureMode> mode = default;
+            Optional<FirewallPolicyIdpsSignatureSeverity> severity = default;
+            Optional<FirewallPolicyIdpsSignatureDirection> direction = default;
+            Optional<string> group = default;
+            Optional<string> description = default;
+            Optional<string> protocol = default;
+            Optional<IReadOnlyList<string>> sourcePorts = default;
+            Optional<IReadOnlyList<string>> destinationPorts = default;
+            Optional<string> lastUpdated = default;
+            Optional<bool> inheritedFromParentPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("signatureId"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new IdpsSignatureResult(Core.Optional.ToNullable(signatureId), Core.Optional.ToNullable(mode), Core.Optional.ToNullable(severity), Core.Optional.ToNullable(direction), group.Value, description.Value, protocol.Value, Core.Optional.ToList(sourcePorts), Core.Optional.ToList(destinationPorts), lastUpdated.Value, Core.Optional.ToNullable(inheritedFromParentPolicy));
+            return new IdpsSignatureResult(Optional.ToNullable(signatureId), Optional.ToNullable(mode), Optional.ToNullable(severity), Optional.ToNullable(direction), group.Value, description.Value, protocol.Value, Optional.ToList(sourcePorts), Optional.ToList(destinationPorts), lastUpdated.Value, Optional.ToNullable(inheritedFromParentPolicy));
         }
     }
 }

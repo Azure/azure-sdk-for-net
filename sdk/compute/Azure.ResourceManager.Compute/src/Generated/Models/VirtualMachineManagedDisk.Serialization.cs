@@ -11,27 +11,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineManagedDisk : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineManagedDisk : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DiskEncryptionSet))
+            if (Optional.IsDefined(DiskEncryptionSet))
             {
                 writer.WritePropertyName("diskEncryptionSet"u8);
                 JsonSerializer.Serialize(writer, DiskEncryptionSet);
             }
-            if (Core.Optional.IsDefined(SecurityProfile))
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<StorageAccountType> storageAccountType = default;
-            Core.Optional<WritableSubResource> diskEncryptionSet = default;
-            Core.Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<StorageAccountType> storageAccountType = default;
+            Optional<WritableSubResource> diskEncryptionSet = default;
+            Optional<VirtualMachineDiskSecurityProfile> securityProfile = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineManagedDisk(id.Value, Core.Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
+            return new VirtualMachineManagedDisk(id.Value, Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
         }
     }
 }

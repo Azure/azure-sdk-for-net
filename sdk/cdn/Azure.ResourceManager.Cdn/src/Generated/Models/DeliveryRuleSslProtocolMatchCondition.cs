@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             SslProtocolMatchConditionType = sslProtocolMatchConditionType;
             SslProtocolOperator = sslProtocolOperator;
-            MatchValues = new Core.ChangeTrackingList<DeliveryRuleSslProtocol>();
-            Transforms = new Core.ChangeTrackingList<PreTransformCategory>();
+            MatchValues = new ChangeTrackingList<DeliveryRuleSslProtocol>();
+            Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleSslProtocolMatchCondition. </summary>

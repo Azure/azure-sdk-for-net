@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class CreateAndMountFileShareConfiguration : Core.IUtf8JsonSerializable
+    public partial class CreateAndMountFileShareConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Core.Optional.IsDefined(StorageAccountName))
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceGroup = default;
-            Core.Optional<string> storageAccountName = default;
+            Optional<string> resourceGroup = default;
+            Optional<string> storageAccountName = default;
             ConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {

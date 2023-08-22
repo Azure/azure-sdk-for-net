@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class LivePipelineProperties : Core.IUtf8JsonSerializable
+    public partial class LivePipelineProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(TopologyName))
+            if (Optional.IsDefined(TopologyName))
             {
                 writer.WritePropertyName("topologyName"u8);
                 writer.WriteStringValue(TopologyName);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -50,10 +50,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<string> topologyName = default;
-            Core.Optional<IList<ParameterDefinition>> parameters = default;
-            Core.Optional<LivePipelineState> state = default;
+            Optional<string> description = default;
+            Optional<string> topologyName = default;
+            Optional<IList<ParameterDefinition>> parameters = default;
+            Optional<LivePipelineState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -90,7 +90,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineProperties(description.Value, topologyName.Value, Core.Optional.ToList(parameters), Core.Optional.ToNullable(state));
+            return new LivePipelineProperties(description.Value, topologyName.Value, Optional.ToList(parameters), Optional.ToNullable(state));
         }
     }
 }

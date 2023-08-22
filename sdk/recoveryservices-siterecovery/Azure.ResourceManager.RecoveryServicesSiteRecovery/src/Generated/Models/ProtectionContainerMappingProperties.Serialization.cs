@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> targetProtectionContainerId = default;
-            Core.Optional<string> targetProtectionContainerFriendlyName = default;
-            Core.Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
-            Core.Optional<string> health = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
-            Core.Optional<ResourceIdentifier> policyId = default;
-            Core.Optional<string> state = default;
-            Core.Optional<string> sourceProtectionContainerFriendlyName = default;
-            Core.Optional<string> sourceFabricFriendlyName = default;
-            Core.Optional<string> targetFabricFriendlyName = default;
-            Core.Optional<string> policyFriendlyName = default;
+            Optional<ResourceIdentifier> targetProtectionContainerId = default;
+            Optional<string> targetProtectionContainerFriendlyName = default;
+            Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
+            Optional<string> health = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
+            Optional<ResourceIdentifier> policyId = default;
+            Optional<string> state = default;
+            Optional<string> sourceProtectionContainerFriendlyName = default;
+            Optional<string> sourceFabricFriendlyName = default;
+            Optional<string> targetFabricFriendlyName = default;
+            Optional<string> policyFriendlyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetProtectionContainerId"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Core.Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value);
+            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value);
         }
     }
 }

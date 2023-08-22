@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class DataSourcesSpecDataImports : Core.IUtf8JsonSerializable
+    internal partial class DataSourcesSpecDataImports : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EventHub))
+            if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
                 writer.WriteObjectValue(EventHub);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<DataImportSourcesEventHub> eventHub = default;
+            Optional<DataImportSourcesEventHub> eventHub = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHub"u8))

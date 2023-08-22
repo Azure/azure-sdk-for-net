@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics, Pipeline, "SubscriptionPacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics, Pipeline, "SubscriptionPacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics, Pipeline, "SubscriptionPacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionPacketCoreControlPlaneVersionResource(Client, PacketCoreControlPlaneVersionData.DeserializePacketCoreControlPlaneVersionData(e)), _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics, Pipeline, "SubscriptionPacketCoreControlPlaneVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

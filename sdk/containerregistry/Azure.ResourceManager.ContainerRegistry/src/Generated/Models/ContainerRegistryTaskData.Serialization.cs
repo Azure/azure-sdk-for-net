@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryTaskData : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryTaskData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,52 +39,52 @@ namespace Azure.ResourceManager.ContainerRegistry
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Platform))
+            if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (Core.Optional.IsDefined(AgentConfiguration))
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
-            if (Core.Optional.IsDefined(AgentPoolName))
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Core.Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(Step))
+            if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
                 writer.WriteObjectValue(Step);
             }
-            if (Core.Optional.IsDefined(Trigger))
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteObjectValue(Trigger);
             }
-            if (Core.Optional.IsDefined(Credentials))
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Core.Optional.IsDefined(LogTemplate))
+            if (Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
             }
-            if (Core.Optional.IsDefined(IsSystemTask))
+            if (Optional.IsDefined(IsSystemTask))
             {
                 writer.WritePropertyName("isSystemTask"u8);
                 writer.WriteBooleanValue(IsSystemTask.Value);
@@ -99,25 +99,25 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<ContainerRegistryTaskStatus> status = default;
-            Core.Optional<ContainerRegistryPlatformProperties> platform = default;
-            Core.Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Core.Optional<string> agentPoolName = default;
-            Core.Optional<int> timeout = default;
-            Core.Optional<ContainerRegistryTaskStepProperties> step = default;
-            Core.Optional<ContainerRegistryTriggerProperties> trigger = default;
-            Core.Optional<ContainerRegistryCredentials> credentials = default;
-            Core.Optional<string> logTemplate = default;
-            Core.Optional<bool> isSystemTask = default;
+            Optional<SystemData> systemData = default;
+            Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<ContainerRegistryTaskStatus> status = default;
+            Optional<ContainerRegistryPlatformProperties> platform = default;
+            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
+            Optional<string> agentPoolName = default;
+            Optional<int> timeout = default;
+            Optional<ContainerRegistryTaskStepProperties> step = default;
+            Optional<ContainerRegistryTriggerProperties> trigger = default;
+            Optional<ContainerRegistryCredentials> credentials = default;
+            Optional<string> logTemplate = default;
+            Optional<bool> isSystemTask = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRegistryTaskData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Core.Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, Core.Optional.ToNullable(isSystemTask));
+            return new ContainerRegistryTaskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, Optional.ToNullable(isSystemTask));
         }
     }
 }

@@ -12,22 +12,22 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRoutePortsLocationData : Core.IUtf8JsonSerializable
+    public partial class ExpressRoutePortsLocationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AvailableBandwidths))
+            if (Optional.IsCollectionDefined(AvailableBandwidths))
             {
                 writer.WritePropertyName("availableBandwidths"u8);
                 writer.WriteStartArray();
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<string> address = default;
-            Core.Optional<string> contact = default;
-            Core.Optional<IList<ExpressRoutePortsLocationBandwidths>> availableBandwidths = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> address = default;
+            Optional<string> contact = default;
+            Optional<IList<ExpressRoutePortsLocationBandwidths>> availableBandwidths = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRoutePortsLocationData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), address.Value, contact.Value, Core.Optional.ToList(availableBandwidths), Core.Optional.ToNullable(provisioningState));
+            return new ExpressRoutePortsLocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), address.Value, contact.Value, Optional.ToList(availableBandwidths), Optional.ToNullable(provisioningState));
         }
     }
 }

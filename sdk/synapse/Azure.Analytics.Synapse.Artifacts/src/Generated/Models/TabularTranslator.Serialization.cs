@@ -14,42 +14,42 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TabularTranslatorConverter))]
-    public partial class TabularTranslator : Core.IUtf8JsonSerializable
+    public partial class TabularTranslator : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ColumnMappings))
+            if (Optional.IsDefined(ColumnMappings))
             {
                 writer.WritePropertyName("columnMappings"u8);
                 writer.WriteObjectValue(ColumnMappings);
             }
-            if (Core.Optional.IsDefined(SchemaMapping))
+            if (Optional.IsDefined(SchemaMapping))
             {
                 writer.WritePropertyName("schemaMapping"u8);
                 writer.WriteObjectValue(SchemaMapping);
             }
-            if (Core.Optional.IsDefined(CollectionReference))
+            if (Optional.IsDefined(CollectionReference))
             {
                 writer.WritePropertyName("collectionReference"u8);
                 writer.WriteObjectValue(CollectionReference);
             }
-            if (Core.Optional.IsDefined(MapComplexValuesToString))
+            if (Optional.IsDefined(MapComplexValuesToString))
             {
                 writer.WritePropertyName("mapComplexValuesToString"u8);
                 writer.WriteObjectValue(MapComplexValuesToString);
             }
-            if (Core.Optional.IsDefined(Mappings))
+            if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteObjectValue(Mappings);
             }
-            if (Core.Optional.IsDefined(TypeConversion))
+            if (Optional.IsDefined(TypeConversion))
             {
                 writer.WritePropertyName("typeConversion"u8);
                 writer.WriteObjectValue(TypeConversion);
             }
-            if (Core.Optional.IsDefined(TypeConversionSettings))
+            if (Optional.IsDefined(TypeConversionSettings))
             {
                 writer.WritePropertyName("typeConversionSettings"u8);
                 writer.WriteObjectValue(TypeConversionSettings);
@@ -70,13 +70,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> columnMappings = default;
-            Core.Optional<object> schemaMapping = default;
-            Core.Optional<object> collectionReference = default;
-            Core.Optional<object> mapComplexValuesToString = default;
-            Core.Optional<object> mappings = default;
-            Core.Optional<object> typeConversion = default;
-            Core.Optional<TypeConversionSettings> typeConversionSettings = default;
+            Optional<object> columnMappings = default;
+            Optional<object> schemaMapping = default;
+            Optional<object> collectionReference = default;
+            Optional<object> mapComplexValuesToString = default;
+            Optional<object> mappings = default;
+            Optional<object> typeConversion = default;
+            Optional<TypeConversionSettings> typeConversionSettings = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

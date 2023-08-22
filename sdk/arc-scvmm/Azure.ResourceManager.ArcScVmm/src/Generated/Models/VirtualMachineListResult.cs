@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
         internal VirtualMachineListResult()
         {
-            Value = new Core.ChangeTrackingList<ScVmmVirtualMachineData>();
+            Value = new ChangeTrackingList<ScVmmVirtualMachineData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>

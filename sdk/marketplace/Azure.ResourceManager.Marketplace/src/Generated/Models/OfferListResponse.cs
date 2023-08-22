@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of OfferListResponse. </summary>
         internal OfferListResponse()
         {
-            Value = new Core.ChangeTrackingList<PrivateStoreOfferData>();
+            Value = new ChangeTrackingList<PrivateStoreOfferData>();
         }
 
         /// <summary> Initializes a new instance of OfferListResponse. </summary>

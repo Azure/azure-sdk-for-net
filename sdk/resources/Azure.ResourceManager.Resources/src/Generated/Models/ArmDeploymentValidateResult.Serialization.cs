@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<ResponseError> error = default;
-            Core.Optional<ArmDeploymentPropertiesExtended> properties = default;
+            Optional<ResponseError> error = default;
+            Optional<ArmDeploymentPropertiesExtended> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

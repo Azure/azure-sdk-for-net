@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SiteRecoveryInnerHealthError>> innerHealthErrors = default;
-            Core.Optional<string> errorSource = default;
-            Core.Optional<string> errorType = default;
-            Core.Optional<string> errorLevel = default;
-            Core.Optional<string> errorCategory = default;
-            Core.Optional<string> errorCode = default;
-            Core.Optional<string> summaryMessage = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<string> possibleCauses = default;
-            Core.Optional<string> recommendedAction = default;
-            Core.Optional<DateTimeOffset> creationTimeUtc = default;
-            Core.Optional<string> recoveryProviderErrorMessage = default;
-            Core.Optional<string> entityId = default;
-            Core.Optional<string> errorId = default;
-            Core.Optional<HealthErrorCustomerResolvability> customerResolvability = default;
+            Optional<IReadOnlyList<SiteRecoveryInnerHealthError>> innerHealthErrors = default;
+            Optional<string> errorSource = default;
+            Optional<string> errorType = default;
+            Optional<string> errorLevel = default;
+            Optional<string> errorCategory = default;
+            Optional<string> errorCode = default;
+            Optional<string> summaryMessage = default;
+            Optional<string> errorMessage = default;
+            Optional<string> possibleCauses = default;
+            Optional<string> recommendedAction = default;
+            Optional<DateTimeOffset> creationTimeUtc = default;
+            Optional<string> recoveryProviderErrorMessage = default;
+            Optional<string> entityId = default;
+            Optional<string> errorId = default;
+            Optional<HealthErrorCustomerResolvability> customerResolvability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("innerHealthErrors"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryHealthError(Core.Optional.ToList(innerHealthErrors), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Core.Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Core.Optional.ToNullable(customerResolvability));
+            return new SiteRecoveryHealthError(Optional.ToList(innerHealthErrors), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability));
         }
     }
 }

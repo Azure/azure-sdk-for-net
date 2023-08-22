@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<string> nameLocale = default;
-            Core.Optional<string> name = default;
+            Optional<string> nameLocale = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameLocale"u8))

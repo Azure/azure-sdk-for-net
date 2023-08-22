@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.IotHub
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
-            Core.Optional<ETag?> etag = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
+            Optional<ETag?> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotHub
                     continue;
                 }
             }
-            return new EventHubConsumerGroupInfoData(id, name, type, systemData.Value, Core.Optional.ToDictionary(properties), Core.Optional.ToNullable(etag));
+            return new EventHubConsumerGroupInfoData(id, name, type, systemData.Value, Optional.ToDictionary(properties), Optional.ToNullable(etag));
         }
     }
 }

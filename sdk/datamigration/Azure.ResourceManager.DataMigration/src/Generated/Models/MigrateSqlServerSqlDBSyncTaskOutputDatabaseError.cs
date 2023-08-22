@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputDatabaseError. </summary>
         internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError()
         {
-            Events = new Core.ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
+            Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
             ResultType = "DatabaseLevelErrorOutput";
         }
 

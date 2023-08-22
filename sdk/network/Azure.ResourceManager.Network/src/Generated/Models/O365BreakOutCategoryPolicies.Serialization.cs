@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class O365BreakOutCategoryPolicies : Core.IUtf8JsonSerializable
+    public partial class O365BreakOutCategoryPolicies : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Allow))
+            if (Optional.IsDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteBooleanValue(Allow.Value);
             }
-            if (Core.Optional.IsDefined(Optimize))
+            if (Optional.IsDefined(Optimize))
             {
                 writer.WritePropertyName("optimize"u8);
                 writer.WriteBooleanValue(Optimize.Value);
             }
-            if (Core.Optional.IsDefined(Default))
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(Default.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<bool> allow = default;
-            Core.Optional<bool> optimize = default;
-            Core.Optional<bool> @default = default;
+            Optional<bool> allow = default;
+            Optional<bool> optimize = default;
+            Optional<bool> @default = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allow"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new O365BreakOutCategoryPolicies(Core.Optional.ToNullable(allow), Core.Optional.ToNullable(optimize), Core.Optional.ToNullable(@default));
+            return new O365BreakOutCategoryPolicies(Optional.ToNullable(allow), Optional.ToNullable(optimize), Optional.ToNullable(@default));
         }
     }
 }

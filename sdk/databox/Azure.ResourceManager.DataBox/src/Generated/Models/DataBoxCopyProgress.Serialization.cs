@@ -20,23 +20,23 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> storageAccountName = default;
-            Core.Optional<DataBoxJobTransferType> transferType = default;
-            Core.Optional<DataAccountType> dataAccountType = default;
-            Core.Optional<ResourceIdentifier> accountId = default;
-            Core.Optional<long> bytesProcessed = default;
-            Core.Optional<long> totalBytesToProcess = default;
-            Core.Optional<long> filesProcessed = default;
-            Core.Optional<long> totalFilesToProcess = default;
-            Core.Optional<long> invalidFilesProcessed = default;
-            Core.Optional<long> invalidFileBytesUploaded = default;
-            Core.Optional<long> renamedContainerCount = default;
-            Core.Optional<long> filesErroredOut = default;
-            Core.Optional<long> directoriesErroredOut = default;
-            Core.Optional<long> invalidDirectoriesProcessed = default;
-            Core.Optional<bool> isEnumerationInProgress = default;
-            Core.Optional<ResponseError> error = default;
-            Core.Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            Optional<string> storageAccountName = default;
+            Optional<DataBoxJobTransferType> transferType = default;
+            Optional<DataAccountType> dataAccountType = default;
+            Optional<ResourceIdentifier> accountId = default;
+            Optional<long> bytesProcessed = default;
+            Optional<long> totalBytesToProcess = default;
+            Optional<long> filesProcessed = default;
+            Optional<long> totalFilesToProcess = default;
+            Optional<long> invalidFilesProcessed = default;
+            Optional<long> invalidFileBytesUploaded = default;
+            Optional<long> renamedContainerCount = default;
+            Optional<long> filesErroredOut = default;
+            Optional<long> directoriesErroredOut = default;
+            Optional<long> invalidDirectoriesProcessed = default;
+            Optional<bool> isEnumerationInProgress = default;
+            Optional<ResponseError> error = default;
+            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountName"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxCopyProgress(storageAccountName.Value, Core.Optional.ToNullable(transferType), Core.Optional.ToNullable(dataAccountType), accountId.Value, Core.Optional.ToNullable(bytesProcessed), Core.Optional.ToNullable(totalBytesToProcess), Core.Optional.ToNullable(filesProcessed), Core.Optional.ToNullable(totalFilesToProcess), Core.Optional.ToNullable(invalidFilesProcessed), Core.Optional.ToNullable(invalidFileBytesUploaded), Core.Optional.ToNullable(renamedContainerCount), Core.Optional.ToNullable(filesErroredOut), Core.Optional.ToNullable(directoriesErroredOut), Core.Optional.ToNullable(invalidDirectoriesProcessed), Core.Optional.ToNullable(isEnumerationInProgress), error.Value, Core.Optional.ToList(actions));
+            return new DataBoxCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions));
         }
     }
 }

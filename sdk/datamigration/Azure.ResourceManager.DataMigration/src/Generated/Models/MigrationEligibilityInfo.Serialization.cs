@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<bool> isEligibleForMigration = default;
-            Core.Optional<IReadOnlyList<string>> validationMessages = default;
+            Optional<bool> isEligibleForMigration = default;
+            Optional<IReadOnlyList<string>> validationMessages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEligibleForMigration"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrationEligibilityInfo(Core.Optional.ToNullable(isEligibleForMigration), Core.Optional.ToList(validationMessages));
+            return new MigrationEligibilityInfo(Optional.ToNullable(isEligibleForMigration), Optional.ToList(validationMessages));
         }
     }
 }

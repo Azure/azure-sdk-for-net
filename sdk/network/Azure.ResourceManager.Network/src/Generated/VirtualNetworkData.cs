@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualNetworkData. </summary>
         public VirtualNetworkData()
         {
-            Subnets = new Core.ChangeTrackingList<SubnetData>();
-            VirtualNetworkPeerings = new Core.ChangeTrackingList<VirtualNetworkPeeringData>();
-            IPAllocations = new Core.ChangeTrackingList<WritableSubResource>();
-            FlowLogs = new Core.ChangeTrackingList<FlowLogData>();
+            Subnets = new ChangeTrackingList<SubnetData>();
+            VirtualNetworkPeerings = new ChangeTrackingList<VirtualNetworkPeeringData>();
+            IPAllocations = new ChangeTrackingList<WritableSubResource>();
+            FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkData. </summary>

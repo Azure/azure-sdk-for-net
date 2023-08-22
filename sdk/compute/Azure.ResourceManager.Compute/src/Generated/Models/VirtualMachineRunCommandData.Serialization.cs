@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineRunCommandData : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineRunCommandData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ProtectedParameters))
+            if (Optional.IsCollectionDefined(ProtectedParameters))
             {
                 writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();
@@ -59,47 +59,47 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AsyncExecution))
+            if (Optional.IsDefined(AsyncExecution))
             {
                 writer.WritePropertyName("asyncExecution"u8);
                 writer.WriteBooleanValue(AsyncExecution.Value);
             }
-            if (Core.Optional.IsDefined(RunAsUser))
+            if (Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteStringValue(RunAsUser);
             }
-            if (Core.Optional.IsDefined(RunAsPassword))
+            if (Optional.IsDefined(RunAsPassword))
             {
                 writer.WritePropertyName("runAsPassword"u8);
                 writer.WriteStringValue(RunAsPassword);
             }
-            if (Core.Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(OutputBlobUri))
+            if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri"u8);
                 writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(ErrorBlobUri))
+            if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri"u8);
                 writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(OutputBlobManagedIdentity))
+            if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
                 writer.WriteObjectValue(OutputBlobManagedIdentity);
             }
-            if (Core.Optional.IsDefined(ErrorBlobManagedIdentity))
+            if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
                 writer.WriteObjectValue(ErrorBlobManagedIdentity);
             }
-            if (Core.Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
@@ -114,26 +114,26 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<VirtualMachineRunCommandScriptSource> source = default;
-            Core.Optional<IList<RunCommandInputParameter>> parameters = default;
-            Core.Optional<IList<RunCommandInputParameter>> protectedParameters = default;
-            Core.Optional<bool> asyncExecution = default;
-            Core.Optional<string> runAsUser = default;
-            Core.Optional<string> runAsPassword = default;
-            Core.Optional<int> timeoutInSeconds = default;
-            Core.Optional<Uri> outputBlobUri = default;
-            Core.Optional<Uri> errorBlobUri = default;
-            Core.Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
-            Core.Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
-            Core.Optional<bool> treatFailureAsDeploymentFailure = default;
+            Optional<SystemData> systemData = default;
+            Optional<VirtualMachineRunCommandScriptSource> source = default;
+            Optional<IList<RunCommandInputParameter>> parameters = default;
+            Optional<IList<RunCommandInputParameter>> protectedParameters = default;
+            Optional<bool> asyncExecution = default;
+            Optional<string> runAsUser = default;
+            Optional<string> runAsPassword = default;
+            Optional<int> timeoutInSeconds = default;
+            Optional<Uri> outputBlobUri = default;
+            Optional<Uri> errorBlobUri = default;
+            Optional<RunCommandManagedIdentity> outputBlobManagedIdentity = default;
+            Optional<RunCommandManagedIdentity> errorBlobManagedIdentity = default;
+            Optional<string> provisioningState = default;
+            Optional<VirtualMachineRunCommandInstanceView> instanceView = default;
+            Optional<bool> treatFailureAsDeploymentFailure = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineRunCommandData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, source.Value, Core.Optional.ToList(parameters), Core.Optional.ToList(protectedParameters), Core.Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Core.Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Core.Optional.ToNullable(treatFailureAsDeploymentFailure));
+            return new VirtualMachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, Optional.ToList(parameters), Optional.ToList(protectedParameters), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(treatFailureAsDeploymentFailure));
         }
     }
 }

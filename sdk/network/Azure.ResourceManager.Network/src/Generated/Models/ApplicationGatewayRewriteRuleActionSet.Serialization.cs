@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRewriteRuleActionSet : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayRewriteRuleActionSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(RequestHeaderConfigurations))
+            if (Optional.IsCollectionDefined(RequestHeaderConfigurations))
             {
                 writer.WritePropertyName("requestHeaderConfigurations"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ResponseHeaderConfigurations))
+            if (Optional.IsCollectionDefined(ResponseHeaderConfigurations))
             {
                 writer.WritePropertyName("responseHeaderConfigurations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(UrlConfiguration))
+            if (Optional.IsDefined(UrlConfiguration))
             {
                 writer.WritePropertyName("urlConfiguration"u8);
                 writer.WriteObjectValue(UrlConfiguration);
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<ApplicationGatewayHeaderConfiguration>> requestHeaderConfigurations = default;
-            Core.Optional<IList<ApplicationGatewayHeaderConfiguration>> responseHeaderConfigurations = default;
-            Core.Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;
+            Optional<IList<ApplicationGatewayHeaderConfiguration>> requestHeaderConfigurations = default;
+            Optional<IList<ApplicationGatewayHeaderConfiguration>> responseHeaderConfigurations = default;
+            Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestHeaderConfigurations"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRewriteRuleActionSet(Core.Optional.ToList(requestHeaderConfigurations), Core.Optional.ToList(responseHeaderConfigurations), urlConfiguration.Value);
+            return new ApplicationGatewayRewriteRuleActionSet(Optional.ToList(requestHeaderConfigurations), Optional.ToList(responseHeaderConfigurations), urlConfiguration.Value);
         }
     }
 }

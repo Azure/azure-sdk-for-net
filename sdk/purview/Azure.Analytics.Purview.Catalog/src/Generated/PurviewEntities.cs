@@ -2598,7 +2598,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guids != null && Core.Optional.IsCollectionDefined(guids))
+            if (guids != null && Optional.IsCollectionDefined(guids))
             {
                 foreach (var param in guids)
                 {
@@ -2613,7 +2613,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
             }
-            if (excludeRelationshipTypes != null && Core.Optional.IsCollectionDefined(excludeRelationshipTypes))
+            if (excludeRelationshipTypes != null && Optional.IsCollectionDefined(excludeRelationshipTypes))
             {
                 foreach (var param in excludeRelationshipTypes)
                 {
@@ -2650,7 +2650,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guids != null && Core.Optional.IsCollectionDefined(guids))
+            if (guids != null && Optional.IsCollectionDefined(guids))
             {
                 foreach (var param in guids)
                 {

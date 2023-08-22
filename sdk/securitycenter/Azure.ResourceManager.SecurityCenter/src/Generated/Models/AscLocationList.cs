@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of AscLocationList. </summary>
         internal AscLocationList()
         {
-            Value = new Core.ChangeTrackingList<SecurityCenterLocationData>();
+            Value = new ChangeTrackingList<SecurityCenterLocationData>();
         }
 
         /// <summary> Initializes a new instance of AscLocationList. </summary>

@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class EventHubConfiguration : Core.IUtf8JsonSerializable
+    public partial class EventHubConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(NameSpace))
+            if (Optional.IsDefined(NameSpace))
             {
                 writer.WritePropertyName("nameSpace"u8);
                 writer.WriteStringValue(NameSpace);
             }
-            if (Core.Optional.IsDefined(PolicyName))
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> nameSpace = default;
-            Core.Optional<string> policyName = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> name = default;
+            Optional<string> nameSpace = default;
+            Optional<string> policyName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class Participant : Core.IUtf8JsonSerializable
+    public partial class Participant : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("profileTypeName"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteEndArray();
             writer.WritePropertyName("participantName"u8);
             writer.WriteStringValue(ParticipantName);
-            if (Core.Optional.IsCollectionDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Description))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Role))
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string profileTypeName = default;
             IList<ParticipantPropertyReference> participantPropertyReferences = default;
             string participantName = default;
-            Core.Optional<IDictionary<string, string>> displayName = default;
-            Core.Optional<IDictionary<string, string>> description = default;
-            Core.Optional<string> role = default;
+            Optional<IDictionary<string, string>> displayName = default;
+            Optional<IDictionary<string, string>> description = default;
+            Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileTypeName"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new Participant(profileTypeName, participantPropertyReferences, participantName, Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description), role.Value);
+            return new Participant(profileTypeName, participantPropertyReferences, participantName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), role.Value);
         }
     }
 }

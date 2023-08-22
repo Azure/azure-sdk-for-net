@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> eventHubNamespace = default;
-            Core.Optional<ResourceIdentifier> resourceGroup = default;
-            Core.Optional<ResourceIdentifier> storageAccount = default;
+            Optional<ResourceIdentifier> eventHubNamespace = default;
+            Optional<ResourceIdentifier> resourceGroup = default;
+            Optional<ResourceIdentifier> storageAccount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubNamespace"u8))

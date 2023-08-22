@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<Uri> blobUri = default;
+            Optional<Uri> blobUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobUrl"u8))

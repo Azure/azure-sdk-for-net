@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> publicIPAddress = default;
-            Core.Optional<string> privateIPAddress = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> publicIPAddress = default;
+            Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

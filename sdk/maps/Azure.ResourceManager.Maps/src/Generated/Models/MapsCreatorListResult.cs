@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>
         internal MapsCreatorListResult()
         {
-            Value = new Core.ChangeTrackingList<MapsCreatorData>();
+            Value = new ChangeTrackingList<MapsCreatorData>();
         }
 
         /// <summary> Initializes a new instance of MapsCreatorListResult. </summary>

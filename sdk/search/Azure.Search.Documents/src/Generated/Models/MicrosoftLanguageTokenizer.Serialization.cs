@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class MicrosoftLanguageTokenizer : Core.IUtf8JsonSerializable
+    public partial class MicrosoftLanguageTokenizer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxTokenLength))
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (Core.Optional.IsDefined(IsSearchTokenizer))
+            if (Optional.IsDefined(IsSearchTokenizer))
             {
                 writer.WritePropertyName("isSearchTokenizer"u8);
                 writer.WriteBooleanValue(IsSearchTokenizer.Value);
             }
-            if (Core.Optional.IsDefined(Language))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language.Value.ToSerialString());
@@ -43,9 +43,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<int> maxTokenLength = default;
-            Core.Optional<bool> isSearchTokenizer = default;
-            Core.Optional<MicrosoftTokenizerLanguage> language = default;
+            Optional<int> maxTokenLength = default;
+            Optional<bool> isSearchTokenizer = default;
+            Optional<MicrosoftTokenizerLanguage> language = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MicrosoftLanguageTokenizer(odataType, name, Core.Optional.ToNullable(maxTokenLength), Core.Optional.ToNullable(isSearchTokenizer), Core.Optional.ToNullable(language));
+            return new MicrosoftLanguageTokenizer(odataType, name, Optional.ToNullable(maxTokenLength), Optional.ToNullable(isSearchTokenizer), Optional.ToNullable(language));
         }
     }
 }

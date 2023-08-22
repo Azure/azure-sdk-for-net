@@ -11,77 +11,77 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceNetworkProfile : Core.IUtf8JsonSerializable
+    public partial class ContainerServiceNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetworkPlugin))
+            if (Optional.IsDefined(NetworkPlugin))
             {
                 writer.WritePropertyName("networkPlugin"u8);
                 writer.WriteStringValue(NetworkPlugin.Value.ToString());
             }
-            if (Core.Optional.IsDefined(NetworkPluginMode))
+            if (Optional.IsDefined(NetworkPluginMode))
             {
                 writer.WritePropertyName("networkPluginMode"u8);
                 writer.WriteStringValue(NetworkPluginMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(NetworkPolicy))
+            if (Optional.IsDefined(NetworkPolicy))
             {
                 writer.WritePropertyName("networkPolicy"u8);
                 writer.WriteStringValue(NetworkPolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(NetworkMode))
+            if (Optional.IsDefined(NetworkMode))
             {
                 writer.WritePropertyName("networkMode"u8);
                 writer.WriteStringValue(NetworkMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EbpfDataplane))
+            if (Optional.IsDefined(EbpfDataplane))
             {
                 writer.WritePropertyName("ebpfDataplane"u8);
                 writer.WriteStringValue(EbpfDataplane.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PodCidr))
+            if (Optional.IsDefined(PodCidr))
             {
                 writer.WritePropertyName("podCidr"u8);
                 writer.WriteStringValue(PodCidr);
             }
-            if (Core.Optional.IsDefined(ServiceCidr))
+            if (Optional.IsDefined(ServiceCidr))
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (Core.Optional.IsDefined(DnsServiceIP))
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
-            if (Core.Optional.IsDefined(DockerBridgeCidr))
+            if (Optional.IsDefined(DockerBridgeCidr))
             {
                 writer.WritePropertyName("dockerBridgeCidr"u8);
                 writer.WriteStringValue(DockerBridgeCidr);
             }
-            if (Core.Optional.IsDefined(OutboundType))
+            if (Optional.IsDefined(OutboundType))
             {
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LoadBalancerSku))
+            if (Optional.IsDefined(LoadBalancerSku))
             {
                 writer.WritePropertyName("loadBalancerSku"u8);
                 writer.WriteStringValue(LoadBalancerSku.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LoadBalancerProfile))
+            if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile);
             }
-            if (Core.Optional.IsDefined(NatGatewayProfile))
+            if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
                 writer.WriteObjectValue(NatGatewayProfile);
             }
-            if (Core.Optional.IsCollectionDefined(PodCidrs))
+            if (Optional.IsCollectionDefined(PodCidrs))
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceCidrs))
+            if (Optional.IsCollectionDefined(ServiceCidrs))
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPFamilies))
+            if (Optional.IsCollectionDefined(IPFamilies))
             {
                 writer.WritePropertyName("ipFamilies"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(KubeProxyConfig))
+            if (Optional.IsDefined(KubeProxyConfig))
             {
                 writer.WritePropertyName("kubeProxyConfig"u8);
                 writer.WriteObjectValue(KubeProxyConfig);
@@ -125,23 +125,23 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
-            Core.Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
-            Core.Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
-            Core.Optional<ContainerServiceNetworkMode> networkMode = default;
-            Core.Optional<EbpfDataplane> ebpfDataplane = default;
-            Core.Optional<string> podCidr = default;
-            Core.Optional<string> serviceCidr = default;
-            Core.Optional<string> dnsServiceIP = default;
-            Core.Optional<string> dockerBridgeCidr = default;
-            Core.Optional<ContainerServiceOutboundType> outboundType = default;
-            Core.Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
-            Core.Optional<ManagedClusterLoadBalancerProfile> loadBalancerProfile = default;
-            Core.Optional<ManagedClusterNatGatewayProfile> natGatewayProfile = default;
-            Core.Optional<IList<string>> podCidrs = default;
-            Core.Optional<IList<string>> serviceCidrs = default;
-            Core.Optional<IList<IPFamily>> ipFamilies = default;
-            Core.Optional<ContainerServiceNetworkProfileKubeProxyConfig> kubeProxyConfig = default;
+            Optional<ContainerServiceNetworkPlugin> networkPlugin = default;
+            Optional<ContainerServiceNetworkPluginMode> networkPluginMode = default;
+            Optional<ContainerServiceNetworkPolicy> networkPolicy = default;
+            Optional<ContainerServiceNetworkMode> networkMode = default;
+            Optional<EbpfDataplane> ebpfDataplane = default;
+            Optional<string> podCidr = default;
+            Optional<string> serviceCidr = default;
+            Optional<string> dnsServiceIP = default;
+            Optional<string> dockerBridgeCidr = default;
+            Optional<ContainerServiceOutboundType> outboundType = default;
+            Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
+            Optional<ManagedClusterLoadBalancerProfile> loadBalancerProfile = default;
+            Optional<ManagedClusterNatGatewayProfile> natGatewayProfile = default;
+            Optional<IList<string>> podCidrs = default;
+            Optional<IList<string>> serviceCidrs = default;
+            Optional<IList<IPFamily>> ipFamilies = default;
+            Optional<ContainerServiceNetworkProfileKubeProxyConfig> kubeProxyConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkPlugin"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ContainerServiceNetworkProfile(Core.Optional.ToNullable(networkPlugin), Core.Optional.ToNullable(networkPluginMode), Core.Optional.ToNullable(networkPolicy), Core.Optional.ToNullable(networkMode), Core.Optional.ToNullable(ebpfDataplane), podCidr.Value, serviceCidr.Value, dnsServiceIP.Value, dockerBridgeCidr.Value, Core.Optional.ToNullable(outboundType), Core.Optional.ToNullable(loadBalancerSku), loadBalancerProfile.Value, natGatewayProfile.Value, Core.Optional.ToList(podCidrs), Core.Optional.ToList(serviceCidrs), Core.Optional.ToList(ipFamilies), kubeProxyConfig.Value);
+            return new ContainerServiceNetworkProfile(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(ebpfDataplane), podCidr.Value, serviceCidr.Value, dnsServiceIP.Value, dockerBridgeCidr.Value, Optional.ToNullable(outboundType), Optional.ToNullable(loadBalancerSku), loadBalancerProfile.Value, natGatewayProfile.Value, Optional.ToList(podCidrs), Optional.ToList(serviceCidrs), Optional.ToList(ipFamilies), kubeProxyConfig.Value);
         }
     }
 }

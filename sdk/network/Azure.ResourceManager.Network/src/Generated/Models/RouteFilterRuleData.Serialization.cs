@@ -13,39 +13,39 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class RouteFilterRuleData : Core.IUtf8JsonSerializable
+    public partial class RouteFilterRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Access))
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RouteFilterRuleType))
+            if (Optional.IsDefined(RouteFilterRuleType))
             {
                 writer.WritePropertyName("routeFilterRuleType"u8);
                 writer.WriteStringValue(RouteFilterRuleType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Communities))
+            if (Optional.IsCollectionDefined(Communities))
             {
                 writer.WritePropertyName("communities"u8);
                 writer.WriteStartArray();
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<NetworkAccess> access = default;
-            Core.Optional<RouteFilterRuleType> routeFilterRuleType = default;
-            Core.Optional<IList<string>> communities = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<AzureLocation> location = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<NetworkAccess> access = default;
+            Optional<RouteFilterRuleType> routeFilterRuleType = default;
+            Optional<IList<string>> communities = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteFilterRuleData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(access), Core.Optional.ToNullable(routeFilterRuleType), Core.Optional.ToList(communities), Core.Optional.ToNullable(provisioningState));
+            return new RouteFilterRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToNullable(etag), Optional.ToNullable(access), Optional.ToNullable(routeFilterRuleType), Optional.ToList(communities), Optional.ToNullable(provisioningState));
         }
     }
 }

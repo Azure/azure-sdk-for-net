@@ -21,39 +21,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SiteRecoveryProcessServer>> processServers = default;
-            Core.Optional<IReadOnlyList<MasterTargetServer>> masterTargetServers = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryRunAsAccount>> runAsAccounts = default;
-            Core.Optional<string> replicationPairCount = default;
-            Core.Optional<string> processServerCount = default;
-            Core.Optional<string> agentCount = default;
-            Core.Optional<string> protectedServers = default;
-            Core.Optional<string> systemLoad = default;
-            Core.Optional<string> systemLoadStatus = default;
-            Core.Optional<string> cpuLoad = default;
-            Core.Optional<string> cpuLoadStatus = default;
-            Core.Optional<long> totalMemoryInBytes = default;
-            Core.Optional<long> availableMemoryInBytes = default;
-            Core.Optional<string> memoryUsageStatus = default;
-            Core.Optional<long> totalSpaceInBytes = default;
-            Core.Optional<long> availableSpaceInBytes = default;
-            Core.Optional<string> spaceUsageStatus = default;
-            Core.Optional<string> webLoad = default;
-            Core.Optional<string> webLoadStatus = default;
-            Core.Optional<string> databaseServerLoad = default;
-            Core.Optional<string> databaseServerLoadStatus = default;
-            Core.Optional<string> csServiceStatus = default;
-            Core.Optional<IPAddress> ipAddress = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<DateTimeOffset> lastHeartbeat = default;
-            Core.Optional<string> versionStatus = default;
-            Core.Optional<DateTimeOffset> sslCertExpireOn = default;
-            Core.Optional<int> sslCertExpiryRemainingDays = default;
-            Core.Optional<string> psTemplateVersion = default;
-            Core.Optional<DateTimeOffset> agentExpireOn = default;
-            Core.Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
-            Core.Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryProcessServer>> processServers = default;
+            Optional<IReadOnlyList<MasterTargetServer>> masterTargetServers = default;
+            Optional<IReadOnlyList<SiteRecoveryRunAsAccount>> runAsAccounts = default;
+            Optional<string> replicationPairCount = default;
+            Optional<string> processServerCount = default;
+            Optional<string> agentCount = default;
+            Optional<string> protectedServers = default;
+            Optional<string> systemLoad = default;
+            Optional<string> systemLoadStatus = default;
+            Optional<string> cpuLoad = default;
+            Optional<string> cpuLoadStatus = default;
+            Optional<long> totalMemoryInBytes = default;
+            Optional<long> availableMemoryInBytes = default;
+            Optional<string> memoryUsageStatus = default;
+            Optional<long> totalSpaceInBytes = default;
+            Optional<long> availableSpaceInBytes = default;
+            Optional<string> spaceUsageStatus = default;
+            Optional<string> webLoad = default;
+            Optional<string> webLoadStatus = default;
+            Optional<string> databaseServerLoad = default;
+            Optional<string> databaseServerLoadStatus = default;
+            Optional<string> csServiceStatus = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<string> agentVersion = default;
+            Optional<string> hostName = default;
+            Optional<DateTimeOffset> lastHeartbeat = default;
+            Optional<string> versionStatus = default;
+            Optional<DateTimeOffset> sslCertExpireOn = default;
+            Optional<int> sslCertExpiryRemainingDays = default;
+            Optional<string> psTemplateVersion = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
+            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
+            Optional<IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails>> switchProviderBlockingErrorDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareDetails(instanceType, Core.Optional.ToList(processServers), Core.Optional.ToList(masterTargetServers), Core.Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Core.Optional.ToNullable(totalMemoryInBytes), Core.Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Core.Optional.ToNullable(totalSpaceInBytes), Core.Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Core.Optional.ToNullable(lastHeartbeat), versionStatus.Value, Core.Optional.ToNullable(sslCertExpireOn), Core.Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Core.Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Core.Optional.ToList(switchProviderBlockingErrorDetails));
+            return new VMwareDetails(instanceType, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
         }
     }
 }

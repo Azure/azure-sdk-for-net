@@ -13,14 +13,14 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseAadOnlyAuthenticationData : Core.IUtf8JsonSerializable
+    public partial class SynapseAadOnlyAuthenticationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsAadOnlyAuthenticationEnabled))
+            if (Optional.IsDefined(IsAadOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication"u8);
                 writer.WriteBooleanValue(IsAadOnlyAuthenticationEnabled.Value);
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> azureADOnlyAuthentication = default;
-            Core.Optional<AadAuthenticationState> state = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> azureADOnlyAuthentication = default;
+            Optional<AadAuthenticationState> state = default;
+            Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseAadOnlyAuthenticationData(id, name, type, systemData.Value, Core.Optional.ToNullable(azureADOnlyAuthentication), Core.Optional.ToNullable(state), Core.Optional.ToNullable(creationDate));
+            return new SynapseAadOnlyAuthenticationData(id, name, type, systemData.Value, Optional.ToNullable(azureADOnlyAuthentication), Optional.ToNullable(state), Optional.ToNullable(creationDate));
         }
     }
 }

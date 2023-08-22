@@ -12,39 +12,39 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerBackendAddress : Core.IUtf8JsonSerializable
+    public partial class LoadBalancerBackendAddress : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualNetwork))
+            if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (Core.Optional.IsDefined(IPAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Core.Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
+            if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
             }
-            if (Core.Optional.IsDefined(AdminState))
+            if (Optional.IsDefined(AdminState))
             {
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<WritableSubResource> virtualNetwork = default;
-            Core.Optional<WritableSubResource> subnet = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
-            Core.Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
-            Core.Optional<IReadOnlyList<NatRulePortMapping>> inboundNatRulesPortMapping = default;
-            Core.Optional<LoadBalancerBackendAddressAdminState> adminState = default;
+            Optional<string> name = default;
+            Optional<WritableSubResource> virtualNetwork = default;
+            Optional<WritableSubResource> subnet = default;
+            Optional<string> ipAddress = default;
+            Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
+            Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
+            Optional<IReadOnlyList<NatRulePortMapping>> inboundNatRulesPortMapping = default;
+            Optional<LoadBalancerBackendAddressAdminState> adminState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Core.Optional.ToList(inboundNatRulesPortMapping), Core.Optional.ToNullable(adminState));
+            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState));
         }
     }
 }

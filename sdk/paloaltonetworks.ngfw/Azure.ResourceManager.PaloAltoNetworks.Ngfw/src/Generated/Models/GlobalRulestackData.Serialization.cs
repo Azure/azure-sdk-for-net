@@ -14,14 +14,14 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class GlobalRulestackData : Core.IUtf8JsonSerializable
+    public partial class GlobalRulestackData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PanETag))
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PanLocation))
+            if (Optional.IsDefined(PanLocation))
             {
                 writer.WritePropertyName("panLocation"u8);
                 writer.WriteStringValue(PanLocation.Value);
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AssociatedSubscriptions))
+            if (Optional.IsCollectionDefined(AssociatedSubscriptions))
             {
                 writer.WritePropertyName("associatedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -54,22 +54,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(DefaultMode))
+            if (Optional.IsDefined(DefaultMode))
             {
                 writer.WritePropertyName("defaultMode"u8);
                 writer.WriteStringValue(DefaultMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MinAppIdVersion))
+            if (Optional.IsDefined(MinAppIdVersion))
             {
                 writer.WritePropertyName("minAppIdVersion"u8);
                 writer.WriteStringValue(MinAppIdVersion);
             }
-            if (Core.Optional.IsDefined(SecurityServices))
+            if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
                 writer.WriteObjectValue(SecurityServices);
@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 return null;
             }
             AzureLocation location = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ETag> panETag = default;
-            Core.Optional<AzureLocation> panLocation = default;
-            Core.Optional<RulestackScopeType> scope = default;
-            Core.Optional<IList<string>> associatedSubscriptions = default;
-            Core.Optional<string> description = default;
-            Core.Optional<RuleCreationDefaultMode> defaultMode = default;
-            Core.Optional<string> minAppIdVersion = default;
-            Core.Optional<FirewallProvisioningState> provisioningState = default;
-            Core.Optional<RulestackSecurityServices> securityServices = default;
+            Optional<SystemData> systemData = default;
+            Optional<ETag> panETag = default;
+            Optional<AzureLocation> panLocation = default;
+            Optional<RulestackScopeType> scope = default;
+            Optional<IList<string>> associatedSubscriptions = default;
+            Optional<string> description = default;
+            Optional<RuleCreationDefaultMode> defaultMode = default;
+            Optional<string> minAppIdVersion = default;
+            Optional<FirewallProvisioningState> provisioningState = default;
+            Optional<RulestackSecurityServices> securityServices = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     continue;
                 }
             }
-            return new GlobalRulestackData(id, name, type, systemData.Value, location, identity, Core.Optional.ToNullable(panETag), Core.Optional.ToNullable(panLocation), Core.Optional.ToNullable(scope), Core.Optional.ToList(associatedSubscriptions), description.Value, Core.Optional.ToNullable(defaultMode), minAppIdVersion.Value, Core.Optional.ToNullable(provisioningState), securityServices.Value);
+            return new GlobalRulestackData(id, name, type, systemData.Value, location, identity, Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), Optional.ToList(associatedSubscriptions), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, Optional.ToNullable(provisioningState), securityServices.Value);
         }
     }
 }

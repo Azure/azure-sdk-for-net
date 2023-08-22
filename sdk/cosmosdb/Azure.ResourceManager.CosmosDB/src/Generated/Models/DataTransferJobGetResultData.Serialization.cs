@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class DataTransferJobGetResultData : Core.IUtf8JsonSerializable
+    public partial class DataTransferJobGetResultData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (Core.Optional.IsDefined(Destination))
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Core.Optional.IsDefined(WorkerCount))
+            if (Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> jobName = default;
-            Core.Optional<DataTransferDataSourceSink> source = default;
-            Core.Optional<DataTransferDataSourceSink> destination = default;
-            Core.Optional<string> status = default;
-            Core.Optional<long> processedCount = default;
-            Core.Optional<long> totalCount = default;
-            Core.Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Core.Optional<int> workerCount = default;
-            Core.Optional<ErrorResponse> error = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> jobName = default;
+            Optional<DataTransferDataSourceSink> source = default;
+            Optional<DataTransferDataSourceSink> destination = default;
+            Optional<string> status = default;
+            Optional<long> processedCount = default;
+            Optional<long> totalCount = default;
+            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
+            Optional<int> workerCount = default;
+            Optional<ErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new DataTransferJobGetResultData(id, name, type, systemData.Value, jobName.Value, source.Value, destination.Value, status.Value, Core.Optional.ToNullable(processedCount), Core.Optional.ToNullable(totalCount), Core.Optional.ToNullable(lastUpdatedUtcTime), Core.Optional.ToNullable(workerCount), error.Value);
+            return new DataTransferJobGetResultData(id, name, type, systemData.Value, jobName.Value, source.Value, destination.Value, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value);
         }
     }
 }

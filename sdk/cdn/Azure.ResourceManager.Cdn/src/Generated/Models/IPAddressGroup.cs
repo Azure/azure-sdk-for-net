@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of IPAddressGroup. </summary>
         public IPAddressGroup()
         {
-            IPv4Addresses = new Core.ChangeTrackingList<CidrIPAddress>();
-            IPv6Addresses = new Core.ChangeTrackingList<CidrIPAddress>();
+            IPv4Addresses = new ChangeTrackingList<CidrIPAddress>();
+            IPv6Addresses = new ChangeTrackingList<CidrIPAddress>();
         }
 
         /// <summary> Initializes a new instance of IPAddressGroup. </summary>

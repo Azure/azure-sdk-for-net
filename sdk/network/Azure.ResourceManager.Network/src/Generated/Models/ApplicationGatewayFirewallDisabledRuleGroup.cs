@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
 
             RuleGroupName = ruleGroupName;
-            Rules = new Core.ChangeTrackingList<int>();
+            Rules = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFirewallDisabledRuleGroup. </summary>

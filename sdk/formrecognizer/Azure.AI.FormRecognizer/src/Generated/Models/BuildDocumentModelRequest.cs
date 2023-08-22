@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             ModelId = modelId;
             BuildMode = buildMode;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Unique document model name. </summary>

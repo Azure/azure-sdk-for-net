@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudClusterVirtualMachineData : Core.IUtf8JsonSerializable
+    public partial class AvsPrivateCloudClusterVirtualMachineData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> moRefId = default;
-            Core.Optional<string> folderPath = default;
-            Core.Optional<VirtualMachineRestrictMovementState> restrictMovement = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<string> moRefId = default;
+            Optional<string> folderPath = default;
+            Optional<VirtualMachineRestrictMovementState> restrictMovement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new AvsPrivateCloudClusterVirtualMachineData(id, name, type, systemData.Value, displayName.Value, moRefId.Value, folderPath.Value, Core.Optional.ToNullable(restrictMovement));
+            return new AvsPrivateCloudClusterVirtualMachineData(id, name, type, systemData.Value, displayName.Value, moRefId.Value, folderPath.Value, Optional.ToNullable(restrictMovement));
         }
     }
 }

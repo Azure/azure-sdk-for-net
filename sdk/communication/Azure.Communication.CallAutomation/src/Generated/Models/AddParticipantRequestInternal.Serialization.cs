@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class AddParticipantRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class AddParticipantRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceCallerIdNumber))
+            if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
                 writer.WriteObjectValue(SourceCallerIdNumber);
             }
-            if (Core.Optional.IsDefined(SourceDisplayName))
+            if (Optional.IsDefined(SourceDisplayName))
             {
                 writer.WritePropertyName("sourceDisplayName"u8);
                 writer.WriteStringValue(SourceDisplayName);
             }
             writer.WritePropertyName("participantToAdd"u8);
             writer.WriteObjectValue(ParticipantToAdd);
-            if (Core.Optional.IsDefined(InvitationTimeoutInSeconds))
+            if (Optional.IsDefined(InvitationTimeoutInSeconds))
             {
                 writer.WritePropertyName("invitationTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InvitationTimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(OperationContext))
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Core.Optional.IsDefined(CustomContext))
+            if (Optional.IsDefined(CustomContext))
             {
                 writer.WritePropertyName("customContext"u8);
                 writer.WriteObjectValue(CustomContext);
             }
-            if (Core.Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);

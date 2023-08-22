@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceSelectorExpression : Core.IUtf8JsonSerializable
+    public partial class ResourceSelectorExpression : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(In))
+            if (Optional.IsCollectionDefined(In))
             {
                 writer.WritePropertyName("in"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(NotIn))
+            if (Optional.IsCollectionDefined(NotIn))
             {
                 writer.WritePropertyName("notIn"u8);
                 writer.WriteStartArray();
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<ResourceSelectorKind> kind = default;
-            Core.Optional<IList<string>> @in = default;
-            Core.Optional<IList<string>> notIn = default;
+            Optional<ResourceSelectorKind> kind = default;
+            Optional<IList<string>> @in = default;
+            Optional<IList<string>> notIn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceSelectorExpression(Core.Optional.ToNullable(kind), Core.Optional.ToList(@in), Core.Optional.ToList(notIn));
+            return new ResourceSelectorExpression(Optional.ToNullable(kind), Optional.ToList(@in), Optional.ToList(notIn));
         }
     }
 }

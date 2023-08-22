@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class LiveEventOutputTranscriptionTrack : Core.IUtf8JsonSerializable
+    internal partial class LiveEventOutputTranscriptionTrack : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("trackName"u8);

@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            Zones = new Core.ChangeTrackingList<string>();
-            VirtualMachinesAssociated = new Core.ChangeTrackingList<SubResource>();
+            Zones = new ChangeTrackingList<string>();
+            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of CapacityReservationData. </summary>

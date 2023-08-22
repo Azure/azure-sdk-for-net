@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <summary> Initializes a new instance of BlueprintList. </summary>
         internal BlueprintList()
         {
-            Value = new Core.ChangeTrackingList<BlueprintData>();
+            Value = new ChangeTrackingList<BlueprintData>();
         }
 
         /// <summary> Initializes a new instance of BlueprintList. </summary>

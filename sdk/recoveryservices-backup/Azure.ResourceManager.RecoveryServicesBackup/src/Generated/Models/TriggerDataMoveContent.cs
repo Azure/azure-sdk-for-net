@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             SourceRegion = sourceRegion;
             DataMoveLevel = dataMoveLevel;
             CorrelationId = correlationId;
-            SourceContainerArmIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            SourceContainerArmIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> ARM Id of source vault. </summary>

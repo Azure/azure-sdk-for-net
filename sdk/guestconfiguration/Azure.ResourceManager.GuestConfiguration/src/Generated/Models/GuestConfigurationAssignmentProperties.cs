@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>
         public GuestConfigurationAssignmentProperties()
         {
-            VmssVmList = new Core.ChangeTrackingList<GuestConfigurationVmssVmInfo>();
+            VmssVmList = new ChangeTrackingList<GuestConfigurationVmssVmInfo>();
         }
 
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>

@@ -13,9 +13,9 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(WorkspaceIdentityConverter))]
-    public partial class WorkspaceIdentity : Core.IUtf8JsonSerializable
+    public partial class WorkspaceIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -30,8 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             WorkspaceIdentityType type = default;
-            Core.Optional<string> principalId = default;
-            Core.Optional<string> tenantId = default;
+            Optional<string> principalId = default;
+            Optional<string> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

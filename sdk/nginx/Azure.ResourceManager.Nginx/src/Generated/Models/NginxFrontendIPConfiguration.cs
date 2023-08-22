@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of NginxFrontendIPConfiguration. </summary>
         public NginxFrontendIPConfiguration()
         {
-            PublicIPAddresses = new Core.ChangeTrackingList<WritableSubResource>();
-            PrivateIPAddresses = new Core.ChangeTrackingList<NginxPrivateIPAddress>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
+            PrivateIPAddresses = new ChangeTrackingList<NginxPrivateIPAddress>();
         }
 
         /// <summary> Initializes a new instance of NginxFrontendIPConfiguration. </summary>

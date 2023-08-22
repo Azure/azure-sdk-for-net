@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class UpdateAdministrativeStateOnResources : Core.IUtf8JsonSerializable
+    public partial class UpdateAdministrativeStateOnResources : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ResourceIds))
+            if (Optional.IsCollectionDefined(ResourceIds))
             {
                 writer.WritePropertyName("resourceIds"u8);
                 writer.WriteStartArray();

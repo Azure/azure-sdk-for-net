@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupIdentityInfo : Core.IUtf8JsonSerializable
+    public partial class BackupIdentityInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsSystemAssignedIdentity))
+            if (Optional.IsDefined(IsSystemAssignedIdentity))
             {
                 writer.WritePropertyName("isSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(IsSystemAssignedIdentity.Value);
             }
-            if (Core.Optional.IsDefined(ManagedIdentityResourceId))
+            if (Optional.IsDefined(ManagedIdentityResourceId))
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<bool> isSystemAssignedIdentity = default;
-            Core.Optional<ResourceIdentifier> managedIdentityResourceId = default;
+            Optional<bool> isSystemAssignedIdentity = default;
+            Optional<ResourceIdentifier> managedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSystemAssignedIdentity"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupIdentityInfo(Core.Optional.ToNullable(isSystemAssignedIdentity), managedIdentityResourceId.Value);
+            return new BackupIdentityInfo(Optional.ToNullable(isSystemAssignedIdentity), managedIdentityResourceId.Value);
         }
     }
 }

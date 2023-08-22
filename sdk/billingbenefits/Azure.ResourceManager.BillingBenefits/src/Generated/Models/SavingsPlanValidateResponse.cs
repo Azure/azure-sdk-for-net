@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>
         internal SavingsPlanValidateResponse()
         {
-            Benefits = new Core.ChangeTrackingList<SavingsPlanValidateResult>();
+            Benefits = new ChangeTrackingList<SavingsPlanValidateResult>();
         }
 
         /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>

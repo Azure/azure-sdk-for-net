@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterPodIdentityProfile : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterPodIdentityProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(AllowNetworkPluginKubenet))
+            if (Optional.IsDefined(AllowNetworkPluginKubenet))
             {
                 writer.WritePropertyName("allowNetworkPluginKubenet"u8);
                 writer.WriteBooleanValue(AllowNetworkPluginKubenet.Value);
             }
-            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(UserAssignedIdentityExceptions))
+            if (Optional.IsCollectionDefined(UserAssignedIdentityExceptions))
             {
                 writer.WritePropertyName("userAssignedIdentityExceptions"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<bool> allowNetworkPluginKubenet = default;
-            Core.Optional<IList<ManagedClusterPodIdentity>> userAssignedIdentities = default;
-            Core.Optional<IList<ManagedClusterPodIdentityException>> userAssignedIdentityExceptions = default;
+            Optional<bool> enabled = default;
+            Optional<bool> allowNetworkPluginKubenet = default;
+            Optional<IList<ManagedClusterPodIdentity>> userAssignedIdentities = default;
+            Optional<IList<ManagedClusterPodIdentityException>> userAssignedIdentityExceptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterPodIdentityProfile(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(allowNetworkPluginKubenet), Core.Optional.ToList(userAssignedIdentities), Core.Optional.ToList(userAssignedIdentityExceptions));
+            return new ManagedClusterPodIdentityProfile(Optional.ToNullable(enabled), Optional.ToNullable(allowNetworkPluginKubenet), Optional.ToList(userAssignedIdentities), Optional.ToList(userAssignedIdentityExceptions));
         }
     }
 }

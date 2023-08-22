@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of KpiListResult. </summary>
         internal KpiListResult()
         {
-            Value = new Core.ChangeTrackingList<KpiResourceFormatData>();
+            Value = new ChangeTrackingList<KpiResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of KpiListResult. </summary>

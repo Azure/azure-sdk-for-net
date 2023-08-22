@@ -25,11 +25,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             PageNumber = pageNumber;
             Spans = spans.ToList();
-            Words = new Core.ChangeTrackingList<DocumentWord>();
-            SelectionMarks = new Core.ChangeTrackingList<DocumentSelectionMark>();
-            Lines = new Core.ChangeTrackingList<DocumentLine>();
-            Barcodes = new Core.ChangeTrackingList<DocumentBarcode>();
-            Formulas = new Core.ChangeTrackingList<DocumentFormula>();
+            Words = new ChangeTrackingList<DocumentWord>();
+            SelectionMarks = new ChangeTrackingList<DocumentSelectionMark>();
+            Lines = new ChangeTrackingList<DocumentLine>();
+            Barcodes = new ChangeTrackingList<DocumentBarcode>();
+            Formulas = new ChangeTrackingList<DocumentFormula>();
         }
 
         /// <summary> 1-based page number in the input document. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetTdeCertificatesSqlTaskProperties. </summary>
         public GetTdeCertificatesSqlTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<GetTdeCertificatesSqlTaskOutput>();
+            Output = new ChangeTrackingList<GetTdeCertificatesSqlTaskOutput>();
             TaskType = TaskType.GetTDECertificatesSql;
         }
 

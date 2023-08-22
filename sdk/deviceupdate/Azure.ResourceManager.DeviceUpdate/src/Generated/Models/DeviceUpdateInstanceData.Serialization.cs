@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    public partial class DeviceUpdateInstanceData : Core.IUtf8JsonSerializable
+    public partial class DeviceUpdateInstanceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(IotHubs))
+            if (Optional.IsCollectionDefined(IotHubs))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableDiagnostics))
+            if (Optional.IsDefined(EnableDiagnostics))
             {
                 writer.WritePropertyName("enableDiagnostics"u8);
                 writer.WriteBooleanValue(EnableDiagnostics.Value);
             }
-            if (Core.Optional.IsDefined(DiagnosticStorageProperties))
+            if (Optional.IsDefined(DiagnosticStorageProperties))
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
                 writer.WriteObjectValue(DiagnosticStorageProperties);
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> accountName = default;
-            Core.Optional<IList<IotHubSettings>> iotHubs = default;
-            Core.Optional<bool> enableDiagnostics = default;
-            Core.Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> accountName = default;
+            Optional<IList<IotHubSettings>> iotHubs = default;
+            Optional<bool> enableDiagnostics = default;
+            Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), accountName.Value, Core.Optional.ToList(iotHubs), Core.Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
+            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
         }
     }
 }

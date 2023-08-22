@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="replicaTimeout"> Maximum number of seconds a replica is allowed to run. </param>
         public ContainerAppJobConfiguration(ContainerAppJobTriggerType triggerType, int replicaTimeout)
         {
-            Secrets = new Core.ChangeTrackingList<ContainerAppWritableSecret>();
+            Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             TriggerType = triggerType;
             ReplicaTimeout = replicaTimeout;
-            Registries = new Core.ChangeTrackingList<ContainerAppRegistryCredentials>();
+            Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppJobConfiguration. </summary>

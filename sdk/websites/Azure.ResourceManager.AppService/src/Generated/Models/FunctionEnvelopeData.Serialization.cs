@@ -13,54 +13,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class FunctionEnvelopeData : Core.IUtf8JsonSerializable
+    public partial class FunctionEnvelopeData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FunctionAppId))
+            if (Optional.IsDefined(FunctionAppId))
             {
                 writer.WritePropertyName("function_app_id"u8);
                 writer.WriteStringValue(FunctionAppId);
             }
-            if (Core.Optional.IsDefined(ScriptRootPathHref))
+            if (Optional.IsDefined(ScriptRootPathHref))
             {
                 writer.WritePropertyName("script_root_path_href"u8);
                 writer.WriteStringValue(ScriptRootPathHref);
             }
-            if (Core.Optional.IsDefined(ScriptHref))
+            if (Optional.IsDefined(ScriptHref))
             {
                 writer.WritePropertyName("script_href"u8);
                 writer.WriteStringValue(ScriptHref);
             }
-            if (Core.Optional.IsDefined(ConfigHref))
+            if (Optional.IsDefined(ConfigHref))
             {
                 writer.WritePropertyName("config_href"u8);
                 writer.WriteStringValue(ConfigHref);
             }
-            if (Core.Optional.IsDefined(TestDataHref))
+            if (Optional.IsDefined(TestDataHref))
             {
                 writer.WritePropertyName("test_data_href"u8);
                 writer.WriteStringValue(TestDataHref);
             }
-            if (Core.Optional.IsDefined(SecretsFileHref))
+            if (Optional.IsDefined(SecretsFileHref))
             {
                 writer.WritePropertyName("secrets_file_href"u8);
                 writer.WriteStringValue(SecretsFileHref);
             }
-            if (Core.Optional.IsDefined(Href))
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Core.Optional.IsDefined(Config))
+            if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
 #if NET6_0_OR_GREATER
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Config.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsCollectionDefined(Files))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartObject();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(TestData))
+            if (Optional.IsDefined(TestData))
             {
                 writer.WritePropertyName("test_data"u8);
                 writer.WriteStringValue(TestData);
             }
-            if (Core.Optional.IsDefined(InvokeUrlTemplate))
+            if (Optional.IsDefined(InvokeUrlTemplate))
             {
                 writer.WritePropertyName("invoke_url_template"u8);
                 writer.WriteStringValue(InvokeUrlTemplate);
             }
-            if (Core.Optional.IsDefined(Language))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Core.Optional.IsDefined(IsDisabled))
+            if (Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> functionAppId = default;
-            Core.Optional<string> scriptRootPathHref = default;
-            Core.Optional<string> scriptHref = default;
-            Core.Optional<string> configHref = default;
-            Core.Optional<string> testDataHref = default;
-            Core.Optional<string> secretsFileHref = default;
-            Core.Optional<string> href = default;
-            Core.Optional<BinaryData> config = default;
-            Core.Optional<IDictionary<string, string>> files = default;
-            Core.Optional<string> testData = default;
-            Core.Optional<string> invokeUrlTemplate = default;
-            Core.Optional<string> language = default;
-            Core.Optional<bool> isDisabled = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> functionAppId = default;
+            Optional<string> scriptRootPathHref = default;
+            Optional<string> scriptHref = default;
+            Optional<string> configHref = default;
+            Optional<string> testDataHref = default;
+            Optional<string> secretsFileHref = default;
+            Optional<string> href = default;
+            Optional<BinaryData> config = default;
+            Optional<IDictionary<string, string>> files = default;
+            Optional<string> testData = default;
+            Optional<string> invokeUrlTemplate = default;
+            Optional<string> language = default;
+            Optional<bool> isDisabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Core.Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Core.Optional.ToNullable(isDisabled), kind.Value);
+            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value);
         }
     }
 }

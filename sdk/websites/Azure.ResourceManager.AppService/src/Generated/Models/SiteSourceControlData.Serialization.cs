@@ -13,49 +13,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SiteSourceControlData : Core.IUtf8JsonSerializable
+    public partial class SiteSourceControlData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RepoUri))
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Branch))
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Core.Optional.IsDefined(IsManualIntegration))
+            if (Optional.IsDefined(IsManualIntegration))
             {
                 writer.WritePropertyName("isManualIntegration"u8);
                 writer.WriteBooleanValue(IsManualIntegration.Value);
             }
-            if (Core.Optional.IsDefined(IsGitHubAction))
+            if (Optional.IsDefined(IsGitHubAction))
             {
                 writer.WritePropertyName("isGitHubAction"u8);
                 writer.WriteBooleanValue(IsGitHubAction.Value);
             }
-            if (Core.Optional.IsDefined(IsDeploymentRollbackEnabled))
+            if (Optional.IsDefined(IsDeploymentRollbackEnabled))
             {
                 writer.WritePropertyName("deploymentRollbackEnabled"u8);
                 writer.WriteBooleanValue(IsDeploymentRollbackEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsMercurial))
+            if (Optional.IsDefined(IsMercurial))
             {
                 writer.WritePropertyName("isMercurial"u8);
                 writer.WriteBooleanValue(IsMercurial.Value);
             }
-            if (Core.Optional.IsDefined(GitHubActionConfiguration))
+            if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 if (GitHubActionConfiguration != null)
                 {
@@ -77,18 +77,18 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> repoUrl = default;
-            Core.Optional<string> branch = default;
-            Core.Optional<bool> isManualIntegration = default;
-            Core.Optional<bool> isGitHubAction = default;
-            Core.Optional<bool> deploymentRollbackEnabled = default;
-            Core.Optional<bool> isMercurial = default;
-            Core.Optional<GitHubActionConfiguration> gitHubActionConfiguration = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> repoUrl = default;
+            Optional<string> branch = default;
+            Optional<bool> isManualIntegration = default;
+            Optional<bool> isGitHubAction = default;
+            Optional<bool> deploymentRollbackEnabled = default;
+            Optional<bool> isMercurial = default;
+            Optional<GitHubActionConfiguration> gitHubActionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new SiteSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, Core.Optional.ToNullable(isManualIntegration), Core.Optional.ToNullable(isGitHubAction), Core.Optional.ToNullable(deploymentRollbackEnabled), Core.Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value, kind.Value);
+            return new SiteSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value, kind.Value);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SynapseGeoBackupPolicyData>> value = default;
+            Optional<IReadOnlyList<SynapseGeoBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseGeoBackupPolicyListResult(Core.Optional.ToList(value));
+            return new SynapseGeoBackupPolicyListResult(Optional.ToList(value));
         }
     }
 }

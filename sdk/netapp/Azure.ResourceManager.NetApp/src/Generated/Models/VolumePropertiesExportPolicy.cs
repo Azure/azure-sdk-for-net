@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VolumePropertiesExportPolicy. </summary>
         public VolumePropertiesExportPolicy()
         {
-            Rules = new Core.ChangeTrackingList<NetAppVolumeExportPolicyRule>();
+            Rules = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of VolumePropertiesExportPolicy. </summary>

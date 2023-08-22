@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    public partial class HDInsightApplicationData : Core.IUtf8JsonSerializable
+    public partial class HDInsightApplicationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.HDInsight
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<HDInsightApplicationProperties> properties = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<HDInsightApplicationProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight
                     continue;
                 }
             }
-            return new HDInsightApplicationData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags), properties.Value);
+            return new HDInsightApplicationData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), properties.Value);
         }
     }
 }

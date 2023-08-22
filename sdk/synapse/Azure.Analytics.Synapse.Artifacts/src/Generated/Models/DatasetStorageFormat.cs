@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>
         public DatasetStorageFormat()
         {
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of DatasetStorageFormat. </summary>

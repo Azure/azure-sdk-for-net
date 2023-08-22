@@ -111,7 +111,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(string fileAttributes, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(string fileAttributes, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -141,7 +141,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public Core.ResponseWithHeaders<DirectoryCreateHeaders> Create(string fileAttributes, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryCreateHeaders> Create(string fileAttributes, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 201:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -194,7 +194,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<DirectoryGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryGetPropertiesHeaders>> GetPropertiesAsync(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(sharesnapshot, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -202,7 +202,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -212,7 +212,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<DirectoryGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryGetPropertiesHeaders> GetProperties(string sharesnapshot = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetPropertiesRequest(sharesnapshot, timeout);
             _pipeline.Send(message, cancellationToken);
@@ -220,7 +220,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -255,7 +255,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<DirectoryDeleteHeaders>> DeleteAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryDeleteHeaders>> DeleteAsync(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -263,7 +263,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -272,7 +272,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<DirectoryDeleteHeaders> Delete(int? timeout = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryDeleteHeaders> Delete(int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateDeleteRequest(timeout);
             _pipeline.Send(message, cancellationToken);
@@ -280,7 +280,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -344,7 +344,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(string fileAttributes, int? timeout = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectorySetPropertiesHeaders>> SetPropertiesAsync(string fileAttributes, int? timeout = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -357,7 +357,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -373,7 +373,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public Core.ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(string fileAttributes, int? timeout = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectorySetPropertiesHeaders> SetProperties(string fileAttributes, int? timeout = null, string filePermission = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, CancellationToken cancellationToken = default)
         {
             if (fileAttributes == null)
             {
@@ -386,7 +386,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -427,7 +427,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<DirectorySetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectorySetMetadataHeaders>> SetMetadataAsync(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -435,7 +435,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -445,7 +445,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<DirectorySetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectorySetMetadataHeaders> SetMetadata(int? timeout = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateSetMetadataRequest(timeout, metadata);
             _pipeline.Send(message, cancellationToken);
@@ -453,7 +453,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -488,7 +488,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("timeout", timeout.Value, true);
             }
-            if (include != null && Core.Optional.IsCollectionDefined(include))
+            if (include != null && Optional.IsCollectionDefined(include))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -519,7 +519,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentAsync(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -534,7 +534,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -550,7 +550,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegment(string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, timeout, include, includeExtendedInfo);
             _pipeline.Send(message, cancellationToken);
@@ -565,7 +565,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Core.ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders>> ListHandlesAsync(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -636,7 +636,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListHandlesResponse.DeserializeListHandlesResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -650,7 +650,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Core.ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListHandlesResponse, DirectoryListHandlesHeaders> ListHandles(string marker = null, int? maxresults = null, int? timeout = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive);
             _pipeline.Send(message, cancellationToken);
@@ -665,7 +665,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListHandlesResponse.DeserializeListHandlesResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -719,7 +719,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<DirectoryForceCloseHandlesHeaders>> ForceCloseHandlesAsync(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryForceCloseHandlesHeaders>> ForceCloseHandlesAsync(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             if (handleId == null)
             {
@@ -732,7 +732,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -746,7 +746,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="handleId"/> is null. </exception>
-        public Core.ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> ForceCloseHandles(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryForceCloseHandlesHeaders> ForceCloseHandles(string handleId, int? timeout = null, string marker = null, string sharesnapshot = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             if (handleId == null)
             {
@@ -759,7 +759,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -854,7 +854,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryRenameHeaders>> RenameAsync(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
@@ -867,7 +867,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -886,7 +886,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="renameSource"/> is null. </exception>
-        public Core.ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryRenameHeaders> Rename(string renameSource, int? timeout = null, bool? replaceIfExists = null, bool? ignoreReadOnly = null, string sourceLeaseId = null, string destinationLeaseId = null, string filePermission = null, string filePermissionKey = null, IDictionary<string, string> metadata = null, CopyFileSmbInfo copyFileSmbInfo = null, CancellationToken cancellationToken = default)
         {
             if (renameSource == null)
             {
@@ -899,7 +899,7 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -942,7 +942,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders>> ListFilesAndDirectoriesSegmentNextPageAsync(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -962,7 +962,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -980,7 +980,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Core.ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ListFilesAndDirectoriesSegmentResponse, DirectoryListFilesAndDirectoriesSegmentHeaders> ListFilesAndDirectoriesSegmentNextPage(string nextLink, string prefix = null, string sharesnapshot = null, string marker = null, int? maxresults = null, int? timeout = null, IEnumerable<ListFilesIncludeType> include = null, bool? includeExtendedInfo = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1000,7 +1000,7 @@ namespace Azure.Storage.Files.Shares
                         {
                             value = ListFilesAndDirectoriesSegmentResponse.DeserializeListFilesAndDirectoriesSegmentResponse(enumerationResultsElement);
                         }
-                        return Core.ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

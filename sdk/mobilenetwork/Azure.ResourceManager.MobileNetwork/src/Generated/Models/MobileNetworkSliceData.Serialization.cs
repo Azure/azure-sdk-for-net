@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkSliceData : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkSliceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartObject();
             writer.WritePropertyName("snssai"u8);
             writer.WriteObjectValue(Snssai);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
             Snssai snssai = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new MobileNetworkSliceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), snssai, description.Value);
+            return new MobileNetworkSliceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), snssai, description.Value);
         }
     }
 }

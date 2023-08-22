@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SourceConfiguration>> configurations = default;
+            Optional<IReadOnlyList<SourceConfiguration>> configurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurations"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new SourceConfigurationResult(Core.Optional.ToList(configurations));
+            return new SourceConfigurationResult(Optional.ToList(configurations));
         }
     }
 }

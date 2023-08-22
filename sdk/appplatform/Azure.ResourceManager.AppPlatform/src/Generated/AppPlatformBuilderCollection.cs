@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformBuilderBuildServiceBuilderRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformBuilderBuildServiceBuilderRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuilderResource>(new AppPlatformBuilderOperationSource(Client), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, _appPlatformBuilderBuildServiceBuilderRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, builderName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuilderResource(Client, AppPlatformBuilderData.DeserializeAppPlatformBuilderData(e)), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuilderResource(Client, AppPlatformBuilderData.DeserializeAppPlatformBuilderData(e)), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuilderBuildServiceBuilderRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuilderResource(Client, AppPlatformBuilderData.DeserializeAppPlatformBuilderData(e)), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuilderResource(Client, AppPlatformBuilderData.DeserializeAppPlatformBuilderData(e)), _appPlatformBuilderBuildServiceBuilderClientDiagnostics, Pipeline, "AppPlatformBuilderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

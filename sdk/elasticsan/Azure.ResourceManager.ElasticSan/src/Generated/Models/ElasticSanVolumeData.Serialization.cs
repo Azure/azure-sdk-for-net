@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanVolumeData : Core.IUtf8JsonSerializable
+    public partial class ElasticSanVolumeData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreationData))
+            if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> volumeId = default;
-            Core.Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> volumeId = default;
+            Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
             long sizeGiB = default;
-            Core.Optional<IscsiTargetInfo> storageTarget = default;
+            Optional<IscsiTargetInfo> storageTarget = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Core.Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value);
+            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value);
         }
     }
 }

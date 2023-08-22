@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Initializes a new instance of CollectorPolicyListResult. </summary>
         internal CollectorPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<CollectorPolicyData>();
+            Value = new ChangeTrackingList<CollectorPolicyData>();
         }
 
         /// <summary> Initializes a new instance of CollectorPolicyListResult. </summary>

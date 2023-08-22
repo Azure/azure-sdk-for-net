@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of FirmwarePatch. </summary>
         public FirmwarePatch()
         {
-            StatusMessages = new Core.ChangeTrackingList<BinaryData>();
+            StatusMessages = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> File name for a firmware that user uploaded. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    internal class KustoClusterOperationSource : Core.IOperationSource<KustoClusterResource>
+    internal class KustoClusterOperationSource : IOperationSource<KustoClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Kusto
             _client = client;
         }
 
-        KustoClusterResource Core.IOperationSource<KustoClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        KustoClusterResource IOperationSource<KustoClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = KustoClusterData.DeserializeKustoClusterData(document.RootElement);
             return new KustoClusterResource(_client, data);
         }
 
-        async ValueTask<KustoClusterResource> Core.IOperationSource<KustoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<KustoClusterResource> IOperationSource<KustoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = KustoClusterData.DeserializeKustoClusterData(document.RootElement);

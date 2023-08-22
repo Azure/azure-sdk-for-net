@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of RouteTableData. </summary>
         public RouteTableData()
         {
-            Routes = new Core.ChangeTrackingList<RouteData>();
-            Subnets = new Core.ChangeTrackingList<SubnetData>();
+            Routes = new ChangeTrackingList<RouteData>();
+            Subnets = new ChangeTrackingList<SubnetData>();
         }
 
         /// <summary> Initializes a new instance of RouteTableData. </summary>

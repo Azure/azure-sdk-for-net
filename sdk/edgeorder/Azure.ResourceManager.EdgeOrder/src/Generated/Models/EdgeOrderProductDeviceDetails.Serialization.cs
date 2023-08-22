@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<string> serialNumber = default;
-            Core.Optional<string> managementResourceId = default;
-            Core.Optional<string> managementResourceTenantId = default;
+            Optional<string> serialNumber = default;
+            Optional<string> managementResourceId = default;
+            Optional<string> managementResourceTenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))

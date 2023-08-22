@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPacketCaptureContent. </summary>
         public FirewallPacketCaptureContent()
         {
-            Flags = new Core.ChangeTrackingList<AzureFirewallPacketCaptureFlags>();
-            Filters = new Core.ChangeTrackingList<AzureFirewallPacketCaptureRule>();
+            Flags = new ChangeTrackingList<AzureFirewallPacketCaptureFlags>();
+            Filters = new ChangeTrackingList<AzureFirewallPacketCaptureRule>();
         }
 
         /// <summary> Initializes a new instance of FirewallPacketCaptureContent. </summary>

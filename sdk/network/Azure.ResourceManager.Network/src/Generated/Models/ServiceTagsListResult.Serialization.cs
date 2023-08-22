@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> changeNumber = default;
-            Core.Optional<string> cloud = default;
-            Core.Optional<IReadOnlyList<ServiceTagInformation>> values = default;
-            Core.Optional<string> nextLink = default;
+            Optional<string> changeNumber = default;
+            Optional<string> cloud = default;
+            Optional<IReadOnlyList<ServiceTagInformation>> values = default;
+            Optional<string> nextLink = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeNumber"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, Core.Optional.ToList(values), nextLink.Value);
+            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value);
         }
     }
 }

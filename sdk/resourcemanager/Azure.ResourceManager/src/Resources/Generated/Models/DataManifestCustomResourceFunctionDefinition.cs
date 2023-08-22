@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
         internal DataManifestCustomResourceFunctionDefinition()
         {
-            DefaultProperties = new Core.ChangeTrackingList<string>();
+            DefaultProperties = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>

@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class NamespaceTopicEventSubscriptionData : Core.IUtf8JsonSerializable
+    public partial class NamespaceTopicEventSubscriptionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeliveryConfiguration))
+            if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
                 writer.WriteObjectValue(DeliveryConfiguration);
             }
-            if (Core.Optional.IsDefined(EventDeliverySchema))
+            if (Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (Core.Optional.IsDefined(FiltersConfiguration))
+            if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
                 writer.WriteObjectValue(FiltersConfiguration);
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SubscriptionProvisioningState> provisioningState = default;
-            Core.Optional<DeliveryConfiguration> deliveryConfiguration = default;
-            Core.Optional<DeliverySchema> eventDeliverySchema = default;
-            Core.Optional<FiltersConfiguration> filtersConfiguration = default;
+            Optional<SystemData> systemData = default;
+            Optional<SubscriptionProvisioningState> provisioningState = default;
+            Optional<DeliveryConfiguration> deliveryConfiguration = default;
+            Optional<DeliverySchema> eventDeliverySchema = default;
+            Optional<FiltersConfiguration> filtersConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new NamespaceTopicEventSubscriptionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), deliveryConfiguration.Value, Core.Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value);
+            return new NamespaceTopicEventSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), deliveryConfiguration.Value, Optional.ToNullable(eventDeliverySchema), filtersConfiguration.Value);
         }
     }
 }

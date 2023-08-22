@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PartnerDestinationData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PartnerDestinationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new PartnerDestinationsListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PartnerDestinationsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

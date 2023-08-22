@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<Guid> sessionId = default;
-            Core.Optional<int> quantity = default;
-            Core.Optional<PurchasePrice> billingRefundAmount = default;
-            Core.Optional<PurchasePrice> pricingRefundAmount = default;
-            Core.Optional<RefundPolicyResult> policyResult = default;
-            Core.Optional<ReservationRefundBillingInformation> billingInformation = default;
+            Optional<Guid> sessionId = default;
+            Optional<int> quantity = default;
+            Optional<PurchasePrice> billingRefundAmount = default;
+            Optional<PurchasePrice> pricingRefundAmount = default;
+            Optional<RefundPolicyResult> policyResult = default;
+            Optional<ReservationRefundBillingInformation> billingInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationRefundResponseProperties(Core.Optional.ToNullable(sessionId), Core.Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value);
+            return new ReservationRefundResponseProperties(Optional.ToNullable(sessionId), Optional.ToNullable(quantity), billingRefundAmount.Value, pricingRefundAmount.Value, policyResult.Value, billingInformation.Value);
         }
     }
 }

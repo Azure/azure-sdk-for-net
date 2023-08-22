@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of AvailableSkusResult. </summary>
         internal AvailableSkusResult()
         {
-            Value = new Core.ChangeTrackingList<DataBoxSkuInformation>();
+            Value = new ChangeTrackingList<DataBoxSkuInformation>();
         }
 
         /// <summary> Initializes a new instance of AvailableSkusResult. </summary>

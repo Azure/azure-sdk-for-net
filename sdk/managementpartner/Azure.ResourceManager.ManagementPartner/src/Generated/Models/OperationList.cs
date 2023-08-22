@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         /// <summary> Initializes a new instance of OperationList. </summary>
         internal OperationList()
         {
-            Value = new Core.ChangeTrackingList<OperationResponse>();
+            Value = new ChangeTrackingList<OperationResponse>();
         }
 
         /// <summary> Initializes a new instance of OperationList. </summary>

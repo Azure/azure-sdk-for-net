@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Subscription.Models
             {
                 return null;
             }
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> tenantName = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> tenantName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Subscription.Models
                     continue;
                 }
             }
-            return new ServiceTenant(Core.Optional.ToNullable(tenantId), tenantName.Value);
+            return new ServiceTenant(Optional.ToNullable(tenantId), tenantName.Value);
         }
     }
 }

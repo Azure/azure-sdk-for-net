@@ -14,15 +14,15 @@ using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class StateUpdateCommonPostActionResultOperationSource : Core.IOperationSource<StateUpdateCommonPostActionResult>
+    internal class StateUpdateCommonPostActionResultOperationSource : IOperationSource<StateUpdateCommonPostActionResult>
     {
-        StateUpdateCommonPostActionResult Core.IOperationSource<StateUpdateCommonPostActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        StateUpdateCommonPostActionResult IOperationSource<StateUpdateCommonPostActionResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return StateUpdateCommonPostActionResult.DeserializeStateUpdateCommonPostActionResult(document.RootElement);
         }
 
-        async ValueTask<StateUpdateCommonPostActionResult> Core.IOperationSource<StateUpdateCommonPostActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<StateUpdateCommonPostActionResult> IOperationSource<StateUpdateCommonPostActionResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return StateUpdateCommonPostActionResult.DeserializeStateUpdateCommonPostActionResult(document.RootElement);

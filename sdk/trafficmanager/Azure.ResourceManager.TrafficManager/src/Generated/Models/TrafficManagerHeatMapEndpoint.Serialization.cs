@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerHeatMapEndpoint : Core.IUtf8JsonSerializable
+    public partial class TrafficManagerHeatMapEndpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(EndpointId))
+            if (Optional.IsDefined(EndpointId))
             {
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteNumberValue(EndpointId.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<int> endpointId = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<int> endpointId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerHeatMapEndpoint(resourceId.Value, Core.Optional.ToNullable(endpointId));
+            return new TrafficManagerHeatMapEndpoint(resourceId.Value, Optional.ToNullable(endpointId));
         }
     }
 }

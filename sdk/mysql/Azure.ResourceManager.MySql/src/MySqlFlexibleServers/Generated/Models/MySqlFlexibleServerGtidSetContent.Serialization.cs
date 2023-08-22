@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerGtidSetContent : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerGtidSetContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GtidSet))
+            if (Optional.IsDefined(GtidSet))
             {
                 writer.WritePropertyName("gtidSet"u8);
                 writer.WriteStringValue(GtidSet);

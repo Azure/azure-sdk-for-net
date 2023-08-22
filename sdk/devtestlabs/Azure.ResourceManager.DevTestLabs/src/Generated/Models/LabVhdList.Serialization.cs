@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SubResource>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SubResource>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new LabVhdList(Core.Optional.ToList(value), nextLink.Value);
+            return new LabVhdList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

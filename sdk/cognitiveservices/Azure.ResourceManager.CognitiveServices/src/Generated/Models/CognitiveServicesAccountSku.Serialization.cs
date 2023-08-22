@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<ResourceType> resourceType = default;
-            Core.Optional<CognitiveServicesSku> sku = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<CognitiveServicesSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountSku(Core.Optional.ToNullable(resourceType), sku.Value);
+            return new CognitiveServicesAccountSku(Optional.ToNullable(resourceType), sku.Value);
         }
     }
 }

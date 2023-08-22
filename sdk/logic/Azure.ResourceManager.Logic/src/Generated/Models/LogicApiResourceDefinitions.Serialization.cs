@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<Uri> originalSwaggerUrl = default;
-            Core.Optional<Uri> modifiedSwaggerUrl = default;
+            Optional<Uri> originalSwaggerUrl = default;
+            Optional<Uri> modifiedSwaggerUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("originalSwaggerUrl"u8))

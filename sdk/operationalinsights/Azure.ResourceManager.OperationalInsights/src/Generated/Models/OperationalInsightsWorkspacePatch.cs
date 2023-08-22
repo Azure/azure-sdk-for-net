@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of OperationalInsightsWorkspacePatch. </summary>
         public OperationalInsightsWorkspacePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            PrivateLinkScopedResources = new Core.ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            PrivateLinkScopedResources = new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsWorkspacePatch. </summary>

@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<ResourceIdentifier> primaryFabricId = default;
-            Core.Optional<string> primaryFabricFriendlyName = default;
-            Core.Optional<ResourceIdentifier> recoveryFabricId = default;
-            Core.Optional<string> recoveryFabricFriendlyName = default;
-            Core.Optional<string> failoverDeploymentModel = default;
-            Core.Optional<IReadOnlyList<string>> replicationProviders = default;
-            Core.Optional<IReadOnlyList<string>> allowedOperations = default;
-            Core.Optional<DateTimeOffset> lastPlannedFailoverTime = default;
-            Core.Optional<DateTimeOffset> lastUnplannedFailoverTime = default;
-            Core.Optional<DateTimeOffset> lastTestFailoverTime = default;
-            Core.Optional<CurrentScenarioDetails> currentScenario = default;
-            Core.Optional<string> currentScenarioStatus = default;
-            Core.Optional<string> currentScenarioStatusDescription = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryPlanGroup>> groups = default;
-            Core.Optional<IReadOnlyList<RecoveryPlanProviderSpecificDetails>> providerSpecificDetails = default;
+            Optional<string> friendlyName = default;
+            Optional<ResourceIdentifier> primaryFabricId = default;
+            Optional<string> primaryFabricFriendlyName = default;
+            Optional<ResourceIdentifier> recoveryFabricId = default;
+            Optional<string> recoveryFabricFriendlyName = default;
+            Optional<string> failoverDeploymentModel = default;
+            Optional<IReadOnlyList<string>> replicationProviders = default;
+            Optional<IReadOnlyList<string>> allowedOperations = default;
+            Optional<DateTimeOffset> lastPlannedFailoverTime = default;
+            Optional<DateTimeOffset> lastUnplannedFailoverTime = default;
+            Optional<DateTimeOffset> lastTestFailoverTime = default;
+            Optional<CurrentScenarioDetails> currentScenario = default;
+            Optional<string> currentScenarioStatus = default;
+            Optional<string> currentScenarioStatusDescription = default;
+            Optional<IReadOnlyList<SiteRecoveryPlanGroup>> groups = default;
+            Optional<IReadOnlyList<RecoveryPlanProviderSpecificDetails>> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, Core.Optional.ToList(replicationProviders), Core.Optional.ToList(allowedOperations), Core.Optional.ToNullable(lastPlannedFailoverTime), Core.Optional.ToNullable(lastUnplannedFailoverTime), Core.Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, Core.Optional.ToList(groups), Core.Optional.ToList(providerSpecificDetails));
+            return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, Optional.ToList(replicationProviders), Optional.ToList(allowedOperations), Optional.ToNullable(lastPlannedFailoverTime), Optional.ToNullable(lastUnplannedFailoverTime), Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, Optional.ToList(groups), Optional.ToList(providerSpecificDetails));
         }
     }
 }

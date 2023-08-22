@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of ListApplicationPackagesResult. </summary>
         internal ListApplicationPackagesResult()
         {
-            Value = new Core.ChangeTrackingList<BatchApplicationPackageData>();
+            Value = new ChangeTrackingList<BatchApplicationPackageData>();
         }
 
         /// <summary> Initializes a new instance of ListApplicationPackagesResult. </summary>

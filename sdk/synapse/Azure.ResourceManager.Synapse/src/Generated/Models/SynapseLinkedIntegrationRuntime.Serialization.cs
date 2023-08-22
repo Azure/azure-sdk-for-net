@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> dataFactoryName = default;
-            Core.Optional<string> dataFactoryLocation = default;
-            Core.Optional<DateTimeOffset> createTime = default;
+            Optional<string> name = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> dataFactoryName = default;
+            Optional<string> dataFactoryLocation = default;
+            Optional<DateTimeOffset> createTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseLinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Core.Optional.ToNullable(createTime));
+            return new SynapseLinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Optional.ToNullable(createTime));
         }
     }
 }

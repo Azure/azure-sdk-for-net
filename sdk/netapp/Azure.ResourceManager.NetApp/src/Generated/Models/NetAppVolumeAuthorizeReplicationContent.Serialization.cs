@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeAuthorizeReplicationContent : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumeAuthorizeReplicationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RemoteVolumeResourceId))
+            if (Optional.IsDefined(RemoteVolumeResourceId))
             {
                 writer.WritePropertyName("remoteVolumeResourceId"u8);
                 writer.WriteStringValue(RemoteVolumeResourceId);

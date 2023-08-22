@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of PrivateStoreList. </summary>
         internal PrivateStoreList()
         {
-            Value = new Core.ChangeTrackingList<PrivateStoreData>();
+            Value = new ChangeTrackingList<PrivateStoreData>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreList. </summary>

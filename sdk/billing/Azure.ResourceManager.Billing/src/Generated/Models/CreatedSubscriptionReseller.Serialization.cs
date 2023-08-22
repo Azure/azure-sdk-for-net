@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Core.Optional<string> resellerId = default;
-            Core.Optional<string> description = default;
+            Optional<string> resellerId = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resellerId"u8))

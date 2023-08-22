@@ -15,17 +15,17 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ScheduledQueryRuleData : Core.IUtf8JsonSerializable
+    public partial class ScheduledQueryRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,27 +40,27 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Severity))
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Scopes))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EvaluationFrequency))
+            if (Optional.IsDefined(EvaluationFrequency))
             {
                 writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
-            if (Core.Optional.IsDefined(WindowSize))
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (Core.Optional.IsDefined(OverrideQueryTimeRange))
+            if (Optional.IsDefined(OverrideQueryTimeRange))
             {
                 writer.WritePropertyName("overrideQueryTimeRange"u8);
                 writer.WriteStringValue(OverrideQueryTimeRange.Value, "P");
             }
-            if (Core.Optional.IsCollectionDefined(TargetResourceTypes))
+            if (Optional.IsCollectionDefined(TargetResourceTypes))
             {
                 writer.WritePropertyName("targetResourceTypes"u8);
                 writer.WriteStartArray();
@@ -95,32 +95,32 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Criteria))
+            if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
-            if (Core.Optional.IsDefined(MuteActionsDuration))
+            if (Optional.IsDefined(MuteActionsDuration))
             {
                 writer.WritePropertyName("muteActionsDuration"u8);
                 writer.WriteStringValue(MuteActionsDuration.Value, "P");
             }
-            if (Core.Optional.IsDefined(Actions))
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (Core.Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
+            if (Optional.IsDefined(CheckWorkspaceAlertsStorageConfigured))
             {
                 writer.WritePropertyName("checkWorkspaceAlertsStorageConfigured"u8);
                 writer.WriteBooleanValue(CheckWorkspaceAlertsStorageConfigured.Value);
             }
-            if (Core.Optional.IsDefined(SkipQueryValidation))
+            if (Optional.IsDefined(SkipQueryValidation))
             {
                 writer.WritePropertyName("skipQueryValidation"u8);
                 writer.WriteBooleanValue(SkipQueryValidation.Value);
             }
-            if (Core.Optional.IsDefined(AutoMitigate))
+            if (Optional.IsDefined(AutoMitigate))
             {
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
@@ -135,32 +135,32 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Core.Optional<ScheduledQueryRuleKind> kind = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ScheduledQueryRuleKind> kind = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> createdWithApiVersion = default;
-            Core.Optional<bool> isLegacyLogAnalyticsRule = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<AlertSeverity> severity = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<IList<string>> scopes = default;
-            Core.Optional<TimeSpan> evaluationFrequency = default;
-            Core.Optional<TimeSpan> windowSize = default;
-            Core.Optional<TimeSpan> overrideQueryTimeRange = default;
-            Core.Optional<IList<string>> targetResourceTypes = default;
-            Core.Optional<ScheduledQueryRuleCriteria> criteria = default;
-            Core.Optional<TimeSpan> muteActionsDuration = default;
-            Core.Optional<ScheduledQueryRuleActions> actions = default;
-            Core.Optional<bool> isWorkspaceAlertsStorageConfigured = default;
-            Core.Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
-            Core.Optional<bool> skipQueryValidation = default;
-            Core.Optional<bool> autoMitigate = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> createdWithApiVersion = default;
+            Optional<bool> isLegacyLogAnalyticsRule = default;
+            Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<AlertSeverity> severity = default;
+            Optional<bool> enabled = default;
+            Optional<IList<string>> scopes = default;
+            Optional<TimeSpan> evaluationFrequency = default;
+            Optional<TimeSpan> windowSize = default;
+            Optional<TimeSpan> overrideQueryTimeRange = default;
+            Optional<IList<string>> targetResourceTypes = default;
+            Optional<ScheduledQueryRuleCriteria> criteria = default;
+            Optional<TimeSpan> muteActionsDuration = default;
+            Optional<ScheduledQueryRuleActions> actions = default;
+            Optional<bool> isWorkspaceAlertsStorageConfigured = default;
+            Optional<bool> checkWorkspaceAlertsStorageConfigured = default;
+            Optional<bool> skipQueryValidation = default;
+            Optional<bool> autoMitigate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new ScheduledQueryRuleData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(kind), Core.Optional.ToNullable(etag), createdWithApiVersion.Value, Core.Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Core.Optional.ToNullable(severity), Core.Optional.ToNullable(enabled), Core.Optional.ToList(scopes), Core.Optional.ToNullable(evaluationFrequency), Core.Optional.ToNullable(windowSize), Core.Optional.ToNullable(overrideQueryTimeRange), Core.Optional.ToList(targetResourceTypes), criteria.Value, Core.Optional.ToNullable(muteActionsDuration), actions.Value, Core.Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Core.Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Core.Optional.ToNullable(skipQueryValidation), Core.Optional.ToNullable(autoMitigate));
+            return new ScheduledQueryRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), createdWithApiVersion.Value, Optional.ToNullable(isLegacyLogAnalyticsRule), description.Value, displayName.Value, Optional.ToNullable(severity), Optional.ToNullable(enabled), Optional.ToList(scopes), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(windowSize), Optional.ToNullable(overrideQueryTimeRange), Optional.ToList(targetResourceTypes), criteria.Value, Optional.ToNullable(muteActionsDuration), actions.Value, Optional.ToNullable(isWorkspaceAlertsStorageConfigured), Optional.ToNullable(checkWorkspaceAlertsStorageConfigured), Optional.ToNullable(skipQueryValidation), Optional.ToNullable(autoMitigate));
         }
     }
 }

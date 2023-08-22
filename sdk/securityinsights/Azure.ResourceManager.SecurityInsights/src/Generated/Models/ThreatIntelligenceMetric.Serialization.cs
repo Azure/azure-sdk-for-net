@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> lastUpdatedTimeUtc = default;
-            Core.Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> threatTypeMetrics = default;
-            Core.Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> patternTypeMetrics = default;
-            Core.Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> sourceMetrics = default;
+            Optional<string> lastUpdatedTimeUtc = default;
+            Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> threatTypeMetrics = default;
+            Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> patternTypeMetrics = default;
+            Optional<IReadOnlyList<ThreatIntelligenceMetricEntity>> sourceMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimeUtc"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc.Value, Core.Optional.ToList(threatTypeMetrics), Core.Optional.ToList(patternTypeMetrics), Core.Optional.ToList(sourceMetrics));
+            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc.Value, Optional.ToList(threatTypeMetrics), Optional.ToList(patternTypeMetrics), Optional.ToList(sourceMetrics));
         }
     }
 }

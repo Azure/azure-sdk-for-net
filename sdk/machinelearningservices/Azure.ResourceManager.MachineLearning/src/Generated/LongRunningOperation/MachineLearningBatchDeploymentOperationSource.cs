@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal class MachineLearningBatchDeploymentOperationSource : Core.IOperationSource<MachineLearningBatchDeploymentResource>
+    internal class MachineLearningBatchDeploymentOperationSource : IOperationSource<MachineLearningBatchDeploymentResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MachineLearning
             _client = client;
         }
 
-        MachineLearningBatchDeploymentResource Core.IOperationSource<MachineLearningBatchDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MachineLearningBatchDeploymentResource IOperationSource<MachineLearningBatchDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(document.RootElement);
             return new MachineLearningBatchDeploymentResource(_client, data);
         }
 
-        async ValueTask<MachineLearningBatchDeploymentResource> Core.IOperationSource<MachineLearningBatchDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MachineLearningBatchDeploymentResource> IOperationSource<MachineLearningBatchDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = MachineLearningBatchDeploymentData.DeserializeMachineLearningBatchDeploymentData(document.RootElement);

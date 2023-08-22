@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class WorkspaceConnectionPersonalAccessToken : Core.IUtf8JsonSerializable
+    internal partial class WorkspaceConnectionPersonalAccessToken : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Pat))
+            if (Optional.IsDefined(Pat))
             {
                 writer.WritePropertyName("pat"u8);
                 writer.WriteStringValue(Pat);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> pat = default;
+            Optional<string> pat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pat"u8))

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<int> serverCount = default;
-            Core.Optional<bool> isGateway = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> id = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> dataReceived = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> sku = default;
+            Optional<int> serverCount = default;
+            Optional<bool> isGateway = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> dataReceived = default;
+            Optional<string> version = default;
+            Optional<string> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsManagementGroup(Core.Optional.ToNullable(serverCount), Core.Optional.ToNullable(isGateway), name.Value, id.Value, Core.Optional.ToNullable(created), Core.Optional.ToNullable(dataReceived), version.Value, sku.Value);
+            return new OperationalInsightsManagementGroup(Optional.ToNullable(serverCount), Optional.ToNullable(isGateway), name.Value, id.Value, Optional.ToNullable(created), Optional.ToNullable(dataReceived), version.Value, sku.Value);
         }
     }
 }

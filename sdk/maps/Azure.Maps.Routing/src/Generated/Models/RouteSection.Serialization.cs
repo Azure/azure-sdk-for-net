@@ -18,15 +18,15 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<int> startPointIndex = default;
-            Core.Optional<int> endPointIndex = default;
-            Core.Optional<ResponseSectionType> sectionType = default;
-            Core.Optional<ResponseTravelMode> travelMode = default;
-            Core.Optional<TrafficIncidentCategory> simpleCategory = default;
-            Core.Optional<int> effectiveSpeedInKmh = default;
-            Core.Optional<int> delayInSeconds = default;
-            Core.Optional<DelayMagnitude> magnitudeOfDelay = default;
-            Core.Optional<RouteSectionTec> tec = default;
+            Optional<int> startPointIndex = default;
+            Optional<int> endPointIndex = default;
+            Optional<ResponseSectionType> sectionType = default;
+            Optional<ResponseTravelMode> travelMode = default;
+            Optional<TrafficIncidentCategory> simpleCategory = default;
+            Optional<int> effectiveSpeedInKmh = default;
+            Optional<int> delayInSeconds = default;
+            Optional<DelayMagnitude> magnitudeOfDelay = default;
+            Optional<RouteSectionTec> tec = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startPointIndex"u8))
@@ -111,7 +111,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSection(Core.Optional.ToNullable(startPointIndex), Core.Optional.ToNullable(endPointIndex), Core.Optional.ToNullable(sectionType), Core.Optional.ToNullable(travelMode), Core.Optional.ToNullable(simpleCategory), Core.Optional.ToNullable(effectiveSpeedInKmh), Core.Optional.ToNullable(delayInSeconds), Core.Optional.ToNullable(magnitudeOfDelay), tec.Value);
+            return new RouteSection(Optional.ToNullable(startPointIndex), Optional.ToNullable(endPointIndex), Optional.ToNullable(sectionType), Optional.ToNullable(travelMode), Optional.ToNullable(simpleCategory), Optional.ToNullable(effectiveSpeedInKmh), Optional.ToNullable(delayInSeconds), Optional.ToNullable(magnitudeOfDelay), tec.Value);
         }
     }
 }

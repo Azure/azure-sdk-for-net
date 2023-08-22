@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkManagerData. </summary>
         public NetworkManagerData()
         {
-            NetworkManagerScopeAccesses = new Core.ChangeTrackingList<NetworkConfigurationDeploymentType>();
+            NetworkManagerScopeAccesses = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
         /// <summary> Initializes a new instance of NetworkManagerData. </summary>

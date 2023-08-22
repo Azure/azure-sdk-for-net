@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> prometheusQueryEndpoint = default;
-            Core.Optional<string> internalId = default;
+            Optional<string> prometheusQueryEndpoint = default;
+            Optional<string> internalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prometheusQueryEndpoint"u8))

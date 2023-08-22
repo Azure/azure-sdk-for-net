@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>
         public KpiResourceHealthDetails()
         {
-            ResourceHealthDetails = new Core.ChangeTrackingList<ResourceHealthDetails>();
+            ResourceHealthDetails = new ChangeTrackingList<ResourceHealthDetails>();
         }
 
         /// <summary> Initializes a new instance of KpiResourceHealthDetails. </summary>

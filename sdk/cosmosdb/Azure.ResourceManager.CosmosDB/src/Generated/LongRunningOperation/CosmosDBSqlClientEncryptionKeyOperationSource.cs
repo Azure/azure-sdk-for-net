@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CosmosDBSqlClientEncryptionKeyOperationSource : Core.IOperationSource<CosmosDBSqlClientEncryptionKeyResource>
+    internal class CosmosDBSqlClientEncryptionKeyOperationSource : IOperationSource<CosmosDBSqlClientEncryptionKeyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CosmosDBSqlClientEncryptionKeyResource Core.IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBSqlClientEncryptionKeyResource IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(document.RootElement);
             return new CosmosDBSqlClientEncryptionKeyResource(_client, data);
         }
 
-        async ValueTask<CosmosDBSqlClientEncryptionKeyResource> Core.IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBSqlClientEncryptionKeyResource> IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(document.RootElement);

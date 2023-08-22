@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>
         internal EdgeProfileSubscription()
         {
-            RegisteredFeatures = new Core.ChangeTrackingList<SubscriptionRegisteredFeatures>();
+            RegisteredFeatures = new ChangeTrackingList<SubscriptionRegisteredFeatures>();
         }
 
         /// <summary> Initializes a new instance of EdgeProfileSubscription. </summary>

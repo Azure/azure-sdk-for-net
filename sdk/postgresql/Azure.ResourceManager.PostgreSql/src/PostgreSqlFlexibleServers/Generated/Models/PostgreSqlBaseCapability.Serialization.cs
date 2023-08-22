@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlBaseCapability(Core.Optional.ToNullable(status), reason.Value);
+            return new PostgreSqlBaseCapability(Optional.ToNullable(status), reason.Value);
         }
     }
 }

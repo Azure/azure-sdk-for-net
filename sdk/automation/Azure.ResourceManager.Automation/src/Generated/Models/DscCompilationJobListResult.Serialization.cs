@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DscCompilationJobData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DscCompilationJobData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscCompilationJobListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DscCompilationJobListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

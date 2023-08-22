@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>
         public EventHubsNetworkRuleSetData()
         {
-            VirtualNetworkRules = new Core.ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>();
-            IPRules = new Core.ChangeTrackingList<EventHubsNetworkRuleSetIPRules>();
+            VirtualNetworkRules = new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>();
+            IPRules = new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>();
         }
 
         /// <summary> Initializes a new instance of EventHubsNetworkRuleSetData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>
         public ContainerAppCertificateProperties()
         {
-            SubjectAlternativeNames = new Core.ChangeTrackingList<string>();
+            SubjectAlternativeNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppCertificateProperties. </summary>

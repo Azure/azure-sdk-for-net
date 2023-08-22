@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.VoiceServices.Models
 {
-    public partial class VoiceServicesPrimaryRegionProperties : Core.IUtf8JsonSerializable
+    public partial class VoiceServicesPrimaryRegionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operatorAddresses"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(EsrpAddresses))
+            if (Optional.IsCollectionDefined(EsrpAddresses))
             {
                 writer.WritePropertyName("esrpAddresses"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AllowedSignalingSourceAddressPrefixes))
+            if (Optional.IsCollectionDefined(AllowedSignalingSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSignalingSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AllowedMediaSourceAddressPrefixes))
+            if (Optional.IsCollectionDefined(AllowedMediaSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedMediaSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 return null;
             }
             IList<string> operatorAddresses = default;
-            Core.Optional<IList<string>> esrpAddresses = default;
-            Core.Optional<IList<string>> allowedSignalingSourceAddressPrefixes = default;
-            Core.Optional<IList<string>> allowedMediaSourceAddressPrefixes = default;
+            Optional<IList<string>> esrpAddresses = default;
+            Optional<IList<string>> allowedSignalingSourceAddressPrefixes = default;
+            Optional<IList<string>> allowedMediaSourceAddressPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatorAddresses"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     continue;
                 }
             }
-            return new VoiceServicesPrimaryRegionProperties(operatorAddresses, Core.Optional.ToList(esrpAddresses), Core.Optional.ToList(allowedSignalingSourceAddressPrefixes), Core.Optional.ToList(allowedMediaSourceAddressPrefixes));
+            return new VoiceServicesPrimaryRegionProperties(operatorAddresses, Optional.ToList(esrpAddresses), Optional.ToList(allowedSignalingSourceAddressPrefixes), Optional.ToList(allowedMediaSourceAddressPrefixes));
         }
     }
 }

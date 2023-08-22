@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerVersionCapability. </summary>
         internal PostgreSqlFlexibleServerServerVersionCapability()
         {
-            SupportedVersionsToUpgrade = new Core.ChangeTrackingList<string>();
+            SupportedVersionsToUpgrade = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerVersionCapability. </summary>

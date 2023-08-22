@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class MongoDBParameter : Core.IUtf8JsonSerializable
+    internal partial class MongoDBParameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectionString))
+            if (Optional.IsDefined(ConnectionString))
             {
                 if (ConnectionString != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("connectionString");
                 }
             }
-            if (Core.Optional.IsDefined(Database))
+            if (Optional.IsDefined(Database))
             {
                 if (Database != null)
                 {
@@ -57,8 +57,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> connectionString = default;
-            Core.Optional<string> database = default;
+            Optional<string> connectionString = default;
+            Optional<string> database = default;
             string command = default;
             foreach (var property in element.EnumerateObject())
             {

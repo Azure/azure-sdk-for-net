@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> fileName = default;
-            Core.Optional<string> status = default;
-            Core.Optional<long> totalSize = default;
-            Core.Optional<long> dataRead = default;
-            Core.Optional<long> dataWritten = default;
-            Core.Optional<double> copyThroughput = default;
-            Core.Optional<int> copyDuration = default;
-            Core.Optional<int> familySequenceNumber = default;
+            Optional<string> fileName = default;
+            Optional<string> status = default;
+            Optional<long> totalSize = default;
+            Optional<long> dataRead = default;
+            Optional<long> dataWritten = default;
+            Optional<double> copyThroughput = default;
+            Optional<int> copyDuration = default;
+            Optional<int> familySequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SqlBackupFileInfo(fileName.Value, status.Value, Core.Optional.ToNullable(totalSize), Core.Optional.ToNullable(dataRead), Core.Optional.ToNullable(dataWritten), Core.Optional.ToNullable(copyThroughput), Core.Optional.ToNullable(copyDuration), Core.Optional.ToNullable(familySequenceNumber));
+            return new SqlBackupFileInfo(fileName.Value, status.Value, Optional.ToNullable(totalSize), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), Optional.ToNullable(familySequenceNumber));
         }
     }
 }

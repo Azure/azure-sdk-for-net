@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BenefitRecommendationModel>> value = default;
-            Core.Optional<Uri> nextLink = default;
+            Optional<IReadOnlyList<BenefitRecommendationModel>> value = default;
+            Optional<Uri> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new BenefitRecommendationsListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new BenefitRecommendationsListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

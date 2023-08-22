@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNetworkRuleSetIPRules : Core.IUtf8JsonSerializable
+    public partial class EventHubsNetworkRuleSetIPRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IPMask))
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Core.Optional.IsDefined(Action))
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<string> ipMask = default;
-            Core.Optional<EventHubsNetworkRuleIPAction> action = default;
+            Optional<string> ipMask = default;
+            Optional<EventHubsNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EventHubsNetworkRuleSetIPRules(ipMask.Value, Core.Optional.ToNullable(action));
+            return new EventHubsNetworkRuleSetIPRules(ipMask.Value, Optional.ToNullable(action));
         }
     }
 }

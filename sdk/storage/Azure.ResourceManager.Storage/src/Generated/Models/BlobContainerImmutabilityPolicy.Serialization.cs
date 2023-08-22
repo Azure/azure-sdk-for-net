@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IReadOnlyList<UpdateHistoryEntry>> updateHistory = default;
-            Core.Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Core.Optional<ImmutabilityPolicyState> state = default;
-            Core.Optional<bool> allowProtectedAppendWrites = default;
-            Core.Optional<bool> allowProtectedAppendWritesAll = default;
+            Optional<ETag> etag = default;
+            Optional<IReadOnlyList<UpdateHistoryEntry>> updateHistory = default;
+            Optional<int> immutabilityPeriodSinceCreationInDays = default;
+            Optional<ImmutabilityPolicyState> state = default;
+            Optional<bool> allowProtectedAppendWrites = default;
+            Optional<bool> allowProtectedAppendWritesAll = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobContainerImmutabilityPolicy(Core.Optional.ToNullable(etag), Core.Optional.ToList(updateHistory), Core.Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Core.Optional.ToNullable(state), Core.Optional.ToNullable(allowProtectedAppendWrites), Core.Optional.ToNullable(allowProtectedAppendWritesAll));
+            return new BlobContainerImmutabilityPolicy(Optional.ToNullable(etag), Optional.ToList(updateHistory), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll));
         }
     }
 }

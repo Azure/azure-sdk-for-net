@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>
         public MobileNetworkInstallation()
         {
-            Reasons = new Core.ChangeTrackingList<MobileNetworkInstallationReason>();
+            Reasons = new ChangeTrackingList<MobileNetworkInstallationReason>();
         }
 
         /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>

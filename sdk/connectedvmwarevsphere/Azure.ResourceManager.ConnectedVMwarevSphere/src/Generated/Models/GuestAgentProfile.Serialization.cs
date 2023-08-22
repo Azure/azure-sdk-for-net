@@ -13,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class GuestAgentProfile : Core.IUtf8JsonSerializable
+    public partial class GuestAgentProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<string> vmUuid = default;
-            Core.Optional<StatusType> status = default;
-            Core.Optional<DateTimeOffset> lastStatusChange = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<IReadOnlyList<ResponseError>> errorDetails = default;
+            Optional<string> vmUuid = default;
+            Optional<StatusType> status = default;
+            Optional<DateTimeOffset> lastStatusChange = default;
+            Optional<string> agentVersion = default;
+            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmUuid"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new GuestAgentProfile(vmUuid.Value, Core.Optional.ToNullable(status), Core.Optional.ToNullable(lastStatusChange), agentVersion.Value, Core.Optional.ToList(errorDetails));
+            return new GuestAgentProfile(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, Optional.ToList(errorDetails));
         }
     }
 }

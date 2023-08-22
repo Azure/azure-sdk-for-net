@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> databases = default;
-            Core.Optional<string> targetServerVersion = default;
-            Core.Optional<string> targetServerBrandVersion = default;
+            Optional<string> id = default;
+            Optional<string> databases = default;
+            Optional<string> targetServerVersion = default;
+            Optional<string> targetServerBrandVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

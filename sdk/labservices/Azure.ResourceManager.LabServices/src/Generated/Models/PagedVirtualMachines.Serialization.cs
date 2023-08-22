@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<LabVirtualMachineData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<LabVirtualMachineData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new PagedVirtualMachines(Core.Optional.ToList(value), nextLink.Value);
+            return new PagedVirtualMachines(Optional.ToList(value), nextLink.Value);
         }
     }
 }

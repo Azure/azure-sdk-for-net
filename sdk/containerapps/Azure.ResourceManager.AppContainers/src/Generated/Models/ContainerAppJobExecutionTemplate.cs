@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>
         public ContainerAppJobExecutionTemplate()
         {
-            Containers = new Core.ChangeTrackingList<JobExecutionContainer>();
-            InitContainers = new Core.ChangeTrackingList<JobExecutionContainer>();
+            Containers = new ChangeTrackingList<JobExecutionContainer>();
+            InitContainers = new ChangeTrackingList<JobExecutionContainer>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppJobExecutionTemplate. </summary>

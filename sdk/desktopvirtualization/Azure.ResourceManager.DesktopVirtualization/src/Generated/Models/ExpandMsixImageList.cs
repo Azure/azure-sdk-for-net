@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ExpandMsixImageList. </summary>
         internal ExpandMsixImageList()
         {
-            Value = new Core.ChangeTrackingList<ExpandMsixImage>();
+            Value = new ChangeTrackingList<ExpandMsixImage>();
         }
 
         /// <summary> Initializes a new instance of ExpandMsixImageList. </summary>

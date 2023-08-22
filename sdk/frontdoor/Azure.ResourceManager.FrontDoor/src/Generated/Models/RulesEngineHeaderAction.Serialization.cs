@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineHeaderAction : Core.IUtf8JsonSerializable
+    public partial class RulesEngineHeaderAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("headerActionType"u8);
             writer.WriteStringValue(HeaderActionType.ToString());
             writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             RulesEngineHeaderActionType headerActionType = default;
             string headerName = default;
-            Core.Optional<string> value = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headerActionType"u8))

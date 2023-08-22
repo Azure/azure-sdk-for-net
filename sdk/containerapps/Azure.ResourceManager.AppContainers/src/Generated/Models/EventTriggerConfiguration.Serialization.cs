@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class EventTriggerConfiguration : Core.IUtf8JsonSerializable
+    public partial class EventTriggerConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ReplicaCompletionCount))
+            if (Optional.IsDefined(ReplicaCompletionCount))
             {
                 writer.WritePropertyName("replicaCompletionCount"u8);
                 writer.WriteNumberValue(ReplicaCompletionCount.Value);
             }
-            if (Core.Optional.IsDefined(Parallelism))
+            if (Optional.IsDefined(Parallelism))
             {
                 writer.WritePropertyName("parallelism"u8);
                 writer.WriteNumberValue(Parallelism.Value);
             }
-            if (Core.Optional.IsDefined(Scale))
+            if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<int> replicaCompletionCount = default;
-            Core.Optional<int> parallelism = default;
-            Core.Optional<ContainerAppJobScale> scale = default;
+            Optional<int> replicaCompletionCount = default;
+            Optional<int> parallelism = default;
+            Optional<ContainerAppJobScale> scale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new EventTriggerConfiguration(Core.Optional.ToNullable(replicaCompletionCount), Core.Optional.ToNullable(parallelism), scale.Value);
+            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value);
         }
     }
 }

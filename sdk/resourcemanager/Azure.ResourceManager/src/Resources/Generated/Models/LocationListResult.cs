@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of LocationListResult. </summary>
         internal LocationListResult()
         {
-            Value = new Core.ChangeTrackingList<LocationExpanded>();
+            Value = new ChangeTrackingList<LocationExpanded>();
         }
 
         /// <summary> Initializes a new instance of LocationListResult. </summary>

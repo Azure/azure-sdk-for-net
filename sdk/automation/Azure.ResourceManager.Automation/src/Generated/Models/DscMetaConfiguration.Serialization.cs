@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<int> configurationModeFrequencyMins = default;
-            Core.Optional<bool> rebootNodeIfNeeded = default;
-            Core.Optional<string> configurationMode = default;
-            Core.Optional<string> actionAfterReboot = default;
-            Core.Optional<string> certificateId = default;
-            Core.Optional<int> refreshFrequencyMins = default;
-            Core.Optional<bool> allowModuleOverwrite = default;
+            Optional<int> configurationModeFrequencyMins = default;
+            Optional<bool> rebootNodeIfNeeded = default;
+            Optional<string> configurationMode = default;
+            Optional<string> actionAfterReboot = default;
+            Optional<string> certificateId = default;
+            Optional<int> refreshFrequencyMins = default;
+            Optional<bool> allowModuleOverwrite = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationModeFrequencyMins"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscMetaConfiguration(Core.Optional.ToNullable(configurationModeFrequencyMins), Core.Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Core.Optional.ToNullable(refreshFrequencyMins), Core.Optional.ToNullable(allowModuleOverwrite));
+            return new DscMetaConfiguration(Optional.ToNullable(configurationModeFrequencyMins), Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(allowModuleOverwrite));
         }
     }
 }

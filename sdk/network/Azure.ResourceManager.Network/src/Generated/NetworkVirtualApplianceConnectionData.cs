@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
         public NetworkVirtualApplianceConnectionData()
         {
-            BgpPeerAddress = new Core.ChangeTrackingList<string>();
+            BgpPeerAddress = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>

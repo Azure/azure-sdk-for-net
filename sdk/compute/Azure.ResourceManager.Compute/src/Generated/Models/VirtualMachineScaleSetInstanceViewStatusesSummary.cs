@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceViewStatusesSummary. </summary>
         internal VirtualMachineScaleSetInstanceViewStatusesSummary()
         {
-            StatusesSummary = new Core.ChangeTrackingList<VirtualMachineStatusCodeCount>();
+            StatusesSummary = new ChangeTrackingList<VirtualMachineStatusCodeCount>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceViewStatusesSummary. </summary>

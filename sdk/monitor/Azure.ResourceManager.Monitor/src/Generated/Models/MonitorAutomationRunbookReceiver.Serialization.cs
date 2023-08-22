@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorAutomationRunbookReceiver : Core.IUtf8JsonSerializable
+    public partial class MonitorAutomationRunbookReceiver : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("automationAccountId"u8);
@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(WebhookResourceId);
             writer.WritePropertyName("isGlobalRunbook"u8);
             writer.WriteBooleanValue(IsGlobalRunbook);
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ServiceUri))
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(UseCommonAlertSchema))
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string runbookName = default;
             ResourceIdentifier webhookResourceId = default;
             bool isGlobalRunbook = default;
-            Core.Optional<string> name = default;
-            Core.Optional<Uri> serviceUri = default;
-            Core.Optional<bool> useCommonAlertSchema = default;
+            Optional<string> name = default;
+            Optional<Uri> serviceUri = default;
+            Optional<bool> useCommonAlertSchema = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("automationAccountId"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorAutomationRunbookReceiver(automationAccountId, runbookName, webhookResourceId, isGlobalRunbook, name.Value, serviceUri.Value, Core.Optional.ToNullable(useCommonAlertSchema));
+            return new MonitorAutomationRunbookReceiver(automationAccountId, runbookName, webhookResourceId, isGlobalRunbook, name.Value, serviceUri.Value, Optional.ToNullable(useCommonAlertSchema));
         }
     }
 }

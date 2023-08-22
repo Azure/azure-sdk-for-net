@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryBaseImageTriggerUpdateContent : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryBaseImageTriggerUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BaseImageTriggerType))
+            if (Optional.IsDefined(BaseImageTriggerType))
             {
                 writer.WritePropertyName("baseImageTriggerType"u8);
                 writer.WriteStringValue(BaseImageTriggerType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(UpdateTriggerEndpoint))
+            if (Optional.IsDefined(UpdateTriggerEndpoint))
             {
                 writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
-            if (Core.Optional.IsDefined(UpdateTriggerPayloadType))
+            if (Optional.IsDefined(UpdateTriggerPayloadType))
             {
                 writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

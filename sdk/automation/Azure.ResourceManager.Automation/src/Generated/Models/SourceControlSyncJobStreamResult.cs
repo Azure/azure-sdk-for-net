@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>
         internal SourceControlSyncJobStreamResult()
         {
-            Value = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Value = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of SourceControlSyncJobStreamResult. </summary>

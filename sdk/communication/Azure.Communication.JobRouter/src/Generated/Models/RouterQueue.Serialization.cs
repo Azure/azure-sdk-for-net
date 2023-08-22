@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterQueue : Core.IUtf8JsonSerializable
+    public partial class RouterQueue : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(DistributionPolicyId))
+            if (Optional.IsDefined(DistributionPolicyId))
             {
                 writer.WritePropertyName("distributionPolicyId"u8);
                 writer.WriteStringValue(DistributionPolicyId);
             }
-            if (Core.Optional.IsCollectionDefined(_labels))
+            if (Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ExceptionPolicyId))
+            if (Optional.IsDefined(ExceptionPolicyId))
             {
                 writer.WritePropertyName("exceptionPolicyId"u8);
                 writer.WriteStringValue(ExceptionPolicyId);
@@ -56,11 +56,11 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> distributionPolicyId = default;
-            Core.Optional<IDictionary<string, object>> labels = default;
-            Core.Optional<string> exceptionPolicyId = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<string> distributionPolicyId = default;
+            Optional<IDictionary<string, object>> labels = default;
+            Optional<string> exceptionPolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,7 +105,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new RouterQueue(id.Value, name.Value, distributionPolicyId.Value, Core.Optional.ToDictionary(labels), exceptionPolicyId.Value);
+            return new RouterQueue(id.Value, name.Value, distributionPolicyId.Value, Optional.ToDictionary(labels), exceptionPolicyId.Value);
         }
     }
 }

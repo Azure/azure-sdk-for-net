@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseEncryptionProtectorOperationSource : Core.IOperationSource<SynapseEncryptionProtectorResource>
+    internal class SynapseEncryptionProtectorOperationSource : IOperationSource<SynapseEncryptionProtectorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseEncryptionProtectorResource Core.IOperationSource<SynapseEncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseEncryptionProtectorResource IOperationSource<SynapseEncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);
             return new SynapseEncryptionProtectorResource(_client, data);
         }
 
-        async ValueTask<SynapseEncryptionProtectorResource> Core.IOperationSource<SynapseEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseEncryptionProtectorResource> IOperationSource<SynapseEncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(document.RootElement);

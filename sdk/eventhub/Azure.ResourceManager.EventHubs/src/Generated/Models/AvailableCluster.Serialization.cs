@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new AvailableCluster(Core.Optional.ToNullable(location));
+            return new AvailableCluster(Optional.ToNullable(location));
         }
     }
 }

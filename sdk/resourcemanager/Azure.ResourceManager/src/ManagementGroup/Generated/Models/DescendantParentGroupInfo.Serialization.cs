@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

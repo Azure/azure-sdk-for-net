@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> fqdn = default;
-            Core.Optional<string> resourceId = default;
-            Core.Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;
+            Optional<string> fqdn = default;
+            Optional<string> resourceId = default;
+            Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))

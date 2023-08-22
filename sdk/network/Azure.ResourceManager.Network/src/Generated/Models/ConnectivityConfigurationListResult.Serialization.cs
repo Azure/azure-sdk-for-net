@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ConnectivityConfigurationData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ConnectivityConfigurationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectivityConfigurationListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ConnectivityConfigurationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

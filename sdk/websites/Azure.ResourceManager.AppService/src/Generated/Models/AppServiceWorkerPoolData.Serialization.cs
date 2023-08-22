@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceWorkerPoolData : Core.IUtf8JsonSerializable
+    public partial class AppServiceWorkerPoolData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WorkerSizeId))
+            if (Optional.IsDefined(WorkerSizeId))
             {
                 writer.WritePropertyName("workerSizeId"u8);
                 writer.WriteNumberValue(WorkerSizeId.Value);
             }
-            if (Core.Optional.IsDefined(ComputeMode))
+            if (Optional.IsDefined(ComputeMode))
             {
                 writer.WritePropertyName("computeMode"u8);
                 writer.WriteStringValue(ComputeMode.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(WorkerSize))
+            if (Optional.IsDefined(WorkerSize))
             {
                 writer.WritePropertyName("workerSize"u8);
                 writer.WriteStringValue(WorkerSize);
             }
-            if (Core.Optional.IsDefined(WorkerCount))
+            if (Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<AppServiceSkuDescription> sku = default;
-            Core.Optional<string> kind = default;
+            Optional<AppServiceSkuDescription> sku = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> workerSizeId = default;
-            Core.Optional<ComputeModeOption> computeMode = default;
-            Core.Optional<string> workerSize = default;
-            Core.Optional<int> workerCount = default;
-            Core.Optional<IReadOnlyList<string>> instanceNames = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> workerSizeId = default;
+            Optional<ComputeModeOption> computeMode = default;
+            Optional<string> workerSize = default;
+            Optional<int> workerCount = default;
+            Optional<IReadOnlyList<string>> instanceNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceWorkerPoolData(id, name, type, systemData.Value, sku.Value, Core.Optional.ToNullable(workerSizeId), Core.Optional.ToNullable(computeMode), workerSize.Value, Core.Optional.ToNullable(workerCount), Core.Optional.ToList(instanceNames), kind.Value);
+            return new AppServiceWorkerPoolData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(workerSizeId), Optional.ToNullable(computeMode), workerSize.Value, Optional.ToNullable(workerCount), Optional.ToList(instanceNames), kind.Value);
         }
     }
 }

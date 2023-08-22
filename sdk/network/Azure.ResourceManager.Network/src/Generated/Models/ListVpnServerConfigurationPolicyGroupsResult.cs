@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVpnServerConfigurationPolicyGroupsResult. </summary>
         internal ListVpnServerConfigurationPolicyGroupsResult()
         {
-            Value = new Core.ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
+            Value = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
         /// <summary> Initializes a new instance of ListVpnServerConfigurationPolicyGroupsResult. </summary>

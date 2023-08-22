@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExclusionManagedRuleGroup : Core.IUtf8JsonSerializable
+    public partial class ExclusionManagedRuleGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (Core.Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleGroupName = default;
-            Core.Optional<IList<ExclusionManagedRule>> rules = default;
+            Optional<IList<ExclusionManagedRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExclusionManagedRuleGroup(ruleGroupName, Core.Optional.ToList(rules));
+            return new ExclusionManagedRuleGroup(ruleGroupName, Optional.ToList(rules));
         }
     }
 }

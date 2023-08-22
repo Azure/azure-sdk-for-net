@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TrafficAnalyticsConfigurationProperties : Core.IUtf8JsonSerializable
+    public partial class TrafficAnalyticsConfigurationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Core.Optional.IsDefined(WorkspaceId))
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (Core.Optional.IsDefined(WorkspaceRegion))
+            if (Optional.IsDefined(WorkspaceRegion))
             {
                 writer.WritePropertyName("workspaceRegion"u8);
                 writer.WriteStringValue(WorkspaceRegion);
             }
-            if (Core.Optional.IsDefined(WorkspaceResourceId))
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (Core.Optional.IsDefined(TrafficAnalyticsIntervalInMinutes))
+            if (Optional.IsDefined(TrafficAnalyticsIntervalInMinutes))
             {
                 writer.WritePropertyName("trafficAnalyticsInterval"u8);
                 writer.WriteNumberValue(TrafficAnalyticsIntervalInMinutes.Value);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> workspaceId = default;
-            Core.Optional<string> workspaceRegion = default;
-            Core.Optional<ResourceIdentifier> workspaceResourceId = default;
-            Core.Optional<int> trafficAnalyticsInterval = default;
+            Optional<bool> enabled = default;
+            Optional<string> workspaceId = default;
+            Optional<string> workspaceRegion = default;
+            Optional<ResourceIdentifier> workspaceResourceId = default;
+            Optional<int> trafficAnalyticsInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TrafficAnalyticsConfigurationProperties(Core.Optional.ToNullable(enabled), workspaceId.Value, workspaceRegion.Value, workspaceResourceId.Value, Core.Optional.ToNullable(trafficAnalyticsInterval));
+            return new TrafficAnalyticsConfigurationProperties(Optional.ToNullable(enabled), workspaceId.Value, workspaceRegion.Value, workspaceResourceId.Value, Optional.ToNullable(trafficAnalyticsInterval));
         }
     }
 }

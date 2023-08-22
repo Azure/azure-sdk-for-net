@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ThroughputPolicyResourceInfo : Core.IUtf8JsonSerializable
+    public partial class ThroughputPolicyResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IncrementPercent))
+            if (Optional.IsDefined(IncrementPercent))
             {
                 writer.WritePropertyName("incrementPercent"u8);
                 writer.WriteNumberValue(IncrementPercent.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<int> incrementPercent = default;
+            Optional<bool> isEnabled = default;
+            Optional<int> incrementPercent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEnabled"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new ThroughputPolicyResourceInfo(Core.Optional.ToNullable(isEnabled), Core.Optional.ToNullable(incrementPercent));
+            return new ThroughputPolicyResourceInfo(Optional.ToNullable(isEnabled), Optional.ToNullable(incrementPercent));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> domainName = default;
-            Core.Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
+            Optional<string> domainName = default;
+            Optional<IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Core.Optional.ToList(endpointDetails));
+            return new IntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Optional.ToList(endpointDetails));
         }
     }
 }

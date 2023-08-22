@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(pipeline, nameof(pipeline));
 
             Pipeline = pipeline;
-            Parameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "ExecutePipeline";
         }
 

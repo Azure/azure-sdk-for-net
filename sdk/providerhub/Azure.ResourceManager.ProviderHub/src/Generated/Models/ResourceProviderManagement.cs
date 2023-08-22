@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>
         public ResourceProviderManagement()
         {
-            SchemaOwners = new Core.ChangeTrackingList<string>();
-            ManifestOwners = new Core.ChangeTrackingList<string>();
-            ServiceTreeInfos = new Core.ChangeTrackingList<ServiceTreeInfo>();
-            ResourceAccessRoles = new Core.ChangeTrackingList<BinaryData>();
+            SchemaOwners = new ChangeTrackingList<string>();
+            ManifestOwners = new ChangeTrackingList<string>();
+            ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
+            ResourceAccessRoles = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManagement. </summary>

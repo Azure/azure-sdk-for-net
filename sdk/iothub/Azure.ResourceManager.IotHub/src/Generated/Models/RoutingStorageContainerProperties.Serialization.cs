@@ -11,66 +11,66 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingStorageContainerProperties : Core.IUtf8JsonSerializable
+    public partial class RoutingStorageContainerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Core.Optional.IsDefined(ConnectionString))
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Core.Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Core.Optional.IsDefined(AuthenticationType))
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Core.Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Core.Optional.IsDefined(FileNameFormat))
+            if (Optional.IsDefined(FileNameFormat))
             {
                 writer.WritePropertyName("fileNameFormat"u8);
                 writer.WriteStringValue(FileNameFormat);
             }
-            if (Core.Optional.IsDefined(BatchFrequencyInSeconds))
+            if (Optional.IsDefined(BatchFrequencyInSeconds))
             {
                 writer.WritePropertyName("batchFrequencyInSeconds"u8);
                 writer.WriteNumberValue(BatchFrequencyInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(MaxChunkSizeInBytes))
+            if (Optional.IsDefined(MaxChunkSizeInBytes))
             {
                 writer.WritePropertyName("maxChunkSizeInBytes"u8);
                 writer.WriteNumberValue(MaxChunkSizeInBytes.Value);
             }
-            if (Core.Optional.IsDefined(Encoding))
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<Guid> id = default;
-            Core.Optional<string> connectionString = default;
-            Core.Optional<string> endpointUri = default;
-            Core.Optional<IotHubAuthenticationType> authenticationType = default;
-            Core.Optional<ManagedIdentity> identity = default;
+            Optional<Guid> id = default;
+            Optional<string> connectionString = default;
+            Optional<string> endpointUri = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
+            Optional<ManagedIdentity> identity = default;
             string name = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> resourceGroup = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> resourceGroup = default;
             string containerName = default;
-            Core.Optional<string> fileNameFormat = default;
-            Core.Optional<int> batchFrequencyInSeconds = default;
-            Core.Optional<int> maxChunkSizeInBytes = default;
-            Core.Optional<RoutingStorageContainerPropertiesEncoding> encoding = default;
+            Optional<string> fileNameFormat = default;
+            Optional<int> batchFrequencyInSeconds = default;
+            Optional<int> maxChunkSizeInBytes = default;
+            Optional<RoutingStorageContainerPropertiesEncoding> encoding = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RoutingStorageContainerProperties(Core.Optional.ToNullable(id), connectionString.Value, endpointUri.Value, Core.Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Core.Optional.ToNullable(batchFrequencyInSeconds), Core.Optional.ToNullable(maxChunkSizeInBytes), Core.Optional.ToNullable(encoding));
+            return new RoutingStorageContainerProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Optional.ToNullable(batchFrequencyInSeconds), Optional.ToNullable(maxChunkSizeInBytes), Optional.ToNullable(encoding));
         }
     }
 }

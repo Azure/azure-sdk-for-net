@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <summary> Initializes a new instance of ControllerPatch. </summary>
         public ControllerPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Tags for the Azure Dev Spaces Controller. </summary>

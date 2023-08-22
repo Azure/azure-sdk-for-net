@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
-    public partial class Scope : Core.IUtf8JsonSerializable
+    public partial class Scope : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ManagementGroups))
+            if (Optional.IsCollectionDefined(ManagementGroups))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Subscriptions))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VirtualNetworks))
+            if (Optional.IsCollectionDefined(VirtualNetworks))
             {
                 writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Subnets))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Core.Optional<IList<WritableSubResource>> managementGroups = default;
-            Core.Optional<IList<WritableSubResource>> subscriptions = default;
-            Core.Optional<IList<WritableSubResource>> virtualNetworks = default;
-            Core.Optional<IList<WritableSubResource>> subnets = default;
+            Optional<IList<WritableSubResource>> managementGroups = default;
+            Optional<IList<WritableSubResource>> subscriptions = default;
+            Optional<IList<WritableSubResource>> virtualNetworks = default;
+            Optional<IList<WritableSubResource>> subnets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managementGroups"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     continue;
                 }
             }
-            return new Scope(Core.Optional.ToList(managementGroups), Core.Optional.ToList(subscriptions), Core.Optional.ToList(virtualNetworks), Core.Optional.ToList(subnets));
+            return new Scope(Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(virtualNetworks), Optional.ToList(subnets));
         }
     }
 }

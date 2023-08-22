@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GetVpnSitesConfigurationContent : Core.IUtf8JsonSerializable
+    public partial class GetVpnSitesConfigurationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VpnSites))
+            if (Optional.IsCollectionDefined(VpnSites))
             {
                 writer.WritePropertyName("vpnSites"u8);
                 writer.WriteStartArray();

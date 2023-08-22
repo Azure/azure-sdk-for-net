@@ -13,29 +13,29 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TransformationConverter))]
-    public partial class Transformation : Core.IUtf8JsonSerializable
+    public partial class Transformation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Dataset))
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (Core.Optional.IsDefined(LinkedService))
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Core.Optional.IsDefined(Flowlet))
+            if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -50,10 +50,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DatasetReference> dataset = default;
-            Core.Optional<LinkedServiceReference> linkedService = default;
-            Core.Optional<DataFlowReference> flowlet = default;
+            Optional<string> description = default;
+            Optional<DatasetReference> dataset = default;
+            Optional<LinkedServiceReference> linkedService = default;
+            Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

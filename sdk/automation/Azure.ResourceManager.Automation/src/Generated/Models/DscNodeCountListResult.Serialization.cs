@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DscNodeCount>> value = default;
-            Core.Optional<int> totalCount = default;
+            Optional<IReadOnlyList<DscNodeCount>> value = default;
+            Optional<int> totalCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new DscNodeCountListResult(Core.Optional.ToList(value), Core.Optional.ToNullable(totalCount));
+            return new DscNodeCountListResult(Optional.ToList(value), Optional.ToNullable(totalCount));
         }
     }
 }

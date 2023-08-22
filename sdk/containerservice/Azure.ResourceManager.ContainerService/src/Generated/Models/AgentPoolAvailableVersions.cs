@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>
         internal AgentPoolAvailableVersions()
         {
-            AgentPoolVersions = new Core.ChangeTrackingList<AgentPoolAvailableVersion>();
+            AgentPoolVersions = new ChangeTrackingList<AgentPoolAvailableVersion>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolAvailableVersions. </summary>

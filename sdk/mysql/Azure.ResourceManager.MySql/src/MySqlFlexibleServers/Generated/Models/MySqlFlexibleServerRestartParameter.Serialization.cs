@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerRestartParameter : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerRestartParameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RestartWithFailover))
+            if (Optional.IsDefined(RestartWithFailover))
             {
                 writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteStringValue(RestartWithFailover.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MaxFailoverSeconds))
+            if (Optional.IsDefined(MaxFailoverSeconds))
             {
                 writer.WritePropertyName("maxFailoverSeconds"u8);
                 writer.WriteNumberValue(MaxFailoverSeconds.Value);

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VoiceServices
 {
-    internal class VoiceServicesCommunicationsGatewayOperationSource : Core.IOperationSource<VoiceServicesCommunicationsGatewayResource>
+    internal class VoiceServicesCommunicationsGatewayOperationSource : IOperationSource<VoiceServicesCommunicationsGatewayResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.VoiceServices
             _client = client;
         }
 
-        VoiceServicesCommunicationsGatewayResource Core.IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VoiceServicesCommunicationsGatewayResource IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);
             return new VoiceServicesCommunicationsGatewayResource(_client, data);
         }
 
-        async ValueTask<VoiceServicesCommunicationsGatewayResource> Core.IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VoiceServicesCommunicationsGatewayResource> IOperationSource<VoiceServicesCommunicationsGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VoiceServicesCommunicationsGatewayData.DeserializeVoiceServicesCommunicationsGatewayData(document.RootElement);

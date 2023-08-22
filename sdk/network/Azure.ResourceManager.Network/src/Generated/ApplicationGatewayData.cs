@@ -24,30 +24,30 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>
         public ApplicationGatewayData()
         {
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
-            GatewayIPConfigurations = new Core.ChangeTrackingList<ApplicationGatewayIPConfiguration>();
-            AuthenticationCertificates = new Core.ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>();
-            TrustedRootCertificates = new Core.ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>();
-            TrustedClientCertificates = new Core.ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>();
-            SslCertificates = new Core.ChangeTrackingList<ApplicationGatewaySslCertificate>();
-            FrontendIPConfigurations = new Core.ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>();
-            FrontendPorts = new Core.ChangeTrackingList<ApplicationGatewayFrontendPort>();
-            Probes = new Core.ChangeTrackingList<ApplicationGatewayProbe>();
-            BackendAddressPools = new Core.ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
-            BackendHttpSettingsCollection = new Core.ChangeTrackingList<ApplicationGatewayBackendHttpSettings>();
-            BackendSettingsCollection = new Core.ChangeTrackingList<ApplicationGatewayBackendSettings>();
-            HttpListeners = new Core.ChangeTrackingList<ApplicationGatewayHttpListener>();
-            Listeners = new Core.ChangeTrackingList<ApplicationGatewayListener>();
-            SslProfiles = new Core.ChangeTrackingList<ApplicationGatewaySslProfile>();
-            UrlPathMaps = new Core.ChangeTrackingList<ApplicationGatewayUrlPathMap>();
-            RequestRoutingRules = new Core.ChangeTrackingList<ApplicationGatewayRequestRoutingRule>();
-            RoutingRules = new Core.ChangeTrackingList<ApplicationGatewayRoutingRule>();
-            RewriteRuleSets = new Core.ChangeTrackingList<ApplicationGatewayRewriteRuleSet>();
-            RedirectConfigurations = new Core.ChangeTrackingList<ApplicationGatewayRedirectConfiguration>();
-            PrivateLinkConfigurations = new Core.ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
-            CustomErrorConfigurations = new Core.ChangeTrackingList<ApplicationGatewayCustomError>();
-            LoadDistributionPolicies = new Core.ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>();
+            AvailabilityZones = new ChangeTrackingList<string>();
+            GatewayIPConfigurations = new ChangeTrackingList<ApplicationGatewayIPConfiguration>();
+            AuthenticationCertificates = new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>();
+            TrustedRootCertificates = new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>();
+            TrustedClientCertificates = new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>();
+            SslCertificates = new ChangeTrackingList<ApplicationGatewaySslCertificate>();
+            FrontendIPConfigurations = new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>();
+            FrontendPorts = new ChangeTrackingList<ApplicationGatewayFrontendPort>();
+            Probes = new ChangeTrackingList<ApplicationGatewayProbe>();
+            BackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
+            BackendHttpSettingsCollection = new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>();
+            BackendSettingsCollection = new ChangeTrackingList<ApplicationGatewayBackendSettings>();
+            HttpListeners = new ChangeTrackingList<ApplicationGatewayHttpListener>();
+            Listeners = new ChangeTrackingList<ApplicationGatewayListener>();
+            SslProfiles = new ChangeTrackingList<ApplicationGatewaySslProfile>();
+            UrlPathMaps = new ChangeTrackingList<ApplicationGatewayUrlPathMap>();
+            RequestRoutingRules = new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>();
+            RoutingRules = new ChangeTrackingList<ApplicationGatewayRoutingRule>();
+            RewriteRuleSets = new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>();
+            RedirectConfigurations = new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>();
+            PrivateLinkConfigurations = new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>();
+            PrivateEndpointConnections = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
+            CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
+            LoadDistributionPolicies = new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayData. </summary>

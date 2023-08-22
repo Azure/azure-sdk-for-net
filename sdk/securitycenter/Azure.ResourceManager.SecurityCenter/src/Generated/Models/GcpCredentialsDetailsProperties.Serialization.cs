@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpCredentialsDetailsProperties : Core.IUtf8JsonSerializable
+    public partial class GcpCredentialsDetailsProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("organizationId"u8);
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Uri tokenUri = default;
             Uri authProviderX509CertUrl = default;
             Uri clientX509CertUrl = default;
-            Core.Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Core.Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new GcpCredentialsDetailsProperties(Core.Optional.ToNullable(authenticationProvisioningState), Core.Optional.ToList(grantedPermissions), authenticationType, organizationId, type, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUrl, clientX509CertUrl);
+            return new GcpCredentialsDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, organizationId, type, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUrl, clientX509CertUrl);
         }
     }
 }

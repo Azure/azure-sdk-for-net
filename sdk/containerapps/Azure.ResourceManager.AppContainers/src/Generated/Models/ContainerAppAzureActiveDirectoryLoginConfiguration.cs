@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryLoginConfiguration. </summary>
         public ContainerAppAzureActiveDirectoryLoginConfiguration()
         {
-            LoginParameters = new Core.ChangeTrackingList<string>();
+            LoginParameters = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryLoginConfiguration. </summary>

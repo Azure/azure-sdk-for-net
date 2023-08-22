@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>
         internal OnlineDeploymentTrackedResourceArmPaginatedResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningOnlineDeploymentData>();
+            Value = new ChangeTrackingList<MachineLearningOnlineDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of OnlineDeploymentTrackedResourceArmPaginatedResult. </summary>

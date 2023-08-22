@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of SourceAddressInfo. </summary>
         public SourceAddressInfo()
         {
-            Cidrs = new Core.ChangeTrackingList<string>();
-            Countries = new Core.ChangeTrackingList<string>();
-            Feeds = new Core.ChangeTrackingList<string>();
-            PrefixLists = new Core.ChangeTrackingList<string>();
+            Cidrs = new ChangeTrackingList<string>();
+            Countries = new ChangeTrackingList<string>();
+            Feeds = new ChangeTrackingList<string>();
+            PrefixLists = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SourceAddressInfo. </summary>

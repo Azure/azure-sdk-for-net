@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<LinkableEnvironmentResult>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<LinkableEnvironmentResult>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new LinkableEnvironmentListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new LinkableEnvironmentListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

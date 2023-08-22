@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierConfiguration : Core.IUtf8JsonSerializable
+    public partial class ThreeTierConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetworkConfiguration))
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(ApplicationServer);
             writer.WritePropertyName("databaseServer"u8);
             writer.WriteObjectValue(DatabaseServer);
-            if (Core.Optional.IsDefined(HighAvailabilityConfig))
+            if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
                 writer.WriteObjectValue(HighAvailabilityConfig);
             }
-            if (Core.Optional.IsDefined(StorageConfiguration))
+            if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (Core.Optional.IsDefined(CustomResourceNames))
+            if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
                 writer.WriteObjectValue(CustomResourceNames);
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<NetworkConfiguration> networkConfiguration = default;
+            Optional<NetworkConfiguration> networkConfiguration = default;
             CentralServerConfiguration centralServer = default;
             ApplicationServerConfiguration applicationServer = default;
             DatabaseConfiguration databaseServer = default;
-            Core.Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
-            Core.Optional<SapStorageConfiguration> storageConfiguration = default;
-            Core.Optional<ThreeTierCustomResourceNames> customResourceNames = default;
+            Optional<HighAvailabilityConfiguration> highAvailabilityConfig = default;
+            Optional<SapStorageConfiguration> storageConfiguration = default;
+            Optional<ThreeTierCustomResourceNames> customResourceNames = default;
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             foreach (var property in element.EnumerateObject())

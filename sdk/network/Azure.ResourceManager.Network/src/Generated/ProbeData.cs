@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ProbeData. </summary>
         public ProbeData()
         {
-            LoadBalancingRules = new Core.ChangeTrackingList<WritableSubResource>();
+            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ProbeData. </summary>

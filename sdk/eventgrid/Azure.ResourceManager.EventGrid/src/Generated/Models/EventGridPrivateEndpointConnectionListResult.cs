@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionListResult. </summary>
         internal EventGridPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionListResult. </summary>

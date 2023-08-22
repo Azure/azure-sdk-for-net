@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="location"> The location. </param>
         public HDInsightClusterData(AzureLocation location) : base(location)
         {
-            Zones = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterData. </summary>

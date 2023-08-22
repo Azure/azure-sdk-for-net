@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualHubData : Core.IUtf8JsonSerializable
+    public partial class VirtualHubData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,52 +42,52 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualWan))
+            if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
-            if (Core.Optional.IsDefined(VpnGateway))
+            if (Optional.IsDefined(VpnGateway))
             {
                 writer.WritePropertyName("vpnGateway"u8);
                 JsonSerializer.Serialize(writer, VpnGateway);
             }
-            if (Core.Optional.IsDefined(P2SVpnGateway))
+            if (Optional.IsDefined(P2SVpnGateway))
             {
                 writer.WritePropertyName("p2SVpnGateway"u8);
                 JsonSerializer.Serialize(writer, P2SVpnGateway);
             }
-            if (Core.Optional.IsDefined(ExpressRouteGateway))
+            if (Optional.IsDefined(ExpressRouteGateway))
             {
                 writer.WritePropertyName("expressRouteGateway"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteGateway);
             }
-            if (Core.Optional.IsDefined(AzureFirewall))
+            if (Optional.IsDefined(AzureFirewall))
             {
                 writer.WritePropertyName("azureFirewall"u8);
                 JsonSerializer.Serialize(writer, AzureFirewall);
             }
-            if (Core.Optional.IsDefined(SecurityPartnerProvider))
+            if (Optional.IsDefined(SecurityPartnerProvider))
             {
                 writer.WritePropertyName("securityPartnerProvider"u8);
                 JsonSerializer.Serialize(writer, SecurityPartnerProvider);
             }
-            if (Core.Optional.IsDefined(AddressPrefix))
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Core.Optional.IsDefined(RouteTable))
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
-            if (Core.Optional.IsDefined(SecurityProviderName))
+            if (Optional.IsDefined(SecurityProviderName))
             {
                 writer.WritePropertyName("securityProviderName"u8);
                 writer.WriteStringValue(SecurityProviderName);
             }
-            if (Core.Optional.IsCollectionDefined(VirtualHubRouteTableV2S))
+            if (Optional.IsCollectionDefined(VirtualHubRouteTableV2S))
             {
                 writer.WritePropertyName("virtualHubRouteTableV2s"u8);
                 writer.WriteStartArray();
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Core.Optional.IsDefined(VirtualRouterAsn))
+            if (Optional.IsDefined(VirtualRouterAsn))
             {
                 writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
-            if (Core.Optional.IsCollectionDefined(VirtualRouterIPs))
+            if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
                 writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
@@ -117,22 +117,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AllowBranchToBranchTraffic))
+            if (Optional.IsDefined(AllowBranchToBranchTraffic))
             {
                 writer.WritePropertyName("allowBranchToBranchTraffic"u8);
                 writer.WriteBooleanValue(AllowBranchToBranchTraffic.Value);
             }
-            if (Core.Optional.IsDefined(PreferredRoutingGateway))
+            if (Optional.IsDefined(PreferredRoutingGateway))
             {
                 writer.WritePropertyName("preferredRoutingGateway"u8);
                 writer.WriteStringValue(PreferredRoutingGateway.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HubRoutingPreference))
+            if (Optional.IsDefined(HubRoutingPreference))
             {
                 writer.WritePropertyName("hubRoutingPreference"u8);
                 writer.WriteStringValue(HubRoutingPreference.Value.ToString());
             }
-            if (Core.Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
+            if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
             {
                 writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
                 writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
@@ -147,35 +147,35 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<string> kind = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<WritableSubResource> virtualWan = default;
-            Core.Optional<WritableSubResource> vpnGateway = default;
-            Core.Optional<WritableSubResource> p2sVpnGateway = default;
-            Core.Optional<WritableSubResource> expressRouteGateway = default;
-            Core.Optional<WritableSubResource> azureFirewall = default;
-            Core.Optional<WritableSubResource> securityPartnerProvider = default;
-            Core.Optional<string> addressPrefix = default;
-            Core.Optional<VirtualHubRouteTable> routeTable = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<string> securityProviderName = default;
-            Core.Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
-            Core.Optional<string> sku = default;
-            Core.Optional<RoutingState> routingState = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> routeMaps = default;
-            Core.Optional<long> virtualRouterAsn = default;
-            Core.Optional<IList<string>> virtualRouterIPs = default;
-            Core.Optional<bool> allowBranchToBranchTraffic = default;
-            Core.Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
-            Core.Optional<HubRoutingPreference> hubRoutingPreference = default;
-            Core.Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
+            Optional<ETag> etag = default;
+            Optional<string> kind = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<WritableSubResource> virtualWan = default;
+            Optional<WritableSubResource> vpnGateway = default;
+            Optional<WritableSubResource> p2sVpnGateway = default;
+            Optional<WritableSubResource> expressRouteGateway = default;
+            Optional<WritableSubResource> azureFirewall = default;
+            Optional<WritableSubResource> securityPartnerProvider = default;
+            Optional<string> addressPrefix = default;
+            Optional<VirtualHubRouteTable> routeTable = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<string> securityProviderName = default;
+            Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
+            Optional<string> sku = default;
+            Optional<RoutingState> routingState = default;
+            Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
+            Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
+            Optional<IReadOnlyList<WritableSubResource>> routeMaps = default;
+            Optional<long> virtualRouterAsn = default;
+            Optional<IList<string>> virtualRouterIPs = default;
+            Optional<bool> allowBranchToBranchTraffic = default;
+            Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
+            Optional<HubRoutingPreference> hubRoutingPreference = default;
+            Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualHubData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Core.Optional.ToNullable(provisioningState), securityProviderName.Value, Core.Optional.ToList(virtualHubRouteTableV2s), sku.Value, Core.Optional.ToNullable(routingState), Core.Optional.ToList(bgpConnections), Core.Optional.ToList(ipConfigurations), Core.Optional.ToList(routeMaps), Core.Optional.ToNullable(virtualRouterAsn), Core.Optional.ToList(virtualRouterIPs), Core.Optional.ToNullable(allowBranchToBranchTraffic), Core.Optional.ToNullable(preferredRoutingGateway), Core.Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
         }
     }
 }

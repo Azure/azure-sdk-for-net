@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
         public ExpressRouteCircuitPeeringConfig()
         {
-            AdvertisedPublicPrefixes = new Core.ChangeTrackingList<string>();
-            AdvertisedCommunities = new Core.ChangeTrackingList<string>();
+            AdvertisedPublicPrefixes = new ChangeTrackingList<string>();
+            AdvertisedCommunities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>

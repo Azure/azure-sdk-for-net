@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
         public VirtualHubRouteTableV2Data()
         {
-            Routes = new Core.ChangeTrackingList<VirtualHubRouteV2>();
-            AttachedConnections = new Core.ChangeTrackingList<string>();
+            Routes = new ChangeTrackingList<VirtualHubRouteV2>();
+            AttachedConnections = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>

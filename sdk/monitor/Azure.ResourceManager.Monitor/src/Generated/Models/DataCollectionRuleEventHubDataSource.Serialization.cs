@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleEventHubDataSource : Core.IUtf8JsonSerializable
+    public partial class DataCollectionRuleEventHubDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ConsumerGroup))
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Core.Optional.IsDefined(Stream))
+            if (Optional.IsDefined(Stream))
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteStringValue(Stream);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> consumerGroup = default;
-            Core.Optional<string> stream = default;
+            Optional<string> name = default;
+            Optional<string> consumerGroup = default;
+            Optional<string> stream = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

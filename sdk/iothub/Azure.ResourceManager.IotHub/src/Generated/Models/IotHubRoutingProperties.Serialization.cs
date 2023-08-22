@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubRoutingProperties : Core.IUtf8JsonSerializable
+    public partial class IotHubRoutingProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Endpoints))
+            if (Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteObjectValue(Endpoints);
             }
-            if (Core.Optional.IsCollectionDefined(Routes))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FallbackRoute))
+            if (Optional.IsDefined(FallbackRoute))
             {
                 writer.WritePropertyName("fallbackRoute"u8);
                 writer.WriteObjectValue(FallbackRoute);
             }
-            if (Core.Optional.IsCollectionDefined(Enrichments))
+            if (Optional.IsCollectionDefined(Enrichments))
             {
                 writer.WritePropertyName("enrichments"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<RoutingEndpoints> endpoints = default;
-            Core.Optional<IList<RoutingRuleProperties>> routes = default;
-            Core.Optional<IotHubFallbackRouteProperties> fallbackRoute = default;
-            Core.Optional<IList<IotHubEnrichmentProperties>> enrichments = default;
+            Optional<RoutingEndpoints> endpoints = default;
+            Optional<IList<RoutingRuleProperties>> routes = default;
+            Optional<IotHubFallbackRouteProperties> fallbackRoute = default;
+            Optional<IList<IotHubEnrichmentProperties>> enrichments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoints"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubRoutingProperties(endpoints.Value, Core.Optional.ToList(routes), fallbackRoute.Value, Core.Optional.ToList(enrichments));
+            return new IotHubRoutingProperties(endpoints.Value, Optional.ToList(routes), fallbackRoute.Value, Optional.ToList(enrichments));
         }
     }
 }

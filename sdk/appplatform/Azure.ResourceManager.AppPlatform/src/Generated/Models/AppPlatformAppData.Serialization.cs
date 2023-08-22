@@ -12,23 +12,23 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    public partial class AppPlatformAppData : Core.IUtf8JsonSerializable
+    public partial class AppPlatformAppData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 return null;
             }
-            Core.Optional<AppPlatformAppProperties> properties = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<AppPlatformAppProperties> properties = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppPlatform
                     continue;
                 }
             }
-            return new AppPlatformAppData(id, name, type, systemData.Value, properties.Value, identity, Core.Optional.ToNullable(location));
+            return new AppPlatformAppData(id, name, type, systemData.Value, properties.Value, identity, Optional.ToNullable(location));
         }
     }
 }

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchDeploymentConfiguration : Core.IUtf8JsonSerializable
+    public partial class BatchDeploymentConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CloudServiceConfiguration))
+            if (Optional.IsDefined(CloudServiceConfiguration))
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
                 writer.WriteObjectValue(CloudServiceConfiguration);
             }
-            if (Core.Optional.IsDefined(VmConfiguration))
+            if (Optional.IsDefined(VmConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
                 writer.WriteObjectValue(VmConfiguration);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<BatchCloudServiceConfiguration> cloudServiceConfiguration = default;
-            Core.Optional<BatchVmConfiguration> virtualMachineConfiguration = default;
+            Optional<BatchCloudServiceConfiguration> cloudServiceConfiguration = default;
+            Optional<BatchVmConfiguration> virtualMachineConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudServiceConfiguration"u8))

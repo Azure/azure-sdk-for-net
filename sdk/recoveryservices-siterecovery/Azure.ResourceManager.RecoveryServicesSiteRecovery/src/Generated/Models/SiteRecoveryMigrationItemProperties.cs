@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>
         internal SiteRecoveryMigrationItemProperties()
         {
-            HealthErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
-            AllowedOperations = new Core.ChangeTrackingList<MigrationItemOperation>();
-            CriticalJobHistory = new Core.ChangeTrackingList<CriticalJobHistoryDetails>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            AllowedOperations = new ChangeTrackingList<MigrationItemOperation>();
+            CriticalJobHistory = new ChangeTrackingList<CriticalJobHistoryDetails>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryMigrationItemProperties. </summary>

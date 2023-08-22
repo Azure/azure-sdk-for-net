@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of ComputeVmProperties. </summary>
         internal ComputeVmProperties()
         {
-            Statuses = new Core.ChangeTrackingList<ComputeVmInstanceViewStatus>();
-            DataDiskIds = new Core.ChangeTrackingList<string>();
-            DataDisks = new Core.ChangeTrackingList<ComputeDataDisk>();
+            Statuses = new ChangeTrackingList<ComputeVmInstanceViewStatus>();
+            DataDiskIds = new ChangeTrackingList<string>();
+            DataDisks = new ChangeTrackingList<ComputeDataDisk>();
         }
 
         /// <summary> Initializes a new instance of ComputeVmProperties. </summary>

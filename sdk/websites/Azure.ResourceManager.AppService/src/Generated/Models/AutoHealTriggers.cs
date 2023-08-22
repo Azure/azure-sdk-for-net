@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AutoHealTriggers. </summary>
         public AutoHealTriggers()
         {
-            StatusCodes = new Core.ChangeTrackingList<StatusCodesBasedTrigger>();
-            SlowRequestsWithPath = new Core.ChangeTrackingList<SlowRequestsBasedTrigger>();
-            StatusCodesRange = new Core.ChangeTrackingList<StatusCodesRangeBasedTrigger>();
+            StatusCodes = new ChangeTrackingList<StatusCodesBasedTrigger>();
+            SlowRequestsWithPath = new ChangeTrackingList<SlowRequestsBasedTrigger>();
+            StatusCodesRange = new ChangeTrackingList<StatusCodesRangeBasedTrigger>();
         }
 
         /// <summary> Initializes a new instance of AutoHealTriggers. </summary>

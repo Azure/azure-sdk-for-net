@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SampleUtterance : Core.IUtf8JsonSerializable
+    public partial class SampleUtterance : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Text))
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Core.Optional.IsCollectionDefined(Links))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Qid))
+            if (Optional.IsDefined(Qid))
             {
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> text = default;
-            Core.Optional<IList<string>> links = default;
-            Core.Optional<string> qid = default;
+            Optional<string> text = default;
+            Optional<IList<string>> links = default;
+            Optional<string> qid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SampleUtterance(text.Value, Core.Optional.ToList(links), qid.Value);
+            return new SampleUtterance(text.Value, Optional.ToList(links), qid.Value);
         }
     }
 }

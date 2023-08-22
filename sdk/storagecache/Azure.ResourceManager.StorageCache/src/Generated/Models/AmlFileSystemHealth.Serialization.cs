@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<AmlFileSystemHealthStateType> state = default;
-            Core.Optional<string> statusCode = default;
-            Core.Optional<string> statusDescription = default;
+            Optional<AmlFileSystemHealthStateType> state = default;
+            Optional<string> statusCode = default;
+            Optional<string> statusDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFileSystemHealth(Core.Optional.ToNullable(state), statusCode.Value, statusDescription.Value);
+            return new AmlFileSystemHealth(Optional.ToNullable(state), statusCode.Value, statusDescription.Value);
         }
     }
 }

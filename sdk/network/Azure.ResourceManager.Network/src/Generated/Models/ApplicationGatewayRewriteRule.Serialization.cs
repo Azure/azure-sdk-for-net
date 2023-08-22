@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRewriteRule : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayRewriteRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(RuleSequence))
+            if (Optional.IsDefined(RuleSequence))
             {
                 writer.WritePropertyName("ruleSequence"u8);
                 writer.WriteNumberValue(RuleSequence.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Conditions))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ActionSet))
+            if (Optional.IsDefined(ActionSet))
             {
                 writer.WritePropertyName("actionSet"u8);
                 writer.WriteObjectValue(ActionSet);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<int> ruleSequence = default;
-            Core.Optional<IList<ApplicationGatewayRewriteRuleCondition>> conditions = default;
-            Core.Optional<ApplicationGatewayRewriteRuleActionSet> actionSet = default;
+            Optional<string> name = default;
+            Optional<int> ruleSequence = default;
+            Optional<IList<ApplicationGatewayRewriteRuleCondition>> conditions = default;
+            Optional<ApplicationGatewayRewriteRuleActionSet> actionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRewriteRule(name.Value, Core.Optional.ToNullable(ruleSequence), Core.Optional.ToList(conditions), actionSet.Value);
+            return new ApplicationGatewayRewriteRule(name.Value, Optional.ToNullable(ruleSequence), Optional.ToList(conditions), actionSet.Value);
         }
     }
 }

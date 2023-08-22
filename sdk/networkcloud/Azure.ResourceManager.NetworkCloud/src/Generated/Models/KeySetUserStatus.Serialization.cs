@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<string> azureUserName = default;
-            Core.Optional<BareMetalMachineKeySetUserSetupStatus> status = default;
-            Core.Optional<string> statusMessage = default;
+            Optional<string> azureUserName = default;
+            Optional<BareMetalMachineKeySetUserSetupStatus> status = default;
+            Optional<string> statusMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureUserName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new KeySetUserStatus(azureUserName.Value, Core.Optional.ToNullable(status), statusMessage.Value);
+            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value);
         }
     }
 }

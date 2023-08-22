@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ConnectivityConfigurationData. </summary>
         public ConnectivityConfigurationData()
         {
-            Hubs = new Core.ChangeTrackingList<ConnectivityHub>();
-            AppliesToGroups = new Core.ChangeTrackingList<ConnectivityGroupItem>();
+            Hubs = new ChangeTrackingList<ConnectivityHub>();
+            AppliesToGroups = new ChangeTrackingList<ConnectivityGroupItem>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityConfigurationData. </summary>

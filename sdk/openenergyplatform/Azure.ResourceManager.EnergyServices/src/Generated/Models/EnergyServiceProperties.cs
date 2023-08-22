@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         /// <summary> Initializes a new instance of EnergyServiceProperties. </summary>
         public EnergyServiceProperties()
         {
-            DataPartitionNames = new Core.ChangeTrackingList<DataPartitionName>();
+            DataPartitionNames = new ChangeTrackingList<DataPartitionName>();
         }
 
         /// <summary> Initializes a new instance of EnergyServiceProperties. </summary>

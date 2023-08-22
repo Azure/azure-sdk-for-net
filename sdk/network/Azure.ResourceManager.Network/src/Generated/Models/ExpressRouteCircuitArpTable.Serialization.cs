@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<int> age = default;
-            Core.Optional<string> @interface = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<string> macAddress = default;
+            Optional<int> age = default;
+            Optional<string> @interface = default;
+            Optional<string> ipAddress = default;
+            Optional<string> macAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("age"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitArpTable(Core.Optional.ToNullable(age), @interface.Value, ipAddress.Value, macAddress.Value);
+            return new ExpressRouteCircuitArpTable(Optional.ToNullable(age), @interface.Value, ipAddress.Value, macAddress.Value);
         }
     }
 }

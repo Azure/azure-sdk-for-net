@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> fabricType = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> providerVersion = default;
-            Core.Optional<string> serverVersion = default;
-            Core.Optional<string> providerVersionState = default;
-            Core.Optional<DateTimeOffset> providerVersionExpireOn = default;
-            Core.Optional<string> fabricFriendlyName = default;
-            Core.Optional<DateTimeOffset> lastHeartBeat = default;
-            Core.Optional<string> connectionStatus = default;
-            Core.Optional<int> protectedItemCount = default;
-            Core.Optional<IReadOnlyList<string>> allowedScenarios = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
-            Core.Optional<string> draIdentifier = default;
-            Core.Optional<string> machineId = default;
-            Core.Optional<string> machineName = default;
-            Core.Optional<string> biosId = default;
-            Core.Optional<IdentityProviderDetails> authenticationIdentityDetails = default;
-            Core.Optional<IdentityProviderDetails> resourceAccessIdentityDetails = default;
-            Core.Optional<IdentityProviderDetails> dataPlaneAuthenticationIdentityDetails = default;
-            Core.Optional<SiteRecoveryVersionDetails> providerVersionDetails = default;
+            Optional<string> fabricType = default;
+            Optional<string> friendlyName = default;
+            Optional<string> providerVersion = default;
+            Optional<string> serverVersion = default;
+            Optional<string> providerVersionState = default;
+            Optional<DateTimeOffset> providerVersionExpireOn = default;
+            Optional<string> fabricFriendlyName = default;
+            Optional<DateTimeOffset> lastHeartBeat = default;
+            Optional<string> connectionStatus = default;
+            Optional<int> protectedItemCount = default;
+            Optional<IReadOnlyList<string>> allowedScenarios = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
+            Optional<string> draIdentifier = default;
+            Optional<string> machineId = default;
+            Optional<string> machineName = default;
+            Optional<string> biosId = default;
+            Optional<IdentityProviderDetails> authenticationIdentityDetails = default;
+            Optional<IdentityProviderDetails> resourceAccessIdentityDetails = default;
+            Optional<IdentityProviderDetails> dataPlaneAuthenticationIdentityDetails = default;
+            Optional<SiteRecoveryVersionDetails> providerVersionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricType"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Core.Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Core.Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Core.Optional.ToNullable(protectedItemCount), Core.Optional.ToList(allowedScenarios), Core.Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value);
+            return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value);
         }
     }
 }

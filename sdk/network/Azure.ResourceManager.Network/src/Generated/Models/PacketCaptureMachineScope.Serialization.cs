@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureMachineScope : Core.IUtf8JsonSerializable
+    public partial class PacketCaptureMachineScope : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Include))
+            if (Optional.IsCollectionDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Exclude))
+            if (Optional.IsCollectionDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> include = default;
-            Core.Optional<IList<string>> exclude = default;
+            Optional<IList<string>> include = default;
+            Optional<IList<string>> exclude = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("include"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PacketCaptureMachineScope(Core.Optional.ToList(include), Core.Optional.ToList(exclude));
+            return new PacketCaptureMachineScope(Optional.ToList(include), Optional.ToList(exclude));
         }
     }
 }

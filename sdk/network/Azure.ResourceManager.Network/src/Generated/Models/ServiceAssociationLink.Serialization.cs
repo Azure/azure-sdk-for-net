@@ -12,39 +12,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ServiceAssociationLink : Core.IUtf8JsonSerializable
+    public partial class ServiceAssociationLink : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedResourceType))
+            if (Optional.IsDefined(LinkedResourceType))
             {
                 writer.WritePropertyName("linkedResourceType"u8);
                 writer.WriteStringValue(LinkedResourceType.Value);
             }
-            if (Core.Optional.IsDefined(Link))
+            if (Optional.IsDefined(Link))
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
             }
-            if (Core.Optional.IsDefined(AllowDelete))
+            if (Optional.IsDefined(AllowDelete))
             {
                 writer.WritePropertyName("allowDelete"u8);
                 writer.WriteBooleanValue(AllowDelete.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Locations))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<ResourceType> linkedResourceType = default;
-            Core.Optional<ResourceIdentifier> link = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<bool> allowDelete = default;
-            Core.Optional<IList<AzureLocation>> locations = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<ResourceType> linkedResourceType = default;
+            Optional<ResourceIdentifier> link = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<bool> allowDelete = default;
+            Optional<IList<AzureLocation>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ServiceAssociationLink(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(linkedResourceType), link.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(allowDelete), Core.Optional.ToList(locations));
+            return new ServiceAssociationLink(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(linkedResourceType), link.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(allowDelete), Optional.ToList(locations));
         }
     }
 }

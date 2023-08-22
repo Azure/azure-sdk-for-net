@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> The location. </param>
         public NetAppAccountPatch(AzureLocation location) : base(location)
         {
-            ActiveDirectories = new Core.ChangeTrackingList<NetAppAccountActiveDirectory>();
+            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> The identity used for the resource. </summary>

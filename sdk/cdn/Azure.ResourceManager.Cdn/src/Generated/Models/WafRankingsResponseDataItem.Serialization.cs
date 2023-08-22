@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> groupValues = default;
-            Core.Optional<IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>> metrics = default;
+            Optional<IReadOnlyList<string>> groupValues = default;
+            Optional<IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems>> metrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupValues"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new WafRankingsResponseDataItem(Core.Optional.ToList(groupValues), Core.Optional.ToList(metrics));
+            return new WafRankingsResponseDataItem(Optional.ToList(groupValues), Optional.ToList(metrics));
         }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ClusterQuotaConfigurationProperties : Core.IUtf8JsonSerializable
+    public partial class ClusterQuotaConfigurationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Settings))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> settings = default;
+            Optional<IDictionary<string, string>> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ClusterQuotaConfigurationProperties(Core.Optional.ToDictionary(settings));
+            return new ClusterQuotaConfigurationProperties(Optional.ToDictionary(settings));
         }
     }
 }

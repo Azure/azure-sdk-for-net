@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>
         public ExpressRouteGatewayData()
         {
-            ExpressRouteConnectionList = new Core.ChangeTrackingList<ExpressRouteConnectionData>();
+            ExpressRouteConnectionList = new ChangeTrackingList<ExpressRouteConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteGatewayData. </summary>

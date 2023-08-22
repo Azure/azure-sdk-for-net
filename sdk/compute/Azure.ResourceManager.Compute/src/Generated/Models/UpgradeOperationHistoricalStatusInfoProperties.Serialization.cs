@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<UpgradeOperationHistoryStatus> runningStatus = default;
-            Core.Optional<RollingUpgradeProgressInfo> progress = default;
-            Core.Optional<ComputeApiError> error = default;
-            Core.Optional<UpgradeOperationInvoker> startedBy = default;
-            Core.Optional<ImageReference> targetImageReference = default;
-            Core.Optional<RollbackStatusInfo> rollbackInfo = default;
+            Optional<UpgradeOperationHistoryStatus> runningStatus = default;
+            Optional<RollingUpgradeProgressInfo> progress = default;
+            Optional<ComputeApiError> error = default;
+            Optional<UpgradeOperationInvoker> startedBy = default;
+            Optional<ImageReference> targetImageReference = default;
+            Optional<RollbackStatusInfo> rollbackInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runningStatus"u8))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus.Value, progress.Value, error.Value, Core.Optional.ToNullable(startedBy), targetImageReference.Value, rollbackInfo.Value);
+            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus.Value, progress.Value, error.Value, Optional.ToNullable(startedBy), targetImageReference.Value, rollbackInfo.Value);
         }
     }
 }

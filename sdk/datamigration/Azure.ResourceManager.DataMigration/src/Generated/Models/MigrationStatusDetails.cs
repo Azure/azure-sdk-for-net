@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrationStatusDetails. </summary>
         internal MigrationStatusDetails()
         {
-            ActiveBackupSets = new Core.ChangeTrackingList<SqlBackupSetInfo>();
-            InvalidFiles = new Core.ChangeTrackingList<string>();
-            FileUploadBlockingErrors = new Core.ChangeTrackingList<string>();
+            ActiveBackupSets = new ChangeTrackingList<SqlBackupSetInfo>();
+            InvalidFiles = new ChangeTrackingList<string>();
+            FileUploadBlockingErrors = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MigrationStatusDetails. </summary>

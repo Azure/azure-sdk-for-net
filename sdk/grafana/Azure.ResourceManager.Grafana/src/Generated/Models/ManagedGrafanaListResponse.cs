@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>
         internal ManagedGrafanaListResponse()
         {
-            Value = new Core.ChangeTrackingList<ManagedGrafanaData>();
+            Value = new ChangeTrackingList<ManagedGrafanaData>();
         }
 
         /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>

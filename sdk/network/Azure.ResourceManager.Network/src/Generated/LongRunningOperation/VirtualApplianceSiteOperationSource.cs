@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualApplianceSiteOperationSource : Core.IOperationSource<VirtualApplianceSiteResource>
+    internal class VirtualApplianceSiteOperationSource : IOperationSource<VirtualApplianceSiteResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        VirtualApplianceSiteResource Core.IOperationSource<VirtualApplianceSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualApplianceSiteResource IOperationSource<VirtualApplianceSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(document.RootElement);
             return new VirtualApplianceSiteResource(_client, data);
         }
 
-        async ValueTask<VirtualApplianceSiteResource> Core.IOperationSource<VirtualApplianceSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualApplianceSiteResource> IOperationSource<VirtualApplianceSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = VirtualApplianceSiteData.DeserializeVirtualApplianceSiteData(document.RootElement);

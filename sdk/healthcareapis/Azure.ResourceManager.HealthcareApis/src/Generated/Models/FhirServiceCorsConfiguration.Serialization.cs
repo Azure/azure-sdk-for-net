@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceCorsConfiguration : Core.IUtf8JsonSerializable
+    public partial class FhirServiceCorsConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Origins))
+            if (Optional.IsCollectionDefined(Origins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Headers))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Methods))
+            if (Optional.IsCollectionDefined(Methods))
             {
                 writer.WritePropertyName("methods"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(MaxAge))
+            if (Optional.IsDefined(MaxAge))
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (Core.Optional.IsDefined(AllowCredentials))
+            if (Optional.IsDefined(AllowCredentials))
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> origins = default;
-            Core.Optional<IList<string>> headers = default;
-            Core.Optional<IList<string>> methods = default;
-            Core.Optional<int> maxAge = default;
-            Core.Optional<bool> allowCredentials = default;
+            Optional<IList<string>> origins = default;
+            Optional<IList<string>> headers = default;
+            Optional<IList<string>> methods = default;
+            Optional<int> maxAge = default;
+            Optional<bool> allowCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origins"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new FhirServiceCorsConfiguration(Core.Optional.ToList(origins), Core.Optional.ToList(headers), Core.Optional.ToList(methods), Core.Optional.ToNullable(maxAge), Core.Optional.ToNullable(allowCredentials));
+            return new FhirServiceCorsConfiguration(Optional.ToList(origins), Optional.ToList(headers), Optional.ToList(methods), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials));
         }
     }
 }

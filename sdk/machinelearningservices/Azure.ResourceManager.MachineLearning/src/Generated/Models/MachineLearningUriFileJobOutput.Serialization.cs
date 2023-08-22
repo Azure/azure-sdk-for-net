@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUriFileJobOutput : Core.IUtf8JsonSerializable
+    public partial class MachineLearningUriFileJobOutput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningOutputDeliveryMode> mode = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<string> description = default;
+            Optional<MachineLearningOutputDeliveryMode> mode = default;
+            Optional<Uri> uri = default;
+            Optional<string> description = default;
             JobOutputType jobOutputType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningUriFileJobOutput(description.Value, jobOutputType, Core.Optional.ToNullable(mode), uri.Value);
+            return new MachineLearningUriFileJobOutput(description.Value, jobOutputType, Optional.ToNullable(mode), uri.Value);
         }
     }
 }

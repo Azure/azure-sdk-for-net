@@ -18,7 +18,7 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<BatchResultSummary> summary = default;
+            Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))

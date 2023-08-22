@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class AccountImmutabilityPolicy : Core.IUtf8JsonSerializable
+    public partial class AccountImmutabilityPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
                 writer.WritePropertyName("immutabilityPeriodSinceCreationInDays"u8);
                 writer.WriteNumberValue(ImmutabilityPeriodSinceCreationInDays.Value);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AllowProtectedAppendWrites))
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
             {
                 writer.WritePropertyName("allowProtectedAppendWrites"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWrites.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<int> immutabilityPeriodSinceCreationInDays = default;
-            Core.Optional<AccountImmutabilityPolicyState> state = default;
-            Core.Optional<bool> allowProtectedAppendWrites = default;
+            Optional<int> immutabilityPeriodSinceCreationInDays = default;
+            Optional<AccountImmutabilityPolicyState> state = default;
+            Optional<bool> allowProtectedAppendWrites = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("immutabilityPeriodSinceCreationInDays"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new AccountImmutabilityPolicy(Core.Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Core.Optional.ToNullable(state), Core.Optional.ToNullable(allowProtectedAppendWrites));
+            return new AccountImmutabilityPolicy(Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites));
         }
     }
 }

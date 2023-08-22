@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Articles = new Core.ChangeTrackingList<string>();
+            Articles = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
 

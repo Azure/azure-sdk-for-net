@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<SiteRecoverySupportedOSProperties> properties = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<SiteRecoverySupportedOSProperties> properties = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoverySupportedOperatingSystems(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(location));
+            return new SiteRecoverySupportedOperatingSystems(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
         }
     }
 }

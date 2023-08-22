@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppScaleRuleAuth : Core.IUtf8JsonSerializable
+    public partial class ContainerAppScaleRuleAuth : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecretRef))
+            if (Optional.IsDefined(SecretRef))
             {
                 writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
             }
-            if (Core.Optional.IsDefined(TriggerParameter))
+            if (Optional.IsDefined(TriggerParameter))
             {
                 writer.WritePropertyName("triggerParameter"u8);
                 writer.WriteStringValue(TriggerParameter);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> secretRef = default;
-            Core.Optional<string> triggerParameter = default;
+            Optional<string> secretRef = default;
+            Optional<string> triggerParameter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretRef"u8))

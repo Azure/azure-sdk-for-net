@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<int> port = default;
-            Core.Optional<bool> enabled = default;
+            Optional<int> port = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("port"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ApplicationRemoteDebuggingConfig(Core.Optional.ToNullable(port), Core.Optional.ToNullable(enabled));
+            return new ApplicationRemoteDebuggingConfig(Optional.ToNullable(port), Optional.ToNullable(enabled));
         }
     }
 }

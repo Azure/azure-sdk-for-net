@@ -16,7 +16,7 @@ namespace Azure.Security.Attestation
         /// <summary> Initializes a new instance of JsonWebKeySet. </summary>
         internal JsonWebKeySet()
         {
-            Keys = new Core.ChangeTrackingList<JsonWebKey>();
+            Keys = new ChangeTrackingList<JsonWebKey>();
         }
 
         /// <summary> Initializes a new instance of JsonWebKeySet. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationVmssVmInfo : Core.IUtf8JsonSerializable
+    public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<Guid> vmId = default;
-            Core.Optional<ResourceIdentifier> vmResourceId = default;
-            Core.Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Core.Optional<Guid?> latestReportId = default;
-            Core.Optional<DateTimeOffset?> lastComplianceChecked = default;
+            Optional<Guid> vmId = default;
+            Optional<ResourceIdentifier> vmResourceId = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Optional<Guid?> latestReportId = default;
+            Optional<DateTimeOffset?> lastComplianceChecked = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationVmssVmInfo(Core.Optional.ToNullable(vmId), vmResourceId.Value, Core.Optional.ToNullable(complianceStatus), Core.Optional.ToNullable(latestReportId), Core.Optional.ToNullable(lastComplianceChecked));
+            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked));
         }
     }
 }

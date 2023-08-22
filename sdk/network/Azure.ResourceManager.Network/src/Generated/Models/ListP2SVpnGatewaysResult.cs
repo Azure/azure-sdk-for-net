@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListP2SVpnGatewaysResult. </summary>
         internal ListP2SVpnGatewaysResult()
         {
-            Value = new Core.ChangeTrackingList<P2SVpnGatewayData>();
+            Value = new ChangeTrackingList<P2SVpnGatewayData>();
         }
 
         /// <summary> Initializes a new instance of ListP2SVpnGatewaysResult. </summary>

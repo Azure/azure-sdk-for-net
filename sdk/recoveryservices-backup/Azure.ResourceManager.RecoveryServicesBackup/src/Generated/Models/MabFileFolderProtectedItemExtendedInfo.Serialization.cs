@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabFileFolderProtectedItemExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class MabFileFolderProtectedItemExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LastRefreshedOn))
+            if (Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(OldestRecoverOn))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecoveryPointCount))
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastRefreshedAt = default;
-            Core.Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Core.Optional<int> recoveryPointCount = default;
+            Optional<DateTimeOffset> lastRefreshedAt = default;
+            Optional<DateTimeOffset> oldestRecoveryPoint = default;
+            Optional<int> recoveryPointCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRefreshedAt"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new MabFileFolderProtectedItemExtendedInfo(Core.Optional.ToNullable(lastRefreshedAt), Core.Optional.ToNullable(oldestRecoveryPoint), Core.Optional.ToNullable(recoveryPointCount));
+            return new MabFileFolderProtectedItemExtendedInfo(Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount));
         }
     }
 }

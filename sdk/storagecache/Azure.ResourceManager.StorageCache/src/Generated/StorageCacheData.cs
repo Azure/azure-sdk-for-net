@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="location"> The location. </param>
         public StorageCacheData(AzureLocation location) : base(location)
         {
-            MountAddresses = new Core.ChangeTrackingList<IPAddress>();
-            Zones = new Core.ChangeTrackingList<string>();
-            PrimingJobs = new Core.ChangeTrackingList<PrimingJob>();
-            SpaceAllocation = new Core.ChangeTrackingList<StorageTargetSpaceAllocation>();
+            MountAddresses = new ChangeTrackingList<IPAddress>();
+            Zones = new ChangeTrackingList<string>();
+            PrimingJobs = new ChangeTrackingList<PrimingJob>();
+            SpaceAllocation = new ChangeTrackingList<StorageTargetSpaceAllocation>();
         }
 
         /// <summary> Initializes a new instance of StorageCacheData. </summary>

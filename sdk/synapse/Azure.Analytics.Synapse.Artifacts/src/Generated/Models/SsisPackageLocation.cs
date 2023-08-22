@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
         public SsisPackageLocation()
         {
-            ChildPackages = new Core.ChangeTrackingList<SsisChildPackage>();
+            ChildPackages = new ChangeTrackingList<SsisChildPackage>();
         }
 
         /// <summary> Initializes a new instance of SsisPackageLocation. </summary>

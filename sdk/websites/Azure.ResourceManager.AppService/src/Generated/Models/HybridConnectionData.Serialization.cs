@@ -11,54 +11,54 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class HybridConnectionData : Core.IUtf8JsonSerializable
+    public partial class HybridConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceBusNamespace))
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (Core.Optional.IsDefined(RelayName))
+            if (Optional.IsDefined(RelayName))
             {
                 writer.WritePropertyName("relayName"u8);
                 writer.WriteStringValue(RelayName);
             }
-            if (Core.Optional.IsDefined(RelayArmId))
+            if (Optional.IsDefined(RelayArmId))
             {
                 writer.WritePropertyName("relayArmUri"u8);
                 writer.WriteStringValue(RelayArmId);
             }
-            if (Core.Optional.IsDefined(Hostname))
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Core.Optional.IsDefined(SendKeyName))
+            if (Optional.IsDefined(SendKeyName))
             {
                 writer.WritePropertyName("sendKeyName"u8);
                 writer.WriteStringValue(SendKeyName);
             }
-            if (Core.Optional.IsDefined(SendKeyValue))
+            if (Optional.IsDefined(SendKeyValue))
             {
                 writer.WritePropertyName("sendKeyValue"u8);
                 writer.WriteStringValue(SendKeyValue);
             }
-            if (Core.Optional.IsDefined(ServiceBusSuffix))
+            if (Optional.IsDefined(ServiceBusSuffix))
             {
                 writer.WritePropertyName("serviceBusSuffix"u8);
                 writer.WriteStringValue(ServiceBusSuffix);
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> serviceBusNamespace = default;
-            Core.Optional<string> relayName = default;
-            Core.Optional<ResourceIdentifier> relayArmUri = default;
-            Core.Optional<string> hostname = default;
-            Core.Optional<int> port = default;
-            Core.Optional<string> sendKeyName = default;
-            Core.Optional<string> sendKeyValue = default;
-            Core.Optional<string> serviceBusSuffix = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> serviceBusNamespace = default;
+            Optional<string> relayName = default;
+            Optional<ResourceIdentifier> relayArmUri = default;
+            Optional<string> hostname = default;
+            Optional<int> port = default;
+            Optional<string> sendKeyName = default;
+            Optional<string> sendKeyValue = default;
+            Optional<string> serviceBusSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new HybridConnectionData(id, name, type, systemData.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Core.Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value, kind.Value);
+            return new HybridConnectionData(id, name, type, systemData.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value, kind.Value);
         }
     }
 }

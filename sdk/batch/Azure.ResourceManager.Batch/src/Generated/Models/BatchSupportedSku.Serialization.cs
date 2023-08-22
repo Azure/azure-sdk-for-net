@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> familyName = default;
-            Core.Optional<IReadOnlyList<BatchSkuCapability>> capabilities = default;
+            Optional<string> name = default;
+            Optional<string> familyName = default;
+            Optional<IReadOnlyList<BatchSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchSupportedSku(name.Value, familyName.Value, Core.Optional.ToList(capabilities));
+            return new BatchSupportedSku(name.Value, familyName.Value, Optional.ToList(capabilities));
         }
     }
 }

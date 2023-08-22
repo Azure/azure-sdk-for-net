@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    internal partial class AutoscaleSettings : Core.IUtf8JsonSerializable
+    internal partial class AutoscaleSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxThroughput))
+            if (Optional.IsDefined(MaxThroughput))
             {
                 writer.WritePropertyName("maxThroughput"u8);
                 writer.WriteNumberValue(MaxThroughput.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<int> maxThroughput = default;
+            Optional<int> maxThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxThroughput"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new AutoscaleSettings(Core.Optional.ToNullable(maxThroughput));
+            return new AutoscaleSettings(Optional.ToNullable(maxThroughput));
         }
     }
 }

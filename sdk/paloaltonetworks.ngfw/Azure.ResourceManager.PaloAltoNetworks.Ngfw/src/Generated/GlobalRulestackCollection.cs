@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _globalRulestackRestClient.CreateOrUpdateAsync(globalRulestackName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<GlobalRulestackResource>(new GlobalRulestackOperationSource(Client), _globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCreateOrUpdateRequest(globalRulestackName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<GlobalRulestackResource>(new GlobalRulestackOperationSource(Client), _globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCreateOrUpdateRequest(globalRulestackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _globalRulestackRestClient.CreateOrUpdate(globalRulestackName, data, cancellationToken);
-                var operation = new NgfwArmOperation<GlobalRulestackResource>(new GlobalRulestackOperationSource(Client), _globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCreateOrUpdateRequest(globalRulestackName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<GlobalRulestackResource>(new GlobalRulestackOperationSource(Client), _globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCreateOrUpdateRequest(globalRulestackName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackRestClient.CreateListNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _globalRulestackRestClient.CreateListNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GlobalRulestackResource(Client, GlobalRulestackData.DeserializeGlobalRulestackData(e)), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

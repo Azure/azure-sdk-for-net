@@ -14,12 +14,12 @@ using Azure.ResourceManager.NetworkFunction.Models;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    public partial class CollectorPolicyData : Core.IUtf8JsonSerializable
+    public partial class CollectorPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.NetworkFunction
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IngestionPolicy))
+            if (Optional.IsDefined(IngestionPolicy))
             {
                 writer.WritePropertyName("ingestionPolicy"u8);
                 writer.WriteObjectValue(IngestionPolicy);
             }
-            if (Core.Optional.IsCollectionDefined(EmissionPolicies))
+            if (Optional.IsCollectionDefined(EmissionPolicies))
             {
                 writer.WritePropertyName("emissionPolicies"u8);
                 writer.WriteStartArray();
@@ -59,16 +59,16 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IngestionPolicyPropertiesFormat> ingestionPolicy = default;
-            Core.Optional<IList<EmissionPoliciesPropertiesFormat>> emissionPolicies = default;
-            Core.Optional<CollectorProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<IngestionPolicyPropertiesFormat> ingestionPolicy = default;
+            Optional<IList<EmissionPoliciesPropertiesFormat>> emissionPolicies = default;
+            Optional<CollectorProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new CollectorPolicyData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), ingestionPolicy.Value, Core.Optional.ToList(emissionPolicies), Core.Optional.ToNullable(provisioningState));
+            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
         }
     }
 }

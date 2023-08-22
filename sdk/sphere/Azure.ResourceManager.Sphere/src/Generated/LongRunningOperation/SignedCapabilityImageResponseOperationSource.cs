@@ -14,15 +14,15 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal class SignedCapabilityImageResponseOperationSource : Core.IOperationSource<SignedCapabilityImageResponse>
+    internal class SignedCapabilityImageResponseOperationSource : IOperationSource<SignedCapabilityImageResponse>
     {
-        SignedCapabilityImageResponse Core.IOperationSource<SignedCapabilityImageResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        SignedCapabilityImageResponse IOperationSource<SignedCapabilityImageResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return SignedCapabilityImageResponse.DeserializeSignedCapabilityImageResponse(document.RootElement);
         }
 
-        async ValueTask<SignedCapabilityImageResponse> Core.IOperationSource<SignedCapabilityImageResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SignedCapabilityImageResponse> IOperationSource<SignedCapabilityImageResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return SignedCapabilityImageResponse.DeserializeSignedCapabilityImageResponse(document.RootElement);

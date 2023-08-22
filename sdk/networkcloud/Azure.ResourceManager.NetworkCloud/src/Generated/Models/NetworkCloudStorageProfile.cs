@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(osDisk, nameof(osDisk));
 
             OSDisk = osDisk;
-            VolumeAttachments = new Core.ChangeTrackingList<ResourceIdentifier>();
+            VolumeAttachments = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudStorageProfile. </summary>

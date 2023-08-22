@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabCustomImageData(AzureLocation location) : base(location)
         {
-            DataDiskStorageInfo = new Core.ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
+            DataDiskStorageInfo = new ChangeTrackingList<DevTestLabDataDiskStorageTypeInfo>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabCustomImageData. </summary>

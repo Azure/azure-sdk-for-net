@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class WorkloadNetworkSegmentSubnet : Core.IUtf8JsonSerializable
+    public partial class WorkloadNetworkSegmentSubnet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DhcpRanges))
+            if (Optional.IsCollectionDefined(DhcpRanges))
             {
                 writer.WritePropertyName("dhcpRanges"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(GatewayAddress))
+            if (Optional.IsDefined(GatewayAddress))
             {
                 writer.WritePropertyName("gatewayAddress"u8);
                 writer.WriteStringValue(GatewayAddress);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> dhcpRanges = default;
-            Core.Optional<string> gatewayAddress = default;
+            Optional<IList<string>> dhcpRanges = default;
+            Optional<string> gatewayAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dhcpRanges"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new WorkloadNetworkSegmentSubnet(Core.Optional.ToList(dhcpRanges), gatewayAddress.Value);
+            return new WorkloadNetworkSegmentSubnet(Optional.ToList(dhcpRanges), gatewayAddress.Value);
         }
     }
 }

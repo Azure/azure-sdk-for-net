@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SamplingOptions : Core.IUtf8JsonSerializable
+    public partial class SamplingOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SkipSamplesWithoutAnnotation))
+            if (Optional.IsDefined(SkipSamplesWithoutAnnotation))
             {
                 writer.WritePropertyName("skipSamplesWithoutAnnotation"u8);
                 writer.WriteStringValue(SkipSamplesWithoutAnnotation);
             }
-            if (Core.Optional.IsDefined(MaximumSamplesPerSecond))
+            if (Optional.IsDefined(MaximumSamplesPerSecond))
             {
                 writer.WritePropertyName("maximumSamplesPerSecond"u8);
                 writer.WriteStringValue(MaximumSamplesPerSecond);
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<string> skipSamplesWithoutAnnotation = default;
-            Core.Optional<string> maximumSamplesPerSecond = default;
+            Optional<string> skipSamplesWithoutAnnotation = default;
+            Optional<string> maximumSamplesPerSecond = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skipSamplesWithoutAnnotation"u8))

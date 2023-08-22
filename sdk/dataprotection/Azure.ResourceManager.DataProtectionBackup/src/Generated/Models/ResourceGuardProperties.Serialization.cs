@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ResourceGuardProperties : Core.IUtf8JsonSerializable
+    public partial class ResourceGuardProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
+            if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
             {
                 writer.WritePropertyName("vaultCriticalOperationExclusionList"u8);
                 writer.WriteStartArray();
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<DataProtectionBackupProvisioningState> provisioningState = default;
-            Core.Optional<bool> allowAutoApprovals = default;
-            Core.Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
-            Core.Optional<IList<string>> vaultCriticalOperationExclusionList = default;
-            Core.Optional<string> description = default;
+            Optional<DataProtectionBackupProvisioningState> provisioningState = default;
+            Optional<bool> allowAutoApprovals = default;
+            Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
+            Optional<IList<string>> vaultCriticalOperationExclusionList = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new ResourceGuardProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(allowAutoApprovals), Core.Optional.ToList(resourceGuardOperations), Core.Optional.ToList(vaultCriticalOperationExclusionList), description.Value);
+            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), Optional.ToList(resourceGuardOperations), Optional.ToList(vaultCriticalOperationExclusionList), description.Value);
         }
     }
 }

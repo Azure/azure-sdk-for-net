@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
         internal CollectTonesResult()
         {
-            Tones = new Core.ChangeTrackingList<DtmfTone>();
+            Tones = new ChangeTrackingList<DtmfTone>();
         }
 
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>

@@ -11,9 +11,9 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownScoringFunction : Core.IUtf8JsonSerializable
+    internal partial class UnknownScoringFunction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
-            if (Core.Optional.IsDefined(Interpolation))
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
             string type = "Unknown";
             string fieldName = default;
             double boost = default;
-            Core.Optional<ScoringFunctionInterpolation> interpolation = default;
+            Optional<ScoringFunctionInterpolation> interpolation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownScoringFunction(type, fieldName, boost, Core.Optional.ToNullable(interpolation));
+            return new UnknownScoringFunction(type, fieldName, boost, Optional.ToNullable(interpolation));
         }
     }
 }

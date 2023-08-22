@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of RouteFilterRuleData. </summary>
         public RouteFilterRuleData()
         {
-            Communities = new Core.ChangeTrackingList<string>();
+            Communities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RouteFilterRuleData. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceLoadBalancerConfiguration : Core.IUtf8JsonSerializable
+    public partial class CloudServiceLoadBalancerConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> id = default;
             string name = default;
             IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = default;
             foreach (var property in element.EnumerateObject())

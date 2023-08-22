@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The location. </param>
         public SynapsePrivateLinkHubData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<PrivateEndpointConnectionForPrivateLinkHubBasic>();
+            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionForPrivateLinkHubBasic>();
         }
 
         /// <summary> Initializes a new instance of SynapsePrivateLinkHubData. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<QuotaOperationResult>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<QuotaOperationResult>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new QuotaOperationListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new QuotaOperationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<PatchOperationStatus> status = default;
-            Core.Optional<string> installationActivityId = default;
-            Core.Optional<bool> maintenanceWindowExceeded = default;
-            Core.Optional<int> notSelectedPatchCount = default;
-            Core.Optional<int> excludedPatchCount = default;
-            Core.Optional<int> pendingPatchCount = default;
-            Core.Optional<int> installedPatchCount = default;
-            Core.Optional<int> failedPatchCount = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<ComputeApiError> error = default;
+            Optional<PatchOperationStatus> status = default;
+            Optional<string> installationActivityId = default;
+            Optional<bool> maintenanceWindowExceeded = default;
+            Optional<int> notSelectedPatchCount = default;
+            Optional<int> excludedPatchCount = default;
+            Optional<int> pendingPatchCount = default;
+            Optional<int> installedPatchCount = default;
+            Optional<int> failedPatchCount = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new LastPatchInstallationSummary(Core.Optional.ToNullable(status), installationActivityId.Value, Core.Optional.ToNullable(maintenanceWindowExceeded), Core.Optional.ToNullable(notSelectedPatchCount), Core.Optional.ToNullable(excludedPatchCount), Core.Optional.ToNullable(pendingPatchCount), Core.Optional.ToNullable(installedPatchCount), Core.Optional.ToNullable(failedPatchCount), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(lastModifiedTime), error.Value);
+            return new LastPatchInstallationSummary(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToNullable(startTime), Optional.ToNullable(lastModifiedTime), error.Value);
         }
     }
 }

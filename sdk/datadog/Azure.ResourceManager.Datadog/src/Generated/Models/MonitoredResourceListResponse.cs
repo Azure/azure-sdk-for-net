@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
         internal MonitoredResourceListResponse()
         {
-            Value = new Core.ChangeTrackingList<MonitoredResource>();
+            Value = new ChangeTrackingList<MonitoredResource>();
         }
 
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>

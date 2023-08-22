@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of SwaggerSchema. </summary>
         public SwaggerSchema()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, SwaggerSchema>();
-            RequiredProperties = new Core.ChangeTrackingList<string>();
-            AllOf = new Core.ChangeTrackingList<SwaggerSchema>();
+            Properties = new ChangeTrackingDictionary<string, SwaggerSchema>();
+            RequiredProperties = new ChangeTrackingList<string>();
+            AllOf = new ChangeTrackingList<SwaggerSchema>();
         }
 
         /// <summary> Initializes a new instance of SwaggerSchema. </summary>

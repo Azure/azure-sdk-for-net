@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string resourceId = default;
             WhatIfChangeType changeType = default;
-            Core.Optional<string> unsupportedReason = default;
-            Core.Optional<BinaryData> before = default;
-            Core.Optional<BinaryData> after = default;
-            Core.Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
+            Optional<string> unsupportedReason = default;
+            Optional<BinaryData> before = default;
+            Optional<BinaryData> after = default;
+            Optional<IReadOnlyList<WhatIfPropertyChange>> delta = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Core.Optional.ToList(delta));
+            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta));
         }
     }
 }

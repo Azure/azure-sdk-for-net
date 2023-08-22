@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorRuleSetData : Core.IUtf8JsonSerializable
+    public partial class FrontDoorRuleSetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Cdn
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<FrontDoorProvisioningState> provisioningState = default;
-            Core.Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
-            Core.Optional<string> profileName = default;
+            Optional<SystemData> systemData = default;
+            Optional<FrontDoorProvisioningState> provisioningState = default;
+            Optional<FrontDoorDeploymentStatus> deploymentStatus = default;
+            Optional<string> profileName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Cdn
                     continue;
                 }
             }
-            return new FrontDoorRuleSetData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(deploymentStatus), profileName.Value);
+            return new FrontDoorRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), profileName.Value);
         }
     }
 }

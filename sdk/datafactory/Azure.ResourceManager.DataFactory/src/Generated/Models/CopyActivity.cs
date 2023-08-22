@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(sink, nameof(sink));
 
-            Inputs = new Core.ChangeTrackingList<DatasetReference>();
-            Outputs = new Core.ChangeTrackingList<DatasetReference>();
+            Inputs = new ChangeTrackingList<DatasetReference>();
+            Outputs = new ChangeTrackingList<DatasetReference>();
             Source = source;
             Sink = sink;
-            PreserveRules = new Core.ChangeTrackingList<BinaryData>();
-            Preserve = new Core.ChangeTrackingList<BinaryData>();
+            PreserveRules = new ChangeTrackingList<BinaryData>();
+            Preserve = new ChangeTrackingList<BinaryData>();
             ActivityType = "Copy";
         }
 

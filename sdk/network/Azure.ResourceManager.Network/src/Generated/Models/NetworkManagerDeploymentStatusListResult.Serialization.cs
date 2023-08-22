@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetworkManagerDeploymentStatus>> value = default;
-            Core.Optional<string> skipToken = default;
+            Optional<IReadOnlyList<NetworkManagerDeploymentStatus>> value = default;
+            Optional<string> skipToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkManagerDeploymentStatusListResult(Core.Optional.ToList(value), skipToken.Value);
+            return new NetworkManagerDeploymentStatusListResult(Optional.ToList(value), skipToken.Value);
         }
     }
 }

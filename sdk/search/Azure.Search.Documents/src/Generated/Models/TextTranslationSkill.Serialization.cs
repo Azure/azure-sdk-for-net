@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class TextTranslationSkill : Core.IUtf8JsonSerializable
+    public partial class TextTranslationSkill : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("defaultToLanguageCode"u8);
             writer.WriteStringValue(DefaultToLanguageCode.ToString());
-            if (Core.Optional.IsDefined(DefaultFromLanguageCode))
+            if (Optional.IsDefined(DefaultFromLanguageCode))
             {
                 if (DefaultFromLanguageCode != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultFromLanguageCode");
                 }
             }
-            if (Core.Optional.IsDefined(SuggestedFrom))
+            if (Optional.IsDefined(SuggestedFrom))
             {
                 if (SuggestedFrom != null)
                 {
@@ -44,17 +44,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Context))
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -83,12 +83,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             TextTranslationSkillLanguage defaultToLanguageCode = default;
-            Core.Optional<TextTranslationSkillLanguage?> defaultFromLanguageCode = default;
-            Core.Optional<TextTranslationSkillLanguage?> suggestedFrom = default;
+            Optional<TextTranslationSkillLanguage?> defaultFromLanguageCode = default;
+            Optional<TextTranslationSkillLanguage?> suggestedFrom = default;
             string odataType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> context = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<string> context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new TextTranslationSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultToLanguageCode, Core.Optional.ToNullable(defaultFromLanguageCode), Core.Optional.ToNullable(suggestedFrom));
+            return new TextTranslationSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultToLanguageCode, Optional.ToNullable(defaultFromLanguageCode), Optional.ToNullable(suggestedFrom));
         }
     }
 }

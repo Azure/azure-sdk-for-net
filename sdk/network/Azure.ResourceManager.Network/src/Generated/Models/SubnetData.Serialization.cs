@@ -14,34 +14,34 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SubnetData : Core.IUtf8JsonSerializable
+    public partial class SubnetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AddressPrefix))
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (Core.Optional.IsCollectionDefined(AddressPrefixes))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NetworkSecurityGroup))
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 writer.WriteObjectValue(NetworkSecurityGroup);
             }
-            if (Core.Optional.IsDefined(RouteTable))
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
-            if (Core.Optional.IsDefined(NatGateway))
+            if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
                 JsonSerializer.Serialize(writer, NatGateway);
             }
-            if (Core.Optional.IsCollectionDefined(ServiceEndpoints))
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceEndpointPolicies))
+            if (Optional.IsCollectionDefined(ServiceEndpointPolicies))
             {
                 writer.WritePropertyName("serviceEndpointPolicies"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPAllocations))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Delegations))
+            if (Optional.IsCollectionDefined(Delegations))
             {
                 writer.WritePropertyName("delegations"u8);
                 writer.WriteStartArray();
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PrivateEndpointNetworkPolicy))
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointNetworkPolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicy.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
+            if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {
                 writer.WritePropertyName("applicationGatewayIPConfigurations"u8);
                 writer.WriteStartArray();
@@ -136,29 +136,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> addressPrefix = default;
-            Core.Optional<IList<string>> addressPrefixes = default;
-            Core.Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Core.Optional<RouteTableData> routeTable = default;
-            Core.Optional<WritableSubResource> natGateway = default;
-            Core.Optional<IList<ServiceEndpointProperties>> serviceEndpoints = default;
-            Core.Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
-            Core.Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
-            Core.Optional<IReadOnlyList<NetworkIPConfiguration>> ipConfigurations = default;
-            Core.Optional<IReadOnlyList<NetworkIPConfigurationProfile>> ipConfigurationProfiles = default;
-            Core.Optional<IList<WritableSubResource>> ipAllocations = default;
-            Core.Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
-            Core.Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
-            Core.Optional<IList<ServiceDelegation>> delegations = default;
-            Core.Optional<string> purpose = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
-            Core.Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
-            Core.Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIPConfigurations = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> addressPrefix = default;
+            Optional<IList<string>> addressPrefixes = default;
+            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
+            Optional<RouteTableData> routeTable = default;
+            Optional<WritableSubResource> natGateway = default;
+            Optional<IList<ServiceEndpointProperties>> serviceEndpoints = default;
+            Optional<IList<ServiceEndpointPolicyData>> serviceEndpointPolicies = default;
+            Optional<IReadOnlyList<PrivateEndpointData>> privateEndpoints = default;
+            Optional<IReadOnlyList<NetworkIPConfiguration>> ipConfigurations = default;
+            Optional<IReadOnlyList<NetworkIPConfigurationProfile>> ipConfigurationProfiles = default;
+            Optional<IList<WritableSubResource>> ipAllocations = default;
+            Optional<IReadOnlyList<ResourceNavigationLink>> resourceNavigationLinks = default;
+            Optional<IReadOnlyList<ServiceAssociationLink>> serviceAssociationLinks = default;
+            Optional<IList<ServiceDelegation>> delegations = default;
+            Optional<string> purpose = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<VirtualNetworkPrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
+            Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
+            Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIPConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new SubnetData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), addressPrefix.Value, Core.Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Core.Optional.ToList(serviceEndpoints), Core.Optional.ToList(serviceEndpointPolicies), Core.Optional.ToList(privateEndpoints), Core.Optional.ToList(ipConfigurations), Core.Optional.ToList(ipConfigurationProfiles), Core.Optional.ToList(ipAllocations), Core.Optional.ToList(resourceNavigationLinks), Core.Optional.ToList(serviceAssociationLinks), Core.Optional.ToList(delegations), purpose.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(privateEndpointNetworkPolicies), Core.Optional.ToNullable(privateLinkServiceNetworkPolicies), Core.Optional.ToList(applicationGatewayIPConfigurations));
+            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations));
         }
     }
 }

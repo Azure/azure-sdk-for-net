@@ -13,54 +13,54 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SoftwareInventoryData : Core.IUtf8JsonSerializable
+    public partial class SoftwareInventoryData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeviceId))
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (Core.Optional.IsDefined(OSPlatform))
+            if (Optional.IsDefined(OSPlatform))
             {
                 writer.WritePropertyName("osPlatform"u8);
                 writer.WriteStringValue(OSPlatform);
             }
-            if (Core.Optional.IsDefined(Vendor))
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Core.Optional.IsDefined(SoftwareName))
+            if (Optional.IsDefined(SoftwareName))
             {
                 writer.WritePropertyName("softwareName"u8);
                 writer.WriteStringValue(SoftwareName);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(EndOfSupportStatus))
+            if (Optional.IsDefined(EndOfSupportStatus))
             {
                 writer.WritePropertyName("endOfSupportStatus"u8);
                 writer.WriteStringValue(EndOfSupportStatus.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EndOfSupportDate))
+            if (Optional.IsDefined(EndOfSupportDate))
             {
                 writer.WritePropertyName("endOfSupportDate"u8);
                 writer.WriteStringValue(EndOfSupportDate);
             }
-            if (Core.Optional.IsDefined(NumberOfKnownVulnerabilities))
+            if (Optional.IsDefined(NumberOfKnownVulnerabilities))
             {
                 writer.WritePropertyName("numberOfKnownVulnerabilities"u8);
                 writer.WriteNumberValue(NumberOfKnownVulnerabilities.Value);
             }
-            if (Core.Optional.IsDefined(FirstSeenOn))
+            if (Optional.IsDefined(FirstSeenOn))
             {
                 writer.WritePropertyName("firstSeenAt"u8);
                 writer.WriteStringValue(FirstSeenOn.Value, "O");
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> deviceId = default;
-            Core.Optional<string> osPlatform = default;
-            Core.Optional<string> vendor = default;
-            Core.Optional<string> softwareName = default;
-            Core.Optional<string> version = default;
-            Core.Optional<EndOfSupportStatus> endOfSupportStatus = default;
-            Core.Optional<string> endOfSupportDate = default;
-            Core.Optional<int> numberOfKnownVulnerabilities = default;
-            Core.Optional<DateTimeOffset> firstSeenAt = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> deviceId = default;
+            Optional<string> osPlatform = default;
+            Optional<string> vendor = default;
+            Optional<string> softwareName = default;
+            Optional<string> version = default;
+            Optional<EndOfSupportStatus> endOfSupportStatus = default;
+            Optional<string> endOfSupportDate = default;
+            Optional<int> numberOfKnownVulnerabilities = default;
+            Optional<DateTimeOffset> firstSeenAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SoftwareInventoryData(id, name, type, systemData.Value, deviceId.Value, osPlatform.Value, vendor.Value, softwareName.Value, version.Value, Core.Optional.ToNullable(endOfSupportStatus), endOfSupportDate.Value, Core.Optional.ToNullable(numberOfKnownVulnerabilities), Core.Optional.ToNullable(firstSeenAt));
+            return new SoftwareInventoryData(id, name, type, systemData.Value, deviceId.Value, osPlatform.Value, vendor.Value, softwareName.Value, version.Value, Optional.ToNullable(endOfSupportStatus), endOfSupportDate.Value, Optional.ToNullable(numberOfKnownVulnerabilities), Optional.ToNullable(firstSeenAt));
         }
     }
 }

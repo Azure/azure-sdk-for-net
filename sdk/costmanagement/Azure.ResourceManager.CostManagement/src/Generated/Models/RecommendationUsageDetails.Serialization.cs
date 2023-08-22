@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class RecommendationUsageDetails : Core.IUtf8JsonSerializable
+    public partial class RecommendationUsageDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UsageGrain))
+            if (Optional.IsDefined(UsageGrain))
             {
                 writer.WritePropertyName("usageGrain"u8);
                 writer.WriteStringValue(UsageGrain.Value.ToString());
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<BenefitRecommendationUsageGrain> usageGrain = default;
-            Core.Optional<IReadOnlyList<decimal>> charges = default;
+            Optional<BenefitRecommendationUsageGrain> usageGrain = default;
+            Optional<IReadOnlyList<decimal>> charges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageGrain"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new RecommendationUsageDetails(Core.Optional.ToNullable(usageGrain), Core.Optional.ToList(charges));
+            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), Optional.ToList(charges));
         }
     }
 }

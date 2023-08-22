@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ControlPlaneEndpointProfileControlPlaneEndpoint : Core.IUtf8JsonSerializable
+    public partial class ControlPlaneEndpointProfileControlPlaneEndpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HostIP))
+            if (Optional.IsDefined(HostIP))
             {
                 writer.WritePropertyName("hostIP"u8);
                 writer.WriteStringValue(HostIP);
             }
-            if (Core.Optional.IsDefined(Port))
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> hostIP = default;
-            Core.Optional<string> port = default;
+            Optional<string> hostIP = default;
+            Optional<string> port = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostIP"u8))

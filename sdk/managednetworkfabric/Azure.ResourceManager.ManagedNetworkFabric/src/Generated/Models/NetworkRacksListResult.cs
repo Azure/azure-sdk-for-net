@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkRacksListResult. </summary>
         internal NetworkRacksListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkRackData>();
+            Value = new ChangeTrackingList<NetworkRackData>();
         }
 
         /// <summary> Initializes a new instance of NetworkRacksListResult. </summary>

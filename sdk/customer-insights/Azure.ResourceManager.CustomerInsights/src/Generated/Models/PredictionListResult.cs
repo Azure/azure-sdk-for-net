@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of PredictionListResult. </summary>
         internal PredictionListResult()
         {
-            Value = new Core.ChangeTrackingList<PredictionResourceFormatData>();
+            Value = new ChangeTrackingList<PredictionResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of PredictionListResult. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudVolumeOperationSource : Core.IOperationSource<NetworkCloudVolumeResource>
+    internal class NetworkCloudVolumeOperationSource : IOperationSource<NetworkCloudVolumeResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud
             _client = client;
         }
 
-        NetworkCloudVolumeResource Core.IOperationSource<NetworkCloudVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkCloudVolumeResource IOperationSource<NetworkCloudVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(document.RootElement);
             return new NetworkCloudVolumeResource(_client, data);
         }
 
-        async ValueTask<NetworkCloudVolumeResource> Core.IOperationSource<NetworkCloudVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkCloudVolumeResource> IOperationSource<NetworkCloudVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(document.RootElement);

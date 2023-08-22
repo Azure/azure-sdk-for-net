@@ -14,29 +14,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class WorkloadNetworkDnsServiceData : Core.IUtf8JsonSerializable
+    public partial class WorkloadNetworkDnsServiceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(DnsServiceIP))
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
                 writer.WriteStringValue(DnsServiceIP.ToString());
             }
-            if (Core.Optional.IsDefined(DefaultDnsZone))
+            if (Optional.IsDefined(DefaultDnsZone))
             {
                 writer.WritePropertyName("defaultDnsZone"u8);
                 writer.WriteStringValue(DefaultDnsZone);
             }
-            if (Core.Optional.IsCollectionDefined(FqdnZones))
+            if (Optional.IsCollectionDefined(FqdnZones))
             {
                 writer.WritePropertyName("fqdnZones"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(LogLevel))
+            if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Revision))
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IPAddress> dnsServiceIP = default;
-            Core.Optional<string> defaultDnsZone = default;
-            Core.Optional<IList<string>> fqdnZones = default;
-            Core.Optional<DnsServiceLogLevel> logLevel = default;
-            Core.Optional<DnsServiceStatus> status = default;
-            Core.Optional<WorkloadNetworkDnsServiceProvisioningState> provisioningState = default;
-            Core.Optional<long> revision = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<IPAddress> dnsServiceIP = default;
+            Optional<string> defaultDnsZone = default;
+            Optional<IList<string>> fqdnZones = default;
+            Optional<DnsServiceLogLevel> logLevel = default;
+            Optional<DnsServiceStatus> status = default;
+            Optional<WorkloadNetworkDnsServiceProvisioningState> provisioningState = default;
+            Optional<long> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new WorkloadNetworkDnsServiceData(id, name, type, systemData.Value, displayName.Value, dnsServiceIP.Value, defaultDnsZone.Value, Core.Optional.ToList(fqdnZones), Core.Optional.ToNullable(logLevel), Core.Optional.ToNullable(status), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(revision));
+            return new WorkloadNetworkDnsServiceData(id, name, type, systemData.Value, displayName.Value, dnsServiceIP.Value, defaultDnsZone.Value, Optional.ToList(fqdnZones), Optional.ToNullable(logLevel), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision));
         }
     }
 }

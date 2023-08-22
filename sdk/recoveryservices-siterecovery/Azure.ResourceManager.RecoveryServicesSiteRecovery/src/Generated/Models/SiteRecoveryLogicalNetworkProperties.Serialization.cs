@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> networkVirtualizationStatus = default;
-            Core.Optional<string> logicalNetworkUsage = default;
-            Core.Optional<string> logicalNetworkDefinitionsStatus = default;
+            Optional<string> friendlyName = default;
+            Optional<string> networkVirtualizationStatus = default;
+            Optional<string> logicalNetworkUsage = default;
+            Optional<string> logicalNetworkDefinitionsStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))

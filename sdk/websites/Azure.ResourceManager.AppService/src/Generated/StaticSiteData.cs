@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public StaticSiteData(AzureLocation location) : base(location)
         {
-            CustomDomains = new Core.ChangeTrackingList<string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
-            UserProvidedFunctionApps = new Core.ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
+            CustomDomains = new ChangeTrackingList<string>();
+            PrivateEndpointConnections = new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
+            UserProvidedFunctionApps = new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>();
         }
 
         /// <summary> Initializes a new instance of StaticSiteData. </summary>

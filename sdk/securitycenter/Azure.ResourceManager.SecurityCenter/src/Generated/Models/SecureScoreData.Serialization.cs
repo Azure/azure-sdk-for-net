@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecureScoreData : Core.IUtf8JsonSerializable
+    public partial class SecureScoreData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<long> weight = default;
-            Core.Optional<int> max = default;
-            Core.Optional<double> current = default;
-            Core.Optional<double> percentage = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<long> weight = default;
+            Optional<int> max = default;
+            Optional<double> current = default;
+            Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecureScoreData(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToNullable(weight), Core.Optional.ToNullable(max), Core.Optional.ToNullable(current), Core.Optional.ToNullable(percentage));
+            return new SecureScoreData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(weight), Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage));
         }
     }
 }

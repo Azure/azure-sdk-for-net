@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DetectorDefinition : Core.IUtf8JsonSerializable
+    public partial class DetectorDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<double> rank = default;
-            Core.Optional<bool> isEnabled = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<double> rank = default;
+            Optional<bool> isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DetectorDefinition(displayName.Value, description.Value, Core.Optional.ToNullable(rank), Core.Optional.ToNullable(isEnabled));
+            return new DetectorDefinition(displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(isEnabled));
         }
     }
 }

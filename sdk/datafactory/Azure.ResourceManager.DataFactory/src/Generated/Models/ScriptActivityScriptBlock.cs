@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Text = text;
             ScriptType = scriptType;
-            Parameters = new Core.ChangeTrackingList<ScriptActivityParameter>();
+            Parameters = new ChangeTrackingList<ScriptActivityParameter>();
         }
 
         /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class Oauth2ClientCredential : Core.IUtf8JsonSerializable
+    public partial class Oauth2ClientCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -34,8 +34,8 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> clientSecret = default;
+            Optional<string> clientId = default;
+            Optional<string> clientSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))

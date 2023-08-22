@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SystemData : Core.IUtf8JsonSerializable
+    public partial class SystemData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreatedAt))
+            if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedAt.Value, "O");
             }
-            if (Core.Optional.IsDefined(LastModifiedAt))
+            if (Optional.IsDefined(LastModifiedAt))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedAt.Value, "O");
@@ -35,8 +35,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> createdAt = default;
-            Core.Optional<DateTimeOffset> lastModifiedAt = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdAt"u8))
@@ -58,7 +58,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SystemData(Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(lastModifiedAt));
+            return new SystemData(Optional.ToNullable(createdAt), Optional.ToNullable(lastModifiedAt));
         }
     }
 }

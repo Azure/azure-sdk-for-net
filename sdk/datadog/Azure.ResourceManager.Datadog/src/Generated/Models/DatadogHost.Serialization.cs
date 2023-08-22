@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<string>> aliases = default;
-            Core.Optional<IReadOnlyList<string>> apps = default;
-            Core.Optional<DatadogHostMetadata> meta = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<string>> aliases = default;
+            Optional<IReadOnlyList<string>> apps = default;
+            Optional<DatadogHostMetadata> meta = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new DatadogHost(name.Value, Core.Optional.ToList(aliases), Core.Optional.ToList(apps), meta.Value);
+            return new DatadogHost(name.Value, Optional.ToList(aliases), Optional.ToList(apps), meta.Value);
         }
     }
 }

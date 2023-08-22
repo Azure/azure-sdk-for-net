@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Models
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
-            Contexts = new Core.ChangeTrackingList<SummaryContextInternal>();
+            Contexts = new ChangeTrackingList<SummaryContextInternal>();
         }
 
         /// <summary> Initializes a new instance of AbstractiveSummaryInternal. </summary>

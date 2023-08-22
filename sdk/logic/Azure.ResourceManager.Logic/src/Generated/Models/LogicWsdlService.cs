@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <summary> Initializes a new instance of LogicWsdlService. </summary>
         internal LogicWsdlService()
         {
-            EndpointQualifiedNames = new Core.ChangeTrackingList<string>();
+            EndpointQualifiedNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LogicWsdlService. </summary>

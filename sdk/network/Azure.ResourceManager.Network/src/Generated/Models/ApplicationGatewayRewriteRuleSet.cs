@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
         public ApplicationGatewayRewriteRuleSet()
         {
-            RewriteRules = new Core.ChangeTrackingList<ApplicationGatewayRewriteRule>();
+            RewriteRules = new ChangeTrackingList<ApplicationGatewayRewriteRule>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>

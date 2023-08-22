@@ -19,21 +19,21 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
-            Core.Optional<string> status = default;
-            Core.Optional<TimeSpan> configuredDuration = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
-            Core.Optional<int> computerCount = default;
-            Core.Optional<int> failedCount = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<string> createdBy = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> lastModifiedBy = default;
-            Core.Optional<SoftwareUpdateConfigurationRunTasks> tasks = default;
+            Optional<string> name = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<SoftwareUpdateConfigurationNavigation> softwareUpdateConfiguration = default;
+            Optional<string> status = default;
+            Optional<TimeSpan> configuredDuration = default;
+            Optional<string> osType = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Optional<int> computerCount = default;
+            Optional<int> failedCount = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<string> createdBy = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<SoftwareUpdateConfigurationRunTasks> tasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationRun(name.Value, id.Value, softwareUpdateConfiguration.Value, status.Value, Core.Optional.ToNullable(configuredDuration), osType.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(computerCount), Core.Optional.ToNullable(failedCount), Core.Optional.ToNullable(creationTime), createdBy.Value, Core.Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value);
+            return new SoftwareUpdateConfigurationRun(name.Value, id.Value, softwareUpdateConfiguration.Value, status.Value, Optional.ToNullable(configuredDuration), osType.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(computerCount), Optional.ToNullable(failedCount), Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value);
         }
     }
 }

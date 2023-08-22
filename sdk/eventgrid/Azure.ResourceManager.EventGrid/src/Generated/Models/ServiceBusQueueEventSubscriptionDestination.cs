@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of ServiceBusQueueEventSubscriptionDestination. </summary>
         public ServiceBusQueueEventSubscriptionDestination()
         {
-            DeliveryAttributeMappings = new Core.ChangeTrackingList<DeliveryAttributeMapping>();
+            DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.ServiceBusQueue;
         }
 

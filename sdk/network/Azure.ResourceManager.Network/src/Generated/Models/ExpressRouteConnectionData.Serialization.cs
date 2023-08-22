@@ -12,54 +12,54 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteConnectionData : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExpressRouteCircuitPeering))
+            if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
             }
-            if (Core.Optional.IsDefined(AuthorizationKey))
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (Core.Optional.IsDefined(RoutingWeight))
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (Core.Optional.IsDefined(EnableInternetSecurity))
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Core.Optional.IsDefined(ExpressRouteGatewayBypass))
+            if (Optional.IsDefined(ExpressRouteGatewayBypass))
             {
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
-            if (Core.Optional.IsDefined(EnablePrivateLinkFastPath))
+            if (Optional.IsDefined(EnablePrivateLinkFastPath))
             {
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
             }
-            if (Core.Optional.IsDefined(RoutingConfiguration))
+            if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration);
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<WritableSubResource> expressRouteCircuitPeering = default;
-            Core.Optional<string> authorizationKey = default;
-            Core.Optional<int> routingWeight = default;
-            Core.Optional<bool> enableInternetSecurity = default;
-            Core.Optional<bool> expressRouteGatewayBypass = default;
-            Core.Optional<bool> enablePrivateLinkFastPath = default;
-            Core.Optional<RoutingConfiguration> routingConfiguration = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<WritableSubResource> expressRouteCircuitPeering = default;
+            Optional<string> authorizationKey = default;
+            Optional<int> routingWeight = default;
+            Optional<bool> enableInternetSecurity = default;
+            Optional<bool> expressRouteGatewayBypass = default;
+            Optional<bool> enablePrivateLinkFastPath = default;
+            Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Core.Optional.ToNullable(routingWeight), Core.Optional.ToNullable(enableInternetSecurity), Core.Optional.ToNullable(expressRouteGatewayBypass), Core.Optional.ToNullable(enablePrivateLinkFastPath), routingConfiguration.Value);
+            return new ExpressRouteConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath), routingConfiguration.Value);
         }
     }
 }

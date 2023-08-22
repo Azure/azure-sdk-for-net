@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
         public VpnSiteLinkConnectionData()
         {
-            VpnGatewayCustomBgpAddresses = new Core.ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
-            IPsecPolicies = new Core.ChangeTrackingList<IPsecPolicy>();
-            IngressNatRules = new Core.ChangeTrackingList<WritableSubResource>();
-            EgressNatRules = new Core.ChangeTrackingList<WritableSubResource>();
+            VpnGatewayCustomBgpAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
+            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            IngressNatRules = new ChangeTrackingList<WritableSubResource>();
+            EgressNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>

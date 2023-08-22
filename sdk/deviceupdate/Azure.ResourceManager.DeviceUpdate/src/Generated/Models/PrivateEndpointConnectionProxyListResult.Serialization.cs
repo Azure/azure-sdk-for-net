@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PrivateEndpointConnectionProxyData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PrivateEndpointConnectionProxyData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnectionProxyListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PrivateEndpointConnectionProxyListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

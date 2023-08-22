@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryImageUpdateTrigger : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryImageUpdateTrigger : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Core.Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(Images))
+            if (Optional.IsCollectionDefined(Images))
             {
                 writer.WritePropertyName("images"u8);
                 writer.WriteStartArray();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<Guid> id = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<IList<ContainerRegistryImageDescriptor>> images = default;
+            Optional<Guid> id = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<IList<ContainerRegistryImageDescriptor>> images = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryImageUpdateTrigger(Core.Optional.ToNullable(id), Core.Optional.ToNullable(timestamp), Core.Optional.ToList(images));
+            return new ContainerRegistryImageUpdateTrigger(Optional.ToNullable(id), Optional.ToNullable(timestamp), Optional.ToList(images));
         }
     }
 }

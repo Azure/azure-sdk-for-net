@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
-    public partial class SensorIntegration : Core.IUtf8JsonSerializable
+    public partial class SensorIntegration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (Core.Optional.IsDefined(ProvisioningInfo))
+            if (Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
                 writer.WriteObjectValue(ProvisioningInfo);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> enabled = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<ErrorResponse> provisioningInfo = default;
+            Optional<string> enabled = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<ErrorResponse> provisioningInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     continue;
                 }
             }
-            return new SensorIntegration(enabled.Value, Core.Optional.ToNullable(provisioningState), provisioningInfo.Value);
+            return new SensorIntegration(enabled.Value, Optional.ToNullable(provisioningState), provisioningInfo.Value);
         }
     }
 }

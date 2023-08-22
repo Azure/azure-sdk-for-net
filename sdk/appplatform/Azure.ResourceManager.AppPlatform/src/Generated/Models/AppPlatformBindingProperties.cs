@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformBindingProperties. </summary>
         public AppPlatformBindingProperties()
         {
-            BindingParameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            BindingParameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformBindingProperties. </summary>

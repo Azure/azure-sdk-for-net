@@ -20,7 +20,7 @@ namespace Azure.Communication.Identity
                 return null;
             }
             CommunicationIdentity identity = default;
-            Core.Optional<CommunicationIdentityAccessToken> accessToken = default;
+            Optional<CommunicationIdentityAccessToken> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))

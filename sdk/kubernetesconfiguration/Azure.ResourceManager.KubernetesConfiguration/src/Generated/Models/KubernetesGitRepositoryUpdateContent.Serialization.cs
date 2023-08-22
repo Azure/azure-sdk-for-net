@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepositoryUpdateContent : Core.IUtf8JsonSerializable
+    public partial class KubernetesGitRepositoryUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (Core.Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Core.Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Core.Optional.IsDefined(RepositoryRef))
+            if (Optional.IsDefined(RepositoryRef))
             {
                 if (RepositoryRef != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("repositoryRef");
                 }
             }
-            if (Core.Optional.IsDefined(SshKnownHosts))
+            if (Optional.IsDefined(SshKnownHosts))
             {
                 if (SshKnownHosts != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sshKnownHosts");
                 }
             }
-            if (Core.Optional.IsDefined(HttpsUser))
+            if (Optional.IsDefined(HttpsUser))
             {
                 if (HttpsUser != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsUser");
                 }
             }
-            if (Core.Optional.IsDefined(HttpsCACert))
+            if (Optional.IsDefined(HttpsCACert))
             {
                 if (HttpsCACert != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsCACert");
                 }
             }
-            if (Core.Optional.IsDefined(LocalAuthRef))
+            if (Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {

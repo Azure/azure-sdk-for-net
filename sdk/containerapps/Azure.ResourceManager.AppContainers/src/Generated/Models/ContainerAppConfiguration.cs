@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>
         public ContainerAppConfiguration()
         {
-            Secrets = new Core.ChangeTrackingList<ContainerAppWritableSecret>();
-            Registries = new Core.ChangeTrackingList<ContainerAppRegistryCredentials>();
+            Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
+            Registries = new ChangeTrackingList<ContainerAppRegistryCredentials>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppConfiguration. </summary>

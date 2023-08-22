@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class TrafficDetails : Core.IUtf8JsonSerializable
+    public partial class TrafficDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TotalMonthlyVolume))
+            if (Optional.IsDefined(TotalMonthlyVolume))
             {
                 writer.WritePropertyName("totalMonthlyVolume"u8);
                 writer.WriteNumberValue(TotalMonthlyVolume.Value);
             }
-            if (Core.Optional.IsDefined(MonthlyAverageMessagesFromUser))
+            if (Optional.IsDefined(MonthlyAverageMessagesFromUser))
             {
                 writer.WritePropertyName("monthlyAverageMessagesFromUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesFromUser.Value);
             }
-            if (Core.Optional.IsDefined(MonthlyAverageMessagesToUser))
+            if (Optional.IsDefined(MonthlyAverageMessagesToUser))
             {
                 writer.WritePropertyName("monthlyAverageMessagesToUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesToUser.Value);
             }
-            if (Core.Optional.IsDefined(IsSpiky))
+            if (Optional.IsDefined(IsSpiky))
             {
                 writer.WritePropertyName("isSpiky"u8);
                 writer.WriteBooleanValue(IsSpiky.Value);
             }
-            if (Core.Optional.IsDefined(SpikeDetails))
+            if (Optional.IsDefined(SpikeDetails))
             {
                 writer.WritePropertyName("spikeDetails"u8);
                 writer.WriteStringValue(SpikeDetails);
             }
-            if (Core.Optional.IsDefined(EstimatedRampUpTimeInDays))
+            if (Optional.IsDefined(EstimatedRampUpTimeInDays))
             {
                 writer.WritePropertyName("estimatedRampUpTimeInDays"u8);
                 writer.WriteNumberValue(EstimatedRampUpTimeInDays.Value);
@@ -54,12 +54,12 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Core.Optional<int> totalMonthlyVolume = default;
-            Core.Optional<int> monthlyAverageMessagesFromUser = default;
-            Core.Optional<int> monthlyAverageMessagesToUser = default;
-            Core.Optional<bool> isSpiky = default;
-            Core.Optional<string> spikeDetails = default;
-            Core.Optional<int> estimatedRampUpTimeInDays = default;
+            Optional<int> totalMonthlyVolume = default;
+            Optional<int> monthlyAverageMessagesFromUser = default;
+            Optional<int> monthlyAverageMessagesToUser = default;
+            Optional<bool> isSpiky = default;
+            Optional<string> spikeDetails = default;
+            Optional<int> estimatedRampUpTimeInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalMonthlyVolume"u8))
@@ -113,7 +113,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new TrafficDetails(Core.Optional.ToNullable(totalMonthlyVolume), Core.Optional.ToNullable(monthlyAverageMessagesFromUser), Core.Optional.ToNullable(monthlyAverageMessagesToUser), Core.Optional.ToNullable(isSpiky), spikeDetails.Value, Core.Optional.ToNullable(estimatedRampUpTimeInDays));
+            return new TrafficDetails(Optional.ToNullable(totalMonthlyVolume), Optional.ToNullable(monthlyAverageMessagesFromUser), Optional.ToNullable(monthlyAverageMessagesToUser), Optional.ToNullable(isSpiky), spikeDetails.Value, Optional.ToNullable(estimatedRampUpTimeInDays));
         }
     }
 }

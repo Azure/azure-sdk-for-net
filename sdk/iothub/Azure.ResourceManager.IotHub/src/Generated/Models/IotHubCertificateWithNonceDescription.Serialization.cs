@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<IotHubCertificatePropertiesWithNonce> properties = default;
-            Core.Optional<ETag> etag = default;
+            Optional<IotHubCertificatePropertiesWithNonce> properties = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new IotHubCertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(etag));
+            return new IotHubCertificateWithNonceDescription(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(etag));
         }
     }
 }

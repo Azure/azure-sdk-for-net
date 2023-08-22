@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
         internal GetGroupIdListForLdapUserResult()
         {
-            GroupIdsForLdapUser = new Core.ChangeTrackingList<string>();
+            GroupIdsForLdapUser = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>

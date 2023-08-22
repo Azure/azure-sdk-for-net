@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>
         internal ConnectionMonitorListResult()
         {
-            Value = new Core.ChangeTrackingList<ConnectionMonitorData>();
+            Value = new ChangeTrackingList<ConnectionMonitorData>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorListResult. </summary>

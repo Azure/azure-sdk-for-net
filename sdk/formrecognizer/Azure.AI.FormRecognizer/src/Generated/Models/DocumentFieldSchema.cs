@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal DocumentFieldSchema(DocumentFieldType type)
         {
             Type = type;
-            Properties = new Core.ChangeTrackingDictionary<string, DocumentFieldSchema>();
+            Properties = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
         }
 
         /// <summary> Initializes a new instance of DocumentFieldSchema. </summary>

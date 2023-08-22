@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class ClassicAlertSettings : Core.IUtf8JsonSerializable
+    internal partial class ClassicAlertSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AlertsForCriticalOperations))
+            if (Optional.IsDefined(AlertsForCriticalOperations))
             {
                 writer.WritePropertyName("alertsForCriticalOperations"u8);
                 writer.WriteStringValue(AlertsForCriticalOperations.Value.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<RecoveryServicesAlertsState> alertsForCriticalOperations = default;
+            Optional<RecoveryServicesAlertsState> alertsForCriticalOperations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForCriticalOperations"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new ClassicAlertSettings(Core.Optional.ToNullable(alertsForCriticalOperations));
+            return new ClassicAlertSettings(Optional.ToNullable(alertsForCriticalOperations));
         }
     }
 }

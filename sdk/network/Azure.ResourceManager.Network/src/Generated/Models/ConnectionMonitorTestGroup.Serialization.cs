@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorTestGroup : Core.IUtf8JsonSerializable
+    public partial class ConnectionMonitorTestGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Disable))
+            if (Optional.IsDefined(Disable))
             {
                 writer.WritePropertyName("disable"u8);
                 writer.WriteBooleanValue(Disable.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Core.Optional<bool> disable = default;
+            Optional<bool> disable = default;
             IList<string> testConfigurations = default;
             IList<string> sources = default;
             IList<string> destinations = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorTestGroup(name, Core.Optional.ToNullable(disable), testConfigurations, sources, destinations);
+            return new ConnectionMonitorTestGroup(name, Optional.ToNullable(disable), testConfigurations, sources, destinations);
         }
     }
 }

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImageDiskReference : Core.IUtf8JsonSerializable
+    public partial class ImageDiskReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(SharedGalleryImageId))
+            if (Optional.IsDefined(SharedGalleryImageId))
             {
                 writer.WritePropertyName("sharedGalleryImageId"u8);
                 writer.WriteStringValue(SharedGalleryImageId);
             }
-            if (Core.Optional.IsDefined(CommunityGalleryImageId))
+            if (Optional.IsDefined(CommunityGalleryImageId))
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (Core.Optional.IsDefined(Lun))
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> sharedGalleryImageId = default;
-            Core.Optional<string> communityGalleryImageId = default;
-            Core.Optional<int> lun = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> sharedGalleryImageId = default;
+            Optional<string> communityGalleryImageId = default;
+            Optional<int> lun = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ImageDiskReference(id.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value, Core.Optional.ToNullable(lun));
+            return new ImageDiskReference(id.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value, Optional.ToNullable(lun));
         }
     }
 }

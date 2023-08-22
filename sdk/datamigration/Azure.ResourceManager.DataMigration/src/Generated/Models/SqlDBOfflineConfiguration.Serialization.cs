@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<bool> offline = default;
+            Optional<bool> offline = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offline"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new SqlDBOfflineConfiguration(Core.Optional.ToNullable(offline));
+            return new SqlDBOfflineConfiguration(Optional.ToNullable(offline));
         }
     }
 }

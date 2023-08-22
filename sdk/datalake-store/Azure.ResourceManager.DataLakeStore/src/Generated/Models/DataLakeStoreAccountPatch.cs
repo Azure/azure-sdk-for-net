@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of DataLakeStoreAccountPatch. </summary>
         public DataLakeStoreAccountPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            FirewallRules = new Core.ChangeTrackingList<FirewallRuleForDataLakeStoreAccountUpdateContent>();
-            VirtualNetworkRules = new Core.ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>();
-            TrustedIdProviders = new Core.ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            FirewallRules = new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountUpdateContent>();
+            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>();
+            TrustedIdProviders = new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>();
         }
 
         /// <summary> Resource tags. </summary>

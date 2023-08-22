@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(GitHubClientSecretConverter))]
-    public partial class GitHubClientSecret : Core.IUtf8JsonSerializable
+    public partial class GitHubClientSecret : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ByoaSecretAkvUrl))
+            if (Optional.IsDefined(ByoaSecretAkvUrl))
             {
                 writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUrl);
             }
-            if (Core.Optional.IsDefined(ByoaSecretName))
+            if (Optional.IsDefined(ByoaSecretName))
             {
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> byoaSecretAkvUrl = default;
-            Core.Optional<string> byoaSecretName = default;
+            Optional<string> byoaSecretAkvUrl = default;
+            Optional<string> byoaSecretName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("byoaSecretAkvUrl"u8))

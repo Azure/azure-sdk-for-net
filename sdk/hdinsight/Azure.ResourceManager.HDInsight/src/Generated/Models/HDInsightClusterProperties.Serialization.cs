@@ -14,74 +14,74 @@ using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterProperties : Core.IUtf8JsonSerializable
+    public partial class HDInsightClusterProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClusterVersion))
+            if (Optional.IsDefined(ClusterVersion))
             {
                 writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
-            if (Core.Optional.IsDefined(ClusterHdpVersion))
+            if (Optional.IsDefined(ClusterHdpVersion))
             {
                 writer.WritePropertyName("clusterHdpVersion"u8);
                 writer.WriteStringValue(ClusterHdpVersion);
             }
-            if (Core.Optional.IsDefined(OSType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ClusterId))
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
             writer.WritePropertyName("clusterDefinition"u8);
             writer.WriteObjectValue(ClusterDefinition);
-            if (Core.Optional.IsDefined(KafkaRestProperties))
+            if (Optional.IsDefined(KafkaRestProperties))
             {
                 writer.WritePropertyName("kafkaRestProperties"u8);
                 writer.WriteObjectValue(KafkaRestProperties);
             }
-            if (Core.Optional.IsDefined(SecurityProfile))
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Core.Optional.IsDefined(ComputeProfile))
+            if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
                 writer.WriteObjectValue(ComputeProfile);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ClusterState))
+            if (Optional.IsDefined(ClusterState))
             {
                 writer.WritePropertyName("clusterState"u8);
                 writer.WriteStringValue(ClusterState);
             }
-            if (Core.Optional.IsDefined(QuotaInfo))
+            if (Optional.IsDefined(QuotaInfo))
             {
                 writer.WritePropertyName("quotaInfo"u8);
                 writer.WriteObjectValue(QuotaInfo);
             }
-            if (Core.Optional.IsCollectionDefined(Errors))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ConnectivityEndpoints))
+            if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteStartArray();
@@ -101,42 +101,42 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DiskEncryptionProperties))
+            if (Optional.IsDefined(DiskEncryptionProperties))
             {
                 writer.WritePropertyName("diskEncryptionProperties"u8);
                 writer.WriteObjectValue(DiskEncryptionProperties);
             }
-            if (Core.Optional.IsDefined(EncryptionInTransitProperties))
+            if (Optional.IsDefined(EncryptionInTransitProperties))
             {
                 writer.WritePropertyName("encryptionInTransitProperties"u8);
                 writer.WriteObjectValue(EncryptionInTransitProperties);
             }
-            if (Core.Optional.IsDefined(StorageProfile))
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Core.Optional.IsDefined(MinSupportedTlsVersion))
+            if (Optional.IsDefined(MinSupportedTlsVersion))
             {
                 writer.WritePropertyName("minSupportedTlsVersion"u8);
                 writer.WriteStringValue(MinSupportedTlsVersion);
             }
-            if (Core.Optional.IsDefined(ExcludedServicesConfig))
+            if (Optional.IsDefined(ExcludedServicesConfig))
             {
                 writer.WritePropertyName("excludedServicesConfig"u8);
                 writer.WriteObjectValue(ExcludedServicesConfig);
             }
-            if (Core.Optional.IsDefined(NetworkProperties))
+            if (Optional.IsDefined(NetworkProperties))
             {
                 writer.WritePropertyName("networkProperties"u8);
                 writer.WriteObjectValue(NetworkProperties);
             }
-            if (Core.Optional.IsDefined(ComputeIsolationProperties))
+            if (Optional.IsDefined(ComputeIsolationProperties))
             {
                 writer.WritePropertyName("computeIsolationProperties"u8);
                 writer.WriteObjectValue(ComputeIsolationProperties);
             }
-            if (Core.Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
@@ -155,30 +155,30 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> clusterVersion = default;
-            Core.Optional<string> clusterHdpVersion = default;
-            Core.Optional<HDInsightOSType> osType = default;
-            Core.Optional<HDInsightTier> tier = default;
-            Core.Optional<string> clusterId = default;
+            Optional<string> clusterVersion = default;
+            Optional<string> clusterHdpVersion = default;
+            Optional<HDInsightOSType> osType = default;
+            Optional<HDInsightTier> tier = default;
+            Optional<string> clusterId = default;
             HDInsightClusterDefinition clusterDefinition = default;
-            Core.Optional<KafkaRestProperties> kafkaRestProperties = default;
-            Core.Optional<HDInsightSecurityProfile> securityProfile = default;
-            Core.Optional<ComputeProfile> computeProfile = default;
-            Core.Optional<HDInsightClusterProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<string> clusterState = default;
-            Core.Optional<QuotaInfo> quotaInfo = default;
-            Core.Optional<IList<ResponseError>> errors = default;
-            Core.Optional<IList<ConnectivityEndpoint>> connectivityEndpoints = default;
-            Core.Optional<HDInsightDiskEncryptionProperties> diskEncryptionProperties = default;
-            Core.Optional<EncryptionInTransitProperties> encryptionInTransitProperties = default;
-            Core.Optional<StorageProfile> storageProfile = default;
-            Core.Optional<string> minSupportedTlsVersion = default;
-            Core.Optional<ExcludedServicesConfig> excludedServicesConfig = default;
-            Core.Optional<HDInsightClusterNetworkProperties> networkProperties = default;
-            Core.Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
-            Core.Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
-            Core.Optional<IReadOnlyList<HDInsightPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<KafkaRestProperties> kafkaRestProperties = default;
+            Optional<HDInsightSecurityProfile> securityProfile = default;
+            Optional<ComputeProfile> computeProfile = default;
+            Optional<HDInsightClusterProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<string> clusterState = default;
+            Optional<QuotaInfo> quotaInfo = default;
+            Optional<IList<ResponseError>> errors = default;
+            Optional<IList<ConnectivityEndpoint>> connectivityEndpoints = default;
+            Optional<HDInsightDiskEncryptionProperties> diskEncryptionProperties = default;
+            Optional<EncryptionInTransitProperties> encryptionInTransitProperties = default;
+            Optional<StorageProfile> storageProfile = default;
+            Optional<string> minSupportedTlsVersion = default;
+            Optional<ExcludedServicesConfig> excludedServicesConfig = default;
+            Optional<HDInsightClusterNetworkProperties> networkProperties = default;
+            Optional<HDInsightComputeIsolationProperties> computeIsolationProperties = default;
+            Optional<IList<HDInsightPrivateLinkConfiguration>> privateLinkConfigurations = default;
+            Optional<IReadOnlyList<HDInsightPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterVersion"u8))
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterProperties(clusterVersion.Value, clusterHdpVersion.Value, Core.Optional.ToNullable(osType), Core.Optional.ToNullable(tier), clusterId.Value, clusterDefinition, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(createdDate), clusterState.Value, quotaInfo.Value, Core.Optional.ToList(errors), Core.Optional.ToList(connectivityEndpoints), diskEncryptionProperties.Value, encryptionInTransitProperties.Value, storageProfile.Value, minSupportedTlsVersion.Value, excludedServicesConfig.Value, networkProperties.Value, computeIsolationProperties.Value, Core.Optional.ToList(privateLinkConfigurations), Core.Optional.ToList(privateEndpointConnections));
+            return new HDInsightClusterProperties(clusterVersion.Value, clusterHdpVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(tier), clusterId.Value, clusterDefinition, kafkaRestProperties.Value, securityProfile.Value, computeProfile.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdDate), clusterState.Value, quotaInfo.Value, Optional.ToList(errors), Optional.ToList(connectivityEndpoints), diskEncryptionProperties.Value, encryptionInTransitProperties.Value, storageProfile.Value, minSupportedTlsVersion.Value, excludedServicesConfig.Value, networkProperties.Value, computeIsolationProperties.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections));
         }
     }
 }

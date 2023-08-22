@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<string> complianceName = default;
-            Core.Optional<IReadOnlyList<Category>> categories = default;
+            Optional<string> complianceName = default;
+            Optional<IReadOnlyList<Category>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new ComplianceResult(complianceName.Value, Core.Optional.ToList(categories));
+            return new ComplianceResult(complianceName.Value, Optional.ToList(categories));
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CustomContextInternal. </summary>
         public CustomContextInternal()
         {
-            VoipHeaders = new Core.ChangeTrackingDictionary<string, string>();
-            SipHeaders = new Core.ChangeTrackingDictionary<string, string>();
+            VoipHeaders = new ChangeTrackingDictionary<string, string>();
+            SipHeaders = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

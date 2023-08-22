@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of BackupPoliciesList. </summary>
         internal BackupPoliciesList()
         {
-            Value = new Core.ChangeTrackingList<NetAppBackupPolicyData>();
+            Value = new ChangeTrackingList<NetAppBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of BackupPoliciesList. </summary>

@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class RelationshipResourceFormatData : Core.IUtf8JsonSerializable
+    public partial class RelationshipResourceFormatData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Cardinality))
+            if (Optional.IsDefined(Cardinality))
             {
                 writer.WritePropertyName("cardinality"u8);
                 writer.WriteStringValue(Cardinality.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Description))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ExpiryDateTimeUtc))
+            if (Optional.IsDefined(ExpiryDateTimeUtc))
             {
                 writer.WritePropertyName("expiryDateTimeUtc"u8);
                 writer.WriteStringValue(ExpiryDateTimeUtc.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(Fields))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(LookupMappings))
+            if (Optional.IsCollectionDefined(LookupMappings))
             {
                 writer.WritePropertyName("lookupMappings"u8);
                 writer.WriteStartArray();
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ProfileType))
+            if (Optional.IsDefined(ProfileType))
             {
                 writer.WritePropertyName("profileType"u8);
                 writer.WriteStringValue(ProfileType);
             }
-            if (Core.Optional.IsDefined(RelatedProfileType))
+            if (Optional.IsDefined(RelatedProfileType))
             {
                 writer.WritePropertyName("relatedProfileType"u8);
                 writer.WriteStringValue(RelatedProfileType);
@@ -96,19 +96,19 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<CardinalityType> cardinality = default;
-            Core.Optional<IDictionary<string, string>> displayName = default;
-            Core.Optional<IDictionary<string, string>> description = default;
-            Core.Optional<DateTimeOffset> expiryDateTimeUtc = default;
-            Core.Optional<IList<PropertyDefinition>> fields = default;
-            Core.Optional<IList<RelationshipTypeMapping>> lookupMappings = default;
-            Core.Optional<string> profileType = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> relationshipName = default;
-            Core.Optional<string> relatedProfileType = default;
-            Core.Optional<string> relationshipGuidId = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<SystemData> systemData = default;
+            Optional<CardinalityType> cardinality = default;
+            Optional<IDictionary<string, string>> displayName = default;
+            Optional<IDictionary<string, string>> description = default;
+            Optional<DateTimeOffset> expiryDateTimeUtc = default;
+            Optional<IList<PropertyDefinition>> fields = default;
+            Optional<IList<RelationshipTypeMapping>> lookupMappings = default;
+            Optional<string> profileType = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> relationshipName = default;
+            Optional<string> relatedProfileType = default;
+            Optional<string> relationshipGuidId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CustomerInsights
                     continue;
                 }
             }
-            return new RelationshipResourceFormatData(id, name, type, systemData.Value, Core.Optional.ToNullable(cardinality), Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description), Core.Optional.ToNullable(expiryDateTimeUtc), Core.Optional.ToList(fields), Core.Optional.ToList(lookupMappings), profileType.Value, Core.Optional.ToNullable(provisioningState), relationshipName.Value, relatedProfileType.Value, relationshipGuidId.Value, Core.Optional.ToNullable(tenantId));
+            return new RelationshipResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(cardinality), Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(expiryDateTimeUtc), Optional.ToList(fields), Optional.ToList(lookupMappings), profileType.Value, Optional.ToNullable(provisioningState), relationshipName.Value, relatedProfileType.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId));
         }
     }
 }

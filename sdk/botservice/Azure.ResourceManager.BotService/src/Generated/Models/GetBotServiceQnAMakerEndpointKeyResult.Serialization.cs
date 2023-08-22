@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryEndpointKey = default;
-            Core.Optional<string> secondaryEndpointKey = default;
-            Core.Optional<string> installedVersion = default;
-            Core.Optional<string> lastStableVersion = default;
+            Optional<string> primaryEndpointKey = default;
+            Optional<string> secondaryEndpointKey = default;
+            Optional<string> installedVersion = default;
+            Optional<string> lastStableVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryEndpointKey"u8))

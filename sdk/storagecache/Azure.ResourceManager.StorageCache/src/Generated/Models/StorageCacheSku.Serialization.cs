@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<IReadOnlyList<StorageCacheSkuCapability>> capabilities = default;
-            Core.Optional<IReadOnlyList<string>> locations = default;
-            Core.Optional<IReadOnlyList<StorageCacheSkuLocationInfo>> locationInfo = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<StorageCacheRestriction>> restrictions = default;
+            Optional<string> resourceType = default;
+            Optional<IReadOnlyList<StorageCacheSkuCapability>> capabilities = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<StorageCacheSkuLocationInfo>> locationInfo = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<StorageCacheRestriction>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheSku(resourceType.Value, Core.Optional.ToList(capabilities), Core.Optional.ToList(locations), Core.Optional.ToList(locationInfo), name.Value, Core.Optional.ToList(restrictions));
+            return new StorageCacheSku(resourceType.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(locationInfo), name.Value, Optional.ToList(restrictions));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of EnrichmentStatusList. </summary>
         internal EnrichmentStatusList()
         {
-            Value = new Core.ChangeTrackingList<EnrichmentStatus>();
+            Value = new ChangeTrackingList<EnrichmentStatus>();
         }
 
         /// <summary> Initializes a new instance of EnrichmentStatusList. </summary>

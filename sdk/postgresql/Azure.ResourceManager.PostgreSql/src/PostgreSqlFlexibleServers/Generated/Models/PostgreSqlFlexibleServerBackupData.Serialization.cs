@@ -13,24 +13,24 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlFlexibleServerBackupData : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerBackupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BackupType))
+            if (Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CompletedOn))
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<PostgreSqlFlexibleServerBackupOrigin> backupType = default;
-            Core.Optional<DateTimeOffset> completedTime = default;
-            Core.Optional<string> source = default;
+            Optional<SystemData> systemData = default;
+            Optional<PostgreSqlFlexibleServerBackupOrigin> backupType = default;
+            Optional<DateTimeOffset> completedTime = default;
+            Optional<string> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerBackupData(id, name, type, systemData.Value, Core.Optional.ToNullable(backupType), Core.Optional.ToNullable(completedTime), source.Value);
+            return new PostgreSqlFlexibleServerBackupData(id, name, type, systemData.Value, Optional.ToNullable(backupType), Optional.ToNullable(completedTime), source.Value);
         }
     }
 }

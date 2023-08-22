@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NewRelicMonitorResourceMonitorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NewRelicMonitorResourceMonitorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), NewRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicMonitorResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), NewRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicMonitorResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NewRelicMonitorResourceMonitorsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NewRelicMonitorResourceMonitorsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), NewRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicMonitorResources", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NewRelicMonitorResource(Client, NewRelicMonitorResourceData.DeserializeNewRelicMonitorResourceData(e)), NewRelicMonitorResourceMonitorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicMonitorResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PlansRestClient.CreateListRequest(Id.SubscriptionId, accountId, organizationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, accountId, organizationId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicPlans", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PlansRestClient.CreateListRequest(Id.SubscriptionId, accountId, organizationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, accountId, organizationId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicPlans", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNewRelicPlans", "value", "nextLink", cancellationToken);
         }
     }
 }

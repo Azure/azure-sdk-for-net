@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadBackupContent : Core.IUtf8JsonSerializable
+    public partial class WorkloadBackupContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BackupType))
+            if (Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnableCompression))
+            if (Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteBooleanValue(EnableCompression.Value);
             }
-            if (Core.Optional.IsDefined(RecoveryPointExpireOn))
+            if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupType> backupType = default;
-            Core.Optional<bool> enableCompression = default;
-            Core.Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
+            Optional<BackupType> backupType = default;
+            Optional<bool> enableCompression = default;
+            Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadBackupContent(objectType, Core.Optional.ToNullable(backupType), Core.Optional.ToNullable(enableCompression), Core.Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            return new WorkloadBackupContent(objectType, Optional.ToNullable(backupType), Optional.ToNullable(enableCompression), Optional.ToNullable(recoveryPointExpiryTimeInUTC));
         }
     }
 }

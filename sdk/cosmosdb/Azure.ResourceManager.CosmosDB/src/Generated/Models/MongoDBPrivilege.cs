@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoDBPrivilege. </summary>
         public MongoDBPrivilege()
         {
-            Actions = new Core.ChangeTrackingList<string>();
+            Actions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MongoDBPrivilege. </summary>

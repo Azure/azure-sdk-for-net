@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<string> allocationMethod = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<string> subnetMask = default;
+            Optional<string> allocationMethod = default;
+            Optional<string> ipAddress = default;
+            Optional<string> subnetMask = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allocationMethod"u8))

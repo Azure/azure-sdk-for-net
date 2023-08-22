@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<string> agentUpdateStatus = default;
-            Core.Optional<string> postUpdateRebootStatus = default;
-            Core.Optional<DateTimeOffset> agentExpireOn = default;
+            Optional<string> agentVersion = default;
+            Optional<string> agentUpdateStatus = default;
+            Optional<string> postUpdateRebootStatus = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentVersion"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageAgentDetails(agentVersion.Value, agentUpdateStatus.Value, postUpdateRebootStatus.Value, Core.Optional.ToNullable(agentExpireOn));
+            return new InMageAgentDetails(agentVersion.Value, agentUpdateStatus.Value, postUpdateRebootStatus.Value, Optional.ToNullable(agentExpireOn));
         }
     }
 }

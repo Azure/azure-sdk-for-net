@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of VolumeQuotaRulesList. </summary>
         internal VolumeQuotaRulesList()
         {
-            Value = new Core.ChangeTrackingList<NetAppVolumeQuotaRuleData>();
+            Value = new ChangeTrackingList<NetAppVolumeQuotaRuleData>();
         }
 
         /// <summary> Initializes a new instance of VolumeQuotaRulesList. </summary>

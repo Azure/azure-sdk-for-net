@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AgentPoolProvisioningStatusStatus : Core.IUtf8JsonSerializable
+    public partial class AgentPoolProvisioningStatusStatus : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ErrorMessage))
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Core.Optional.IsDefined(ProvisioningStatus))
+            if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteObjectValue(ProvisioningStatus);
             }
-            if (Core.Optional.IsDefined(ReadyReplicas))
+            if (Optional.IsDefined(ReadyReplicas))
             {
                 writer.WritePropertyName("readyReplicas"u8);
                 writer.WriteNumberValue(ReadyReplicas.Value);
             }
-            if (Core.Optional.IsDefined(Replicas))
+            if (Optional.IsDefined(Replicas))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteNumberValue(Replicas.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<AgentPoolProvisioningStatusStatusProvisioningStatus> provisioningStatus = default;
-            Core.Optional<int> readyReplicas = default;
-            Core.Optional<int> replicas = default;
+            Optional<string> errorMessage = default;
+            Optional<AgentPoolProvisioningStatusStatusProvisioningStatus> provisioningStatus = default;
+            Optional<int> readyReplicas = default;
+            Optional<int> replicas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new AgentPoolProvisioningStatusStatus(errorMessage.Value, provisioningStatus.Value, Core.Optional.ToNullable(readyReplicas), Core.Optional.ToNullable(replicas));
+            return new AgentPoolProvisioningStatusStatus(errorMessage.Value, provisioningStatus.Value, Optional.ToNullable(readyReplicas), Optional.ToNullable(replicas));
         }
     }
 }

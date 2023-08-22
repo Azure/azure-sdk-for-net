@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    internal class PostgreSqlFlexibleServerActiveDirectoryAdministratorOperationSource : Core.IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>
+    internal class PostgreSqlFlexibleServerActiveDirectoryAdministratorOperationSource : IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _client = client;
         }
 
-        PostgreSqlFlexibleServerActiveDirectoryAdministratorResource Core.IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PostgreSqlFlexibleServerActiveDirectoryAdministratorResource IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(document.RootElement);
             return new PostgreSqlFlexibleServerActiveDirectoryAdministratorResource(_client, data);
         }
 
-        async ValueTask<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> Core.IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> IOperationSource<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(document.RootElement);

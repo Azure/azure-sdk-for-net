@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of AppConfigurationKeyValueListResult. </summary>
         internal AppConfigurationKeyValueListResult()
         {
-            Value = new Core.ChangeTrackingList<AppConfigurationKeyValueData>();
+            Value = new ChangeTrackingList<AppConfigurationKeyValueData>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationKeyValueListResult. </summary>

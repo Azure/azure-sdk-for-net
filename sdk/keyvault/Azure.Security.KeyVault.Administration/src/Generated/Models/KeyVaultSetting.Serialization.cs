@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             string name = default;
             string value = default;
-            Core.Optional<KeyVaultSettingType> type = default;
+            Optional<KeyVaultSettingType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultSetting(name, value, Core.Optional.ToNullable(type));
+            return new KeyVaultSetting(name, value, Optional.ToNullable(type));
         }
     }
 }

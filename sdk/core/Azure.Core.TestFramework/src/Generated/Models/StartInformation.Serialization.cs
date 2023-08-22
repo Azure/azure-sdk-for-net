@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class StartInformation : Core.IUtf8JsonSerializable
+    public partial class StartInformation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("x-recording-file"u8);
             writer.WriteStringValue(XRecordingFile);
-            if (Core.Optional.IsDefined(XRecordingAssetsFile))
+            if (Optional.IsDefined(XRecordingAssetsFile))
             {
                 writer.WritePropertyName("x-recording-assets-file"u8);
                 writer.WriteStringValue(XRecordingAssetsFile);

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    internal partial class GrafanaIntegrations : Core.IUtf8JsonSerializable
+    internal partial class GrafanaIntegrations : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
+            if (Optional.IsCollectionDefined(MonitorWorkspaceIntegrations))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceIntegrations"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Core.Optional<IList<MonitorWorkspaceIntegration>> azureMonitorWorkspaceIntegrations = default;
+            Optional<IList<MonitorWorkspaceIntegration>> azureMonitorWorkspaceIntegrations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorWorkspaceIntegrations"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     continue;
                 }
             }
-            return new GrafanaIntegrations(Core.Optional.ToList(azureMonitorWorkspaceIntegrations));
+            return new GrafanaIntegrations(Optional.ToList(azureMonitorWorkspaceIntegrations));
         }
     }
 }

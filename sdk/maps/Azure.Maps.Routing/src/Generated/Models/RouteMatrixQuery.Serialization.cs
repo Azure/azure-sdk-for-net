@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Maps.Routing
 {
-    public partial class RouteMatrixQuery : Core.IUtf8JsonSerializable
+    public partial class RouteMatrixQuery : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GeoJsonMultiPointOrigins))
+            if (Optional.IsDefined(GeoJsonMultiPointOrigins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointOrigins);
             }
-            if (Core.Optional.IsDefined(GeoJsonMultiPointDestinations))
+            if (Optional.IsDefined(GeoJsonMultiPointDestinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(GeoJsonMultiPointDestinations);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>
         internal PostgreSqlLtrServerBackupOperationList()
         {
-            Value = new Core.ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>();
+            Value = new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationList. </summary>

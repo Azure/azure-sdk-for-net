@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class BackupConfiguration : Core.IUtf8JsonSerializable
+    public partial class BackupConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceLocation))
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteObjectValue(SourceLocation);
             }
-            if (Core.Optional.IsDefined(TargetLocation))
+            if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteObjectValue(TargetLocation);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<SourceLocation> sourceLocation = default;
-            Core.Optional<TargetLocation> targetLocation = default;
+            Optional<SourceLocation> sourceLocation = default;
+            Optional<TargetLocation> targetLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceLocation"u8))

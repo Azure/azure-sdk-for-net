@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> kekState = default;
-            Core.Optional<string> kekCertThumbprint = default;
-            Core.Optional<DateTimeOffset> kekCertExpireOn = default;
+            Optional<string> kekState = default;
+            Optional<string> kekCertThumbprint = default;
+            Optional<DateTimeOffset> kekCertExpireOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kekState"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Core.Optional.ToNullable(kekCertExpireOn));
+            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Optional.ToNullable(kekCertExpireOn));
         }
     }
 }

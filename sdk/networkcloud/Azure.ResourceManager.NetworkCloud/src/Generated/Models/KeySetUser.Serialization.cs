@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KeySetUser : Core.IUtf8JsonSerializable
+    public partial class KeySetUser : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("azureUserName"u8);
             writer.WriteStringValue(AzureUserName);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string azureUserName = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             foreach (var property in element.EnumerateObject())
             {

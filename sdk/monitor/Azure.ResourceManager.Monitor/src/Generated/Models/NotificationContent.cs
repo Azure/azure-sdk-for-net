@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Monitor.Models
             Argument.AssertNotNull(alertType, nameof(alertType));
 
             AlertType = alertType;
-            EmailReceivers = new Core.ChangeTrackingList<MonitorEmailReceiver>();
-            SmsReceivers = new Core.ChangeTrackingList<MonitorSmsReceiver>();
-            WebhookReceivers = new Core.ChangeTrackingList<MonitorWebhookReceiver>();
-            ItsmReceivers = new Core.ChangeTrackingList<MonitorItsmReceiver>();
-            AzureAppPushReceivers = new Core.ChangeTrackingList<MonitorAzureAppPushReceiver>();
-            AutomationRunbookReceivers = new Core.ChangeTrackingList<MonitorAutomationRunbookReceiver>();
-            VoiceReceivers = new Core.ChangeTrackingList<MonitorVoiceReceiver>();
-            LogicAppReceivers = new Core.ChangeTrackingList<MonitorLogicAppReceiver>();
-            AzureFunctionReceivers = new Core.ChangeTrackingList<MonitorAzureFunctionReceiver>();
-            ArmRoleReceivers = new Core.ChangeTrackingList<MonitorArmRoleReceiver>();
-            EventHubReceivers = new Core.ChangeTrackingList<MonitorEventHubReceiver>();
+            EmailReceivers = new ChangeTrackingList<MonitorEmailReceiver>();
+            SmsReceivers = new ChangeTrackingList<MonitorSmsReceiver>();
+            WebhookReceivers = new ChangeTrackingList<MonitorWebhookReceiver>();
+            ItsmReceivers = new ChangeTrackingList<MonitorItsmReceiver>();
+            AzureAppPushReceivers = new ChangeTrackingList<MonitorAzureAppPushReceiver>();
+            AutomationRunbookReceivers = new ChangeTrackingList<MonitorAutomationRunbookReceiver>();
+            VoiceReceivers = new ChangeTrackingList<MonitorVoiceReceiver>();
+            LogicAppReceivers = new ChangeTrackingList<MonitorLogicAppReceiver>();
+            AzureFunctionReceivers = new ChangeTrackingList<MonitorAzureFunctionReceiver>();
+            ArmRoleReceivers = new ChangeTrackingList<MonitorArmRoleReceiver>();
+            EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
         }
 
         /// <summary> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </summary>

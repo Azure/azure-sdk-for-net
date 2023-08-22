@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AlertRuleLeafCondition : Core.IUtf8JsonSerializable
+    public partial class AlertRuleLeafCondition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Field))
+            if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Core.Optional.IsDefined(EqualsValue))
+            if (Optional.IsDefined(EqualsValue))
             {
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (Core.Optional.IsCollectionDefined(ContainsAny))
+            if (Optional.IsCollectionDefined(ContainsAny))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> field = default;
-            Core.Optional<string> @equals = default;
-            Core.Optional<IList<string>> containsAny = default;
+            Optional<string> field = default;
+            Optional<string> @equals = default;
+            Optional<IList<string>> containsAny = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("field"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new AlertRuleLeafCondition(field.Value, @equals.Value, Core.Optional.ToList(containsAny));
+            return new AlertRuleLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ArmApplicationHealthPolicy. </summary>
         public ArmApplicationHealthPolicy()
         {
-            ServiceTypeHealthPolicyMap = new Core.ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>();
+            ServiceTypeHealthPolicyMap = new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationHealthPolicy. </summary>

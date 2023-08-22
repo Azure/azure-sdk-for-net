@@ -13,12 +13,12 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    public partial class SqlVmGroupData : Core.IUtf8JsonSerializable
+    public partial class SqlVmGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SqlImageOffer))
+            if (Optional.IsDefined(SqlImageOffer))
             {
                 writer.WritePropertyName("sqlImageOffer"u8);
                 writer.WriteStringValue(SqlImageOffer);
             }
-            if (Core.Optional.IsDefined(SqlImageSku))
+            if (Optional.IsDefined(SqlImageSku))
             {
                 writer.WritePropertyName("sqlImageSku"u8);
                 writer.WriteStringValue(SqlImageSku.Value.ToString());
             }
-            if (Core.Optional.IsDefined(WindowsServerFailoverClusterDomainProfile))
+            if (Optional.IsDefined(WindowsServerFailoverClusterDomainProfile))
             {
                 writer.WritePropertyName("wsfcDomainProfile"u8);
                 writer.WriteObjectValue(WindowsServerFailoverClusterDomainProfile);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> sqlImageOffer = default;
-            Core.Optional<SqlVmGroupImageSku> sqlImageSku = default;
-            Core.Optional<SqlVmGroupScaleType> scaleType = default;
-            Core.Optional<SqlVmClusterManagerType> clusterManagerType = default;
-            Core.Optional<SqlVmClusterConfiguration> clusterConfiguration = default;
-            Core.Optional<WindowsServerFailoverClusterDomainProfile> windowsServerFailoverClusterDomainProfile = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> provisioningState = default;
+            Optional<string> sqlImageOffer = default;
+            Optional<SqlVmGroupImageSku> sqlImageSku = default;
+            Optional<SqlVmGroupScaleType> scaleType = default;
+            Optional<SqlVmClusterManagerType> clusterManagerType = default;
+            Optional<SqlVmClusterConfiguration> clusterConfiguration = default;
+            Optional<WindowsServerFailoverClusterDomainProfile> windowsServerFailoverClusterDomainProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                     continue;
                 }
             }
-            return new SqlVmGroupData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, provisioningState.Value, sqlImageOffer.Value, Core.Optional.ToNullable(sqlImageSku), Core.Optional.ToNullable(scaleType), Core.Optional.ToNullable(clusterManagerType), Core.Optional.ToNullable(clusterConfiguration), windowsServerFailoverClusterDomainProfile.Value);
+            return new SqlVmGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlImageSku), Optional.ToNullable(scaleType), Optional.ToNullable(clusterManagerType), Optional.ToNullable(clusterConfiguration), windowsServerFailoverClusterDomainProfile.Value);
         }
     }
 }

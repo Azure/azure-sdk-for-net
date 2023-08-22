@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <summary> Initializes a new instance of TrafficManagerRegion. </summary>
         public TrafficManagerRegion()
         {
-            Regions = new Core.ChangeTrackingList<TrafficManagerRegion>();
+            Regions = new ChangeTrackingList<TrafficManagerRegion>();
         }
 
         /// <summary> Initializes a new instance of TrafficManagerRegion. </summary>

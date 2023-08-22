@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineAgentInstanceView. </summary>
         internal VirtualMachineAgentInstanceView()
         {
-            ExtensionHandlers = new Core.ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView>();
-            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
+            ExtensionHandlers = new ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineAgentInstanceView. </summary>

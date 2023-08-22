@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DnsForwardingRuleData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DnsForwardingRuleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     continue;
                 }
             }
-            return new ForwardingRuleListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ForwardingRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

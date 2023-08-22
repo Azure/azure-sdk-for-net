@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DynatraceMonitorVmInfo>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DynatraceMonitorVmInfo>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new VmHostsListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new VmHostsListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

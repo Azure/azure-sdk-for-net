@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         /// <summary> Initializes a new instance of Scope. </summary>
         public Scope()
         {
-            ManagementGroups = new Core.ChangeTrackingList<WritableSubResource>();
-            Subscriptions = new Core.ChangeTrackingList<WritableSubResource>();
-            VirtualNetworks = new Core.ChangeTrackingList<WritableSubResource>();
-            Subnets = new Core.ChangeTrackingList<WritableSubResource>();
+            ManagementGroups = new ChangeTrackingList<WritableSubResource>();
+            Subscriptions = new ChangeTrackingList<WritableSubResource>();
+            VirtualNetworks = new ChangeTrackingList<WritableSubResource>();
+            Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of Scope. </summary>

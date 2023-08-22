@@ -21,9 +21,9 @@ namespace Azure.Communication.Chat
             }
             string code = default;
             string message = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IReadOnlyList<ChatError>> details = default;
-            Core.Optional<ChatError> innererror = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ChatError>> details = default;
+            Optional<ChatError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatError(code, message, target.Value, Core.Optional.ToList(details), innererror.Value);
+            return new ChatError(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

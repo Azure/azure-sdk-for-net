@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateEndpointListResult. </summary>
         internal PrivateEndpointListResult()
         {
-            Value = new Core.ChangeTrackingList<PrivateEndpointData>();
+            Value = new ChangeTrackingList<PrivateEndpointData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointListResult. </summary>

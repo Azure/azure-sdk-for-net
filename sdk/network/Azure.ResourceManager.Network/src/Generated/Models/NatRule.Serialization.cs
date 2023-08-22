@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NatRule : Core.IUtf8JsonSerializable
+    public partial class NatRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(IPProtocols))
+            if (Optional.IsCollectionDefined(IPProtocols))
             {
                 writer.WritePropertyName("ipProtocols"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourceAddresses))
+            if (Optional.IsCollectionDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationAddresses))
+            if (Optional.IsCollectionDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationPorts))
+            if (Optional.IsCollectionDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TranslatedAddress))
+            if (Optional.IsDefined(TranslatedAddress))
             {
                 writer.WritePropertyName("translatedAddress"u8);
                 writer.WriteStringValue(TranslatedAddress);
             }
-            if (Core.Optional.IsDefined(TranslatedPort))
+            if (Optional.IsDefined(TranslatedPort))
             {
                 writer.WritePropertyName("translatedPort"u8);
                 writer.WriteStringValue(TranslatedPort);
             }
-            if (Core.Optional.IsCollectionDefined(SourceIPGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TranslatedFqdn))
+            if (Optional.IsDefined(TranslatedFqdn))
             {
                 writer.WritePropertyName("translatedFqdn"u8);
                 writer.WriteStringValue(TranslatedFqdn);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<FirewallPolicyRuleNetworkProtocol>> ipProtocols = default;
-            Core.Optional<IList<string>> sourceAddresses = default;
-            Core.Optional<IList<string>> destinationAddresses = default;
-            Core.Optional<IList<string>> destinationPorts = default;
-            Core.Optional<string> translatedAddress = default;
-            Core.Optional<string> translatedPort = default;
-            Core.Optional<IList<string>> sourceIPGroups = default;
-            Core.Optional<string> translatedFqdn = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
+            Optional<IList<FirewallPolicyRuleNetworkProtocol>> ipProtocols = default;
+            Optional<IList<string>> sourceAddresses = default;
+            Optional<IList<string>> destinationAddresses = default;
+            Optional<IList<string>> destinationPorts = default;
+            Optional<string> translatedAddress = default;
+            Optional<string> translatedPort = default;
+            Optional<IList<string>> sourceIPGroups = default;
+            Optional<string> translatedFqdn = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             FirewallPolicyRuleType ruleType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NatRule(name.Value, description.Value, ruleType, Core.Optional.ToList(ipProtocols), Core.Optional.ToList(sourceAddresses), Core.Optional.ToList(destinationAddresses), Core.Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Core.Optional.ToList(sourceIPGroups), translatedFqdn.Value);
+            return new NatRule(name.Value, description.Value, ruleType, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Optional.ToList(sourceIPGroups), translatedFqdn.Value);
         }
     }
 }

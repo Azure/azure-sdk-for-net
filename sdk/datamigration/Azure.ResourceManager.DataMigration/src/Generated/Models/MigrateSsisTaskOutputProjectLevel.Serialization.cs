@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> folderName = default;
-            Core.Optional<string> projectName = default;
-            Core.Optional<MigrationState> state = default;
-            Core.Optional<SsisMigrationStage> stage = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<string> message = default;
-            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Core.Optional<string> id = default;
+            Optional<string> folderName = default;
+            Optional<string> projectName = default;
+            Optional<MigrationState> state = default;
+            Optional<SsisMigrationStage> stage = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSsisTaskOutputProjectLevel(id.Value, resultType, folderName.Value, projectName.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(stage), Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), message.Value, Core.Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSsisTaskOutputProjectLevel(id.Value, resultType, folderName.Value, projectName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
         }
     }
 }

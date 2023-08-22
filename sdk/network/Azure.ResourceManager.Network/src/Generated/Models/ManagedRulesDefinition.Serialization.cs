@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ManagedRulesDefinition : Core.IUtf8JsonSerializable
+    public partial class ManagedRulesDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Exclusions))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<OwaspCrsExclusionEntry>> exclusions = default;
+            Optional<IList<OwaspCrsExclusionEntry>> exclusions = default;
             IList<ManagedRuleSet> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ManagedRulesDefinition(Core.Optional.ToList(exclusions), managedRuleSets);
+            return new ManagedRulesDefinition(Optional.ToList(exclusions), managedRuleSets);
         }
     }
 }

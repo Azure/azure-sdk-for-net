@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxPrivateIPAddress : Core.IUtf8JsonSerializable
+    public partial class NginxPrivateIPAddress : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Core.Optional.IsDefined(PrivateIPAllocationMethod))
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SubnetId))
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<string> privateIPAddress = default;
-            Core.Optional<NginxPrivateIPAllocationMethod> privateIPAllocationMethod = default;
-            Core.Optional<string> subnetId = default;
+            Optional<string> privateIPAddress = default;
+            Optional<NginxPrivateIPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<string> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateIPAddress"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new NginxPrivateIPAddress(privateIPAddress.Value, Core.Optional.ToNullable(privateIPAllocationMethod), subnetId.Value);
+            return new NginxPrivateIPAddress(privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnetId.Value);
         }
     }
 }

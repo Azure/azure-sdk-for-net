@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of DscpConfigurationListResult. </summary>
         internal DscpConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<DscpConfigurationData>();
+            Value = new ChangeTrackingList<DscpConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of DscpConfigurationListResult. </summary>

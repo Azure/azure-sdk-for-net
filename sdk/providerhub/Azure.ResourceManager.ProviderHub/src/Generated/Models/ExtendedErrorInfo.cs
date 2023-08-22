@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>
         public ExtendedErrorInfo()
         {
-            Details = new Core.ChangeTrackingList<ExtendedErrorInfo>();
-            AdditionalInfo = new Core.ChangeTrackingList<TypedErrorInfo>();
+            Details = new ChangeTrackingList<ExtendedErrorInfo>();
+            AdditionalInfo = new ChangeTrackingList<TypedErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of ExtendedErrorInfo. </summary>

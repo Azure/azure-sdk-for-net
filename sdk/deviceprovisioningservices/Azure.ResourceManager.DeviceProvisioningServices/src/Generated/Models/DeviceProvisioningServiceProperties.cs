@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>
         public DeviceProvisioningServiceProperties()
         {
-            IPFilterRules = new Core.ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
-            IotHubs = new Core.ChangeTrackingList<IotHubDefinitionDescription>();
-            AuthorizationPolicies = new Core.ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
+            IPFilterRules = new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
+            PrivateEndpointConnections = new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
+            IotHubs = new ChangeTrackingList<IotHubDefinitionDescription>();
+            AuthorizationPolicies = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
         /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>

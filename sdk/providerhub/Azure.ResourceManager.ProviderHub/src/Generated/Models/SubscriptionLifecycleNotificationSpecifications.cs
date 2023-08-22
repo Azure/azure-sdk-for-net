@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>
         public SubscriptionLifecycleNotificationSpecifications()
         {
-            SubscriptionStateOverrideActions = new Core.ChangeTrackingList<SubscriptionStateOverrideAction>();
+            SubscriptionStateOverrideActions = new ChangeTrackingList<SubscriptionStateOverrideAction>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionLifecycleNotificationSpecifications. </summary>

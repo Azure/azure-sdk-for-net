@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEndpointAuthKeys : Core.IUtf8JsonSerializable
+    public partial class MachineLearningEndpointAuthKeys : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrimaryKey))
+            if (Optional.IsDefined(PrimaryKey))
             {
                 if (PrimaryKey != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("primaryKey");
                 }
             }
-            if (Core.Optional.IsDefined(SecondaryKey))
+            if (Optional.IsDefined(SecondaryKey))
             {
                 if (SecondaryKey != null)
                 {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))

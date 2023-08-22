@@ -10,59 +10,59 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class StorageContainer : Core.IUtf8JsonSerializable
+    public partial class StorageContainer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceResourceId))
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Core.Optional.IsDefined(StorageAccountVersion))
+            if (Optional.IsDefined(StorageAccountVersion))
             {
                 writer.WritePropertyName("storageAccountVersion"u8);
                 writer.WriteStringValue(StorageAccountVersion);
             }
-            if (Core.Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (Core.Optional.IsDefined(ProtectedItemCount))
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (Core.Optional.IsDefined(AcquireStorageAccountLock))
+            if (Optional.IsDefined(AcquireStorageAccountLock))
             {
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
                 writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
             }
-            if (Core.Optional.IsDefined(FriendlyName))
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RegistrationStatus))
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (Core.Optional.IsDefined(HealthStatus))
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (Core.Optional.IsDefined(ProtectableObjectType))
+            if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> sourceResourceId = default;
-            Core.Optional<string> storageAccountVersion = default;
-            Core.Optional<string> resourceGroup = default;
-            Core.Optional<long> protectedItemCount = default;
-            Core.Optional<AcquireStorageAccountLock> acquireStorageAccountLock = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<BackupManagementType> backupManagementType = default;
-            Core.Optional<string> registrationStatus = default;
-            Core.Optional<string> healthStatus = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<string> storageAccountVersion = default;
+            Optional<string> resourceGroup = default;
+            Optional<long> protectedItemCount = default;
+            Optional<AcquireStorageAccountLock> acquireStorageAccountLock = default;
+            Optional<string> friendlyName = default;
+            Optional<BackupManagementType> backupManagementType = default;
+            Optional<string> registrationStatus = default;
+            Optional<string> healthStatus = default;
             ProtectableContainerType containerType = default;
-            Core.Optional<string> protectableObjectType = default;
+            Optional<string> protectableObjectType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceId"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new StorageContainer(friendlyName.Value, Core.Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, sourceResourceId.Value, storageAccountVersion.Value, resourceGroup.Value, Core.Optional.ToNullable(protectedItemCount), Core.Optional.ToNullable(acquireStorageAccountLock));
+            return new StorageContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, sourceResourceId.Value, storageAccountVersion.Value, resourceGroup.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(acquireStorageAccountLock));
         }
     }
 }

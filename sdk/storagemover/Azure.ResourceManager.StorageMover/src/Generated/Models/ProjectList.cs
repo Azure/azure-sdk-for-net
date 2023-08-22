@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of ProjectList. </summary>
         internal ProjectList()
         {
-            Value = new Core.ChangeTrackingList<StorageMoverProjectData>();
+            Value = new ChangeTrackingList<StorageMoverProjectData>();
         }
 
         /// <summary> Initializes a new instance of ProjectList. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> privateLinkService = default;
+            Optional<string> privateLinkService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLinkService"u8))

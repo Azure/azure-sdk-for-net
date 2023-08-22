@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MetricDataPoint : Core.IUtf8JsonSerializable
+    internal partial class MetricDataPoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Namespace))
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("ns"u8);
                 writer.WriteStringValue(Namespace);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(DataPointType))
+            if (Optional.IsDefined(DataPointType))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(DataPointType.Value.ToString());
             }
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 if (Count != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("count");
                 }
             }
-            if (Core.Optional.IsDefined(Min))
+            if (Optional.IsDefined(Min))
             {
                 if (Min != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("min");
                 }
             }
-            if (Core.Optional.IsDefined(Max))
+            if (Optional.IsDefined(Max))
             {
                 if (Max != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     writer.WriteNull("max");
                 }
             }
-            if (Core.Optional.IsDefined(StdDev))
+            if (Optional.IsDefined(StdDev))
             {
                 if (StdDev != null)
                 {

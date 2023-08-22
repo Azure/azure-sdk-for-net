@@ -13,17 +13,17 @@ using Azure.ResourceManager.Peering.Models;
 
 namespace Azure.ResourceManager.Peering
 {
-    public partial class PeeringServiceData : Core.IUtf8JsonSerializable
+    public partial class PeeringServiceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.Peering
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PeeringServiceLocation))
+            if (Optional.IsDefined(PeeringServiceLocation))
             {
                 writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
-            if (Core.Optional.IsDefined(PeeringServiceProvider))
+            if (Optional.IsDefined(PeeringServiceProvider))
             {
                 writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);
             }
-            if (Core.Optional.IsDefined(ProviderPrimaryPeeringLocation))
+            if (Optional.IsDefined(ProviderPrimaryPeeringLocation))
             {
                 writer.WritePropertyName("providerPrimaryPeeringLocation"u8);
                 writer.WriteStringValue(ProviderPrimaryPeeringLocation);
             }
-            if (Core.Optional.IsDefined(ProviderBackupPeeringLocation))
+            if (Optional.IsDefined(ProviderBackupPeeringLocation))
             {
                 writer.WritePropertyName("providerBackupPeeringLocation"u8);
                 writer.WriteStringValue(ProviderBackupPeeringLocation);
             }
-            if (Core.Optional.IsDefined(LogAnalyticsWorkspaceProperties))
+            if (Optional.IsDefined(LogAnalyticsWorkspaceProperties))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceProperties"u8);
                 writer.WriteObjectValue(LogAnalyticsWorkspaceProperties);
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.Peering
             {
                 return null;
             }
-            Core.Optional<PeeringServiceSku> sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<PeeringServiceSku> sku = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> peeringServiceLocation = default;
-            Core.Optional<string> peeringServiceProvider = default;
-            Core.Optional<PeeringProvisioningState> provisioningState = default;
-            Core.Optional<string> providerPrimaryPeeringLocation = default;
-            Core.Optional<string> providerBackupPeeringLocation = default;
-            Core.Optional<PeeringLogAnalyticsWorkspaceProperties> logAnalyticsWorkspaceProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> peeringServiceLocation = default;
+            Optional<string> peeringServiceProvider = default;
+            Optional<PeeringProvisioningState> provisioningState = default;
+            Optional<string> providerPrimaryPeeringLocation = default;
+            Optional<string> providerBackupPeeringLocation = default;
+            Optional<PeeringLogAnalyticsWorkspaceProperties> logAnalyticsWorkspaceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Peering
                     continue;
                 }
             }
-            return new PeeringServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, peeringServiceLocation.Value, peeringServiceProvider.Value, Core.Optional.ToNullable(provisioningState), providerPrimaryPeeringLocation.Value, providerBackupPeeringLocation.Value, logAnalyticsWorkspaceProperties.Value);
+            return new PeeringServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, peeringServiceLocation.Value, peeringServiceProvider.Value, Optional.ToNullable(provisioningState), providerPrimaryPeeringLocation.Value, providerBackupPeeringLocation.Value, logAnalyticsWorkspaceProperties.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
         internal SiteRecoveryJobListResult()
         {
-            Value = new Core.ChangeTrackingList<SiteRecoveryJobData>();
+            Value = new ChangeTrackingList<SiteRecoveryJobData>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>

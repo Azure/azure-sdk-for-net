@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class GrpcExtension : Core.IUtf8JsonSerializable
+    public partial class GrpcExtension : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataTransfer"u8);
             writer.WriteObjectValue(DataTransfer);
-            if (Core.Optional.IsDefined(ExtensionConfiguration))
+            if (Optional.IsDefined(ExtensionConfiguration))
             {
                 writer.WritePropertyName("extensionConfiguration"u8);
                 writer.WriteStringValue(ExtensionConfiguration);
@@ -27,7 +27,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (Core.Optional.IsDefined(SamplingOptions))
+            if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -53,10 +53,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             GrpcExtensionDataTransfer dataTransfer = default;
-            Core.Optional<string> extensionConfiguration = default;
+            Optional<string> extensionConfiguration = default;
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Core.Optional<SamplingOptions> samplingOptions = default;
+            Optional<SamplingOptions> samplingOptions = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;

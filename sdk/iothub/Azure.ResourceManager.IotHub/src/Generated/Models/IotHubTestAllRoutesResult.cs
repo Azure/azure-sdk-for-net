@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>
         internal IotHubTestAllRoutesResult()
         {
-            Routes = new Core.ChangeTrackingList<IotHubMatchedRoute>();
+            Routes = new ChangeTrackingList<IotHubMatchedRoute>();
         }
 
         /// <summary> Initializes a new instance of IotHubTestAllRoutesResult. </summary>

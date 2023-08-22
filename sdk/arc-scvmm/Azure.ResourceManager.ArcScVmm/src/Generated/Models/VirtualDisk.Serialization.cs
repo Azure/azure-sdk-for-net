@@ -10,57 +10,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class VirtualDisk : Core.IUtf8JsonSerializable
+    public partial class VirtualDisk : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(DiskId))
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Core.Optional.IsDefined(DiskSizeGB))
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Core.Optional.IsDefined(Bus))
+            if (Optional.IsDefined(Bus))
             {
                 writer.WritePropertyName("bus"u8);
                 writer.WriteNumberValue(Bus.Value);
             }
-            if (Core.Optional.IsDefined(Lun))
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (Core.Optional.IsDefined(BusType))
+            if (Optional.IsDefined(BusType))
             {
                 writer.WritePropertyName("busType"u8);
                 writer.WriteStringValue(BusType);
             }
-            if (Core.Optional.IsDefined(VhdType))
+            if (Optional.IsDefined(VhdType))
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (Core.Optional.IsDefined(TemplateDiskId))
+            if (Optional.IsDefined(TemplateDiskId))
             {
                 writer.WritePropertyName("templateDiskId"u8);
                 writer.WriteStringValue(TemplateDiskId);
             }
-            if (Core.Optional.IsDefined(StorageQoSPolicy))
+            if (Optional.IsDefined(StorageQoSPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
                 writer.WriteObjectValue(StorageQoSPolicy);
             }
-            if (Core.Optional.IsDefined(CreateDiffDisk))
+            if (Optional.IsDefined(CreateDiffDisk))
             {
                 writer.WritePropertyName("createDiffDisk"u8);
                 writer.WriteStringValue(CreateDiffDisk.Value.ToString());
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> diskId = default;
-            Core.Optional<int> diskSizeGB = default;
-            Core.Optional<int> maxDiskSizeGB = default;
-            Core.Optional<int> bus = default;
-            Core.Optional<int> lun = default;
-            Core.Optional<string> busType = default;
-            Core.Optional<string> vhdType = default;
-            Core.Optional<string> volumeType = default;
-            Core.Optional<string> vhdFormatType = default;
-            Core.Optional<string> templateDiskId = default;
-            Core.Optional<StorageQoSPolicyDetails> storageQoSPolicy = default;
-            Core.Optional<CreateDiffDisk> createDiffDisk = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> diskId = default;
+            Optional<int> diskSizeGB = default;
+            Optional<int> maxDiskSizeGB = default;
+            Optional<int> bus = default;
+            Optional<int> lun = default;
+            Optional<string> busType = default;
+            Optional<string> vhdType = default;
+            Optional<string> volumeType = default;
+            Optional<string> vhdFormatType = default;
+            Optional<string> templateDiskId = default;
+            Optional<StorageQoSPolicyDetails> storageQoSPolicy = default;
+            Optional<CreateDiffDisk> createDiffDisk = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new VirtualDisk(name.Value, displayName.Value, diskId.Value, Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(maxDiskSizeGB), Core.Optional.ToNullable(bus), Core.Optional.ToNullable(lun), busType.Value, vhdType.Value, volumeType.Value, vhdFormatType.Value, templateDiskId.Value, storageQoSPolicy.Value, Core.Optional.ToNullable(createDiffDisk));
+            return new VirtualDisk(name.Value, displayName.Value, diskId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(maxDiskSizeGB), Optional.ToNullable(bus), Optional.ToNullable(lun), busType.Value, vhdType.Value, volumeType.Value, vhdFormatType.Value, templateDiskId.Value, storageQoSPolicy.Value, Optional.ToNullable(createDiffDisk));
         }
     }
 }

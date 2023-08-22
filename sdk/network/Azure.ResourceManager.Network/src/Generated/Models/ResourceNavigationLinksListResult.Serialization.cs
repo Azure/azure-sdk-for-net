@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ResourceNavigationLink>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ResourceNavigationLink>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ResourceNavigationLinksListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ResourceNavigationLinksListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

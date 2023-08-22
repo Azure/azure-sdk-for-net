@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<CognitiveServicesSkuRestrictionsType> type = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<CognitiveServicesSkuRestrictionInfo> restrictionInfo = default;
-            Core.Optional<CognitiveServicesSkuRestrictionReasonCode> reasonCode = default;
+            Optional<CognitiveServicesSkuRestrictionsType> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<CognitiveServicesSkuRestrictionInfo> restrictionInfo = default;
+            Optional<CognitiveServicesSkuRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesSkuRestrictions(Core.Optional.ToNullable(type), Core.Optional.ToList(values), restrictionInfo.Value, Core.Optional.ToNullable(reasonCode));
+            return new CognitiveServicesSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
         }
     }
 }

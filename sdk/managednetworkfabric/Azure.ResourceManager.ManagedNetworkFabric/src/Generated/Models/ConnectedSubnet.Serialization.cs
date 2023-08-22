@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ConnectedSubnet : Core.IUtf8JsonSerializable
+    public partial class ConnectedSubnet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("prefix"u8);
             writer.WriteStringValue(Prefix);
-            if (Core.Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             string prefix = default;
-            Core.Optional<string> annotation = default;
+            Optional<string> annotation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))

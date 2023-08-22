@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _mongoClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoClusterResource>(new MongoClusterOperationSource(Client), _mongoClusterClientDiagnostics, Pipeline, _mongoClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBArmOperation<MongoClusterResource>(new MongoClusterOperationSource(Client), _mongoClusterClientDiagnostics, Pipeline, _mongoClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _mongoClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoClusterResource>(new MongoClusterOperationSource(Client), _mongoClusterClientDiagnostics, Pipeline, _mongoClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CosmosDBArmOperation<MongoClusterResource>(new MongoClusterOperationSource(Client), _mongoClusterClientDiagnostics, Pipeline, _mongoClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mongoClusterName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mongoClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), _mongoClusterClientDiagnostics, Pipeline, "MongoClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), _mongoClusterClientDiagnostics, Pipeline, "MongoClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mongoClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), _mongoClusterClientDiagnostics, Pipeline, "MongoClusterCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), _mongoClusterClientDiagnostics, Pipeline, "MongoClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

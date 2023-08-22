@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>
         public SharedAccessAuthorizationRuleProperties()
         {
-            Rights = new Core.ChangeTrackingList<AuthorizationRuleAccessRight>();
+            Rights = new ChangeTrackingList<AuthorizationRuleAccessRight>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleProperties. </summary>

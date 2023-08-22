@@ -12,19 +12,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class RestHealthCheckStepAttributes : Core.IUtf8JsonSerializable
+    public partial class RestHealthCheckStepAttributes : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(HealthCheckStepAttributesType);
-            if (Core.Optional.IsDefined(WaitDuration))
+            if (Optional.IsDefined(WaitDuration))
             {
                 writer.WritePropertyName("waitDuration"u8);
                 writer.WriteStringValue(WaitDuration.Value, "P");
             }
-            if (Core.Optional.IsDefined(MaxElasticDuration))
+            if (Optional.IsDefined(MaxElasticDuration))
             {
                 writer.WritePropertyName("maxElasticDuration"u8);
                 writer.WriteStringValue(MaxElasticDuration.Value, "P");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             writer.WriteStringValue(HealthyStateDuration, "P");
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(HealthChecks))
+            if (Optional.IsCollectionDefined(HealthChecks))
             {
                 writer.WritePropertyName("healthChecks"u8);
                 writer.WriteStartArray();
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 return null;
             }
             string type = default;
-            Core.Optional<TimeSpan> waitDuration = default;
-            Core.Optional<TimeSpan> maxElasticDuration = default;
+            Optional<TimeSpan> waitDuration = default;
+            Optional<TimeSpan> maxElasticDuration = default;
             TimeSpan healthyStateDuration = default;
-            Core.Optional<IList<RestHealthCheck>> healthChecks = default;
+            Optional<IList<RestHealthCheck>> healthChecks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new RestHealthCheckStepAttributes(type, Core.Optional.ToNullable(waitDuration), Core.Optional.ToNullable(maxElasticDuration), healthyStateDuration, Core.Optional.ToList(healthChecks));
+            return new RestHealthCheckStepAttributes(type, Optional.ToNullable(waitDuration), Optional.ToNullable(maxElasticDuration), healthyStateDuration, Optional.ToList(healthChecks));
         }
     }
 }

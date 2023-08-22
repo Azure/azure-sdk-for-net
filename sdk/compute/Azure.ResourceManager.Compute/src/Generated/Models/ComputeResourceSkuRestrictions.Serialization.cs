@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<ComputeResourceSkuRestrictionsType> type = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<ComputeResourceSkuRestrictionInfo> restrictionInfo = default;
-            Core.Optional<ComputeResourceSkuRestrictionsReasonCode> reasonCode = default;
+            Optional<ComputeResourceSkuRestrictionsType> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<ComputeResourceSkuRestrictionInfo> restrictionInfo = default;
+            Optional<ComputeResourceSkuRestrictionsReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ComputeResourceSkuRestrictions(Core.Optional.ToNullable(type), Core.Optional.ToList(values), restrictionInfo.Value, Core.Optional.ToNullable(reasonCode));
+            return new ComputeResourceSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode));
         }
     }
 }

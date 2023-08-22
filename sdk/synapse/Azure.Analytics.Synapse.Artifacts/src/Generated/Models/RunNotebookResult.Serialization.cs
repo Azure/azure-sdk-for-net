@@ -21,14 +21,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> runId = default;
-            Core.Optional<string> runStatus = default;
-            Core.Optional<string> lastCheckedOn = default;
-            Core.Optional<long> sessionId = default;
-            Core.Optional<string> sparkPool = default;
-            Core.Optional<object> sessionDetail = default;
-            Core.Optional<string> exitValue = default;
-            Core.Optional<RunNotebookError> error = default;
+            Optional<string> runId = default;
+            Optional<string> runStatus = default;
+            Optional<string> lastCheckedOn = default;
+            Optional<long> sessionId = default;
+            Optional<string> sparkPool = default;
+            Optional<object> sessionDetail = default;
+            Optional<string> exitValue = default;
+            Optional<RunNotebookError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runId"u8))
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookResult(runId.Value, runStatus.Value, lastCheckedOn.Value, Core.Optional.ToNullable(sessionId), sparkPool.Value, sessionDetail.Value, exitValue.Value, error.Value);
+            return new RunNotebookResult(runId.Value, runStatus.Value, lastCheckedOn.Value, Optional.ToNullable(sessionId), sparkPool.Value, sessionDetail.Value, exitValue.Value, error.Value);
         }
 
         internal partial class RunNotebookResultConverter : JsonConverter<RunNotebookResult>

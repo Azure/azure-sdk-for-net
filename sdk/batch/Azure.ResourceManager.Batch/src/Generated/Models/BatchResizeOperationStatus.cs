@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchResizeOperationStatus. </summary>
         internal BatchResizeOperationStatus()
         {
-            Errors = new Core.ChangeTrackingList<ResponseError>();
+            Errors = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of BatchResizeOperationStatus. </summary>

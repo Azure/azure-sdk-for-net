@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetTimePeriod : Core.IUtf8JsonSerializable
+    public partial class BudgetTimePeriod : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startDate"u8);
             writer.WriteStringValue(StartOn, "O");
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             DateTimeOffset startDate = default;
-            Core.Optional<DateTimeOffset> endDate = default;
+            Optional<DateTimeOffset> endDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDate"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new BudgetTimePeriod(startDate, Core.Optional.ToNullable(endDate));
+            return new BudgetTimePeriod(startDate, Optional.ToNullable(endDate));
         }
     }
 }

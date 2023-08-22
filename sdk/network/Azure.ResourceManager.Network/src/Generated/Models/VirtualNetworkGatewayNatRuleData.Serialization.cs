@@ -13,34 +13,34 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkGatewayNatRuleData : Core.IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewayNatRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VpnNatRuleType))
+            if (Optional.IsDefined(VpnNatRuleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VpnNatRuleType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(InternalMappings))
+            if (Optional.IsCollectionDefined(InternalMappings))
             {
                 writer.WritePropertyName("internalMappings"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExternalMappings))
+            if (Optional.IsCollectionDefined(ExternalMappings))
             {
                 writer.WritePropertyName("externalMappings"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IPConfigurationId))
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipConfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<VpnNatRuleType> type0 = default;
-            Core.Optional<VpnNatRuleMode> mode = default;
-            Core.Optional<IList<VpnNatRuleMapping>> internalMappings = default;
-            Core.Optional<IList<VpnNatRuleMapping>> externalMappings = default;
-            Core.Optional<string> ipConfigurationId = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<VpnNatRuleType> type0 = default;
+            Optional<VpnNatRuleMode> mode = default;
+            Optional<IList<VpnNatRuleMapping>> internalMappings = default;
+            Optional<IList<VpnNatRuleMapping>> externalMappings = default;
+            Optional<string> ipConfigurationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayNatRuleData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(type0), Core.Optional.ToNullable(mode), Core.Optional.ToList(internalMappings), Core.Optional.ToList(externalMappings), ipConfigurationId.Value);
+            return new VirtualNetworkGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value);
         }
     }
 }

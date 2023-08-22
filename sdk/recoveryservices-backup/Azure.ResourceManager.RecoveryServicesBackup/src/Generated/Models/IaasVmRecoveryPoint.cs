@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of IaasVmRecoveryPoint. </summary>
         public IaasVmRecoveryPoint()
         {
-            RecoveryPointTierDetails = new Core.ChangeTrackingList<RecoveryPointTierInformationV2>();
-            Zones = new Core.ChangeTrackingList<string>();
-            RecoveryPointMoveReadinessInfo = new Core.ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
+            RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
+            Zones = new ChangeTrackingList<string>();
+            RecoveryPointMoveReadinessInfo = new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
             ObjectType = "IaasVMRecoveryPoint";
         }
 

@@ -11,27 +11,27 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PolicySignaturesOverridesForIdpsData : Core.IUtf8JsonSerializable
+    public partial class PolicySignaturesOverridesForIdpsData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<PolicySignaturesOverridesForIdpsProperties> properties = default;
+            Optional<string> name = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<ResourceType> type = default;
+            Optional<PolicySignaturesOverridesForIdpsProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PolicySignaturesOverridesForIdpsData(name.Value, id.Value, Core.Optional.ToNullable(type), properties.Value);
+            return new PolicySignaturesOverridesForIdpsData(name.Value, id.Value, Optional.ToNullable(type), properties.Value);
         }
     }
 }

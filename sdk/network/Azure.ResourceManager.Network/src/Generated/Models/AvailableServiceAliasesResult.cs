@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AvailableServiceAliasesResult. </summary>
         internal AvailableServiceAliasesResult()
         {
-            Value = new Core.ChangeTrackingList<AvailableServiceAlias>();
+            Value = new ChangeTrackingList<AvailableServiceAlias>();
         }
 
         /// <summary> Initializes a new instance of AvailableServiceAliasesResult. </summary>

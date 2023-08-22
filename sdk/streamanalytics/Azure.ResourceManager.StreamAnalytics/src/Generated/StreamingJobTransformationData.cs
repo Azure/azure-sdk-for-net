@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <summary> Initializes a new instance of StreamingJobTransformationData. </summary>
         public StreamingJobTransformationData()
         {
-            ValidStreamingUnits = new Core.ChangeTrackingList<int>();
+            ValidStreamingUnits = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of StreamingJobTransformationData. </summary>

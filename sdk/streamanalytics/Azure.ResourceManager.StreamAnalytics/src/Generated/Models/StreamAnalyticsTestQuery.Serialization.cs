@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsTestQuery : Core.IUtf8JsonSerializable
+    public partial class StreamAnalyticsTestQuery : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("streamingJob"u8);
             writer.WriteObjectValue(StreamingJob);
             writer.WritePropertyName("diagnostics"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WriteUri))
+            if (Optional.IsDefined(WriteUri))
             {
                 writer.WritePropertyName("writeUri"u8);
                 writer.WriteStringValue(WriteUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

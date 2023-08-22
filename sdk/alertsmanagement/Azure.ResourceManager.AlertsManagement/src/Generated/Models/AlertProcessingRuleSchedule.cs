@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>
         public AlertProcessingRuleSchedule()
         {
-            Recurrences = new Core.ChangeTrackingList<AlertProcessingRuleRecurrence>();
+            Recurrences = new ChangeTrackingList<AlertProcessingRuleRecurrence>();
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleSchedule. </summary>

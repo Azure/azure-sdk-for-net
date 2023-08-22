@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetworkFabricIPCommunityData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<NetworkFabricIPCommunityData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPCommunitiesListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new IPCommunitiesListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummarizationLROTask : Core.IUtf8JsonSerializable
+    internal partial class AbstractiveSummarizationLROTask : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
             writer.WriteObjectValue(Parameters);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(TaskName))
+            if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             AbstractiveSummarizationTaskParameters parameters = default;
             AnalyzeTextLROTaskKind kind = default;
-            Core.Optional<string> taskName = default;
+            Optional<string> taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))

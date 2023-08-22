@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of NginxDeploymentPatch. </summary>
         public NginxDeploymentPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Gets or sets the identity. </summary>

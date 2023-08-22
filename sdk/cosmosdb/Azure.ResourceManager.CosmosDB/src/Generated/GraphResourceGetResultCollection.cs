@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _graphResourceGetResultGraphResourcesRestClient.CreateUpdateGraphAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _graphResourceGetResultGraphResourcesRestClient.CreateUpdateGraph(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CosmosDBArmOperation<GraphResourceGetResultResource>(new GraphResourceGetResultOperationSource(Client), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, _graphResourceGetResultGraphResourcesRestClient.CreateCreateUpdateGraphRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, graphName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<GraphResourceGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphResourceGetResultGraphResourcesRestClient.CreateListGraphsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GraphResourceGetResultResource(Client, GraphResourceGetResultData.DeserializeGraphResourceGetResultData(e)), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, "GraphResourceGetResultCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GraphResourceGetResultResource(Client, GraphResourceGetResultData.DeserializeGraphResourceGetResultData(e)), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, "GraphResourceGetResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<GraphResourceGetResultResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _graphResourceGetResultGraphResourcesRestClient.CreateListGraphsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GraphResourceGetResultResource(Client, GraphResourceGetResultData.DeserializeGraphResourceGetResultData(e)), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, "GraphResourceGetResultCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new GraphResourceGetResultResource(Client, GraphResourceGetResultData.DeserializeGraphResourceGetResultData(e)), _graphResourceGetResultGraphResourcesClientDiagnostics, Pipeline, "GraphResourceGetResultCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

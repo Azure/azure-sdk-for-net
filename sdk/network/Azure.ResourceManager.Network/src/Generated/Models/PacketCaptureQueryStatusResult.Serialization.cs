@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> id = default;
-            Core.Optional<DateTimeOffset> captureStartTime = default;
-            Core.Optional<PcStatus> packetCaptureStatus = default;
-            Core.Optional<string> stopReason = default;
-            Core.Optional<IReadOnlyList<PcError>> packetCaptureError = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<DateTimeOffset> captureStartTime = default;
+            Optional<PcStatus> packetCaptureStatus = default;
+            Optional<string> stopReason = default;
+            Optional<IReadOnlyList<PcError>> packetCaptureError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Core.Optional.ToNullable(captureStartTime), Core.Optional.ToNullable(packetCaptureStatus), stopReason.Value, Core.Optional.ToList(packetCaptureError));
+            return new PacketCaptureQueryStatusResult(name.Value, id.Value, Optional.ToNullable(captureStartTime), Optional.ToNullable(packetCaptureStatus), stopReason.Value, Optional.ToList(packetCaptureError));
         }
     }
 }

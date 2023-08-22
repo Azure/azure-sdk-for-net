@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotCentral
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            PrivateEndpointConnections = new Core.ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of IotCentralAppData. </summary>

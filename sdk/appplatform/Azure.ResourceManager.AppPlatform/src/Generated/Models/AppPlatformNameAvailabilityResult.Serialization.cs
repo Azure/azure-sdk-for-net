@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<bool> nameAvailable = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<string> message = default;
+            Optional<bool> nameAvailable = default;
+            Optional<string> reason = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), reason.Value, message.Value);
+            return new AppPlatformNameAvailabilityResult(Optional.ToNullable(nameAvailable), reason.Value, message.Value);
         }
     }
 }

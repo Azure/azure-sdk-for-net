@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerDataEncryption : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerDataEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrimaryKeyUri))
+            if (Optional.IsDefined(PrimaryKeyUri))
             {
                 writer.WritePropertyName("primaryKeyURI"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (Core.Optional.IsDefined(GeoBackupKeyUri))
+            if (Optional.IsDefined(GeoBackupKeyUri))
             {
                 writer.WritePropertyName("geoBackupKeyURI"u8);
                 writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(GeoBackupUserAssignedIdentityId))
+            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
             {
                 writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
-            if (Core.Optional.IsDefined(KeyType))
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrimaryEncryptionKeyStatus))
+            if (Optional.IsDefined(PrimaryEncryptionKeyStatus))
             {
                 writer.WritePropertyName("primaryEncryptionKeyStatus"u8);
                 writer.WriteStringValue(PrimaryEncryptionKeyStatus.Value.ToString());
             }
-            if (Core.Optional.IsDefined(GeoBackupEncryptionKeyStatus))
+            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus))
             {
                 writer.WritePropertyName("geoBackupEncryptionKeyStatus"u8);
                 writer.WriteStringValue(GeoBackupEncryptionKeyStatus.Value.ToString());
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<Uri> primaryKeyUri = default;
-            Core.Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Core.Optional<Uri> geoBackupKeyUri = default;
-            Core.Optional<string> geoBackupUserAssignedIdentityId = default;
-            Core.Optional<PostgreSqlFlexibleServerKeyType> type = default;
-            Core.Optional<PostgreSqlKeyStatus> primaryEncryptionKeyStatus = default;
-            Core.Optional<PostgreSqlKeyStatus> geoBackupEncryptionKeyStatus = default;
+            Optional<Uri> primaryKeyUri = default;
+            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
+            Optional<Uri> geoBackupKeyUri = default;
+            Optional<string> geoBackupUserAssignedIdentityId = default;
+            Optional<PostgreSqlFlexibleServerKeyType> type = default;
+            Optional<PostgreSqlKeyStatus> primaryEncryptionKeyStatus = default;
+            Optional<PostgreSqlKeyStatus> geoBackupEncryptionKeyStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKeyURI"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerDataEncryption(primaryKeyUri.Value, primaryUserAssignedIdentityId.Value, geoBackupKeyUri.Value, geoBackupUserAssignedIdentityId.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(primaryEncryptionKeyStatus), Core.Optional.ToNullable(geoBackupEncryptionKeyStatus));
+            return new PostgreSqlFlexibleServerDataEncryption(primaryKeyUri.Value, primaryUserAssignedIdentityId.Value, geoBackupKeyUri.Value, geoBackupUserAssignedIdentityId.Value, Optional.ToNullable(type), Optional.ToNullable(primaryEncryptionKeyStatus), Optional.ToNullable(geoBackupEncryptionKeyStatus));
         }
     }
 }

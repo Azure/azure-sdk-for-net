@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteMapRule : Core.IUtf8JsonSerializable
+    public partial class RouteMapRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(MatchCriteria))
+            if (Optional.IsCollectionDefined(MatchCriteria))
             {
                 writer.WritePropertyName("matchCriteria"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Actions))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NextStepIfMatched))
+            if (Optional.IsDefined(NextStepIfMatched))
             {
                 writer.WritePropertyName("nextStepIfMatched"u8);
                 writer.WriteStringValue(NextStepIfMatched.Value.ToString());
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IList<RouteCriterion>> matchCriteria = default;
-            Core.Optional<IList<RouteMapAction>> actions = default;
-            Core.Optional<RouteMapNextStepBehavior> nextStepIfMatched = default;
+            Optional<string> name = default;
+            Optional<IList<RouteCriterion>> matchCriteria = default;
+            Optional<IList<RouteMapAction>> actions = default;
+            Optional<RouteMapNextStepBehavior> nextStepIfMatched = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new RouteMapRule(name.Value, Core.Optional.ToList(matchCriteria), Core.Optional.ToList(actions), Core.Optional.ToNullable(nextStepIfMatched));
+            return new RouteMapRule(name.Value, Optional.ToList(matchCriteria), Optional.ToList(actions), Optional.ToNullable(nextStepIfMatched));
         }
     }
 }

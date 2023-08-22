@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmGeoReplicatedRegion : Core.IUtf8JsonSerializable
+    public partial class ManagedHsmGeoReplicatedRegion : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(IsPrimary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ManagedHsmGeoReplicatedRegionProvisioningState> provisioningState = default;
-            Core.Optional<bool> isPrimary = default;
+            Optional<string> name = default;
+            Optional<ManagedHsmGeoReplicatedRegionProvisioningState> provisioningState = default;
+            Optional<bool> isPrimary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmGeoReplicatedRegion(name.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(isPrimary));
+            return new ManagedHsmGeoReplicatedRegion(name.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isPrimary));
         }
     }
 }

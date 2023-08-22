@@ -12,29 +12,29 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCircuitAuthorizationData : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteCircuitAuthorizationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AuthorizationKey))
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (Core.Optional.IsDefined(AuthorizationUseStatus))
+            if (Optional.IsDefined(AuthorizationUseStatus))
             {
                 writer.WritePropertyName("authorizationUseStatus"u8);
                 writer.WriteStringValue(AuthorizationUseStatus.Value.ToString());
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> authorizationKey = default;
-            Core.Optional<AuthorizationUseStatus> authorizationUseStatus = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> authorizationKey = default;
+            Optional<AuthorizationUseStatus> authorizationUseStatus = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCircuitAuthorizationData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), authorizationKey.Value, Core.Optional.ToNullable(authorizationUseStatus), Core.Optional.ToNullable(provisioningState));
+            return new ExpressRouteCircuitAuthorizationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), Optional.ToNullable(provisioningState));
         }
     }
 }

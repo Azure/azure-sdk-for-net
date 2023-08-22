@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <summary> Initializes a new instance of ControllerConnectionDetailsList. </summary>
         internal ControllerConnectionDetailsList()
         {
-            ConnectionDetailsList = new Core.ChangeTrackingList<ControllerConnectionDetails>();
+            ConnectionDetailsList = new ChangeTrackingList<ControllerConnectionDetails>();
         }
 
         /// <summary> Initializes a new instance of ControllerConnectionDetailsList. </summary>

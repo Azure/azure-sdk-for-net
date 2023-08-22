@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaTransformData : Core.IUtf8JsonSerializable
+    public partial class MediaTransformData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Outputs))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<IList<MediaTransformOutput>> outputs = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<string> description = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<IList<MediaTransformOutput>> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new MediaTransformData(id, name, type, systemData.Value, Core.Optional.ToNullable(created), description.Value, Core.Optional.ToNullable(lastModified), Core.Optional.ToList(outputs));
+            return new MediaTransformData(id, name, type, systemData.Value, Optional.ToNullable(created), description.Value, Optional.ToNullable(lastModified), Optional.ToList(outputs));
         }
     }
 }

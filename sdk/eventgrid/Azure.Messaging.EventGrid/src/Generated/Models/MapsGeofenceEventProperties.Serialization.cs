@@ -19,10 +19,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> expiredGeofenceGeometryId = default;
-            Core.Optional<IReadOnlyList<MapsGeofenceGeometry>> geometries = default;
-            Core.Optional<IReadOnlyList<string>> invalidPeriodGeofenceGeometryId = default;
-            Core.Optional<bool> isEventPublished = default;
+            Optional<IReadOnlyList<string>> expiredGeofenceGeometryId = default;
+            Optional<IReadOnlyList<MapsGeofenceGeometry>> geometries = default;
+            Optional<IReadOnlyList<string>> invalidPeriodGeofenceGeometryId = default;
+            Optional<bool> isEventPublished = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiredGeofenceGeometryId"u8))
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MapsGeofenceEventProperties(Core.Optional.ToList(expiredGeofenceGeometryId), Core.Optional.ToList(geometries), Core.Optional.ToList(invalidPeriodGeofenceGeometryId), Core.Optional.ToNullable(isEventPublished));
+            return new MapsGeofenceEventProperties(Optional.ToList(expiredGeofenceGeometryId), Optional.ToList(geometries), Optional.ToList(invalidPeriodGeofenceGeometryId), Optional.ToNullable(isEventPublished));
         }
     }
 }

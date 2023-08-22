@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryApplicationPatch. </summary>
         public GalleryApplicationPatch()
         {
-            CustomActions = new Core.ChangeTrackingList<GalleryApplicationCustomAction>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> The description of this gallery Application Definition resource. This property is updatable. </summary>

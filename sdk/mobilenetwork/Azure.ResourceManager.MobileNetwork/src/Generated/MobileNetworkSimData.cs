@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             Argument.AssertNotNull(internationalMobileSubscriberIdentity, nameof(internationalMobileSubscriberIdentity));
 
-            SiteProvisioningState = new Core.ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
+            SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
             InternationalMobileSubscriberIdentity = internationalMobileSubscriberIdentity;
-            StaticIPConfiguration = new Core.ChangeTrackingList<SimStaticIPProperties>();
+            StaticIPConfiguration = new ChangeTrackingList<SimStaticIPProperties>();
         }
 
         /// <summary> Initializes a new instance of MobileNetworkSimData. </summary>

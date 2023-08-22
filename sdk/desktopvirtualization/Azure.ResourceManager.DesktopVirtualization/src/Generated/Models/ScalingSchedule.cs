@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Initializes a new instance of ScalingSchedule. </summary>
         public ScalingSchedule()
         {
-            DaysOfWeek = new Core.ChangeTrackingList<ScalingScheduleDaysOfWeekItem>();
+            DaysOfWeek = new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>();
         }
 
         /// <summary> Initializes a new instance of ScalingSchedule. </summary>

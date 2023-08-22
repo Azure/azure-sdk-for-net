@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class DataLakeGen2SharedKeyCredentialPatch : Core.IUtf8JsonSerializable
+    internal partial class DataLakeGen2SharedKeyCredentialPatch : IUtf8JsonSerializable
     {
     }
 }

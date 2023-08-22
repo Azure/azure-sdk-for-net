@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerSecurityContextDefinition : Core.IUtf8JsonSerializable
+    public partial class ContainerSecurityContextDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsPrivileged))
+            if (Optional.IsDefined(IsPrivileged))
             {
                 writer.WritePropertyName("privileged"u8);
                 writer.WriteBooleanValue(IsPrivileged.Value);
             }
-            if (Core.Optional.IsDefined(AllowPrivilegeEscalation))
+            if (Optional.IsDefined(AllowPrivilegeEscalation))
             {
                 writer.WritePropertyName("allowPrivilegeEscalation"u8);
                 writer.WriteBooleanValue(AllowPrivilegeEscalation.Value);
             }
-            if (Core.Optional.IsDefined(Capabilities))
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
-            if (Core.Optional.IsDefined(RunAsGroup))
+            if (Optional.IsDefined(RunAsGroup))
             {
                 writer.WritePropertyName("runAsGroup"u8);
                 writer.WriteNumberValue(RunAsGroup.Value);
             }
-            if (Core.Optional.IsDefined(RunAsUser))
+            if (Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteNumberValue(RunAsUser.Value);
             }
-            if (Core.Optional.IsDefined(SeccompProfile))
+            if (Optional.IsDefined(SeccompProfile))
             {
                 writer.WritePropertyName("seccompProfile"u8);
                 writer.WriteStringValue(SeccompProfile);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<bool> privileged = default;
-            Core.Optional<bool> allowPrivilegeEscalation = default;
-            Core.Optional<ContainerSecurityContextCapabilitiesDefinition> capabilities = default;
-            Core.Optional<int> runAsGroup = default;
-            Core.Optional<int> runAsUser = default;
-            Core.Optional<string> seccompProfile = default;
+            Optional<bool> privileged = default;
+            Optional<bool> allowPrivilegeEscalation = default;
+            Optional<ContainerSecurityContextCapabilitiesDefinition> capabilities = default;
+            Optional<int> runAsGroup = default;
+            Optional<int> runAsUser = default;
+            Optional<string> seccompProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privileged"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerSecurityContextDefinition(Core.Optional.ToNullable(privileged), Core.Optional.ToNullable(allowPrivilegeEscalation), capabilities.Value, Core.Optional.ToNullable(runAsGroup), Core.Optional.ToNullable(runAsUser), seccompProfile.Value);
+            return new ContainerSecurityContextDefinition(Optional.ToNullable(privileged), Optional.ToNullable(allowPrivilegeEscalation), capabilities.Value, Optional.ToNullable(runAsGroup), Optional.ToNullable(runAsUser), seccompProfile.Value);
         }
     }
 }

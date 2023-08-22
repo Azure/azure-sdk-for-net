@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IdentityBasedRestoreDetails : Core.IUtf8JsonSerializable
+    public partial class IdentityBasedRestoreDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ObjectType))
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (Core.Optional.IsDefined(TargetStorageAccountId))
+            if (Optional.IsDefined(TargetStorageAccountId))
             {
                 writer.WritePropertyName("targetStorageAccountId"u8);
                 writer.WriteStringValue(TargetStorageAccountId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> objectType = default;
-            Core.Optional<ResourceIdentifier> targetStorageAccountId = default;
+            Optional<string> objectType = default;
+            Optional<ResourceIdentifier> targetStorageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectType"u8))

@@ -11,32 +11,32 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SharedPrivateLinkResourceProperties : Core.IUtf8JsonSerializable
+    public partial class SharedPrivateLinkResourceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateLink))
+            if (Optional.IsDefined(PrivateLink))
             {
                 writer.WritePropertyName("privateLink"u8);
                 JsonSerializer.Serialize(writer, PrivateLink);
             }
-            if (Core.Optional.IsDefined(PrivateLinkLocation))
+            if (Optional.IsDefined(PrivateLinkLocation))
             {
                 writer.WritePropertyName("privateLinkLocation"u8);
                 writer.WriteStringValue(PrivateLinkLocation);
             }
-            if (Core.Optional.IsDefined(GroupId))
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (Core.Optional.IsDefined(RequestMessage))
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> privateLink = default;
-            Core.Optional<string> privateLinkLocation = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> requestMessage = default;
-            Core.Optional<SharedPrivateLinkResourceStatus> status = default;
+            Optional<WritableSubResource> privateLink = default;
+            Optional<string> privateLinkLocation = default;
+            Optional<string> groupId = default;
+            Optional<string> requestMessage = default;
+            Optional<SharedPrivateLinkResourceStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateLink"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SharedPrivateLinkResourceProperties(privateLink, privateLinkLocation.Value, groupId.Value, requestMessage.Value, Core.Optional.ToNullable(status));
+            return new SharedPrivateLinkResourceProperties(privateLink, privateLinkLocation.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(status));
         }
     }
 }

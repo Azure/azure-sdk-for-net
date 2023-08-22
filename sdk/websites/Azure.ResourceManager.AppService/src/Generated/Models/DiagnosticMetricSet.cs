@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>
         public DiagnosticMetricSet()
         {
-            Values = new Core.ChangeTrackingList<DiagnosticMetricSample>();
+            Values = new ChangeTrackingList<DiagnosticMetricSample>();
         }
 
         /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>

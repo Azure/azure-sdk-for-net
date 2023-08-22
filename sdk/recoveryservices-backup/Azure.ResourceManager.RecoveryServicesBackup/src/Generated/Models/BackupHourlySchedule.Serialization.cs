@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupHourlySchedule : Core.IUtf8JsonSerializable
+    public partial class BackupHourlySchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Interval))
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Core.Optional.IsDefined(ScheduleWindowStartOn))
+            if (Optional.IsDefined(ScheduleWindowStartOn))
             {
                 writer.WritePropertyName("scheduleWindowStartTime"u8);
                 writer.WriteStringValue(ScheduleWindowStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ScheduleWindowDuration))
+            if (Optional.IsDefined(ScheduleWindowDuration))
             {
                 writer.WritePropertyName("scheduleWindowDuration"u8);
                 writer.WriteNumberValue(ScheduleWindowDuration.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<int> interval = default;
-            Core.Optional<DateTimeOffset> scheduleWindowStartTime = default;
-            Core.Optional<int> scheduleWindowDuration = default;
+            Optional<int> interval = default;
+            Optional<DateTimeOffset> scheduleWindowStartTime = default;
+            Optional<int> scheduleWindowDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupHourlySchedule(Core.Optional.ToNullable(interval), Core.Optional.ToNullable(scheduleWindowStartTime), Core.Optional.ToNullable(scheduleWindowDuration));
+            return new BackupHourlySchedule(Optional.ToNullable(interval), Optional.ToNullable(scheduleWindowStartTime), Optional.ToNullable(scheduleWindowDuration));
         }
     }
 }

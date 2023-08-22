@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <summary> Initializes a new instance of DedicatedCapacityAdministrators. </summary>
         public DedicatedCapacityAdministrators()
         {
-            Members = new Core.ChangeTrackingList<string>();
+            Members = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DedicatedCapacityAdministrators. </summary>

@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeNode : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeNode : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DataBoxEdgeNodeStatus> nodeStatus = default;
-            Core.Optional<string> nodeChassisSerialNumber = default;
-            Core.Optional<string> nodeSerialNumber = default;
-            Core.Optional<string> nodeDisplayName = default;
-            Core.Optional<string> nodeFriendlySoftwareVersion = default;
-            Core.Optional<string> nodeHcsVersion = default;
-            Core.Optional<Guid> nodeInstanceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<DataBoxEdgeNodeStatus> nodeStatus = default;
+            Optional<string> nodeChassisSerialNumber = default;
+            Optional<string> nodeSerialNumber = default;
+            Optional<string> nodeDisplayName = default;
+            Optional<string> nodeFriendlySoftwareVersion = default;
+            Optional<string> nodeHcsVersion = default;
+            Optional<Guid> nodeInstanceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeNode(id, name, type, systemData.Value, Core.Optional.ToNullable(nodeStatus), nodeChassisSerialNumber.Value, nodeSerialNumber.Value, nodeDisplayName.Value, nodeFriendlySoftwareVersion.Value, nodeHcsVersion.Value, Core.Optional.ToNullable(nodeInstanceId));
+            return new DataBoxEdgeNode(id, name, type, systemData.Value, Optional.ToNullable(nodeStatus), nodeChassisSerialNumber.Value, nodeSerialNumber.Value, nodeDisplayName.Value, nodeFriendlySoftwareVersion.Value, nodeHcsVersion.Value, Optional.ToNullable(nodeInstanceId));
         }
     }
 }

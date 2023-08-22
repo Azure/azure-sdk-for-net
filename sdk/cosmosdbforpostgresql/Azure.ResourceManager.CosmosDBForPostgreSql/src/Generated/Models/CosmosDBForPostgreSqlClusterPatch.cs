@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterPatch. </summary>
         public CosmosDBForPostgreSqlClusterPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>

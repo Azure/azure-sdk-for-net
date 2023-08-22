@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyFilterRuleCollectionInfo. </summary>
         public FirewallPolicyFilterRuleCollectionInfo()
         {
-            Rules = new Core.ChangeTrackingList<FirewallPolicyRule>();
+            Rules = new ChangeTrackingList<FirewallPolicyRule>();
             RuleCollectionType = FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection;
         }
 

@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class EventHubsApplicationGroupData : Core.IUtf8JsonSerializable
+    public partial class EventHubsApplicationGroupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(ClientAppGroupIdentifier))
+            if (Optional.IsDefined(ClientAppGroupIdentifier))
             {
                 writer.WritePropertyName("clientAppGroupIdentifier"u8);
                 writer.WriteStringValue(ClientAppGroupIdentifier);
             }
-            if (Core.Optional.IsCollectionDefined(Policies))
+            if (Optional.IsCollectionDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStartArray();
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<string> clientAppGroupIdentifier = default;
-            Core.Optional<IList<EventHubsApplicationGroupPolicy>> policies = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> isEnabled = default;
+            Optional<string> clientAppGroupIdentifier = default;
+            Optional<IList<EventHubsApplicationGroupPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new EventHubsApplicationGroupData(id, name, type, systemData.Value, Core.Optional.ToNullable(isEnabled), clientAppGroupIdentifier.Value, Core.Optional.ToList(policies), Core.Optional.ToNullable(location));
+            return new EventHubsApplicationGroupData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), clientAppGroupIdentifier.Value, Optional.ToList(policies), Optional.ToNullable(location));
         }
     }
 }

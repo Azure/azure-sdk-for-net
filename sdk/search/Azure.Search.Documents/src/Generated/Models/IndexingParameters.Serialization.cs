@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class IndexingParameters : Core.IUtf8JsonSerializable
+    public partial class IndexingParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BatchSize))
+            if (Optional.IsDefined(BatchSize))
             {
                 if (BatchSize != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("batchSize");
                 }
             }
-            if (Core.Optional.IsDefined(MaxFailedItems))
+            if (Optional.IsDefined(MaxFailedItems))
             {
                 if (MaxFailedItems != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItems");
                 }
             }
-            if (Core.Optional.IsDefined(MaxFailedItemsPerBatch))
+            if (Optional.IsDefined(MaxFailedItemsPerBatch))
             {
                 if (MaxFailedItemsPerBatch != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItemsPerBatch");
                 }
             }
-            if (Core.Optional.IsDefined(IndexingParametersConfiguration))
+            if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(IndexingParametersConfiguration);
@@ -65,10 +65,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<int?> batchSize = default;
-            Core.Optional<int?> maxFailedItems = default;
-            Core.Optional<int?> maxFailedItemsPerBatch = default;
-            Core.Optional<IndexingParametersConfiguration> configuration = default;
+            Optional<int?> batchSize = default;
+            Optional<int?> maxFailedItems = default;
+            Optional<int?> maxFailedItemsPerBatch = default;
+            Optional<IndexingParametersConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"u8))
@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexingParameters(Core.Optional.ToNullable(batchSize), Core.Optional.ToNullable(maxFailedItems), Core.Optional.ToNullable(maxFailedItemsPerBatch), configuration.Value);
+            return new IndexingParameters(Optional.ToNullable(batchSize), Optional.ToNullable(maxFailedItems), Optional.ToNullable(maxFailedItemsPerBatch), configuration.Value);
         }
     }
 }

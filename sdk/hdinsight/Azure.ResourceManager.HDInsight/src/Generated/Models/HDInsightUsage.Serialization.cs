@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> unit = default;
-            Core.Optional<long> currentValue = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<HDInsightLocalizedName> name = default;
+            Optional<string> unit = default;
+            Optional<long> currentValue = default;
+            Optional<long> limit = default;
+            Optional<HDInsightLocalizedName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightUsage(unit.Value, Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value);
+            return new HDInsightUsage(unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

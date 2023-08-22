@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud : Core.IUtf8JsonSerializable
+    internal partial class VirtualNetworksPropertiesInfraVnetProfileNetworkCloud : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetworkId))
+            if (Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> networkId = default;
+            Optional<string> networkId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkId"u8))

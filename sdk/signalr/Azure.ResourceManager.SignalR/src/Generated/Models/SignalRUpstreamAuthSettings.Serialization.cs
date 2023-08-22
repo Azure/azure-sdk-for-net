@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRUpstreamAuthSettings : Core.IUtf8JsonSerializable
+    public partial class SignalRUpstreamAuthSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AuthType))
+            if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ManagedIdentity))
+            if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Core.Optional<SignalRUpstreamAuthType> type = default;
-            Core.Optional<ManagedIdentitySettings> managedIdentity = default;
+            Optional<SignalRUpstreamAuthType> type = default;
+            Optional<ManagedIdentitySettings> managedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     continue;
                 }
             }
-            return new SignalRUpstreamAuthSettings(Core.Optional.ToNullable(type), managedIdentity.Value);
+            return new SignalRUpstreamAuthSettings(Optional.ToNullable(type), managedIdentity.Value);
         }
     }
 }

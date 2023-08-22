@@ -13,17 +13,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SkipErrorFileConverter))]
-    public partial class SkipErrorFile : Core.IUtf8JsonSerializable
+    public partial class SkipErrorFile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FileMissing))
+            if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
                 writer.WriteObjectValue(FileMissing);
             }
-            if (Core.Optional.IsDefined(DataInconsistency))
+            if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
                 writer.WriteObjectValue(DataInconsistency);
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> fileMissing = default;
-            Core.Optional<object> dataInconsistency = default;
+            Optional<object> fileMissing = default;
+            Optional<object> dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"u8))

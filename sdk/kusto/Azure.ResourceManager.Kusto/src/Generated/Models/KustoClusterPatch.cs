@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> The location. </param>
         public KustoClusterPatch(AzureLocation location) : base(location)
         {
-            TrustedExternalTenants = new Core.ChangeTrackingList<KustoClusterTrustedExternalTenant>();
-            AllowedIPRangeList = new Core.ChangeTrackingList<string>();
-            AcceptedAudiences = new Core.ChangeTrackingList<AcceptedAudience>();
-            AllowedFqdnList = new Core.ChangeTrackingList<string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<KustoPrivateEndpointConnectionData>();
+            TrustedExternalTenants = new ChangeTrackingList<KustoClusterTrustedExternalTenant>();
+            AllowedIPRangeList = new ChangeTrackingList<string>();
+            AcceptedAudiences = new ChangeTrackingList<AcceptedAudience>();
+            AllowedFqdnList = new ChangeTrackingList<string>();
+            PrivateEndpointConnections = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of KustoClusterPatch. </summary>

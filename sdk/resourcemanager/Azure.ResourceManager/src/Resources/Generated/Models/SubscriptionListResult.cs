@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            Value = new Core.ChangeTrackingList<SubscriptionData>();
+            Value = new ChangeTrackingList<SubscriptionData>();
             NextLink = nextLink;
         }
 

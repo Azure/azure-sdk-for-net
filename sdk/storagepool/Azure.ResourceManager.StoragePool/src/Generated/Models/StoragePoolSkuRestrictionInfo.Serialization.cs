@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locations"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new StoragePoolSkuRestrictionInfo(Core.Optional.ToList(locations), Core.Optional.ToList(zones));
+            return new StoragePoolSkuRestrictionInfo(Optional.ToList(locations), Optional.ToList(zones));
         }
     }
 }

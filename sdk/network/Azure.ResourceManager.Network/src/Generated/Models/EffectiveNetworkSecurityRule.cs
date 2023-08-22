@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityRule. </summary>
         internal EffectiveNetworkSecurityRule()
         {
-            SourcePortRanges = new Core.ChangeTrackingList<string>();
-            DestinationPortRanges = new Core.ChangeTrackingList<string>();
-            SourceAddressPrefixes = new Core.ChangeTrackingList<string>();
-            DestinationAddressPrefixes = new Core.ChangeTrackingList<string>();
-            ExpandedSourceAddressPrefix = new Core.ChangeTrackingList<string>();
-            ExpandedDestinationAddressPrefix = new Core.ChangeTrackingList<string>();
+            SourcePortRanges = new ChangeTrackingList<string>();
+            DestinationPortRanges = new ChangeTrackingList<string>();
+            SourceAddressPrefixes = new ChangeTrackingList<string>();
+            DestinationAddressPrefixes = new ChangeTrackingList<string>();
+            ExpandedSourceAddressPrefix = new ChangeTrackingList<string>();
+            ExpandedDestinationAddressPrefix = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityRule. </summary>

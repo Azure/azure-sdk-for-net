@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             string priority = default;
-            Core.Optional<string> ruleStackName = default;
-            Core.Optional<string> ruleListName = default;
-            Core.Optional<string> firewallName = default;
+            Optional<string> ruleStackName = default;
+            Optional<string> ruleListName = default;
+            Optional<string> firewallName = default;
             string ruleName = default;
-            Core.Optional<int> hitCount = default;
-            Core.Optional<AppSeenInfoList> appSeen = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<DateTimeOffset> requestTimestamp = default;
-            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Optional<int> hitCount = default;
+            Optional<AppSeenInfoList> appSeen = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<DateTimeOffset> requestTimestamp = default;
+            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Core.Optional.ToNullable(hitCount), appSeen.Value, Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(requestTimestamp), Core.Optional.ToNullable(lastUpdatedTimestamp));
+            return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Optional.ToNullable(hitCount), appSeen.Value, Optional.ToNullable(timestamp), Optional.ToNullable(requestTimestamp), Optional.ToNullable(lastUpdatedTimestamp));
         }
     }
 }

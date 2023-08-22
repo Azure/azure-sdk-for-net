@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceId = default;
-            Core.Optional<ResourceStatus> resourceStatus = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<string> statusChangeDate = default;
+            Optional<string> resourceId = default;
+            Optional<ResourceStatus> resourceStatus = default;
+            Optional<string> reason = default;
+            Optional<string> statusChangeDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new AssessmentResource(resourceId.Value, Core.Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value);
+            return new AssessmentResource(resourceId.Value, Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value);
         }
     }
 }

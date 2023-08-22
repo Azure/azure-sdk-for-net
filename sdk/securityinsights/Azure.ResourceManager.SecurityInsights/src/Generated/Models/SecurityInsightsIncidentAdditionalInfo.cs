@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>
         internal SecurityInsightsIncidentAdditionalInfo()
         {
-            AlertProductNames = new Core.ChangeTrackingList<string>();
-            Tactics = new Core.ChangeTrackingList<SecurityInsightsAttackTactic>();
+            AlertProductNames = new ChangeTrackingList<string>();
+            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsIncidentAdditionalInfo. </summary>

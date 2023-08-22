@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class CommunicationDomainResourceData : Core.IUtf8JsonSerializable
+    public partial class CommunicationDomainResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Communication
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DomainManagement))
+            if (Optional.IsDefined(DomainManagement))
             {
                 writer.WritePropertyName("domainManagement"u8);
                 writer.WriteStringValue(DomainManagement.Value.ToString());
             }
-            if (Core.Optional.IsDefined(UserEngagementTracking))
+            if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
                 writer.WriteStringValue(UserEngagementTracking.Value.ToString());
@@ -53,20 +53,20 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DomainProvisioningState> provisioningState = default;
-            Core.Optional<string> dataLocation = default;
-            Core.Optional<string> fromSenderDomain = default;
-            Core.Optional<string> mailFromSenderDomain = default;
-            Core.Optional<DomainManagement> domainManagement = default;
-            Core.Optional<DomainPropertiesVerificationStates> verificationStates = default;
-            Core.Optional<DomainPropertiesVerificationRecords> verificationRecords = default;
-            Core.Optional<UserEngagementTracking> userEngagementTracking = default;
+            Optional<SystemData> systemData = default;
+            Optional<DomainProvisioningState> provisioningState = default;
+            Optional<string> dataLocation = default;
+            Optional<string> fromSenderDomain = default;
+            Optional<string> mailFromSenderDomain = default;
+            Optional<DomainManagement> domainManagement = default;
+            Optional<DomainPropertiesVerificationStates> verificationStates = default;
+            Optional<DomainPropertiesVerificationRecords> verificationRecords = default;
+            Optional<UserEngagementTracking> userEngagementTracking = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Core.Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Core.Optional.ToNullable(userEngagementTracking));
+            return new CommunicationDomainResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToNullable(userEngagementTracking));
         }
     }
 }

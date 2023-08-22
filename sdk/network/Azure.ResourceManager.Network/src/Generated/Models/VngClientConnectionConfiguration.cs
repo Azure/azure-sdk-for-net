@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VngClientConnectionConfiguration. </summary>
         public VngClientConnectionConfiguration()
         {
-            VirtualNetworkGatewayPolicyGroups = new Core.ChangeTrackingList<WritableSubResource>();
+            VirtualNetworkGatewayPolicyGroups = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VngClientConnectionConfiguration. </summary>

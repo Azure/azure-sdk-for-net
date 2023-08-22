@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallNetworkProfile : Core.IUtf8JsonSerializable
+    public partial class FirewallNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VnetConfiguration))
+            if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
                 writer.WriteObjectValue(VnetConfiguration);
             }
-            if (Core.Optional.IsDefined(VwanConfiguration))
+            if (Optional.IsDefined(VwanConfiguration))
             {
                 writer.WritePropertyName("vwanConfiguration"u8);
                 writer.WriteObjectValue(VwanConfiguration);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
             writer.WriteStringValue(EnableEgressNat.ToString());
-            if (Core.Optional.IsCollectionDefined(EgressNatIP))
+            if (Optional.IsCollectionDefined(EgressNatIP))
             {
                 writer.WritePropertyName("egressNatIp"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Core.Optional<FirewallVnetConfiguration> vnetConfiguration = default;
-            Core.Optional<FirewallVwanConfiguration> vwanConfiguration = default;
+            Optional<FirewallVnetConfiguration> vnetConfiguration = default;
+            Optional<FirewallVwanConfiguration> vwanConfiguration = default;
             FirewallNetworkType networkType = default;
             IList<IPAddressInfo> publicIPs = default;
             AllowEgressNatType enableEgressNat = default;
-            Core.Optional<IList<IPAddressInfo>> egressNatIP = default;
+            Optional<IList<IPAddressInfo>> egressNatIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vnetConfiguration"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Core.Optional.ToList(egressNatIP));
+            return new FirewallNetworkProfile(vnetConfiguration.Value, vwanConfiguration.Value, networkType, publicIPs, enableEgressNat, Optional.ToList(egressNatIP));
         }
     }
 }

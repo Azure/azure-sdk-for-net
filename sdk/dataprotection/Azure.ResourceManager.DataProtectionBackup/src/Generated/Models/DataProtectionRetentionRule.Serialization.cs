@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionRetentionRule : Core.IUtf8JsonSerializable
+    public partial class DataProtectionRetentionRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsDefault))
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<bool> isDefault = default;
+            Optional<bool> isDefault = default;
             IList<SourceLifeCycle> lifecycles = default;
             string name = default;
             string objectType = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionRetentionRule(name, objectType, Core.Optional.ToNullable(isDefault), lifecycles);
+            return new DataProtectionRetentionRule(name, objectType, Optional.ToNullable(isDefault), lifecycles);
         }
     }
 }

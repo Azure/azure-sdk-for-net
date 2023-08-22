@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageCustomDomain : Core.IUtf8JsonSerializable
+    public partial class StorageCustomDomain : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(IsUseSubDomainNameEnabled))
+            if (Optional.IsDefined(IsUseSubDomainNameEnabled))
             {
                 writer.WritePropertyName("useSubDomainName"u8);
                 writer.WriteBooleanValue(IsUseSubDomainNameEnabled.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string name = default;
-            Core.Optional<bool> useSubDomainName = default;
+            Optional<bool> useSubDomainName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageCustomDomain(name, Core.Optional.ToNullable(useSubDomainName));
+            return new StorageCustomDomain(name, Optional.ToNullable(useSubDomainName));
         }
     }
 }

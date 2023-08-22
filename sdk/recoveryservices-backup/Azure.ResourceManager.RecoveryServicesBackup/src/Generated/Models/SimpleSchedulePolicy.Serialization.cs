@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SimpleSchedulePolicy : Core.IUtf8JsonSerializable
+    public partial class SimpleSchedulePolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScheduleRunFrequency))
+            if (Optional.IsDefined(ScheduleRunFrequency))
             {
                 writer.WritePropertyName("scheduleRunFrequency"u8);
                 writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ScheduleRunDays))
+            if (Optional.IsCollectionDefined(ScheduleRunDays))
             {
                 writer.WritePropertyName("scheduleRunDays"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ScheduleRunTimes))
+            if (Optional.IsCollectionDefined(ScheduleRunTimes))
             {
                 writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(HourlySchedule))
+            if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
                 writer.WriteObjectValue(HourlySchedule);
             }
-            if (Core.Optional.IsDefined(ScheduleWeeklyFrequency))
+            if (Optional.IsDefined(ScheduleWeeklyFrequency))
             {
                 writer.WritePropertyName("scheduleWeeklyFrequency"u8);
                 writer.WriteNumberValue(ScheduleWeeklyFrequency.Value);
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<ScheduleRunType> scheduleRunFrequency = default;
-            Core.Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
-            Core.Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
-            Core.Optional<BackupHourlySchedule> hourlySchedule = default;
-            Core.Optional<int> scheduleWeeklyFrequency = default;
+            Optional<ScheduleRunType> scheduleRunFrequency = default;
+            Optional<IList<BackupDayOfWeek>> scheduleRunDays = default;
+            Optional<IList<DateTimeOffset>> scheduleRunTimes = default;
+            Optional<BackupHourlySchedule> hourlySchedule = default;
+            Optional<int> scheduleWeeklyFrequency = default;
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new SimpleSchedulePolicy(schedulePolicyType, Core.Optional.ToNullable(scheduleRunFrequency), Core.Optional.ToList(scheduleRunDays), Core.Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Core.Optional.ToNullable(scheduleWeeklyFrequency));
+            return new SimpleSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleRunFrequency), Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ReplicationEligibilityResultData>> value = default;
+            Optional<IReadOnlyList<ReplicationEligibilityResultData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ReplicationEligibilityResultListResult(Core.Optional.ToList(value));
+            return new ReplicationEligibilityResultListResult(Optional.ToList(value));
         }
     }
 }

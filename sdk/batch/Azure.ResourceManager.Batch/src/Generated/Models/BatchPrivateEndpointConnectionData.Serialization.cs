@@ -15,14 +15,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class BatchPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<BatchPrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<IReadOnlyList<string>> groupIds = default;
-            Core.Optional<BatchPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<SystemData> systemData = default;
+            Optional<BatchPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
+            Optional<BatchPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchPrivateEndpointConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), privateEndpoint, Core.Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(etag));
+            return new BatchPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(etag));
         }
     }
 }

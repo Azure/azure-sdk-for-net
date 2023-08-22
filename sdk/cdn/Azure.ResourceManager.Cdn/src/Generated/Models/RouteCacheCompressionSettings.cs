@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of RouteCacheCompressionSettings. </summary>
         public RouteCacheCompressionSettings()
         {
-            ContentTypesToCompress = new Core.ChangeTrackingList<string>();
+            ContentTypesToCompress = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RouteCacheCompressionSettings. </summary>

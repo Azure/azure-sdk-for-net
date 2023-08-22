@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<HybridContainerServiceVirtualNetworkData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<HybridContainerServiceVirtualNetworkData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new VirtualNetworksListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new VirtualNetworksListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

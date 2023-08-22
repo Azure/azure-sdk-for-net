@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionEventSummary : Core.IUtf8JsonSerializable
+    public partial class ConsumptionEventSummary : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EventType))
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
@@ -40,33 +40,33 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<ETag> eTag = default;
+            Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> transactionDate = default;
-            Core.Optional<string> description = default;
-            Core.Optional<ConsumptionAmount> newCredit = default;
-            Core.Optional<ConsumptionAmount> adjustments = default;
-            Core.Optional<ConsumptionAmount> creditExpired = default;
-            Core.Optional<ConsumptionAmount> charges = default;
-            Core.Optional<ConsumptionAmount> closedBalance = default;
-            Core.Optional<ConsumptionEventType> eventType = default;
-            Core.Optional<string> invoiceNumber = default;
-            Core.Optional<ResourceIdentifier> billingProfileId = default;
-            Core.Optional<string> billingProfileDisplayName = default;
-            Core.Optional<ResourceIdentifier> lotId = default;
-            Core.Optional<string> lotSource = default;
-            Core.Optional<ConsumptionAmount> canceledCredit = default;
-            Core.Optional<string> creditCurrency = default;
-            Core.Optional<string> billingCurrency = default;
-            Core.Optional<ConsumptionReseller> reseller = default;
-            Core.Optional<ConsumptionAmountWithExchangeRate> creditExpiredInBillingCurrency = default;
-            Core.Optional<ConsumptionAmountWithExchangeRate> newCreditInBillingCurrency = default;
-            Core.Optional<ConsumptionAmountWithExchangeRate> adjustmentsInBillingCurrency = default;
-            Core.Optional<ConsumptionAmountWithExchangeRate> chargesInBillingCurrency = default;
-            Core.Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> transactionDate = default;
+            Optional<string> description = default;
+            Optional<ConsumptionAmount> newCredit = default;
+            Optional<ConsumptionAmount> adjustments = default;
+            Optional<ConsumptionAmount> creditExpired = default;
+            Optional<ConsumptionAmount> charges = default;
+            Optional<ConsumptionAmount> closedBalance = default;
+            Optional<ConsumptionEventType> eventType = default;
+            Optional<string> invoiceNumber = default;
+            Optional<ResourceIdentifier> billingProfileId = default;
+            Optional<string> billingProfileDisplayName = default;
+            Optional<ResourceIdentifier> lotId = default;
+            Optional<string> lotSource = default;
+            Optional<ConsumptionAmount> canceledCredit = default;
+            Optional<string> creditCurrency = default;
+            Optional<string> billingCurrency = default;
+            Optional<ConsumptionReseller> reseller = default;
+            Optional<ConsumptionAmountWithExchangeRate> creditExpiredInBillingCurrency = default;
+            Optional<ConsumptionAmountWithExchangeRate> newCreditInBillingCurrency = default;
+            Optional<ConsumptionAmountWithExchangeRate> adjustmentsInBillingCurrency = default;
+            Optional<ConsumptionAmountWithExchangeRate> chargesInBillingCurrency = default;
+            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionEventSummary(id, name, type, systemData.Value, Core.Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Core.Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Core.Optional.ToNullable(eTag));
+            return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag));
         }
     }
 }

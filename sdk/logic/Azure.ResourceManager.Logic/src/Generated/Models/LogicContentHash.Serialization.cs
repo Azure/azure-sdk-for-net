@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> algorithm = default;
-            Core.Optional<string> value = default;
+            Optional<string> algorithm = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("algorithm"u8))

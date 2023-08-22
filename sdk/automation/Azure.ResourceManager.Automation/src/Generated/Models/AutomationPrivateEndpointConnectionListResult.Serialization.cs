@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AutomationPrivateEndpointConnectionData>> value = default;
+            Optional<IReadOnlyList<AutomationPrivateEndpointConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationPrivateEndpointConnectionListResult(Core.Optional.ToList(value));
+            return new AutomationPrivateEndpointConnectionListResult(Optional.ToList(value));
         }
     }
 }

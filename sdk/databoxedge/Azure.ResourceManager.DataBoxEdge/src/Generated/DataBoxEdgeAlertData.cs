@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <summary> Initializes a new instance of DataBoxEdgeAlertData. </summary>
         public DataBoxEdgeAlertData()
         {
-            DetailedInformation = new Core.ChangeTrackingDictionary<string, string>();
+            DetailedInformation = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeAlertData. </summary>

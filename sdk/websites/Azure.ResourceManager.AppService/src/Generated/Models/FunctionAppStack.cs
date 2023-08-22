@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of FunctionAppStack. </summary>
         public FunctionAppStack()
         {
-            MajorVersions = new Core.ChangeTrackingList<FunctionAppMajorVersion>();
+            MajorVersions = new ChangeTrackingList<FunctionAppMajorVersion>();
         }
 
         /// <summary> Initializes a new instance of FunctionAppStack. </summary>

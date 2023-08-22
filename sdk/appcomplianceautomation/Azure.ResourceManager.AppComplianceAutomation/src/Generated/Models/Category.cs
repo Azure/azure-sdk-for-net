@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of Category. </summary>
         internal Category()
         {
-            ControlFamilies = new Core.ChangeTrackingList<ControlFamily>();
+            ControlFamilies = new ChangeTrackingList<ControlFamily>();
         }
 
         /// <summary> Initializes a new instance of Category. </summary>

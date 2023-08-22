@@ -14,12 +14,12 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncServiceData : Core.IUtf8JsonSerializable
+    public partial class StorageSyncServiceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageSync
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IncomingTrafficPolicy))
+            if (Optional.IsDefined(IncomingTrafficPolicy))
             {
                 writer.WritePropertyName("incomingTrafficPolicy"u8);
                 writer.WriteStringValue(IncomingTrafficPolicy.Value.ToString());
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.StorageSync
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
-            Core.Optional<int> storageSyncServiceStatus = default;
-            Core.Optional<Guid> storageSyncServiceUid = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> lastWorkflowId = default;
-            Core.Optional<string> lastOperationName = default;
-            Core.Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<SystemData> systemData = default;
+            Optional<IncomingTrafficPolicy> incomingTrafficPolicy = default;
+            Optional<int> storageSyncServiceStatus = default;
+            Optional<Guid> storageSyncServiceUid = default;
+            Optional<string> provisioningState = default;
+            Optional<string> lastWorkflowId = default;
+            Optional<string> lastOperationName = default;
+            Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(incomingTrafficPolicy), Core.Optional.ToNullable(storageSyncServiceStatus), Core.Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Core.Optional.ToList(privateEndpointConnections));
+            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

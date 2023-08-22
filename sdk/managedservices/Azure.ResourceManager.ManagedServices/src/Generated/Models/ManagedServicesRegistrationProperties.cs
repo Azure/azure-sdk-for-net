@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Argument.AssertNotNull(authorizations, nameof(authorizations));
 
             Authorizations = authorizations.ToList();
-            EligibleAuthorizations = new Core.ChangeTrackingList<ManagedServicesEligibleAuthorization>();
+            EligibleAuthorizations = new ChangeTrackingList<ManagedServicesEligibleAuthorization>();
             ManagedByTenantId = managedByTenantId;
         }
 

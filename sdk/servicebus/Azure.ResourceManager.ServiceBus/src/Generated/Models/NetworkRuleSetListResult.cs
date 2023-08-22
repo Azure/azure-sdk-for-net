@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of NetworkRuleSetListResult. </summary>
         internal NetworkRuleSetListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceBusNetworkRuleSetData>();
+            Value = new ChangeTrackingList<ServiceBusNetworkRuleSetData>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSetListResult. </summary>

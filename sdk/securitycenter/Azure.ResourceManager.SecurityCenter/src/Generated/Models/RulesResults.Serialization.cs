@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData>> value = default;
+            Optional<IReadOnlyList<SqlVulnerabilityAssessmentBaselineRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new RulesResults(Core.Optional.ToList(value));
+            return new RulesResults(Optional.ToList(value));
         }
     }
 }

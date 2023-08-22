@@ -14,12 +14,12 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(EditTablesRequestConverter))]
-    public partial class EditTablesRequest : Core.IUtf8JsonSerializable
+    public partial class EditTablesRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(LinkTables))
+            if (Optional.IsCollectionDefined(LinkTables))
             {
                 writer.WritePropertyName("linkTables"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<IList<LinkTableRequest>> linkTables = default;
+            Optional<IList<LinkTableRequest>> linkTables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkTables"u8))
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new EditTablesRequest(Core.Optional.ToList(linkTables));
+            return new EditTablesRequest(Optional.ToList(linkTables));
         }
 
         internal partial class EditTablesRequestConverter : JsonConverter<EditTablesRequest>

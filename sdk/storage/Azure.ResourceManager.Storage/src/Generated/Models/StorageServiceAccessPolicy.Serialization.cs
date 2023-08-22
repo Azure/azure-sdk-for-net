@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageServiceAccessPolicy : Core.IUtf8JsonSerializable
+    public partial class StorageServiceAccessPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Permission))
+            if (Optional.IsDefined(Permission))
             {
                 writer.WritePropertyName("permission"u8);
                 writer.WriteStringValue(Permission);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> expiryTime = default;
-            Core.Optional<string> permission = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> expiryTime = default;
+            Optional<string> permission = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageServiceAccessPolicy(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(expiryTime), permission.Value);
+            return new StorageServiceAccessPolicy(Optional.ToNullable(startTime), Optional.ToNullable(expiryTime), permission.Value);
         }
     }
 }

@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<string> cryptoCertId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<FirmwareCryptoCertificateEntity> subject = default;
-            Core.Optional<FirmwareCryptoCertificateEntity> issuer = default;
-            Core.Optional<DateTimeOffset?> issuedDate = default;
-            Core.Optional<DateTimeOffset?> expirationDate = default;
-            Core.Optional<string> role = default;
-            Core.Optional<string> signatureAlgorithm = default;
-            Core.Optional<long?> keySize = default;
-            Core.Optional<string> keyAlgorithm = default;
-            Core.Optional<string> encoding = default;
-            Core.Optional<string> serialNumber = default;
-            Core.Optional<string> fingerprint = default;
-            Core.Optional<IReadOnlyList<string>> usage = default;
-            Core.Optional<IReadOnlyList<string>> filePaths = default;
-            Core.Optional<PairedKey> pairedKey = default;
-            Core.Optional<IsExpired?> isExpired = default;
-            Core.Optional<IsSelfSigned?> isSelfSigned = default;
-            Core.Optional<IsWeakSignature?> isWeakSignature = default;
-            Core.Optional<IsShortKeySize?> isShortKeySize = default;
+            Optional<string> cryptoCertId = default;
+            Optional<string> name = default;
+            Optional<FirmwareCryptoCertificateEntity> subject = default;
+            Optional<FirmwareCryptoCertificateEntity> issuer = default;
+            Optional<DateTimeOffset?> issuedDate = default;
+            Optional<DateTimeOffset?> expirationDate = default;
+            Optional<string> role = default;
+            Optional<string> signatureAlgorithm = default;
+            Optional<long?> keySize = default;
+            Optional<string> keyAlgorithm = default;
+            Optional<string> encoding = default;
+            Optional<string> serialNumber = default;
+            Optional<string> fingerprint = default;
+            Optional<IReadOnlyList<string>> usage = default;
+            Optional<IReadOnlyList<string>> filePaths = default;
+            Optional<PairedKey> pairedKey = default;
+            Optional<IsExpired?> isExpired = default;
+            Optional<IsSelfSigned?> isSelfSigned = default;
+            Optional<IsWeakSignature?> isWeakSignature = default;
+            Optional<IsShortKeySize?> isShortKeySize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cryptoCertId"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new FirmwareCryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Core.Optional.ToNullable(issuedDate), Core.Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Core.Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Core.Optional.ToList(usage), Core.Optional.ToList(filePaths), pairedKey.Value, Core.Optional.ToNullable(isExpired), Core.Optional.ToNullable(isSelfSigned), Core.Optional.ToNullable(isWeakSignature), Core.Optional.ToNullable(isShortKeySize));
+            return new FirmwareCryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize));
         }
     }
 }

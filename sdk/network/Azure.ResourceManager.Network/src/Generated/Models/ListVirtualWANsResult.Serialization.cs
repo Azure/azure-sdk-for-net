@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<VirtualWanData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<VirtualWanData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ListVirtualWANsResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ListVirtualWANsResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

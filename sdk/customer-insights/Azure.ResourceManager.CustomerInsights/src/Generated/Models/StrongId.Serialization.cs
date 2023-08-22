@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class StrongId : Core.IUtf8JsonSerializable
+    public partial class StrongId : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyPropertyNames"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteEndArray();
             writer.WritePropertyName("strongIdName"u8);
             writer.WriteStringValue(StrongIdName);
-            if (Core.Optional.IsCollectionDefined(DisplayName))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Description))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             IList<string> keyPropertyNames = default;
             string strongIdName = default;
-            Core.Optional<IDictionary<string, string>> displayName = default;
-            Core.Optional<IDictionary<string, string>> description = default;
+            Optional<IDictionary<string, string>> displayName = default;
+            Optional<IDictionary<string, string>> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyPropertyNames"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new StrongId(keyPropertyNames, strongIdName, Core.Optional.ToDictionary(displayName), Core.Optional.ToDictionary(description));
+            return new StrongId(keyPropertyNames, strongIdName, Optional.ToDictionary(displayName), Optional.ToDictionary(description));
         }
     }
 }

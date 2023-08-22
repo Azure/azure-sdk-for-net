@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class CosmosDBSqlRoleAssignmentData : Core.IUtf8JsonSerializable
+    public partial class CosmosDBSqlRoleAssignmentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RoleDefinitionId))
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Core.Optional.IsDefined(PrincipalId))
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> roleDefinitionId = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<Guid> principalId = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> roleDefinitionId = default;
+            Optional<string> scope = default;
+            Optional<Guid> principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new CosmosDBSqlRoleAssignmentData(id, name, type, systemData.Value, roleDefinitionId.Value, scope.Value, Core.Optional.ToNullable(principalId));
+            return new CosmosDBSqlRoleAssignmentData(id, name, type, systemData.Value, roleDefinitionId.Value, scope.Value, Optional.ToNullable(principalId));
         }
     }
 }

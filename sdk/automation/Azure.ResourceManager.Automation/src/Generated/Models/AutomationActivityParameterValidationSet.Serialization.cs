@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<string> memberValue = default;
+            Optional<string> memberValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memberValue"u8))

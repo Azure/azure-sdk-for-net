@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class VirtualMachinePublicIPAddressDnsSettingsConfiguration : Core.IUtf8JsonSerializable
+    internal partial class VirtualMachinePublicIPAddressDnsSettingsConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("domainNameLabel"u8);

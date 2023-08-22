@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of TopologyResourceInfo. </summary>
         internal TopologyResourceInfo()
         {
-            Associations = new Core.ChangeTrackingList<TopologyAssociation>();
+            Associations = new ChangeTrackingList<TopologyAssociation>();
         }
 
         /// <summary> Initializes a new instance of TopologyResourceInfo. </summary>

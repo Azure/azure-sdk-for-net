@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistrySecretObject : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistrySecretObject : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(ObjectType))
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<string> value = default;
-            Core.Optional<ContainerRegistrySecretObjectType> type = default;
+            Optional<string> value = default;
+            Optional<ContainerRegistrySecretObjectType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistrySecretObject(value.Value, Core.Optional.ToNullable(type));
+            return new ContainerRegistrySecretObject(value.Value, Optional.ToNullable(type));
         }
     }
 }

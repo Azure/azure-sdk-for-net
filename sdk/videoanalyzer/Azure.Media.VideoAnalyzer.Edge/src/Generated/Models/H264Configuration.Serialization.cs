@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class H264Configuration : Core.IUtf8JsonSerializable
+    public partial class H264Configuration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GovLength))
+            if (Optional.IsDefined(GovLength))
             {
                 writer.WritePropertyName("govLength"u8);
                 writer.WriteNumberValue(GovLength.Value);
             }
-            if (Core.Optional.IsDefined(Profile))
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<float> govLength = default;
-            Core.Optional<H264Profile> profile = default;
+            Optional<float> govLength = default;
+            Optional<H264Profile> profile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("govLength"u8))
@@ -57,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new H264Configuration(Core.Optional.ToNullable(govLength), Core.Optional.ToNullable(profile));
+            return new H264Configuration(Optional.ToNullable(govLength), Optional.ToNullable(profile));
         }
     }
 }

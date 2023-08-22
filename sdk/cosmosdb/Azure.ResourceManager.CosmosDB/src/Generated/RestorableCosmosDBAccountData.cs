@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <summary> Initializes a new instance of RestorableCosmosDBAccountData. </summary>
         internal RestorableCosmosDBAccountData()
         {
-            RestorableLocations = new Core.ChangeTrackingList<RestorableLocationResourceInfo>();
+            RestorableLocations = new ChangeTrackingList<RestorableLocationResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of RestorableCosmosDBAccountData. </summary>

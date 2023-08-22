@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class RoutePolicyStatementProperties : Core.IUtf8JsonSerializable
+    public partial class RoutePolicyStatementProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sequenceNumber"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteObjectValue(Condition);
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action);
-            if (Core.Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             long sequenceNumber = default;
             StatementConditionProperties condition = default;
             StatementActionProperties action = default;
-            Core.Optional<string> annotation = default;
+            Optional<string> annotation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sequenceNumber"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionListResult. </summary>
         internal ServiceBusPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionListResult. </summary>

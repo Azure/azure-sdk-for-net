@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class AzureDevOpsRepoProperties : Core.IUtf8JsonSerializable
+    public partial class AzureDevOpsRepoProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RepoId))
+            if (Optional.IsDefined(RepoId))
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (Core.Optional.IsDefined(RepoUri))
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(OrgName))
+            if (Optional.IsDefined(OrgName))
             {
                 writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
-            if (Core.Optional.IsDefined(ProjectName))
+            if (Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Core.Optional.IsDefined(Visibility))
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Core.Optional.IsDefined(ActionableRemediation))
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> repoId = default;
-            Core.Optional<Uri> repoUrl = default;
-            Core.Optional<string> orgName = default;
-            Core.Optional<string> projectName = default;
-            Core.Optional<string> visibility = default;
-            Core.Optional<ActionableRemediation> actionableRemediation = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> repoId = default;
+            Optional<Uri> repoUrl = default;
+            Optional<string> orgName = default;
+            Optional<string> projectName = default;
+            Optional<string> visibility = default;
+            Optional<ActionableRemediation> actionableRemediation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsRepoProperties(Core.Optional.ToNullable(provisioningState), repoId.Value, repoUrl.Value, orgName.Value, projectName.Value, visibility.Value, actionableRemediation.Value);
+            return new AzureDevOpsRepoProperties(Optional.ToNullable(provisioningState), repoId.Value, repoUrl.Value, orgName.Value, projectName.Value, visibility.Value, actionableRemediation.Value);
         }
     }
 }

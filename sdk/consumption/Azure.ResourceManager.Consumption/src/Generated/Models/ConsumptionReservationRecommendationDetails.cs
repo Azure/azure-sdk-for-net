@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionReservationRecommendationDetails. </summary>
         internal ConsumptionReservationRecommendationDetails()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionReservationRecommendationDetails. </summary>

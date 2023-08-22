@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> availabilityZones = default;
-            Core.Optional<IReadOnlyList<string>> additionalCapabilities = default;
-            Core.Optional<StoragePoolSku> sku = default;
+            Optional<IReadOnlyList<string>> availabilityZones = default;
+            Optional<IReadOnlyList<string>> additionalCapabilities = default;
+            Optional<StoragePoolSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityZones"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new DiskPoolZoneInfo(Core.Optional.ToList(availabilityZones), Core.Optional.ToList(additionalCapabilities), sku.Value);
+            return new DiskPoolZoneInfo(Optional.ToList(availabilityZones), Optional.ToList(additionalCapabilities), sku.Value);
         }
     }
 }

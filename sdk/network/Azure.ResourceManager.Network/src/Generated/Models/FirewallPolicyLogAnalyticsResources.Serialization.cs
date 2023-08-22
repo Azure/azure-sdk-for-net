@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyLogAnalyticsResources : Core.IUtf8JsonSerializable
+    public partial class FirewallPolicyLogAnalyticsResources : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Workspaces))
+            if (Optional.IsCollectionDefined(Workspaces))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultWorkspaceId))
+            if (Optional.IsDefined(DefaultWorkspaceId))
             {
                 writer.WritePropertyName("defaultWorkspaceId"u8);
                 JsonSerializer.Serialize(writer, DefaultWorkspaceId);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
-            Core.Optional<WritableSubResource> defaultWorkspaceId = default;
+            Optional<IList<FirewallPolicyLogAnalyticsWorkspace>> workspaces = default;
+            Optional<WritableSubResource> defaultWorkspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaces"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyLogAnalyticsResources(Core.Optional.ToList(workspaces), defaultWorkspaceId);
+            return new FirewallPolicyLogAnalyticsResources(Optional.ToList(workspaces), defaultWorkspaceId);
         }
     }
 }

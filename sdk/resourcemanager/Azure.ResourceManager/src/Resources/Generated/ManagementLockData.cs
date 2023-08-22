@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources
         public ManagementLockData(ManagementLockLevel level)
         {
             Level = level;
-            Owners = new Core.ChangeTrackingList<ManagementLockOwner>();
+            Owners = new ChangeTrackingList<ManagementLockOwner>();
         }
 
         /// <summary> Initializes a new instance of ManagementLockData. </summary>

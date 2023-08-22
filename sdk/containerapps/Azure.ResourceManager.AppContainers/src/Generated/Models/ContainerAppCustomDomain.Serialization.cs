@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomDomain : Core.IUtf8JsonSerializable
+    public partial class ContainerAppCustomDomain : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(BindingType))
+            if (Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CertificateId))
+            if (Optional.IsDefined(CertificateId))
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
-            Core.Optional<ContainerAppCustomDomainBindingType> bindingType = default;
-            Core.Optional<ResourceIdentifier> certificateId = default;
+            Optional<ContainerAppCustomDomainBindingType> bindingType = default;
+            Optional<ResourceIdentifier> certificateId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCustomDomain(name, Core.Optional.ToNullable(bindingType), certificateId.Value);
+            return new ContainerAppCustomDomain(name, Optional.ToNullable(bindingType), certificateId.Value);
         }
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TopologyContent : Core.IUtf8JsonSerializable
+    public partial class TopologyContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetResourceGroupName))
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
-            if (Core.Optional.IsDefined(TargetVirtualNetwork))
+            if (Optional.IsDefined(TargetVirtualNetwork))
             {
                 writer.WritePropertyName("targetVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, TargetVirtualNetwork);
             }
-            if (Core.Optional.IsDefined(TargetSubnet))
+            if (Optional.IsDefined(TargetSubnet))
             {
                 writer.WritePropertyName("targetSubnet"u8);
                 JsonSerializer.Serialize(writer, TargetSubnet);

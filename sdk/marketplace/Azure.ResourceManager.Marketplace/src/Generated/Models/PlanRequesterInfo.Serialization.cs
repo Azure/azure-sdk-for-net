@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<string> user = default;
-            Core.Optional<string> date = default;
-            Core.Optional<string> justification = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> subscriptionName = default;
+            Optional<string> user = default;
+            Optional<string> date = default;
+            Optional<string> justification = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> subscriptionName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("user"u8))

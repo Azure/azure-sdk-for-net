@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    public partial class ScreenShare : Core.IUtf8JsonSerializable
+    public partial class ScreenShare : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("call"u8);
             writer.WriteStringValue(Call);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(PlaceholderImageUri))
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -35,7 +35,7 @@ namespace Azure.Communication.MediaComposition
             }
             string call = default;
             MediaInputType kind = default;
-            Core.Optional<string> placeholderImageUri = default;
+            Optional<string> placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("call"u8))

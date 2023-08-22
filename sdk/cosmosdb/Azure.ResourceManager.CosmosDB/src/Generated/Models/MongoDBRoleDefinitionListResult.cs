@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of MongoDBRoleDefinitionListResult. </summary>
         internal MongoDBRoleDefinitionListResult()
         {
-            Value = new Core.ChangeTrackingList<MongoDBRoleDefinitionData>();
+            Value = new ChangeTrackingList<MongoDBRoleDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of MongoDBRoleDefinitionListResult. </summary>

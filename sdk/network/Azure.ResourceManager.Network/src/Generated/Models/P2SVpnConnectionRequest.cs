@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of P2SVpnConnectionRequest. </summary>
         public P2SVpnConnectionRequest()
         {
-            VpnConnectionIds = new Core.ChangeTrackingList<string>();
+            VpnConnectionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> List of p2s vpn connection Ids. </summary>

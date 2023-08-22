@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a trigger. </summary>
-    public partial class TriggerCreateOrUpdateTriggerOperation : Operation<TriggerResource>, Core.IOperationSource<TriggerResource>
+    public partial class TriggerCreateOrUpdateTriggerOperation : Operation<TriggerResource>, IOperationSource<TriggerResource>
     {
         private readonly OperationInternal<TriggerResource> _operation;
 
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal TriggerCreateOrUpdateTriggerOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<TriggerResource> nextLinkOperation = Core.NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
+            IOperation<TriggerResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
             _operation = new OperationInternal<TriggerResource>(nextLinkOperation, clientDiagnostics, response, "TriggerCreateOrUpdateTriggerOperation");
         }
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<TriggerResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        TriggerResource Core.IOperationSource<TriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        TriggerResource IOperationSource<TriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return TriggerResource.DeserializeTriggerResource(document.RootElement);
         }
 
-        async ValueTask<TriggerResource> Core.IOperationSource<TriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TriggerResource> IOperationSource<TriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return TriggerResource.DeserializeTriggerResource(document.RootElement);

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJwtClaimChecks : Core.IUtf8JsonSerializable
+    public partial class ContainerAppJwtClaimChecks : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AllowedGroups))
+            if (Optional.IsCollectionDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AllowedClientApplications))
+            if (Optional.IsCollectionDefined(AllowedClientApplications))
             {
                 writer.WritePropertyName("allowedClientApplications"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> allowedGroups = default;
-            Core.Optional<IList<string>> allowedClientApplications = default;
+            Optional<IList<string>> allowedGroups = default;
+            Optional<IList<string>> allowedClientApplications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedGroups"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJwtClaimChecks(Core.Optional.ToList(allowedGroups), Core.Optional.ToList(allowedClientApplications));
+            return new ContainerAppJwtClaimChecks(Optional.ToList(allowedGroups), Optional.ToList(allowedClientApplications));
         }
     }
 }

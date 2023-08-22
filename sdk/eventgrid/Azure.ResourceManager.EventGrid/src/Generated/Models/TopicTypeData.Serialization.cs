@@ -13,39 +13,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class TopicTypeData : Core.IUtf8JsonSerializable
+    public partial class TopicTypeData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Provider))
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ResourceRegionType))
+            if (Optional.IsDefined(ResourceRegionType))
             {
                 writer.WritePropertyName("resourceRegionType"u8);
                 writer.WriteStringValue(ResourceRegionType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(SupportedLocations))
+            if (Optional.IsCollectionDefined(SupportedLocations))
             {
                 writer.WritePropertyName("supportedLocations"u8);
                 writer.WriteStartArray();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SourceResourceFormat))
+            if (Optional.IsDefined(SourceResourceFormat))
             {
                 writer.WritePropertyName("sourceResourceFormat"u8);
                 writer.WriteStringValue(SourceResourceFormat);
             }
-            if (Core.Optional.IsCollectionDefined(SupportedScopesForSource))
+            if (Optional.IsCollectionDefined(SupportedScopesForSource))
             {
                 writer.WritePropertyName("supportedScopesForSource"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AreRegionalAndGlobalSourcesSupported))
+            if (Optional.IsDefined(AreRegionalAndGlobalSourcesSupported))
             {
                 writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
@@ -88,16 +88,16 @@ namespace Azure.ResourceManager.EventGrid
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> provider = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<EventGridResourceRegionType> resourceRegionType = default;
-            Core.Optional<TopicTypeProvisioningState> provisioningState = default;
-            Core.Optional<IList<string>> supportedLocations = default;
-            Core.Optional<string> sourceResourceFormat = default;
-            Core.Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
-            Core.Optional<bool> areRegionalAndGlobalSourcesSupported = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> provider = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<EventGridResourceRegionType> resourceRegionType = default;
+            Optional<TopicTypeProvisioningState> provisioningState = default;
+            Optional<IList<string>> supportedLocations = default;
+            Optional<string> sourceResourceFormat = default;
+            Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
+            Optional<bool> areRegionalAndGlobalSourcesSupported = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Core.Optional.ToNullable(resourceRegionType), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(supportedLocations), sourceResourceFormat.Value, Core.Optional.ToList(supportedScopesForSource), Core.Optional.ToNullable(areRegionalAndGlobalSourcesSupported));
+            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported));
         }
     }
 }

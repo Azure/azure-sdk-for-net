@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Core.Optional<FirewallPanoramaServerStatus> panoramaServerStatus = default;
-            Core.Optional<FirewallPanoramaServerStatus> panoramaServer2Status = default;
+            Optional<FirewallPanoramaServerStatus> panoramaServerStatus = default;
+            Optional<FirewallPanoramaServerStatus> panoramaServer2Status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("panoramaServerStatus"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new FirewallPanoramaStatus(Core.Optional.ToNullable(panoramaServerStatus), Core.Optional.ToNullable(panoramaServer2Status));
+            return new FirewallPanoramaStatus(Optional.ToNullable(panoramaServerStatus), Optional.ToNullable(panoramaServer2Status));
         }
     }
 }

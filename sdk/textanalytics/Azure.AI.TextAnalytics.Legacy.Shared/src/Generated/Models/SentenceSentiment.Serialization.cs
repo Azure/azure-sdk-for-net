@@ -25,8 +25,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             SentimentConfidenceScorePerLabel confidenceScores = default;
             int offset = default;
             int length = default;
-            Core.Optional<IReadOnlyList<SentenceTarget>> targets = default;
-            Core.Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            Optional<IReadOnlyList<SentenceTarget>> targets = default;
+            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new SentenceSentiment(text, sentiment, confidenceScores, offset, length, Core.Optional.ToList(targets), Core.Optional.ToList(assessments));
+            return new SentenceSentiment(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
         }
     }
 }

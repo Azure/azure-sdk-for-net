@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="location"> The location. </param>
         public ServiceFabricClusterData(AzureLocation location) : base(location)
         {
-            AddOnFeatures = new Core.ChangeTrackingList<ClusterAddOnFeature>();
-            AvailableClusterVersions = new Core.ChangeTrackingList<ClusterVersionDetails>();
-            ClientCertificateCommonNames = new Core.ChangeTrackingList<ClusterClientCertificateCommonName>();
-            ClientCertificateThumbprints = new Core.ChangeTrackingList<ClusterClientCertificateThumbprint>();
-            FabricSettings = new Core.ChangeTrackingList<SettingsSectionDescription>();
-            NodeTypes = new Core.ChangeTrackingList<ClusterNodeTypeDescription>();
-            Notifications = new Core.ChangeTrackingList<ClusterNotification>();
+            AddOnFeatures = new ChangeTrackingList<ClusterAddOnFeature>();
+            AvailableClusterVersions = new ChangeTrackingList<ClusterVersionDetails>();
+            ClientCertificateCommonNames = new ChangeTrackingList<ClusterClientCertificateCommonName>();
+            ClientCertificateThumbprints = new ChangeTrackingList<ClusterClientCertificateThumbprint>();
+            FabricSettings = new ChangeTrackingList<SettingsSectionDescription>();
+            NodeTypes = new ChangeTrackingList<ClusterNodeTypeDescription>();
+            Notifications = new ChangeTrackingList<ClusterNotification>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>

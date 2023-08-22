@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <summary> Initializes a new instance of SphereCatalogPatch. </summary>
         public SphereCatalogPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary>

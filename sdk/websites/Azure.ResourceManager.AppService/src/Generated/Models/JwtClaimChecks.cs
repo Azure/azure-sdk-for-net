@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of JwtClaimChecks. </summary>
         public JwtClaimChecks()
         {
-            AllowedGroups = new Core.ChangeTrackingList<string>();
-            AllowedClientApplications = new Core.ChangeTrackingList<string>();
+            AllowedGroups = new ChangeTrackingList<string>();
+            AllowedClientApplications = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of JwtClaimChecks. </summary>

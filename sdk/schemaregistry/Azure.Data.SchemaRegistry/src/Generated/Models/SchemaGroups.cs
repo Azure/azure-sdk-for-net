@@ -16,7 +16,7 @@ namespace Azure.Data.SchemaRegistry.Models
         /// <summary> Initializes a new instance of SchemaGroups. </summary>
         internal SchemaGroups()
         {
-            Groups = new Core.ChangeTrackingList<string>();
+            Groups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SchemaGroups. </summary>

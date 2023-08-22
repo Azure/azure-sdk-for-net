@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Creates or updates a dataset. </summary>
-    public partial class DatasetCreateOrUpdateDatasetOperation : Operation<DatasetResource>, Core.IOperationSource<DatasetResource>
+    public partial class DatasetCreateOrUpdateDatasetOperation : Operation<DatasetResource>, IOperationSource<DatasetResource>
     {
         private readonly OperationInternal<DatasetResource> _operation;
 
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DatasetCreateOrUpdateDatasetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            IOperation<DatasetResource> nextLinkOperation = Core.NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, Core.OperationFinalStateVia.Location);
+            IOperation<DatasetResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
             _operation = new OperationInternal<DatasetResource>(nextLinkOperation, clientDiagnostics, response, "DatasetCreateOrUpdateDatasetOperation");
         }
 
@@ -67,13 +67,13 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <inheritdoc />
         public override ValueTask<Response<DatasetResource>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        DatasetResource Core.IOperationSource<DatasetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DatasetResource IOperationSource<DatasetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DatasetResource.DeserializeDatasetResource(document.RootElement);
         }
 
-        async ValueTask<DatasetResource> Core.IOperationSource<DatasetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DatasetResource> IOperationSource<DatasetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DatasetResource.DeserializeDatasetResource(document.RootElement);

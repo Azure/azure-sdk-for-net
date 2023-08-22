@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnServerConfigurationData. </summary>
         public VpnServerConfigurationData()
         {
-            VpnProtocols = new Core.ChangeTrackingList<VpnGatewayTunnelingProtocol>();
-            VpnAuthenticationTypes = new Core.ChangeTrackingList<VpnAuthenticationType>();
-            VpnClientRootCertificates = new Core.ChangeTrackingList<VpnServerConfigVpnClientRootCertificate>();
-            VpnClientRevokedCertificates = new Core.ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>();
-            RadiusServerRootCertificates = new Core.ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>();
-            RadiusClientRootCertificates = new Core.ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>();
-            VpnClientIPsecPolicies = new Core.ChangeTrackingList<IPsecPolicy>();
-            RadiusServers = new Core.ChangeTrackingList<RadiusServer>();
-            P2SVpnGateways = new Core.ChangeTrackingList<P2SVpnGatewayData>();
-            ConfigurationPolicyGroups = new Core.ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
+            VpnProtocols = new ChangeTrackingList<VpnGatewayTunnelingProtocol>();
+            VpnAuthenticationTypes = new ChangeTrackingList<VpnAuthenticationType>();
+            VpnClientRootCertificates = new ChangeTrackingList<VpnServerConfigVpnClientRootCertificate>();
+            VpnClientRevokedCertificates = new ChangeTrackingList<VpnServerConfigVpnClientRevokedCertificate>();
+            RadiusServerRootCertificates = new ChangeTrackingList<VpnServerConfigRadiusServerRootCertificate>();
+            RadiusClientRootCertificates = new ChangeTrackingList<VpnServerConfigRadiusClientRootCertificate>();
+            VpnClientIPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            RadiusServers = new ChangeTrackingList<RadiusServer>();
+            P2SVpnGateways = new ChangeTrackingList<P2SVpnGatewayData>();
+            ConfigurationPolicyGroups = new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>();
         }
 
         /// <summary> Initializes a new instance of VpnServerConfigurationData. </summary>

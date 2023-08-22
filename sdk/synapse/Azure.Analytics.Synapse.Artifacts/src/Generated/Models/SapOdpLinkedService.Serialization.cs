@@ -14,24 +14,24 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SapOdpLinkedServiceConverter))]
-    public partial class SapOdpLinkedService : Core.IUtf8JsonSerializable
+    public partial class SapOdpLinkedService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(ConnectVia))
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -59,92 +59,92 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Server))
+            if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteObjectValue(Server);
             }
-            if (Core.Optional.IsDefined(SystemNumber))
+            if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
                 writer.WriteObjectValue(SystemNumber);
             }
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue(ClientId);
             }
-            if (Core.Optional.IsDefined(Language))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteObjectValue(Language);
             }
-            if (Core.Optional.IsDefined(SystemId))
+            if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
                 writer.WriteObjectValue(SystemId);
             }
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (Core.Optional.IsDefined(MessageServer))
+            if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
                 writer.WriteObjectValue(MessageServer);
             }
-            if (Core.Optional.IsDefined(MessageServerService))
+            if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
                 writer.WriteObjectValue(MessageServerService);
             }
-            if (Core.Optional.IsDefined(SncMode))
+            if (Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode"u8);
                 writer.WriteObjectValue(SncMode);
             }
-            if (Core.Optional.IsDefined(SncMyName))
+            if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
                 writer.WriteObjectValue(SncMyName);
             }
-            if (Core.Optional.IsDefined(SncPartnerName))
+            if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
                 writer.WriteObjectValue(SncPartnerName);
             }
-            if (Core.Optional.IsDefined(SncLibraryPath))
+            if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
                 writer.WriteObjectValue(SncLibraryPath);
             }
-            if (Core.Optional.IsDefined(SncQop))
+            if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
                 writer.WriteObjectValue(SncQop);
             }
-            if (Core.Optional.IsDefined(X509CertificatePath))
+            if (Optional.IsDefined(X509CertificatePath))
             {
                 writer.WritePropertyName("x509CertificatePath"u8);
                 writer.WriteObjectValue(X509CertificatePath);
             }
-            if (Core.Optional.IsDefined(LogonGroup))
+            if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
                 writer.WriteObjectValue(LogonGroup);
             }
-            if (Core.Optional.IsDefined(SubscriberName))
+            if (Optional.IsDefined(SubscriberName))
             {
                 writer.WritePropertyName("subscriberName"u8);
                 writer.WriteObjectValue(SubscriberName);
             }
-            if (Core.Optional.IsDefined(EncryptedCredential))
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
@@ -165,28 +165,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Core.Optional<IntegrationRuntimeReference> connectVia = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Core.Optional<IList<object>> annotations = default;
-            Core.Optional<object> server = default;
-            Core.Optional<object> systemNumber = default;
-            Core.Optional<object> clientId = default;
-            Core.Optional<object> language = default;
-            Core.Optional<object> systemId = default;
-            Core.Optional<object> userName = default;
-            Core.Optional<SecretBase> password = default;
-            Core.Optional<object> messageServer = default;
-            Core.Optional<object> messageServerService = default;
-            Core.Optional<object> sncMode = default;
-            Core.Optional<object> sncMyName = default;
-            Core.Optional<object> sncPartnerName = default;
-            Core.Optional<object> sncLibraryPath = default;
-            Core.Optional<object> sncQop = default;
-            Core.Optional<object> x509CertificatePath = default;
-            Core.Optional<object> logonGroup = default;
-            Core.Optional<object> subscriberName = default;
-            Core.Optional<object> encryptedCredential = default;
+            Optional<IntegrationRuntimeReference> connectVia = default;
+            Optional<string> description = default;
+            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            Optional<IList<object>> annotations = default;
+            Optional<object> server = default;
+            Optional<object> systemNumber = default;
+            Optional<object> clientId = default;
+            Optional<object> language = default;
+            Optional<object> systemId = default;
+            Optional<object> userName = default;
+            Optional<SecretBase> password = default;
+            Optional<object> messageServer = default;
+            Optional<object> messageServerService = default;
+            Optional<object> sncMode = default;
+            Optional<object> sncMyName = default;
+            Optional<object> sncPartnerName = default;
+            Optional<object> sncLibraryPath = default;
+            Optional<object> sncQop = default;
+            Optional<object> x509CertificatePath = default;
+            Optional<object> logonGroup = default;
+            Optional<object> subscriberName = default;
+            Optional<object> encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -422,7 +422,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpLinkedService(type, connectVia.Value, description.Value, Core.Optional.ToDictionary(parameters), Core.Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);
+            return new SapOdpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);
         }
 
         internal partial class SapOdpLinkedServiceConverter : JsonConverter<SapOdpLinkedService>

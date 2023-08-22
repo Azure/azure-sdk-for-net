@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
 
             RuleGroupName = ruleGroupName;
-            Rules = new Core.ChangeTrackingList<ManagedRuleOverride>();
+            Rules = new ChangeTrackingList<ManagedRuleOverride>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>

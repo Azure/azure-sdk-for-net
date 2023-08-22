@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of DirectLineChannelProperties. </summary>
         public DirectLineChannelProperties()
         {
-            Sites = new Core.ChangeTrackingList<DirectLineSite>();
+            Sites = new ChangeTrackingList<DirectLineSite>();
         }
 
         /// <summary> Initializes a new instance of DirectLineChannelProperties. </summary>

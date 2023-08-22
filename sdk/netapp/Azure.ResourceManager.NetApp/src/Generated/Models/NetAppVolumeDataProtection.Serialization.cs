@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeDataProtection : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumeDataProtection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Backup))
+            if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
                 writer.WriteObjectValue(Backup);
             }
-            if (Core.Optional.IsDefined(Replication))
+            if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteObjectValue(Replication);
             }
-            if (Core.Optional.IsDefined(Snapshot))
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot);
             }
-            if (Core.Optional.IsDefined(VolumeRelocation))
+            if (Optional.IsDefined(VolumeRelocation))
             {
                 writer.WritePropertyName("volumeRelocation"u8);
                 writer.WriteObjectValue(VolumeRelocation);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<NetAppVolumeBackupConfiguration> backup = default;
-            Core.Optional<NetAppReplicationObject> replication = default;
-            Core.Optional<VolumeSnapshotProperties> snapshot = default;
-            Core.Optional<NetAppVolumeRelocationProperties> volumeRelocation = default;
+            Optional<NetAppVolumeBackupConfiguration> backup = default;
+            Optional<NetAppReplicationObject> replication = default;
+            Optional<VolumeSnapshotProperties> snapshot = default;
+            Optional<NetAppVolumeRelocationProperties> volumeRelocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backup"u8))

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class FiltersConfiguration : Core.IUtf8JsonSerializable
+    public partial class FiltersConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(IncludedEventTypes))
+            if (Optional.IsCollectionDefined(IncludedEventTypes))
             {
                 writer.WritePropertyName("includedEventTypes"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Filters))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> includedEventTypes = default;
-            Core.Optional<IList<EventGridFilter>> filters = default;
+            Optional<IList<string>> includedEventTypes = default;
+            Optional<IList<EventGridFilter>> filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includedEventTypes"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new FiltersConfiguration(Core.Optional.ToList(includedEventTypes), Core.Optional.ToList(filters));
+            return new FiltersConfiguration(Optional.ToList(includedEventTypes), Optional.ToList(filters));
         }
     }
 }

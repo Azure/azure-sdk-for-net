@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <summary> Initializes a new instance of ManagementGroupChildOptions. </summary>
         internal ManagementGroupChildOptions()
         {
-            Children = new Core.ChangeTrackingList<ManagementGroupChildOptions>();
+            Children = new ChangeTrackingList<ManagementGroupChildOptions>();
         }
 
         /// <summary> The fully qualified resource type which includes provider namespace (e.g. Microsoft.Management/managementGroups). </summary>

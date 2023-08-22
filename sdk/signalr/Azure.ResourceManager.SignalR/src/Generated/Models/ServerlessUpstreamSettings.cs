@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of ServerlessUpstreamSettings. </summary>
         public ServerlessUpstreamSettings()
         {
-            Templates = new Core.ChangeTrackingList<SignalRUpstreamTemplate>();
+            Templates = new ChangeTrackingList<SignalRUpstreamTemplate>();
         }
 
         /// <summary> Initializes a new instance of ServerlessUpstreamSettings. </summary>

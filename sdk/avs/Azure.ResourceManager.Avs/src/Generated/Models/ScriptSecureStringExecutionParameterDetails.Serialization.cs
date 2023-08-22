@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class ScriptSecureStringExecutionParameterDetails : Core.IUtf8JsonSerializable
+    public partial class ScriptSecureStringExecutionParameterDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecureValue))
+            if (Optional.IsDefined(SecureValue))
             {
                 writer.WritePropertyName("secureValue"u8);
                 writer.WriteStringValue(SecureValue);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<string> secureValue = default;
+            Optional<string> secureValue = default;
             string name = default;
             ScriptExecutionParameterType type = default;
             foreach (var property in element.EnumerateObject())

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class RoutingEnrichments : Core.IUtf8JsonSerializable
+    public partial class RoutingEnrichments : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Static))
+            if (Optional.IsCollectionDefined(Static))
             {
                 writer.WritePropertyName("static"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Dynamic))
+            if (Optional.IsCollectionDefined(Dynamic))
             {
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<IList<StaticRoutingEnrichment>> @static = default;
-            Core.Optional<IList<DynamicRoutingEnrichment>> @dynamic = default;
+            Optional<IList<StaticRoutingEnrichment>> @static = default;
+            Optional<IList<DynamicRoutingEnrichment>> @dynamic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("static"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new RoutingEnrichments(Core.Optional.ToList(@static), Core.Optional.ToList(@dynamic));
+            return new RoutingEnrichments(Optional.ToList(@static), Optional.ToList(@dynamic));
         }
     }
 }

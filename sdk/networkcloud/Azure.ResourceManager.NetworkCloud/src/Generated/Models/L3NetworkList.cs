@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of L3NetworkList. </summary>
         internal L3NetworkList()
         {
-            Value = new Core.ChangeTrackingList<NetworkCloudL3NetworkData>();
+            Value = new ChangeTrackingList<NetworkCloudL3NetworkData>();
         }
 
         /// <summary> Initializes a new instance of L3NetworkList. </summary>

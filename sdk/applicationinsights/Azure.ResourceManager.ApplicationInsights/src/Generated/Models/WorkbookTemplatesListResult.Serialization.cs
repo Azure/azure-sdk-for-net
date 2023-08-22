@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<WorkbookTemplateData>> value = default;
+            Optional<IReadOnlyList<WorkbookTemplateData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new WorkbookTemplatesListResult(Core.Optional.ToList(value));
+            return new WorkbookTemplatesListResult(Optional.ToList(value));
         }
     }
 }

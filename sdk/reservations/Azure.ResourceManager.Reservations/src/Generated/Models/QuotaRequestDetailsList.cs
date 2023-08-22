@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of QuotaRequestDetailsList. </summary>
         internal QuotaRequestDetailsList()
         {
-            Value = new Core.ChangeTrackingList<QuotaRequestDetailData>();
+            Value = new ChangeTrackingList<QuotaRequestDetailData>();
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailsList. </summary>

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxDeploymentProperties : Core.IUtf8JsonSerializable
+    public partial class NginxDeploymentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ManagedResourceGroup))
+            if (Optional.IsDefined(ManagedResourceGroup))
             {
                 writer.WritePropertyName("managedResourceGroup"u8);
                 writer.WriteStringValue(ManagedResourceGroup);
             }
-            if (Core.Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Core.Optional.IsDefined(EnableDiagnosticsSupport))
+            if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Core.Optional.IsDefined(Logging))
+            if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> nginxVersion = default;
-            Core.Optional<string> managedResourceGroup = default;
-            Core.Optional<NginxNetworkProfile> networkProfile = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<bool> enableDiagnosticsSupport = default;
-            Core.Optional<NginxLogging> logging = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> nginxVersion = default;
+            Optional<string> managedResourceGroup = default;
+            Optional<NginxNetworkProfile> networkProfile = default;
+            Optional<string> ipAddress = default;
+            Optional<bool> enableDiagnosticsSupport = default;
+            Optional<NginxLogging> logging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new NginxDeploymentProperties(Core.Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Core.Optional.ToNullable(enableDiagnosticsSupport), logging.Value);
+            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value);
         }
     }
 }

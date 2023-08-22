@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of BuildpacksGroupProperties. </summary>
         public BuildpacksGroupProperties()
         {
-            Buildpacks = new Core.ChangeTrackingList<WritableSubResource>();
+            Buildpacks = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of BuildpacksGroupProperties. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class SendTypingNotificationRequest : Core.IUtf8JsonSerializable
+    internal partial class SendTypingNotificationRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SenderDisplayName))
+            if (Optional.IsDefined(SenderDisplayName))
             {
                 writer.WritePropertyName("senderDisplayName"u8);
                 writer.WriteStringValue(SenderDisplayName);

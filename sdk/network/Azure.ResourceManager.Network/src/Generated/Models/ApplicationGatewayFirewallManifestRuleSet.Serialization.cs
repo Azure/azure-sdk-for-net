@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Core.Optional<ApplicationGatewayRuleSetStatusOption> status = default;
-            Core.Optional<IReadOnlyList<ApplicationGatewayTierType>> tiers = default;
+            Optional<ApplicationGatewayRuleSetStatusOption> status = default;
+            Optional<IReadOnlyList<ApplicationGatewayTierType>> tiers = default;
             IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayFirewallManifestRuleSet(ruleSetType, ruleSetVersion, Core.Optional.ToNullable(status), Core.Optional.ToList(tiers), ruleGroups);
+            return new ApplicationGatewayFirewallManifestRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(status), Optional.ToList(tiers), ruleGroups);
         }
     }
 }

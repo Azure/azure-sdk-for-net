@@ -12,39 +12,39 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkVirtualApplianceConnectionData : Core.IUtf8JsonSerializable
+    public partial class NetworkVirtualApplianceConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (Core.Optional.IsDefined(Asn))
+            if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (Core.Optional.IsDefined(TunnelIdentifier))
+            if (Optional.IsDefined(TunnelIdentifier))
             {
                 writer.WritePropertyName("tunnelIdentifier"u8);
                 writer.WriteNumberValue(TunnelIdentifier.Value);
             }
-            if (Core.Optional.IsCollectionDefined(BgpPeerAddress))
+            if (Optional.IsCollectionDefined(BgpPeerAddress))
             {
                 writer.WritePropertyName("bgpPeerAddress"u8);
                 writer.WriteStartArray();
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableInternetSecurity))
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Core.Optional.IsDefined(RoutingConfiguration))
+            if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration);
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> name0 = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<long> asn = default;
-            Core.Optional<long> tunnelIdentifier = default;
-            Core.Optional<IList<string>> bgpPeerAddress = default;
-            Core.Optional<bool> enableInternetSecurity = default;
-            Core.Optional<RoutingConfigurationNfv> routingConfiguration = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> name0 = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<long> asn = default;
+            Optional<long> tunnelIdentifier = default;
+            Optional<IList<string>> bgpPeerAddress = default;
+            Optional<bool> enableInternetSecurity = default;
+            Optional<RoutingConfigurationNfv> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkVirtualApplianceConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), name0.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(asn), Core.Optional.ToNullable(tunnelIdentifier), Core.Optional.ToList(bgpPeerAddress), Core.Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value);
+            return new NetworkVirtualApplianceConnectionData(id.Value, name.Value, Optional.ToNullable(type), name0.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(asn), Optional.ToNullable(tunnelIdentifier), Optional.ToList(bgpPeerAddress), Optional.ToNullable(enableInternetSecurity), routingConfiguration.Value);
         }
     }
 }

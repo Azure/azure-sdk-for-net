@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class DiagnosticsStorageAccountConfig : Core.IUtf8JsonSerializable
+    public partial class DiagnosticsStorageAccountConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
             writer.WritePropertyName("protectedAccountKeyName"u8);
             writer.WriteStringValue(ProtectedAccountKeyName);
-            if (Core.Optional.IsDefined(ProtectedAccountKeyName2))
+            if (Optional.IsDefined(ProtectedAccountKeyName2))
             {
                 writer.WritePropertyName("protectedAccountKeyName2"u8);
                 writer.WriteStringValue(ProtectedAccountKeyName2);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
-            Core.Optional<string> protectedAccountKeyName2 = default;
+            Optional<string> protectedAccountKeyName2 = default;
             Uri blobEndpoint = default;
             Uri queueEndpoint = default;
             Uri tableEndpoint = default;

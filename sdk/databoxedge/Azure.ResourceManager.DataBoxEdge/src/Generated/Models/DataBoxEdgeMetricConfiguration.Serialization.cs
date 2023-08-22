@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeMetricConfiguration : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeMetricConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Core.Optional.IsDefined(MdmAccount))
+            if (Optional.IsDefined(MdmAccount))
             {
                 writer.WritePropertyName("mdmAccount"u8);
                 writer.WriteStringValue(MdmAccount);
             }
-            if (Core.Optional.IsDefined(MetricNameSpace))
+            if (Optional.IsDefined(MetricNameSpace))
             {
                 writer.WritePropertyName("metricNameSpace"u8);
                 writer.WriteStringValue(MetricNameSpace);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Core.Optional<string> mdmAccount = default;
-            Core.Optional<string> metricNameSpace = default;
+            Optional<string> mdmAccount = default;
+            Optional<string> metricNameSpace = default;
             IList<DataBoxEdgeMetricCounterSet> counterSets = default;
             foreach (var property in element.EnumerateObject())
             {

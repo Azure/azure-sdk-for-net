@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of VmPlacementRequestResult. </summary>
         public VmPlacementRequestResult()
         {
-            VmSize = new Core.ChangeTrackingList<string>();
+            VmSize = new ChangeTrackingList<string>();
         }
 
         /// <summary> List of VM sizes being checked. </summary>

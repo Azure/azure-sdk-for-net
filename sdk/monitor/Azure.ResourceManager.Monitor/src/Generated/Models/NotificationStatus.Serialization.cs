@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<NotificationContext> context = default;
+            Optional<NotificationContext> context = default;
             string state = default;
-            Core.Optional<DateTimeOffset> completedTime = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
+            Optional<DateTimeOffset> completedTime = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<IReadOnlyList<NotificationActionDetail>> actionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("context"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new NotificationStatus(context.Value, state, Core.Optional.ToNullable(completedTime), Core.Optional.ToNullable(createdTime), Core.Optional.ToList(actionDetails));
+            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails));
         }
     }
 }

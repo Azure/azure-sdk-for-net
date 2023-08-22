@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsSku : Core.IUtf8JsonSerializable
+    public partial class MapsSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Maps.Models
                 return null;
             }
             MapsSkuName name = default;
-            Core.Optional<string> tier = default;
+            Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

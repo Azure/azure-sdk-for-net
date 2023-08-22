@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> databaseName = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<MigrationState> state = default;
-            Core.Optional<DatabaseMigrationStage> stage = default;
-            Core.Optional<string> statusMessage = default;
-            Core.Optional<string> message = default;
-            Core.Optional<long> numberOfObjects = default;
-            Core.Optional<long> numberOfObjectsCompleted = default;
-            Core.Optional<long> errorCount = default;
-            Core.Optional<string> errorPrefix = default;
-            Core.Optional<string> resultPrefix = default;
-            Core.Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Core.Optional<string> objectSummary = default;
-            Core.Optional<string> id = default;
+            Optional<string> databaseName = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<MigrationState> state = default;
+            Optional<DatabaseMigrationStage> stage = default;
+            Optional<string> statusMessage = default;
+            Optional<string> message = default;
+            Optional<long> numberOfObjects = default;
+            Optional<long> numberOfObjectsCompleted = default;
+            Optional<long> errorCount = default;
+            Optional<string> errorPrefix = default;
+            Optional<string> resultPrefix = default;
+            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            Optional<string> objectSummary = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), Core.Optional.ToNullable(state), Core.Optional.ToNullable(stage), statusMessage.Value, message.Value, Core.Optional.ToNullable(numberOfObjects), Core.Optional.ToNullable(numberOfObjectsCompleted), Core.Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Core.Optional.ToList(exceptionsAndWarnings), objectSummary.Value);
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), Optional.ToNullable(stage), statusMessage.Value, message.Value, Optional.ToNullable(numberOfObjects), Optional.ToNullable(numberOfObjectsCompleted), Optional.ToNullable(errorCount), errorPrefix.Value, resultPrefix.Value, Optional.ToList(exceptionsAndWarnings), objectSummary.Value);
         }
     }
 }

@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> statusDetails = default;
-            Core.Optional<string> runOn = default;
-            Core.Optional<DateTimeOffset?> startTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
-            Core.Optional<string> exception = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Core.Optional<int> logActivityTrace = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<string> status = default;
+            Optional<string> statusDetails = default;
+            Optional<string> runOn = default;
+            Optional<DateTimeOffset?> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Optional<string> exception = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<DateTimeOffset?> lastStatusModifiedTime = default;
+            Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            Optional<int> logActivityTrace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("creationTime"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new RunbookTestJob(Core.Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), exception.Value, Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(lastStatusModifiedTime), Core.Optional.ToDictionary(parameters), Core.Optional.ToNullable(logActivityTrace));
+            return new RunbookTestJob(Optional.ToNullable(creationTime), status.Value, statusDetails.Value, runOn.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(logActivityTrace));
         }
     }
 }

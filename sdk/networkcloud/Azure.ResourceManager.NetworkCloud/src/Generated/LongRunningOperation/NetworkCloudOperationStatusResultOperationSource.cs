@@ -14,15 +14,15 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudOperationStatusResultOperationSource : Core.IOperationSource<NetworkCloudOperationStatusResult>
+    internal class NetworkCloudOperationStatusResultOperationSource : IOperationSource<NetworkCloudOperationStatusResult>
     {
-        NetworkCloudOperationStatusResult Core.IOperationSource<NetworkCloudOperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkCloudOperationStatusResult IOperationSource<NetworkCloudOperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement);
         }
 
-        async ValueTask<NetworkCloudOperationStatusResult> Core.IOperationSource<NetworkCloudOperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkCloudOperationStatusResult> IOperationSource<NetworkCloudOperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NetworkCloudOperationStatusResult.DeserializeNetworkCloudOperationStatusResult(document.RootElement);

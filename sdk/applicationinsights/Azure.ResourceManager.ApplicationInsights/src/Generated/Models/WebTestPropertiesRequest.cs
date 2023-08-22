@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of WebTestPropertiesRequest. </summary>
         public WebTestPropertiesRequest()
         {
-            Headers = new Core.ChangeTrackingList<HeaderField>();
+            Headers = new ChangeTrackingList<HeaderField>();
         }
 
         /// <summary> Initializes a new instance of WebTestPropertiesRequest. </summary>

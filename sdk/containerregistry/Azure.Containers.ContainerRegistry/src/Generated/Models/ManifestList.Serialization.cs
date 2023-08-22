@@ -19,9 +19,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<string> mediaType = default;
-            Core.Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
-            Core.Optional<int> schemaVersion = default;
+            Optional<string> mediaType = default;
+            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
+            Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -53,7 +53,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestList(Core.Optional.ToNullable(schemaVersion), mediaType.Value, Core.Optional.ToList(manifests));
+            return new ManifestList(Optional.ToNullable(schemaVersion), mediaType.Value, Optional.ToList(manifests));
         }
     }
 }

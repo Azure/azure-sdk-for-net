@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Core.Optional<ElasticDeploymentStatus> status = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> memoryCapacity = default;
-            Core.Optional<string> diskCapacity = default;
+            Optional<ElasticDeploymentStatus> status = default;
+            Optional<string> version = default;
+            Optional<string> memoryCapacity = default;
+            Optional<string> diskCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new DeploymentInfoResponse(Core.Optional.ToNullable(status), version.Value, memoryCapacity.Value, diskCapacity.Value);
+            return new DeploymentInfoResponse(Optional.ToNullable(status), version.Value, memoryCapacity.Value, diskCapacity.Value);
         }
     }
 }

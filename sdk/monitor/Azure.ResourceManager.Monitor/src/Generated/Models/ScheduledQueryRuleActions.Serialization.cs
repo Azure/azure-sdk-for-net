@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ScheduledQueryRuleActions : Core.IUtf8JsonSerializable
+    public partial class ScheduledQueryRuleActions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ActionGroups))
+            if (Optional.IsCollectionDefined(ActionGroups))
             {
                 writer.WritePropertyName("actionGroups"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(CustomProperties))
+            if (Optional.IsCollectionDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> actionGroups = default;
-            Core.Optional<IDictionary<string, string>> customProperties = default;
+            Optional<IList<string>> actionGroups = default;
+            Optional<IDictionary<string, string>> customProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionGroups"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new ScheduledQueryRuleActions(Core.Optional.ToList(actionGroups), Core.Optional.ToDictionary(customProperties));
+            return new ScheduledQueryRuleActions(Optional.ToList(actionGroups), Optional.ToDictionary(customProperties));
         }
     }
 }

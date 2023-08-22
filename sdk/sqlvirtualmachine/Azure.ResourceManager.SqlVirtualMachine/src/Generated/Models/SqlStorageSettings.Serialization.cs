@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlStorageSettings : Core.IUtf8JsonSerializable
+    public partial class SqlStorageSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Luns))
+            if (Optional.IsCollectionDefined(Luns))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultFilePath))
+            if (Optional.IsDefined(DefaultFilePath))
             {
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<IList<int>> luns = default;
-            Core.Optional<string> defaultFilePath = default;
+            Optional<IList<int>> luns = default;
+            Optional<string> defaultFilePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("luns"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     continue;
                 }
             }
-            return new SqlStorageSettings(Core.Optional.ToList(luns), defaultFilePath.Value);
+            return new SqlStorageSettings(Optional.ToList(luns), defaultFilePath.Value);
         }
     }
 }

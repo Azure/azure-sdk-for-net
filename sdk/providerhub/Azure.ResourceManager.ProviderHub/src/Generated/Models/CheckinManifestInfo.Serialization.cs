@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             bool isCheckedIn = default;
             string statusMessage = default;
-            Core.Optional<string> pullRequest = default;
-            Core.Optional<string> commitId = default;
+            Optional<string> pullRequest = default;
+            Optional<string> commitId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isCheckedIn"u8))

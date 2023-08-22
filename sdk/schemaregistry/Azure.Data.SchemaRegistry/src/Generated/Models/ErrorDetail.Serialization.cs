@@ -21,7 +21,7 @@ namespace Azure.Data.SchemaRegistry.Models
             }
             string code = default;
             string message = default;
-            Core.Optional<IReadOnlyList<ErrorDetail>> details = default;
+            Optional<IReadOnlyList<ErrorDetail>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -49,7 +49,7 @@ namespace Azure.Data.SchemaRegistry.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, Core.Optional.ToList(details));
+            return new ErrorDetail(code, message, Optional.ToList(details));
         }
     }
 }

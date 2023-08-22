@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <summary> Initializes a new instance of AvailableGroundStationListResult. </summary>
         internal AvailableGroundStationListResult()
         {
-            Value = new Core.ChangeTrackingList<AvailableGroundStationData>();
+            Value = new ChangeTrackingList<AvailableGroundStationData>();
         }
 
         /// <summary> Initializes a new instance of AvailableGroundStationListResult. </summary>

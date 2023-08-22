@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LogicAppResourceId))
+            if (Optional.IsDefined(LogicAppResourceId))
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Core.Optional.IsDefined(TriggerUri))
+            if (Optional.IsDefined(TriggerUri))
             {
                 writer.WritePropertyName("triggerUri"u8);
                 writer.WriteStringValue(TriggerUri.AbsoluteUri);
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> logicAppResourceId = default;
-            Core.Optional<Uri> triggerUri = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> logicAppResourceId = default;
+            Optional<Uri> triggerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(id, name, type, systemData.Value, logicAppResourceId.Value, triggerUri.Value, Core.Optional.ToNullable(etag));
+            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(id, name, type, systemData.Value, logicAppResourceId.Value, triggerUri.Value, Optional.ToNullable(etag));
         }
     }
 }

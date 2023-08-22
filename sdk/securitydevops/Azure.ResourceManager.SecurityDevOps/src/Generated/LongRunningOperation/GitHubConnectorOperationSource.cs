@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
-    internal class GitHubConnectorOperationSource : Core.IOperationSource<GitHubConnectorResource>
+    internal class GitHubConnectorOperationSource : IOperationSource<GitHubConnectorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityDevOps
             _client = client;
         }
 
-        GitHubConnectorResource Core.IOperationSource<GitHubConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GitHubConnectorResource IOperationSource<GitHubConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = GitHubConnectorData.DeserializeGitHubConnectorData(document.RootElement);
             return new GitHubConnectorResource(_client, data);
         }
 
-        async ValueTask<GitHubConnectorResource> Core.IOperationSource<GitHubConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GitHubConnectorResource> IOperationSource<GitHubConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = GitHubConnectorData.DeserializeGitHubConnectorData(document.RootElement);

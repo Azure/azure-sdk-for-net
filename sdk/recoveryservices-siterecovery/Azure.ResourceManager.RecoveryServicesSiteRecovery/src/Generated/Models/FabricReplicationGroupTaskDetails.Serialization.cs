@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> skippedReason = default;
-            Core.Optional<string> skippedReasonString = default;
-            Core.Optional<SiteRecoveryJobEntity> jobTask = default;
+            Optional<string> skippedReason = default;
+            Optional<string> skippedReasonString = default;
+            Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

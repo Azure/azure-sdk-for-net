@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorEmailReceiver : Core.IUtf8JsonSerializable
+    public partial class MonitorEmailReceiver : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
-            if (Core.Optional.IsDefined(UseCommonAlertSchema))
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string name = default;
             string emailAddress = default;
-            Core.Optional<bool> useCommonAlertSchema = default;
-            Core.Optional<MonitorReceiverStatus> status = default;
+            Optional<bool> useCommonAlertSchema = default;
+            Optional<MonitorReceiverStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorEmailReceiver(name, emailAddress, Core.Optional.ToNullable(useCommonAlertSchema), Core.Optional.ToNullable(status));
+            return new MonitorEmailReceiver(name, emailAddress, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(status));
         }
     }
 }

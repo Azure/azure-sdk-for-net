@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigurationServiceResourceList. </summary>
         internal ConfigurationServiceResourceList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformConfigurationServiceData>();
+            Value = new ChangeTrackingList<AppPlatformConfigurationServiceData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationServiceResourceList. </summary>

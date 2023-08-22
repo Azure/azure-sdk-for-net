@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of DataStreamDeclaration. </summary>
         public DataStreamDeclaration()
         {
-            Columns = new Core.ChangeTrackingList<DataColumnDefinition>();
+            Columns = new ChangeTrackingList<DataColumnDefinition>();
         }
 
         /// <summary> Initializes a new instance of DataStreamDeclaration. </summary>

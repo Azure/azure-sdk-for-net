@@ -12,21 +12,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricTrigger : Core.IUtf8JsonSerializable
+    public partial class MetricTrigger : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
-            if (Core.Optional.IsDefined(MetricNamespace))
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("metricResourceUri"u8);
             writer.WriteStringValue(MetricResourceId);
-            if (Core.Optional.IsDefined(MetricResourceLocation))
+            if (Optional.IsDefined(MetricResourceLocation))
             {
                 writer.WritePropertyName("metricResourceLocation"u8);
                 writer.WriteStringValue(MetricResourceLocation.Value);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            if (Core.Optional.IsCollectionDefined(Dimensions))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 if (Dimensions != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Core.Optional.IsDefined(IsDividedPerInstance))
+            if (Optional.IsDefined(IsDividedPerInstance))
             {
                 writer.WritePropertyName("dividePerInstance"u8);
                 writer.WriteBooleanValue(IsDividedPerInstance.Value);
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string metricName = default;
-            Core.Optional<string> metricNamespace = default;
+            Optional<string> metricNamespace = default;
             ResourceIdentifier metricResourceUri = default;
-            Core.Optional<AzureLocation> metricResourceLocation = default;
+            Optional<AzureLocation> metricResourceLocation = default;
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
             TimeSpan timeWindow = default;
             MetricTriggerTimeAggregationType timeAggregation = default;
             MetricTriggerComparisonOperation @operator = default;
             double threshold = default;
-            Core.Optional<IList<AutoscaleRuleMetricDimension>> dimensions = default;
-            Core.Optional<bool> dividePerInstance = default;
+            Optional<IList<AutoscaleRuleMetricDimension>> dimensions = default;
+            Optional<bool> dividePerInstance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricTrigger(metricName, metricNamespace.Value, metricResourceUri, Core.Optional.ToNullable(metricResourceLocation), timeGrain, statistic, timeWindow, timeAggregation, @operator, threshold, Core.Optional.ToList(dimensions), Core.Optional.ToNullable(dividePerInstance));
+            return new MetricTrigger(metricName, metricNamespace.Value, metricResourceUri, Optional.ToNullable(metricResourceLocation), timeGrain, statistic, timeWindow, timeAggregation, @operator, threshold, Optional.ToList(dimensions), Optional.ToNullable(dividePerInstance));
         }
     }
 }

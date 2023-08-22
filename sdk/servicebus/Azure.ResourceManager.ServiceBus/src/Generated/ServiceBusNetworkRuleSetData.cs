@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetData. </summary>
         public ServiceBusNetworkRuleSetData()
         {
-            VirtualNetworkRules = new Core.ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>();
-            IPRules = new Core.ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>();
+            VirtualNetworkRules = new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>();
+            IPRules = new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetData. </summary>

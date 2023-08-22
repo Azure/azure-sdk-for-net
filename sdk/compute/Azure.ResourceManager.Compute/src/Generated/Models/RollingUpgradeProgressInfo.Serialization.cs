@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<int> successfulInstanceCount = default;
-            Core.Optional<int> failedInstanceCount = default;
-            Core.Optional<int> inProgressInstanceCount = default;
-            Core.Optional<int> pendingInstanceCount = default;
+            Optional<int> successfulInstanceCount = default;
+            Optional<int> failedInstanceCount = default;
+            Optional<int> inProgressInstanceCount = default;
+            Optional<int> pendingInstanceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfulInstanceCount"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RollingUpgradeProgressInfo(Core.Optional.ToNullable(successfulInstanceCount), Core.Optional.ToNullable(failedInstanceCount), Core.Optional.ToNullable(inProgressInstanceCount), Core.Optional.ToNullable(pendingInstanceCount));
+            return new RollingUpgradeProgressInfo(Optional.ToNullable(successfulInstanceCount), Optional.ToNullable(failedInstanceCount), Optional.ToNullable(inProgressInstanceCount), Optional.ToNullable(pendingInstanceCount));
         }
     }
 }

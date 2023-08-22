@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionListResult. </summary>
         internal SynapseTransparentDataEncryptionListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseTransparentDataEncryptionData>();
+            Value = new ChangeTrackingList<SynapseTransparentDataEncryptionData>();
         }
 
         /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionListResult. </summary>

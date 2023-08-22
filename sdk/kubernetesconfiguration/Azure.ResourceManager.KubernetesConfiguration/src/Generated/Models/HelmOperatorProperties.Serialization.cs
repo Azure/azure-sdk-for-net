@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class HelmOperatorProperties : Core.IUtf8JsonSerializable
+    public partial class HelmOperatorProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ChartVersion))
+            if (Optional.IsDefined(ChartVersion))
             {
                 writer.WritePropertyName("chartVersion"u8);
                 writer.WriteStringValue(ChartVersion);
             }
-            if (Core.Optional.IsDefined(ChartValues))
+            if (Optional.IsDefined(ChartValues))
             {
                 writer.WritePropertyName("chartValues"u8);
                 writer.WriteStringValue(ChartValues);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> chartVersion = default;
-            Core.Optional<string> chartValues = default;
+            Optional<string> chartVersion = default;
+            Optional<string> chartValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("chartVersion"u8))

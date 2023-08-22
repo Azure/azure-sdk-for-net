@@ -24,8 +24,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             ModelId = modelId;
             CreatedOn = createdOn;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            DocumentTypes = new Core.ChangeTrackingDictionary<string, DocumentTypeDetails>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            DocumentTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
         }
 
         /// <summary> Initializes a new instance of DocumentModelDetails. </summary>

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of ResourceGuardProperties. </summary>
         public ResourceGuardProperties()
         {
-            ResourceGuardOperations = new Core.ChangeTrackingList<ResourceGuardOperationDetails>();
-            VaultCriticalOperationExclusionList = new Core.ChangeTrackingList<string>();
+            ResourceGuardOperations = new ChangeTrackingList<ResourceGuardOperationDetails>();
+            VaultCriticalOperationExclusionList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceGuardProperties. </summary>

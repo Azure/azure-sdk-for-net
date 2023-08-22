@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MySql
             uri.AppendPath(serverName, true);
             uri.AppendPath("/queryTexts", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (queryIds != null && Core.Optional.IsCollectionDefined(queryIds))
+            if (queryIds != null && Optional.IsCollectionDefined(queryIds))
             {
                 foreach (var param in queryIds)
                 {

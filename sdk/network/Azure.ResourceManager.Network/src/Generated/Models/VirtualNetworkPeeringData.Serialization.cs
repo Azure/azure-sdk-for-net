@@ -14,79 +14,79 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkPeeringData : Core.IUtf8JsonSerializable
+    public partial class VirtualNetworkPeeringData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AllowVirtualNetworkAccess))
+            if (Optional.IsDefined(AllowVirtualNetworkAccess))
             {
                 writer.WritePropertyName("allowVirtualNetworkAccess"u8);
                 writer.WriteBooleanValue(AllowVirtualNetworkAccess.Value);
             }
-            if (Core.Optional.IsDefined(AllowForwardedTraffic))
+            if (Optional.IsDefined(AllowForwardedTraffic))
             {
                 writer.WritePropertyName("allowForwardedTraffic"u8);
                 writer.WriteBooleanValue(AllowForwardedTraffic.Value);
             }
-            if (Core.Optional.IsDefined(AllowGatewayTransit))
+            if (Optional.IsDefined(AllowGatewayTransit))
             {
                 writer.WritePropertyName("allowGatewayTransit"u8);
                 writer.WriteBooleanValue(AllowGatewayTransit.Value);
             }
-            if (Core.Optional.IsDefined(UseRemoteGateways))
+            if (Optional.IsDefined(UseRemoteGateways))
             {
                 writer.WritePropertyName("useRemoteGateways"u8);
                 writer.WriteBooleanValue(UseRemoteGateways.Value);
             }
-            if (Core.Optional.IsDefined(RemoteVirtualNetwork))
+            if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
-            if (Core.Optional.IsDefined(RemoteAddressSpace))
+            if (Optional.IsDefined(RemoteAddressSpace))
             {
                 writer.WritePropertyName("remoteAddressSpace"u8);
                 writer.WriteObjectValue(RemoteAddressSpace);
             }
-            if (Core.Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
+            if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
                 writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace);
             }
-            if (Core.Optional.IsDefined(RemoteBgpCommunities))
+            if (Optional.IsDefined(RemoteBgpCommunities))
             {
                 writer.WritePropertyName("remoteBgpCommunities"u8);
                 writer.WriteObjectValue(RemoteBgpCommunities);
             }
-            if (Core.Optional.IsDefined(PeeringState))
+            if (Optional.IsDefined(PeeringState))
             {
                 writer.WritePropertyName("peeringState"u8);
                 writer.WriteStringValue(PeeringState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PeeringSyncLevel))
+            if (Optional.IsDefined(PeeringSyncLevel))
             {
                 writer.WritePropertyName("peeringSyncLevel"u8);
                 writer.WriteStringValue(PeeringSyncLevel.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DoNotVerifyRemoteGateways))
+            if (Optional.IsDefined(DoNotVerifyRemoteGateways))
             {
                 writer.WritePropertyName("doNotVerifyRemoteGateways"u8);
                 writer.WriteBooleanValue(DoNotVerifyRemoteGateways.Value);
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<bool> allowVirtualNetworkAccess = default;
-            Core.Optional<bool> allowForwardedTraffic = default;
-            Core.Optional<bool> allowGatewayTransit = default;
-            Core.Optional<bool> useRemoteGateways = default;
-            Core.Optional<WritableSubResource> remoteVirtualNetwork = default;
-            Core.Optional<AddressSpace> remoteAddressSpace = default;
-            Core.Optional<AddressSpace> remoteVirtualNetworkAddressSpace = default;
-            Core.Optional<VirtualNetworkBgpCommunities> remoteBgpCommunities = default;
-            Core.Optional<VirtualNetworkEncryption> remoteVirtualNetworkEncryption = default;
-            Core.Optional<VirtualNetworkPeeringState> peeringState = default;
-            Core.Optional<VirtualNetworkPeeringLevel> peeringSyncLevel = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<bool> doNotVerifyRemoteGateways = default;
-            Core.Optional<Guid> resourceGuid = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<bool> allowVirtualNetworkAccess = default;
+            Optional<bool> allowForwardedTraffic = default;
+            Optional<bool> allowGatewayTransit = default;
+            Optional<bool> useRemoteGateways = default;
+            Optional<WritableSubResource> remoteVirtualNetwork = default;
+            Optional<AddressSpace> remoteAddressSpace = default;
+            Optional<AddressSpace> remoteVirtualNetworkAddressSpace = default;
+            Optional<VirtualNetworkBgpCommunities> remoteBgpCommunities = default;
+            Optional<VirtualNetworkEncryption> remoteVirtualNetworkEncryption = default;
+            Optional<VirtualNetworkPeeringState> peeringState = default;
+            Optional<VirtualNetworkPeeringLevel> peeringSyncLevel = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<bool> doNotVerifyRemoteGateways = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkPeeringData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(allowVirtualNetworkAccess), Core.Optional.ToNullable(allowForwardedTraffic), Core.Optional.ToNullable(allowGatewayTransit), Core.Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, remoteVirtualNetworkEncryption.Value, Core.Optional.ToNullable(peeringState), Core.Optional.ToNullable(peeringSyncLevel), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(doNotVerifyRemoteGateways), Core.Optional.ToNullable(resourceGuid));
+            return new VirtualNetworkPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(allowVirtualNetworkAccess), Optional.ToNullable(allowForwardedTraffic), Optional.ToNullable(allowGatewayTransit), Optional.ToNullable(useRemoteGateways), remoteVirtualNetwork, remoteAddressSpace.Value, remoteVirtualNetworkAddressSpace.Value, remoteBgpCommunities.Value, remoteVirtualNetworkEncryption.Value, Optional.ToNullable(peeringState), Optional.ToNullable(peeringSyncLevel), Optional.ToNullable(provisioningState), Optional.ToNullable(doNotVerifyRemoteGateways), Optional.ToNullable(resourceGuid));
         }
     }
 }

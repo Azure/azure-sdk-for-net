@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<IReadOnlyList<string>> values = default;
-            Core.Optional<StorageCacheRestrictionReasonCode> reasonCode = default;
+            Optional<string> type = default;
+            Optional<IReadOnlyList<string>> values = default;
+            Optional<StorageCacheRestrictionReasonCode> reasonCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheRestriction(type.Value, Core.Optional.ToList(values), Core.Optional.ToNullable(reasonCode));
+            return new StorageCacheRestriction(type.Value, Optional.ToList(values), Optional.ToNullable(reasonCode));
         }
     }
 }

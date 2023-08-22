@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformServiceProperties : Core.IUtf8JsonSerializable
+    public partial class AppPlatformServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetworkProfile))
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (Core.Optional.IsDefined(VnetAddons))
+            if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
                 writer.WriteObjectValue(VnetAddons);
             }
-            if (Core.Optional.IsDefined(IsZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<AppPlatformServiceProvisioningState> provisioningState = default;
-            Core.Optional<AppPlatformServiceNetworkProfile> networkProfile = default;
-            Core.Optional<ServiceVnetAddons> vnetAddons = default;
-            Core.Optional<int> version = default;
-            Core.Optional<string> serviceId = default;
-            Core.Optional<AppPlatformServicePowerState> powerState = default;
-            Core.Optional<bool> zoneRedundant = default;
-            Core.Optional<string> fqdn = default;
+            Optional<AppPlatformServiceProvisioningState> provisioningState = default;
+            Optional<AppPlatformServiceNetworkProfile> networkProfile = default;
+            Optional<ServiceVnetAddons> vnetAddons = default;
+            Optional<int> version = default;
+            Optional<string> serviceId = default;
+            Optional<AppPlatformServicePowerState> powerState = default;
+            Optional<bool> zoneRedundant = default;
+            Optional<string> fqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformServiceProperties(Core.Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Core.Optional.ToNullable(version), serviceId.Value, Core.Optional.ToNullable(powerState), Core.Optional.ToNullable(zoneRedundant), fqdn.Value);
+            return new AppPlatformServiceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), serviceId.Value, Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value);
         }
     }
 }

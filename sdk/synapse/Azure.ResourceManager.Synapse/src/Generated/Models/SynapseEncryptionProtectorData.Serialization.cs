@@ -13,19 +13,19 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseEncryptionProtectorData : Core.IUtf8JsonSerializable
+    public partial class SynapseEncryptionProtectorData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServerKeyName))
+            if (Optional.IsDefined(ServerKeyName))
             {
                 writer.WritePropertyName("serverKeyName"u8);
                 writer.WriteStringValue(ServerKeyName);
             }
-            if (Core.Optional.IsDefined(ServerKeyType))
+            if (Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> subregion = default;
-            Core.Optional<string> serverKeyName = default;
-            Core.Optional<SynapseServerKeyType> serverKeyType = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<BinaryData> thumbprint = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> subregion = default;
+            Optional<string> serverKeyName = default;
+            Optional<SynapseServerKeyType> serverKeyType = default;
+            Optional<Uri> uri = default;
+            Optional<BinaryData> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Core.Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value);
+            return new SynapseEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value);
         }
     }
 }

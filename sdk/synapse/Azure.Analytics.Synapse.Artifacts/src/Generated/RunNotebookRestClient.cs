@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(runNotebookRequest);
             request.Content = content;
             return message;
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runNotebookRequest"> Run notebook request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="runNotebookRequest"/> is null. </exception>
-        public async Task<Core.ResponseWithHeaders<RunNotebookCreateRunHeaders>> CreateRunAsync(string runId, RunNotebookRequest runNotebookRequest, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<RunNotebookCreateRunHeaders>> CreateRunAsync(string runId, RunNotebookRequest runNotebookRequest, CancellationToken cancellationToken = default)
         {
             if (runId == null)
             {
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runNotebookRequest"> Run notebook request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="runNotebookRequest"/> is null. </exception>
-        public Core.ResponseWithHeaders<RunNotebookCreateRunHeaders> CreateRun(string runId, RunNotebookRequest runNotebookRequest, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<RunNotebookCreateRunHeaders> CreateRun(string runId, RunNotebookRequest runNotebookRequest, CancellationToken cancellationToken = default)
         {
             if (runId == null)
             {
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

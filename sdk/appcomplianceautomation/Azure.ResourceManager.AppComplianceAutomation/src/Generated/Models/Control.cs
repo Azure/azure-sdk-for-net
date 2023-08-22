@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> Initializes a new instance of Control. </summary>
         internal Control()
         {
-            Assessments = new Core.ChangeTrackingList<Assessment>();
+            Assessments = new ChangeTrackingList<Assessment>();
         }
 
         /// <summary> Initializes a new instance of Control. </summary>

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Models
             Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
-            Operations = new Core.ChangeTrackingList<OperationStatusResult>();
+            Operations = new ChangeTrackingList<OperationStatusResult>();
         }
 
         /// <summary> Initializes a new instance of OperationStatusResult. </summary>

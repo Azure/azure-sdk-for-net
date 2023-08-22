@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ExpressRouteGatewayPropertiesAutoScaleConfiguration : Core.IUtf8JsonSerializable
+    internal partial class ExpressRouteGatewayPropertiesAutoScaleConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Bounds))
+            if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
                 writer.WriteObjectValue(Bounds);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds> bounds = default;
+            Optional<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds> bounds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bounds"u8))

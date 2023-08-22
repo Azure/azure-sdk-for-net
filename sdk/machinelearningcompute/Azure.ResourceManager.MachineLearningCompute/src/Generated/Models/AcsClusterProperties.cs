@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public AcsClusterProperties(OrchestratorType orchestratorType)
         {
             OrchestratorType = orchestratorType;
-            SystemServices = new Core.ChangeTrackingList<SystemService>();
+            SystemServices = new ChangeTrackingList<SystemService>();
         }
 
         /// <summary> Initializes a new instance of AcsClusterProperties. </summary>

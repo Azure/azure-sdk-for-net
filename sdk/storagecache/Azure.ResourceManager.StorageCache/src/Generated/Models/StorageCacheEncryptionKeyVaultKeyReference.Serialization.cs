@@ -12,9 +12,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheEncryptionKeyVaultKeyReference : Core.IUtf8JsonSerializable
+    public partial class StorageCacheEncryptionKeyVaultKeyReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyUrl"u8);

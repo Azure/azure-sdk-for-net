@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Core.Optional<AppServiceArmPlan> plan = default;
-            Core.Optional<RemotePrivateEndpointConnection> properties = default;
-            Core.Optional<AppServiceSkuDescription> sku = default;
-            Core.Optional<string> status = default;
-            Core.Optional<ResponseError> error = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
+            Optional<AzureLocation> location = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<AppServiceArmPlan> plan = default;
+            Optional<RemotePrivateEndpointConnection> properties = default;
+            Optional<AppServiceSkuDescription> sku = default;
+            Optional<string> status = default;
+            Optional<ResponseError> error = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IReadOnlyList<string>> zones = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData.Value, Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, Core.Optional.ToList(zones));
+            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, Optional.ToList(zones));
         }
     }
 }

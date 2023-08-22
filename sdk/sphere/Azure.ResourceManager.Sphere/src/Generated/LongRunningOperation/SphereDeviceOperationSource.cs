@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
-    internal class SphereDeviceOperationSource : Core.IOperationSource<SphereDeviceResource>
+    internal class SphereDeviceOperationSource : IOperationSource<SphereDeviceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Sphere
             _client = client;
         }
 
-        SphereDeviceResource Core.IOperationSource<SphereDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SphereDeviceResource IOperationSource<SphereDeviceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SphereDeviceData.DeserializeSphereDeviceData(document.RootElement);
             return new SphereDeviceResource(_client, data);
         }
 
-        async ValueTask<SphereDeviceResource> Core.IOperationSource<SphereDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SphereDeviceResource> IOperationSource<SphereDeviceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SphereDeviceData.DeserializeSphereDeviceData(document.RootElement);

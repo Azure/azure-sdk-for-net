@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeResultProperties. </summary>
         public BackupFindRestorableTimeRangeResultProperties()
         {
-            RestorableTimeRanges = new Core.ChangeTrackingList<RestorableTimeRange>();
+            RestorableTimeRanges = new ChangeTrackingList<RestorableTimeRange>();
         }
 
         /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeResultProperties. </summary>

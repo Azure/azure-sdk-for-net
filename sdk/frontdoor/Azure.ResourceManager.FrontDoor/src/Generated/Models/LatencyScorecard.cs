@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="location"> The location. </param>
         public LatencyScorecard(AzureLocation location) : base(location)
         {
-            LatencyMetrics = new Core.ChangeTrackingList<LatencyMetric>();
+            LatencyMetrics = new ChangeTrackingList<LatencyMetric>();
         }
 
         /// <summary> Initializes a new instance of LatencyScorecard. </summary>

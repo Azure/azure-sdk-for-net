@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseEncryptionDetails : Core.IUtf8JsonSerializable
+    public partial class SynapseEncryptionDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Cmk))
+            if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
                 writer.WriteObjectValue(Cmk);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<bool> doubleEncryptionEnabled = default;
-            Core.Optional<WorkspaceCustomerManagedKeyDetails> cmk = default;
+            Optional<bool> doubleEncryptionEnabled = default;
+            Optional<WorkspaceCustomerManagedKeyDetails> cmk = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryptionEnabled"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseEncryptionDetails(Core.Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
+            return new SynapseEncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
         }
     }
 }

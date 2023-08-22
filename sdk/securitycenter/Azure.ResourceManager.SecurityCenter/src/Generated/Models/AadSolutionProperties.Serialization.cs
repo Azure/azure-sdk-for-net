@@ -13,27 +13,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AadSolutionProperties : Core.IUtf8JsonSerializable
+    public partial class AadSolutionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectivityState))
+            if (Optional.IsDefined(ConnectivityState))
             {
                 writer.WritePropertyName("connectivityState"u8);
                 writer.WriteStringValue(ConnectivityState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DeviceVendor))
+            if (Optional.IsDefined(DeviceVendor))
             {
                 writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
-            if (Core.Optional.IsDefined(DeviceType))
+            if (Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (Core.Optional.IsDefined(Workspace))
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 JsonSerializer.Serialize(writer, Workspace);
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<AadConnectivityStateType> connectivityState = default;
-            Core.Optional<string> deviceVendor = default;
-            Core.Optional<string> deviceType = default;
-            Core.Optional<WritableSubResource> workspace = default;
+            Optional<AadConnectivityStateType> connectivityState = default;
+            Optional<string> deviceVendor = default;
+            Optional<string> deviceType = default;
+            Optional<WritableSubResource> workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AadSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, Core.Optional.ToNullable(connectivityState));
+            return new AadSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, Optional.ToNullable(connectivityState));
         }
     }
 }

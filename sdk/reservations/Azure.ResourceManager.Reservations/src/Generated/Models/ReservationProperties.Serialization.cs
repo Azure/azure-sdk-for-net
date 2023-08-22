@@ -20,41 +20,41 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<ReservedResourceType> reservedResourceType = default;
-            Core.Optional<InstanceFlexibility> instanceFlexibility = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IReadOnlyList<string>> appliedScopes = default;
-            Core.Optional<AppliedScopeType> appliedScopeType = default;
-            Core.Optional<bool> archived = default;
-            Core.Optional<string> capabilities = default;
-            Core.Optional<int> quantity = default;
-            Core.Optional<ReservationProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> effectiveDateTime = default;
-            Core.Optional<DateTimeOffset> benefitStartTime = default;
-            Core.Optional<DateTimeOffset> lastUpdatedDateTime = default;
-            Core.Optional<DateTimeOffset> expiryDate = default;
-            Core.Optional<DateTimeOffset> expiryDateTime = default;
-            Core.Optional<DateTimeOffset> reviewDateTime = default;
-            Core.Optional<string> skuDescription = default;
-            Core.Optional<ExtendedStatusInfo> extendedStatusInfo = default;
-            Core.Optional<ReservationBillingPlan> billingPlan = default;
-            Core.Optional<string> displayProvisioningState = default;
-            Core.Optional<string> provisioningSubState = default;
-            Core.Optional<DateTimeOffset> purchaseDate = default;
-            Core.Optional<DateTimeOffset> purchaseDateTime = default;
-            Core.Optional<ReservationSplitProperties> splitProperties = default;
-            Core.Optional<ReservationMergeProperties> mergeProperties = default;
-            Core.Optional<ReservationSwapProperties> swapProperties = default;
-            Core.Optional<AppliedScopeProperties> appliedScopeProperties = default;
-            Core.Optional<ResourceIdentifier> billingScopeId = default;
-            Core.Optional<bool> renew = default;
-            Core.Optional<string> renewSource = default;
-            Core.Optional<string> renewDestination = default;
-            Core.Optional<RenewProperties> renewProperties = default;
-            Core.Optional<ReservationTerm> term = default;
-            Core.Optional<string> userFriendlyAppliedScopeType = default;
-            Core.Optional<string> userFriendlyRenewState = default;
-            Core.Optional<ReservationPropertiesUtilization> utilization = default;
+            Optional<ReservedResourceType> reservedResourceType = default;
+            Optional<InstanceFlexibility> instanceFlexibility = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<string>> appliedScopes = default;
+            Optional<AppliedScopeType> appliedScopeType = default;
+            Optional<bool> archived = default;
+            Optional<string> capabilities = default;
+            Optional<int> quantity = default;
+            Optional<ReservationProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> effectiveDateTime = default;
+            Optional<DateTimeOffset> benefitStartTime = default;
+            Optional<DateTimeOffset> lastUpdatedDateTime = default;
+            Optional<DateTimeOffset> expiryDate = default;
+            Optional<DateTimeOffset> expiryDateTime = default;
+            Optional<DateTimeOffset> reviewDateTime = default;
+            Optional<string> skuDescription = default;
+            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
+            Optional<ReservationBillingPlan> billingPlan = default;
+            Optional<string> displayProvisioningState = default;
+            Optional<string> provisioningSubState = default;
+            Optional<DateTimeOffset> purchaseDate = default;
+            Optional<DateTimeOffset> purchaseDateTime = default;
+            Optional<ReservationSplitProperties> splitProperties = default;
+            Optional<ReservationMergeProperties> mergeProperties = default;
+            Optional<ReservationSwapProperties> swapProperties = default;
+            Optional<AppliedScopeProperties> appliedScopeProperties = default;
+            Optional<ResourceIdentifier> billingScopeId = default;
+            Optional<bool> renew = default;
+            Optional<string> renewSource = default;
+            Optional<string> renewDestination = default;
+            Optional<RenewProperties> renewProperties = default;
+            Optional<ReservationTerm> term = default;
+            Optional<string> userFriendlyAppliedScopeType = default;
+            Optional<string> userFriendlyRenewState = default;
+            Optional<ReservationPropertiesUtilization> utilization = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservedResourceType"u8))
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ReservationProperties(Core.Optional.ToNullable(reservedResourceType), Core.Optional.ToNullable(instanceFlexibility), displayName.Value, Core.Optional.ToList(appliedScopes), Core.Optional.ToNullable(appliedScopeType), Core.Optional.ToNullable(archived), capabilities.Value, Core.Optional.ToNullable(quantity), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(effectiveDateTime), Core.Optional.ToNullable(benefitStartTime), Core.Optional.ToNullable(lastUpdatedDateTime), Core.Optional.ToNullable(expiryDate), Core.Optional.ToNullable(expiryDateTime), Core.Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Core.Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Core.Optional.ToNullable(purchaseDate), Core.Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Core.Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Core.Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value);
+            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value);
         }
     }
 }

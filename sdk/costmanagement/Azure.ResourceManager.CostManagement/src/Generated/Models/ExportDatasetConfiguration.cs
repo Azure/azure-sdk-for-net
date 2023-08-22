@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ExportDatasetConfiguration. </summary>
         public ExportDatasetConfiguration()
         {
-            Columns = new Core.ChangeTrackingList<string>();
+            Columns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ExportDatasetConfiguration. </summary>

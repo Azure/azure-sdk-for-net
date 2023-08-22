@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             Action = action;
             Metrics = metrics.ToList();
-            RequiredFeatures = new Core.ChangeTrackingList<string>();
+            RequiredFeatures = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ThrottlingRule. </summary>

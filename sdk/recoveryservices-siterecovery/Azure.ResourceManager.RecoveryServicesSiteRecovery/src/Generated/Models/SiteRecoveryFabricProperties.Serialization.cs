@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<SiteRecoveryEncryptionDetails> encryptionDetails = default;
-            Core.Optional<SiteRecoveryEncryptionDetails> rolloverEncryptionDetails = default;
-            Core.Optional<string> internalIdentifier = default;
-            Core.Optional<string> bcdrState = default;
-            Core.Optional<FabricSpecificDetails> customDetails = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
-            Core.Optional<string> health = default;
+            Optional<string> friendlyName = default;
+            Optional<SiteRecoveryEncryptionDetails> encryptionDetails = default;
+            Optional<SiteRecoveryEncryptionDetails> rolloverEncryptionDetails = default;
+            Optional<string> internalIdentifier = default;
+            Optional<string> bcdrState = default;
+            Optional<FabricSpecificDetails> customDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
+            Optional<string> health = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryFabricProperties(friendlyName.Value, encryptionDetails.Value, rolloverEncryptionDetails.Value, internalIdentifier.Value, bcdrState.Value, customDetails.Value, Core.Optional.ToList(healthErrorDetails), health.Value);
+            return new SiteRecoveryFabricProperties(friendlyName.Value, encryptionDetails.Value, rolloverEncryptionDetails.Value, internalIdentifier.Value, bcdrState.Value, customDetails.Value, Optional.ToList(healthErrorDetails), health.Value);
         }
     }
 }

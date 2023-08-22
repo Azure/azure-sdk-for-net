@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    internal class AppPlatformGatewayCustomDomainOperationSource : Core.IOperationSource<AppPlatformGatewayCustomDomainResource>
+    internal class AppPlatformGatewayCustomDomainOperationSource : IOperationSource<AppPlatformGatewayCustomDomainResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
             _client = client;
         }
 
-        AppPlatformGatewayCustomDomainResource Core.IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AppPlatformGatewayCustomDomainResource IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(document.RootElement);
             return new AppPlatformGatewayCustomDomainResource(_client, data);
         }
 
-        async ValueTask<AppPlatformGatewayCustomDomainResource> Core.IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AppPlatformGatewayCustomDomainResource> IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AppPlatformGatewayCustomDomainData.DeserializeAppPlatformGatewayCustomDomainData(document.RootElement);

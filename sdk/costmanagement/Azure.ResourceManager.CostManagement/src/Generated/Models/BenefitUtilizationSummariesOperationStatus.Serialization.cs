@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<BenefitUtilizationSummariesContent> input = default;
-            Core.Optional<OperationStatusType> status = default;
-            Core.Optional<AsyncOperationStatusProperties> properties = default;
+            Optional<BenefitUtilizationSummariesContent> input = default;
+            Optional<OperationStatusType> status = default;
+            Optional<AsyncOperationStatusProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new BenefitUtilizationSummariesOperationStatus(input.Value, Core.Optional.ToNullable(status), properties.Value);
+            return new BenefitUtilizationSummariesOperationStatus(input.Value, Optional.ToNullable(status), properties.Value);
         }
     }
 }

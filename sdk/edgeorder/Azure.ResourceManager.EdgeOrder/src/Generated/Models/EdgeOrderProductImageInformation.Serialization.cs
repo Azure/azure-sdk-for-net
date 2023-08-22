@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<EdgeOrderProductImageType> imageType = default;
-            Core.Optional<Uri> imageUrl = default;
+            Optional<EdgeOrderProductImageType> imageType = default;
+            Optional<Uri> imageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageType"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EdgeOrderProductImageInformation(Core.Optional.ToNullable(imageType), imageUrl.Value);
+            return new EdgeOrderProductImageInformation(Optional.ToNullable(imageType), imageUrl.Value);
         }
     }
 }

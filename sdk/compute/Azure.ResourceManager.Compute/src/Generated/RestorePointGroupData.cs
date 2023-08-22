@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public RestorePointGroupData(AzureLocation location) : base(location)
         {
-            RestorePoints = new Core.ChangeTrackingList<RestorePointData>();
+            RestorePoints = new ChangeTrackingList<RestorePointData>();
         }
 
         /// <summary> Initializes a new instance of RestorePointGroupData. </summary>

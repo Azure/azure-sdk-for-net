@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<LocationType> type = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> regionalDisplayName = default;
-            Core.Optional<LocationMetadata> metadata = default;
-            Core.Optional<IReadOnlyList<AvailabilityZoneMappings>> availabilityZoneMappings = default;
+            Optional<string> id = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> name = default;
+            Optional<LocationType> type = default;
+            Optional<string> displayName = default;
+            Optional<string> regionalDisplayName = default;
+            Optional<LocationMetadata> metadata = default;
+            Optional<IReadOnlyList<AvailabilityZoneMappings>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Core.Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, Core.Optional.ToList(availabilityZoneMappings));
+            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, Optional.ToList(availabilityZoneMappings));
         }
     }
 }

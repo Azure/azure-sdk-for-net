@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of ServiceAccountThrottlingRule. </summary>
         internal ServiceAccountThrottlingRule()
         {
-            MatchPatterns = new Core.ChangeTrackingList<ServiceAccountThrottlingMatchPattern>();
+            MatchPatterns = new ChangeTrackingList<ServiceAccountThrottlingMatchPattern>();
         }
 
         /// <summary> Initializes a new instance of ServiceAccountThrottlingRule. </summary>

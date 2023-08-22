@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Core.Optional<long> count = default;
-            Core.Optional<string> nextLink = default;
+            Optional<long> count = default;
+            Optional<string> nextLink = default;
             IReadOnlyList<PurviewAccountData> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview.Models
                     continue;
                 }
             }
-            return new AccountList(Core.Optional.ToNullable(count), nextLink.Value, value);
+            return new AccountList(Optional.ToNullable(count), nextLink.Value, value);
         }
     }
 }

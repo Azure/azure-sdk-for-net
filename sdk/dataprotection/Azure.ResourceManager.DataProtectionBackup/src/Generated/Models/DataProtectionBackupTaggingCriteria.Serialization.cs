@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupTaggingCriteria : Core.IUtf8JsonSerializable
+    public partial class DataProtectionBackupTaggingCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Criteria))
+            if (Optional.IsCollectionDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<DataProtectionBackupCriteria>> criteria = default;
+            Optional<IList<DataProtectionBackupCriteria>> criteria = default;
             bool isDefault = default;
             long taggingPriority = default;
             DataProtectionBackupRetentionTag tagInfo = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new DataProtectionBackupTaggingCriteria(Core.Optional.ToList(criteria), isDefault, taggingPriority, tagInfo);
+            return new DataProtectionBackupTaggingCriteria(Optional.ToList(criteria), isDefault, taggingPriority, tagInfo);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ProtectionContainerMappingListResult. </summary>
         internal ProtectionContainerMappingListResult()
         {
-            Value = new Core.ChangeTrackingList<ProtectionContainerMappingData>();
+            Value = new ChangeTrackingList<ProtectionContainerMappingData>();
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingListResult. </summary>

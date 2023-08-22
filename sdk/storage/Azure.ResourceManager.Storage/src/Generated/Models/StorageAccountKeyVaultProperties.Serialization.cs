@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountKeyVaultProperties : Core.IUtf8JsonSerializable
+    public partial class StorageAccountKeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyName))
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyname"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (Core.Optional.IsDefined(KeyVersion))
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyversion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (Core.Optional.IsDefined(KeyVaultUri))
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyvaulturi"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<string> keyname = default;
-            Core.Optional<string> keyversion = default;
-            Core.Optional<Uri> keyvaulturi = default;
-            Core.Optional<string> currentVersionedKeyIdentifier = default;
-            Core.Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
-            Core.Optional<DateTimeOffset> currentVersionedKeyExpirationTimestamp = default;
+            Optional<string> keyname = default;
+            Optional<string> keyversion = default;
+            Optional<Uri> keyvaulturi = default;
+            Optional<string> currentVersionedKeyIdentifier = default;
+            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            Optional<DateTimeOffset> currentVersionedKeyExpirationTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyname"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountKeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Core.Optional.ToNullable(lastKeyRotationTimestamp), Core.Optional.ToNullable(currentVersionedKeyExpirationTimestamp));
+            return new StorageAccountKeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp));
         }
     }
 }

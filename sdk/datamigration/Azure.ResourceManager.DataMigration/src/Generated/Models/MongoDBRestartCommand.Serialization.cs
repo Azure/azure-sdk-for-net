@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBRestartCommand : Core.IUtf8JsonSerializable
+    public partial class MongoDBRestartCommand : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Input))
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<MongoDBCommandInput> input = default;
+            Optional<MongoDBCommandInput> input = default;
             CommandType commandType = default;
-            Core.Optional<IReadOnlyList<ODataError>> errors = default;
-            Core.Optional<CommandState> state = default;
+            Optional<IReadOnlyList<ODataError>> errors = default;
+            Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBRestartCommand(commandType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), input.Value);
+            return new MongoDBRestartCommand(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value);
         }
     }
 }

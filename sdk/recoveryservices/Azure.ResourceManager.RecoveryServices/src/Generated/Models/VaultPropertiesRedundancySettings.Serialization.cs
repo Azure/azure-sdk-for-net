@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultPropertiesRedundancySettings : Core.IUtf8JsonSerializable
+    public partial class VaultPropertiesRedundancySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<StandardTierStorageRedundancy> standardTierStorageRedundancy = default;
-            Core.Optional<CrossRegionRestore> crossRegionRestore = default;
+            Optional<StandardTierStorageRedundancy> standardTierStorageRedundancy = default;
+            Optional<CrossRegionRestore> crossRegionRestore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("standardTierStorageRedundancy"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new VaultPropertiesRedundancySettings(Core.Optional.ToNullable(standardTierStorageRedundancy), Core.Optional.ToNullable(crossRegionRestore));
+            return new VaultPropertiesRedundancySettings(Optional.ToNullable(standardTierStorageRedundancy), Optional.ToNullable(crossRegionRestore));
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class VirtualApplication : Core.IUtf8JsonSerializable
+    public partial class VirtualApplication : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualPath))
+            if (Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (Core.Optional.IsDefined(PhysicalPath))
+            if (Optional.IsDefined(PhysicalPath))
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
-            if (Core.Optional.IsDefined(IsPreloadEnabled))
+            if (Optional.IsDefined(IsPreloadEnabled))
             {
                 writer.WritePropertyName("preloadEnabled"u8);
                 writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(VirtualDirectories))
+            if (Optional.IsCollectionDefined(VirtualDirectories))
             {
                 writer.WritePropertyName("virtualDirectories"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> virtualPath = default;
-            Core.Optional<string> physicalPath = default;
-            Core.Optional<bool> preloadEnabled = default;
-            Core.Optional<IList<VirtualDirectory>> virtualDirectories = default;
+            Optional<string> virtualPath = default;
+            Optional<string> physicalPath = default;
+            Optional<bool> preloadEnabled = default;
+            Optional<IList<VirtualDirectory>> virtualDirectories = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualPath"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Core.Optional.ToNullable(preloadEnabled), Core.Optional.ToList(virtualDirectories));
+            return new VirtualApplication(virtualPath.Value, physicalPath.Value, Optional.ToNullable(preloadEnabled), Optional.ToList(virtualDirectories));
         }
     }
 }

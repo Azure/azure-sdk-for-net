@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmentProperties : Core.IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IntegrationServiceEnvironmentId))
+            if (Optional.IsDefined(IntegrationServiceEnvironmentId))
             {
                 writer.WritePropertyName("integrationServiceEnvironmentId"u8);
                 writer.WriteStringValue(IntegrationServiceEnvironmentId);
             }
-            if (Core.Optional.IsDefined(EndpointsConfiguration))
+            if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
                 writer.WriteObjectValue(EndpointsConfiguration);
             }
-            if (Core.Optional.IsDefined(NetworkConfiguration))
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (Core.Optional.IsDefined(EncryptionConfiguration))
+            if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
                 writer.WriteObjectValue(EncryptionConfiguration);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Core.Optional<LogicWorkflowState> state = default;
-            Core.Optional<string> integrationServiceEnvironmentId = default;
-            Core.Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Core.Optional<IntegrationServiceNetworkConfiguration> networkConfiguration = default;
-            Core.Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
+            Optional<LogicWorkflowProvisioningState> provisioningState = default;
+            Optional<LogicWorkflowState> state = default;
+            Optional<string> integrationServiceEnvironmentId = default;
+            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
+            Optional<IntegrationServiceNetworkConfiguration> networkConfiguration = default;
+            Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value);
+            return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value);
         }
     }
 }

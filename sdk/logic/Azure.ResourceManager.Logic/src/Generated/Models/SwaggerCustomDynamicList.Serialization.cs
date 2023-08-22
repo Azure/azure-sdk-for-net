@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicList : Core.IUtf8JsonSerializable
+    public partial class SwaggerCustomDynamicList : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OperationId))
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Core.Optional.IsDefined(BuiltInOperation))
+            if (Optional.IsDefined(BuiltInOperation))
             {
                 writer.WritePropertyName("builtInOperation"u8);
                 writer.WriteStringValue(BuiltInOperation);
             }
-            if (Core.Optional.IsDefined(ItemsPath))
+            if (Optional.IsDefined(ItemsPath))
             {
                 writer.WritePropertyName("itemsPath"u8);
                 writer.WriteStringValue(ItemsPath);
             }
-            if (Core.Optional.IsDefined(ItemValuePath))
+            if (Optional.IsDefined(ItemValuePath))
             {
                 writer.WritePropertyName("itemValuePath"u8);
                 writer.WriteStringValue(ItemValuePath);
             }
-            if (Core.Optional.IsDefined(ItemTitlePath))
+            if (Optional.IsDefined(ItemTitlePath))
             {
                 writer.WritePropertyName("itemTitlePath"u8);
                 writer.WriteStringValue(ItemTitlePath);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> operationId = default;
-            Core.Optional<string> builtInOperation = default;
-            Core.Optional<string> itemsPath = default;
-            Core.Optional<string> itemValuePath = default;
-            Core.Optional<string> itemTitlePath = default;
-            Core.Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;
+            Optional<string> operationId = default;
+            Optional<string> builtInOperation = default;
+            Optional<string> itemsPath = default;
+            Optional<string> itemValuePath = default;
+            Optional<string> itemTitlePath = default;
+            Optional<IDictionary<string, SwaggerCustomDynamicProperties>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new SwaggerCustomDynamicList(operationId.Value, builtInOperation.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, Core.Optional.ToDictionary(parameters));
+            return new SwaggerCustomDynamicList(operationId.Value, builtInOperation.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, Optional.ToDictionary(parameters));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of SqlMigrationListResult. </summary>
         internal SqlMigrationListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlMigrationServiceData>();
+            Value = new ChangeTrackingList<SqlMigrationServiceData>();
         }
 
         /// <summary> Initializes a new instance of SqlMigrationListResult. </summary>

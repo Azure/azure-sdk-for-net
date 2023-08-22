@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsColumn : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsColumn : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ColumnType))
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DataTypeHint))
+            if (Optional.IsDefined(DataTypeHint))
             {
                 writer.WritePropertyName("dataTypeHint"u8);
                 writer.WriteStringValue(DataTypeHint.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<OperationalInsightsColumnType> type = default;
-            Core.Optional<OperationalInsightsColumnDataTypeHint> dataTypeHint = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<bool> isDefaultDisplay = default;
-            Core.Optional<bool> isHidden = default;
+            Optional<string> name = default;
+            Optional<OperationalInsightsColumnType> type = default;
+            Optional<OperationalInsightsColumnDataTypeHint> dataTypeHint = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<bool> isDefaultDisplay = default;
+            Optional<bool> isHidden = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new OperationalInsightsColumn(name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(dataTypeHint), displayName.Value, description.Value, Core.Optional.ToNullable(isDefaultDisplay), Core.Optional.ToNullable(isHidden));
+            return new OperationalInsightsColumn(name.Value, Optional.ToNullable(type), Optional.ToNullable(dataTypeHint), displayName.Value, description.Value, Optional.ToNullable(isDefaultDisplay), Optional.ToNullable(isHidden));
         }
     }
 }

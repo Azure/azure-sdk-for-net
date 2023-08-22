@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceEnvironmentProperties : Core.IUtf8JsonSerializable
+    public partial class DynatraceEnvironmentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UserId))
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Core.Optional.IsDefined(AccountInfo))
+            if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
                 writer.WriteObjectValue(AccountInfo);
             }
-            if (Core.Optional.IsDefined(EnvironmentInfo))
+            if (Optional.IsDefined(EnvironmentInfo))
             {
                 writer.WritePropertyName("environmentInfo"u8);
                 writer.WriteObjectValue(EnvironmentInfo);
             }
-            if (Core.Optional.IsDefined(SingleSignOnProperties))
+            if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
                 writer.WriteObjectValue(SingleSignOnProperties);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<string> userId = default;
-            Core.Optional<DynatraceAccountInfo> accountInfo = default;
-            Core.Optional<DynatraceEnvironmentInfo> environmentInfo = default;
-            Core.Optional<DynatraceSingleSignOnProperties> singleSignOnProperties = default;
+            Optional<string> userId = default;
+            Optional<DynatraceAccountInfo> accountInfo = default;
+            Optional<DynatraceEnvironmentInfo> environmentInfo = default;
+            Optional<DynatraceSingleSignOnProperties> singleSignOnProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PolicySettingsLogScrubbing : Core.IUtf8JsonSerializable
+    public partial class PolicySettingsLogScrubbing : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ScrubbingRules))
+            if (Optional.IsCollectionDefined(ScrubbingRules))
             {
                 writer.WritePropertyName("scrubbingRules"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<WebApplicationFirewallScrubbingState> state = default;
-            Core.Optional<IList<WebApplicationFirewallScrubbingRules>> scrubbingRules = default;
+            Optional<WebApplicationFirewallScrubbingState> state = default;
+            Optional<IList<WebApplicationFirewallScrubbingRules>> scrubbingRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PolicySettingsLogScrubbing(Core.Optional.ToNullable(state), Core.Optional.ToList(scrubbingRules));
+            return new PolicySettingsLogScrubbing(Optional.ToNullable(state), Optional.ToList(scrubbingRules));
         }
     }
 }

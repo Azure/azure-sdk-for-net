@@ -14,14 +14,14 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class RouteMapData : Core.IUtf8JsonSerializable
+    public partial class RouteMapData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AssociatedInboundConnections))
+            if (Optional.IsCollectionDefined(AssociatedInboundConnections))
             {
                 writer.WritePropertyName("associatedInboundConnections"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AssociatedOutboundConnections))
+            if (Optional.IsCollectionDefined(AssociatedOutboundConnections))
             {
                 writer.WritePropertyName("associatedOutboundConnections"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<string>> associatedInboundConnections = default;
-            Core.Optional<IList<string>> associatedOutboundConnections = default;
-            Core.Optional<IList<RouteMapRule>> rules = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<string>> associatedInboundConnections = default;
+            Optional<IList<string>> associatedOutboundConnections = default;
+            Optional<IList<RouteMapRule>> rules = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteMapData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), Core.Optional.ToList(associatedInboundConnections), Core.Optional.ToList(associatedOutboundConnections), Core.Optional.ToList(rules), Core.Optional.ToNullable(provisioningState));
+            return new RouteMapData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToList(associatedInboundConnections), Optional.ToList(associatedOutboundConnections), Optional.ToList(rules), Optional.ToNullable(provisioningState));
         }
     }
 }

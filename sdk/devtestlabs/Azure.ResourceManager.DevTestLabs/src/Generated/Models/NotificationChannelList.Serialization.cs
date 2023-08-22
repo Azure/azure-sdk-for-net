@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DevTestLabNotificationChannelData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<DevTestLabNotificationChannelData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new NotificationChannelList(Core.Optional.ToList(value), nextLink.Value);
+            return new NotificationChannelList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

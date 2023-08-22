@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotConnectionSettingProperties : Core.IUtf8JsonSerializable
+    public partial class BotConnectionSettingProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Core.Optional.IsDefined(ClientSecret))
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (Core.Optional.IsDefined(Scopes))
+            if (Optional.IsDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
-            if (Core.Optional.IsDefined(ServiceProviderId))
+            if (Optional.IsDefined(ServiceProviderId))
             {
                 writer.WritePropertyName("serviceProviderId"u8);
                 writer.WriteStringValue(ServiceProviderId);
             }
-            if (Core.Optional.IsDefined(ServiceProviderDisplayName))
+            if (Optional.IsDefined(ServiceProviderDisplayName))
             {
                 writer.WritePropertyName("serviceProviderDisplayName"u8);
                 writer.WriteStringValue(ServiceProviderDisplayName);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> clientId = default;
-            Core.Optional<string> settingId = default;
-            Core.Optional<string> clientSecret = default;
-            Core.Optional<string> scopes = default;
-            Core.Optional<string> serviceProviderId = default;
-            Core.Optional<string> serviceProviderDisplayName = default;
-            Core.Optional<IList<BotConnectionSettingParameter>> parameters = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<string> clientId = default;
+            Optional<string> settingId = default;
+            Optional<string> clientSecret = default;
+            Optional<string> scopes = default;
+            Optional<string> serviceProviderId = default;
+            Optional<string> serviceProviderDisplayName = default;
+            Optional<IList<BotConnectionSettingParameter>> parameters = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new BotConnectionSettingProperties(clientId.Value, settingId.Value, clientSecret.Value, scopes.Value, serviceProviderId.Value, serviceProviderDisplayName.Value, Core.Optional.ToList(parameters), provisioningState.Value);
+            return new BotConnectionSettingProperties(clientId.Value, settingId.Value, clientSecret.Value, scopes.Value, serviceProviderId.Value, serviceProviderDisplayName.Value, Optional.ToList(parameters), provisioningState.Value);
         }
     }
 }

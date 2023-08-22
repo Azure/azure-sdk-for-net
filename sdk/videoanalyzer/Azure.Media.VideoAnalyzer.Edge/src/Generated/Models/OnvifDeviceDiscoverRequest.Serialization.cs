@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class OnvifDeviceDiscoverRequest : Core.IUtf8JsonSerializable
+    public partial class OnvifDeviceDiscoverRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DiscoveryDuration))
+            if (Optional.IsDefined(DiscoveryDuration))
             {
                 writer.WritePropertyName("discoveryDuration"u8);
                 writer.WriteStringValue(DiscoveryDuration);
             }
-            if (Core.Optional.IsDefined(ApiVersion))
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -34,9 +34,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<string> discoveryDuration = default;
+            Optional<string> discoveryDuration = default;
             string methodName = default;
-            Core.Optional<string> apiVersion = default;
+            Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("discoveryDuration"u8))

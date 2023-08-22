@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<float> @base = default;
+            Optional<float> @base = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("base"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityCvss(Core.Optional.ToNullable(@base));
+            return new SecurityCvss(Optional.ToNullable(@base));
         }
     }
 }

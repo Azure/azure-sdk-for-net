@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpCommunity : Core.IUtf8JsonSerializable
+    public partial class BgpCommunity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceSupportedRegion))
+            if (Optional.IsDefined(ServiceSupportedRegion))
             {
                 writer.WritePropertyName("serviceSupportedRegion"u8);
                 writer.WriteStringValue(ServiceSupportedRegion);
             }
-            if (Core.Optional.IsDefined(CommunityName))
+            if (Optional.IsDefined(CommunityName))
             {
                 writer.WritePropertyName("communityName"u8);
                 writer.WriteStringValue(CommunityName);
             }
-            if (Core.Optional.IsDefined(CommunityValue))
+            if (Optional.IsDefined(CommunityValue))
             {
                 writer.WritePropertyName("communityValue"u8);
                 writer.WriteStringValue(CommunityValue);
             }
-            if (Core.Optional.IsCollectionDefined(CommunityPrefixes))
+            if (Optional.IsCollectionDefined(CommunityPrefixes))
             {
                 writer.WritePropertyName("communityPrefixes"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsAuthorizedToUse))
+            if (Optional.IsDefined(IsAuthorizedToUse))
             {
                 writer.WritePropertyName("isAuthorizedToUse"u8);
                 writer.WriteBooleanValue(IsAuthorizedToUse.Value);
             }
-            if (Core.Optional.IsDefined(ServiceGroup))
+            if (Optional.IsDefined(ServiceGroup))
             {
                 writer.WritePropertyName("serviceGroup"u8);
                 writer.WriteStringValue(ServiceGroup);
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> serviceSupportedRegion = default;
-            Core.Optional<string> communityName = default;
-            Core.Optional<string> communityValue = default;
-            Core.Optional<IList<string>> communityPrefixes = default;
-            Core.Optional<bool> isAuthorizedToUse = default;
-            Core.Optional<string> serviceGroup = default;
+            Optional<string> serviceSupportedRegion = default;
+            Optional<string> communityName = default;
+            Optional<string> communityValue = default;
+            Optional<IList<string>> communityPrefixes = default;
+            Optional<bool> isAuthorizedToUse = default;
+            Optional<string> serviceGroup = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceSupportedRegion"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new BgpCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Core.Optional.ToList(communityPrefixes), Core.Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value);
+            return new BgpCommunity(serviceSupportedRegion.Value, communityName.Value, communityValue.Value, Optional.ToList(communityPrefixes), Optional.ToNullable(isAuthorizedToUse), serviceGroup.Value);
         }
     }
 }

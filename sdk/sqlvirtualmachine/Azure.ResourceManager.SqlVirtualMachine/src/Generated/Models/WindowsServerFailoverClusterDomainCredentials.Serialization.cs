@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class WindowsServerFailoverClusterDomainCredentials : Core.IUtf8JsonSerializable
+    public partial class WindowsServerFailoverClusterDomainCredentials : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClusterBootstrapAccountPassword))
+            if (Optional.IsDefined(ClusterBootstrapAccountPassword))
             {
                 writer.WritePropertyName("clusterBootstrapAccountPassword"u8);
                 writer.WriteStringValue(ClusterBootstrapAccountPassword);
             }
-            if (Core.Optional.IsDefined(ClusterOperatorAccountPassword))
+            if (Optional.IsDefined(ClusterOperatorAccountPassword))
             {
                 writer.WritePropertyName("clusterOperatorAccountPassword"u8);
                 writer.WriteStringValue(ClusterOperatorAccountPassword);
             }
-            if (Core.Optional.IsDefined(SqlServiceAccountPassword))
+            if (Optional.IsDefined(SqlServiceAccountPassword))
             {
                 writer.WritePropertyName("sqlServiceAccountPassword"u8);
                 writer.WriteStringValue(SqlServiceAccountPassword);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Core.Optional<string> clusterBootstrapAccountPassword = default;
-            Core.Optional<string> clusterOperatorAccountPassword = default;
-            Core.Optional<string> sqlServiceAccountPassword = default;
+            Optional<string> clusterBootstrapAccountPassword = default;
+            Optional<string> clusterOperatorAccountPassword = default;
+            Optional<string> sqlServiceAccountPassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterBootstrapAccountPassword"u8))

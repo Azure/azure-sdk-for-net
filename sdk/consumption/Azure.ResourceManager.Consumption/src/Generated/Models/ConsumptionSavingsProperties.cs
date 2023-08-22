@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionSavingsProperties. </summary>
         internal ConsumptionSavingsProperties()
         {
-            CalculatedSavings = new Core.ChangeTrackingList<ConsumptionCalculatedSavingsProperties>();
+            CalculatedSavings = new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionSavingsProperties. </summary>

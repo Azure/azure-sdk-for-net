@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of PreconfiguredEndpointList. </summary>
         internal PreconfiguredEndpointList()
         {
-            Value = new Core.ChangeTrackingList<PreconfiguredEndpoint>();
+            Value = new ChangeTrackingList<PreconfiguredEndpoint>();
         }
 
         /// <summary> Initializes a new instance of PreconfiguredEndpointList. </summary>

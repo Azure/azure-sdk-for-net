@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkPortReuseHoldTimes : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkPortReuseHoldTimes : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Tcp))
+            if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
-            if (Core.Optional.IsDefined(Udp))
+            if (Optional.IsDefined(Udp))
             {
                 writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<int> tcp = default;
-            Core.Optional<int> udp = default;
+            Optional<int> tcp = default;
+            Optional<int> udp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tcp"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkPortReuseHoldTimes(Core.Optional.ToNullable(tcp), Core.Optional.ToNullable(udp));
+            return new MobileNetworkPortReuseHoldTimes(Optional.ToNullable(tcp), Optional.ToNullable(udp));
         }
     }
 }

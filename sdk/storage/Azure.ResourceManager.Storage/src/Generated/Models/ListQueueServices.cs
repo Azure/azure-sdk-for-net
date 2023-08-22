@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of ListQueueServices. </summary>
         internal ListQueueServices()
         {
-            Value = new Core.ChangeTrackingList<QueueServiceData>();
+            Value = new ChangeTrackingList<QueueServiceData>();
         }
 
         /// <summary> Initializes a new instance of ListQueueServices. </summary>

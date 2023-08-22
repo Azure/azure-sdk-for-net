@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadProtectionPolicy : Core.IUtf8JsonSerializable
+    public partial class VmWorkloadProtectionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WorkLoadType))
+            if (Optional.IsDefined(WorkLoadType))
             {
                 writer.WritePropertyName("workLoadType"u8);
                 writer.WriteStringValue(WorkLoadType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Core.Optional.IsCollectionDefined(SubProtectionPolicy))
+            if (Optional.IsCollectionDefined(SubProtectionPolicy))
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DoesMakePolicyConsistent))
+            if (Optional.IsDefined(DoesMakePolicyConsistent))
             {
                 writer.WritePropertyName("makePolicyConsistent"u8);
                 writer.WriteBooleanValue(DoesMakePolicyConsistent.Value);
             }
-            if (Core.Optional.IsDefined(ProtectedItemsCount))
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (Core.Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -67,13 +67,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupWorkloadType> workLoadType = default;
-            Core.Optional<BackupCommonSettings> settings = default;
-            Core.Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
-            Core.Optional<bool> makePolicyConsistent = default;
-            Core.Optional<int> protectedItemsCount = default;
+            Optional<BackupWorkloadType> workLoadType = default;
+            Optional<BackupCommonSettings> settings = default;
+            Optional<IList<SubProtectionPolicy>> subProtectionPolicy = default;
+            Optional<bool> makePolicyConsistent = default;
+            Optional<int> protectedItemsCount = default;
             string backupManagementType = default;
-            Core.Optional<IList<string>> resourceGuardOperationRequests = default;
+            Optional<IList<string>> resourceGuardOperationRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workLoadType"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmWorkloadProtectionPolicy(Core.Optional.ToNullable(protectedItemsCount), backupManagementType, Core.Optional.ToList(resourceGuardOperationRequests), Core.Optional.ToNullable(workLoadType), settings.Value, Core.Optional.ToList(subProtectionPolicy), Core.Optional.ToNullable(makePolicyConsistent));
+            return new VmWorkloadProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(workLoadType), settings.Value, Optional.ToList(subProtectionPolicy), Optional.ToNullable(makePolicyConsistent));
         }
     }
 }

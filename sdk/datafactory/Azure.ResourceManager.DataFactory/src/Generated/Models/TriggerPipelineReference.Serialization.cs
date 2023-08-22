@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TriggerPipelineReference : Core.IUtf8JsonSerializable
+    public partial class TriggerPipelineReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PipelineReference))
+            if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
                 writer.WriteObjectValue(PipelineReference);
             }
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryPipelineReference> pipelineReference = default;
-            Core.Optional<IDictionary<string, BinaryData>> parameters = default;
+            Optional<DataFactoryPipelineReference> pipelineReference = default;
+            Optional<IDictionary<string, BinaryData>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineReference"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new TriggerPipelineReference(pipelineReference.Value, Core.Optional.ToDictionary(parameters));
+            return new TriggerPipelineReference(pipelineReference.Value, Optional.ToDictionary(parameters));
         }
     }
 }

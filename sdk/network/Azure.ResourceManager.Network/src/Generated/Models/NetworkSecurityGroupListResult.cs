@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkSecurityGroupListResult. </summary>
         internal NetworkSecurityGroupListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkSecurityGroupData>();
+            Value = new ChangeTrackingList<NetworkSecurityGroupData>();
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityGroupListResult. </summary>

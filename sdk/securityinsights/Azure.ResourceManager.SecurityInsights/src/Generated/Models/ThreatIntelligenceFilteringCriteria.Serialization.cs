@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceFilteringCriteria : Core.IUtf8JsonSerializable
+    public partial class ThreatIntelligenceFilteringCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PageSize))
+            if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteNumberValue(PageSize.Value);
             }
-            if (Core.Optional.IsDefined(MinConfidence))
+            if (Optional.IsDefined(MinConfidence))
             {
                 writer.WritePropertyName("minConfidence"u8);
                 writer.WriteNumberValue(MinConfidence.Value);
             }
-            if (Core.Optional.IsDefined(MaxConfidence))
+            if (Optional.IsDefined(MaxConfidence))
             {
                 writer.WritePropertyName("maxConfidence"u8);
                 writer.WriteNumberValue(MaxConfidence.Value);
             }
-            if (Core.Optional.IsDefined(MinValidUntil))
+            if (Optional.IsDefined(MinValidUntil))
             {
                 writer.WritePropertyName("minValidUntil"u8);
                 writer.WriteStringValue(MinValidUntil.Value, "O");
             }
-            if (Core.Optional.IsDefined(MaxValidUntil))
+            if (Optional.IsDefined(MaxValidUntil))
             {
                 writer.WritePropertyName("maxValidUntil"u8);
                 writer.WriteStringValue(MaxValidUntil.Value, "O");
             }
-            if (Core.Optional.IsDefined(IsIncludeDisabled))
+            if (Optional.IsDefined(IsIncludeDisabled))
             {
                 writer.WritePropertyName("includeDisabled"u8);
                 writer.WriteBooleanValue(IsIncludeDisabled.Value);
             }
-            if (Core.Optional.IsCollectionDefined(SortBy))
+            if (Optional.IsCollectionDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Sources))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PatternTypes))
+            if (Optional.IsCollectionDefined(PatternTypes))
             {
                 writer.WritePropertyName("patternTypes"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ThreatTypes))
+            if (Optional.IsCollectionDefined(ThreatTypes))
             {
                 writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Ids))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Keywords))
+            if (Optional.IsCollectionDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SkipToken))
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);

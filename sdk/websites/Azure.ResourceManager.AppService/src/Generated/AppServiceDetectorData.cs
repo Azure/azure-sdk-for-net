@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>
         public AppServiceDetectorData()
         {
-            Dataset = new Core.ChangeTrackingList<DiagnosticDataset>();
-            DataProvidersMetadata = new Core.ChangeTrackingList<DataProviderMetadata>();
+            Dataset = new ChangeTrackingList<DiagnosticDataset>();
+            DataProvidersMetadata = new ChangeTrackingList<DataProviderMetadata>();
         }
 
         /// <summary> Initializes a new instance of AppServiceDetectorData. </summary>

@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabVmData(AzureLocation location) : base(location)
         {
-            Artifacts = new Core.ChangeTrackingList<DevTestLabArtifactInstallInfo>();
-            DataDiskParameters = new Core.ChangeTrackingList<DevTestLabDataDiskProperties>();
-            ScheduleParameters = new Core.ChangeTrackingList<DevTestLabScheduleCreationParameter>();
+            Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
+            DataDiskParameters = new ChangeTrackingList<DevTestLabDataDiskProperties>();
+            ScheduleParameters = new ChangeTrackingList<DevTestLabScheduleCreationParameter>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabVmData. </summary>

@@ -18,10 +18,10 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<string> mediaType = default;
-            Core.Optional<long> size = default;
-            Core.Optional<string> digest = default;
-            Core.Optional<Platform> platform = default;
+            Optional<string> mediaType = default;
+            Optional<long> size = default;
+            Optional<string> digest = default;
+            Optional<Platform> platform = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -53,7 +53,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestListAttributes(mediaType.Value, Core.Optional.ToNullable(size), digest.Value, platform.Value);
+            return new ManifestListAttributes(mediaType.Value, Optional.ToNullable(size), digest.Value, platform.Value);
         }
     }
 }

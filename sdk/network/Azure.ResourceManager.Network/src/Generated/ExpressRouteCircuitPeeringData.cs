@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringData. </summary>
         public ExpressRouteCircuitPeeringData()
         {
-            Connections = new Core.ChangeTrackingList<ExpressRouteCircuitConnectionData>();
-            PeeredConnections = new Core.ChangeTrackingList<PeerExpressRouteCircuitConnectionData>();
+            Connections = new ChangeTrackingList<ExpressRouteCircuitConnectionData>();
+            PeeredConnections = new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringData. </summary>

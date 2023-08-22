@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<string> availabilityZone = default;
-            Core.Optional<bool> isAvailable = default;
+            Optional<string> availabilityZone = default;
+            Optional<bool> isAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityZone"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new AvailabilityZoneMapping(availabilityZone.Value, Core.Optional.ToNullable(isAvailable));
+            return new AvailabilityZoneMapping(availabilityZone.Value, Optional.ToNullable(isAvailable));
         }
     }
 }

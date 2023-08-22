@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class LinkerResourcePatch : Core.IUtf8JsonSerializable
+    public partial class LinkerResourcePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetService))
+            if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
                 writer.WriteObjectValue(TargetService);
             }
-            if (Core.Optional.IsDefined(AuthInfo))
+            if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
                 writer.WriteObjectValue(AuthInfo);
             }
-            if (Core.Optional.IsDefined(ClientType))
+            if (Optional.IsDefined(ClientType))
             {
                 writer.WritePropertyName("clientType"u8);
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(VnetSolution))
+            if (Optional.IsDefined(VnetSolution))
             {
                 if (VnetSolution != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("vNetSolution");
                 }
             }
-            if (Core.Optional.IsDefined(SecretStore))
+            if (Optional.IsDefined(SecretStore))
             {
                 if (SecretStore != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("secretStore");
                 }
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 if (Scope != null)
                 {

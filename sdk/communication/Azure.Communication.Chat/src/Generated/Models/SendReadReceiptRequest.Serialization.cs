@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class SendReadReceiptRequest : Core.IUtf8JsonSerializable
+    internal partial class SendReadReceiptRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("chatMessageId"u8);

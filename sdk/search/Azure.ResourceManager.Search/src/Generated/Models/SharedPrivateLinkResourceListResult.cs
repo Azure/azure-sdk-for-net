@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of SharedPrivateLinkResourceListResult. </summary>
         internal SharedPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of SharedPrivateLinkResourceListResult. </summary>

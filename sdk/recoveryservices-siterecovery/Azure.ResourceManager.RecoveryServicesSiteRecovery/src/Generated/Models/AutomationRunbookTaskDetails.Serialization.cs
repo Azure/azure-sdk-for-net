@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> cloudServiceName = default;
-            Core.Optional<string> subscriptionId = default;
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> runbookId = default;
-            Core.Optional<string> runbookName = default;
-            Core.Optional<ResourceIdentifier> jobId = default;
-            Core.Optional<string> jobOutput = default;
-            Core.Optional<bool> isPrimarySideScript = default;
+            Optional<string> name = default;
+            Optional<string> cloudServiceName = default;
+            Optional<string> subscriptionId = default;
+            Optional<string> accountName = default;
+            Optional<string> runbookId = default;
+            Optional<string> runbookName = default;
+            Optional<ResourceIdentifier> jobId = default;
+            Optional<string> jobOutput = default;
+            Optional<bool> isPrimarySideScript = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new AutomationRunbookTaskDetails(instanceType, name.Value, cloudServiceName.Value, subscriptionId.Value, accountName.Value, runbookId.Value, runbookName.Value, jobId.Value, jobOutput.Value, Core.Optional.ToNullable(isPrimarySideScript));
+            return new AutomationRunbookTaskDetails(instanceType, name.Value, cloudServiceName.Value, subscriptionId.Value, accountName.Value, runbookId.Value, runbookName.Value, jobId.Value, jobOutput.Value, Optional.ToNullable(isPrimarySideScript));
         }
     }
 }

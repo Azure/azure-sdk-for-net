@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(ruleProperties, nameof(ruleProperties));
 
             RuleProperties = ruleProperties;
-            InternetGatewayIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            InternetGatewayIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricInternetGatewayRuleData. </summary>

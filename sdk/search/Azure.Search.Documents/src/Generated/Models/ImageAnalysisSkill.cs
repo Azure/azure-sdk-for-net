@@ -23,8 +23,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            VisualFeatures = new Core.ChangeTrackingList<VisualFeature>();
-            Details = new Core.ChangeTrackingList<ImageDetail>();
+            VisualFeatures = new ChangeTrackingList<VisualFeature>();
+            Details = new ChangeTrackingList<ImageDetail>();
             ODataType = "#Microsoft.Skills.Vision.ImageAnalysisSkill";
         }
 

@@ -11,21 +11,21 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisChildPackage : Core.IUtf8JsonSerializable
+    public partial class SsisChildPackage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
             JsonSerializer.Serialize(writer, PackagePath);
-            if (Core.Optional.IsDefined(PackageName))
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
             JsonSerializer.Serialize(writer, PackageContent);
-            if (Core.Optional.IsDefined(PackageLastModifiedDate))
+            if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> packagePath = default;
-            Core.Optional<string> packageName = default;
+            Optional<string> packageName = default;
             DataFactoryElement<string> packageContent = default;
-            Core.Optional<string> packageLastModifiedDate = default;
+            Optional<string> packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))

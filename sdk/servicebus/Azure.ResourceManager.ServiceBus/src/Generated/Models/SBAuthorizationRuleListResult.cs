@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of SBAuthorizationRuleListResult. </summary>
         internal SBAuthorizationRuleListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceBusAuthorizationRuleData>();
+            Value = new ChangeTrackingList<ServiceBusAuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of SBAuthorizationRuleListResult. </summary>

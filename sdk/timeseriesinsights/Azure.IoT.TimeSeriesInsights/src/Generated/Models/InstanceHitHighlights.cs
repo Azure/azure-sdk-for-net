@@ -16,11 +16,11 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of InstanceHitHighlights. </summary>
         internal InstanceHitHighlights()
         {
-            TimeSeriesId = new Core.ChangeTrackingList<string>();
-            HierarchyIds = new Core.ChangeTrackingList<string>();
-            HierarchyNames = new Core.ChangeTrackingList<string>();
-            InstanceFieldNames = new Core.ChangeTrackingList<string>();
-            InstanceFieldValues = new Core.ChangeTrackingList<string>();
+            TimeSeriesId = new ChangeTrackingList<string>();
+            HierarchyIds = new ChangeTrackingList<string>();
+            HierarchyNames = new ChangeTrackingList<string>();
+            InstanceFieldNames = new ChangeTrackingList<string>();
+            InstanceFieldValues = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of InstanceHitHighlights. </summary>

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> ruleName = default;
-            Core.Optional<string> action = default;
+            Optional<string> ruleName = default;
+            Optional<string> action = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleName"u8))

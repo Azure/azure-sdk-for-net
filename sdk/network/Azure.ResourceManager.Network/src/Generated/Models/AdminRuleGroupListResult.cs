@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AdminRuleGroupListResult. </summary>
         internal AdminRuleGroupListResult()
         {
-            Value = new Core.ChangeTrackingList<AdminRuleGroupData>();
+            Value = new ChangeTrackingList<AdminRuleGroupData>();
         }
 
         /// <summary> Initializes a new instance of AdminRuleGroupListResult. </summary>

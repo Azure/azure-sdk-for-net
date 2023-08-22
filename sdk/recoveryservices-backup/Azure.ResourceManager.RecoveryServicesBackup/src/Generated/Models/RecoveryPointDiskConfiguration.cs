@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of RecoveryPointDiskConfiguration. </summary>
         public RecoveryPointDiskConfiguration()
         {
-            IncludedDiskList = new Core.ChangeTrackingList<DiskInformation>();
-            ExcludedDiskList = new Core.ChangeTrackingList<DiskInformation>();
+            IncludedDiskList = new ChangeTrackingList<DiskInformation>();
+            ExcludedDiskList = new ChangeTrackingList<DiskInformation>();
         }
 
         /// <summary> Initializes a new instance of RecoveryPointDiskConfiguration. </summary>

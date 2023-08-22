@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
-            Core.Optional<IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings>> backendHttpSettingsCollection = default;
+            Optional<ApplicationGatewayBackendAddressPool> backendAddressPool = default;
+            Optional<IReadOnlyList<ApplicationGatewayBackendHealthHttpSettings>> backendHttpSettingsCollection = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backendAddressPool"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, Core.Optional.ToList(backendHttpSettingsCollection));
+            return new ApplicationGatewayBackendHealthPool(backendAddressPool.Value, Optional.ToList(backendHttpSettingsCollection));
         }
     }
 }

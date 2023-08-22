@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of ChangeDirectoryDetail. </summary>
         internal ChangeDirectoryDetail()
         {
-            Reservations = new Core.ChangeTrackingList<ChangeDirectoryResult>();
+            Reservations = new ChangeTrackingList<ChangeDirectoryResult>();
         }
 
         /// <summary> Initializes a new instance of ChangeDirectoryDetail. </summary>

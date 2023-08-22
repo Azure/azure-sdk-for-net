@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 return null;
             }
-            Core.Optional<ModelsSummary> summary = default;
-            Core.Optional<IReadOnlyList<CustomFormModelInfo>> modelList = default;
-            Core.Optional<string> nextLink = default;
+            Optional<ModelsSummary> summary = default;
+            Optional<IReadOnlyList<CustomFormModelInfo>> modelList = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new Models(summary.Value, Core.Optional.ToList(modelList), nextLink.Value);
+            return new Models(summary.Value, Optional.ToList(modelList), nextLink.Value);
         }
     }
 }

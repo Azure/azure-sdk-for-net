@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryRetentionPolicy : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryRetentionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Days))
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<int> days = default;
-            Core.Optional<DateTimeOffset> lastUpdatedTime = default;
-            Core.Optional<ContainerRegistryPolicyStatus> status = default;
+            Optional<int> days = default;
+            Optional<DateTimeOffset> lastUpdatedTime = default;
+            Optional<ContainerRegistryPolicyStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("days"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryRetentionPolicy(Core.Optional.ToNullable(days), Core.Optional.ToNullable(lastUpdatedTime), Core.Optional.ToNullable(status));
+            return new ContainerRegistryRetentionPolicy(Optional.ToNullable(days), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(status));
         }
     }
 }

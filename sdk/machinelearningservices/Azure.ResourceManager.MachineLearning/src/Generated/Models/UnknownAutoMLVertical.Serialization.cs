@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownAutoMLVertical : Core.IUtf8JsonSerializable
+    internal partial class UnknownAutoMLVertical : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LogVerbosity))
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TargetColumnName))
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Core.Optional<string> targetColumnName = default;
+            Optional<MachineLearningLogVerbosity> logVerbosity = default;
+            Optional<string> targetColumnName = default;
             TaskType taskType = "Unknown";
             MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new UnknownAutoMLVertical(Core.Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData);
+            return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData);
         }
     }
 }

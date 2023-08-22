@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(taskFilePath, nameof(taskFilePath));
 
             TaskFilePath = taskFilePath;
-            Values = new Core.ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
+            Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
             ContainerRegistryTaskStepType = ContainerRegistryTaskStepType.FileTask;
         }
 

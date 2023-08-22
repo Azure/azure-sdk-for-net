@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBreakReplicationContent : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumeBreakReplicationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ForceBreakReplication))
+            if (Optional.IsDefined(ForceBreakReplication))
             {
                 writer.WritePropertyName("forceBreakReplication"u8);
                 writer.WriteBooleanValue(ForceBreakReplication.Value);

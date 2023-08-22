@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = await _storageSpacestorageSpacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HybridContainerService
             try
             {
                 var response = _storageSpacestorageSpacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HybridContainerServiceArmOperation<StorageSpaceResource>(new StorageSpaceOperationSource(Client), _storageSpacestorageSpacesClientDiagnostics, Pipeline, _storageSpacestorageSpacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

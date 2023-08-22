@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of CommonMatchConditions. </summary>
         public CommonMatchConditions()
         {
-            ProtocolTypes = new Core.ChangeTrackingList<string>();
+            ProtocolTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CommonMatchConditions. </summary>

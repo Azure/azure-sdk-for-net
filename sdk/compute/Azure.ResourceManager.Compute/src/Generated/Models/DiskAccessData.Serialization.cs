@@ -14,17 +14,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DiskAccessData : Core.IUtf8JsonSerializable
+    public partial class DiskAccessData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<ExtendedLocation> extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<ComputePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<DateTimeOffset> timeCreated = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<ComputePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<string> provisioningState = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new DiskAccessData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToList(privateEndpointConnections), provisioningState.Value, Core.Optional.ToNullable(timeCreated));
+            return new DiskAccessData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(privateEndpointConnections), provisioningState.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

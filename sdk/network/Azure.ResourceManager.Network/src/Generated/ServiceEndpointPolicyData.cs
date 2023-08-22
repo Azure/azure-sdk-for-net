@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
         public ServiceEndpointPolicyData()
         {
-            ServiceEndpointPolicyDefinitions = new Core.ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
-            Subnets = new Core.ChangeTrackingList<SubnetData>();
-            ContextualServiceEndpointPolicies = new Core.ChangeTrackingList<string>();
+            ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
+            Subnets = new ChangeTrackingList<SubnetData>();
+            ContextualServiceEndpointPolicies = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>

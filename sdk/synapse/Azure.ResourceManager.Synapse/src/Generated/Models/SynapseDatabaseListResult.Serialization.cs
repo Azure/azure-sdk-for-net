@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SynapseDatabaseData>> value = default;
+            Optional<IReadOnlyList<SynapseDatabaseData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseDatabaseListResult(Core.Optional.ToList(value));
+            return new SynapseDatabaseListResult(Optional.ToList(value));
         }
     }
 }

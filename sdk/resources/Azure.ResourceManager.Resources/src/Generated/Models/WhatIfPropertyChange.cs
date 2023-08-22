@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
 
             Path = path;
             PropertyChangeType = propertyChangeType;
-            Children = new Core.ChangeTrackingList<WhatIfPropertyChange>();
+            Children = new ChangeTrackingList<WhatIfPropertyChange>();
         }
 
         /// <summary> Initializes a new instance of WhatIfPropertyChange. </summary>

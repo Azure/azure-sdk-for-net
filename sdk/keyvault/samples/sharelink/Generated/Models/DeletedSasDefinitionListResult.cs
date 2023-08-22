@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <summary> Initializes a new instance of DeletedSasDefinitionListResult. </summary>
         internal DeletedSasDefinitionListResult()
         {
-            Value = new Core.ChangeTrackingList<DeletedSasDefinitionItem>();
+            Value = new ChangeTrackingList<DeletedSasDefinitionItem>();
         }
 
         /// <summary> Initializes a new instance of DeletedSasDefinitionListResult. </summary>

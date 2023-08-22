@@ -12,22 +12,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAvailableSslOptionsInfo : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayAvailableSslOptionsInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PredefinedPolicies))
+            if (Optional.IsCollectionDefined(PredefinedPolicies))
             {
                 writer.WritePropertyName("predefinedPolicies"u8);
                 writer.WriteStartArray();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultPolicy))
+            if (Optional.IsDefined(DefaultPolicy))
             {
                 writer.WritePropertyName("defaultPolicy"u8);
                 writer.WriteStringValue(DefaultPolicy.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AvailableCipherSuites))
+            if (Optional.IsCollectionDefined(AvailableCipherSuites))
             {
                 writer.WritePropertyName("availableCipherSuites"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AvailableProtocols))
+            if (Optional.IsCollectionDefined(AvailableProtocols))
             {
                 writer.WritePropertyName("availableProtocols"u8);
                 writer.WriteStartArray();

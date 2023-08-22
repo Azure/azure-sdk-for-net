@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomResult : Core.IUtf8JsonSerializable
+    internal partial class CustomResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("errors"u8);
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(Statistics))
+            if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             IList<DocumentError> errors = default;
-            Core.Optional<TextDocumentBatchStatistics> statistics = default;
+            Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
             foreach (var property in element.EnumerateObject())

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ConsumptionMarketplace>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ConsumptionMarketplace>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new MarketplacesListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new MarketplacesListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

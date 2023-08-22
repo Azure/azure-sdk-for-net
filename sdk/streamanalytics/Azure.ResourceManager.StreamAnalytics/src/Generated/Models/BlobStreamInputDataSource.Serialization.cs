@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class BlobStreamInputDataSource : Core.IUtf8JsonSerializable
+    public partial class BlobStreamInputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(StorageAccounts))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Container))
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Core.Optional.IsDefined(PathPattern))
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (Core.Optional.IsDefined(DateFormat))
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (Core.Optional.IsDefined(TimeFormat))
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (Core.Optional.IsDefined(AuthenticationMode))
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SourcePartitionCount))
+            if (Optional.IsDefined(SourcePartitionCount))
             {
                 writer.WritePropertyName("sourcePartitionCount"u8);
                 writer.WriteNumberValue(SourcePartitionCount.Value);
@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
-            Core.Optional<string> container = default;
-            Core.Optional<string> pathPattern = default;
-            Core.Optional<string> dateFormat = default;
-            Core.Optional<string> timeFormat = default;
-            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Core.Optional<int> sourcePartitionCount = default;
+            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
+            Optional<string> container = default;
+            Optional<string> pathPattern = default;
+            Optional<string> dateFormat = default;
+            Optional<string> timeFormat = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Optional<int> sourcePartitionCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new BlobStreamInputDataSource(type, Core.Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Core.Optional.ToNullable(authenticationMode), Core.Optional.ToNullable(sourcePartitionCount));
+            return new BlobStreamInputDataSource(type, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), Optional.ToNullable(sourcePartitionCount));
         }
     }
 }

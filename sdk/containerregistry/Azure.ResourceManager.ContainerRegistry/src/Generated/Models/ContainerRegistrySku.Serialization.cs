@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistrySku : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistrySku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ContainerRegistrySkuName name = default;
-            Core.Optional<ContainerRegistrySkuTier> tier = default;
+            Optional<ContainerRegistrySkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistrySku(name, Core.Optional.ToNullable(tier));
+            return new ContainerRegistrySku(name, Optional.ToNullable(tier));
         }
     }
 }

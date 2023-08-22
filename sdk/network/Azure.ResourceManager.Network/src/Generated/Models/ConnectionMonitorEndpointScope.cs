@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointScope. </summary>
         public ConnectionMonitorEndpointScope()
         {
-            Include = new Core.ChangeTrackingList<ConnectionMonitorEndpointScopeItem>();
-            Exclude = new Core.ChangeTrackingList<ConnectionMonitorEndpointScopeItem>();
+            Include = new ChangeTrackingList<ConnectionMonitorEndpointScopeItem>();
+            Exclude = new ChangeTrackingList<ConnectionMonitorEndpointScopeItem>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointScope. </summary>

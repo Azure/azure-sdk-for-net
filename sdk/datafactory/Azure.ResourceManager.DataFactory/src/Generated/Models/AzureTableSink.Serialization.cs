@@ -13,59 +13,59 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureTableSink : Core.IUtf8JsonSerializable
+    public partial class AzureTableSink : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
+            if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
                 writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
                 JsonSerializer.Serialize(writer, AzureTableDefaultPartitionKeyValue);
             }
-            if (Core.Optional.IsDefined(AzureTablePartitionKeyName))
+            if (Optional.IsDefined(AzureTablePartitionKeyName))
             {
                 writer.WritePropertyName("azureTablePartitionKeyName"u8);
                 JsonSerializer.Serialize(writer, AzureTablePartitionKeyName);
             }
-            if (Core.Optional.IsDefined(AzureTableRowKeyName))
+            if (Optional.IsDefined(AzureTableRowKeyName))
             {
                 writer.WritePropertyName("azureTableRowKeyName"u8);
                 JsonSerializer.Serialize(writer, AzureTableRowKeyName);
             }
-            if (Core.Optional.IsDefined(AzureTableInsertType))
+            if (Optional.IsDefined(AzureTableInsertType))
             {
                 writer.WritePropertyName("azureTableInsertType"u8);
                 JsonSerializer.Serialize(writer, AzureTableInsertType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (Core.Optional.IsDefined(WriteBatchSize))
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (Core.Optional.IsDefined(WriteBatchTimeout))
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (Core.Optional.IsDefined(SinkRetryCount))
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (Core.Optional.IsDefined(SinkRetryWait))
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Core.Optional.IsDefined(DisableMetricsCollection))
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> azureTableDefaultPartitionKeyValue = default;
-            Core.Optional<DataFactoryElement<string>> azureTablePartitionKeyName = default;
-            Core.Optional<DataFactoryElement<string>> azureTableRowKeyName = default;
-            Core.Optional<DataFactoryElement<string>> azureTableInsertType = default;
+            Optional<DataFactoryElement<string>> azureTableDefaultPartitionKeyValue = default;
+            Optional<DataFactoryElement<string>> azureTablePartitionKeyName = default;
+            Optional<DataFactoryElement<string>> azureTableRowKeyName = default;
+            Optional<DataFactoryElement<string>> azureTableInsertType = default;
             string type = default;
-            Core.Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Core.Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Core.Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Core.Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Core.Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Core.Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            Optional<DataFactoryElement<int>> writeBatchSize = default;
+            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
+            Optional<DataFactoryElement<int>> sinkRetryCount = default;
+            Optional<DataFactoryElement<string>> sinkRetryWait = default;
+            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
+            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

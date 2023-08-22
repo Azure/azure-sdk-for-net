@@ -13,24 +13,24 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereImageData : Core.IUtf8JsonSerializable
+    public partial class SphereImageData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Image))
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Core.Optional.IsDefined(ImageId))
+            if (Optional.IsDefined(ImageId))
             {
                 writer.WritePropertyName("imageId"u8);
                 writer.WriteStringValue(ImageId);
             }
-            if (Core.Optional.IsDefined(RegionalDataBoundary))
+            if (Optional.IsDefined(RegionalDataBoundary))
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.Sphere
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> image = default;
-            Core.Optional<string> imageId = default;
-            Core.Optional<string> imageName = default;
-            Core.Optional<RegionalDataBoundary> regionalDataBoundary = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> componentId = default;
-            Core.Optional<SphereImageType> imageType = default;
-            Core.Optional<SphereProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> image = default;
+            Optional<string> imageId = default;
+            Optional<string> imageName = default;
+            Optional<RegionalDataBoundary> regionalDataBoundary = default;
+            Optional<Uri> uri = default;
+            Optional<string> description = default;
+            Optional<string> componentId = default;
+            Optional<SphereImageType> imageType = default;
+            Optional<SphereProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sphere
                     continue;
                 }
             }
-            return new SphereImageData(id, name, type, systemData.Value, image.Value, imageId.Value, imageName.Value, Core.Optional.ToNullable(regionalDataBoundary), uri.Value, description.Value, componentId.Value, Core.Optional.ToNullable(imageType), Core.Optional.ToNullable(provisioningState));
+            return new SphereImageData(id, name, type, systemData.Value, image.Value, imageId.Value, imageName.Value, Optional.ToNullable(regionalDataBoundary), uri.Value, description.Value, componentId.Value, Optional.ToNullable(imageType), Optional.ToNullable(provisioningState));
         }
     }
 }

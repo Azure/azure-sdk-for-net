@@ -20,9 +20,9 @@ namespace Azure.Monitor.Query.Models
                 return null;
             }
             IReadOnlyList<LogsTable> tables = default;
-            Core.Optional<JsonElement> statistics = default;
-            Core.Optional<JsonElement> render = default;
-            Core.Optional<JsonElement> error = default;
+            Optional<JsonElement> statistics = default;
+            Optional<JsonElement> render = default;
+            Optional<JsonElement> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"u8))

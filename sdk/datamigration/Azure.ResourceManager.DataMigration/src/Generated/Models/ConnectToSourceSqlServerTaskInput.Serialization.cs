@@ -10,44 +10,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskInput : Core.IUtf8JsonSerializable
+    public partial class ConnectToSourceSqlServerTaskInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (Core.Optional.IsDefined(CheckPermissionsGroup))
+            if (Optional.IsDefined(CheckPermissionsGroup))
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(CollectDatabases))
+            if (Optional.IsDefined(CollectDatabases))
             {
                 writer.WritePropertyName("collectDatabases"u8);
                 writer.WriteBooleanValue(CollectDatabases.Value);
             }
-            if (Core.Optional.IsDefined(CollectLogins))
+            if (Optional.IsDefined(CollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
                 writer.WriteBooleanValue(CollectLogins.Value);
             }
-            if (Core.Optional.IsDefined(CollectAgentJobs))
+            if (Optional.IsDefined(CollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
                 writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
-            if (Core.Optional.IsDefined(CollectTdeCertificateInfo))
+            if (Optional.IsDefined(CollectTdeCertificateInfo))
             {
                 writer.WritePropertyName("collectTdeCertificateInfo"u8);
                 writer.WriteBooleanValue(CollectTdeCertificateInfo.Value);
             }
-            if (Core.Optional.IsDefined(ValidateSsisCatalogOnly))
+            if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
                 writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
             }
-            if (Core.Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SqlConnectionInfo sourceConnectionInfo = default;
-            Core.Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
-            Core.Optional<bool> collectDatabases = default;
-            Core.Optional<bool> collectLogins = default;
-            Core.Optional<bool> collectAgentJobs = default;
-            Core.Optional<bool> collectTdeCertificateInfo = default;
-            Core.Optional<bool> validateSsisCatalogOnly = default;
-            Core.Optional<string> encryptedKeyForSecureFields = default;
+            Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
+            Optional<bool> collectDatabases = default;
+            Optional<bool> collectLogins = default;
+            Optional<bool> collectAgentJobs = default;
+            Optional<bool> collectTdeCertificateInfo = default;
+            Optional<bool> validateSsisCatalogOnly = default;
+            Optional<string> encryptedKeyForSecureFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToSourceSqlServerTaskInput(sourceConnectionInfo, Core.Optional.ToNullable(checkPermissionsGroup), Core.Optional.ToNullable(collectDatabases), Core.Optional.ToNullable(collectLogins), Core.Optional.ToNullable(collectAgentJobs), Core.Optional.ToNullable(collectTdeCertificateInfo), Core.Optional.ToNullable(validateSsisCatalogOnly), encryptedKeyForSecureFields.Value);
+            return new ConnectToSourceSqlServerTaskInput(sourceConnectionInfo, Optional.ToNullable(checkPermissionsGroup), Optional.ToNullable(collectDatabases), Optional.ToNullable(collectLogins), Optional.ToNullable(collectAgentJobs), Optional.ToNullable(collectTdeCertificateInfo), Optional.ToNullable(validateSsisCatalogOnly), encryptedKeyForSecureFields.Value);
         }
     }
 }

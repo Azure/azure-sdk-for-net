@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkVirtualApplianceConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkVirtualApplianceConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation(_networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkVirtualApplianceConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionOperationSource(Client), _networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionOperationSource(Client), _networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkVirtualApplianceConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionOperationSource(Client), _networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetworkArmOperation<NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionOperationSource(Client), _networkVirtualApplianceConnectionClientDiagnostics, Pipeline, _networkVirtualApplianceConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

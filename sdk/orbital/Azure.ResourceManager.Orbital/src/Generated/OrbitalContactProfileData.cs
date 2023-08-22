@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="location"> The location. </param>
         public OrbitalContactProfileData(AzureLocation location) : base(location)
         {
-            Links = new Core.ChangeTrackingList<OrbitalContactProfileLink>();
+            Links = new ChangeTrackingList<OrbitalContactProfileLink>();
         }
 
         /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>

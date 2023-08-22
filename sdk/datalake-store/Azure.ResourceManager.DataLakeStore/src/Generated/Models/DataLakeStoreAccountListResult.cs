@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> Initializes a new instance of DataLakeStoreAccountListResult. </summary>
         internal DataLakeStoreAccountListResult()
         {
-            Value = new Core.ChangeTrackingList<DataLakeStoreAccountBasicData>();
+            Value = new ChangeTrackingList<DataLakeStoreAccountBasicData>();
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreAccountListResult. </summary>

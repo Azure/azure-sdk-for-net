@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ValidateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
         public ValidateOracleAzureDBForPostgreSqlSyncTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>();
+            Output = new ChangeTrackingList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>();
             TaskType = TaskType.ValidateOracleAzureDBPostgreSqlSync;
         }
 

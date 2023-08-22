@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    internal partial class ManagedRuleSetList : Core.IUtf8JsonSerializable
+    internal partial class ManagedRuleSetList : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ManagedRuleSets))
+            if (Optional.IsCollectionDefined(ManagedRuleSets))
             {
                 writer.WritePropertyName("managedRuleSets"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Core.Optional<IList<ManagedRuleSet>> managedRuleSets = default;
+            Optional<IList<ManagedRuleSet>> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedRuleSets"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ManagedRuleSetList(Core.Optional.ToList(managedRuleSets));
+            return new ManagedRuleSetList(Optional.ToList(managedRuleSets));
         }
     }
 }

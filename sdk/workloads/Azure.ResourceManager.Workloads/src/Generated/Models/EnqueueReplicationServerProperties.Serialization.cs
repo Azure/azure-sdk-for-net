@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class EnqueueReplicationServerProperties : Core.IUtf8JsonSerializable
+    public partial class EnqueueReplicationServerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<EnqueueReplicationServerType> ersVersion = default;
-            Core.Optional<string> instanceNo = default;
-            Core.Optional<string> hostname = default;
-            Core.Optional<string> kernelVersion = default;
-            Core.Optional<string> kernelPatch = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<SapHealthState> health = default;
+            Optional<EnqueueReplicationServerType> ersVersion = default;
+            Optional<string> instanceNo = default;
+            Optional<string> hostname = default;
+            Optional<string> kernelVersion = default;
+            Optional<string> kernelPatch = default;
+            Optional<string> ipAddress = default;
+            Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ersVersion"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new EnqueueReplicationServerProperties(Core.Optional.ToNullable(ersVersion), instanceNo.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Core.Optional.ToNullable(health));
+            return new EnqueueReplicationServerProperties(Optional.ToNullable(ersVersion), instanceNo.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(health));
         }
     }
 }

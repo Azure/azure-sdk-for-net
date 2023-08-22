@@ -14,15 +14,15 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class NetAppSubvolumeMetadataOperationSource : Core.IOperationSource<NetAppSubvolumeMetadata>
+    internal class NetAppSubvolumeMetadataOperationSource : IOperationSource<NetAppSubvolumeMetadata>
     {
-        NetAppSubvolumeMetadata Core.IOperationSource<NetAppSubvolumeMetadata>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetAppSubvolumeMetadata IOperationSource<NetAppSubvolumeMetadata>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NetAppSubvolumeMetadata.DeserializeNetAppSubvolumeMetadata(document.RootElement);
         }
 
-        async ValueTask<NetAppSubvolumeMetadata> Core.IOperationSource<NetAppSubvolumeMetadata>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetAppSubvolumeMetadata> IOperationSource<NetAppSubvolumeMetadata>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NetAppSubvolumeMetadata.DeserializeNetAppSubvolumeMetadata(document.RootElement);

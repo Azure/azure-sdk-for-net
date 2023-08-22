@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningOperationKind> provisioningOperation = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<string> serviceRequestId = default;
-            Core.Optional<string> statusCode = default;
-            Core.Optional<StatusMessage> statusMessage = default;
-            Core.Optional<TargetResource> targetResource = default;
-            Core.Optional<HttpMessage> request = default;
-            Core.Optional<HttpMessage> response = default;
+            Optional<ProvisioningOperationKind> provisioningOperation = default;
+            Optional<string> provisioningState = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<TimeSpan> duration = default;
+            Optional<string> serviceRequestId = default;
+            Optional<string> statusCode = default;
+            Optional<StatusMessage> statusMessage = default;
+            Optional<TargetResource> targetResource = default;
+            Optional<HttpMessage> request = default;
+            Optional<HttpMessage> response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningOperation"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmDeploymentOperationProperties(Core.Optional.ToNullable(provisioningOperation), provisioningState.Value, Core.Optional.ToNullable(timestamp), Core.Optional.ToNullable(duration), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value);
+            return new ArmDeploymentOperationProperties(Optional.ToNullable(provisioningOperation), provisioningState.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value);
         }
     }
 }

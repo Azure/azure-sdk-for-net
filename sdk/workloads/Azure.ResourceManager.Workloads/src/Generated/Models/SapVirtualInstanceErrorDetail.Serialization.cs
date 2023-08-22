@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<IReadOnlyList<SapVirtualInstanceErrorDetail>> details = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<SapVirtualInstanceErrorDetail>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapVirtualInstanceErrorDetail(code.Value, message.Value, Core.Optional.ToList(details));
+            return new SapVirtualInstanceErrorDetail(code.Value, message.Value, Optional.ToList(details));
         }
     }
 }

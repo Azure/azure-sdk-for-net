@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of JobDefinitionList. </summary>
         internal JobDefinitionList()
         {
-            Value = new Core.ChangeTrackingList<JobDefinitionData>();
+            Value = new ChangeTrackingList<JobDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of JobDefinitionList. </summary>

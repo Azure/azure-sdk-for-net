@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <summary> Initializes a new instance of AnalyzeJobErrorsAndStatistics. </summary>
         internal AnalyzeJobErrorsAndStatistics()
         {
-            Errors = new Core.ChangeTrackingList<TextAnalyticsError>();
+            Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
         /// <summary> Initializes a new instance of AnalyzeJobErrorsAndStatistics. </summary>

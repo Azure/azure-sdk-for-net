@@ -21,15 +21,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<object> startTime = default;
-            Core.Optional<object> stopTime = default;
-            Core.Optional<string> linkTableId = default;
-            Core.Optional<string> errorCode = default;
-            Core.Optional<DateTimeOffset> lastProcessedData = default;
-            Core.Optional<DateTimeOffset> lastTransactionCommitTime = default;
+            Optional<string> id = default;
+            Optional<string> status = default;
+            Optional<string> errorMessage = default;
+            Optional<object> startTime = default;
+            Optional<object> stopTime = default;
+            Optional<string> linkTableId = default;
+            Optional<string> errorCode = default;
+            Optional<DateTimeOffset> lastProcessedData = default;
+            Optional<DateTimeOffset> lastTransactionCommitTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value, linkTableId.Value, errorCode.Value, Core.Optional.ToNullable(lastProcessedData), Core.Optional.ToNullable(lastTransactionCommitTime));
+            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value, linkTableId.Value, errorCode.Value, Optional.ToNullable(lastProcessedData), Optional.ToNullable(lastTransactionCommitTime));
         }
 
         internal partial class LinkTableStatusConverter : JsonConverter<LinkTableStatus>

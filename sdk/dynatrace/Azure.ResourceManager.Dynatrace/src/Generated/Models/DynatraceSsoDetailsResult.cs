@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of DynatraceSsoDetailsResult. </summary>
         internal DynatraceSsoDetailsResult()
         {
-            AadDomains = new Core.ChangeTrackingList<string>();
-            AdminUsers = new Core.ChangeTrackingList<string>();
+            AadDomains = new ChangeTrackingList<string>();
+            AdminUsers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DynatraceSsoDetailsResult. </summary>

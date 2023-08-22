@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<int> schemaVersion = default;
+            Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaVersion"u8))
@@ -31,7 +31,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Manifest(Core.Optional.ToNullable(schemaVersion));
+            return new Manifest(Optional.ToNullable(schemaVersion));
         }
     }
 }

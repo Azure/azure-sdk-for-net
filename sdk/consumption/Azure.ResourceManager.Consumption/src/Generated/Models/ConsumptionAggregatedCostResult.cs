@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionAggregatedCostResult. </summary>
         internal ConsumptionAggregatedCostResult()
         {
-            Children = new Core.ChangeTrackingList<ConsumptionAggregatedCostResult>();
-            IncludedSubscriptions = new Core.ChangeTrackingList<string>();
-            ExcludedSubscriptions = new Core.ChangeTrackingList<string>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Children = new ChangeTrackingList<ConsumptionAggregatedCostResult>();
+            IncludedSubscriptions = new ChangeTrackingList<string>();
+            ExcludedSubscriptions = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionAggregatedCostResult. </summary>

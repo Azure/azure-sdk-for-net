@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class OwaspCrsExclusionEntry : Core.IUtf8JsonSerializable
+    public partial class OwaspCrsExclusionEntry : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SelectorMatchOperator.ToString());
             writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
-            if (Core.Optional.IsCollectionDefined(ExclusionManagedRuleSets))
+            if (Optional.IsCollectionDefined(ExclusionManagedRuleSets))
             {
                 writer.WritePropertyName("exclusionManagedRuleSets"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
             OwaspCrsExclusionEntryMatchVariable matchVariable = default;
             OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator = default;
             string selector = default;
-            Core.Optional<IList<ExclusionManagedRuleSet>> exclusionManagedRuleSets = default;
+            Optional<IList<ExclusionManagedRuleSet>> exclusionManagedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariable"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector, Core.Optional.ToList(exclusionManagedRuleSets));
+            return new OwaspCrsExclusionEntry(matchVariable, selectorMatchOperator, selector, Optional.ToList(exclusionManagedRuleSets));
         }
     }
 }

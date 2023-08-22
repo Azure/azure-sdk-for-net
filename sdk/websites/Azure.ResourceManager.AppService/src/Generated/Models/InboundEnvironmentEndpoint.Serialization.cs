@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<IReadOnlyList<string>> endpoints = default;
-            Core.Optional<IReadOnlyList<string>> ports = default;
+            Optional<string> description = default;
+            Optional<IReadOnlyList<string>> endpoints = default;
+            Optional<IReadOnlyList<string>> ports = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new InboundEnvironmentEndpoint(description.Value, Core.Optional.ToList(endpoints), Core.Optional.ToList(ports));
+            return new InboundEnvironmentEndpoint(description.Value, Optional.ToList(endpoints), Optional.ToList(ports));
         }
     }
 }

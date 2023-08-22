@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
             ManagedByTenantId = managedByTenantId;
             Authorizations = authorizations.ToList();
-            EligibleAuthorizations = new Core.ChangeTrackingList<ManagedServicesEligibleAuthorization>();
+            EligibleAuthorizations = new ChangeTrackingList<ManagedServicesEligibleAuthorization>();
         }
 
         /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationProperties. </summary>

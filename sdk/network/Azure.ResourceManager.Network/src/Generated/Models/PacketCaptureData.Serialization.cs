@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> target = default;
-            Core.Optional<PacketCaptureMachineScope> scope = default;
-            Core.Optional<PacketCaptureTargetType> targetType = default;
-            Core.Optional<long> bytesToCapturePerPacket = default;
-            Core.Optional<long> totalBytesPerSession = default;
-            Core.Optional<int> timeLimitInSeconds = default;
-            Core.Optional<PacketCaptureStorageLocation> storageLocation = default;
-            Core.Optional<IReadOnlyList<PacketCaptureFilter>> filters = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> target = default;
+            Optional<PacketCaptureMachineScope> scope = default;
+            Optional<PacketCaptureTargetType> targetType = default;
+            Optional<long> bytesToCapturePerPacket = default;
+            Optional<long> totalBytesPerSession = default;
+            Optional<int> timeLimitInSeconds = default;
+            Optional<PacketCaptureStorageLocation> storageLocation = default;
+            Optional<IReadOnlyList<PacketCaptureFilter>> filters = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PacketCaptureData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), target.Value, scope.Value, Core.Optional.ToNullable(targetType), Core.Optional.ToNullable(bytesToCapturePerPacket), Core.Optional.ToNullable(totalBytesPerSession), Core.Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Core.Optional.ToList(filters), Core.Optional.ToNullable(provisioningState));
+            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState));
         }
     }
 }

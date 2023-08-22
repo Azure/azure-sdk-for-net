@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<string> content = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> headers = default;
-            Core.Optional<string> reasonPhrase = default;
-            Core.Optional<string> statusCode = default;
-            Core.Optional<string> version = default;
+            Optional<string> content = default;
+            Optional<IReadOnlyDictionary<string, string>> headers = default;
+            Optional<string> reasonPhrase = default;
+            Optional<string> statusCode = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEventResponseMessage(content.Value, Core.Optional.ToDictionary(headers), reasonPhrase.Value, statusCode.Value, version.Value);
+            return new ContainerRegistryWebhookEventResponseMessage(content.Value, Optional.ToDictionary(headers), reasonPhrase.Value, statusCode.Value, version.Value);
         }
     }
 }

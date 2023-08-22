@@ -19,8 +19,8 @@ namespace Azure.Containers.ContainerRegistry
                 return null;
             }
             string digest = default;
-            Core.Optional<ArtifactArchitecture> architecture = default;
-            Core.Optional<ArtifactOperatingSystem> os = default;
+            Optional<ArtifactArchitecture> architecture = default;
+            Optional<ArtifactOperatingSystem> os = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"u8))
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactManifestPlatform(digest, Core.Optional.ToNullable(architecture), Core.Optional.ToNullable(os));
+            return new ArtifactManifestPlatform(digest, Optional.ToNullable(architecture), Optional.ToNullable(os));
         }
     }
 }

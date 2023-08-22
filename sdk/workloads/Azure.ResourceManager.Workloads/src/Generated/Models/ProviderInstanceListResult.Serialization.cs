@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SapProviderInstanceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SapProviderInstanceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new ProviderInstanceListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ProviderInstanceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

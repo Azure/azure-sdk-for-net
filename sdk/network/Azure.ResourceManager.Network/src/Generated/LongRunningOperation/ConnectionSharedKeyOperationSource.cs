@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ConnectionSharedKeyOperationSource : Core.IOperationSource<ConnectionSharedKey>
+    internal class ConnectionSharedKeyOperationSource : IOperationSource<ConnectionSharedKey>
     {
-        ConnectionSharedKey Core.IOperationSource<ConnectionSharedKey>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConnectionSharedKey IOperationSource<ConnectionSharedKey>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);
         }
 
-        async ValueTask<ConnectionSharedKey> Core.IOperationSource<ConnectionSharedKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConnectionSharedKey> IOperationSource<ConnectionSharedKey>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return ConnectionSharedKey.DeserializeConnectionSharedKey(document.RootElement);

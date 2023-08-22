@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppReplicaData : Core.IUtf8JsonSerializable
+    public partial class ContainerAppReplicaData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Containers))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(InitContainers))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<ContainerAppReplicaRunningState> runningState = default;
-            Core.Optional<string> runningStateDetails = default;
-            Core.Optional<IList<ContainerAppReplicaContainer>> containers = default;
-            Core.Optional<IList<ContainerAppReplicaContainer>> initContainers = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<ContainerAppReplicaRunningState> runningState = default;
+            Optional<string> runningStateDetails = default;
+            Optional<IList<ContainerAppReplicaContainer>> containers = default;
+            Optional<IList<ContainerAppReplicaContainer>> initContainers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppReplicaData(id, name, type, systemData.Value, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(runningState), runningStateDetails.Value, Core.Optional.ToList(containers), Core.Optional.ToList(initContainers));
+            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(runningState), runningStateDetails.Value, Optional.ToList(containers), Optional.ToList(initContainers));
         }
     }
 }

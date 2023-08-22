@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterPoolData : Core.IUtf8JsonSerializable
+    public partial class DevCenterPoolData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,27 +33,27 @@ namespace Azure.ResourceManager.DevCenter
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DevBoxDefinitionName))
+            if (Optional.IsDefined(DevBoxDefinitionName))
             {
                 writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
             }
-            if (Core.Optional.IsDefined(NetworkConnectionName))
+            if (Optional.IsDefined(NetworkConnectionName))
             {
                 writer.WritePropertyName("networkConnectionName"u8);
                 writer.WriteStringValue(NetworkConnectionName);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LocalAdministrator))
+            if (Optional.IsDefined(LocalAdministrator))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
-            if (Core.Optional.IsDefined(StopOnDisconnect))
+            if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
                 writer.WriteObjectValue(StopOnDisconnect);
@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> devBoxDefinitionName = default;
-            Core.Optional<string> networkConnectionName = default;
-            Core.Optional<DevCenterLicenseType> licenseType = default;
-            Core.Optional<LocalAdminStatus> localAdministrator = default;
-            Core.Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
-            Core.Optional<DevCenterHealthStatus> healthStatus = default;
-            Core.Optional<IReadOnlyList<DevCenterHealthStatusDetail>> healthStatusDetails = default;
-            Core.Optional<DevCenterProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> devBoxDefinitionName = default;
+            Optional<string> networkConnectionName = default;
+            Optional<DevCenterLicenseType> licenseType = default;
+            Optional<LocalAdminStatus> localAdministrator = default;
+            Optional<StopOnDisconnectConfiguration> stopOnDisconnect = default;
+            Optional<DevCenterHealthStatus> healthStatus = default;
+            Optional<IReadOnlyList<DevCenterHealthStatusDetail>> healthStatusDetails = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterPoolData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Core.Optional.ToNullable(licenseType), Core.Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Core.Optional.ToNullable(healthStatus), Core.Optional.ToList(healthStatusDetails), Core.Optional.ToNullable(provisioningState));
+            return new DevCenterPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value, Optional.ToNullable(healthStatus), Optional.ToList(healthStatusDetails), Optional.ToNullable(provisioningState));
         }
     }
 }

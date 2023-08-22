@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of ArtifactSourceList. </summary>
         internal ArtifactSourceList()
         {
-            Value = new Core.ChangeTrackingList<DevTestLabArtifactSourceData>();
+            Value = new ChangeTrackingList<DevTestLabArtifactSourceData>();
         }
 
         /// <summary> Initializes a new instance of ArtifactSourceList. </summary>

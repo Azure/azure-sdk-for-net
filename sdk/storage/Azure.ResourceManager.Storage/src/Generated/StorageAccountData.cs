@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="location"> The location. </param>
         public StorageAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<StoragePrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<StoragePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of StorageAccountData. </summary>

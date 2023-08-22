@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVirtualMachineProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningVirtualMachineProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VirtualMachineSize))
+            if (Optional.IsDefined(VirtualMachineSize))
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteStringValue(VirtualMachineSize);
             }
-            if (Core.Optional.IsDefined(SshPort))
+            if (Optional.IsDefined(SshPort))
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Core.Optional.IsDefined(NotebookServerPort))
+            if (Optional.IsDefined(NotebookServerPort))
             {
                 writer.WritePropertyName("notebookServerPort"u8);
                 writer.WriteNumberValue(NotebookServerPort.Value);
             }
-            if (Core.Optional.IsDefined(Address))
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (Core.Optional.IsDefined(AdministratorAccount))
+            if (Optional.IsDefined(AdministratorAccount))
             {
                 if (AdministratorAccount != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("administratorAccount");
                 }
             }
-            if (Core.Optional.IsDefined(IsNotebookInstanceCompute))
+            if (Optional.IsDefined(IsNotebookInstanceCompute))
             {
                 writer.WritePropertyName("isNotebookInstanceCompute"u8);
                 writer.WriteBooleanValue(IsNotebookInstanceCompute.Value);
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> virtualMachineSize = default;
-            Core.Optional<int> sshPort = default;
-            Core.Optional<int> notebookServerPort = default;
-            Core.Optional<IPAddress> address = default;
-            Core.Optional<MachineLearningVmSshCredentials> administratorAccount = default;
-            Core.Optional<bool> isNotebookInstanceCompute = default;
+            Optional<string> virtualMachineSize = default;
+            Optional<int> sshPort = default;
+            Optional<int> notebookServerPort = default;
+            Optional<IPAddress> address = default;
+            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            Optional<bool> isNotebookInstanceCompute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineSize"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningVirtualMachineProperties(virtualMachineSize.Value, Core.Optional.ToNullable(sshPort), Core.Optional.ToNullable(notebookServerPort), address.Value, administratorAccount.Value, Core.Optional.ToNullable(isNotebookInstanceCompute));
+            return new MachineLearningVirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), Optional.ToNullable(notebookServerPort), address.Value, administratorAccount.Value, Optional.ToNullable(isNotebookInstanceCompute));
         }
     }
 }

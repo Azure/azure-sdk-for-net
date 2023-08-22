@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryTriggerRun. </summary>
         internal DataFactoryTriggerRun()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, string>();
-            TriggeredPipelines = new Core.ChangeTrackingDictionary<string, string>();
-            RunDimension = new Core.ChangeTrackingDictionary<string, string>();
-            DependencyStatus = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Properties = new ChangeTrackingDictionary<string, string>();
+            TriggeredPipelines = new ChangeTrackingDictionary<string, string>();
+            RunDimension = new ChangeTrackingDictionary<string, string>();
+            DependencyStatus = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryTriggerRun. </summary>

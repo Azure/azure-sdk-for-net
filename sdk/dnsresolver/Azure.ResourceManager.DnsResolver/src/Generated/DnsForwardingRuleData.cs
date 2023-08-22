@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
 
             DomainName = domainName;
             TargetDnsServers = targetDnsServers.ToList();
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRuleData. </summary>

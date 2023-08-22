@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActions. </summary>
         internal ResourceHealthEventRecommendedActions()
         {
-            Actions = new Core.ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>();
+            Actions = new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActions. </summary>

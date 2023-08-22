@@ -12,69 +12,69 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCrossConnectionPeeringData : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteCrossConnectionPeeringData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PeeringType))
+            if (Optional.IsDefined(PeeringType))
             {
                 writer.WritePropertyName("peeringType"u8);
                 writer.WriteStringValue(PeeringType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PeerASN))
+            if (Optional.IsDefined(PeerASN))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerASN.Value);
             }
-            if (Core.Optional.IsDefined(PrimaryPeerAddressPrefix))
+            if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("primaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(PrimaryPeerAddressPrefix);
             }
-            if (Core.Optional.IsDefined(SecondaryPeerAddressPrefix))
+            if (Optional.IsDefined(SecondaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("secondaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(SecondaryPeerAddressPrefix);
             }
-            if (Core.Optional.IsDefined(SharedKey))
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (Core.Optional.IsDefined(VlanId))
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Core.Optional.IsDefined(MicrosoftPeeringConfig))
+            if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
-            if (Core.Optional.IsDefined(GatewayManagerETag))
+            if (Optional.IsDefined(GatewayManagerETag))
             {
                 writer.WritePropertyName("gatewayManagerEtag"u8);
                 writer.WriteStringValue(GatewayManagerETag);
             }
-            if (Core.Optional.IsDefined(IPv6PeeringConfig))
+            if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
                 writer.WriteObjectValue(IPv6PeeringConfig);
@@ -89,25 +89,25 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<ExpressRoutePeeringType> peeringType = default;
-            Core.Optional<ExpressRoutePeeringState> state = default;
-            Core.Optional<int> azureASN = default;
-            Core.Optional<long> peerASN = default;
-            Core.Optional<string> primaryPeerAddressPrefix = default;
-            Core.Optional<string> secondaryPeerAddressPrefix = default;
-            Core.Optional<string> primaryAzurePort = default;
-            Core.Optional<string> secondaryAzurePort = default;
-            Core.Optional<string> sharedKey = default;
-            Core.Optional<int> vlanId = default;
-            Core.Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<string> gatewayManagerETag = default;
-            Core.Optional<string> lastModifiedBy = default;
-            Core.Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<ExpressRoutePeeringType> peeringType = default;
+            Optional<ExpressRoutePeeringState> state = default;
+            Optional<int> azureASN = default;
+            Optional<long> peerASN = default;
+            Optional<string> primaryPeerAddressPrefix = default;
+            Optional<string> secondaryPeerAddressPrefix = default;
+            Optional<string> primaryAzurePort = default;
+            Optional<string> secondaryAzurePort = default;
+            Optional<string> sharedKey = default;
+            Optional<int> vlanId = default;
+            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<string> gatewayManagerETag = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<IPv6ExpressRouteCircuitPeeringConfig> ipv6PeeringConfig = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteCrossConnectionPeeringData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(peeringType), Core.Optional.ToNullable(state), Core.Optional.ToNullable(azureASN), Core.Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Core.Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, Core.Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, ipv6PeeringConfig.Value);
+            return new ExpressRouteCrossConnectionPeeringData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, ipv6PeeringConfig.Value);
         }
     }
 }

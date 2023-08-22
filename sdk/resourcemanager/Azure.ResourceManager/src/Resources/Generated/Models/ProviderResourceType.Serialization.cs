@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<IReadOnlyList<string>> locations = default;
-            Core.Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
-            Core.Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
-            Core.Optional<IReadOnlyList<string>> apiVersions = default;
-            Core.Optional<string> defaultApiVersion = default;
-            Core.Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
-            Core.Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
-            Core.Optional<string> capabilities = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> properties = default;
+            Optional<string> resourceType = default;
+            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<ProviderExtendedLocation>> locationMappings = default;
+            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
+            Optional<IReadOnlyList<string>> apiVersions = default;
+            Optional<string> defaultApiVersion = default;
+            Optional<IReadOnlyList<ZoneMapping>> zoneMappings = default;
+            Optional<IReadOnlyList<ApiProfile>> apiProfiles = default;
+            Optional<string> capabilities = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ProviderResourceType(resourceType.Value, Core.Optional.ToList(locations), Core.Optional.ToList(locationMappings), Core.Optional.ToList(aliases), Core.Optional.ToList(apiVersions), defaultApiVersion.Value, Core.Optional.ToList(zoneMappings), Core.Optional.ToList(apiProfiles), capabilities.Value, Core.Optional.ToDictionary(properties));
+            return new ProviderResourceType(resourceType.Value, Optional.ToList(locations), Optional.ToList(locationMappings), Optional.ToList(aliases), Optional.ToList(apiVersions), defaultApiVersion.Value, Optional.ToList(zoneMappings), Optional.ToList(apiProfiles), capabilities.Value, Optional.ToDictionary(properties));
         }
     }
 }

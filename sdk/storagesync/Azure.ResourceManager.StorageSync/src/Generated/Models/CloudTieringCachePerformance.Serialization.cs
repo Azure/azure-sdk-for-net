@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Core.Optional<long> cacheHitBytes = default;
-            Core.Optional<long> cacheMissBytes = default;
-            Core.Optional<int> cacheHitBytesPercent = default;
+            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Optional<long> cacheHitBytes = default;
+            Optional<long> cacheMissBytes = default;
+            Optional<int> cacheHitBytesPercent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudTieringCachePerformance(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(cacheHitBytes), Core.Optional.ToNullable(cacheMissBytes), Core.Optional.ToNullable(cacheHitBytesPercent));
+            return new CloudTieringCachePerformance(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(cacheHitBytes), Optional.ToNullable(cacheMissBytes), Optional.ToNullable(cacheHitBytesPercent));
         }
     }
 }

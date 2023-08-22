@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<long> currentValue = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<LabServicesUsageUnit> unit = default;
-            Core.Optional<LabServicesUsageName> name = default;
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<long> currentValue = default;
+            Optional<long> limit = default;
+            Optional<LabServicesUsageUnit> unit = default;
+            Optional<LabServicesUsageName> name = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new LabServicesUsage(Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), Core.Optional.ToNullable(unit), name.Value, id.Value);
+            return new LabServicesUsage(Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(unit), name.Value, id.Value);
         }
     }
 }

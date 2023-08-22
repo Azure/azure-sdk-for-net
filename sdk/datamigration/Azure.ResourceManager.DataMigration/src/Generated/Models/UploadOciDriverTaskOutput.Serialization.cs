@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> driverPackageName = default;
-            Core.Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            Optional<string> driverPackageName = default;
+            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverPackageName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new UploadOciDriverTaskOutput(driverPackageName.Value, Core.Optional.ToList(validationErrors));
+            return new UploadOciDriverTaskOutput(driverPackageName.Value, Optional.ToList(validationErrors));
         }
     }
 }

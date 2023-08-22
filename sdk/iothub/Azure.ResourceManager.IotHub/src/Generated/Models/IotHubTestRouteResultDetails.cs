@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>
         internal IotHubTestRouteResultDetails()
         {
-            CompilationErrors = new Core.ChangeTrackingList<RouteCompilationError>();
+            CompilationErrors = new ChangeTrackingList<RouteCompilationError>();
         }
 
         /// <summary> Initializes a new instance of IotHubTestRouteResultDetails. </summary>

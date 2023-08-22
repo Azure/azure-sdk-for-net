@@ -13,74 +13,74 @@ using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class SupportTicketData : Core.IUtf8JsonSerializable
+    public partial class SupportTicketData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SupportTicketId))
+            if (Optional.IsDefined(SupportTicketId))
             {
                 writer.WritePropertyName("supportTicketId"u8);
                 writer.WriteStringValue(SupportTicketId);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ProblemClassificationId))
+            if (Optional.IsDefined(ProblemClassificationId))
             {
                 writer.WritePropertyName("problemClassificationId"u8);
                 writer.WriteStringValue(ProblemClassificationId);
             }
-            if (Core.Optional.IsDefined(Severity))
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Require24X7Response))
+            if (Optional.IsDefined(Require24X7Response))
             {
                 writer.WritePropertyName("require24X7Response"u8);
                 writer.WriteBooleanValue(Require24X7Response.Value);
             }
-            if (Core.Optional.IsDefined(ContactDetails))
+            if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (Core.Optional.IsDefined(ServiceLevelAgreement))
+            if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
                 writer.WriteObjectValue(ServiceLevelAgreement);
             }
-            if (Core.Optional.IsDefined(SupportEngineer))
+            if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
                 writer.WriteObjectValue(SupportEngineer);
             }
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(ProblemStartOn))
+            if (Optional.IsDefined(ProblemStartOn))
             {
                 writer.WritePropertyName("problemStartTime"u8);
                 writer.WriteStringValue(ProblemStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ServiceId))
+            if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (Core.Optional.IsDefined(TechnicalTicketDetails))
+            if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
                 writer.WriteObjectValue(TechnicalTicketDetails);
             }
-            if (Core.Optional.IsDefined(QuotaTicketDetails))
+            if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
                 writer.WriteObjectValue(QuotaTicketDetails);
@@ -98,27 +98,27 @@ namespace Azure.ResourceManager.Support
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> supportTicketId = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> problemClassificationId = default;
-            Core.Optional<string> problemClassificationDisplayName = default;
-            Core.Optional<SupportSeverityLevel> severity = default;
-            Core.Optional<string> enrollmentId = default;
-            Core.Optional<bool> require24X7Response = default;
-            Core.Optional<SupportContactProfile> contactDetails = default;
-            Core.Optional<SupportServiceLevelAgreement> serviceLevelAgreement = default;
-            Core.Optional<SupportEngineer> supportEngineer = default;
-            Core.Optional<string> supportPlanType = default;
-            Core.Optional<string> title = default;
-            Core.Optional<DateTimeOffset> problemStartTime = default;
-            Core.Optional<string> serviceId = default;
-            Core.Optional<string> serviceDisplayName = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<DateTimeOffset> modifiedDate = default;
-            Core.Optional<TechnicalTicketDetails> technicalTicketDetails = default;
-            Core.Optional<QuotaTicketDetails> quotaTicketDetails = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> supportTicketId = default;
+            Optional<string> description = default;
+            Optional<string> problemClassificationId = default;
+            Optional<string> problemClassificationDisplayName = default;
+            Optional<SupportSeverityLevel> severity = default;
+            Optional<string> enrollmentId = default;
+            Optional<bool> require24X7Response = default;
+            Optional<SupportContactProfile> contactDetails = default;
+            Optional<SupportServiceLevelAgreement> serviceLevelAgreement = default;
+            Optional<SupportEngineer> supportEngineer = default;
+            Optional<string> supportPlanType = default;
+            Optional<string> title = default;
+            Optional<DateTimeOffset> problemStartTime = default;
+            Optional<string> serviceId = default;
+            Optional<string> serviceDisplayName = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<DateTimeOffset> modifiedDate = default;
+            Optional<TechnicalTicketDetails> technicalTicketDetails = default;
+            Optional<QuotaTicketDetails> quotaTicketDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Support
                     continue;
                 }
             }
-            return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Core.Optional.ToNullable(severity), enrollmentId.Value, Core.Optional.ToNullable(require24X7Response), contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, title.Value, Core.Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Core.Optional.ToNullable(createdDate), Core.Optional.ToNullable(modifiedDate), technicalTicketDetails.Value, quotaTicketDetails.Value);
+            return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Optional.ToNullable(severity), enrollmentId.Value, Optional.ToNullable(require24X7Response), contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, title.Value, Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), technicalTicketDetails.Value, quotaTicketDetails.Value);
         }
     }
 }

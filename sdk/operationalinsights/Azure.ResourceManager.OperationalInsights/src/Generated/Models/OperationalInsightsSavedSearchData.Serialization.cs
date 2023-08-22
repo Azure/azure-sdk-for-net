@@ -14,12 +14,12 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsSavedSearchData : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsSavedSearchData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Core.Optional.IsDefined(FunctionAlias))
+            if (Optional.IsDefined(FunctionAlias))
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
-            if (Core.Optional.IsDefined(FunctionParameters))
+            if (Optional.IsDefined(FunctionParameters))
             {
                 writer.WritePropertyName("functionParameters"u8);
                 writer.WriteStringValue(FunctionParameters);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string category = default;
             string displayName = default;
             string query = default;
-            Core.Optional<string> functionAlias = default;
-            Core.Optional<string> functionParameters = default;
-            Core.Optional<long> version = default;
-            Core.Optional<IList<OperationalInsightsTag>> tags = default;
+            Optional<string> functionAlias = default;
+            Optional<string> functionParameters = default;
+            Optional<long> version = default;
+            Optional<IList<OperationalInsightsTag>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Core.Optional.ToNullable(version), Core.Optional.ToList(tags));
+            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Optional.ToNullable(version), Optional.ToList(tags));
         }
     }
 }

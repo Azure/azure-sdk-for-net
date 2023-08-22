@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> accessSas = default;
-            Core.Optional<string> securityDataAccessSas = default;
+            Optional<string> accessSas = default;
+            Optional<string> securityDataAccessSas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessSAS"u8))

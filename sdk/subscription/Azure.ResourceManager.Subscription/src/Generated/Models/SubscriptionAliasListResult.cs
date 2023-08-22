@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>
         internal SubscriptionAliasListResult()
         {
-            Value = new Core.ChangeTrackingList<SubscriptionAliasData>();
+            Value = new ChangeTrackingList<SubscriptionAliasData>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionAliasListResult. </summary>

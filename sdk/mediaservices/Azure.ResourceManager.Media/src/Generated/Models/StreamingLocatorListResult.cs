@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>
         internal StreamingLocatorListResult()
         {
-            Value = new Core.ChangeTrackingList<StreamingLocatorData>();
+            Value = new ChangeTrackingList<StreamingLocatorData>();
         }
 
         /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ScriptPackageData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ScriptPackageData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new ScriptPackagesList(Core.Optional.ToList(value), nextLink.Value);
+            return new ScriptPackagesList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

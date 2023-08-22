@@ -21,27 +21,27 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Core.Optional<string> dataFactoryName = default;
-            Core.Optional<SynapseIntegrationRuntimeState> state = default;
-            Core.Optional<DateTimeOffset> createTime = default;
-            Core.Optional<string> taskQueueId = default;
-            Core.Optional<string> nodeCommunicationChannelEncryptionMode = default;
-            Core.Optional<SynapseIntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
-            Core.Optional<string> version = default;
-            Core.Optional<IReadOnlyList<SynapseSelfHostedIntegrationRuntimeNode>> nodes = default;
-            Core.Optional<DateTimeOffset> scheduledUpdateDate = default;
-            Core.Optional<string> updateDelayOffset = default;
-            Core.Optional<string> localTimeZoneOffset = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Core.Optional<IReadOnlyList<string>> serviceUrls = default;
-            Core.Optional<SynapseIntegrationRuntimeAutoUpdate> autoUpdate = default;
-            Core.Optional<string> versionStatus = default;
-            Core.Optional<IReadOnlyList<SynapseLinkedIntegrationRuntime>> links = default;
-            Core.Optional<string> pushedVersion = default;
-            Core.Optional<string> latestVersion = default;
-            Core.Optional<DateTimeOffset> autoUpdateEta = default;
-            Core.Optional<string> serviceRegion = default;
-            Core.Optional<IReadOnlyList<string>> newerVersions = default;
+            Optional<string> dataFactoryName = default;
+            Optional<SynapseIntegrationRuntimeState> state = default;
+            Optional<DateTimeOffset> createTime = default;
+            Optional<string> taskQueueId = default;
+            Optional<string> nodeCommunicationChannelEncryptionMode = default;
+            Optional<SynapseIntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
+            Optional<string> version = default;
+            Optional<IReadOnlyList<SynapseSelfHostedIntegrationRuntimeNode>> nodes = default;
+            Optional<DateTimeOffset> scheduledUpdateDate = default;
+            Optional<string> updateDelayOffset = default;
+            Optional<string> localTimeZoneOffset = default;
+            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            Optional<IReadOnlyList<string>> serviceUrls = default;
+            Optional<SynapseIntegrationRuntimeAutoUpdate> autoUpdate = default;
+            Optional<string> versionStatus = default;
+            Optional<IReadOnlyList<SynapseLinkedIntegrationRuntime>> links = default;
+            Optional<string> pushedVersion = default;
+            Optional<string> latestVersion = default;
+            Optional<DateTimeOffset> autoUpdateEta = default;
+            Optional<string> serviceRegion = default;
+            Optional<IReadOnlyList<string>> newerVersions = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Core.Optional.ToNullable(state), additionalProperties, Core.Optional.ToNullable(createTime), taskQueueId.Value, nodeCommunicationChannelEncryptionMode.Value, Core.Optional.ToNullable(internalChannelEncryption), version.Value, Core.Optional.ToList(nodes), Core.Optional.ToNullable(scheduledUpdateDate), updateDelayOffset.Value, localTimeZoneOffset.Value, Core.Optional.ToDictionary(capabilities), Core.Optional.ToList(serviceUrls), Core.Optional.ToNullable(autoUpdate), versionStatus.Value, Core.Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Core.Optional.ToNullable(autoUpdateEta), serviceRegion.Value, Core.Optional.ToList(newerVersions));
+            return new SynapseSelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), taskQueueId.Value, nodeCommunicationChannelEncryptionMode.Value, Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), updateDelayOffset.Value, localTimeZoneOffset.Value, Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), serviceRegion.Value, Optional.ToList(newerVersions));
         }
     }
 }

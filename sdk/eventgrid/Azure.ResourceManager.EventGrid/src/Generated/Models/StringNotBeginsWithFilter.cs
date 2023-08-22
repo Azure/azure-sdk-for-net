@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of StringNotBeginsWithFilter. </summary>
         public StringNotBeginsWithFilter()
         {
-            Values = new Core.ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
             OperatorType = FilterOperatorType.StringNotBeginsWith;
         }
 

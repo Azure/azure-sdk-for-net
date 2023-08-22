@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SubscriptionData>> value = default;
+            Optional<IReadOnlyList<SubscriptionData>> value = default;
             string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new SubscriptionListResult(Core.Optional.ToList(value), nextLink);
+            return new SubscriptionListResult(Optional.ToList(value), nextLink);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<int> successfullyRolledbackInstanceCount = default;
-            Core.Optional<int> failedRolledbackInstanceCount = default;
-            Core.Optional<ComputeApiError> rollbackError = default;
+            Optional<int> successfullyRolledbackInstanceCount = default;
+            Optional<int> failedRolledbackInstanceCount = default;
+            Optional<ComputeApiError> rollbackError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfullyRolledbackInstanceCount"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RollbackStatusInfo(Core.Optional.ToNullable(successfullyRolledbackInstanceCount), Core.Optional.ToNullable(failedRolledbackInstanceCount), rollbackError.Value);
+            return new RollbackStatusInfo(Optional.ToNullable(successfullyRolledbackInstanceCount), Optional.ToNullable(failedRolledbackInstanceCount), rollbackError.Value);
         }
     }
 }

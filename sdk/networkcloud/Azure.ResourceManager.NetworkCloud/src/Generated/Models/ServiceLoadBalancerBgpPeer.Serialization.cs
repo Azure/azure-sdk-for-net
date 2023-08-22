@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ServiceLoadBalancerBgpPeer : Core.IUtf8JsonSerializable
+    public partial class ServiceLoadBalancerBgpPeer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BfdEnabled))
+            if (Optional.IsDefined(BfdEnabled))
             {
                 writer.WritePropertyName("bfdEnabled"u8);
                 writer.WriteStringValue(BfdEnabled.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BgpMultiHop))
+            if (Optional.IsDefined(BgpMultiHop))
             {
                 writer.WritePropertyName("bgpMultiHop"u8);
                 writer.WriteStringValue(BgpMultiHop.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HoldTime))
+            if (Optional.IsDefined(HoldTime))
             {
                 writer.WritePropertyName("holdTime"u8);
                 writer.WriteStringValue(HoldTime);
             }
-            if (Core.Optional.IsDefined(KeepAliveTime))
+            if (Optional.IsDefined(KeepAliveTime))
             {
                 writer.WritePropertyName("keepAliveTime"u8);
                 writer.WriteStringValue(KeepAliveTime);
             }
-            if (Core.Optional.IsDefined(MyAsn))
+            if (Optional.IsDefined(MyAsn))
             {
                 writer.WritePropertyName("myAsn"u8);
                 writer.WriteNumberValue(MyAsn.Value);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(PeerAddress);
             writer.WritePropertyName("peerAsn"u8);
             writer.WriteNumberValue(PeerAsn);
-            if (Core.Optional.IsDefined(PeerPort))
+            if (Optional.IsDefined(PeerPort))
             {
                 writer.WritePropertyName("peerPort"u8);
                 writer.WriteNumberValue(PeerPort.Value);
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<BfdEnabled> bfdEnabled = default;
-            Core.Optional<BgpMultiHop> bgpMultiHop = default;
-            Core.Optional<string> holdTime = default;
-            Core.Optional<string> keepAliveTime = default;
-            Core.Optional<long> myAsn = default;
+            Optional<BfdEnabled> bfdEnabled = default;
+            Optional<BgpMultiHop> bgpMultiHop = default;
+            Optional<string> holdTime = default;
+            Optional<string> keepAliveTime = default;
+            Optional<long> myAsn = default;
             string name = default;
-            Core.Optional<string> password = default;
+            Optional<string> password = default;
             string peerAddress = default;
             long peerAsn = default;
-            Core.Optional<long> peerPort = default;
+            Optional<long> peerPort = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdEnabled"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new ServiceLoadBalancerBgpPeer(Core.Optional.ToNullable(bfdEnabled), Core.Optional.ToNullable(bgpMultiHop), holdTime.Value, keepAliveTime.Value, Core.Optional.ToNullable(myAsn), name, password.Value, peerAddress, peerAsn, Core.Optional.ToNullable(peerPort));
+            return new ServiceLoadBalancerBgpPeer(Optional.ToNullable(bfdEnabled), Optional.ToNullable(bgpMultiHop), holdTime.Value, keepAliveTime.Value, Optional.ToNullable(myAsn), name, password.Value, peerAddress, peerAsn, Optional.ToNullable(peerPort));
         }
     }
 }

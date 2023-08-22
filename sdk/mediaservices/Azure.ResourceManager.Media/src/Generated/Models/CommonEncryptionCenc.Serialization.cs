@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class CommonEncryptionCenc : Core.IUtf8JsonSerializable
+    public partial class CommonEncryptionCenc : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnabledProtocols))
+            if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);
             }
-            if (Core.Optional.IsCollectionDefined(ClearTracks))
+            if (Optional.IsCollectionDefined(ClearTracks))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ContentKeys))
+            if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteObjectValue(ContentKeys);
             }
-            if (Core.Optional.IsDefined(Drm))
+            if (Optional.IsDefined(Drm))
             {
                 writer.WritePropertyName("drm"u8);
                 writer.WriteObjectValue(Drm);
             }
-            if (Core.Optional.IsDefined(ClearKeyEncryptionConfiguration))
+            if (Optional.IsDefined(ClearKeyEncryptionConfiguration))
             {
                 writer.WritePropertyName("clearKeyEncryptionConfiguration"u8);
                 writer.WriteObjectValue(ClearKeyEncryptionConfiguration);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<MediaEnabledProtocols> enabledProtocols = default;
-            Core.Optional<IList<MediaTrackSelection>> clearTracks = default;
-            Core.Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Core.Optional<CencDrmConfiguration> drm = default;
-            Core.Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
+            Optional<MediaEnabledProtocols> enabledProtocols = default;
+            Optional<IList<MediaTrackSelection>> clearTracks = default;
+            Optional<StreamingPolicyContentKeys> contentKeys = default;
+            Optional<CencDrmConfiguration> drm = default;
+            Optional<ClearKeyEncryptionConfiguration> clearKeyEncryptionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new CommonEncryptionCenc(enabledProtocols.Value, Core.Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value);
+            return new CommonEncryptionCenc(enabledProtocols.Value, Optional.ToList(clearTracks), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value);
         }
     }
 }

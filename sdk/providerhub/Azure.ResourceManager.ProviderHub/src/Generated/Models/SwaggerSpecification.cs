@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of SwaggerSpecification. </summary>
         public SwaggerSpecification()
         {
-            ApiVersions = new Core.ChangeTrackingList<string>();
+            ApiVersions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SwaggerSpecification. </summary>

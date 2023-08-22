@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class DnsSettings : Core.IUtf8JsonSerializable
+    public partial class DnsSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Servers))
+            if (Optional.IsCollectionDefined(Servers))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableProxy))
+            if (Optional.IsDefined(EnableProxy))
             {
                 writer.WritePropertyName("enableProxy"u8);
                 writer.WriteBooleanValue(EnableProxy.Value);
             }
-            if (Core.Optional.IsDefined(RequireProxyForNetworkRules))
+            if (Optional.IsDefined(RequireProxyForNetworkRules))
             {
                 if (RequireProxyForNetworkRules != null)
                 {
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> servers = default;
-            Core.Optional<bool> enableProxy = default;
-            Core.Optional<bool?> requireProxyForNetworkRules = default;
+            Optional<IList<string>> servers = default;
+            Optional<bool> enableProxy = default;
+            Optional<bool?> requireProxyForNetworkRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("servers"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new DnsSettings(Core.Optional.ToList(servers), Core.Optional.ToNullable(enableProxy), Core.Optional.ToNullable(requireProxyForNetworkRules));
+            return new DnsSettings(Optional.ToList(servers), Optional.ToNullable(enableProxy), Optional.ToNullable(requireProxyForNetworkRules));
         }
     }
 }

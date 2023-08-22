@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class CaptureDescription : Core.IUtf8JsonSerializable
+    public partial class CaptureDescription : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Core.Optional.IsDefined(Encoding))
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(IntervalInSeconds))
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(SizeLimitInBytes))
+            if (Optional.IsDefined(SizeLimitInBytes))
             {
                 writer.WritePropertyName("sizeLimitInBytes"u8);
                 writer.WriteNumberValue(SizeLimitInBytes.Value);
             }
-            if (Core.Optional.IsDefined(Destination))
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (Core.Optional.IsDefined(SkipEmptyArchives))
+            if (Optional.IsDefined(SkipEmptyArchives))
             {
                 writer.WritePropertyName("skipEmptyArchives"u8);
                 writer.WriteBooleanValue(SkipEmptyArchives.Value);
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<EncodingCaptureDescription> encoding = default;
-            Core.Optional<int> intervalInSeconds = default;
-            Core.Optional<int> sizeLimitInBytes = default;
-            Core.Optional<EventHubDestination> destination = default;
-            Core.Optional<bool> skipEmptyArchives = default;
+            Optional<bool> enabled = default;
+            Optional<EncodingCaptureDescription> encoding = default;
+            Optional<int> intervalInSeconds = default;
+            Optional<int> sizeLimitInBytes = default;
+            Optional<EventHubDestination> destination = default;
+            Optional<bool> skipEmptyArchives = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new CaptureDescription(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(encoding), Core.Optional.ToNullable(intervalInSeconds), Core.Optional.ToNullable(sizeLimitInBytes), destination.Value, Core.Optional.ToNullable(skipEmptyArchives));
+            return new CaptureDescription(Optional.ToNullable(enabled), Optional.ToNullable(encoding), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(sizeLimitInBytes), destination.Value, Optional.ToNullable(skipEmptyArchives));
         }
     }
 }

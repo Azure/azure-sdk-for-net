@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <summary> Initializes a new instance of ProviderProperties. </summary>
         internal ProviderProperties()
         {
-            Targets = new Core.ChangeTrackingList<TargetDescription>();
-            Skus = new Core.ChangeTrackingList<SkuDescription>();
-            QuotaDimensions = new Core.ChangeTrackingList<QuotaDimension>();
-            PricingDimensions = new Core.ChangeTrackingList<PricingDimension>();
+            Targets = new ChangeTrackingList<TargetDescription>();
+            Skus = new ChangeTrackingList<SkuDescription>();
+            QuotaDimensions = new ChangeTrackingList<QuotaDimension>();
+            PricingDimensions = new ChangeTrackingList<PricingDimension>();
         }
 
         /// <summary> Initializes a new instance of ProviderProperties. </summary>

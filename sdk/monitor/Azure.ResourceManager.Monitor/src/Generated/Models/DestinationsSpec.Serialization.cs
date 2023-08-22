@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DestinationsSpec : Core.IUtf8JsonSerializable
+    public partial class DestinationsSpec : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(LogAnalytics))
+            if (Optional.IsCollectionDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(MonitoringAccounts))
+            if (Optional.IsCollectionDefined(MonitoringAccounts))
             {
                 writer.WritePropertyName("monitoringAccounts"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AzureMonitorMetrics))
+            if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
                 writer.WriteObjectValue(AzureMonitorMetrics);
             }
-            if (Core.Optional.IsCollectionDefined(EventHubs))
+            if (Optional.IsCollectionDefined(EventHubs))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EventHubsDirect))
+            if (Optional.IsCollectionDefined(EventHubsDirect))
             {
                 writer.WritePropertyName("eventHubsDirect"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(StorageBlobsDirect))
+            if (Optional.IsCollectionDefined(StorageBlobsDirect))
             {
                 writer.WritePropertyName("storageBlobsDirect"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(StorageTablesDirect))
+            if (Optional.IsCollectionDefined(StorageTablesDirect))
             {
                 writer.WritePropertyName("storageTablesDirect"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(StorageAccounts))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IList<LogAnalyticsDestination>> logAnalytics = default;
-            Core.Optional<IList<MonitoringAccountDestination>> monitoringAccounts = default;
-            Core.Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
-            Core.Optional<IList<DataCollectionRuleEventHubDestination>> eventHubs = default;
-            Core.Optional<IList<DataCollectionRuleEventHubDirectDestination>> eventHubsDirect = default;
-            Core.Optional<IList<DataCollectionRuleStorageBlobDestination>> storageBlobsDirect = default;
-            Core.Optional<IList<DataCollectionRuleStorageTableDestination>> storageTablesDirect = default;
-            Core.Optional<IList<DataCollectionRuleStorageBlobDestination>> storageAccounts = default;
+            Optional<IList<LogAnalyticsDestination>> logAnalytics = default;
+            Optional<IList<MonitoringAccountDestination>> monitoringAccounts = default;
+            Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
+            Optional<IList<DataCollectionRuleEventHubDestination>> eventHubs = default;
+            Optional<IList<DataCollectionRuleEventHubDirectDestination>> eventHubsDirect = default;
+            Optional<IList<DataCollectionRuleStorageBlobDestination>> storageBlobsDirect = default;
+            Optional<IList<DataCollectionRuleStorageTableDestination>> storageTablesDirect = default;
+            Optional<IList<DataCollectionRuleStorageBlobDestination>> storageAccounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new DestinationsSpec(Core.Optional.ToList(logAnalytics), Core.Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Core.Optional.ToList(eventHubs), Core.Optional.ToList(eventHubsDirect), Core.Optional.ToList(storageBlobsDirect), Core.Optional.ToList(storageTablesDirect), Core.Optional.ToList(storageAccounts));
+            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts));
         }
     }
 }

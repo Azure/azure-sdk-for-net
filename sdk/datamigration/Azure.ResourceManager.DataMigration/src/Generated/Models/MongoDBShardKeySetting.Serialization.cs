@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBShardKeySetting : Core.IUtf8JsonSerializable
+    public partial class MongoDBShardKeySetting : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("fields"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(IsUnique))
+            if (Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("isUnique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MongoDBShardKeyField> fields = default;
-            Core.Optional<bool> isUnique = default;
+            Optional<bool> isUnique = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fields"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBShardKeySetting(fields, Core.Optional.ToNullable(isUnique));
+            return new MongoDBShardKeySetting(fields, Optional.ToNullable(isUnique));
         }
     }
 }

@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> diskId = default;
-            Core.Optional<string> diskName = default;
-            Core.Optional<string> isOSDisk = default;
-            Core.Optional<long> capacityInBytes = default;
-            Core.Optional<int> lunId = default;
+            Optional<string> diskId = default;
+            Optional<string> diskName = default;
+            Optional<string> isOSDisk = default;
+            Optional<long> capacityInBytes = default;
+            Optional<int> lunId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryAgentDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Core.Optional.ToNullable(capacityInBytes), Core.Optional.ToNullable(lunId));
+            return new SiteRecoveryAgentDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), Optional.ToNullable(lunId));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
         public MultiplePipelineTrigger()
         {
-            Pipelines = new Core.ChangeTrackingList<TriggerPipelineReference>();
+            Pipelines = new ChangeTrackingList<TriggerPipelineReference>();
             TriggerType = "MultiplePipelineTrigger";
         }
 

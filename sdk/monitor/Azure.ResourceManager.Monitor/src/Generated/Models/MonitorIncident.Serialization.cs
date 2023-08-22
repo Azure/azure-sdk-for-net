@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> ruleName = default;
-            Core.Optional<bool> isActive = default;
-            Core.Optional<DateTimeOffset> activatedTime = default;
-            Core.Optional<DateTimeOffset> resolvedTime = default;
+            Optional<string> name = default;
+            Optional<string> ruleName = default;
+            Optional<bool> isActive = default;
+            Optional<DateTimeOffset> activatedTime = default;
+            Optional<DateTimeOffset> resolvedTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorIncident(name.Value, ruleName.Value, Core.Optional.ToNullable(isActive), Core.Optional.ToNullable(activatedTime), Core.Optional.ToNullable(resolvedTime));
+            return new MonitorIncident(name.Value, ruleName.Value, Optional.ToNullable(isActive), Optional.ToNullable(activatedTime), Optional.ToNullable(resolvedTime));
         }
     }
 }

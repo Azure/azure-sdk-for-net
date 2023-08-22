@@ -16,8 +16,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of TwinProperties. </summary>
         public TwinProperties()
         {
-            Desired = new Core.ChangeTrackingDictionary<string, object>();
-            Reported = new Core.ChangeTrackingDictionary<string, object>();
+            Desired = new ChangeTrackingDictionary<string, object>();
+            Reported = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of TwinProperties. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of HttpProxyConfigResponse. </summary>
         public HttpProxyConfigResponse()
         {
-            NoProxy = new Core.ChangeTrackingList<string>();
+            NoProxy = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HttpProxyConfigResponse. </summary>

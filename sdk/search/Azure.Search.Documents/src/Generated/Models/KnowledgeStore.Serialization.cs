@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeStore : Core.IUtf8JsonSerializable
+    public partial class KnowledgeStore : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageConnectionString"u8);
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string storageConnectionString = default;
             IList<KnowledgeStoreProjection> projections = default;
-            Core.Optional<SearchIndexerDataIdentity> identity = default;
+            Optional<SearchIndexerDataIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConnectionString"u8))

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _postRulestackRulePostRulesRestClient.CreateOrUpdateAsync(Id.Name, priority, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<PostRulestackRuleResource>(new PostRulestackRuleOperationSource(Client), _postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<PostRulestackRuleResource>(new PostRulestackRuleOperationSource(Client), _postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _postRulestackRulePostRulesRestClient.CreateOrUpdate(Id.Name, priority, data, cancellationToken);
-                var operation = new NgfwArmOperation<PostRulestackRuleResource>(new PostRulestackRuleOperationSource(Client), _postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<PostRulestackRuleResource>(new PostRulestackRuleOperationSource(Client), _postRulestackRulePostRulesClientDiagnostics, Pipeline, _postRulestackRulePostRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postRulestackRulePostRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postRulestackRulePostRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postRulestackRulePostRulesRestClient.CreateListRequest(Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _postRulestackRulePostRulesRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PostRulestackRuleResource(Client, PostRulestackRuleData.DeserializePostRulestackRuleData(e)), _postRulestackRulePostRulesClientDiagnostics, Pipeline, "PostRulestackRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

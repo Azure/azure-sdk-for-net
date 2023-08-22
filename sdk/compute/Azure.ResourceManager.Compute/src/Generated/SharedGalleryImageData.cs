@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of SharedGalleryImageData. </summary>
         internal SharedGalleryImageData()
         {
-            Features = new Core.ChangeTrackingList<GalleryImageFeature>();
+            Features = new ChangeTrackingList<GalleryImageFeature>();
         }
 
         /// <summary> Initializes a new instance of SharedGalleryImageData. </summary>

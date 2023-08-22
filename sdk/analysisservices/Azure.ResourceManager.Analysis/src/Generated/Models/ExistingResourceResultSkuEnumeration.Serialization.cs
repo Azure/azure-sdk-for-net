@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AnalysisExistingSku>> value = default;
+            Optional<IReadOnlyList<AnalysisExistingSku>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     continue;
                 }
             }
-            return new ExistingResourceResultSkuEnumeration(Core.Optional.ToList(value));
+            return new ExistingResourceResultSkuEnumeration(Optional.ToList(value));
         }
     }
 }

@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class OutboundNetworkDependenciesEndpoint : Core.IUtf8JsonSerializable
+    public partial class OutboundNetworkDependenciesEndpoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Core.Optional.IsCollectionDefined(Endpoints))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> category = default;
-            Core.Optional<IList<EndpointDependency>> endpoints = default;
-            Core.Optional<KustoProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> category = default;
+            Optional<IList<EndpointDependency>> endpoints = default;
+            Optional<KustoProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new OutboundNetworkDependenciesEndpoint(id, name, type, systemData.Value, Core.Optional.ToNullable(etag), category.Value, Core.Optional.ToList(endpoints), Core.Optional.ToNullable(provisioningState));
+            return new OutboundNetworkDependenciesEndpoint(id, name, type, systemData.Value, Optional.ToNullable(etag), category.Value, Optional.ToList(endpoints), Optional.ToNullable(provisioningState));
         }
     }
 }

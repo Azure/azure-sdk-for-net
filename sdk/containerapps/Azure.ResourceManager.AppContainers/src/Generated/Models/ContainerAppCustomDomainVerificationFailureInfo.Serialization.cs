@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> code = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> target = default;
-            Core.Optional<IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>> details = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> target = default;
+            Optional<IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCustomDomainVerificationFailureInfo(code.Value, message.Value, target.Value, Core.Optional.ToList(details));
+            return new ContainerAppCustomDomainVerificationFailureInfo(code.Value, message.Value, target.Value, Optional.ToList(details));
         }
     }
 }

@@ -10,21 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class WebApplicationFirewallScrubbingRules : Core.IUtf8JsonSerializable
+    public partial class WebApplicationFirewallScrubbingRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
             writer.WritePropertyName("selectorMatchOperator"u8);
             writer.WriteStringValue(SelectorMatchOperator.ToString());
-            if (Core.Optional.IsDefined(Selector))
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             ScrubbingRuleEntryMatchVariable matchVariable = default;
             ScrubbingRuleEntryMatchOperator selectorMatchOperator = default;
-            Core.Optional<string> selector = default;
-            Core.Optional<ScrubbingRuleEntryState> state = default;
+            Optional<string> selector = default;
+            Optional<ScrubbingRuleEntryState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariable"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new WebApplicationFirewallScrubbingRules(matchVariable, selectorMatchOperator, selector.Value, Core.Optional.ToNullable(state));
+            return new WebApplicationFirewallScrubbingRules(matchVariable, selectorMatchOperator, selector.Value, Optional.ToNullable(state));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlRecommendationActionListResult. </summary>
         internal MySqlRecommendationActionListResult()
         {
-            Value = new Core.ChangeTrackingList<MySqlRecommendationActionData>();
+            Value = new ChangeTrackingList<MySqlRecommendationActionData>();
         }
 
         /// <summary> Initializes a new instance of MySqlRecommendationActionListResult. </summary>

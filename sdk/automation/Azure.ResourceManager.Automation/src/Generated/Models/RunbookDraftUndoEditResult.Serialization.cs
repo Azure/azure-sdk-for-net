@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<AutomationHttpStatusCode> statusCode = default;
-            Core.Optional<string> requestId = default;
+            Optional<AutomationHttpStatusCode> statusCode = default;
+            Optional<string> requestId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new RunbookDraftUndoEditResult(Core.Optional.ToNullable(statusCode), requestId.Value);
+            return new RunbookDraftUndoEditResult(Optional.ToNullable(statusCode), requestId.Value);
         }
     }
 }

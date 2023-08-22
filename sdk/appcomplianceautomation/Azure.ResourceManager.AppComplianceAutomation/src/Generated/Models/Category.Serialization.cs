@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<string> categoryName = default;
-            Core.Optional<CategoryType> categoryType = default;
-            Core.Optional<CategoryStatus> categoryStatus = default;
-            Core.Optional<IReadOnlyList<ControlFamily>> controlFamilies = default;
+            Optional<string> categoryName = default;
+            Optional<CategoryType> categoryType = default;
+            Optional<CategoryStatus> categoryStatus = default;
+            Optional<IReadOnlyList<ControlFamily>> controlFamilies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categoryName"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new Category(categoryName.Value, Core.Optional.ToNullable(categoryType), Core.Optional.ToNullable(categoryStatus), Core.Optional.ToList(controlFamilies));
+            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), Optional.ToList(controlFamilies));
         }
     }
 }

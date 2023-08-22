@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ExistingRecoveryVirtualNetwork : Core.IUtf8JsonSerializable
+    public partial class ExistingRecoveryVirtualNetwork : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryVirtualNetworkId"u8);
             writer.WriteStringValue(RecoveryVirtualNetworkId);
-            if (Core.Optional.IsDefined(RecoverySubnetName))
+            if (Optional.IsDefined(RecoverySubnetName))
             {
                 writer.WritePropertyName("recoverySubnetName"u8);
                 writer.WriteStringValue(RecoverySubnetName);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             ResourceIdentifier recoveryVirtualNetworkId = default;
-            Core.Optional<string> recoverySubnetName = default;
+            Optional<string> recoverySubnetName = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -21,12 +21,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> minLastTimestamp = default;
-            Core.Optional<string> typeOfStreamWithMinLastTimestamp = default;
-            Core.Optional<string> maxLastTimestamp = default;
-            Core.Optional<string> typeOfStreamWithMaxLastTimestamp = default;
-            Core.Optional<string> timescaleOfMinLastTimestamp = default;
-            Core.Optional<string> timescaleOfMaxLastTimestamp = default;
+            Optional<string> minLastTimestamp = default;
+            Optional<string> typeOfStreamWithMinLastTimestamp = default;
+            Optional<string> maxLastTimestamp = default;
+            Optional<string> typeOfStreamWithMaxLastTimestamp = default;
+            Optional<string> timescaleOfMinLastTimestamp = default;
+            Optional<string> timescaleOfMaxLastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minLastTimestamp"u8))

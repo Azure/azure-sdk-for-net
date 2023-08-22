@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRCustomDomainListResult. </summary>
         internal SignalRCustomDomainListResult()
         {
-            Value = new Core.ChangeTrackingList<SignalRCustomDomainData>();
+            Value = new ChangeTrackingList<SignalRCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of SignalRCustomDomainListResult. </summary>

@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FileShareRecoveryPoint : Core.IUtf8JsonSerializable
+    public partial class FileShareRecoveryPoint : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecoveryPointType))
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (Core.Optional.IsDefined(RecoveryPointOn))
+            if (Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(FileShareSnapshotUri))
+            if (Optional.IsDefined(FileShareSnapshotUri))
             {
                 writer.WritePropertyName("fileShareSnapshotUri"u8);
                 writer.WriteStringValue(FileShareSnapshotUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(RecoveryPointSizeInGB))
+            if (Optional.IsDefined(RecoveryPointSizeInGB))
             {
                 writer.WritePropertyName("recoveryPointSizeInGB"u8);
                 writer.WriteNumberValue(RecoveryPointSizeInGB.Value);
             }
-            if (Core.Optional.IsDefined(RecoveryPointProperties))
+            if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> recoveryPointType = default;
-            Core.Optional<DateTimeOffset> recoveryPointTime = default;
-            Core.Optional<Uri> fileShareSnapshotUri = default;
-            Core.Optional<int> recoveryPointSizeInGB = default;
-            Core.Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            Optional<string> recoveryPointType = default;
+            Optional<DateTimeOffset> recoveryPointTime = default;
+            Optional<Uri> fileShareSnapshotUri = default;
+            Optional<int> recoveryPointSizeInGB = default;
+            Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new FileShareRecoveryPoint(objectType, recoveryPointType.Value, Core.Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Core.Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
+            return new FileShareRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
         }
     }
 }

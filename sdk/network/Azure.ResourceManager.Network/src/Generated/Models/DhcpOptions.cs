@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of DhcpOptions. </summary>
         public DhcpOptions()
         {
-            DnsServers = new Core.ChangeTrackingList<string>();
+            DnsServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DhcpOptions. </summary>

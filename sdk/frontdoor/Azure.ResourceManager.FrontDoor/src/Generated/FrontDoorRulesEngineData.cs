@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>
         public FrontDoorRulesEngineData()
         {
-            Rules = new Core.ChangeTrackingList<RulesEngineRule>();
+            Rules = new ChangeTrackingList<RulesEngineRule>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>

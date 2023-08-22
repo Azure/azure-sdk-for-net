@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of ServiceProviderResponseList. </summary>
         internal ServiceProviderResponseList()
         {
-            Value = new Core.ChangeTrackingList<BotServiceProvider>();
+            Value = new ChangeTrackingList<BotServiceProvider>();
         }
 
         /// <summary> Initializes a new instance of ServiceProviderResponseList. </summary>

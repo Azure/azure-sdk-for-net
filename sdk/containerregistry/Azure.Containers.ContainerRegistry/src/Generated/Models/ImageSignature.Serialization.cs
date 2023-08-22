@@ -18,9 +18,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<JWK> header = default;
-            Core.Optional<string> signature = default;
-            Core.Optional<string> @protected = default;
+            Optional<JWK> header = default;
+            Optional<string> signature = default;
+            Optional<string> @protected = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("header"u8))

@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVReplicaAzureReplicationDetails. </summary>
         internal HyperVReplicaAzureReplicationDetails()
         {
-            AzureVmDiskDetails = new Core.ChangeTrackingList<SiteRecoveryVmDiskDetails>();
-            VmNics = new Core.ChangeTrackingList<VmNicDetails>();
-            TargetVmTags = new Core.ChangeTrackingDictionary<string, string>();
-            SeedManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetManagedDiskTags = new Core.ChangeTrackingDictionary<string, string>();
-            TargetNicTags = new Core.ChangeTrackingDictionary<string, string>();
-            ProtectedManagedDisks = new Core.ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>();
+            AzureVmDiskDetails = new ChangeTrackingList<SiteRecoveryVmDiskDetails>();
+            VmNics = new ChangeTrackingList<VmNicDetails>();
+            TargetVmTags = new ChangeTrackingDictionary<string, string>();
+            SeedManagedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetManagedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new ChangeTrackingDictionary<string, string>();
+            ProtectedManagedDisks = new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>();
             InstanceType = "HyperVReplicaAzure";
         }
 

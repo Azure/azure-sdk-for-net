@@ -14,64 +14,64 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SqlDWSourceConverter))]
-    public partial class SqlDWSource : Core.IUtf8JsonSerializable
+    public partial class SqlDWSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SqlReaderQuery))
+            if (Optional.IsDefined(SqlReaderQuery))
             {
                 writer.WritePropertyName("sqlReaderQuery"u8);
                 writer.WriteObjectValue(SqlReaderQuery);
             }
-            if (Core.Optional.IsDefined(SqlReaderStoredProcedureName))
+            if (Optional.IsDefined(SqlReaderStoredProcedureName))
             {
                 writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
                 writer.WriteObjectValue(SqlReaderStoredProcedureName);
             }
-            if (Core.Optional.IsDefined(StoredProcedureParameters))
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
                 writer.WriteObjectValue(StoredProcedureParameters);
             }
-            if (Core.Optional.IsDefined(IsolationLevel))
+            if (Optional.IsDefined(IsolationLevel))
             {
                 writer.WritePropertyName("isolationLevel"u8);
                 writer.WriteObjectValue(IsolationLevel);
             }
-            if (Core.Optional.IsDefined(PartitionOption))
+            if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
                 writer.WriteObjectValue(PartitionOption);
             }
-            if (Core.Optional.IsDefined(PartitionSettings))
+            if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (Core.Optional.IsDefined(QueryTimeout))
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (Core.Optional.IsDefined(AdditionalColumns))
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(SourceRetryCount))
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Core.Optional.IsDefined(SourceRetryWait))
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> sqlReaderQuery = default;
-            Core.Optional<object> sqlReaderStoredProcedureName = default;
-            Core.Optional<object> storedProcedureParameters = default;
-            Core.Optional<object> isolationLevel = default;
-            Core.Optional<object> partitionOption = default;
-            Core.Optional<SqlPartitionSettings> partitionSettings = default;
-            Core.Optional<object> queryTimeout = default;
-            Core.Optional<object> additionalColumns = default;
+            Optional<object> sqlReaderQuery = default;
+            Optional<object> sqlReaderStoredProcedureName = default;
+            Optional<object> storedProcedureParameters = default;
+            Optional<object> isolationLevel = default;
+            Optional<object> partitionOption = default;
+            Optional<SqlPartitionSettings> partitionSettings = default;
+            Optional<object> queryTimeout = default;
+            Optional<object> additionalColumns = default;
             string type = default;
-            Core.Optional<object> sourceRetryCount = default;
-            Core.Optional<object> sourceRetryWait = default;
-            Core.Optional<object> maxConcurrentConnections = default;
+            Optional<object> sourceRetryCount = default;
+            Optional<object> sourceRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

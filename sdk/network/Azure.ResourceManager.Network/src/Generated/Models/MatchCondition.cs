@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             MatchVariables = matchVariables.ToList();
             Operator = @operator;
             MatchValues = matchValues.ToList();
-            Transforms = new Core.ChangeTrackingList<WebApplicationFirewallTransform>();
+            Transforms = new ChangeTrackingList<WebApplicationFirewallTransform>();
         }
 
         /// <summary> Initializes a new instance of MatchCondition. </summary>

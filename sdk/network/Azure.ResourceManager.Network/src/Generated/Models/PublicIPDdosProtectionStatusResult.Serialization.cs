@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> publicIPAddressId = default;
-            Core.Optional<IPAddress> publicIPAddress = default;
-            Core.Optional<WorkloadProtectedFlag> isWorkloadProtected = default;
-            Core.Optional<ResourceIdentifier> ddosProtectionPlanId = default;
+            Optional<ResourceIdentifier> publicIPAddressId = default;
+            Optional<IPAddress> publicIPAddress = default;
+            Optional<WorkloadProtectedFlag> isWorkloadProtected = default;
+            Optional<ResourceIdentifier> ddosProtectionPlanId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIpAddressId"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PublicIPDdosProtectionStatusResult(publicIPAddressId.Value, publicIPAddress.Value, Core.Optional.ToNullable(isWorkloadProtected), ddosProtectionPlanId.Value);
+            return new PublicIPDdosProtectionStatusResult(publicIPAddressId.Value, publicIPAddress.Value, Optional.ToNullable(isWorkloadProtected), ddosProtectionPlanId.Value);
         }
     }
 }

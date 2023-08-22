@@ -14,14 +14,14 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class AdaptiveNetworkHardeningData : Core.IUtf8JsonSerializable
+    public partial class AdaptiveNetworkHardeningData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RulesCalculatedOn))
+            if (Optional.IsDefined(RulesCalculatedOn))
             {
                 writer.WritePropertyName("rulesCalculationTime"u8);
                 writer.WriteStringValue(RulesCalculatedOn.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(EffectiveNetworkSecurityGroups))
+            if (Optional.IsCollectionDefined(EffectiveNetworkSecurityGroups))
             {
                 writer.WritePropertyName("effectiveNetworkSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<RecommendedSecurityRule>> rules = default;
-            Core.Optional<DateTimeOffset> rulesCalculationTime = default;
-            Core.Optional<IList<EffectiveNetworkSecurityGroups>> effectiveNetworkSecurityGroups = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<RecommendedSecurityRule>> rules = default;
+            Optional<DateTimeOffset> rulesCalculationTime = default;
+            Optional<IList<EffectiveNetworkSecurityGroups>> effectiveNetworkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new AdaptiveNetworkHardeningData(id, name, type, systemData.Value, Core.Optional.ToList(rules), Core.Optional.ToNullable(rulesCalculationTime), Core.Optional.ToList(effectiveNetworkSecurityGroups));
+            return new AdaptiveNetworkHardeningData(id, name, type, systemData.Value, Optional.ToList(rules), Optional.ToNullable(rulesCalculationTime), Optional.ToList(effectiveNetworkSecurityGroups));
         }
     }
 }

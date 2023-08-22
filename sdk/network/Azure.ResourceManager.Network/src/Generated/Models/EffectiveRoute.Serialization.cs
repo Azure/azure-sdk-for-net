@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<bool> disableBgpRoutePropagation = default;
-            Core.Optional<EffectiveRouteSource> source = default;
-            Core.Optional<EffectiveRouteState> state = default;
-            Core.Optional<IReadOnlyList<string>> addressPrefix = default;
-            Core.Optional<IReadOnlyList<string>> nextHopIPAddress = default;
-            Core.Optional<RouteNextHopType> nextHopType = default;
+            Optional<string> name = default;
+            Optional<bool> disableBgpRoutePropagation = default;
+            Optional<EffectiveRouteSource> source = default;
+            Optional<EffectiveRouteState> state = default;
+            Optional<IReadOnlyList<string>> addressPrefix = default;
+            Optional<IReadOnlyList<string>> nextHopIPAddress = default;
+            Optional<RouteNextHopType> nextHopType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EffectiveRoute(name.Value, Core.Optional.ToNullable(disableBgpRoutePropagation), Core.Optional.ToNullable(source), Core.Optional.ToNullable(state), Core.Optional.ToList(addressPrefix), Core.Optional.ToList(nextHopIPAddress), Core.Optional.ToNullable(nextHopType));
+            return new EffectiveRoute(name.Value, Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToList(addressPrefix), Optional.ToList(nextHopIPAddress), Optional.ToNullable(nextHopType));
         }
     }
 }

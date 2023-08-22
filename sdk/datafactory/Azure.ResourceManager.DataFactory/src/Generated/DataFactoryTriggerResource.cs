@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryTriggerTriggersRestClient.SubscribeToEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryTriggerTriggersRestClient.SubscribeToEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateSubscribeToEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryTriggerTriggersRestClient.UnsubscribeFromEventsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryTriggerTriggersRestClient.UnsubscribeFromEvents(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation<DataFactoryTriggerSubscriptionOperationResult>(new DataFactoryTriggerSubscriptionOperationResultOperationSource(), _dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateUnsubscribeFromEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryTriggerTriggersRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryTriggerTriggersRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = await _dataFactoryTriggerTriggersRestClient.StopAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.DataFactory
             try
             {
                 var response = _dataFactoryTriggerTriggersRestClient.Stop(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataFactoryArmOperation(_dataFactoryTriggerTriggersClientDiagnostics, Pipeline, _dataFactoryTriggerTriggersRestClient.CreateStopRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

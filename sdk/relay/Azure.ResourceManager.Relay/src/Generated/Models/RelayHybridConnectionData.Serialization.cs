@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    public partial class RelayHybridConnectionData : Core.IUtf8JsonSerializable
+    public partial class RelayHybridConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsClientAuthorizationRequired))
+            if (Optional.IsDefined(IsClientAuthorizationRequired))
             {
                 writer.WritePropertyName("requiresClientAuthorization"u8);
                 writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (Core.Optional.IsDefined(UserMetadata))
+            if (Optional.IsDefined(UserMetadata))
             {
                 writer.WritePropertyName("userMetadata"u8);
                 writer.WriteStringValue(UserMetadata);
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Relay
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> createdAt = default;
-            Core.Optional<DateTimeOffset> updatedAt = default;
-            Core.Optional<int> listenerCount = default;
-            Core.Optional<bool> requiresClientAuthorization = default;
-            Core.Optional<string> userMetadata = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<DateTimeOffset> updatedAt = default;
+            Optional<int> listenerCount = default;
+            Optional<bool> requiresClientAuthorization = default;
+            Optional<string> userMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Relay
                     continue;
                 }
             }
-            return new RelayHybridConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(createdAt), Core.Optional.ToNullable(updatedAt), Core.Optional.ToNullable(listenerCount), Core.Optional.ToNullable(requiresClientAuthorization), userMetadata.Value, Core.Optional.ToNullable(location));
+            return new RelayHybridConnectionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(requiresClientAuthorization), userMetadata.Value, Optional.ToNullable(location));
         }
     }
 }

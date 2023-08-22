@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class ConnectionDetails : Core.IUtf8JsonSerializable
+    public partial class ConnectionDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> privateIPAddress = default;
-            Core.Optional<string> linkIdentifier = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> memberName = default;
+            Optional<string> id = default;
+            Optional<string> privateIPAddress = default;
+            Optional<string> linkIdentifier = default;
+            Optional<string> groupId = default;
+            Optional<string> memberName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

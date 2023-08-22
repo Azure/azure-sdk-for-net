@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<bool> nameAvailable = default;
-            Core.Optional<ServiceBusNameUnavailableReason> reason = default;
+            Optional<string> message = default;
+            Optional<bool> nameAvailable = default;
+            Optional<ServiceBusNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     continue;
                 }
             }
-            return new ServiceBusNameAvailabilityResult(message.Value, Core.Optional.ToNullable(nameAvailable), Core.Optional.ToNullable(reason));
+            return new ServiceBusNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), Optional.ToNullable(reason));
         }
     }
 }

@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryApplicationVersionPublishingProfile : Core.IUtf8JsonSerializable
+    public partial class GalleryApplicationVersionPublishingProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source);
-            if (Core.Optional.IsDefined(ManageActions))
+            if (Optional.IsDefined(ManageActions))
             {
                 writer.WritePropertyName("manageActions"u8);
                 writer.WriteObjectValue(ManageActions);
             }
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Core.Optional.IsCollectionDefined(AdvancedSettings))
+            if (Optional.IsCollectionDefined(AdvancedSettings))
             {
                 writer.WritePropertyName("advancedSettings"u8);
                 writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(EnableHealthCheck))
+            if (Optional.IsDefined(EnableHealthCheck))
             {
                 writer.WritePropertyName("enableHealthCheck"u8);
                 writer.WriteBooleanValue(EnableHealthCheck.Value);
             }
-            if (Core.Optional.IsCollectionDefined(CustomActions))
+            if (Optional.IsCollectionDefined(CustomActions))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TargetRegions))
+            if (Optional.IsCollectionDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
@@ -65,32 +65,32 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ReplicaCount))
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Core.Optional.IsDefined(IsExcludedFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (Core.Optional.IsDefined(EndOfLifeOn))
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(StorageAccountType))
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ReplicationMode))
+            if (Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(TargetExtendedLocations))
+            if (Optional.IsCollectionDefined(TargetExtendedLocations))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
@@ -110,19 +110,19 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             UserArtifactSource source = default;
-            Core.Optional<UserArtifactManagement> manageActions = default;
-            Core.Optional<UserArtifactSettings> settings = default;
-            Core.Optional<IDictionary<string, string>> advancedSettings = default;
-            Core.Optional<bool> enableHealthCheck = default;
-            Core.Optional<IList<GalleryApplicationCustomAction>> customActions = default;
-            Core.Optional<IList<TargetRegion>> targetRegions = default;
-            Core.Optional<int> replicaCount = default;
-            Core.Optional<bool> excludeFromLatest = default;
-            Core.Optional<DateTimeOffset> publishedDate = default;
-            Core.Optional<DateTimeOffset> endOfLifeDate = default;
-            Core.Optional<ImageStorageAccountType> storageAccountType = default;
-            Core.Optional<GalleryReplicationMode> replicationMode = default;
-            Core.Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
+            Optional<UserArtifactManagement> manageActions = default;
+            Optional<UserArtifactSettings> settings = default;
+            Optional<IDictionary<string, string>> advancedSettings = default;
+            Optional<bool> enableHealthCheck = default;
+            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
+            Optional<IList<TargetRegion>> targetRegions = default;
+            Optional<int> replicaCount = default;
+            Optional<bool> excludeFromLatest = default;
+            Optional<DateTimeOffset> publishedDate = default;
+            Optional<DateTimeOffset> endOfLifeDate = default;
+            Optional<ImageStorageAccountType> storageAccountType = default;
+            Optional<GalleryReplicationMode> replicationMode = default;
+            Optional<IList<GalleryTargetExtendedLocation>> targetExtendedLocations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new GalleryApplicationVersionPublishingProfile(Core.Optional.ToList(targetRegions), Core.Optional.ToNullable(replicaCount), Core.Optional.ToNullable(excludeFromLatest), Core.Optional.ToNullable(publishedDate), Core.Optional.ToNullable(endOfLifeDate), Core.Optional.ToNullable(storageAccountType), Core.Optional.ToNullable(replicationMode), Core.Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Core.Optional.ToDictionary(advancedSettings), Core.Optional.ToNullable(enableHealthCheck), Core.Optional.ToList(customActions));
+            return new GalleryApplicationVersionPublishingProfile(Optional.ToList(targetRegions), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), Optional.ToList(targetExtendedLocations), source, manageActions.Value, settings.Value, Optional.ToDictionary(advancedSettings), Optional.ToNullable(enableHealthCheck), Optional.ToList(customActions));
         }
     }
 }

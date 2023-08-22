@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MonitorPrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<MonitorPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorPrivateLinkResourceListResult(Core.Optional.ToList(value));
+            return new MonitorPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

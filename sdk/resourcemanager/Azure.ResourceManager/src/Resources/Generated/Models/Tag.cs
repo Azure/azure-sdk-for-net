@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of Tag. </summary>
         public Tag()
         {
-            TagValues = new Core.ChangeTrackingDictionary<string, string>();
+            TagValues = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of Tag. </summary>

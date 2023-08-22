@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewayPolicyGroupMember : Core.IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewayPolicyGroupMember : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(AttributeType))
+            if (Optional.IsDefined(AttributeType))
             {
                 writer.WritePropertyName("attributeType"u8);
                 writer.WriteStringValue(AttributeType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AttributeValue))
+            if (Optional.IsDefined(AttributeValue))
             {
                 writer.WritePropertyName("attributeValue"u8);
                 writer.WriteStringValue(AttributeValue);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<VpnPolicyMemberAttributeType> attributeType = default;
-            Core.Optional<string> attributeValue = default;
+            Optional<string> name = default;
+            Optional<VpnPolicyMemberAttributeType> attributeType = default;
+            Optional<string> attributeValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkGatewayPolicyGroupMember(name.Value, Core.Optional.ToNullable(attributeType), attributeValue.Value);
+            return new VirtualNetworkGatewayPolicyGroupMember(name.Value, Optional.ToNullable(attributeType), attributeValue.Value);
         }
     }
 }

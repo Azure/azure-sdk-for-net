@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
-    public partial class CustomLocationEnabledResourceTypeMetadata : Core.IUtf8JsonSerializable
+    public partial class CustomLocationEnabledResourceTypeMetadata : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApiVersion))
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Core.Optional.IsDefined(ResourceProviderNamespace))
+            if (Optional.IsDefined(ResourceProviderNamespace))
             {
                 writer.WritePropertyName("resourceProviderNamespace"u8);
                 writer.WriteStringValue(ResourceProviderNamespace);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 return null;
             }
-            Core.Optional<string> apiVersion = default;
-            Core.Optional<string> resourceProviderNamespace = default;
-            Core.Optional<string> resourceType = default;
+            Optional<string> apiVersion = default;
+            Optional<string> resourceProviderNamespace = default;
+            Optional<string> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiVersion"u8))

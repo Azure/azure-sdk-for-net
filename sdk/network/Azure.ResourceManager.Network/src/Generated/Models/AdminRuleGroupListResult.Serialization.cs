@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AdminRuleGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AdminRuleGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AdminRuleGroupListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new AdminRuleGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

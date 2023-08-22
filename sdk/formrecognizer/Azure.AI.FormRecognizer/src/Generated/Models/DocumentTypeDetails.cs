@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Argument.AssertNotNull(fieldSchema, nameof(fieldSchema));
 
             FieldSchema = fieldSchema;
-            FieldConfidence = new Core.ChangeTrackingDictionary<string, float>();
+            FieldConfidence = new ChangeTrackingDictionary<string, float>();
         }
 
         /// <summary> Initializes a new instance of DocumentTypeDetails. </summary>

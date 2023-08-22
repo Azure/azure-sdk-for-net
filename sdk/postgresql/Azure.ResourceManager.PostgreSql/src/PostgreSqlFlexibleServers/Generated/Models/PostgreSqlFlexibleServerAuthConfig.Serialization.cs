@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerAuthConfig : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerAuthConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActiveDirectoryAuth))
+            if (Optional.IsDefined(ActiveDirectoryAuth))
             {
                 writer.WritePropertyName("activeDirectoryAuth"u8);
                 writer.WriteStringValue(ActiveDirectoryAuth.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PasswordAuth))
+            if (Optional.IsDefined(PasswordAuth))
             {
                 writer.WritePropertyName("passwordAuth"u8);
                 writer.WriteStringValue(PasswordAuth.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<PostgreSqlFlexibleServerActiveDirectoryAuthEnum> activeDirectoryAuth = default;
-            Core.Optional<PostgreSqlFlexibleServerPasswordAuthEnum> passwordAuth = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<PostgreSqlFlexibleServerActiveDirectoryAuthEnum> activeDirectoryAuth = default;
+            Optional<PostgreSqlFlexibleServerPasswordAuthEnum> passwordAuth = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeDirectoryAuth"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerAuthConfig(Core.Optional.ToNullable(activeDirectoryAuth), Core.Optional.ToNullable(passwordAuth), Core.Optional.ToNullable(tenantId));
+            return new PostgreSqlFlexibleServerAuthConfig(Optional.ToNullable(activeDirectoryAuth), Optional.ToNullable(passwordAuth), Optional.ToNullable(tenantId));
         }
     }
 }

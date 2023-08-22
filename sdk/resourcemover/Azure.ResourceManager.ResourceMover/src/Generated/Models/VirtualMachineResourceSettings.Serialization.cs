@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class VirtualMachineResourceSettings : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineResourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(UserManagedIdentities))
+            if (Optional.IsCollectionDefined(UserManagedIdentities))
             {
                 writer.WritePropertyName("userManagedIdentities"u8);
                 writer.WriteStartArray();
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TargetAvailabilityZone))
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TargetVmSize))
+            if (Optional.IsDefined(TargetVmSize))
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (Core.Optional.IsDefined(TargetAvailabilitySetId))
+            if (Optional.IsDefined(TargetAvailabilitySetId))
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<IList<ResourceIdentifier>> userManagedIdentities = default;
-            Core.Optional<MoverTargetAvailabilityZone> targetAvailabilityZone = default;
-            Core.Optional<string> targetVmSize = default;
-            Core.Optional<ResourceIdentifier> targetAvailabilitySetId = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<ResourceIdentifier>> userManagedIdentities = default;
+            Optional<MoverTargetAvailabilityZone> targetAvailabilityZone = default;
+            Optional<string> targetVmSize = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
             string resourceType = default;
             string targetResourceName = default;
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new VirtualMachineResourceSettings(resourceType, targetResourceName, Core.Optional.ToDictionary(tags), Core.Optional.ToList(userManagedIdentities), Core.Optional.ToNullable(targetAvailabilityZone), targetVmSize.Value, targetAvailabilitySetId.Value);
+            return new VirtualMachineResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), Optional.ToList(userManagedIdentities), Optional.ToNullable(targetAvailabilityZone), targetVmSize.Value, targetAvailabilitySetId.Value);
         }
     }
 }

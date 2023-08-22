@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkPrivateLinkServiceConnection. </summary>
         public NetworkPrivateLinkServiceConnection()
         {
-            GroupIds = new Core.ChangeTrackingList<string>();
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkPrivateLinkServiceConnection. </summary>

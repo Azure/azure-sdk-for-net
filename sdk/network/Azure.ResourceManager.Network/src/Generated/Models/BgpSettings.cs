@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BgpSettings. </summary>
         public BgpSettings()
         {
-            BgpPeeringAddresses = new Core.ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress>();
+            BgpPeeringAddresses = new ChangeTrackingList<NetworkIPConfigurationBgpPeeringAddress>();
         }
 
         /// <summary> Initializes a new instance of BgpSettings. </summary>

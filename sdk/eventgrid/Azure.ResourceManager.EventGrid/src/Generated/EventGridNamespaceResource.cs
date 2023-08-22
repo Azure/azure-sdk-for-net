@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventGridNamespaceNamespacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation(_eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventGridNamespaceNamespacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new EventGridArmOperation(_eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation(_eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventGridNamespaceNamespacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventGridNamespaceNamespacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new EventGridArmOperation<EventGridNamespaceResource>(new EventGridNamespaceOperationSource(Client), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = await _eventGridNamespaceNamespacesRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<NamespaceSharedAccessKeys>(new NamespaceSharedAccessKeysOperationSource(), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<NamespaceSharedAccessKeys>(new NamespaceSharedAccessKeysOperationSource(), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.EventGrid
             try
             {
                 var response = _eventGridNamespaceNamespacesRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new EventGridArmOperation<NamespaceSharedAccessKeys>(new NamespaceSharedAccessKeysOperationSource(), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<NamespaceSharedAccessKeys>(new NamespaceSharedAccessKeysOperationSource(), _eventGridNamespaceNamespacesClientDiagnostics, Pipeline, _eventGridNamespaceNamespacesRestClient.CreateRegenerateKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

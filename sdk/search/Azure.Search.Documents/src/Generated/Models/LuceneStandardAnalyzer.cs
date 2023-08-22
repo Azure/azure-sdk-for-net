@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Stopwords = new Core.ChangeTrackingList<string>();
+            Stopwords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.StandardAnalyzer";
         }
 

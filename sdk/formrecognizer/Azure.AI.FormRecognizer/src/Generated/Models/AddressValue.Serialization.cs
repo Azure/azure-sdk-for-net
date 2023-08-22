@@ -18,20 +18,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Core.Optional<string> houseNumber = default;
-            Core.Optional<string> poBox = default;
-            Core.Optional<string> road = default;
-            Core.Optional<string> city = default;
-            Core.Optional<string> state = default;
-            Core.Optional<string> postalCode = default;
-            Core.Optional<string> countryRegion = default;
-            Core.Optional<string> streetAddress = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<string> cityDistrict = default;
-            Core.Optional<string> stateDistrict = default;
-            Core.Optional<string> suburb = default;
-            Core.Optional<string> house = default;
-            Core.Optional<string> level = default;
+            Optional<string> houseNumber = default;
+            Optional<string> poBox = default;
+            Optional<string> road = default;
+            Optional<string> city = default;
+            Optional<string> state = default;
+            Optional<string> postalCode = default;
+            Optional<string> countryRegion = default;
+            Optional<string> streetAddress = default;
+            Optional<string> unit = default;
+            Optional<string> cityDistrict = default;
+            Optional<string> stateDistrict = default;
+            Optional<string> suburb = default;
+            Optional<string> house = default;
+            Optional<string> level = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("houseNumber"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>
         internal SharedAccessAuthorizationRuleListResult()
         {
-            Value = new Core.ChangeTrackingList<NotificationHubAuthorizationRuleData>();
+            Value = new ChangeTrackingList<NotificationHubAuthorizationRuleData>();
         }
 
         /// <summary> Initializes a new instance of SharedAccessAuthorizationRuleListResult. </summary>

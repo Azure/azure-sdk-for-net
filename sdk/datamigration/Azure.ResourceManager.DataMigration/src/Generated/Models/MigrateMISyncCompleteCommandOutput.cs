@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandOutput. </summary>
         internal MigrateMISyncCompleteCommandOutput()
         {
-            Errors = new Core.ChangeTrackingList<ReportableException>();
+            Errors = new ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandOutput. </summary>

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>
         internal ConnectToTargetAzureDBForMySqlTaskOutput()
         {
-            Databases = new Core.ChangeTrackingList<string>();
-            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
+            Databases = new ChangeTrackingList<string>();
+            ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of ConnectToTargetAzureDBForMySqlTaskOutput. </summary>

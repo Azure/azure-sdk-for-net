@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class NodeTypeFrontendConfiguration : Core.IUtf8JsonSerializable
+    public partial class NodeTypeFrontendConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IPAddressType))
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LoadBalancerBackendAddressPoolId))
+            if (Optional.IsDefined(LoadBalancerBackendAddressPoolId))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPoolId"u8);
                 writer.WriteStringValue(LoadBalancerBackendAddressPoolId);
             }
-            if (Core.Optional.IsDefined(LoadBalancerInboundNatPoolId))
+            if (Optional.IsDefined(LoadBalancerInboundNatPoolId))
             {
                 writer.WritePropertyName("loadBalancerInboundNatPoolId"u8);
                 writer.WriteStringValue(LoadBalancerInboundNatPoolId);
             }
-            if (Core.Optional.IsDefined(ApplicationGatewayBackendAddressPoolId))
+            if (Optional.IsDefined(ApplicationGatewayBackendAddressPoolId))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPoolId"u8);
                 writer.WriteStringValue(ApplicationGatewayBackendAddressPoolId);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Core.Optional<NodeTypeFrontendConfigurationIPAddressType> ipAddressType = default;
-            Core.Optional<ResourceIdentifier> loadBalancerBackendAddressPoolId = default;
-            Core.Optional<ResourceIdentifier> loadBalancerInboundNatPoolId = default;
-            Core.Optional<ResourceIdentifier> applicationGatewayBackendAddressPoolId = default;
+            Optional<NodeTypeFrontendConfigurationIPAddressType> ipAddressType = default;
+            Optional<ResourceIdentifier> loadBalancerBackendAddressPoolId = default;
+            Optional<ResourceIdentifier> loadBalancerInboundNatPoolId = default;
+            Optional<ResourceIdentifier> applicationGatewayBackendAddressPoolId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddressType"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new NodeTypeFrontendConfiguration(Core.Optional.ToNullable(ipAddressType), loadBalancerBackendAddressPoolId.Value, loadBalancerInboundNatPoolId.Value, applicationGatewayBackendAddressPoolId.Value);
+            return new NodeTypeFrontendConfiguration(Optional.ToNullable(ipAddressType), loadBalancerBackendAddressPoolId.Value, loadBalancerInboundNatPoolId.Value, applicationGatewayBackendAddressPoolId.Value);
         }
     }
 }

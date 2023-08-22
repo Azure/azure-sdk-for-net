@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class KeyVaultCertificateSource : Core.IUtf8JsonSerializable
+    public partial class KeyVaultCertificateSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(VaultName);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
-            if (Core.Optional.IsDefined(SecretVersion))
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string resourceGroupName = default;
             string vaultName = default;
             string secretName = default;
-            Core.Optional<string> secretVersion = default;
+            Optional<string> secretVersion = default;
             CertificateUpdateAction updateRule = default;
             CertificateDeleteAction deleteRule = default;
             foreach (var property in element.EnumerateObject())

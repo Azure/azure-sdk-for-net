@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NeighborGroupDestination : Core.IUtf8JsonSerializable
+    public partial class NeighborGroupDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(IPv4Addresses))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPv6Addresses))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IList<IPAddress>> ipv4Addresses = default;
-            Core.Optional<IList<string>> ipv6Addresses = default;
+            Optional<IList<IPAddress>> ipv4Addresses = default;
+            Optional<IList<string>> ipv6Addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Addresses"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new NeighborGroupDestination(Core.Optional.ToList(ipv4Addresses), Core.Optional.ToList(ipv6Addresses));
+            return new NeighborGroupDestination(Optional.ToList(ipv4Addresses), Optional.ToList(ipv6Addresses));
         }
     }
 }

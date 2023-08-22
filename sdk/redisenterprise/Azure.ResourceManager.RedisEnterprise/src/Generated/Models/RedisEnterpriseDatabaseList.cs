@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseList. </summary>
         internal RedisEnterpriseDatabaseList()
         {
-            Value = new Core.ChangeTrackingList<RedisEnterpriseDatabaseData>();
+            Value = new ChangeTrackingList<RedisEnterpriseDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseDatabaseList. </summary>

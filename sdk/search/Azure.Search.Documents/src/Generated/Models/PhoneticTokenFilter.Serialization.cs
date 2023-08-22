@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PhoneticTokenFilter : Core.IUtf8JsonSerializable
+    public partial class PhoneticTokenFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Encoder))
+            if (Optional.IsDefined(Encoder))
             {
                 writer.WritePropertyName("encoder"u8);
                 writer.WriteStringValue(Encoder.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ReplaceOriginalTokens))
+            if (Optional.IsDefined(ReplaceOriginalTokens))
             {
                 writer.WritePropertyName("replace"u8);
                 writer.WriteBooleanValue(ReplaceOriginalTokens.Value);
@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<PhoneticEncoder> encoder = default;
-            Core.Optional<bool> replace = default;
+            Optional<PhoneticEncoder> encoder = default;
+            Optional<bool> replace = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PhoneticTokenFilter(odataType, name, Core.Optional.ToNullable(encoder), Core.Optional.ToNullable(replace));
+            return new PhoneticTokenFilter(odataType, name, Optional.ToNullable(encoder), Optional.ToNullable(replace));
         }
     }
 }

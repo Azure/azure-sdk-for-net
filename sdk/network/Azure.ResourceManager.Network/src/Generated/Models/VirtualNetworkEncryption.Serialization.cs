@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkEncryption : Core.IUtf8JsonSerializable
+    public partial class VirtualNetworkEncryption : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Core.Optional.IsDefined(Enforcement))
+            if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToString());
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             bool enabled = default;
-            Core.Optional<VirtualNetworkEncryptionEnforcement> enforcement = default;
+            Optional<VirtualNetworkEncryptionEnforcement> enforcement = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualNetworkEncryption(enabled, Core.Optional.ToNullable(enforcement));
+            return new VirtualNetworkEncryption(enabled, Optional.ToNullable(enforcement));
         }
     }
 }

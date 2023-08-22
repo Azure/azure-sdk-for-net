@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OperationResponse>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<OperationResponse>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                     continue;
                 }
             }
-            return new OperationList(Core.Optional.ToList(value), nextLink.Value);
+            return new OperationList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

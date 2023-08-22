@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
         internal ExternalNetworksList()
         {
-            Value = new Core.ChangeTrackingList<NetworkFabricExternalNetworkData>();
+            Value = new ChangeTrackingList<NetworkFabricExternalNetworkData>();
         }
 
         /// <summary> Initializes a new instance of ExternalNetworksList. </summary>

@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             Locations = locations.ToList();
             DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard;
-            IPRules = new Core.ChangeTrackingList<CosmosDBIPAddressOrRange>();
-            Capabilities = new Core.ChangeTrackingList<CosmosDBAccountCapability>();
-            VirtualNetworkRules = new Core.ChangeTrackingList<CosmosDBVirtualNetworkRule>();
-            Cors = new Core.ChangeTrackingList<CosmosDBAccountCorsPolicy>();
-            NetworkAclBypassResourceIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            IPRules = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
+            Capabilities = new ChangeTrackingList<CosmosDBAccountCapability>();
+            VirtualNetworkRules = new ChangeTrackingList<CosmosDBVirtualNetworkRule>();
+            Cors = new ChangeTrackingList<CosmosDBAccountCorsPolicy>();
+            NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBAccountCreateOrUpdateContent. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of SearchGetSchemaResponse. </summary>
         internal SearchGetSchemaResponse()
         {
-            Value = new Core.ChangeTrackingList<OperationalInsightsSearchSchemaValue>();
+            Value = new ChangeTrackingList<OperationalInsightsSearchSchemaValue>();
         }
 
         /// <summary> Initializes a new instance of SearchGetSchemaResponse. </summary>

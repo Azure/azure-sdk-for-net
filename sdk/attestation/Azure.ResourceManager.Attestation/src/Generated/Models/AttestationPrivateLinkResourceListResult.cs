@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>
         internal AttestationPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<AttestationPrivateLinkResource>();
+            Value = new ChangeTrackingList<AttestationPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>

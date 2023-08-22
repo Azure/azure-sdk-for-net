@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<HealthcareApisServiceData>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<HealthcareApisServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new ServicesDescriptionListResult(nextLink.Value, Core.Optional.ToList(value));
+            return new ServicesDescriptionListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

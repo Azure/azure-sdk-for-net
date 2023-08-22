@@ -13,71 +13,71 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    public partial class BillingBenefitsSavingsPlanData : Core.IUtf8JsonSerializable
+    public partial class BillingBenefitsSavingsPlanData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(BillingScopeId))
+            if (Optional.IsDefined(BillingScopeId))
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (Core.Optional.IsDefined(Term))
+            if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BillingPlan))
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AppliedScopeType))
+            if (Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AppliedScopeProperties))
+            if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (Core.Optional.IsDefined(Commitment))
+            if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment);
             }
-            if (Core.Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
                 writer.WriteStringValue(BenefitStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(IsRenewed))
+            if (Optional.IsDefined(IsRenewed))
             {
                 writer.WritePropertyName("renew"u8);
                 writer.WriteBooleanValue(IsRenewed.Value);
             }
-            if (Core.Optional.IsDefined(RenewSource))
+            if (Optional.IsDefined(RenewSource))
             {
                 writer.WritePropertyName("renewSource"u8);
                 writer.WriteStringValue(RenewSource);
             }
-            if (Core.Optional.IsDefined(RenewDestination))
+            if (Optional.IsDefined(RenewDestination))
             {
                 writer.WritePropertyName("renewDestination"u8);
                 writer.WriteStringValue(RenewDestination);
             }
-            if (Core.Optional.IsDefined(RenewProperties))
+            if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
                 writer.WriteObjectValue(RenewProperties);
@@ -96,30 +96,30 @@ namespace Azure.ResourceManager.BillingBenefits
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Core.Optional<string> displayProvisioningState = default;
-            Core.Optional<ResourceIdentifier> billingScopeId = default;
-            Core.Optional<ResourceIdentifier> billingProfileId = default;
-            Core.Optional<string> customerId = default;
-            Core.Optional<ResourceIdentifier> billingAccountId = default;
-            Core.Optional<BillingBenefitsTerm> term = default;
-            Core.Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Core.Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Core.Optional<string> userFriendlyAppliedScopeType = default;
-            Core.Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
-            Core.Optional<BillingBenefitsCommitment> commitment = default;
-            Core.Optional<DateTimeOffset> effectiveDateTime = default;
-            Core.Optional<DateTimeOffset> expiryDateTime = default;
-            Core.Optional<DateTimeOffset> purchaseDateTime = default;
-            Core.Optional<DateTimeOffset> benefitStartTime = default;
-            Core.Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
-            Core.Optional<bool> renew = default;
-            Core.Optional<BillingBenefitsSavingsPlanUtilization> utilization = default;
-            Core.Optional<string> renewSource = default;
-            Core.Optional<string> renewDestination = default;
-            Core.Optional<RenewProperties> renewProperties = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<BillingBenefitsProvisioningState> provisioningState = default;
+            Optional<string> displayProvisioningState = default;
+            Optional<ResourceIdentifier> billingScopeId = default;
+            Optional<ResourceIdentifier> billingProfileId = default;
+            Optional<string> customerId = default;
+            Optional<ResourceIdentifier> billingAccountId = default;
+            Optional<BillingBenefitsTerm> term = default;
+            Optional<BillingBenefitsBillingPlan> billingPlan = default;
+            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
+            Optional<string> userFriendlyAppliedScopeType = default;
+            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
+            Optional<BillingBenefitsCommitment> commitment = default;
+            Optional<DateTimeOffset> effectiveDateTime = default;
+            Optional<DateTimeOffset> expiryDateTime = default;
+            Optional<DateTimeOffset> purchaseDateTime = default;
+            Optional<DateTimeOffset> benefitStartTime = default;
+            Optional<BillingBenefitsExtendedStatusInfo> extendedStatusInfo = default;
+            Optional<bool> renew = default;
+            Optional<BillingBenefitsSavingsPlanUtilization> utilization = default;
+            Optional<string> renewSource = default;
+            Optional<string> renewDestination = default;
+            Optional<RenewProperties> renewProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     continue;
                 }
             }
-            return new BillingBenefitsSavingsPlanData(id, name, type, systemData.Value, sku, displayName.Value, Core.Optional.ToNullable(provisioningState), displayProvisioningState.Value, billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Core.Optional.ToNullable(term), Core.Optional.ToNullable(billingPlan), Core.Optional.ToNullable(appliedScopeType), userFriendlyAppliedScopeType.Value, appliedScopeProperties.Value, commitment.Value, Core.Optional.ToNullable(effectiveDateTime), Core.Optional.ToNullable(expiryDateTime), Core.Optional.ToNullable(purchaseDateTime), Core.Optional.ToNullable(benefitStartTime), extendedStatusInfo.Value, Core.Optional.ToNullable(renew), utilization.Value, renewSource.Value, renewDestination.Value, renewProperties.Value);
+            return new BillingBenefitsSavingsPlanData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), displayProvisioningState.Value, billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), userFriendlyAppliedScopeType.Value, appliedScopeProperties.Value, commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(expiryDateTime), Optional.ToNullable(purchaseDateTime), Optional.ToNullable(benefitStartTime), extendedStatusInfo.Value, Optional.ToNullable(renew), utilization.Value, renewSource.Value, renewDestination.Value, renewProperties.Value);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = await _reservationOrderRestClient.PurchaseAsync(reservationOrderId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Reservations
             try
             {
                 var response = _reservationOrderRestClient.Purchase(reservationOrderId, content, cancellationToken);
-                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ReservationsArmOperation<ReservationOrderResource>(new ReservationOrderOperationSource(Client), _reservationOrderClientDiagnostics, Pipeline, _reservationOrderRestClient.CreatePurchaseRequest(reservationOrderId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationOrderRestClient.CreateListNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationOrderResource(Client, ReservationOrderData.DeserializeReservationOrderData(e)), _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationOrderResource(Client, ReservationOrderData.DeserializeReservationOrderData(e)), _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationOrderRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationOrderRestClient.CreateListNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationOrderResource(Client, ReservationOrderData.DeserializeReservationOrderData(e)), _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationOrderResource(Client, ReservationOrderData.DeserializeReservationOrderData(e)), _reservationOrderClientDiagnostics, Pipeline, "ReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

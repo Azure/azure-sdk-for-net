@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiReference : Core.IUtf8JsonSerializable
+    public partial class LogicApiReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(IconUri))
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUri"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Swagger))
+            if (Optional.IsDefined(Swagger))
             {
                 writer.WritePropertyName("swagger"u8);
 #if NET6_0_OR_GREATER
@@ -40,22 +40,22 @@ namespace Azure.ResourceManager.Logic.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Swagger.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(BrandColor))
+            if (Optional.IsDefined(BrandColor))
             {
                 writer.WritePropertyName("brandColor"u8);
                 writer.WriteStringValue(BrandColor);
             }
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IntegrationServiceEnvironment))
+            if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> iconUri = default;
-            Core.Optional<BinaryData> swagger = default;
-            Core.Optional<string> brandColor = default;
-            Core.Optional<LogicApiTier> category = default;
-            Core.Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<Uri> iconUri = default;
+            Optional<BinaryData> swagger = default;
+            Optional<string> brandColor = default;
+            Optional<LogicApiTier> category = default;
+            Optional<LogicResourceReference> integrationServiceEnvironment = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicApiReference(id.Value, name.Value, Core.Optional.ToNullable(type), displayName.Value, description.Value, iconUri.Value, swagger.Value, brandColor.Value, Core.Optional.ToNullable(category), integrationServiceEnvironment.Value);
+            return new LogicApiReference(id.Value, name.Value, Optional.ToNullable(type), displayName.Value, description.Value, iconUri.Value, swagger.Value, brandColor.Value, Optional.ToNullable(category), integrationServiceEnvironment.Value);
         }
     }
 }

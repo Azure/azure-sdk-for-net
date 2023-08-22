@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationListResult. </summary>
         internal ExpressRoutePortsLocationListResult()
         {
-            Value = new Core.ChangeTrackingList<ExpressRoutePortsLocationData>();
+            Value = new ChangeTrackingList<ExpressRoutePortsLocationData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortsLocationListResult. </summary>

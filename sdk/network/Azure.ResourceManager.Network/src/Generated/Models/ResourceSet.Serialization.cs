@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ResourceSet : Core.IUtf8JsonSerializable
+    internal partial class ResourceSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Subscriptions))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> subscriptions = default;
+            Optional<IList<string>> subscriptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptions"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ResourceSet(Core.Optional.ToList(subscriptions));
+            return new ResourceSet(Optional.ToList(subscriptions));
         }
     }
 }

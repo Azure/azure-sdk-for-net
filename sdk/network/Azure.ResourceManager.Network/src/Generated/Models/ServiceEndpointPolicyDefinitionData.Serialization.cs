@@ -13,34 +13,34 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ServiceEndpointPolicyDefinitionData : Core.IUtf8JsonSerializable
+    public partial class ServiceEndpointPolicyDefinitionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Service))
+            if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (Core.Optional.IsCollectionDefined(ServiceResources))
+            if (Optional.IsCollectionDefined(ServiceResources))
             {
                 writer.WritePropertyName("serviceResources"u8);
                 writer.WriteStartArray();
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> service = default;
-            Core.Optional<IList<ResourceIdentifier>> serviceResources = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> description = default;
+            Optional<string> service = default;
+            Optional<IList<ResourceIdentifier>> serviceResources = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ServiceEndpointPolicyDefinitionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), description.Value, service.Value, Core.Optional.ToList(serviceResources), Core.Optional.ToNullable(provisioningState));
+            return new ServiceEndpointPolicyDefinitionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), description.Value, service.Value, Optional.ToList(serviceResources), Optional.ToNullable(provisioningState));
         }
     }
 }

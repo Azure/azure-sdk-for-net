@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
         internal ServiceEmergingIssueData()
         {
-            StatusBanners = new Core.ChangeTrackingList<EmergingIssueBannerType>();
-            StatusActiveEvents = new Core.ChangeTrackingList<EmergingIssueActiveEventType>();
+            StatusBanners = new ChangeTrackingList<EmergingIssueBannerType>();
+            StatusActiveEvents = new ChangeTrackingList<EmergingIssueActiveEventType>();
         }
 
         /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>

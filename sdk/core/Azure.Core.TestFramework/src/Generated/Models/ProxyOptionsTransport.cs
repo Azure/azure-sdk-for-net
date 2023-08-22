@@ -16,7 +16,7 @@ namespace Azure.Core.TestFramework.Models
         /// <summary> Initializes a new instance of ProxyOptionsTransport. </summary>
         public ProxyOptionsTransport()
         {
-            Certificates = new Core.ChangeTrackingList<ProxyOptionsTransportCertificatesItem>();
+            Certificates = new ChangeTrackingList<ProxyOptionsTransportCertificatesItem>();
         }
 
         /// <summary> Gets or sets the allow auto redirect. </summary>

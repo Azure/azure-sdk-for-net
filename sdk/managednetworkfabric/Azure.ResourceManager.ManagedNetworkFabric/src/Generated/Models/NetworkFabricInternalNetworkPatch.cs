@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricInternalNetworkPatch. </summary>
         public NetworkFabricInternalNetworkPatch()
         {
-            ConnectedIPv4Subnets = new Core.ChangeTrackingList<ConnectedSubnet>();
-            ConnectedIPv6Subnets = new Core.ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv4Subnets = new ChangeTrackingList<ConnectedSubnet>();
+            ConnectedIPv6Subnets = new ChangeTrackingList<ConnectedSubnet>();
         }
 
         /// <summary> Switch configuration description. </summary>

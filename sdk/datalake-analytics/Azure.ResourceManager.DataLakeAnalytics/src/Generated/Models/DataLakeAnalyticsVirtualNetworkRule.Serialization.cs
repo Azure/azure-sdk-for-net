@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> subnetId = default;
-            Core.Optional<DataLakeAnalyticsVirtualNetworkRuleState> virtualNetworkRuleState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<DataLakeAnalyticsVirtualNetworkRuleState> virtualNetworkRuleState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                     continue;
                 }
             }
-            return new DataLakeAnalyticsVirtualNetworkRule(id, name, type, systemData.Value, subnetId.Value, Core.Optional.ToNullable(virtualNetworkRuleState));
+            return new DataLakeAnalyticsVirtualNetworkRule(id, name, type, systemData.Value, subnetId.Value, Optional.ToNullable(virtualNetworkRuleState));
         }
     }
 }

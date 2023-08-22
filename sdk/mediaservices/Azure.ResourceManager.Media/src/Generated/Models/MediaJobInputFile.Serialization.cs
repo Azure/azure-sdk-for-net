@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobInputFile : Core.IUtf8JsonSerializable
+    public partial class MediaJobInputFile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Filename))
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsCollectionDefined(IncludedTracks))
+            if (Optional.IsCollectionDefined(IncludedTracks))
             {
                 writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> filename = default;
+            Optional<string> filename = default;
             string odataType = default;
-            Core.Optional<IList<TrackDescriptor>> includedTracks = default;
+            Optional<IList<TrackDescriptor>> includedTracks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filename"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaJobInputFile(odataType, Core.Optional.ToList(includedTracks), filename.Value);
+            return new MediaJobInputFile(odataType, Optional.ToList(includedTracks), filename.Value);
         }
     }
 }

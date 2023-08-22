@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAuthenticationCertificate : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayAuthenticationCertificate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Data))
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
 #if NET6_0_OR_GREATER
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<BinaryData> data = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<BinaryData> data = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayAuthenticationCertificate(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), data.Value, Core.Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayAuthenticationCertificate(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), data.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

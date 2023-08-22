@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
-            Core.Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
+            Optional<ConnectionMonitorSourceStatus> sourceStatus = default;
+            Optional<IReadOnlyList<ConnectionStateSnapshot>> states = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceStatus"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorQueryResult(Core.Optional.ToNullable(sourceStatus), Core.Optional.ToList(states));
+            return new ConnectionMonitorQueryResult(Optional.ToNullable(sourceStatus), Optional.ToList(states));
         }
     }
 }

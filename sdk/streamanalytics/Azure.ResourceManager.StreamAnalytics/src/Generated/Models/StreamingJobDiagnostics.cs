@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamingJobDiagnostics. </summary>
         internal StreamingJobDiagnostics()
         {
-            Conditions = new Core.ChangeTrackingList<StreamingJobDiagnosticCondition>();
+            Conditions = new ChangeTrackingList<StreamingJobDiagnosticCondition>();
         }
 
         /// <summary> Initializes a new instance of StreamingJobDiagnostics. </summary>

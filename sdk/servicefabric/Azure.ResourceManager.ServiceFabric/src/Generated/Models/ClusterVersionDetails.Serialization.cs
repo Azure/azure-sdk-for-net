@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> codeVersion = default;
-            Core.Optional<DateTimeOffset> supportExpiryUtc = default;
-            Core.Optional<ClusterEnvironment> environment = default;
+            Optional<string> codeVersion = default;
+            Optional<DateTimeOffset> supportExpiryUtc = default;
+            Optional<ClusterEnvironment> environment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeVersion"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterVersionDetails(codeVersion.Value, Core.Optional.ToNullable(supportExpiryUtc), Core.Optional.ToNullable(environment));
+            return new ClusterVersionDetails(codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment));
         }
     }
 }

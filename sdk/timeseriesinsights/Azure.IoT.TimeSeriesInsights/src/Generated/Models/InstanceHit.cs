@@ -16,8 +16,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of InstanceHit. </summary>
         internal InstanceHit()
         {
-            TimeSeriesId = new Core.ChangeTrackingList<object>();
-            HierarchyIds = new Core.ChangeTrackingList<string>();
+            TimeSeriesId = new ChangeTrackingList<object>();
+            HierarchyIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of InstanceHit. </summary>

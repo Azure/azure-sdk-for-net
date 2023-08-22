@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>
         internal SapDiskConfiguration()
         {
-            SupportedConfigurations = new Core.ChangeTrackingList<SupportedConfigurationsDiskDetails>();
+            SupportedConfigurations = new ChangeTrackingList<SupportedConfigurationsDiskDetails>();
         }
 
         /// <summary> Initializes a new instance of SapDiskConfiguration. </summary>

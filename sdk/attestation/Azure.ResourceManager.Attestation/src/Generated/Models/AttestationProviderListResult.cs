@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>
         internal AttestationProviderListResult()
         {
-            Value = new Core.ChangeTrackingList<AttestationProviderData>();
+            Value = new ChangeTrackingList<AttestationProviderData>();
         }
 
         /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>

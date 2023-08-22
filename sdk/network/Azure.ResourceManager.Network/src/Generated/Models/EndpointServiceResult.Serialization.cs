@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EndpointServiceResult(name.Value, Core.Optional.ToNullable(type), id.Value);
+            return new EndpointServiceResult(name.Value, Optional.ToNullable(type), id.Value);
         }
     }
 }

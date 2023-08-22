@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _paloAltoNetworksFirewallFirewallsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, firewallName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallOperationSource(Client), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, _paloAltoNetworksFirewallFirewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallOperationSource(Client), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, _paloAltoNetworksFirewallFirewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _paloAltoNetworksFirewallFirewallsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, firewallName, data, cancellationToken);
-                var operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallOperationSource(Client), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, _paloAltoNetworksFirewallFirewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(new PaloAltoNetworksFirewallOperationSource(Client), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, _paloAltoNetworksFirewallFirewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _paloAltoNetworksFirewallFirewallsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), _paloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "PaloAltoNetworksFirewallCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

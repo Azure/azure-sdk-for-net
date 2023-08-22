@@ -16,7 +16,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>
         internal ManagedPrivateEndpointListResponse()
         {
-            Value = new Core.ChangeTrackingList<ManagedPrivateEndpoint>();
+            Value = new ChangeTrackingList<ManagedPrivateEndpoint>();
         }
 
         /// <summary> Initializes a new instance of ManagedPrivateEndpointListResponse. </summary>

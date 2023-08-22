@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of OrderList. </summary>
         internal OrderList()
         {
-            Value = new Core.ChangeTrackingList<DataBoxEdgeOrderData>();
+            Value = new ChangeTrackingList<DataBoxEdgeOrderData>();
         }
 
         /// <summary> Initializes a new instance of OrderList. </summary>

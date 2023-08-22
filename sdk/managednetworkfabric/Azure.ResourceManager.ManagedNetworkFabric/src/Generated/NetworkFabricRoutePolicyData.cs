@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
 
-            Statements = new Core.ChangeTrackingList<RoutePolicyStatementProperties>();
+            Statements = new ChangeTrackingList<RoutePolicyStatementProperties>();
             NetworkFabricId = networkFabricId;
         }
 

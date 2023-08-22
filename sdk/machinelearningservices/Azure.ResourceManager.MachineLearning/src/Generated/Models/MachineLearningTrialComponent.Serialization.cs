@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTrialComponent : Core.IUtf8JsonSerializable
+    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CodeId))
+            if (Optional.IsDefined(CodeId))
             {
                 if (CodeId != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Core.Optional.IsDefined(Distribution))
+            if (Optional.IsDefined(Distribution))
             {
                 if (Distribution != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("environmentId"u8);
             writer.WriteStringValue(EnvironmentId);
-            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (Core.Optional.IsDefined(Resources))
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteObjectValue(Resources);
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> codeId = default;
+            Optional<ResourceIdentifier> codeId = default;
             string command = default;
-            Core.Optional<MachineLearningDistributionConfiguration> distribution = default;
+            Optional<MachineLearningDistributionConfiguration> distribution = default;
             ResourceIdentifier environmentId = default;
-            Core.Optional<IDictionary<string, string>> environmentVariables = default;
-            Core.Optional<MachineLearningJobResourceConfiguration> resources = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
+            Optional<MachineLearningJobResourceConfiguration> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Core.Optional.ToDictionary(environmentVariables), resources.Value);
+            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value);
         }
     }
 }

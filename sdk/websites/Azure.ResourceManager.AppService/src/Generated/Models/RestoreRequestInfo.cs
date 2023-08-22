@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
         public RestoreRequestInfo()
         {
-            Databases = new Core.ChangeTrackingList<AppServiceDatabaseBackupSetting>();
+            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>

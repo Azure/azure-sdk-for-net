@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="location"> The location. </param>
         public DevTestLabVirtualNetworkData(AzureLocation location) : base(location)
         {
-            AllowedSubnets = new Core.ChangeTrackingList<DevTestLabSubnet>();
-            ExternalSubnets = new Core.ChangeTrackingList<DevTestLabExternalSubnet>();
-            SubnetOverrides = new Core.ChangeTrackingList<DevTestLabSubnetOverride>();
+            AllowedSubnets = new ChangeTrackingList<DevTestLabSubnet>();
+            ExternalSubnets = new ChangeTrackingList<DevTestLabExternalSubnet>();
+            SubnetOverrides = new ChangeTrackingList<DevTestLabSubnetOverride>();
         }
 
         /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>

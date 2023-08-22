@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of SmartGroupsList. </summary>
         internal SmartGroupsList()
         {
-            Value = new Core.ChangeTrackingList<SmartGroupData>();
+            Value = new ChangeTrackingList<SmartGroupData>();
         }
 
         /// <summary> Initializes a new instance of SmartGroupsList. </summary>

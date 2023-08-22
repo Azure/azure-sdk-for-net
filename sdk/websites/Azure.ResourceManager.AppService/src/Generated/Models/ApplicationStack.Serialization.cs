@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ApplicationStack : Core.IUtf8JsonSerializable
+    public partial class ApplicationStack : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Display))
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
-            if (Core.Optional.IsDefined(Dependency))
+            if (Optional.IsDefined(Dependency))
             {
                 writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
-            if (Core.Optional.IsCollectionDefined(MajorVersions))
+            if (Optional.IsCollectionDefined(MajorVersions))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Frameworks))
+            if (Optional.IsCollectionDefined(Frameworks))
             {
                 writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IsDeprecated))
+            if (Optional.IsCollectionDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> display = default;
-            Core.Optional<string> dependency = default;
-            Core.Optional<IList<StackMajorVersion>> majorVersions = default;
-            Core.Optional<IList<ApplicationStack>> frameworks = default;
-            Core.Optional<IList<ApplicationStack>> isDeprecated = default;
+            Optional<string> name = default;
+            Optional<string> display = default;
+            Optional<string> dependency = default;
+            Optional<IList<StackMajorVersion>> majorVersions = default;
+            Optional<IList<ApplicationStack>> frameworks = default;
+            Optional<IList<ApplicationStack>> isDeprecated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ApplicationStack(name.Value, display.Value, dependency.Value, Core.Optional.ToList(majorVersions), Core.Optional.ToList(frameworks), Core.Optional.ToList(isDeprecated));
+            return new ApplicationStack(name.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated));
         }
     }
 }

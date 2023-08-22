@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> reverseDCAccessCode = default;
-            Core.Optional<string> forwardDCAccessCode = default;
+            Optional<string> reverseDCAccessCode = default;
+            Optional<string> forwardDCAccessCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reverseDCAccessCode"u8))

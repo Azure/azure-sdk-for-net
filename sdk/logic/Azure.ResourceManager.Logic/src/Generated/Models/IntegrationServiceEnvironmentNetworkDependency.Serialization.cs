@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IntegrationServiceEnvironmentNetworkDependencyCategoryType> category = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint>> endpoints = default;
+            Optional<IntegrationServiceEnvironmentNetworkDependencyCategoryType> category = default;
+            Optional<string> displayName = default;
+            Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkEndpoint>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentNetworkDependency(Core.Optional.ToNullable(category), displayName.Value, Core.Optional.ToList(endpoints));
+            return new IntegrationServiceEnvironmentNetworkDependency(Optional.ToNullable(category), displayName.Value, Optional.ToList(endpoints));
         }
     }
 }

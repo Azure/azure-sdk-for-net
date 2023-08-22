@@ -25,13 +25,13 @@ namespace Azure.Communication.Chat
             ChatMessageType type = default;
             string sequenceId = default;
             string version = default;
-            Core.Optional<ChatMessageContentInternal> content = default;
-            Core.Optional<string> senderDisplayName = default;
+            Optional<ChatMessageContentInternal> content = default;
+            Optional<string> senderDisplayName = default;
             DateTimeOffset createdOn = default;
-            Core.Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
-            Core.Optional<DateTimeOffset> deletedOn = default;
-            Core.Optional<DateTimeOffset> editedOn = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            Optional<CommunicationIdentifierModel> senderCommunicationIdentifier = default;
+            Optional<DateTimeOffset> deletedOn = default;
+            Optional<DateTimeOffset> editedOn = default;
+            Optional<IReadOnlyDictionary<string, string>> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -115,7 +115,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderCommunicationIdentifier.Value, Core.Optional.ToNullable(deletedOn), Core.Optional.ToNullable(editedOn), Core.Optional.ToDictionary(metadata));
+            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderCommunicationIdentifier.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn), Optional.ToDictionary(metadata));
         }
     }
 }

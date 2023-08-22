@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of TriggerList. </summary>
         internal TriggerList()
         {
-            Value = new Core.ChangeTrackingList<DataBoxEdgeTriggerData>();
+            Value = new ChangeTrackingList<DataBoxEdgeTriggerData>();
         }
 
         /// <summary> Initializes a new instance of TriggerList. </summary>

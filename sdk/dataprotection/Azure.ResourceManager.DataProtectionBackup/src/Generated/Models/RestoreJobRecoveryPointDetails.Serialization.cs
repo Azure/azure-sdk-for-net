@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> recoveryPointId = default;
-            Core.Optional<DateTimeOffset> recoveryPointTime = default;
+            Optional<string> recoveryPointId = default;
+            Optional<DateTimeOffset> recoveryPointTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointID"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Core.Optional.ToNullable(recoveryPointTime));
+            return new RestoreJobRecoveryPointDetails(recoveryPointId.Value, Optional.ToNullable(recoveryPointTime));
         }
     }
 }

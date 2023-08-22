@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningEncryptionKeyVaultProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningEncryptionKeyVaultProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultArmId"u8);
             writer.WriteStringValue(KeyVaultArmId);
             writer.WritePropertyName("keyIdentifier"u8);
             writer.WriteStringValue(KeyIdentifier);
-            if (Core.Optional.IsDefined(IdentityClientId))
+            if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             ResourceIdentifier keyVaultArmId = default;
             string keyIdentifier = default;
-            Core.Optional<string> identityClientId = default;
+            Optional<string> identityClientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultArmId"u8))

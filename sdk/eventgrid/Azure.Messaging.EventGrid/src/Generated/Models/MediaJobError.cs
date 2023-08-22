@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of MediaJobError. </summary>
         internal MediaJobError()
         {
-            Details = new Core.ChangeTrackingList<MediaJobErrorDetail>();
+            Details = new ChangeTrackingList<MediaJobErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of MediaJobError. </summary>

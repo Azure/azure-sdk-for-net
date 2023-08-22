@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
 
             HierarchyInformation = hierarchyInformation;
-            FilterableProperty = new Core.ChangeTrackingList<FilterableProperty>();
+            FilterableProperty = new ChangeTrackingList<FilterableProperty>();
         }
 
         /// <summary> Product hierarchy information. </summary>

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaTrackSelection : Core.IUtf8JsonSerializable
+    public partial class MediaTrackSelection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(TrackSelections))
+            if (Optional.IsCollectionDefined(TrackSelections))
             {
                 writer.WritePropertyName("trackSelections"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<IList<TrackPropertyCondition>> trackSelections = default;
+            Optional<IList<TrackPropertyCondition>> trackSelections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackSelections"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaTrackSelection(Core.Optional.ToList(trackSelections));
+            return new MediaTrackSelection(Optional.ToList(trackSelections));
         }
     }
 }

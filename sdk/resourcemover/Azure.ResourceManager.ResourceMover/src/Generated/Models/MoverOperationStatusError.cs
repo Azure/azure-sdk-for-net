@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverOperationStatusError. </summary>
         internal MoverOperationStatusError()
         {
-            Details = new Core.ChangeTrackingList<MoverOperationStatusError>();
-            AdditionalInfo = new Core.ChangeTrackingList<MoverOperationErrorAdditionalInfo>();
+            Details = new ChangeTrackingList<MoverOperationStatusError>();
+            AdditionalInfo = new ChangeTrackingList<MoverOperationErrorAdditionalInfo>();
         }
 
         /// <summary> Initializes a new instance of MoverOperationStatusError. </summary>

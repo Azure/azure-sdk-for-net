@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<Uri> ssoUriValue = default;
+            Optional<Uri> ssoUriValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ssoUriValue"u8))

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
-    public partial class RestResponseRegex : Core.IUtf8JsonSerializable
+    public partial class RestResponseRegex : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Matches))
+            if (Optional.IsCollectionDefined(Matches))
             {
                 writer.WritePropertyName("matches"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(MatchQuantifier))
+            if (Optional.IsDefined(MatchQuantifier))
             {
                 writer.WritePropertyName("matchQuantifier"u8);
                 writer.WriteStringValue(MatchQuantifier.Value.ToSerialString());
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> matches = default;
-            Core.Optional<RestMatchQuantifier> matchQuantifier = default;
+            Optional<IList<string>> matches = default;
+            Optional<RestMatchQuantifier> matchQuantifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matches"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new RestResponseRegex(Core.Optional.ToList(matches), Core.Optional.ToNullable(matchQuantifier));
+            return new RestResponseRegex(Optional.ToList(matches), Optional.ToNullable(matchQuantifier));
         }
     }
 }

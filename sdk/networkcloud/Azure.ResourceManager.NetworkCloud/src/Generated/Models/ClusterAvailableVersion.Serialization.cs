@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<string> supportExpiryDate = default;
-            Core.Optional<string> targetClusterVersion = default;
+            Optional<string> supportExpiryDate = default;
+            Optional<string> targetClusterVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportExpiryDate"u8))

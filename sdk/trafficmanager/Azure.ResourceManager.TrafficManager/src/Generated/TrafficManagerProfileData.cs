@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Initializes a new instance of TrafficManagerProfileData. </summary>
         public TrafficManagerProfileData()
         {
-            Endpoints = new Core.ChangeTrackingList<TrafficManagerEndpointData>();
-            AllowedEndpointRecordTypes = new Core.ChangeTrackingList<AllowedEndpointRecordType>();
+            Endpoints = new ChangeTrackingList<TrafficManagerEndpointData>();
+            AllowedEndpointRecordTypes = new ChangeTrackingList<AllowedEndpointRecordType>();
         }
 
         /// <summary> Initializes a new instance of TrafficManagerProfileData. </summary>

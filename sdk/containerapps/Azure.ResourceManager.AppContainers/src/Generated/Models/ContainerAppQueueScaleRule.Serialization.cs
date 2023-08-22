@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppQueueScaleRule : Core.IUtf8JsonSerializable
+    public partial class ContainerAppQueueScaleRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QueueName))
+            if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (Core.Optional.IsDefined(QueueLength))
+            if (Optional.IsDefined(QueueLength))
             {
                 writer.WritePropertyName("queueLength"u8);
                 writer.WriteNumberValue(QueueLength.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Auth))
+            if (Optional.IsCollectionDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> queueName = default;
-            Core.Optional<int> queueLength = default;
-            Core.Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            Optional<string> queueName = default;
+            Optional<int> queueLength = default;
+            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queueName"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppQueueScaleRule(queueName.Value, Core.Optional.ToNullable(queueLength), Core.Optional.ToList(auth));
+            return new ContainerAppQueueScaleRule(queueName.Value, Optional.ToNullable(queueLength), Optional.ToList(auth));
         }
     }
 }

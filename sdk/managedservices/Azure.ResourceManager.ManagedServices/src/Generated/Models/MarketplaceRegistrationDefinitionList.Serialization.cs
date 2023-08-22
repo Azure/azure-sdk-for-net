@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagedServicesMarketplaceRegistrationData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ManagedServicesMarketplaceRegistrationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new MarketplaceRegistrationDefinitionList(Core.Optional.ToList(value), nextLink.Value);
+            return new MarketplaceRegistrationDefinitionList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

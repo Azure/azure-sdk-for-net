@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeStorageContainerData : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeStorageContainerData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DataBoxEdge
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DataBoxEdgeStorageContainerStatus> containerStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<DataBoxEdgeStorageContainerStatus> containerStatus = default;
             DataBoxEdgeStorageContainerDataFormat dataFormat = default;
-            Core.Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
-            Core.Optional<DateTimeOffset> createdDateTime = default;
+            Optional<DataBoxEdgeRefreshDetails> refreshDetails = default;
+            Optional<DateTimeOffset> createdDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeStorageContainerData(id, name, type, systemData.Value, Core.Optional.ToNullable(containerStatus), dataFormat, refreshDetails.Value, Core.Optional.ToNullable(createdDateTime));
+            return new DataBoxEdgeStorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(containerStatus), dataFormat, refreshDetails.Value, Optional.ToNullable(createdDateTime));
         }
     }
 }

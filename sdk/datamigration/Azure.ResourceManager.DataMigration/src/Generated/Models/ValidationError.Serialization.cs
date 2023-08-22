@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> text = default;
-            Core.Optional<Severity> severity = default;
+            Optional<string> text = default;
+            Optional<Severity> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ValidationError(text.Value, Core.Optional.ToNullable(severity));
+            return new ValidationError(text.Value, Optional.ToNullable(severity));
         }
     }
 }

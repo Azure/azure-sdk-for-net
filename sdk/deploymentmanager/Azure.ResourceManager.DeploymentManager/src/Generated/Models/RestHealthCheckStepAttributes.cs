@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <param name="healthyStateDuration"> The duration in ISO 8601 format for which the resource is expected to be continuously healthy. If maxElasticDuration is specified, healthy state duration is enforced after the detection of first healthy signal. </param>
         public RestHealthCheckStepAttributes(TimeSpan healthyStateDuration) : base(healthyStateDuration)
         {
-            HealthChecks = new Core.ChangeTrackingList<RestHealthCheck>();
+            HealthChecks = new ChangeTrackingList<RestHealthCheck>();
             HealthCheckStepAttributesType = "REST";
         }
 

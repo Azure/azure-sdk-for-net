@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListHubVirtualNetworkConnectionsResult. </summary>
         internal ListHubVirtualNetworkConnectionsResult()
         {
-            Value = new Core.ChangeTrackingList<HubVirtualNetworkConnectionData>();
+            Value = new ChangeTrackingList<HubVirtualNetworkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ListHubVirtualNetworkConnectionsResult. </summary>

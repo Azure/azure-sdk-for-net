@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BatchApplicationData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<BatchApplicationData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new ListApplicationsResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ListApplicationsResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

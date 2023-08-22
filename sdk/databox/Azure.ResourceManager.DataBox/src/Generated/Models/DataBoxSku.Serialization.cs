@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxSku : Core.IUtf8JsonSerializable
+    public partial class DataBoxSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Family))
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataBoxSkuName name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> family = default;
+            Optional<string> displayName = default;
+            Optional<string> family = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

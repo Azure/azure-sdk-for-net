@@ -12,14 +12,14 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseSqlPoolColumnData : Core.IUtf8JsonSerializable
+    public partial class SynapseSqlPoolColumnData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ColumnType))
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Synapse
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SqlPoolColumnDataType> columnType = default;
-            Core.Optional<bool> isComputed = default;
+            Optional<SystemData> systemData = default;
+            Optional<SqlPoolColumnDataType> columnType = default;
+            Optional<bool> isComputed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseSqlPoolColumnData(id, name, type, systemData.Value, Core.Optional.ToNullable(columnType), Core.Optional.ToNullable(isComputed));
+            return new SynapseSqlPoolColumnData(id, name, type, systemData.Value, Optional.ToNullable(columnType), Optional.ToNullable(isComputed));
         }
     }
 }

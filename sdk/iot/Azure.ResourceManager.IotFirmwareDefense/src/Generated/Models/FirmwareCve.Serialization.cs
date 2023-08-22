@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Core.Optional<string> cveId = default;
-            Core.Optional<BinaryData> component = default;
-            Core.Optional<string> severity = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> cvssScore = default;
-            Core.Optional<string> cvssVersion = default;
-            Core.Optional<string> cvssV2Score = default;
-            Core.Optional<string> cvssV3Score = default;
-            Core.Optional<DateTimeOffset> publishDate = default;
-            Core.Optional<DateTimeOffset> updatedDate = default;
-            Core.Optional<IReadOnlyList<CveLink>> links = default;
-            Core.Optional<string> description = default;
+            Optional<string> cveId = default;
+            Optional<BinaryData> component = default;
+            Optional<string> severity = default;
+            Optional<string> name = default;
+            Optional<string> cvssScore = default;
+            Optional<string> cvssVersion = default;
+            Optional<string> cvssV2Score = default;
+            Optional<string> cvssV3Score = default;
+            Optional<DateTimeOffset> publishDate = default;
+            Optional<DateTimeOffset> updatedDate = default;
+            Optional<IReadOnlyList<CveLink>> links = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cveId"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     continue;
                 }
             }
-            return new FirmwareCve(cveId.Value, component.Value, severity.Value, name.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, Core.Optional.ToNullable(publishDate), Core.Optional.ToNullable(updatedDate), Core.Optional.ToList(links), description.Value);
+            return new FirmwareCve(cveId.Value, component.Value, severity.Value, name.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, Optional.ToNullable(publishDate), Optional.ToNullable(updatedDate), Optional.ToList(links), description.Value);
         }
     }
 }

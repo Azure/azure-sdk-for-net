@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class SharedAccessAuthorizationRuleProperties : Core.IUtf8JsonSerializable
+    public partial class SharedAccessAuthorizationRuleProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Rights))
+            if (Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Core.Optional<IList<AuthorizationRuleAccessRight>> rights = default;
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
-            Core.Optional<string> keyName = default;
-            Core.Optional<string> claimType = default;
-            Core.Optional<string> claimValue = default;
-            Core.Optional<DateTimeOffset> modifiedTime = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<int> revision = default;
+            Optional<IList<AuthorizationRuleAccessRight>> rights = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<string> keyName = default;
+            Optional<string> claimType = default;
+            Optional<string> claimValue = default;
+            Optional<DateTimeOffset> modifiedTime = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<int> revision = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rights"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     continue;
                 }
             }
-            return new SharedAccessAuthorizationRuleProperties(Core.Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Core.Optional.ToNullable(modifiedTime), Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(revision));
+            return new SharedAccessAuthorizationRuleProperties(Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Optional.ToNullable(modifiedTime), Optional.ToNullable(createdTime), Optional.ToNullable(revision));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> qualifiedName = default;
-            Core.Optional<IReadOnlyList<string>> endpointQualifiedNames = default;
+            Optional<string> qualifiedName = default;
+            Optional<IReadOnlyList<string>> endpointQualifiedNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("qualifiedName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWsdlService(qualifiedName.Value, Core.Optional.ToList(endpointQualifiedNames));
+            return new LogicWsdlService(qualifiedName.Value, Optional.ToList(endpointQualifiedNames));
         }
     }
 }

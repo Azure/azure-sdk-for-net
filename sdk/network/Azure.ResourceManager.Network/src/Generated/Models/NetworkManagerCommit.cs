@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(targetLocations, nameof(targetLocations));
 
             TargetLocations = targetLocations.ToList();
-            ConfigurationIds = new Core.ChangeTrackingList<string>();
+            ConfigurationIds = new ChangeTrackingList<string>();
             CommitType = commitType;
         }
 

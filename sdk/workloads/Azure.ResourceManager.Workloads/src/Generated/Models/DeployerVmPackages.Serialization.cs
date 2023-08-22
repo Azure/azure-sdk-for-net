@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DeployerVmPackages : Core.IUtf8JsonSerializable
+    public partial class DeployerVmPackages : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PackageUri))
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(StorageAccountId))
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<Uri> url = default;
-            Core.Optional<string> storageAccountId = default;
+            Optional<Uri> url = default;
+            Optional<string> storageAccountId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))

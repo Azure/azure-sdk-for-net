@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class NetworkProfile : Core.IUtf8JsonSerializable
+    public partial class NetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LoadBalancerProfile))
+            if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
                 writer.WriteObjectValue(LoadBalancerProfile);
             }
-            if (Core.Optional.IsDefined(LoadBalancerSku))
+            if (Optional.IsDefined(LoadBalancerSku))
             {
                 writer.WritePropertyName("loadBalancerSku"u8);
                 writer.WriteStringValue(LoadBalancerSku.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DnsServiceIP))
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIP"u8);
                 writer.WriteStringValue(DnsServiceIP);
             }
-            if (Core.Optional.IsDefined(NetworkPolicy))
+            if (Optional.IsDefined(NetworkPolicy))
             {
                 writer.WritePropertyName("networkPolicy"u8);
                 writer.WriteStringValue(NetworkPolicy.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PodCidr))
+            if (Optional.IsDefined(PodCidr))
             {
                 writer.WritePropertyName("podCidr"u8);
                 writer.WriteStringValue(PodCidr);
             }
-            if (Core.Optional.IsCollectionDefined(PodCidrs))
+            if (Optional.IsCollectionDefined(PodCidrs))
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ServiceCidr))
+            if (Optional.IsDefined(ServiceCidr))
             {
                 writer.WritePropertyName("serviceCidr"u8);
                 writer.WriteStringValue(ServiceCidr);
             }
-            if (Core.Optional.IsCollectionDefined(ServiceCidrs))
+            if (Optional.IsCollectionDefined(ServiceCidrs))
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<LoadBalancerProfile> loadBalancerProfile = default;
-            Core.Optional<LoadBalancerSku> loadBalancerSku = default;
-            Core.Optional<string> dnsServiceIP = default;
-            Core.Optional<NetworkPolicy> networkPolicy = default;
-            Core.Optional<string> podCidr = default;
-            Core.Optional<IList<string>> podCidrs = default;
-            Core.Optional<string> serviceCidr = default;
-            Core.Optional<IList<string>> serviceCidrs = default;
+            Optional<LoadBalancerProfile> loadBalancerProfile = default;
+            Optional<LoadBalancerSku> loadBalancerSku = default;
+            Optional<string> dnsServiceIP = default;
+            Optional<NetworkPolicy> networkPolicy = default;
+            Optional<string> podCidr = default;
+            Optional<IList<string>> podCidrs = default;
+            Optional<string> serviceCidr = default;
+            Optional<IList<string>> serviceCidrs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerProfile"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new NetworkProfile(loadBalancerProfile.Value, Core.Optional.ToNullable(loadBalancerSku), dnsServiceIP.Value, Core.Optional.ToNullable(networkPolicy), podCidr.Value, Core.Optional.ToList(podCidrs), serviceCidr.Value, Core.Optional.ToList(serviceCidrs));
+            return new NetworkProfile(loadBalancerProfile.Value, Optional.ToNullable(loadBalancerSku), dnsServiceIP.Value, Optional.ToNullable(networkPolicy), podCidr.Value, Optional.ToList(podCidrs), serviceCidr.Value, Optional.ToList(serviceCidrs));
         }
     }
 }

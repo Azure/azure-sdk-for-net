@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Core.Optional<string> areaCode = default;
+            Optional<string> areaCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("areaCode"u8))

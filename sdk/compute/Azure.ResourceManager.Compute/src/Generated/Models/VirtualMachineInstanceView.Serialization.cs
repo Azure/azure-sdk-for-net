@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<int> platformUpdateDomain = default;
-            Core.Optional<int> platformFaultDomain = default;
-            Core.Optional<string> computerName = default;
-            Core.Optional<string> osName = default;
-            Core.Optional<string> osVersion = default;
-            Core.Optional<HyperVGeneration> hyperVGeneration = default;
-            Core.Optional<string> rdpThumbPrint = default;
-            Core.Optional<VirtualMachineAgentInstanceView> vmAgent = default;
-            Core.Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
-            Core.Optional<IReadOnlyList<DiskInstanceView>> disks = default;
-            Core.Optional<IReadOnlyList<VirtualMachineExtensionInstanceView>> extensions = default;
-            Core.Optional<VirtualMachineHealthStatus> vmHealth = default;
-            Core.Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
-            Core.Optional<string> assignedHost = default;
-            Core.Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
-            Core.Optional<VirtualMachinePatchStatus> patchStatus = default;
+            Optional<int> platformUpdateDomain = default;
+            Optional<int> platformFaultDomain = default;
+            Optional<string> computerName = default;
+            Optional<string> osName = default;
+            Optional<string> osVersion = default;
+            Optional<HyperVGeneration> hyperVGeneration = default;
+            Optional<string> rdpThumbPrint = default;
+            Optional<VirtualMachineAgentInstanceView> vmAgent = default;
+            Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
+            Optional<IReadOnlyList<DiskInstanceView>> disks = default;
+            Optional<IReadOnlyList<VirtualMachineExtensionInstanceView>> extensions = default;
+            Optional<VirtualMachineHealthStatus> vmHealth = default;
+            Optional<BootDiagnosticsInstanceView> bootDiagnostics = default;
+            Optional<string> assignedHost = default;
+            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            Optional<VirtualMachinePatchStatus> patchStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new VirtualMachineInstanceView(Core.Optional.ToNullable(platformUpdateDomain), Core.Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Core.Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Core.Optional.ToList(disks), Core.Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, assignedHost.Value, Core.Optional.ToList(statuses), patchStatus.Value);
+            return new VirtualMachineInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, assignedHost.Value, Optional.ToList(statuses), patchStatus.Value);
         }
     }
 }

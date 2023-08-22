@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfo. </summary>
         public DataBoxEdgeDeviceExtendedInfo()
         {
-            DeviceSecrets = new Core.ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>();
+            DeviceSecrets = new ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfo. </summary>

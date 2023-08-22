@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of WorkflowArray. </summary>
         internal WorkflowArray()
         {
-            Value = new Core.ChangeTrackingList<StorageSyncWorkflowData>();
+            Value = new ChangeTrackingList<StorageSyncWorkflowData>();
         }
 
         /// <summary> Initializes a new instance of WorkflowArray. </summary>

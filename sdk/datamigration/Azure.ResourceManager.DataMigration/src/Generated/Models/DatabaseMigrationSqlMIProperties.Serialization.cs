@@ -11,54 +11,54 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseMigrationSqlMIProperties : Core.IUtf8JsonSerializable
+    public partial class DatabaseMigrationSqlMIProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BackupConfiguration))
+            if (Optional.IsDefined(BackupConfiguration))
             {
                 writer.WritePropertyName("backupConfiguration"u8);
                 writer.WriteObjectValue(BackupConfiguration);
             }
-            if (Core.Optional.IsDefined(OfflineConfiguration))
+            if (Optional.IsDefined(OfflineConfiguration))
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
                 writer.WriteObjectValue(OfflineConfiguration);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Core.Optional.IsDefined(SourceSqlConnection))
+            if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
                 writer.WriteObjectValue(SourceSqlConnection);
             }
-            if (Core.Optional.IsDefined(SourceDatabaseName))
+            if (Optional.IsDefined(SourceDatabaseName))
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (Core.Optional.IsDefined(MigrationService))
+            if (Optional.IsDefined(MigrationService))
             {
                 writer.WritePropertyName("migrationService"u8);
                 writer.WriteStringValue(MigrationService);
             }
-            if (Core.Optional.IsDefined(MigrationOperationId))
+            if (Optional.IsDefined(MigrationOperationId))
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
             }
-            if (Core.Optional.IsDefined(TargetDatabaseCollation))
+            if (Optional.IsDefined(TargetDatabaseCollation))
             {
                 writer.WritePropertyName("targetDatabaseCollation"u8);
                 writer.WriteStringValue(TargetDatabaseCollation);
             }
-            if (Core.Optional.IsDefined(ProvisioningError))
+            if (Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
@@ -72,23 +72,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<MigrationStatusDetails> migrationStatusDetails = default;
-            Core.Optional<BackupConfiguration> backupConfiguration = default;
-            Core.Optional<OfflineConfiguration> offlineConfiguration = default;
+            Optional<MigrationStatusDetails> migrationStatusDetails = default;
+            Optional<BackupConfiguration> backupConfiguration = default;
+            Optional<OfflineConfiguration> offlineConfiguration = default;
             ResourceType kind = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> migrationStatus = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<SqlConnectionInformation> sourceSqlConnection = default;
-            Core.Optional<string> sourceDatabaseName = default;
-            Core.Optional<string> sourceServerName = default;
-            Core.Optional<string> migrationService = default;
-            Core.Optional<string> migrationOperationId = default;
-            Core.Optional<ErrorInfo> migrationFailureError = default;
-            Core.Optional<string> targetDatabaseCollation = default;
-            Core.Optional<string> provisioningError = default;
+            Optional<string> scope = default;
+            Optional<string> provisioningState = default;
+            Optional<string> migrationStatus = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<SqlConnectionInformation> sourceSqlConnection = default;
+            Optional<string> sourceDatabaseName = default;
+            Optional<string> sourceServerName = default;
+            Optional<string> migrationService = default;
+            Optional<string> migrationOperationId = default;
+            Optional<ErrorInfo> migrationFailureError = default;
+            Optional<string> targetDatabaseCollation = default;
+            Optional<string> provisioningError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationStatusDetails"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new DatabaseMigrationSqlMIProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, migrationStatusDetails.Value, backupConfiguration.Value, offlineConfiguration.Value);
+            return new DatabaseMigrationSqlMIProperties(kind, scope.Value, provisioningState.Value, migrationStatus.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceSqlConnection.Value, sourceDatabaseName.Value, sourceServerName.Value, migrationService.Value, migrationOperationId.Value, migrationFailureError.Value, targetDatabaseCollation.Value, provisioningError.Value, migrationStatusDetails.Value, backupConfiguration.Value, offlineConfiguration.Value);
         }
     }
 }

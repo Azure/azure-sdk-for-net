@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanUnplannedFailoverProperties : Core.IUtf8JsonSerializable
+    public partial class RecoveryPlanUnplannedFailoverProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("failoverDirection"u8);
             writer.WriteStringValue(FailoverDirection.ToString());
             writer.WritePropertyName("sourceSiteOperations"u8);
             writer.WriteStringValue(SourceSiteOperation.ToString());
-            if (Core.Optional.IsCollectionDefined(ProviderSpecificDetails))
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();

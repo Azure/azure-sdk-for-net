@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    internal class PrivateEndpointConnectionProxyOperationSource : Core.IOperationSource<PrivateEndpointConnectionProxyResource>
+    internal class PrivateEndpointConnectionProxyOperationSource : IOperationSource<PrivateEndpointConnectionProxyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DeviceUpdate
             _client = client;
         }
 
-        PrivateEndpointConnectionProxyResource Core.IOperationSource<PrivateEndpointConnectionProxyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateEndpointConnectionProxyResource IOperationSource<PrivateEndpointConnectionProxyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);
             return new PrivateEndpointConnectionProxyResource(_client, data);
         }
 
-        async ValueTask<PrivateEndpointConnectionProxyResource> Core.IOperationSource<PrivateEndpointConnectionProxyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateEndpointConnectionProxyResource> IOperationSource<PrivateEndpointConnectionProxyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);

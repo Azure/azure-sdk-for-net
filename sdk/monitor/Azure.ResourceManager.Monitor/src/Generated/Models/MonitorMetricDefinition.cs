@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorMetricDefinition. </summary>
         internal MonitorMetricDefinition()
         {
-            SupportedAggregationTypes = new Core.ChangeTrackingList<MonitorAggregationType>();
-            MetricAvailabilities = new Core.ChangeTrackingList<MonitorMetricAvailability>();
-            Dimensions = new Core.ChangeTrackingList<MonitorLocalizableString>();
+            SupportedAggregationTypes = new ChangeTrackingList<MonitorAggregationType>();
+            MetricAvailabilities = new ChangeTrackingList<MonitorMetricAvailability>();
+            Dimensions = new ChangeTrackingList<MonitorLocalizableString>();
         }
 
         /// <summary> Initializes a new instance of MonitorMetricDefinition. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of SupportTicketsListResult. </summary>
         internal SupportTicketsListResult()
         {
-            Value = new Core.ChangeTrackingList<SupportTicketData>();
+            Value = new ChangeTrackingList<SupportTicketData>();
         }
 
         /// <summary> Initializes a new instance of SupportTicketsListResult. </summary>

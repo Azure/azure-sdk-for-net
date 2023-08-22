@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    internal partial class HttpProxyConfiguration : Core.IUtf8JsonSerializable
+    internal partial class HttpProxyConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HttpsProxy))
+            if (Optional.IsDefined(HttpsProxy))
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<string> httpsProxy = default;
+            Optional<string> httpsProxy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("httpsProxy"u8))

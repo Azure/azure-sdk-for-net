@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="aclMode"> Mode for Target connectivity. </param>
         public DiskPoolIscsiTargetCreateOrUpdateContent(DiskPoolIscsiTargetAclMode aclMode)
         {
-            ManagedByExtended = new Core.ChangeTrackingList<string>();
+            ManagedByExtended = new ChangeTrackingList<string>();
             AclMode = aclMode;
-            StaticAcls = new Core.ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>();
-            Luns = new Core.ChangeTrackingList<ManagedDiskIscsiLun>();
+            StaticAcls = new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>();
+            Luns = new ChangeTrackingList<ManagedDiskIscsiLun>();
         }
 
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetCreateOrUpdateContent. </summary>

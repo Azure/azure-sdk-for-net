@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class ActionableRemediation : Core.IUtf8JsonSerializable
+    public partial class ActionableRemediation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(SeverityLevels))
+            if (Optional.IsCollectionDefined(SeverityLevels))
             {
                 writer.WritePropertyName("severityLevels"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Categories))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BranchConfiguration))
+            if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
                 writer.WriteObjectValue(BranchConfiguration);
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<ActionableRemediationState> state = default;
-            Core.Optional<IList<string>> severityLevels = default;
-            Core.Optional<IList<ActionableRemediationRuleCategory>> categories = default;
-            Core.Optional<TargetBranchConfiguration> branchConfiguration = default;
+            Optional<ActionableRemediationState> state = default;
+            Optional<IList<string>> severityLevels = default;
+            Optional<IList<ActionableRemediationRuleCategory>> categories = default;
+            Optional<TargetBranchConfiguration> branchConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new ActionableRemediation(Core.Optional.ToNullable(state), Core.Optional.ToList(severityLevels), Core.Optional.ToList(categories), branchConfiguration.Value);
+            return new ActionableRemediation(Optional.ToNullable(state), Optional.ToList(severityLevels), Optional.ToList(categories), branchConfiguration.Value);
         }
     }
 }

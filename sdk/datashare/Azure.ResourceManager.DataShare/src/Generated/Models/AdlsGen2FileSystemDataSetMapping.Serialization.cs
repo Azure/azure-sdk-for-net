@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen2FileSystemDataSetMapping : Core.IUtf8JsonSerializable
+    public partial class AdlsGen2FileSystemDataSetMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             Guid dataSetId = default;
-            Core.Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
             string fileSystem = default;
-            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new AdlsGen2FileSystemDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Core.Optional.ToNullable(dataSetMappingStatus), fileSystem, Core.Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileSystemDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), fileSystem, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

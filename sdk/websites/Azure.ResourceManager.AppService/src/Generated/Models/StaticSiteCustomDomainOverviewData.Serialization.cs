@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class StaticSiteCustomDomainOverviewData : Core.IUtf8JsonSerializable
+    public partial class StaticSiteCustomDomainOverviewData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> domainName = default;
-            Core.Optional<DateTimeOffset> createdOn = default;
-            Core.Optional<CustomDomainStatus> status = default;
-            Core.Optional<string> validationToken = default;
-            Core.Optional<string> errorMessage = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> domainName = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<CustomDomainStatus> status = default;
+            Optional<string> validationToken = default;
+            Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteCustomDomainOverviewData(id, name, type, systemData.Value, domainName.Value, Core.Optional.ToNullable(createdOn), Core.Optional.ToNullable(status), validationToken.Value, errorMessage.Value, kind.Value);
+            return new StaticSiteCustomDomainOverviewData(id, name, type, systemData.Value, domainName.Value, Optional.ToNullable(createdOn), Optional.ToNullable(status), validationToken.Value, errorMessage.Value, kind.Value);
         }
     }
 }

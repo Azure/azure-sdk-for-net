@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnNatRuleMapping : Core.IUtf8JsonSerializable
+    public partial class VpnNatRuleMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AddressSpace))
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
-            if (Core.Optional.IsDefined(PortRange))
+            if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteStringValue(PortRange);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> addressSpace = default;
-            Core.Optional<string> portRange = default;
+            Optional<string> addressSpace = default;
+            Optional<string> portRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressSpace"u8))

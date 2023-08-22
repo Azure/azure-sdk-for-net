@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ListCustomAlertRule : Core.IUtf8JsonSerializable
+    public partial class ListCustomAlertRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("isEnabled"u8);
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element);
                 }
             }
-            Core.Optional<SecurityValueType> valueType = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
+            Optional<SecurityValueType> valueType = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
             bool isEnabled = default;
             string ruleType = "ListCustomAlertRule";
             foreach (var property in element.EnumerateObject())
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new ListCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Core.Optional.ToNullable(valueType));
+            return new ListCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, Optional.ToNullable(valueType));
         }
     }
 }

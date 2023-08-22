@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = await _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(new LocalRulestackCertificateObjectOperationSource(Client), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(new LocalRulestackCertificateObjectOperationSource(Client), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             try
             {
                 var response = _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(new LocalRulestackCertificateObjectOperationSource(Client), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(new LocalRulestackCertificateObjectOperationSource(Client), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackCertificateObjectResource(Client, LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(e)), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackCertificateObjectResource(Client, LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(e)), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackCertificateObjectResource(Client, LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(e)), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackCertificateObjectResource(Client, LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(e)), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

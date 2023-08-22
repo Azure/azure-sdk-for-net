@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="location"> The location. </param>
         public DeviceUpdateInstanceData(AzureLocation location) : base(location)
         {
-            IotHubs = new Core.ChangeTrackingList<IotHubSettings>();
+            IotHubs = new ChangeTrackingList<IotHubSettings>();
         }
 
         /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ScopeConnectionListResult. </summary>
         internal ScopeConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<ScopeConnectionData>();
+            Value = new ChangeTrackingList<ScopeConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ScopeConnectionListResult. </summary>

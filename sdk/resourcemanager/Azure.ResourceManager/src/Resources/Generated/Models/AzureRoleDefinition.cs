@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
         internal AzureRoleDefinition()
         {
-            Permissions = new Core.ChangeTrackingList<Permission>();
-            Scopes = new Core.ChangeTrackingList<string>();
+            Permissions = new ChangeTrackingList<Permission>();
+            Scopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>

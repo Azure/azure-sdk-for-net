@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualHubRouteV2 : Core.IUtf8JsonSerializable
+    public partial class VirtualHubRouteV2 : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DestinationType))
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (Core.Optional.IsCollectionDefined(Destinations))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(NextHopType))
+            if (Optional.IsDefined(NextHopType))
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType);
             }
-            if (Core.Optional.IsCollectionDefined(NextHops))
+            if (Optional.IsCollectionDefined(NextHops))
             {
                 writer.WritePropertyName("nextHops"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> destinationType = default;
-            Core.Optional<IList<string>> destinations = default;
-            Core.Optional<string> nextHopType = default;
-            Core.Optional<IList<string>> nextHops = default;
+            Optional<string> destinationType = default;
+            Optional<IList<string>> destinations = default;
+            Optional<string> nextHopType = default;
+            Optional<IList<string>> nextHops = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("destinationType"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VirtualHubRouteV2(destinationType.Value, Core.Optional.ToList(destinations), nextHopType.Value, Core.Optional.ToList(nextHops));
+            return new VirtualHubRouteV2(destinationType.Value, Optional.ToList(destinations), nextHopType.Value, Optional.ToList(nextHops));
         }
     }
 }

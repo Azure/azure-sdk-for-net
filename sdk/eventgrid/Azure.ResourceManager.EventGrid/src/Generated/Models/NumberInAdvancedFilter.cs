@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of NumberInAdvancedFilter. </summary>
         public NumberInAdvancedFilter()
         {
-            Values = new Core.ChangeTrackingList<double>();
+            Values = new ChangeTrackingList<double>();
             OperatorType = AdvancedFilterOperatorType.NumberIn;
         }
 

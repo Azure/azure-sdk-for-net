@@ -19,12 +19,12 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<string> statusDetails = default;
-            Core.Optional<KeyVaultServiceError> error = default;
-            Core.Optional<string> jobId = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
+            Optional<string> status = default;
+            Optional<string> statusDetails = default;
+            Optional<KeyVaultServiceError> error = default;
+            Optional<string> jobId = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset?> endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -72,7 +72,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new SelectiveKeyRestoreDetailsInternal(status.Value, statusDetails.Value, error.Value, jobId.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime));
+            return new SelectiveKeyRestoreDetailsInternal(status.Value, statusDetails.Value, error.Value, jobId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
         }
     }
 }

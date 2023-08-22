@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PacketCoreControlPlaneCollectDiagnosticsPackage : Core.IUtf8JsonSerializable
+    public partial class PacketCoreControlPlaneCollectDiagnosticsPackage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountBlobUrl"u8);

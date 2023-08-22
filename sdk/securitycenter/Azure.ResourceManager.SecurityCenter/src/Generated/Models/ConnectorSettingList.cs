@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of ConnectorSettingList. </summary>
         internal ConnectorSettingList()
         {
-            Value = new Core.ChangeTrackingList<SecurityCloudConnectorData>();
+            Value = new ChangeTrackingList<SecurityCloudConnectorData>();
         }
 
         /// <summary> Initializes a new instance of ConnectorSettingList. </summary>

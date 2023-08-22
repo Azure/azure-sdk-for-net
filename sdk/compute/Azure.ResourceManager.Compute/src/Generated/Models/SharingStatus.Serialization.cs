@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<SharingState> aggregatedState = default;
-            Core.Optional<IReadOnlyList<RegionalSharingStatus>> summary = default;
+            Optional<SharingState> aggregatedState = default;
+            Optional<IReadOnlyList<RegionalSharingStatus>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregatedState"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SharingStatus(Core.Optional.ToNullable(aggregatedState), Core.Optional.ToList(summary));
+            return new SharingStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary));
         }
     }
 }

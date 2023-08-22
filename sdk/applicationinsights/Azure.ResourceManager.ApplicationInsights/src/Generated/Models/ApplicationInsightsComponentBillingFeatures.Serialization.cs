@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentBillingFeatures : Core.IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentBillingFeatures : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataVolumeCap))
+            if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
                 writer.WriteObjectValue(DataVolumeCap);
             }
-            if (Core.Optional.IsCollectionDefined(CurrentBillingFeatures))
+            if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {
                 writer.WritePropertyName("CurrentBillingFeatures"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<ApplicationInsightsComponentDataVolumeCap> dataVolumeCap = default;
-            Core.Optional<IList<string>> currentBillingFeatures = default;
+            Optional<ApplicationInsightsComponentDataVolumeCap> dataVolumeCap = default;
+            Optional<IList<string>> currentBillingFeatures = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("DataVolumeCap"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap.Value, Core.Optional.ToList(currentBillingFeatures));
+            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap.Value, Optional.ToList(currentBillingFeatures));
         }
     }
 }

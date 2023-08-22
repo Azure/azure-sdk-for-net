@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesHierarchySource. </summary>
         public TimeSeriesHierarchySource()
         {
-            InstanceFieldNames = new Core.ChangeTrackingList<string>();
+            InstanceFieldNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TimeSeriesHierarchySource. </summary>

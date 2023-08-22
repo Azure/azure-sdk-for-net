@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkManagedServiceIdentity : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkManagedServiceIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
-            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             MobileNetworkManagedServiceIdentityType type = default;
-            Core.Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new MobileNetworkManagedServiceIdentity(type, Core.Optional.ToDictionary(userAssignedIdentities));
+            return new MobileNetworkManagedServiceIdentity(type, Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

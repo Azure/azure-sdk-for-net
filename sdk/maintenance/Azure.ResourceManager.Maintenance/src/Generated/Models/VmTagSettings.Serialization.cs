@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class VmTagSettings : Core.IUtf8JsonSerializable
+    public partial class VmTagSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(FilterOperator))
+            if (Optional.IsDefined(FilterOperator))
             {
                 writer.WritePropertyName("filterOperator"u8);
                 writer.WriteStringValue(FilterOperator.Value.ToSerialString());
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, IList<string>>> tags = default;
-            Core.Optional<VmTagOperator> filterOperator = default;
+            Optional<IDictionary<string, IList<string>>> tags = default;
+            Optional<VmTagOperator> filterOperator = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new VmTagSettings(Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(filterOperator));
+            return new VmTagSettings(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator));
         }
     }
 }

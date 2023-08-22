@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class DtmfOptionsInternal : Core.IUtf8JsonSerializable
+    internal partial class DtmfOptionsInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(InterToneTimeoutInSeconds))
+            if (Optional.IsDefined(InterToneTimeoutInSeconds))
             {
                 writer.WritePropertyName("interToneTimeoutInSeconds"u8);
                 writer.WriteNumberValue(InterToneTimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(MaxTonesToCollect))
+            if (Optional.IsDefined(MaxTonesToCollect))
             {
                 writer.WritePropertyName("maxTonesToCollect"u8);
                 writer.WriteNumberValue(MaxTonesToCollect.Value);
             }
-            if (Core.Optional.IsCollectionDefined(StopTones))
+            if (Optional.IsCollectionDefined(StopTones))
             {
                 writer.WritePropertyName("stopTones"u8);
                 writer.WriteStartArray();

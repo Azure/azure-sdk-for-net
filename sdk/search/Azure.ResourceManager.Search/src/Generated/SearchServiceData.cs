@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Search
         /// <param name="location"> The location. </param>
         public SearchServiceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<SearchPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new Core.ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
+            PrivateEndpointConnections = new ChangeTrackingList<SearchPrivateEndpointConnectionData>();
+            SharedPrivateLinkResources = new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of SearchServiceData. </summary>

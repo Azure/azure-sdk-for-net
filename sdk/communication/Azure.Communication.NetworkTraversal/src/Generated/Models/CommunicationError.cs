@@ -25,7 +25,7 @@ namespace Azure.Communication.NetworkTraversal
 
             Code = code;
             Message = message;
-            Details = new Core.ChangeTrackingList<CommunicationError>();
+            Details = new ChangeTrackingList<CommunicationError>();
         }
 
         /// <summary> Initializes a new instance of CommunicationError. </summary>

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticDataProviderMetadata : Core.IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticDataProviderMetadata : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProviderName))
+            if (Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (Core.Optional.IsCollectionDefined(PropertyBag))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> providerName = default;
-            Core.Optional<IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>> propertyBag = default;
+            Optional<string> providerName = default;
+            Optional<IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>> propertyBag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerName"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppDiagnosticDataProviderMetadata(providerName.Value, Core.Optional.ToList(propertyBag));
+            return new ContainerAppDiagnosticDataProviderMetadata(providerName.Value, Optional.ToList(propertyBag));
         }
     }
 }

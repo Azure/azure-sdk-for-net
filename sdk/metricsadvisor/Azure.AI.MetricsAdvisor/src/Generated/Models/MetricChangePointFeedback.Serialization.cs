@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class MetricChangePointFeedback : Core.IUtf8JsonSerializable
+    public partial class MetricChangePointFeedback : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
@@ -42,9 +42,9 @@ namespace Azure.AI.MetricsAdvisor
             DateTimeOffset endTime = default;
             ChangePointFeedbackValue value = default;
             MetricFeedbackKind feedbackType = default;
-            Core.Optional<string> feedbackId = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<string> userPrincipal = default;
+            Optional<string> feedbackId = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricChangePointFeedback(feedbackType, feedbackId.Value, Core.Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value);
+            return new MetricChangePointFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, startTime, endTime, value);
         }
     }
 }

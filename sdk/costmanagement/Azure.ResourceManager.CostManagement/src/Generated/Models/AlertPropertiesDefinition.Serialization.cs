@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AlertPropertiesDefinition : Core.IUtf8JsonSerializable
+    public partial class AlertPropertiesDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AlertType))
+            if (Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlertType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Criteria))
+            if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStringValue(Criteria.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<CostManagementAlertType> type = default;
-            Core.Optional<CostManagementAlertCategory> category = default;
-            Core.Optional<AlertCriterion> criteria = default;
+            Optional<CostManagementAlertType> type = default;
+            Optional<CostManagementAlertCategory> category = default;
+            Optional<AlertCriterion> criteria = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new AlertPropertiesDefinition(Core.Optional.ToNullable(type), Core.Optional.ToNullable(category), Core.Optional.ToNullable(criteria));
+            return new AlertPropertiesDefinition(Optional.ToNullable(type), Optional.ToNullable(category), Optional.ToNullable(criteria));
         }
     }
 }

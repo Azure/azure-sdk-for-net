@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class BuiltInStandardEncoderPreset : Core.IUtf8JsonSerializable
+    public partial class BuiltInStandardEncoderPreset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Configurations))
+            if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteObjectValue(Configurations);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<EncoderPresetConfigurations> configurations = default;
+            Optional<EncoderPresetConfigurations> configurations = default;
             EncoderNamedPreset presetName = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())

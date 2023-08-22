@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoSkuDescription. </summary>
         internal KustoSkuDescription()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            LocationInfo = new Core.ChangeTrackingList<KustoSkuLocationInfoItem>();
-            Restrictions = new Core.ChangeTrackingList<BinaryData>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            LocationInfo = new ChangeTrackingList<KustoSkuLocationInfoItem>();
+            Restrictions = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of KustoSkuDescription. </summary>

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PatternAnalyzer : Core.IUtf8JsonSerializable
+    public partial class PatternAnalyzer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LowerCaseTerms))
+            if (Optional.IsDefined(LowerCaseTerms))
             {
                 writer.WritePropertyName("lowercase"u8);
                 writer.WriteBooleanValue(LowerCaseTerms.Value);
             }
-            if (Core.Optional.IsDefined(Pattern))
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Core.Optional.IsDefined(FlagsInternal))
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (Core.Optional.IsCollectionDefined(Stopwords))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -54,10 +54,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<bool> lowercase = default;
-            Core.Optional<string> pattern = default;
-            Core.Optional<string> flags = default;
-            Core.Optional<IList<string>> stopwords = default;
+            Optional<bool> lowercase = default;
+            Optional<string> pattern = default;
+            Optional<string> flags = default;
+            Optional<IList<string>> stopwords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odataType, name, Core.Optional.ToNullable(lowercase), pattern.Value, flags.Value, Core.Optional.ToList(stopwords));
+            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, Optional.ToList(stopwords));
         }
     }
 }

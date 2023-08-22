@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of AlertProcessingRulesList. </summary>
         internal AlertProcessingRulesList()
         {
-            Value = new Core.ChangeTrackingList<AlertProcessingRuleData>();
+            Value = new ChangeTrackingList<AlertProcessingRuleData>();
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRulesList. </summary>

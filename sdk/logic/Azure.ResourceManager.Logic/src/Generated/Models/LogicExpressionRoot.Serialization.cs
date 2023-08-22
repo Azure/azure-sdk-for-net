@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> path = default;
-            Core.Optional<string> text = default;
-            Core.Optional<BinaryData> value = default;
-            Core.Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
-            Core.Optional<LogicExpressionErrorInfo> error = default;
+            Optional<string> path = default;
+            Optional<string> text = default;
+            Optional<BinaryData> value = default;
+            Optional<IReadOnlyList<LogicExpression>> subexpressions = default;
+            Optional<LogicExpressionErrorInfo> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicExpressionRoot(text.Value, value.Value, Core.Optional.ToList(subexpressions), error.Value, path.Value);
+            return new LogicExpressionRoot(text.Value, value.Value, Optional.ToList(subexpressions), error.Value, path.Value);
         }
     }
 }

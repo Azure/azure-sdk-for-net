@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoReadOnlyFollowingDatabase : Core.IUtf8JsonSerializable
+    public partial class KustoReadOnlyFollowingDatabase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HotCachePeriod))
+            if (Optional.IsDefined(HotCachePeriod))
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
@@ -41,23 +41,23 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             KustoKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<KustoProvisioningState> provisioningState = default;
-            Core.Optional<TimeSpan> softDeletePeriod = default;
-            Core.Optional<TimeSpan> hotCachePeriod = default;
-            Core.Optional<DatabaseStatistics> statistics = default;
-            Core.Optional<string> leaderClusterResourceId = default;
-            Core.Optional<string> attachedDatabaseConfigurationName = default;
-            Core.Optional<KustoDatabasePrincipalsModificationKind> principalsModificationKind = default;
-            Core.Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
-            Core.Optional<string> originalDatabaseName = default;
-            Core.Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
-            Core.Optional<SuspensionDetails> suspensionDetails = default;
+            Optional<SystemData> systemData = default;
+            Optional<KustoProvisioningState> provisioningState = default;
+            Optional<TimeSpan> softDeletePeriod = default;
+            Optional<TimeSpan> hotCachePeriod = default;
+            Optional<DatabaseStatistics> statistics = default;
+            Optional<string> leaderClusterResourceId = default;
+            Optional<string> attachedDatabaseConfigurationName = default;
+            Optional<KustoDatabasePrincipalsModificationKind> principalsModificationKind = default;
+            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            Optional<string> originalDatabaseName = default;
+            Optional<KustoDatabaseShareOrigin> databaseShareOrigin = default;
+            Optional<SuspensionDetails> suspensionDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(softDeletePeriod), Core.Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Core.Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Core.Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
+            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
         }
     }
 }

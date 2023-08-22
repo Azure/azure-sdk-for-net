@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class USProgramBrief : Core.IUtf8JsonSerializable
+    public partial class USProgramBrief : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Number))
+            if (Optional.IsDefined(Number))
             {
                 writer.WritePropertyName("number"u8);
                 writer.WriteStringValue(Number);
             }
-            if (Core.Optional.IsCollectionDefined(ReviewNotes))
+            if (Optional.IsCollectionDefined(ReviewNotes))
             {
                 writer.WritePropertyName("reviewNotes"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Costs))
+            if (Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -49,32 +49,32 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SubmissionDate))
+            if (Optional.IsDefined(SubmissionDate))
             {
                 writer.WritePropertyName("submissionDate"u8);
                 writer.WriteStringValue(SubmissionDate.Value, "O");
             }
-            if (Core.Optional.IsDefined(StatusUpdatedDate))
+            if (Optional.IsDefined(StatusUpdatedDate))
             {
                 writer.WritePropertyName("statusUpdatedDate"u8);
                 writer.WriteStringValue(StatusUpdatedDate.Value, "O");
             }
-            if (Core.Optional.IsDefined(ProgramDetails))
+            if (Optional.IsDefined(ProgramDetails))
             {
                 writer.WritePropertyName("programDetails"u8);
                 writer.WriteObjectValue(ProgramDetails);
             }
-            if (Core.Optional.IsDefined(CompanyInformation))
+            if (Optional.IsDefined(CompanyInformation))
             {
                 writer.WritePropertyName("companyInformation"u8);
                 writer.WriteObjectValue(CompanyInformation);
             }
-            if (Core.Optional.IsDefined(MessageDetails))
+            if (Optional.IsDefined(MessageDetails))
             {
                 writer.WritePropertyName("messageDetails"u8);
                 writer.WriteObjectValue(MessageDetails);
             }
-            if (Core.Optional.IsDefined(TrafficDetails))
+            if (Optional.IsDefined(TrafficDetails))
             {
                 writer.WritePropertyName("trafficDetails"u8);
                 writer.WriteObjectValue(TrafficDetails);
@@ -89,16 +89,16 @@ namespace Azure.Communication.ShortCodes.Models
                 return null;
             }
             Guid id = default;
-            Core.Optional<ProgramBriefStatus> status = default;
-            Core.Optional<string> number = default;
-            Core.Optional<IList<ReviewNote>> reviewNotes = default;
-            Core.Optional<IList<ShortCodeCost>> costs = default;
-            Core.Optional<DateTimeOffset> submissionDate = default;
-            Core.Optional<DateTimeOffset> statusUpdatedDate = default;
-            Core.Optional<ProgramDetails> programDetails = default;
-            Core.Optional<CompanyInformation> companyInformation = default;
-            Core.Optional<MessageDetails> messageDetails = default;
-            Core.Optional<TrafficDetails> trafficDetails = default;
+            Optional<ProgramBriefStatus> status = default;
+            Optional<string> number = default;
+            Optional<IList<ReviewNote>> reviewNotes = default;
+            Optional<IList<ShortCodeCost>> costs = default;
+            Optional<DateTimeOffset> submissionDate = default;
+            Optional<DateTimeOffset> statusUpdatedDate = default;
+            Optional<ProgramDetails> programDetails = default;
+            Optional<CompanyInformation> companyInformation = default;
+            Optional<MessageDetails> messageDetails = default;
+            Optional<TrafficDetails> trafficDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -203,7 +203,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new USProgramBrief(id, Core.Optional.ToNullable(status), number.Value, Core.Optional.ToList(reviewNotes), Core.Optional.ToList(costs), Core.Optional.ToNullable(submissionDate), Core.Optional.ToNullable(statusUpdatedDate), programDetails.Value, companyInformation.Value, messageDetails.Value, trafficDetails.Value);
+            return new USProgramBrief(id, Optional.ToNullable(status), number.Value, Optional.ToList(reviewNotes), Optional.ToList(costs), Optional.ToNullable(submissionDate), Optional.ToNullable(statusUpdatedDate), programDetails.Value, companyInformation.Value, messageDetails.Value, trafficDetails.Value);
         }
     }
 }

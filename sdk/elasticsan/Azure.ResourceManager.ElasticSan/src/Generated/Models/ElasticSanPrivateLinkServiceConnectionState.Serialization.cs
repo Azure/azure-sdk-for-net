@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
+    public partial class ElasticSanPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ActionsRequired))
+            if (Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Core.Optional<ElasticSanPrivateEndpointServiceConnectionStatus> status = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> actionsRequired = default;
+            Optional<ElasticSanPrivateEndpointServiceConnectionStatus> status = default;
+            Optional<string> description = default;
+            Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new ElasticSanPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new ElasticSanPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
         }
     }
 }

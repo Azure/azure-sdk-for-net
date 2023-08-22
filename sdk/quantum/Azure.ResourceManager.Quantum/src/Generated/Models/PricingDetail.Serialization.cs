@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> value = default;
+            Optional<string> id = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

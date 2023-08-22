@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of MultiContextAndPlansContent. </summary>
         public MultiContextAndPlansContent()
         {
-            PlansContext = new Core.ChangeTrackingList<ContextAndPlansDetails>();
+            PlansContext = new ChangeTrackingList<ContextAndPlansDetails>();
         }
 
         /// <summary> The offer ID which contains the plans. </summary>

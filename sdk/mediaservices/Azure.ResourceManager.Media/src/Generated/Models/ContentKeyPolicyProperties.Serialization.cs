@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<Guid> policyId = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<string> description = default;
+            Optional<Guid> policyId = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<string> description = default;
             IReadOnlyList<ContentKeyPolicyOption> options = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ContentKeyPolicyProperties(Core.Optional.ToNullable(policyId), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified), description.Value, options);
+            return new ContentKeyPolicyProperties(Optional.ToNullable(policyId), Optional.ToNullable(created), Optional.ToNullable(lastModified), description.Value, options);
         }
     }
 }

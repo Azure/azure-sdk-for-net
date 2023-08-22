@@ -12,51 +12,51 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    public partial class BillingBenefitsSavingsPlanOrderAliasData : Core.IUtf8JsonSerializable
+    public partial class BillingBenefitsSavingsPlanOrderAliasData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(BillingScopeId))
+            if (Optional.IsDefined(BillingScopeId))
             {
                 writer.WritePropertyName("billingScopeId"u8);
                 writer.WriteStringValue(BillingScopeId);
             }
-            if (Core.Optional.IsDefined(Term))
+            if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Core.Optional.IsDefined(BillingPlan))
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AppliedScopeType))
+            if (Optional.IsDefined(AppliedScopeType))
             {
                 writer.WritePropertyName("appliedScopeType"u8);
                 writer.WriteStringValue(AppliedScopeType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AppliedScopeProperties))
+            if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
                 writer.WriteObjectValue(AppliedScopeProperties);
             }
-            if (Core.Optional.IsDefined(Commitment))
+            if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment);
@@ -72,20 +72,20 @@ namespace Azure.ResourceManager.BillingBenefits
                 return null;
             }
             BillingBenefitsSku sku = default;
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<ResourceIdentifier> savingsPlanOrderId = default;
-            Core.Optional<BillingBenefitsProvisioningState> provisioningState = default;
-            Core.Optional<ResourceIdentifier> billingScopeId = default;
-            Core.Optional<BillingBenefitsTerm> term = default;
-            Core.Optional<BillingBenefitsBillingPlan> billingPlan = default;
-            Core.Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
-            Core.Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
-            Core.Optional<BillingBenefitsCommitment> commitment = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<ResourceIdentifier> savingsPlanOrderId = default;
+            Optional<BillingBenefitsProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> billingScopeId = default;
+            Optional<BillingBenefitsTerm> term = default;
+            Optional<BillingBenefitsBillingPlan> billingPlan = default;
+            Optional<BillingBenefitsAppliedScopeType> appliedScopeType = default;
+            Optional<BillingBenefitsAppliedScopeProperties> appliedScopeProperties = default;
+            Optional<BillingBenefitsCommitment> commitment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.BillingBenefits
                     continue;
                 }
             }
-            return new BillingBenefitsSavingsPlanOrderAliasData(id, name, type, systemData.Value, sku, kind.Value, displayName.Value, savingsPlanOrderId.Value, Core.Optional.ToNullable(provisioningState), billingScopeId.Value, Core.Optional.ToNullable(term), Core.Optional.ToNullable(billingPlan), Core.Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, commitment.Value);
+            return new BillingBenefitsSavingsPlanOrderAliasData(id, name, type, systemData.Value, sku, kind.Value, displayName.Value, savingsPlanOrderId.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, commitment.Value);
         }
     }
 }

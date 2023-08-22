@@ -18,7 +18,7 @@ namespace Azure.Maps.Geolocation
             {
                 return null;
             }
-            Core.Optional<string> isoCode = default;
+            Optional<string> isoCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isoCode"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of BudgetsListResult. </summary>
         internal BudgetsListResult()
         {
-            Value = new Core.ChangeTrackingList<ConsumptionBudgetData>();
+            Value = new ChangeTrackingList<ConsumptionBudgetData>();
         }
 
         /// <summary> Initializes a new instance of BudgetsListResult. </summary>

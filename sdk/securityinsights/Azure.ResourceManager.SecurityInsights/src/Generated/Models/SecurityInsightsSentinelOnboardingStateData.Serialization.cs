@@ -12,19 +12,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsSentinelOnboardingStateData : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsSentinelOnboardingStateData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsCustomerManagedKeySet))
+            if (Optional.IsDefined(IsCustomerManagedKeySet))
             {
                 writer.WritePropertyName("customerManagedKey"u8);
                 writer.WriteBooleanValue(IsCustomerManagedKeySet.Value);
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> customerManagedKey = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> customerManagedKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsSentinelOnboardingStateData(id, name, type, systemData.Value, Core.Optional.ToNullable(customerManagedKey), Core.Optional.ToNullable(etag));
+            return new SecurityInsightsSentinelOnboardingStateData(id, name, type, systemData.Value, Optional.ToNullable(customerManagedKey), Optional.ToNullable(etag));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
-            Operations = new Core.ChangeTrackingList<NetworkCloudOperationStatusResult>();
+            Operations = new ChangeTrackingList<NetworkCloudOperationStatusResult>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudOperationStatusResult. </summary>

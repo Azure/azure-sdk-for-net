@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<long> @default = default;
-            Core.Optional<long> minimum = default;
-            Core.Optional<long> maximum = default;
-            Core.Optional<LabServicesSkuCapacityScaleType> scaleType = default;
+            Optional<long> @default = default;
+            Optional<long> minimum = default;
+            Optional<long> maximum = default;
+            Optional<LabServicesSkuCapacityScaleType> scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new AvailableLabServicesSkuCapacity(Core.Optional.ToNullable(@default), Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(scaleType));
+            return new AvailableLabServicesSkuCapacity(Optional.ToNullable(@default), Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(scaleType));
         }
     }
 }

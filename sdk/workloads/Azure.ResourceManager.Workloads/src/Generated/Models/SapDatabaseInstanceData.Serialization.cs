@@ -14,12 +14,12 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapDatabaseInstanceData : Core.IUtf8JsonSerializable
+    public partial class SapDatabaseInstanceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,21 +44,21 @@ namespace Azure.ResourceManager.Workloads
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> subnet = default;
-            Core.Optional<string> databaseSid = default;
-            Core.Optional<string> databaseType = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<SubResource> loadBalancerDetails = default;
-            Core.Optional<IReadOnlyList<DatabaseVmDetails>> vmDetails = default;
-            Core.Optional<SapVirtualInstanceStatus> status = default;
-            Core.Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
-            Core.Optional<SapVirtualInstanceError> errors = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> subnet = default;
+            Optional<string> databaseSid = default;
+            Optional<string> databaseType = default;
+            Optional<string> ipAddress = default;
+            Optional<SubResource> loadBalancerDetails = default;
+            Optional<IReadOnlyList<DatabaseVmDetails>> vmDetails = default;
+            Optional<SapVirtualInstanceStatus> status = default;
+            Optional<SapVirtualInstanceProvisioningState> provisioningState = default;
+            Optional<SapVirtualInstanceError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapDatabaseInstanceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, loadBalancerDetails, Core.Optional.ToList(vmDetails), Core.Optional.ToNullable(status), Core.Optional.ToNullable(provisioningState), errors.Value);
+            return new SapDatabaseInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value);
         }
     }
 }

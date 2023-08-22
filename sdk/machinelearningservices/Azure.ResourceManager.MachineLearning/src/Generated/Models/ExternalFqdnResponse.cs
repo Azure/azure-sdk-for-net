@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ExternalFqdnResponse. </summary>
         internal ExternalFqdnResponse()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningFqdnEndpoints>();
+            Value = new ChangeTrackingList<MachineLearningFqdnEndpoints>();
         }
 
         /// <summary> Initializes a new instance of ExternalFqdnResponse. </summary>

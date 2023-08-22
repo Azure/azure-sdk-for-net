@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class CloudServiceSwapProperties : Core.IUtf8JsonSerializable
+    internal partial class CloudServiceSwapProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SlotType))
+            if (Optional.IsDefined(SlotType))
             {
                 writer.WritePropertyName("slotType"u8);
                 writer.WriteStringValue(SlotType.Value.ToSerialString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<SwapSlotType> slotType = default;
+            Optional<SwapSlotType> slotType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("slotType"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new CloudServiceSwapProperties(Core.Optional.ToNullable(slotType));
+            return new CloudServiceSwapProperties(Optional.ToNullable(slotType));
         }
     }
 }

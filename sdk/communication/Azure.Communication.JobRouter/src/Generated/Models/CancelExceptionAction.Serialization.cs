@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class CancelExceptionAction : Core.IUtf8JsonSerializable
+    public partial class CancelExceptionAction : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Note))
+            if (Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (Core.Optional.IsDefined(DispositionCode))
+            if (Optional.IsDefined(DispositionCode))
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
@@ -36,8 +36,8 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Core.Optional<string> note = default;
-            Core.Optional<string> dispositionCode = default;
+            Optional<string> note = default;
+            Optional<string> dispositionCode = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {

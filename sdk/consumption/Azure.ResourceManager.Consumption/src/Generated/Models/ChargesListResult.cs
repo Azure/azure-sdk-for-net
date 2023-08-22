@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ChargesListResult. </summary>
         internal ChargesListResult()
         {
-            Value = new Core.ChangeTrackingList<ConsumptionChargeSummary>();
+            Value = new ChangeTrackingList<ConsumptionChargeSummary>();
         }
 
         /// <summary> Initializes a new instance of ChargesListResult. </summary>

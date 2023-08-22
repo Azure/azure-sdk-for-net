@@ -14,22 +14,22 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoClusterPatch : Core.IUtf8JsonSerializable
+    public partial class KustoClusterPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(TrustedExternalTenants))
+            if (Optional.IsCollectionDefined(TrustedExternalTenants))
             {
                 writer.WritePropertyName("trustedExternalTenants"u8);
                 writer.WriteStartArray();
@@ -54,52 +54,52 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(OptimizedAutoscale))
+            if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
                 writer.WriteObjectValue(OptimizedAutoscale);
             }
-            if (Core.Optional.IsDefined(IsDiskEncryptionEnabled))
+            if (Optional.IsDefined(IsDiskEncryptionEnabled))
             {
                 writer.WritePropertyName("enableDiskEncryption"u8);
                 writer.WriteBooleanValue(IsDiskEncryptionEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsStreamingIngestEnabled))
+            if (Optional.IsDefined(IsStreamingIngestEnabled))
             {
                 writer.WritePropertyName("enableStreamingIngest"u8);
                 writer.WriteBooleanValue(IsStreamingIngestEnabled.Value);
             }
-            if (Core.Optional.IsDefined(VirtualNetworkConfiguration))
+            if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (Core.Optional.IsDefined(KeyVaultProperties))
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Core.Optional.IsDefined(IsPurgeEnabled))
+            if (Optional.IsDefined(IsPurgeEnabled))
             {
                 writer.WritePropertyName("enablePurge"u8);
                 writer.WriteBooleanValue(IsPurgeEnabled.Value);
             }
-            if (Core.Optional.IsDefined(LanguageExtensions))
+            if (Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
                 writer.WriteObjectValue(LanguageExtensions);
             }
-            if (Core.Optional.IsDefined(IsDoubleEncryptionEnabled))
+            if (Optional.IsDefined(IsDoubleEncryptionEnabled))
             {
                 writer.WritePropertyName("enableDoubleEncryption"u8);
                 writer.WriteBooleanValue(IsDoubleEncryptionEnabled.Value);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AllowedIPRangeList))
+            if (Optional.IsCollectionDefined(AllowedIPRangeList))
             {
                 writer.WritePropertyName("allowedIpRangeList"u8);
                 writer.WriteStartArray();
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EngineType))
+            if (Optional.IsDefined(EngineType))
             {
                 writer.WritePropertyName("engineType"u8);
                 writer.WriteStringValue(EngineType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AcceptedAudiences))
+            if (Optional.IsCollectionDefined(AcceptedAudiences))
             {
                 writer.WritePropertyName("acceptedAudiences"u8);
                 writer.WriteStartArray();
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(IsAutoStopEnabled))
+            if (Optional.IsDefined(IsAutoStopEnabled))
             {
                 writer.WritePropertyName("enableAutoStop"u8);
                 writer.WriteBooleanValue(IsAutoStopEnabled.Value);
             }
-            if (Core.Optional.IsDefined(RestrictOutboundNetworkAccess))
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(AllowedFqdnList))
+            if (Optional.IsCollectionDefined(AllowedFqdnList))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PublicIPType))
+            if (Optional.IsDefined(PublicIPType))
             {
                 writer.WritePropertyName("publicIPType"u8);
                 writer.WriteStringValue(PublicIPType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(VirtualClusterGraduationProperties))
+            if (Optional.IsDefined(VirtualClusterGraduationProperties))
             {
                 writer.WritePropertyName("virtualClusterGraduationProperties"u8);
                 writer.WriteStringValue(VirtualClusterGraduationProperties);
@@ -164,39 +164,39 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<KustoSku> sku = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<KustoSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<KustoClusterState> state = default;
-            Core.Optional<KustoProvisioningState> provisioningState = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<Uri> dataIngestionUri = default;
-            Core.Optional<string> stateReason = default;
-            Core.Optional<IList<KustoClusterTrustedExternalTenant>> trustedExternalTenants = default;
-            Core.Optional<OptimizedAutoscale> optimizedAutoscale = default;
-            Core.Optional<bool> enableDiskEncryption = default;
-            Core.Optional<bool> enableStreamingIngest = default;
-            Core.Optional<KustoClusterVirtualNetworkConfiguration> virtualNetworkConfiguration = default;
-            Core.Optional<KustoKeyVaultProperties> keyVaultProperties = default;
-            Core.Optional<bool> enablePurge = default;
-            Core.Optional<KustoLanguageExtensionList> languageExtensions = default;
-            Core.Optional<bool> enableDoubleEncryption = default;
-            Core.Optional<KustoClusterPublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<IList<string>> allowedIPRangeList = default;
-            Core.Optional<KustoClusterEngineType> engineType = default;
-            Core.Optional<IList<AcceptedAudience>> acceptedAudiences = default;
-            Core.Optional<bool> enableAutoStop = default;
-            Core.Optional<KustoClusterNetworkAccessFlag> restrictOutboundNetworkAccess = default;
-            Core.Optional<IList<string>> allowedFqdnList = default;
-            Core.Optional<KustoClusterPublicIPType> publicIPType = default;
-            Core.Optional<string> virtualClusterGraduationProperties = default;
-            Core.Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Core.Optional<MigrationClusterProperties> migrationCluster = default;
+            Optional<SystemData> systemData = default;
+            Optional<KustoClusterState> state = default;
+            Optional<KustoProvisioningState> provisioningState = default;
+            Optional<Uri> uri = default;
+            Optional<Uri> dataIngestionUri = default;
+            Optional<string> stateReason = default;
+            Optional<IList<KustoClusterTrustedExternalTenant>> trustedExternalTenants = default;
+            Optional<OptimizedAutoscale> optimizedAutoscale = default;
+            Optional<bool> enableDiskEncryption = default;
+            Optional<bool> enableStreamingIngest = default;
+            Optional<KustoClusterVirtualNetworkConfiguration> virtualNetworkConfiguration = default;
+            Optional<KustoKeyVaultProperties> keyVaultProperties = default;
+            Optional<bool> enablePurge = default;
+            Optional<KustoLanguageExtensionList> languageExtensions = default;
+            Optional<bool> enableDoubleEncryption = default;
+            Optional<KustoClusterPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IList<string>> allowedIPRangeList = default;
+            Optional<KustoClusterEngineType> engineType = default;
+            Optional<IList<AcceptedAudience>> acceptedAudiences = default;
+            Optional<bool> enableAutoStop = default;
+            Optional<KustoClusterNetworkAccessFlag> restrictOutboundNetworkAccess = default;
+            Optional<IList<string>> allowedFqdnList = default;
+            Optional<KustoClusterPublicIPType> publicIPType = default;
+            Optional<string> virtualClusterGraduationProperties = default;
+            Optional<IReadOnlyList<KustoPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<MigrationClusterProperties> migrationCluster = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoClusterPatch(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, identity, Core.Optional.ToNullable(state), Core.Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Core.Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Core.Optional.ToNullable(enableDiskEncryption), Core.Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Core.Optional.ToNullable(enablePurge), languageExtensions.Value, Core.Optional.ToNullable(enableDoubleEncryption), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToList(allowedIPRangeList), Core.Optional.ToNullable(engineType), Core.Optional.ToList(acceptedAudiences), Core.Optional.ToNullable(enableAutoStop), Core.Optional.ToNullable(restrictOutboundNetworkAccess), Core.Optional.ToList(allowedFqdnList), Core.Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Core.Optional.ToList(privateEndpointConnections), migrationCluster.Value);
+            return new KustoClusterPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, Optional.ToList(trustedExternalTenants), optimizedAutoscale.Value, Optional.ToNullable(enableDiskEncryption), Optional.ToNullable(enableStreamingIngest), virtualNetworkConfiguration.Value, keyVaultProperties.Value, Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(enableDoubleEncryption), Optional.ToNullable(publicNetworkAccess), Optional.ToList(allowedIPRangeList), Optional.ToNullable(engineType), Optional.ToList(acceptedAudiences), Optional.ToNullable(enableAutoStop), Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(publicIPType), virtualClusterGraduationProperties.Value, Optional.ToList(privateEndpointConnections), migrationCluster.Value);
         }
     }
 }

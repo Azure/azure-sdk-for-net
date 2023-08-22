@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchAccountListResult. </summary>
         internal BatchAccountListResult()
         {
-            Value = new Core.ChangeTrackingList<BatchAccountData>();
+            Value = new ChangeTrackingList<BatchAccountData>();
         }
 
         /// <summary> Initializes a new instance of BatchAccountListResult. </summary>

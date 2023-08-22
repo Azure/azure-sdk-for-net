@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(pythonFile, nameof(pythonFile));
 
             PythonFile = pythonFile;
-            Parameters = new Core.ChangeTrackingList<BinaryData>();
-            Libraries = new Core.ChangeTrackingList<IDictionary<string, BinaryData>>();
+            Parameters = new ChangeTrackingList<BinaryData>();
+            Libraries = new ChangeTrackingList<IDictionary<string, BinaryData>>();
             ActivityType = "DatabricksSparkPython";
         }
 

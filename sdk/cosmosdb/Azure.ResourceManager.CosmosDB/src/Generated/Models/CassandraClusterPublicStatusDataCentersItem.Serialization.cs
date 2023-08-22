@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<string>> seedNodes = default;
-            Core.Optional<IReadOnlyList<CassandraClusterDataCenterNodeItem>> nodes = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<string>> seedNodes = default;
+            Optional<IReadOnlyList<CassandraClusterDataCenterNodeItem>> nodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterPublicStatusDataCentersItem(name.Value, Core.Optional.ToList(seedNodes), Core.Optional.ToList(nodes));
+            return new CassandraClusterPublicStatusDataCentersItem(name.Value, Optional.ToList(seedNodes), Optional.ToList(nodes));
         }
     }
 }

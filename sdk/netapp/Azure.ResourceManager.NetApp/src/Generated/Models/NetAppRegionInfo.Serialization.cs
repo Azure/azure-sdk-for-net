@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
-            Core.Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
+            Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
+            Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageToNetworkProximity"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppRegionInfo(Core.Optional.ToNullable(storageToNetworkProximity), Core.Optional.ToList(availabilityZoneMappings));
+            return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings));
         }
     }
 }

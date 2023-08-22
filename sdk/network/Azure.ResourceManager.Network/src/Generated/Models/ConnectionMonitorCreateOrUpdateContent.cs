@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorCreateOrUpdateContent. </summary>
         public ConnectionMonitorCreateOrUpdateContent()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            Endpoints = new Core.ChangeTrackingList<ConnectionMonitorEndpoint>();
-            TestConfigurations = new Core.ChangeTrackingList<ConnectionMonitorTestConfiguration>();
-            TestGroups = new Core.ChangeTrackingList<ConnectionMonitorTestGroup>();
-            Outputs = new Core.ChangeTrackingList<ConnectionMonitorOutput>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            Endpoints = new ChangeTrackingList<ConnectionMonitorEndpoint>();
+            TestConfigurations = new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
+            TestGroups = new ChangeTrackingList<ConnectionMonitorTestGroup>();
+            Outputs = new ChangeTrackingList<ConnectionMonitorOutput>();
         }
 
         /// <summary> Connection monitor location. </summary>

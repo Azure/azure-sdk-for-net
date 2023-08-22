@@ -12,14 +12,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAutomationRuleTriggeringLogic : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAutomationRuleTriggeringLogic : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(TriggersOn.ToString());
             writer.WritePropertyName("triggersWhen"u8);
             writer.WriteStringValue(TriggersWhen.ToString());
-            if (Core.Optional.IsCollectionDefined(Conditions))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             bool isEnabled = default;
-            Core.Optional<DateTimeOffset> expirationTimeUtc = default;
+            Optional<DateTimeOffset> expirationTimeUtc = default;
             TriggersOn triggersOn = default;
             TriggersWhen triggersWhen = default;
-            Core.Optional<IList<SecurityInsightsAutomationRuleCondition>> conditions = default;
+            Optional<IList<SecurityInsightsAutomationRuleCondition>> conditions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEnabled"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsAutomationRuleTriggeringLogic(isEnabled, Core.Optional.ToNullable(expirationTimeUtc), triggersOn, triggersWhen, Core.Optional.ToList(conditions));
+            return new SecurityInsightsAutomationRuleTriggeringLogic(isEnabled, Optional.ToNullable(expirationTimeUtc), triggersOn, triggersWhen, Optional.ToList(conditions));
         }
     }
 }

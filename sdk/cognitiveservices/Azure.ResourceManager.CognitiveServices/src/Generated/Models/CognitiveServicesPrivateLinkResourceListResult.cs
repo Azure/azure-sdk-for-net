@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceListResult. </summary>
         internal CognitiveServicesPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<CognitiveServicesPrivateLinkResource>();
+            Value = new ChangeTrackingList<CognitiveServicesPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceListResult. </summary>

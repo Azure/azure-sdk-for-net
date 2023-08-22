@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataCenterAddressType dataCenterAddressType = default;
-            Core.Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Core.Optional<AzureLocation> dataCenterAzureLocation = default;
+            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
+            Optional<AzureLocation> dataCenterAzureLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datacenterAddressType"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new UnknownDataCenterAddressResponse(dataCenterAddressType, Core.Optional.ToList(supportedCarriersForReturnShipment), Core.Optional.ToNullable(dataCenterAzureLocation));
+            return new UnknownDataCenterAddressResponse(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation));
         }
     }
 }

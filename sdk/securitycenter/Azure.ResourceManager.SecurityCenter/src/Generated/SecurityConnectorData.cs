@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="location"> The location. </param>
         public SecurityConnectorData(AzureLocation location) : base(location)
         {
-            Offerings = new Core.ChangeTrackingList<SecurityCenterCloudOffering>();
+            Offerings = new ChangeTrackingList<SecurityCenterCloudOffering>();
         }
 
         /// <summary> Initializes a new instance of SecurityConnectorData. </summary>

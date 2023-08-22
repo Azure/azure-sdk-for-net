@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> codeVersion = default;
-            Core.Optional<DateTimeOffset> supportExpiryUtc = default;
-            Core.Optional<ClusterEnvironment> environment = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> codeVersion = default;
+            Optional<DateTimeOffset> supportExpiryUtc = default;
+            Optional<ClusterEnvironment> environment = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, Core.Optional.ToNullable(supportExpiryUtc), Core.Optional.ToNullable(environment));
+            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment));
         }
     }
 }

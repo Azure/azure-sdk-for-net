@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBBaseMetric. </summary>
         internal CosmosDBBaseMetric()
         {
-            MetricValues = new Core.ChangeTrackingList<CosmosDBMetricValue>();
+            MetricValues = new ChangeTrackingList<CosmosDBMetricValue>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBBaseMetric. </summary>

@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Core.Optional<string> productSku = default;
-            Core.Optional<string> productSerial = default;
-            Core.Optional<FirewallBooleanType> accountRegistered = default;
-            Core.Optional<string> accountId = default;
-            Core.Optional<FirewallBooleanType> userDomainSupported = default;
-            Core.Optional<FirewallBooleanType> userRegistered = default;
-            Core.Optional<FirewallBooleanType> freeTrial = default;
-            Core.Optional<int> freeTrialDaysLeft = default;
-            Core.Optional<int> freeTrialCreditLeft = default;
-            Core.Optional<string> helpURL = default;
-            Core.Optional<string> supportURL = default;
-            Core.Optional<string> registerURL = default;
+            Optional<string> productSku = default;
+            Optional<string> productSerial = default;
+            Optional<FirewallBooleanType> accountRegistered = default;
+            Optional<string> accountId = default;
+            Optional<FirewallBooleanType> userDomainSupported = default;
+            Optional<FirewallBooleanType> userRegistered = default;
+            Optional<FirewallBooleanType> freeTrial = default;
+            Optional<int> freeTrialDaysLeft = default;
+            Optional<int> freeTrialCreditLeft = default;
+            Optional<string> helpURL = default;
+            Optional<string> supportURL = default;
+            Optional<string> registerURL = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productSku"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Core.Optional.ToNullable(accountRegistered), accountId.Value, Core.Optional.ToNullable(userDomainSupported), Core.Optional.ToNullable(userRegistered), Core.Optional.ToNullable(freeTrial), Core.Optional.ToNullable(freeTrialDaysLeft), Core.Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value);
+            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value);
         }
     }
 }

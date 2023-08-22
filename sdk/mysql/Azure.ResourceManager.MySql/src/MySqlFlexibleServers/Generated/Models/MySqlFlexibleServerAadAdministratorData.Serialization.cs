@@ -13,34 +13,34 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MySqlFlexibleServerAadAdministratorData : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerAadAdministratorData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AdministratorType))
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Login))
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
-            if (Core.Optional.IsDefined(Sid))
+            if (Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(IdentityResourceId))
+            if (Optional.IsDefined(IdentityResourceId))
             {
                 writer.WritePropertyName("identityResourceId"u8);
                 writer.WriteStringValue(IdentityResourceId);
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MySqlFlexibleServerAdministratorType> administratorType = default;
-            Core.Optional<string> login = default;
-            Core.Optional<string> sid = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<ResourceIdentifier> identityResourceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<MySqlFlexibleServerAdministratorType> administratorType = default;
+            Optional<string> login = default;
+            Optional<string> sid = default;
+            Optional<Guid> tenantId = default;
+            Optional<ResourceIdentifier> identityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     continue;
                 }
             }
-            return new MySqlFlexibleServerAadAdministratorData(id, name, type, systemData.Value, Core.Optional.ToNullable(administratorType), login.Value, sid.Value, Core.Optional.ToNullable(tenantId), identityResourceId.Value);
+            return new MySqlFlexibleServerAadAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, sid.Value, Optional.ToNullable(tenantId), identityResourceId.Value);
         }
     }
 }

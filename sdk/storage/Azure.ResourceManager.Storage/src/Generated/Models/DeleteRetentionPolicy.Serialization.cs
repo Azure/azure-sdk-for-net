@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class DeleteRetentionPolicy : Core.IUtf8JsonSerializable
+    public partial class DeleteRetentionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Days))
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (Core.Optional.IsDefined(AllowPermanentDelete))
+            if (Optional.IsDefined(AllowPermanentDelete))
             {
                 writer.WritePropertyName("allowPermanentDelete"u8);
                 writer.WriteBooleanValue(AllowPermanentDelete.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<int> days = default;
-            Core.Optional<bool> allowPermanentDelete = default;
+            Optional<bool> enabled = default;
+            Optional<int> days = default;
+            Optional<bool> allowPermanentDelete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new DeleteRetentionPolicy(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(days), Core.Optional.ToNullable(allowPermanentDelete));
+            return new DeleteRetentionPolicy(Optional.ToNullable(enabled), Optional.ToNullable(days), Optional.ToNullable(allowPermanentDelete));
         }
     }
 }

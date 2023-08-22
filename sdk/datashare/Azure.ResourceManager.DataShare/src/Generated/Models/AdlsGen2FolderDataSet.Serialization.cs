@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen2FolderDataSet : Core.IUtf8JsonSerializable
+    public partial class AdlsGen2FolderDataSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> dataSetId = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> dataSetId = default;
             string fileSystem = default;
             string folderPath = default;
             string resourceGroup = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new AdlsGen2FolderDataSet(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(dataSetId), fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

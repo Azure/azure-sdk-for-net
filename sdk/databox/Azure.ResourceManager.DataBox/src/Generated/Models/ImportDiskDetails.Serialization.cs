@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ImportDiskDetails : Core.IUtf8JsonSerializable
+    public partial class ImportDiskDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("manifestFile"u8);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
             string manifestFile = default;
             string manifestHash = default;
             string bitLockerKey = default;
-            Core.Optional<string> backupManifestCloudPath = default;
+            Optional<string> backupManifestCloudPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifestFile"u8))

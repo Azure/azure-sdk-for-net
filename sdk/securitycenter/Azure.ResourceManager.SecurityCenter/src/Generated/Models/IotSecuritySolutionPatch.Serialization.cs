@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class IotSecuritySolutionPatch : Core.IUtf8JsonSerializable
+    public partial class IotSecuritySolutionPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UserDefinedResources))
+            if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
                 writer.WriteObjectValue(UserDefinedResources);
             }
-            if (Core.Optional.IsCollectionDefined(RecommendationsConfiguration))
+            if (Optional.IsCollectionDefined(RecommendationsConfiguration))
             {
                 writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<UserDefinedResourcesProperties> userDefinedResources = default;
-            Core.Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<UserDefinedResourcesProperties> userDefinedResources = default;
+            Optional<IList<RecommendationConfigurationProperties>> recommendationsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecuritySolutionPatch(Core.Optional.ToDictionary(tags), userDefinedResources.Value, Core.Optional.ToList(recommendationsConfiguration));
+            return new IotSecuritySolutionPatch(Optional.ToDictionary(tags), userDefinedResources.Value, Optional.ToList(recommendationsConfiguration));
         }
     }
 }

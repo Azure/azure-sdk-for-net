@@ -19,8 +19,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string userId = default;
-            Core.Optional<bool> isAnonymous = default;
-            Core.Optional<CommunicationCloudEnvironmentModel> cloud = default;
+            Optional<bool> isAnonymous = default;
+            Optional<CommunicationCloudEnvironmentModel> cloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))
@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MicrosoftTeamsUserIdentifierModel(userId, Core.Optional.ToNullable(isAnonymous), Core.Optional.ToNullable(cloud));
+            return new MicrosoftTeamsUserIdentifierModel(userId, Optional.ToNullable(isAnonymous), Optional.ToNullable(cloud));
         }
     }
 }

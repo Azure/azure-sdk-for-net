@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
+            Optional<string> nextLink = default;
             IReadOnlyList<ShareDataSetData> value = default;
             foreach (var property in element.EnumerateObject())
             {

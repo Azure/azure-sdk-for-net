@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// <summary> Initializes a new instance of RemoteRenderingAccountListResult. </summary>
         internal RemoteRenderingAccountListResult()
         {
-            Value = new Core.ChangeTrackingList<RemoteRenderingAccountData>();
+            Value = new ChangeTrackingList<RemoteRenderingAccountData>();
         }
 
         /// <summary> Initializes a new instance of RemoteRenderingAccountListResult. </summary>

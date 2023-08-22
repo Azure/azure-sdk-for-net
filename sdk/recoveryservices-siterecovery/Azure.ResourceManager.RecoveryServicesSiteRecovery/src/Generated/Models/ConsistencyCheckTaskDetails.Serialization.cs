@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<InconsistentVmDetails>> vmDetails = default;
+            Optional<IReadOnlyList<InconsistentVmDetails>> vmDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ConsistencyCheckTaskDetails(instanceType, Core.Optional.ToList(vmDetails));
+            return new ConsistencyCheckTaskDetails(instanceType, Optional.ToList(vmDetails));
         }
     }
 }

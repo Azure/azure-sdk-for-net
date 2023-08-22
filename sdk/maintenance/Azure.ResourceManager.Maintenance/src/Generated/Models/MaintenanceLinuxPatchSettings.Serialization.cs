@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceLinuxPatchSettings : Core.IUtf8JsonSerializable
+    public partial class MaintenanceLinuxPatchSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PackageNameMasksToExclude))
+            if (Optional.IsCollectionDefined(PackageNameMasksToExclude))
             {
                 writer.WritePropertyName("packageNameMasksToExclude"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PackageNameMasksToInclude))
+            if (Optional.IsCollectionDefined(PackageNameMasksToInclude))
             {
                 writer.WritePropertyName("packageNameMasksToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ClassificationsToInclude))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> packageNameMasksToExclude = default;
-            Core.Optional<IList<string>> packageNameMasksToInclude = default;
-            Core.Optional<IList<string>> classificationsToInclude = default;
+            Optional<IList<string>> packageNameMasksToExclude = default;
+            Optional<IList<string>> packageNameMasksToInclude = default;
+            Optional<IList<string>> classificationsToInclude = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageNameMasksToExclude"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new MaintenanceLinuxPatchSettings(Core.Optional.ToList(packageNameMasksToExclude), Core.Optional.ToList(packageNameMasksToInclude), Core.Optional.ToList(classificationsToInclude));
+            return new MaintenanceLinuxPatchSettings(Optional.ToList(packageNameMasksToExclude), Optional.ToList(packageNameMasksToInclude), Optional.ToList(classificationsToInclude));
         }
     }
 }

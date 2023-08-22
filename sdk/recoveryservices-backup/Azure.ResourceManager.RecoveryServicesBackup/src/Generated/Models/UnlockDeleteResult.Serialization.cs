@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> unlockDeleteExpiryTime = default;
+            Optional<DateTimeOffset> unlockDeleteExpiryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unlockDeleteExpiryTime"u8))
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new UnlockDeleteResult(Core.Optional.ToNullable(unlockDeleteExpiryTime));
+            return new UnlockDeleteResult(Optional.ToNullable(unlockDeleteExpiryTime));
         }
     }
 }

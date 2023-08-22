@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of HopLink. </summary>
         internal HopLink()
         {
-            Issues = new Core.ChangeTrackingList<ConnectivityIssueInfo>();
-            Context = new Core.ChangeTrackingDictionary<string, string>();
+            Issues = new ChangeTrackingList<ConnectivityIssueInfo>();
+            Context = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of HopLink. </summary>

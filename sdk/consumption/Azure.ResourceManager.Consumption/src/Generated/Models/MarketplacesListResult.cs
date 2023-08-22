@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of MarketplacesListResult. </summary>
         internal MarketplacesListResult()
         {
-            Value = new Core.ChangeTrackingList<ConsumptionMarketplace>();
+            Value = new ChangeTrackingList<ConsumptionMarketplace>();
         }
 
         /// <summary> Initializes a new instance of MarketplacesListResult. </summary>

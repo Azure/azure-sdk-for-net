@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public MapperConnection(MapperConnectionType connectionType)
         {
             ConnectionType = connectionType;
-            CommonDslConnectorProperties = new Core.ChangeTrackingList<MapperDslConnectorProperties>();
+            CommonDslConnectorProperties = new ChangeTrackingList<MapperDslConnectorProperties>();
         }
 
         /// <summary> Initializes a new instance of MapperConnection. </summary>

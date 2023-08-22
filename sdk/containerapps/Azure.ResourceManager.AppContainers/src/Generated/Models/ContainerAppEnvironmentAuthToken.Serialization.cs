@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppEnvironmentAuthToken : Core.IUtf8JsonSerializable
+    public partial class ContainerAppEnvironmentAuthToken : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> token = default;
-            Core.Optional<DateTimeOffset> expires = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> token = default;
+            Optional<DateTimeOffset> expires = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppEnvironmentAuthToken(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, token.Value, Core.Optional.ToNullable(expires));
+            return new ContainerAppEnvironmentAuthToken(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, token.Value, Optional.ToNullable(expires));
         }
     }
 }

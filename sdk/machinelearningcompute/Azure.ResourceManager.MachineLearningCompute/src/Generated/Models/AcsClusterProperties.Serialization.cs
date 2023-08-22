@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class AcsClusterProperties : Core.IUtf8JsonSerializable
+    public partial class AcsClusterProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("orchestratorType"u8);
             writer.WriteStringValue(OrchestratorType.ToString());
-            if (Core.Optional.IsDefined(OrchestratorProperties))
+            if (Optional.IsDefined(OrchestratorProperties))
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
                 writer.WriteObjectValue(OrchestratorProperties);
             }
-            if (Core.Optional.IsCollectionDefined(SystemServices))
+            if (Optional.IsCollectionDefined(SystemServices))
             {
                 writer.WritePropertyName("systemServices"u8);
                 writer.WriteStartArray();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(MasterCount))
+            if (Optional.IsDefined(MasterCount))
             {
                 writer.WritePropertyName("masterCount"u8);
                 writer.WriteNumberValue(MasterCount.Value);
             }
-            if (Core.Optional.IsDefined(AgentCount))
+            if (Optional.IsDefined(AgentCount))
             {
                 writer.WritePropertyName("agentCount"u8);
                 writer.WriteNumberValue(AgentCount.Value);
             }
-            if (Core.Optional.IsDefined(AgentVmSize))
+            if (Optional.IsDefined(AgentVmSize))
             {
                 writer.WritePropertyName("agentVmSize"u8);
                 writer.WriteStringValue(AgentVmSize.Value.ToString());
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Core.Optional<string> clusterFqdn = default;
+            Optional<string> clusterFqdn = default;
             OrchestratorType orchestratorType = default;
-            Core.Optional<KubernetesClusterProperties> orchestratorProperties = default;
-            Core.Optional<IList<SystemService>> systemServices = default;
-            Core.Optional<int> masterCount = default;
-            Core.Optional<int> agentCount = default;
-            Core.Optional<AgentVmSizeType> agentVmSize = default;
+            Optional<KubernetesClusterProperties> orchestratorProperties = default;
+            Optional<IList<SystemService>> systemServices = default;
+            Optional<int> masterCount = default;
+            Optional<int> agentCount = default;
+            Optional<AgentVmSizeType> agentVmSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterFqdn"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     continue;
                 }
             }
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Core.Optional.ToList(systemServices), Core.Optional.ToNullable(masterCount), Core.Optional.ToNullable(agentCount), Core.Optional.ToNullable(agentVmSize));
+            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize));
         }
     }
 }

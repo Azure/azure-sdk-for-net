@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Argument.AssertNotNull(fieldName, nameof(fieldName));
             Argument.AssertNotNull(fieldType, nameof(fieldType));
 
-            EnumValidValues = new Core.ChangeTrackingList<ProfileEnumValidValuesFormat>();
+            EnumValidValues = new ChangeTrackingList<ProfileEnumValidValuesFormat>();
             FieldName = fieldName;
             FieldType = fieldType;
-            DataSourcePrecedenceRules = new Core.ChangeTrackingList<DataSourcePrecedence>();
+            DataSourcePrecedenceRules = new ChangeTrackingList<DataSourcePrecedence>();
         }
 
         /// <summary> Initializes a new instance of PropertyDefinition. </summary>

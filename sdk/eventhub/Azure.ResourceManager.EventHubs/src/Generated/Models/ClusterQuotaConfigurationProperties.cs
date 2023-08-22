@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
         public ClusterQuotaConfigurationProperties()
         {
-            Settings = new Core.ChangeTrackingDictionary<string, string>();
+            Settings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>

@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class BackendAddressInboundNatRulePortMappingsOperationSource : Core.IOperationSource<BackendAddressInboundNatRulePortMappings>
+    internal class BackendAddressInboundNatRulePortMappingsOperationSource : IOperationSource<BackendAddressInboundNatRulePortMappings>
     {
-        BackendAddressInboundNatRulePortMappings Core.IOperationSource<BackendAddressInboundNatRulePortMappings>.CreateResult(Response response, CancellationToken cancellationToken)
+        BackendAddressInboundNatRulePortMappings IOperationSource<BackendAddressInboundNatRulePortMappings>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return BackendAddressInboundNatRulePortMappings.DeserializeBackendAddressInboundNatRulePortMappings(document.RootElement);
         }
 
-        async ValueTask<BackendAddressInboundNatRulePortMappings> Core.IOperationSource<BackendAddressInboundNatRulePortMappings>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<BackendAddressInboundNatRulePortMappings> IOperationSource<BackendAddressInboundNatRulePortMappings>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return BackendAddressInboundNatRulePortMappings.DeserializeBackendAddressInboundNatRulePortMappings(document.RootElement);

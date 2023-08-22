@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public WebSiteData(AzureLocation location) : base(location)
         {
-            HostNames = new Core.ChangeTrackingList<string>();
-            EnabledHostNames = new Core.ChangeTrackingList<string>();
-            HostNameSslStates = new Core.ChangeTrackingList<HostNameSslState>();
-            TrafficManagerHostNames = new Core.ChangeTrackingList<string>();
+            HostNames = new ChangeTrackingList<string>();
+            EnabledHostNames = new ChangeTrackingList<string>();
+            HostNameSslStates = new ChangeTrackingList<HostNameSslState>();
+            TrafficManagerHostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WebSiteData. </summary>

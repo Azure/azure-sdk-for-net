@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <param name="location"> The location. </param>
         public ServiceFabricServiceData(AzureLocation location) : base(location)
         {
-            CorrelationScheme = new Core.ChangeTrackingList<ServiceCorrelationDescription>();
-            ServiceLoadMetrics = new Core.ChangeTrackingList<ServiceLoadMetricDescription>();
-            ServicePlacementPolicies = new Core.ChangeTrackingList<ServicePlacementPolicyDescription>();
+            CorrelationScheme = new ChangeTrackingList<ServiceCorrelationDescription>();
+            ServiceLoadMetrics = new ChangeTrackingList<ServiceLoadMetricDescription>();
+            ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
         /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>

@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of SearchHierarchyNodesResponse. </summary>
         internal SearchHierarchyNodesResponse()
         {
-            Hits = new Core.ChangeTrackingList<HierarchyHit>();
+            Hits = new ChangeTrackingList<HierarchyHit>();
         }
 
         /// <summary> Initializes a new instance of SearchHierarchyNodesResponse. </summary>

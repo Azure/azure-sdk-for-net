@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<string> severity = default;
+            Optional<string> message = default;
+            Optional<string> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
         public NetworkVirtualApplianceData()
         {
-            BootStrapConfigurationBlobs = new Core.ChangeTrackingList<string>();
-            CloudInitConfigurationBlobs = new Core.ChangeTrackingList<string>();
-            VirtualApplianceNics = new Core.ChangeTrackingList<VirtualApplianceNicProperties>();
-            AdditionalNics = new Core.ChangeTrackingList<VirtualApplianceAdditionalNicProperties>();
-            VirtualApplianceSites = new Core.ChangeTrackingList<WritableSubResource>();
-            VirtualApplianceConnections = new Core.ChangeTrackingList<WritableSubResource>();
-            InboundSecurityRules = new Core.ChangeTrackingList<WritableSubResource>();
+            BootStrapConfigurationBlobs = new ChangeTrackingList<string>();
+            CloudInitConfigurationBlobs = new ChangeTrackingList<string>();
+            VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
+            AdditionalNics = new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>();
+            VirtualApplianceSites = new ChangeTrackingList<WritableSubResource>();
+            VirtualApplianceConnections = new ChangeTrackingList<WritableSubResource>();
+            InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>

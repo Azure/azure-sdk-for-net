@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of ProfileListResult. </summary>
         internal ProfileListResult()
         {
-            Value = new Core.ChangeTrackingList<ProfileResourceFormatData>();
+            Value = new ChangeTrackingList<ProfileResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of ProfileListResult. </summary>

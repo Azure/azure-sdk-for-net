@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of NginxCertificateListResponse. </summary>
         internal NginxCertificateListResponse()
         {
-            Value = new Core.ChangeTrackingList<NginxCertificateData>();
+            Value = new ChangeTrackingList<NginxCertificateData>();
         }
 
         /// <summary> Initializes a new instance of NginxCertificateListResponse. </summary>

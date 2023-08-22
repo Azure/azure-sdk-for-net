@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>
         internal SapSupportedResourceSkusResult()
         {
-            SupportedSkus = new Core.ChangeTrackingList<SapSupportedSku>();
+            SupportedSkus = new ChangeTrackingList<SapSupportedSku>();
         }
 
         /// <summary> Initializes a new instance of SapSupportedResourceSkusResult. </summary>

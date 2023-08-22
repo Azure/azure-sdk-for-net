@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyListResult. </summary>
         internal PrivateEndpointConnectionProxyListResult()
         {
-            Value = new Core.ChangeTrackingList<PrivateEndpointConnectionProxyData>();
+            Value = new ChangeTrackingList<PrivateEndpointConnectionProxyData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProxyListResult. </summary>

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Command = new Core.ChangeTrackingList<string>();
-            EnvironmentVariables = new Core.ChangeTrackingList<ContainerEnvironmentVariable>();
-            VolumeMounts = new Core.ChangeTrackingList<ContainerVolumeMount>();
+            Command = new ChangeTrackingList<string>();
+            EnvironmentVariables = new ChangeTrackingList<ContainerEnvironmentVariable>();
+            VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
         /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>

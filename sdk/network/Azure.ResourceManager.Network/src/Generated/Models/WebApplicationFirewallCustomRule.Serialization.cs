@@ -12,29 +12,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class WebApplicationFirewallCustomRule : Core.IUtf8JsonSerializable
+    public partial class WebApplicationFirewallCustomRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RateLimitDuration))
+            if (Optional.IsDefined(RateLimitDuration))
             {
                 writer.WritePropertyName("rateLimitDuration"u8);
                 writer.WriteStringValue(RateLimitDuration.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RateLimitThreshold))
+            if (Optional.IsDefined(RateLimitThreshold))
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(GroupByUserSession))
+            if (Optional.IsCollectionDefined(GroupByUserSession))
             {
                 writer.WritePropertyName("groupByUserSession"u8);
                 writer.WriteStartArray();
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ETag> etag = default;
+            Optional<string> name = default;
+            Optional<ETag> etag = default;
             int priority = default;
-            Core.Optional<WebApplicationFirewallState> state = default;
-            Core.Optional<ApplicationGatewayFirewallRateLimitDuration> rateLimitDuration = default;
-            Core.Optional<int> rateLimitThreshold = default;
+            Optional<WebApplicationFirewallState> state = default;
+            Optional<ApplicationGatewayFirewallRateLimitDuration> rateLimitDuration = default;
+            Optional<int> rateLimitThreshold = default;
             WebApplicationFirewallRuleType ruleType = default;
             IList<MatchCondition> matchConditions = default;
-            Core.Optional<IList<GroupByUserSession>> groupByUserSession = default;
+            Optional<IList<GroupByUserSession>> groupByUserSession = default;
             WebApplicationFirewallAction action = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new WebApplicationFirewallCustomRule(name.Value, Core.Optional.ToNullable(etag), priority, Core.Optional.ToNullable(state), Core.Optional.ToNullable(rateLimitDuration), Core.Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, Core.Optional.ToList(groupByUserSession), action);
+            return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), Optional.ToNullable(rateLimitDuration), Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, Optional.ToList(groupByUserSession), action);
         }
     }
 }

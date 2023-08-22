@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of ManagedServiceBaseProperties. </summary>
         public ManagedServiceBaseProperties()
         {
-            CorrelationScheme = new Core.ChangeTrackingList<ManagedServiceCorrelation>();
-            ServiceLoadMetrics = new Core.ChangeTrackingList<ManagedServiceLoadMetric>();
-            ServicePlacementPolicies = new Core.ChangeTrackingList<ManagedServicePlacementPolicy>();
-            ScalingPolicies = new Core.ChangeTrackingList<ManagedServiceScalingPolicy>();
+            CorrelationScheme = new ChangeTrackingList<ManagedServiceCorrelation>();
+            ServiceLoadMetrics = new ChangeTrackingList<ManagedServiceLoadMetric>();
+            ServicePlacementPolicies = new ChangeTrackingList<ManagedServicePlacementPolicy>();
+            ScalingPolicies = new ChangeTrackingList<ManagedServiceScalingPolicy>();
         }
 
         /// <summary> Initializes a new instance of ManagedServiceBaseProperties. </summary>

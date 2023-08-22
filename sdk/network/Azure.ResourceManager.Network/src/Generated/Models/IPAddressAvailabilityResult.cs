@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IPAddressAvailabilityResult. </summary>
         internal IPAddressAvailabilityResult()
         {
-            AvailableIPAddresses = new Core.ChangeTrackingList<string>();
+            AvailableIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of IPAddressAvailabilityResult. </summary>

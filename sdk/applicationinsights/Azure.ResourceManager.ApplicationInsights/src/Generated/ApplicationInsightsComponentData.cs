@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
-            PrivateLinkScopedResources = new Core.ChangeTrackingList<PrivateLinkScopedResource>();
+            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResource>();
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsComponentData. </summary>

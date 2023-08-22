@@ -14,32 +14,32 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(XmlReadSettingsConverter))]
-    public partial class XmlReadSettings : Core.IUtf8JsonSerializable
+    public partial class XmlReadSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CompressionProperties))
+            if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
-            if (Core.Optional.IsDefined(ValidationMode))
+            if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
                 writer.WriteObjectValue(ValidationMode);
             }
-            if (Core.Optional.IsDefined(DetectDataType))
+            if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
                 writer.WriteObjectValue(DetectDataType);
             }
-            if (Core.Optional.IsDefined(Namespaces))
+            if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
                 writer.WriteObjectValue(Namespaces);
             }
-            if (Core.Optional.IsDefined(NamespacePrefixes))
+            if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
                 writer.WriteObjectValue(NamespacePrefixes);
@@ -60,11 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<CompressionReadSettings> compressionProperties = default;
-            Core.Optional<object> validationMode = default;
-            Core.Optional<object> detectDataType = default;
-            Core.Optional<object> namespaces = default;
-            Core.Optional<object> namespacePrefixes = default;
+            Optional<CompressionReadSettings> compressionProperties = default;
+            Optional<object> validationMode = default;
+            Optional<object> detectDataType = default;
+            Optional<object> namespaces = default;
+            Optional<object> namespacePrefixes = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();

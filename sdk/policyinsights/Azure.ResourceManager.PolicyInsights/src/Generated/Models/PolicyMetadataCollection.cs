@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicyMetadataCollection. </summary>
         internal PolicyMetadataCollection()
         {
-            Value = new Core.ChangeTrackingList<SlimPolicyMetadata>();
+            Value = new ChangeTrackingList<SlimPolicyMetadata>();
         }
 
         /// <summary> Initializes a new instance of PolicyMetadataCollection. </summary>

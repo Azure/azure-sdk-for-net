@@ -12,39 +12,39 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontendEndpointData : Core.IUtf8JsonSerializable
+    public partial class FrontendEndpointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HostName))
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Core.Optional.IsDefined(SessionAffinityEnabledState))
+            if (Optional.IsDefined(SessionAffinityEnabledState))
             {
                 writer.WritePropertyName("sessionAffinityEnabledState"u8);
                 writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SessionAffinityTtlInSeconds))
+            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
             {
                 writer.WritePropertyName("sessionAffinityTtlSeconds"u8);
                 writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(WebApplicationFirewallPolicyLink))
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<SessionAffinityEnabledState> sessionAffinityEnabledState = default;
-            Core.Optional<int> sessionAffinityTtlSeconds = default;
-            Core.Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
-            Core.Optional<FrontDoorResourceState> resourceState = default;
-            Core.Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
-            Core.Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
-            Core.Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<string> hostName = default;
+            Optional<SessionAffinityEnabledState> sessionAffinityEnabledState = default;
+            Optional<int> sessionAffinityTtlSeconds = default;
+            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
+            Optional<FrontDoorResourceState> resourceState = default;
+            Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
+            Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
+            Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.FrontDoor
                     continue;
                 }
             }
-            return new FrontendEndpointData(id.Value, name.Value, Core.Optional.ToNullable(type), hostName.Value, Core.Optional.ToNullable(sessionAffinityEnabledState), Core.Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Core.Optional.ToNullable(resourceState), Core.Optional.ToNullable(customHttpsProvisioningState), Core.Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
         }
     }
 }

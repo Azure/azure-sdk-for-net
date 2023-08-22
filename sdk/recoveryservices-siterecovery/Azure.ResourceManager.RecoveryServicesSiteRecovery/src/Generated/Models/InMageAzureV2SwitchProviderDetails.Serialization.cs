@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> targetVaultId = default;
-            Core.Optional<ResourceIdentifier> targetResourceId = default;
-            Core.Optional<ResourceIdentifier> targetFabricId = default;
-            Core.Optional<string> targetApplianceId = default;
+            Optional<ResourceIdentifier> targetVaultId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
+            Optional<ResourceIdentifier> targetFabricId = default;
+            Optional<string> targetApplianceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetVaultId"u8))

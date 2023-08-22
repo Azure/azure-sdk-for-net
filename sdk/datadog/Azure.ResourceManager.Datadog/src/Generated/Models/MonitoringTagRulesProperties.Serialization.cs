@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class MonitoringTagRulesProperties : Core.IUtf8JsonSerializable
+    public partial class MonitoringTagRulesProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LogRules))
+            if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (Core.Optional.IsDefined(MetricRules))
+            if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<LogRules> logRules = default;
-            Core.Optional<MetricRules> metricRules = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<LogRules> logRules = default;
+            Optional<MetricRules> metricRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new MonitoringTagRulesProperties(Core.Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value);
+            return new MonitoringTagRulesProperties(Optional.ToNullable(provisioningState), logRules.Value, metricRules.Value);
         }
     }
 }

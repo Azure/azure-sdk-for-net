@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of CentralServerFullResourceNames. </summary>
         public CentralServerFullResourceNames()
         {
-            VirtualMachines = new Core.ChangeTrackingList<VirtualMachineResourceNames>();
+            VirtualMachines = new ChangeTrackingList<VirtualMachineResourceNames>();
         }
 
         /// <summary> Initializes a new instance of CentralServerFullResourceNames. </summary>

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Kusto.Models
         internal KustoSkuLocationInfoItem(AzureLocation location)
         {
             Location = location;
-            Zones = new Core.ChangeTrackingList<string>();
-            ZoneDetails = new Core.ChangeTrackingList<KustoResourceSkuZoneDetails>();
+            Zones = new ChangeTrackingList<string>();
+            ZoneDetails = new ChangeTrackingList<KustoResourceSkuZoneDetails>();
         }
 
         /// <summary> Initializes a new instance of KustoSkuLocationInfoItem. </summary>

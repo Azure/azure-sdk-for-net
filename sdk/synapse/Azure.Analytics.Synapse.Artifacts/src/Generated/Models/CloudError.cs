@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Code = code;
             Message = message;
-            Details = new Core.ChangeTrackingList<CloudError>();
+            Details = new ChangeTrackingList<CloudError>();
         }
 
         /// <summary> Initializes a new instance of CloudError. </summary>

@@ -19,10 +19,10 @@ namespace Azure.DigitalTwins.Core
             {
                 return null;
             }
-            Azure.Core.Optional<string> code = default;
-            Azure.Core.Optional<string> message = default;
-            Azure.Core.Optional<IReadOnlyList<Error>> details = default;
-            Azure.Core.Optional<InnerError> innererror = default;
+            Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<IReadOnlyList<Error>> details = default;
+            Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -59,7 +59,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new Error(code.Value, message.Value, Azure.Core.Optional.ToList(details), innererror.Value);
+            return new Error(code.Value, message.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }

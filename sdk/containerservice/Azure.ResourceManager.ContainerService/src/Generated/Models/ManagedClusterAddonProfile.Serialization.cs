@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAddonProfile : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterAddonProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Core.Optional.IsCollectionDefined(Config))
+            if (Optional.IsCollectionDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteStartObject();
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            Core.Optional<IDictionary<string, string>> config = default;
-            Core.Optional<ManagedClusterAddonProfileIdentity> identity = default;
+            Optional<IDictionary<string, string>> config = default;
+            Optional<ManagedClusterAddonProfileIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterAddonProfile(enabled, Core.Optional.ToDictionary(config), identity.Value);
+            return new ManagedClusterAddonProfile(enabled, Optional.ToDictionary(config), identity.Value);
         }
     }
 }

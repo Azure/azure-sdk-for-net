@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerAdministratorServerAdministratorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerAdministratorServerAdministratorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new PostgreSqlArmOperation(_postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation(_postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = await _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerAdministratorResource>(new PostgreSqlServerAdministratorOperationSource(Client), _postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerAdministratorResource>(new PostgreSqlServerAdministratorOperationSource(Client), _postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.PostgreSql
             try
             {
                 var response = _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new PostgreSqlArmOperation<PostgreSqlServerAdministratorResource>(new PostgreSqlServerAdministratorOperationSource(Client), _postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new PostgreSqlArmOperation<PostgreSqlServerAdministratorResource>(new PostgreSqlServerAdministratorOperationSource(Client), _postgreSqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _postgreSqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

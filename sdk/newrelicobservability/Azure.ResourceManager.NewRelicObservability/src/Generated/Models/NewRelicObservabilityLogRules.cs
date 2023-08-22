@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of NewRelicObservabilityLogRules. </summary>
         public NewRelicObservabilityLogRules()
         {
-            FilteringTags = new Core.ChangeTrackingList<NewRelicObservabilityFilteringTag>();
+            FilteringTags = new ChangeTrackingList<NewRelicObservabilityFilteringTag>();
         }
 
         /// <summary> Initializes a new instance of NewRelicObservabilityLogRules. </summary>

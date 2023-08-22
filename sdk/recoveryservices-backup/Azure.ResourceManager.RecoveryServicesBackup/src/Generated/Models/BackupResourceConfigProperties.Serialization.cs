@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceConfigProperties : Core.IUtf8JsonSerializable
+    public partial class BackupResourceConfigProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageModelType))
+            if (Optional.IsDefined(StorageModelType))
             {
                 writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(StorageType))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(StorageTypeState))
+            if (Optional.IsDefined(StorageTypeState))
             {
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnableCrossRegionRestore))
+            if (Optional.IsDefined(EnableCrossRegionRestore))
             {
                 writer.WritePropertyName("crossRegionRestoreFlag"u8);
                 writer.WriteBooleanValue(EnableCrossRegionRestore.Value);
             }
-            if (Core.Optional.IsDefined(DedupState))
+            if (Optional.IsDefined(DedupState))
             {
                 writer.WritePropertyName("dedupState"u8);
                 writer.WriteStringValue(DedupState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(XcoolState))
+            if (Optional.IsDefined(XcoolState))
             {
                 writer.WritePropertyName("xcoolState"u8);
                 writer.WriteStringValue(XcoolState.Value.ToString());
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<BackupStorageType> storageModelType = default;
-            Core.Optional<BackupStorageType> storageType = default;
-            Core.Optional<BackupStorageTypeState> storageTypeState = default;
-            Core.Optional<bool> crossRegionRestoreFlag = default;
-            Core.Optional<VaultDedupState> dedupState = default;
-            Core.Optional<VaultXcoolState> xcoolState = default;
+            Optional<BackupStorageType> storageModelType = default;
+            Optional<BackupStorageType> storageType = default;
+            Optional<BackupStorageTypeState> storageTypeState = default;
+            Optional<bool> crossRegionRestoreFlag = default;
+            Optional<VaultDedupState> dedupState = default;
+            Optional<VaultXcoolState> xcoolState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageModelType"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupResourceConfigProperties(Core.Optional.ToNullable(storageModelType), Core.Optional.ToNullable(storageType), Core.Optional.ToNullable(storageTypeState), Core.Optional.ToNullable(crossRegionRestoreFlag), Core.Optional.ToNullable(dedupState), Core.Optional.ToNullable(xcoolState));
+            return new BackupResourceConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(crossRegionRestoreFlag), Optional.ToNullable(dedupState), Optional.ToNullable(xcoolState));
         }
     }
 }

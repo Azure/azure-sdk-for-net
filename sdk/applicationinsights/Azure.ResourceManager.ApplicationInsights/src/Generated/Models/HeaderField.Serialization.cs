@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class HeaderField : Core.IUtf8JsonSerializable
+    public partial class HeaderField : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HeaderFieldName))
+            if (Optional.IsDefined(HeaderFieldName))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(HeaderFieldName);
             }
-            if (Core.Optional.IsDefined(HeaderFieldValue))
+            if (Optional.IsDefined(HeaderFieldValue))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(HeaderFieldValue);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> key = default;
-            Core.Optional<string> value = default;
+            Optional<string> key = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyList. </summary>
         internal WebApplicationFirewallPolicyList()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyData>();
+            Value = new ChangeTrackingList<FrontDoorWebApplicationFirewallPolicyData>();
         }
 
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyList. </summary>

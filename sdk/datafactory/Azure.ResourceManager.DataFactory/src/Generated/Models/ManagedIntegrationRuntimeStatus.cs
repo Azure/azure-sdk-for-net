@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeStatus. </summary>
         internal ManagedIntegrationRuntimeStatus()
         {
-            Nodes = new Core.ChangeTrackingList<ManagedIntegrationRuntimeNode>();
-            OtherErrors = new Core.ChangeTrackingList<ManagedIntegrationRuntimeError>();
+            Nodes = new ChangeTrackingList<ManagedIntegrationRuntimeNode>();
+            OtherErrors = new ChangeTrackingList<ManagedIntegrationRuntimeError>();
             RuntimeType = IntegrationRuntimeType.Managed;
         }
 

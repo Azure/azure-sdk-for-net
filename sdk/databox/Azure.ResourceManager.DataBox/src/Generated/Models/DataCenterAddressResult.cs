@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>
         protected DataCenterAddressResult()
         {
-            SupportedCarriersForReturnShipment = new Core.ChangeTrackingList<string>();
+            SupportedCarriersForReturnShipment = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataCenterAddressResult. </summary>

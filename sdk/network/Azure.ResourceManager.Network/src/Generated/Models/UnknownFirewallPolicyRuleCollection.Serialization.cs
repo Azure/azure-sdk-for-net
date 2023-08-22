@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownFirewallPolicyRuleCollection : Core.IUtf8JsonSerializable
+    internal partial class UnknownFirewallPolicyRuleCollection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleCollectionType"u8);
             writer.WriteStringValue(RuleCollectionType.ToString());
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             FirewallPolicyRuleCollectionType ruleCollectionType = "Unknown";
-            Core.Optional<string> name = default;
-            Core.Optional<int> priority = default;
+            Optional<string> name = default;
+            Optional<int> priority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleCollectionType"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name.Value, Core.Optional.ToNullable(priority));
+            return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name.Value, Optional.ToNullable(priority));
         }
     }
 }

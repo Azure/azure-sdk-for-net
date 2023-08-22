@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SnowflakeImportCopyCommand : Core.IUtf8JsonSerializable
+    public partial class SnowflakeImportCopyCommand : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AdditionalCopyOptions))
+            if (Optional.IsCollectionDefined(AdditionalCopyOptions))
             {
                 writer.WritePropertyName("additionalCopyOptions"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(AdditionalFormatOptions))
+            if (Optional.IsCollectionDefined(AdditionalFormatOptions))
             {
                 writer.WritePropertyName("additionalFormatOptions"u8);
                 writer.WriteStartObject();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, BinaryData>> additionalCopyOptions = default;
-            Core.Optional<IDictionary<string, BinaryData>> additionalFormatOptions = default;
+            Optional<IDictionary<string, BinaryData>> additionalCopyOptions = default;
+            Optional<IDictionary<string, BinaryData>> additionalFormatOptions = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SnowflakeImportCopyCommand(type, additionalProperties, Core.Optional.ToDictionary(additionalCopyOptions), Core.Optional.ToDictionary(additionalFormatOptions));
+            return new SnowflakeImportCopyCommand(type, additionalProperties, Optional.ToDictionary(additionalCopyOptions), Optional.ToDictionary(additionalFormatOptions));
         }
     }
 }

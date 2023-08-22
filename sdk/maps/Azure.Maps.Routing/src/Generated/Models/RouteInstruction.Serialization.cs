@@ -19,25 +19,25 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<int> routeOffsetInMeters = default;
-            Core.Optional<int> travelTimeInSeconds = default;
-            Core.Optional<LatLongPair> point = default;
-            Core.Optional<int> pointIndex = default;
-            Core.Optional<GuidanceInstructionType> instructionType = default;
-            Core.Optional<IReadOnlyList<string>> roadNumbers = default;
-            Core.Optional<string> exitNumber = default;
-            Core.Optional<string> street = default;
-            Core.Optional<string> signpostText = default;
-            Core.Optional<string> countryCode = default;
-            Core.Optional<string> stateCode = default;
-            Core.Optional<JunctionType> junctionType = default;
-            Core.Optional<int> turnAngleInDecimalDegrees = default;
-            Core.Optional<string> roundaboutExitNumber = default;
-            Core.Optional<bool> possibleCombineWithNext = default;
-            Core.Optional<DrivingSide> drivingSide = default;
-            Core.Optional<GuidanceManeuver> maneuver = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> combinedMessage = default;
+            Optional<int> routeOffsetInMeters = default;
+            Optional<int> travelTimeInSeconds = default;
+            Optional<LatLongPair> point = default;
+            Optional<int> pointIndex = default;
+            Optional<GuidanceInstructionType> instructionType = default;
+            Optional<IReadOnlyList<string>> roadNumbers = default;
+            Optional<string> exitNumber = default;
+            Optional<string> street = default;
+            Optional<string> signpostText = default;
+            Optional<string> countryCode = default;
+            Optional<string> stateCode = default;
+            Optional<JunctionType> junctionType = default;
+            Optional<int> turnAngleInDecimalDegrees = default;
+            Optional<string> roundaboutExitNumber = default;
+            Optional<bool> possibleCombineWithNext = default;
+            Optional<DrivingSide> drivingSide = default;
+            Optional<GuidanceManeuver> maneuver = default;
+            Optional<string> message = default;
+            Optional<string> combinedMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routeOffsetInMeters"u8))
@@ -185,7 +185,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteInstruction(Core.Optional.ToNullable(routeOffsetInMeters), Core.Optional.ToNullable(travelTimeInSeconds), point.Value, Core.Optional.ToNullable(pointIndex), Core.Optional.ToNullable(instructionType), Core.Optional.ToList(roadNumbers), exitNumber.Value, street.Value, signpostText.Value, countryCode.Value, stateCode.Value, Core.Optional.ToNullable(junctionType), Core.Optional.ToNullable(turnAngleInDecimalDegrees), roundaboutExitNumber.Value, Core.Optional.ToNullable(possibleCombineWithNext), Core.Optional.ToNullable(drivingSide), Core.Optional.ToNullable(maneuver), message.Value, combinedMessage.Value);
+            return new RouteInstruction(Optional.ToNullable(routeOffsetInMeters), Optional.ToNullable(travelTimeInSeconds), point.Value, Optional.ToNullable(pointIndex), Optional.ToNullable(instructionType), Optional.ToList(roadNumbers), exitNumber.Value, street.Value, signpostText.Value, countryCode.Value, stateCode.Value, Optional.ToNullable(junctionType), Optional.ToNullable(turnAngleInDecimalDegrees), roundaboutExitNumber.Value, Optional.ToNullable(possibleCombineWithNext), Optional.ToNullable(drivingSide), Optional.ToNullable(maneuver), message.Value, combinedMessage.Value);
         }
     }
 }

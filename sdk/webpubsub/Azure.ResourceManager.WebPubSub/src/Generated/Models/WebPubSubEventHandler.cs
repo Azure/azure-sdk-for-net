@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Argument.AssertNotNull(urlTemplate, nameof(urlTemplate));
 
             UrlTemplate = urlTemplate;
-            SystemEvents = new Core.ChangeTrackingList<string>();
+            SystemEvents = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubEventHandler. </summary>

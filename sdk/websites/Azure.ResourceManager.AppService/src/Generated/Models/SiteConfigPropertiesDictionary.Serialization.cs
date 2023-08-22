@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<bool> use32BitWorkerProcess = default;
-            Core.Optional<string> linuxFxVersion = default;
-            Core.Optional<string> javaVersion = default;
-            Core.Optional<string> powerShellVersion = default;
+            Optional<bool> use32BitWorkerProcess = default;
+            Optional<string> linuxFxVersion = default;
+            Optional<string> javaVersion = default;
+            Optional<string> powerShellVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("use32BitWorkerProcess"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new SiteConfigPropertiesDictionary(Core.Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value);
+            return new SiteConfigPropertiesDictionary(Optional.ToNullable(use32BitWorkerProcess), linuxFxVersion.Value, javaVersion.Value, powerShellVersion.Value);
         }
     }
 }

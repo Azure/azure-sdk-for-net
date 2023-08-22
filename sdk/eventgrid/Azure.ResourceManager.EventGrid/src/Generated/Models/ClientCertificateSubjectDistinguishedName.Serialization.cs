@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class ClientCertificateSubjectDistinguishedName : Core.IUtf8JsonSerializable
+    public partial class ClientCertificateSubjectDistinguishedName : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CommonName))
+            if (Optional.IsDefined(CommonName))
             {
                 writer.WritePropertyName("commonName"u8);
                 writer.WriteStringValue(CommonName);
             }
-            if (Core.Optional.IsDefined(Organization))
+            if (Optional.IsDefined(Organization))
             {
                 writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);
             }
-            if (Core.Optional.IsDefined(OrganizationUnit))
+            if (Optional.IsDefined(OrganizationUnit))
             {
                 writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
-            if (Core.Optional.IsDefined(CountryCode))
+            if (Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<string> commonName = default;
-            Core.Optional<string> organization = default;
-            Core.Optional<string> organizationUnit = default;
-            Core.Optional<string> countryCode = default;
+            Optional<string> commonName = default;
+            Optional<string> organization = default;
+            Optional<string> organizationUnit = default;
+            Optional<string> countryCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonName"u8))

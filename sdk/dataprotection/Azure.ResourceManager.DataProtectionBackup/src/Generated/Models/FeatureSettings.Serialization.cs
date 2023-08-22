@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class FeatureSettings : Core.IUtf8JsonSerializable
+    internal partial class FeatureSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CrossSubscriptionRestoreSettings))
+            if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
                 writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<CrossSubscriptionRestoreSettings> crossSubscriptionRestoreSettings = default;
+            Optional<CrossSubscriptionRestoreSettings> crossSubscriptionRestoreSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crossSubscriptionRestoreSettings"u8))

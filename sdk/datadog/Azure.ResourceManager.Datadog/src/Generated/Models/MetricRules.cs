@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <summary> Initializes a new instance of MetricRules. </summary>
         public MetricRules()
         {
-            FilteringTags = new Core.ChangeTrackingList<FilteringTag>();
+            FilteringTags = new ChangeTrackingList<FilteringTag>();
         }
 
         /// <summary> Initializes a new instance of MetricRules. </summary>

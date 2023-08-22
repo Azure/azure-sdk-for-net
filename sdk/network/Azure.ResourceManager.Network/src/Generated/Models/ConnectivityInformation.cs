@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityInformation. </summary>
         internal ConnectivityInformation()
         {
-            Hops = new Core.ChangeTrackingList<ConnectivityHopInfo>();
+            Hops = new ChangeTrackingList<ConnectivityHopInfo>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityInformation. </summary>

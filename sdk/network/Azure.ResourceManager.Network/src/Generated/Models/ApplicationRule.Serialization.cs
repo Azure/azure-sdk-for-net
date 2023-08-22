@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationRule : Core.IUtf8JsonSerializable
+    public partial class ApplicationRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SourceAddresses))
+            if (Optional.IsCollectionDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationAddresses))
+            if (Optional.IsCollectionDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Protocols))
+            if (Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TargetFqdns))
+            if (Optional.IsCollectionDefined(TargetFqdns))
             {
                 writer.WritePropertyName("targetFqdns"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TargetUrls))
+            if (Optional.IsCollectionDefined(TargetUrls))
             {
                 writer.WritePropertyName("targetUrls"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(FqdnTags))
+            if (Optional.IsCollectionDefined(FqdnTags))
             {
                 writer.WritePropertyName("fqdnTags"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourceIPGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TerminateTLS))
+            if (Optional.IsDefined(TerminateTLS))
             {
                 writer.WritePropertyName("terminateTLS"u8);
                 writer.WriteBooleanValue(TerminateTLS.Value);
             }
-            if (Core.Optional.IsCollectionDefined(WebCategories))
+            if (Optional.IsCollectionDefined(WebCategories))
             {
                 writer.WritePropertyName("webCategories"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(HttpHeadersToInsert))
+            if (Optional.IsCollectionDefined(HttpHeadersToInsert))
             {
                 writer.WritePropertyName("httpHeadersToInsert"u8);
                 writer.WriteStartArray();
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> sourceAddresses = default;
-            Core.Optional<IList<string>> destinationAddresses = default;
-            Core.Optional<IList<FirewallPolicyRuleApplicationProtocol>> protocols = default;
-            Core.Optional<IList<string>> targetFqdns = default;
-            Core.Optional<IList<string>> targetUrls = default;
-            Core.Optional<IList<string>> fqdnTags = default;
-            Core.Optional<IList<string>> sourceIPGroups = default;
-            Core.Optional<bool> terminateTLS = default;
-            Core.Optional<IList<string>> webCategories = default;
-            Core.Optional<IList<FirewallPolicyHttpHeaderToInsert>> httpHeadersToInsert = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
+            Optional<IList<string>> sourceAddresses = default;
+            Optional<IList<string>> destinationAddresses = default;
+            Optional<IList<FirewallPolicyRuleApplicationProtocol>> protocols = default;
+            Optional<IList<string>> targetFqdns = default;
+            Optional<IList<string>> targetUrls = default;
+            Optional<IList<string>> fqdnTags = default;
+            Optional<IList<string>> sourceIPGroups = default;
+            Optional<bool> terminateTLS = default;
+            Optional<IList<string>> webCategories = default;
+            Optional<IList<FirewallPolicyHttpHeaderToInsert>> httpHeadersToInsert = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             FirewallPolicyRuleType ruleType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationRule(name.Value, description.Value, ruleType, Core.Optional.ToList(sourceAddresses), Core.Optional.ToList(destinationAddresses), Core.Optional.ToList(protocols), Core.Optional.ToList(targetFqdns), Core.Optional.ToList(targetUrls), Core.Optional.ToList(fqdnTags), Core.Optional.ToList(sourceIPGroups), Core.Optional.ToNullable(terminateTLS), Core.Optional.ToList(webCategories), Core.Optional.ToList(httpHeadersToInsert));
+            return new ApplicationRule(name.Value, description.Value, ruleType, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(targetUrls), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), Optional.ToNullable(terminateTLS), Optional.ToList(webCategories), Optional.ToList(httpHeadersToInsert));
         }
     }
 }

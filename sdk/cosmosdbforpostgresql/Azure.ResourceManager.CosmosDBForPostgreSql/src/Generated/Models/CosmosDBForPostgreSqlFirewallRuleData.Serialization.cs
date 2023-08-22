@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlFirewallRuleData : Core.IUtf8JsonSerializable
+    public partial class CosmosDBForPostgreSqlFirewallRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string startIPAddress = default;
             string endIPAddress = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     continue;
                 }
             }
-            return new CosmosDBForPostgreSqlFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, Core.Optional.ToNullable(provisioningState));
+            return new CosmosDBForPostgreSqlFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, Optional.ToNullable(provisioningState));
         }
     }
 }

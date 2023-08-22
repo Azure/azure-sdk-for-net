@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CosmosDBFirewallRuleData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<CosmosDBFirewallRuleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new FirewallRuleListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new FirewallRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

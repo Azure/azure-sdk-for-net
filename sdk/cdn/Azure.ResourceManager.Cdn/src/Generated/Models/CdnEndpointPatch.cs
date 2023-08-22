@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CdnEndpointPatch. </summary>
         public CdnEndpointPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            ContentTypesToCompress = new Core.ChangeTrackingList<string>();
-            GeoFilters = new Core.ChangeTrackingList<GeoFilter>();
-            UriSigningKeys = new Core.ChangeTrackingList<UriSigningKey>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            ContentTypesToCompress = new ChangeTrackingList<string>();
+            GeoFilters = new ChangeTrackingList<GeoFilter>();
+            UriSigningKeys = new ChangeTrackingList<UriSigningKey>();
         }
 
         /// <summary> Endpoint tags. </summary>

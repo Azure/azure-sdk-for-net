@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> diskRpMeter = default;
-            Core.Optional<string> sku = default;
-            Core.Optional<HDInsightTier> tier = default;
+            Optional<string> diskRpMeter = default;
+            Optional<string> sku = default;
+            Optional<HDInsightTier> tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskRpMeter"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightDiskBillingMeters(diskRpMeter.Value, sku.Value, Core.Optional.ToNullable(tier));
+            return new HDInsightDiskBillingMeters(diskRpMeter.Value, sku.Value, Optional.ToNullable(tier));
         }
     }
 }

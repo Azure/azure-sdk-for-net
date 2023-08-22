@@ -19,11 +19,11 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<object>> timeSeriesId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> typeId = default;
-            Core.Optional<IReadOnlyList<string>> hierarchyIds = default;
-            Core.Optional<InstanceHitHighlights> highlights = default;
+            Optional<IReadOnlyList<object>> timeSeriesId = default;
+            Optional<string> name = default;
+            Optional<string> typeId = default;
+            Optional<IReadOnlyList<string>> hierarchyIds = default;
+            Optional<InstanceHitHighlights> highlights = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"u8))
@@ -81,7 +81,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstanceHit(Core.Optional.ToList(timeSeriesId), name.Value, typeId.Value, Core.Optional.ToList(hierarchyIds), highlights.Value);
+            return new InstanceHit(Optional.ToList(timeSeriesId), name.Value, typeId.Value, Optional.ToList(hierarchyIds), highlights.Value);
         }
     }
 }

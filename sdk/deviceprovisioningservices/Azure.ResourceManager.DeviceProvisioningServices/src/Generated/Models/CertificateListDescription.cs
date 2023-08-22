@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of CertificateListDescription. </summary>
         internal CertificateListDescription()
         {
-            Value = new Core.ChangeTrackingList<DeviceProvisioningServicesCertificateData>();
+            Value = new ChangeTrackingList<DeviceProvisioningServicesCertificateData>();
         }
 
         /// <summary> Initializes a new instance of CertificateListDescription. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> ipPrefixes = default;
+            Optional<IReadOnlyList<string>> ipPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipPrefixes"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new LearnedIPPrefixesListResult(Core.Optional.ToList(ipPrefixes));
+            return new LearnedIPPrefixesListResult(Optional.ToList(ipPrefixes));
         }
     }
 }

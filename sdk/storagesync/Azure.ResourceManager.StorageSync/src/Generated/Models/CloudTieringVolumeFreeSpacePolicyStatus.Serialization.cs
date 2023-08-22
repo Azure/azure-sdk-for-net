@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Core.Optional<int> effectiveVolumeFreeSpacePolicy = default;
-            Core.Optional<int> currentVolumeFreeSpacePercent = default;
+            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Optional<int> effectiveVolumeFreeSpacePolicy = default;
+            Optional<int> currentVolumeFreeSpacePercent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudTieringVolumeFreeSpacePolicyStatus(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(effectiveVolumeFreeSpacePolicy), Core.Optional.ToNullable(currentVolumeFreeSpacePercent));
+            return new CloudTieringVolumeFreeSpacePolicyStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(effectiveVolumeFreeSpacePolicy), Optional.ToNullable(currentVolumeFreeSpacePercent));
         }
     }
 }

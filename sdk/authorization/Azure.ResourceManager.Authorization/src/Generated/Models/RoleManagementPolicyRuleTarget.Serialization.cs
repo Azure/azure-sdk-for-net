@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyRuleTarget : Core.IUtf8JsonSerializable
+    public partial class RoleManagementPolicyRuleTarget : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Caller))
+            if (Optional.IsDefined(Caller))
             {
                 writer.WritePropertyName("caller"u8);
                 writer.WriteStringValue(Caller);
             }
-            if (Core.Optional.IsCollectionDefined(Operations))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Level))
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(TargetObjects))
+            if (Optional.IsCollectionDefined(TargetObjects))
             {
                 writer.WritePropertyName("targetObjects"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(InheritableSettings))
+            if (Optional.IsCollectionDefined(InheritableSettings))
             {
                 writer.WritePropertyName("inheritableSettings"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EnforcedSettings))
+            if (Optional.IsCollectionDefined(EnforcedSettings))
             {
                 writer.WritePropertyName("enforcedSettings"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<string> caller = default;
-            Core.Optional<IList<string>> operations = default;
-            Core.Optional<RoleManagementAssignmentLevel> level = default;
-            Core.Optional<IList<string>> targetObjects = default;
-            Core.Optional<IList<string>> inheritableSettings = default;
-            Core.Optional<IList<string>> enforcedSettings = default;
+            Optional<string> caller = default;
+            Optional<IList<string>> operations = default;
+            Optional<RoleManagementAssignmentLevel> level = default;
+            Optional<IList<string>> targetObjects = default;
+            Optional<IList<string>> inheritableSettings = default;
+            Optional<IList<string>> enforcedSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("caller"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyRuleTarget(caller.Value, Core.Optional.ToList(operations), Core.Optional.ToNullable(level), Core.Optional.ToList(targetObjects), Core.Optional.ToList(inheritableSettings), Core.Optional.ToList(enforcedSettings));
+            return new RoleManagementPolicyRuleTarget(caller.Value, Optional.ToList(operations), Optional.ToNullable(level), Optional.ToList(targetObjects), Optional.ToList(inheritableSettings), Optional.ToList(enforcedSettings));
         }
     }
 }

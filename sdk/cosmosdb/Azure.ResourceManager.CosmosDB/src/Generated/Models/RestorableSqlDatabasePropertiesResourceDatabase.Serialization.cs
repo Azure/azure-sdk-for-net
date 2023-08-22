@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableSqlDatabasePropertiesResourceDatabase : Core.IUtf8JsonSerializable
+    public partial class RestorableSqlDatabasePropertiesResourceDatabase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(DatabaseName);
-            if (Core.Optional.IsDefined(RestoreParameters))
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Core.Optional.IsDefined(CreateMode))
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> colls = default;
-            Core.Optional<string> users = default;
-            Core.Optional<string> self = default;
-            Core.Optional<string> rid = default;
-            Core.Optional<float> ts = default;
-            Core.Optional<ETag> etag = default;
+            Optional<string> colls = default;
+            Optional<string> users = default;
+            Optional<string> self = default;
+            Optional<string> rid = default;
+            Optional<float> ts = default;
+            Optional<ETag> etag = default;
             string id = default;
-            Core.Optional<ResourceRestoreParameters> restoreParameters = default;
-            Core.Optional<CosmosDBAccountCreateMode> createMode = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_colls"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableSqlDatabasePropertiesResourceDatabase(id, restoreParameters.Value, Core.Optional.ToNullable(createMode), colls.Value, users.Value, self.Value, rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
+            return new RestorableSqlDatabasePropertiesResourceDatabase(id, restoreParameters.Value, Optional.ToNullable(createMode), colls.Value, users.Value, self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<string> size = default;
-            Core.Optional<string> family = default;
-            Core.Optional<AppServiceSkuCapacity> capacity = default;
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<AppServiceSkuCapability>> capabilities = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<string> size = default;
+            Optional<string> family = default;
+            Optional<AppServiceSkuCapacity> capacity = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<AppServiceSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new GlobalCsmSkuDescription(name.Value, tier.Value, size.Value, family.Value, capacity.Value, Core.Optional.ToList(locations), Core.Optional.ToList(capabilities));
+            return new GlobalCsmSkuDescription(name.Value, tier.Value, size.Value, family.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(capabilities));
         }
     }
 }

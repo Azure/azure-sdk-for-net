@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
         internal MachineLearningDiagnoseResultValue()
         {
-            UserDefinedRouteResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            NetworkSecurityRuleResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            ResourceLockResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            DnsResolutionResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            StorageAccountResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            KeyVaultResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            ContainerRegistryResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            ApplicationInsightsResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
-            OtherResults = new Core.ChangeTrackingList<MachineLearningDiagnoseResult>();
+            UserDefinedRouteResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            NetworkSecurityRuleResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            ResourceLockResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            DnsResolutionResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            StorageAccountResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            KeyVaultResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            ContainerRegistryResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            ApplicationInsightsResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
+            OtherResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>

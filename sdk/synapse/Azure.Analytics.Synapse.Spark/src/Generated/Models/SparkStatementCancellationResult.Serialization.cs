@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Core.Optional<string> msg = default;
+            Optional<string> msg = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("msg"u8))

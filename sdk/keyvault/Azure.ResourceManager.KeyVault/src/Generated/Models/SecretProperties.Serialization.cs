@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class SecretProperties : Core.IUtf8JsonSerializable
+    public partial class SecretProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Core.Optional.IsDefined(Attributes))
+            if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            Core.Optional<string> value = default;
-            Core.Optional<string> contentType = default;
-            Core.Optional<SecretAttributes> attributes = default;
-            Core.Optional<Uri> secretUri = default;
-            Core.Optional<string> secretUriWithVersion = default;
+            Optional<string> value = default;
+            Optional<string> contentType = default;
+            Optional<SecretAttributes> attributes = default;
+            Optional<Uri> secretUri = default;
+            Optional<string> secretUriWithVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))

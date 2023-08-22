@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary> Initializes a new instance of AssignmentOperationData. </summary>
         public AssignmentOperationData()
         {
-            Deployments = new Core.ChangeTrackingList<AssignmentDeploymentJob>();
+            Deployments = new ChangeTrackingList<AssignmentDeploymentJob>();
         }
 
         /// <summary> Initializes a new instance of AssignmentOperationData. </summary>

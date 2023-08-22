@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateDnsZoneConfig : Core.IUtf8JsonSerializable
+    public partial class PrivateDnsZoneConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateDnsZoneId))
+            if (Optional.IsDefined(PrivateDnsZoneId))
             {
                 writer.WritePropertyName("privateDnsZoneId"u8);
                 writer.WriteStringValue(PrivateDnsZoneId);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> privateDnsZoneId = default;
-            Core.Optional<IReadOnlyList<RecordSet>> recordSets = default;
+            Optional<string> name = default;
+            Optional<string> privateDnsZoneId = default;
+            Optional<IReadOnlyList<RecordSet>> recordSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Core.Optional.ToList(recordSets));
+            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Optional.ToList(recordSets));
         }
     }
 }

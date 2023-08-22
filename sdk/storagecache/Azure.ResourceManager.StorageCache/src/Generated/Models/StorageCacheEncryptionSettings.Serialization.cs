@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheEncryptionSettings : Core.IUtf8JsonSerializable
+    public partial class StorageCacheEncryptionSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyEncryptionKey))
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
-            if (Core.Optional.IsDefined(EnableRotationToLatestKeyVersion))
+            if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(EnableRotationToLatestKeyVersion.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
-            Core.Optional<bool> rotationToLatestKeyVersionEnabled = default;
+            Optional<StorageCacheEncryptionKeyVaultKeyReference> keyEncryptionKey = default;
+            Optional<bool> rotationToLatestKeyVersionEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKey"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Core.Optional.ToNullable(rotationToLatestKeyVersionEnabled));
+            return new StorageCacheEncryptionSettings(keyEncryptionKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled));
         }
     }
 }

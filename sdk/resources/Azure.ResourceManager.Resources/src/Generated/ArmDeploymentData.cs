@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of ArmDeploymentData. </summary>
         internal ArmDeploymentData()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ArmDeploymentData. </summary>

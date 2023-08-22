@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, grain, filter);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, grain, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, grain, filter);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, _reservationsSummariesClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsDetailsRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsDetailsRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, filter);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, _reservationsDetailsClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, _reservationsDetailsClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsDetailsRestClient.CreateListByReservationOrderAndReservationRequest(Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsDetailsRestClient.CreateListByReservationOrderAndReservationNextPageRequest(nextLink, Id.Parent.Name, Id.Name, filter);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, _reservationsDetailsClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, _reservationsDetailsClientDiagnostics, Pipeline, "ReservationConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
     }
 }

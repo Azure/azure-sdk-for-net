@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
         internal PrivateLinkResources()
         {
-            Value = new Core.ChangeTrackingList<DeviceProvisioningServicesPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<DeviceProvisioningServicesPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>

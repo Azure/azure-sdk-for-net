@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of VlanMatchCondition. </summary>
         public VlanMatchCondition()
         {
-            Vlans = new Core.ChangeTrackingList<string>();
-            InnerVlans = new Core.ChangeTrackingList<string>();
-            VlanGroupNames = new Core.ChangeTrackingList<string>();
+            Vlans = new ChangeTrackingList<string>();
+            InnerVlans = new ChangeTrackingList<string>();
+            VlanGroupNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VlanMatchCondition. </summary>

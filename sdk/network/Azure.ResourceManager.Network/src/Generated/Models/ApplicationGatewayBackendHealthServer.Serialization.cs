@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> address = default;
-            Core.Optional<NetworkInterfaceIPConfigurationData> ipConfiguration = default;
-            Core.Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
-            Core.Optional<string> healthProbeLog = default;
+            Optional<string> address = default;
+            Optional<NetworkInterfaceIPConfigurationData> ipConfiguration = default;
+            Optional<ApplicationGatewayBackendHealthServerHealth> health = default;
+            Optional<string> healthProbeLog = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayBackendHealthServer(address.Value, ipConfiguration.Value, Core.Optional.ToNullable(health), healthProbeLog.Value);
+            return new ApplicationGatewayBackendHealthServer(address.Value, ipConfiguration.Value, Optional.ToNullable(health), healthProbeLog.Value);
         }
     }
 }

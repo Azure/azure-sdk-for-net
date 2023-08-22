@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<long> executionCount = default;
-            Core.Optional<float> cpuTimeMs = default;
-            Core.Optional<float> elapsedTimeMs = default;
-            Core.Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
-            Core.Optional<bool> hasErrors = default;
-            Core.Optional<IReadOnlyList<string>> sqlErrors = default;
+            Optional<long> executionCount = default;
+            Optional<float> cpuTimeMs = default;
+            Optional<float> elapsedTimeMs = default;
+            Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
+            Optional<bool> hasErrors = default;
+            Optional<IReadOnlyList<string>> sqlErrors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("executionCount"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ExecutionStatistics(Core.Optional.ToNullable(executionCount), Core.Optional.ToNullable(cpuTimeMs), Core.Optional.ToNullable(elapsedTimeMs), Core.Optional.ToDictionary(waitStats), Core.Optional.ToNullable(hasErrors), Core.Optional.ToList(sqlErrors));
+            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors));
         }
     }
 }

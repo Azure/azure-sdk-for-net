@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<EffectiveBaseSecurityAdminRule>> value = default;
-            Core.Optional<string> skipToken = default;
+            Optional<IReadOnlyList<EffectiveBaseSecurityAdminRule>> value = default;
+            Optional<string> skipToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkManagerEffectiveSecurityAdminRulesListResult(Core.Optional.ToList(value), skipToken.Value);
+            return new NetworkManagerEffectiveSecurityAdminRulesListResult(Optional.ToList(value), skipToken.Value);
         }
     }
 }

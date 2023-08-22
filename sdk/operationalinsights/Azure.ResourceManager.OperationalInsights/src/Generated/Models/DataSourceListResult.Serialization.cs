@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OperationalInsightsDataSourceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<OperationalInsightsDataSourceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new DataSourceListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new DataSourceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

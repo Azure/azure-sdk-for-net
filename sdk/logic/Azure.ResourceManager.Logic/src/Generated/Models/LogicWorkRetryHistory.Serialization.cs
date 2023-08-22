@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkRetryHistory : Core.IUtf8JsonSerializable
+    public partial class LogicWorkRetryHistory : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Code))
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Core.Optional.IsDefined(ClientRequestId))
+            if (Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (Core.Optional.IsDefined(ServiceRequestId))
+            if (Optional.IsDefined(ServiceRequestId))
             {
                 writer.WritePropertyName("serviceRequestId"u8);
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (Core.Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> code = default;
-            Core.Optional<string> clientRequestId = default;
-            Core.Optional<string> serviceRequestId = default;
-            Core.Optional<LogicErrorResponse> error = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> code = default;
+            Optional<string> clientRequestId = default;
+            Optional<string> serviceRequestId = default;
+            Optional<LogicErrorResponse> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicWorkRetryHistory(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), code.Value, clientRequestId.Value, serviceRequestId.Value, error.Value);
+            return new LogicWorkRetryHistory(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, clientRequestId.Value, serviceRequestId.Value, error.Value);
         }
     }
 }

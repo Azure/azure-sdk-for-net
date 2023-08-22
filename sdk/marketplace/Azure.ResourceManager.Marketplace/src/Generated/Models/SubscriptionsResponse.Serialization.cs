@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MarketplaceSubscription>> value = default;
-            Core.Optional<string> skipToken = default;
-            Core.Optional<long> count = default;
+            Optional<IReadOnlyList<MarketplaceSubscription>> value = default;
+            Optional<string> skipToken = default;
+            Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new SubscriptionsResponse(Core.Optional.ToList(value), skipToken.Value, Core.Optional.ToNullable(count));
+            return new SubscriptionsResponse(Optional.ToList(value), skipToken.Value, Optional.ToNullable(count));
         }
     }
 }

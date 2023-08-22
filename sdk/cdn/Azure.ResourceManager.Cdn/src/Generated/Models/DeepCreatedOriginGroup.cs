@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Origins = new Core.ChangeTrackingList<WritableSubResource>();
+            Origins = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of DeepCreatedOriginGroup. </summary>

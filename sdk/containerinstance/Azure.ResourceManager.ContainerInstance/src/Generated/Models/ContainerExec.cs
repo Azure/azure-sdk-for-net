@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of ContainerExec. </summary>
         public ContainerExec()
         {
-            Command = new Core.ChangeTrackingList<string>();
+            Command = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerExec. </summary>

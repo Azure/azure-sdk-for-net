@@ -16,8 +16,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of DeviceTelemetryEventProperties. </summary>
         internal DeviceTelemetryEventProperties()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, string>();
-            SystemProperties = new Core.ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, string>();
+            SystemProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DeviceTelemetryEventProperties. </summary>

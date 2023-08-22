@@ -14,15 +14,15 @@ using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    internal class DataFactoryIntegrationRuntimeStatusResultOperationSource : Core.IOperationSource<DataFactoryIntegrationRuntimeStatusResult>
+    internal class DataFactoryIntegrationRuntimeStatusResultOperationSource : IOperationSource<DataFactoryIntegrationRuntimeStatusResult>
     {
-        DataFactoryIntegrationRuntimeStatusResult Core.IOperationSource<DataFactoryIntegrationRuntimeStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        DataFactoryIntegrationRuntimeStatusResult IOperationSource<DataFactoryIntegrationRuntimeStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
         }
 
-        async ValueTask<DataFactoryIntegrationRuntimeStatusResult> Core.IOperationSource<DataFactoryIntegrationRuntimeStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DataFactoryIntegrationRuntimeStatusResult> IOperationSource<DataFactoryIntegrationRuntimeStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);

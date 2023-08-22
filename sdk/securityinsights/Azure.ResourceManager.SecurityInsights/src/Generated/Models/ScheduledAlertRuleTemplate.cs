@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ScheduledAlertRuleTemplate. </summary>
         public ScheduledAlertRuleTemplate()
         {
-            RequiredDataConnectors = new Core.ChangeTrackingList<AlertRuleTemplateDataSource>();
-            Tactics = new Core.ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new Core.ChangeTrackingList<string>();
-            CustomDetails = new Core.ChangeTrackingDictionary<string, string>();
-            EntityMappings = new Core.ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
+            RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
+            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            Techniques = new ChangeTrackingList<string>();
+            CustomDetails = new ChangeTrackingDictionary<string, string>();
+            EntityMappings = new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
             Kind = AlertRuleKind.Scheduled;
         }
 

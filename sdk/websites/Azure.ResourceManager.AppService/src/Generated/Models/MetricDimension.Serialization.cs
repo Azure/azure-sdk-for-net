@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> internalName = default;
-            Core.Optional<bool> toBeExportedForShoebox = default;
+            Optional<string> name = default;
+            Optional<string> displayName = default;
+            Optional<string> internalName = default;
+            Optional<bool> toBeExportedForShoebox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new MetricDimension(name.Value, displayName.Value, internalName.Value, Core.Optional.ToNullable(toBeExportedForShoebox));
+            return new MetricDimension(name.Value, displayName.Value, internalName.Value, Optional.ToNullable(toBeExportedForShoebox));
         }
     }
 }

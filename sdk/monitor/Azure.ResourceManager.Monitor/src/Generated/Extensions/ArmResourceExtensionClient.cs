@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(Id, metricnamespace);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(string metricnamespace = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(Id, metricnamespace);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(Id, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorMetric> GetMonitorMetrics(ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(Id, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(Id, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(Id, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(string startTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(Id, startTime);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(string startTime = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(Id, startTime);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningAksComputeProperties. </summary>
         public MachineLearningAksComputeProperties()
         {
-            SystemServices = new Core.ChangeTrackingList<MachineLearningComputeSystemService>();
+            SystemServices = new ChangeTrackingList<MachineLearningComputeSystemService>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningAksComputeProperties. </summary>

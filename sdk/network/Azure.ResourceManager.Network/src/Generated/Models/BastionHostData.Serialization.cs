@@ -13,27 +13,27 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class BastionHostData : Core.IUtf8JsonSerializable
+    public partial class BastionHostData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(IPConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -56,42 +56,42 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DnsName))
+            if (Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (Core.Optional.IsDefined(ScaleUnits))
+            if (Optional.IsDefined(ScaleUnits))
             {
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (Core.Optional.IsDefined(DisableCopyPaste))
+            if (Optional.IsDefined(DisableCopyPaste))
             {
                 writer.WritePropertyName("disableCopyPaste"u8);
                 writer.WriteBooleanValue(DisableCopyPaste.Value);
             }
-            if (Core.Optional.IsDefined(EnableFileCopy))
+            if (Optional.IsDefined(EnableFileCopy))
             {
                 writer.WritePropertyName("enableFileCopy"u8);
                 writer.WriteBooleanValue(EnableFileCopy.Value);
             }
-            if (Core.Optional.IsDefined(EnableIPConnect))
+            if (Optional.IsDefined(EnableIPConnect))
             {
                 writer.WritePropertyName("enableIpConnect"u8);
                 writer.WriteBooleanValue(EnableIPConnect.Value);
             }
-            if (Core.Optional.IsDefined(EnableShareableLink))
+            if (Optional.IsDefined(EnableShareableLink))
             {
                 writer.WritePropertyName("enableShareableLink"u8);
                 writer.WriteBooleanValue(EnableShareableLink.Value);
             }
-            if (Core.Optional.IsDefined(EnableTunneling))
+            if (Optional.IsDefined(EnableTunneling))
             {
                 writer.WritePropertyName("enableTunneling"u8);
                 writer.WriteBooleanValue(EnableTunneling.Value);
             }
-            if (Core.Optional.IsDefined(EnableKerberos))
+            if (Optional.IsDefined(EnableKerberos))
             {
                 writer.WritePropertyName("enableKerberos"u8);
                 writer.WriteBooleanValue(EnableKerberos.Value);
@@ -106,23 +106,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<NetworkSku> sku = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<IList<BastionHostIPConfiguration>> ipConfigurations = default;
-            Core.Optional<string> dnsName = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<int> scaleUnits = default;
-            Core.Optional<bool> disableCopyPaste = default;
-            Core.Optional<bool> enableFileCopy = default;
-            Core.Optional<bool> enableIPConnect = default;
-            Core.Optional<bool> enableShareableLink = default;
-            Core.Optional<bool> enableTunneling = default;
-            Core.Optional<bool> enableKerberos = default;
+            Optional<ETag> etag = default;
+            Optional<NetworkSku> sku = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<BastionHostIPConfiguration>> ipConfigurations = default;
+            Optional<string> dnsName = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<int> scaleUnits = default;
+            Optional<bool> disableCopyPaste = default;
+            Optional<bool> enableFileCopy = default;
+            Optional<bool> enableIPConnect = default;
+            Optional<bool> enableShareableLink = default;
+            Optional<bool> enableTunneling = default;
+            Optional<bool> enableKerberos = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new BastionHostData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), sku.Value, Core.Optional.ToList(ipConfigurations), dnsName.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(scaleUnits), Core.Optional.ToNullable(disableCopyPaste), Core.Optional.ToNullable(enableFileCopy), Core.Optional.ToNullable(enableIPConnect), Core.Optional.ToNullable(enableShareableLink), Core.Optional.ToNullable(enableTunneling), Core.Optional.ToNullable(enableKerberos));
+            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
         }
     }
 }

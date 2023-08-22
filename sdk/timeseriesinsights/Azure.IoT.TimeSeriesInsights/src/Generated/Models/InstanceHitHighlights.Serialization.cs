@@ -19,14 +19,14 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> timeSeriesId = default;
-            Core.Optional<string> typeName = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IReadOnlyList<string>> hierarchyIds = default;
-            Core.Optional<IReadOnlyList<string>> hierarchyNames = default;
-            Core.Optional<IReadOnlyList<string>> instanceFieldNames = default;
-            Core.Optional<IReadOnlyList<string>> instanceFieldValues = default;
+            Optional<IReadOnlyList<string>> timeSeriesId = default;
+            Optional<string> typeName = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<IReadOnlyList<string>> hierarchyIds = default;
+            Optional<IReadOnlyList<string>> hierarchyNames = default;
+            Optional<IReadOnlyList<string>> instanceFieldNames = default;
+            Optional<IReadOnlyList<string>> instanceFieldValues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"u8))
@@ -115,7 +115,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstanceHitHighlights(Core.Optional.ToList(timeSeriesId), typeName.Value, name.Value, description.Value, Core.Optional.ToList(hierarchyIds), Core.Optional.ToList(hierarchyNames), Core.Optional.ToList(instanceFieldNames), Core.Optional.ToList(instanceFieldValues));
+            return new InstanceHitHighlights(Optional.ToList(timeSeriesId), typeName.Value, name.Value, description.Value, Optional.ToList(hierarchyIds), Optional.ToList(hierarchyNames), Optional.ToList(instanceFieldNames), Optional.ToList(instanceFieldValues));
         }
     }
 }

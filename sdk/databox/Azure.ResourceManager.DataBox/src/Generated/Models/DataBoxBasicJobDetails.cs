@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Argument.AssertNotNull(contactDetails, nameof(contactDetails));
 
-            JobStages = new Core.ChangeTrackingList<DataBoxJobStage>();
+            JobStages = new ChangeTrackingList<DataBoxJobStage>();
             ContactDetails = contactDetails;
-            DataImportDetails = new Core.ChangeTrackingList<DataImportDetails>();
-            DataExportDetails = new Core.ChangeTrackingList<DataExportDetails>();
-            CopyLogDetails = new Core.ChangeTrackingList<CopyLogDetails>();
-            Actions = new Core.ChangeTrackingList<CustomerResolutionCode>();
+            DataImportDetails = new ChangeTrackingList<DataImportDetails>();
+            DataExportDetails = new ChangeTrackingList<DataExportDetails>();
+            CopyLogDetails = new ChangeTrackingList<CopyLogDetails>();
+            Actions = new ChangeTrackingList<CustomerResolutionCode>();
         }
 
         /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>

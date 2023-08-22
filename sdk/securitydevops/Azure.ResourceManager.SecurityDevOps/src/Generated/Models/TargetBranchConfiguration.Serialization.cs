@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    internal partial class TargetBranchConfiguration : Core.IUtf8JsonSerializable
+    internal partial class TargetBranchConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Names))
+            if (Optional.IsCollectionDefined(Names))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> names = default;
+            Optional<IList<string>> names = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("names"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new TargetBranchConfiguration(Core.Optional.ToList(names));
+            return new TargetBranchConfiguration(Optional.ToList(names));
         }
     }
 }

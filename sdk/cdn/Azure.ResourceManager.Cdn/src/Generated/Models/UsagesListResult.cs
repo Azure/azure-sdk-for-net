@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of UsagesListResult. </summary>
         internal UsagesListResult()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorUsage>();
+            Value = new ChangeTrackingList<FrontDoorUsage>();
         }
 
         /// <summary> Initializes a new instance of UsagesListResult. </summary>

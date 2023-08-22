@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> Initializes a new instance of HealthcareApisPrivateLinkResourceData. </summary>
         public HealthcareApisPrivateLinkResourceData()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HealthcareApisPrivateLinkResourceData. </summary>

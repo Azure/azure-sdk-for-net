@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class RulestackSecurityServices : Core.IUtf8JsonSerializable
+    public partial class RulestackSecurityServices : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(VulnerabilityProfile))
+            if (Optional.IsDefined(VulnerabilityProfile))
             {
                 writer.WritePropertyName("vulnerabilityProfile"u8);
                 writer.WriteStringValue(VulnerabilityProfile);
             }
-            if (Core.Optional.IsDefined(AntiSpywareProfile))
+            if (Optional.IsDefined(AntiSpywareProfile))
             {
                 writer.WritePropertyName("antiSpywareProfile"u8);
                 writer.WriteStringValue(AntiSpywareProfile);
             }
-            if (Core.Optional.IsDefined(AntiVirusProfile))
+            if (Optional.IsDefined(AntiVirusProfile))
             {
                 writer.WritePropertyName("antiVirusProfile"u8);
                 writer.WriteStringValue(AntiVirusProfile);
             }
-            if (Core.Optional.IsDefined(UrlFilteringProfile))
+            if (Optional.IsDefined(UrlFilteringProfile))
             {
                 writer.WritePropertyName("urlFilteringProfile"u8);
                 writer.WriteStringValue(UrlFilteringProfile);
             }
-            if (Core.Optional.IsDefined(FileBlockingProfile))
+            if (Optional.IsDefined(FileBlockingProfile))
             {
                 writer.WritePropertyName("fileBlockingProfile"u8);
                 writer.WriteStringValue(FileBlockingProfile);
             }
-            if (Core.Optional.IsDefined(DnsSubscription))
+            if (Optional.IsDefined(DnsSubscription))
             {
                 writer.WritePropertyName("dnsSubscription"u8);
                 writer.WriteStringValue(DnsSubscription);
             }
-            if (Core.Optional.IsDefined(OutboundUnTrustCertificate))
+            if (Optional.IsDefined(OutboundUnTrustCertificate))
             {
                 writer.WritePropertyName("outboundUnTrustCertificate"u8);
                 writer.WriteStringValue(OutboundUnTrustCertificate);
             }
-            if (Core.Optional.IsDefined(OutboundTrustCertificate))
+            if (Optional.IsDefined(OutboundTrustCertificate))
             {
                 writer.WritePropertyName("outboundTrustCertificate"u8);
                 writer.WriteStringValue(OutboundTrustCertificate);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Core.Optional<string> vulnerabilityProfile = default;
-            Core.Optional<string> antiSpywareProfile = default;
-            Core.Optional<string> antiVirusProfile = default;
-            Core.Optional<string> urlFilteringProfile = default;
-            Core.Optional<string> fileBlockingProfile = default;
-            Core.Optional<string> dnsSubscription = default;
-            Core.Optional<string> outboundUnTrustCertificate = default;
-            Core.Optional<string> outboundTrustCertificate = default;
+            Optional<string> vulnerabilityProfile = default;
+            Optional<string> antiSpywareProfile = default;
+            Optional<string> antiVirusProfile = default;
+            Optional<string> urlFilteringProfile = default;
+            Optional<string> fileBlockingProfile = default;
+            Optional<string> dnsSubscription = default;
+            Optional<string> outboundUnTrustCertificate = default;
+            Optional<string> outboundTrustCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vulnerabilityProfile"u8))

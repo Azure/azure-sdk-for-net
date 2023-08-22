@@ -18,10 +18,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<int?> maxFieldsPerIndex = default;
-            Core.Optional<int?> maxFieldNestingDepthPerIndex = default;
-            Core.Optional<int?> maxComplexCollectionFieldsPerIndex = default;
-            Core.Optional<int?> maxComplexObjectsInCollectionsPerDocument = default;
+            Optional<int?> maxFieldsPerIndex = default;
+            Optional<int?> maxFieldNestingDepthPerIndex = default;
+            Optional<int?> maxComplexCollectionFieldsPerIndex = default;
+            Optional<int?> maxComplexObjectsInCollectionsPerDocument = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxFieldsPerIndex"u8))
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchServiceLimits(Core.Optional.ToNullable(maxFieldsPerIndex), Core.Optional.ToNullable(maxFieldNestingDepthPerIndex), Core.Optional.ToNullable(maxComplexCollectionFieldsPerIndex), Core.Optional.ToNullable(maxComplexObjectsInCollectionsPerDocument));
+            return new SearchServiceLimits(Optional.ToNullable(maxFieldsPerIndex), Optional.ToNullable(maxFieldNestingDepthPerIndex), Optional.ToNullable(maxComplexCollectionFieldsPerIndex), Optional.ToNullable(maxComplexObjectsInCollectionsPerDocument));
         }
     }
 }

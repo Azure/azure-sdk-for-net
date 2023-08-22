@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchAccountEndpointDependency. </summary>
         internal BatchAccountEndpointDependency()
         {
-            EndpointDetails = new Core.ChangeTrackingList<BatchEndpointDetail>();
+            EndpointDetails = new ChangeTrackingList<BatchEndpointDetail>();
         }
 
         /// <summary> Initializes a new instance of BatchAccountEndpointDependency. </summary>

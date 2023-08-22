@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of ActionList. </summary>
         public ActionList()
         {
-            ActionGroups = new Core.ChangeTrackingList<ActivityLogAlertActionGroup>();
+            ActionGroups = new ChangeTrackingList<ActivityLogAlertActionGroup>();
         }
 
         /// <summary> Initializes a new instance of ActionList. </summary>

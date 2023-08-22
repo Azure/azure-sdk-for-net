@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SessionHostData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SessionHostData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new SessionHostList(Core.Optional.ToList(value), nextLink.Value);
+            return new SessionHostList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

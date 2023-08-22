@@ -141,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetTriggersByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetTriggersByWorkspaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists triggers. </summary>
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetTriggersByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetTriggersByWorkspaceNextPageRequest(nextLink);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a trigger. </summary>

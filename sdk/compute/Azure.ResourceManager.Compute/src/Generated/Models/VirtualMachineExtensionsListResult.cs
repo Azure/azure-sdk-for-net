@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineExtensionsListResult. </summary>
         internal VirtualMachineExtensionsListResult()
         {
-            Value = new Core.ChangeTrackingList<VirtualMachineExtensionData>();
+            Value = new ChangeTrackingList<VirtualMachineExtensionData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineExtensionsListResult. </summary>

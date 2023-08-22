@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<OperationStatusType> status = default;
-            Core.Optional<ReservationReportSchema> reportUrl = default;
-            Core.Optional<DateTimeOffset> validUntil = default;
+            Optional<OperationStatusType> status = default;
+            Optional<ReservationReportSchema> reportUrl = default;
+            Optional<DateTimeOffset> validUntil = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new OperationStatus(Core.Optional.ToNullable(status), Core.Optional.ToNullable(reportUrl), Core.Optional.ToNullable(validUntil));
+            return new OperationStatus(Optional.ToNullable(status), Optional.ToNullable(reportUrl), Optional.ToNullable(validUntil));
         }
     }
 }

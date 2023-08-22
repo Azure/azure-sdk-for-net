@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class TriggerSupportPackageContent : Core.IUtf8JsonSerializable
+    public partial class TriggerSupportPackageContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinimumTimeStamp))
+            if (Optional.IsDefined(MinimumTimeStamp))
             {
                 writer.WritePropertyName("minimumTimeStamp"u8);
                 writer.WriteStringValue(MinimumTimeStamp.Value, "O");
             }
-            if (Core.Optional.IsDefined(MaximumTimeStamp))
+            if (Optional.IsDefined(MaximumTimeStamp))
             {
                 writer.WritePropertyName("maximumTimeStamp"u8);
                 writer.WriteStringValue(MaximumTimeStamp.Value, "O");
             }
-            if (Core.Optional.IsDefined(Include))
+            if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStringValue(Include);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> minimumTimeStamp = default;
-            Core.Optional<DateTimeOffset> maximumTimeStamp = default;
-            Core.Optional<string> include = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> minimumTimeStamp = default;
+            Optional<DateTimeOffset> maximumTimeStamp = default;
+            Optional<string> include = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new TriggerSupportPackageContent(id, name, type, systemData.Value, Core.Optional.ToNullable(minimumTimeStamp), Core.Optional.ToNullable(maximumTimeStamp), include.Value);
+            return new TriggerSupportPackageContent(id, name, type, systemData.Value, Optional.ToNullable(minimumTimeStamp), Optional.ToNullable(maximumTimeStamp), include.Value);
         }
     }
 }

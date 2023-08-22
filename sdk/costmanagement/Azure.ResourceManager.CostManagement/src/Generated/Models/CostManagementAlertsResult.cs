@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of CostManagementAlertsResult. </summary>
         internal CostManagementAlertsResult()
         {
-            Value = new Core.ChangeTrackingList<CostManagementAlertData>();
+            Value = new ChangeTrackingList<CostManagementAlertData>();
         }
 
         /// <summary> Initializes a new instance of CostManagementAlertsResult. </summary>

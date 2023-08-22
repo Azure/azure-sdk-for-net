@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>
         internal SiteRecoveryServicesProviderProperties()
         {
-            AllowedScenarios = new Core.ChangeTrackingList<string>();
-            HealthErrorDetails = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            AllowedScenarios = new ChangeTrackingList<string>();
+            HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryServicesProviderProperties. </summary>

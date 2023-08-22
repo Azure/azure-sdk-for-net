@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServerAdministratorServerAdministratorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation(_mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServerAdministratorServerAdministratorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new MySqlArmOperation(_mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation(_mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = await _mySqlServerAdministratorServerAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MySqlArmOperation<MySqlServerAdministratorResource>(new MySqlServerAdministratorOperationSource(Client), _mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerAdministratorResource>(new MySqlServerAdministratorOperationSource(Client), _mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql
             try
             {
                 var response = _mySqlServerAdministratorServerAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new MySqlArmOperation<MySqlServerAdministratorResource>(new MySqlServerAdministratorOperationSource(Client), _mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<MySqlServerAdministratorResource>(new MySqlServerAdministratorOperationSource(Client), _mySqlServerAdministratorServerAdministratorsClientDiagnostics, Pipeline, _mySqlServerAdministratorServerAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

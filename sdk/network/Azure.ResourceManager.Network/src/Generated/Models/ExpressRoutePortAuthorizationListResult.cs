@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationListResult. </summary>
         internal ExpressRoutePortAuthorizationListResult()
         {
-            Value = new Core.ChangeTrackingList<ExpressRoutePortAuthorizationData>();
+            Value = new ChangeTrackingList<ExpressRoutePortAuthorizationData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationListResult. </summary>

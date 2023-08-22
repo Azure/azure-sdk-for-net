@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(managedRuleSets, nameof(managedRuleSets));
 
-            Exclusions = new Core.ChangeTrackingList<OwaspCrsExclusionEntry>();
+            Exclusions = new ChangeTrackingList<OwaspCrsExclusionEntry>();
             ManagedRuleSets = managedRuleSets.ToList();
         }
 

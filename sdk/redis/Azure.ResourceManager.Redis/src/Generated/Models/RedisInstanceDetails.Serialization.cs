@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Core.Optional<int> sslPort = default;
-            Core.Optional<int> nonSslPort = default;
-            Core.Optional<string> zone = default;
-            Core.Optional<int> shardId = default;
-            Core.Optional<bool> isMaster = default;
-            Core.Optional<bool> isPrimary = default;
+            Optional<int> sslPort = default;
+            Optional<int> nonSslPort = default;
+            Optional<string> zone = default;
+            Optional<int> shardId = default;
+            Optional<bool> isMaster = default;
+            Optional<bool> isPrimary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sslPort"u8))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Redis.Models
                     continue;
                 }
             }
-            return new RedisInstanceDetails(Core.Optional.ToNullable(sslPort), Core.Optional.ToNullable(nonSslPort), zone.Value, Core.Optional.ToNullable(shardId), Core.Optional.ToNullable(isMaster), Core.Optional.ToNullable(isPrimary));
+            return new RedisInstanceDetails(Optional.ToNullable(sslPort), Optional.ToNullable(nonSslPort), zone.Value, Optional.ToNullable(shardId), Optional.ToNullable(isMaster), Optional.ToNullable(isPrimary));
         }
     }
 }

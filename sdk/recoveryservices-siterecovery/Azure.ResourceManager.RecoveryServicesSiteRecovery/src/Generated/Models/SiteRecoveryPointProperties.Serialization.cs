@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> recoveryPointTime = default;
-            Core.Optional<string> recoveryPointType = default;
-            Core.Optional<ProviderSpecificRecoveryPointDetails> providerSpecificDetails = default;
+            Optional<DateTimeOffset> recoveryPointTime = default;
+            Optional<string> recoveryPointType = default;
+            Optional<ProviderSpecificRecoveryPointDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointTime"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryPointProperties(Core.Optional.ToNullable(recoveryPointTime), recoveryPointType.Value, providerSpecificDetails.Value);
+            return new SiteRecoveryPointProperties(Optional.ToNullable(recoveryPointTime), recoveryPointType.Value, providerSpecificDetails.Value);
         }
     }
 }

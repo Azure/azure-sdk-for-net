@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of ConsumptionTagsResult. </summary>
         public ConsumptionTagsResult()
         {
-            Tags = new Core.ChangeTrackingList<ConsumptionTag>();
+            Tags = new ChangeTrackingList<ConsumptionTag>();
         }
 
         /// <summary> Initializes a new instance of ConsumptionTagsResult. </summary>

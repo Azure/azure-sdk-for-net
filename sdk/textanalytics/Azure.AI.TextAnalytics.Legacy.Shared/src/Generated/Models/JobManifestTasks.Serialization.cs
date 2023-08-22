@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class JobManifestTasks : Core.IUtf8JsonSerializable
+    internal partial class JobManifestTasks : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(EntityRecognitionTasks))
+            if (Optional.IsCollectionDefined(EntityRecognitionTasks))
             {
                 writer.WritePropertyName("entityRecognitionTasks"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EntityRecognitionPiiTasks))
+            if (Optional.IsCollectionDefined(EntityRecognitionPiiTasks))
             {
                 writer.WritePropertyName("entityRecognitionPiiTasks"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(KeyPhraseExtractionTasks))
+            if (Optional.IsCollectionDefined(KeyPhraseExtractionTasks))
             {
                 writer.WritePropertyName("keyPhraseExtractionTasks"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EntityLinkingTasks))
+            if (Optional.IsCollectionDefined(EntityLinkingTasks))
             {
                 writer.WritePropertyName("entityLinkingTasks"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SentimentAnalysisTasks))
+            if (Optional.IsCollectionDefined(SentimentAnalysisTasks))
             {
                 writer.WritePropertyName("sentimentAnalysisTasks"u8);
                 writer.WriteStartArray();

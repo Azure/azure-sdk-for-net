@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TextClassificationMultilabel : Core.IUtf8JsonSerializable
+    public partial class TextClassificationMultilabel : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FeaturizationSettings))
+            if (Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (Core.Optional.IsDefined(LimitSettings))
+            if (Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (Core.Optional.IsDefined(ValidationData))
+            if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Core.Optional.IsDefined(LogVerbosity))
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TargetColumnName))
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
-            Core.Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
-            Core.Optional<NlpVerticalLimitSettings> limitSettings = default;
-            Core.Optional<MachineLearningTableJobInput> validationData = default;
-            Core.Optional<MachineLearningLogVerbosity> logVerbosity = default;
-            Core.Optional<string> targetColumnName = default;
+            Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
+            Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
+            Optional<NlpVerticalLimitSettings> limitSettings = default;
+            Optional<MachineLearningTableJobInput> validationData = default;
+            Optional<MachineLearningLogVerbosity> logVerbosity = default;
+            Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TextClassificationMultilabel(Core.Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Core.Optional.ToNullable(primaryMetric), featurizationSettings.Value, limitSettings.Value, validationData.Value);
+            return new TextClassificationMultilabel(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, limitSettings.Value, validationData.Value);
         }
     }
 }

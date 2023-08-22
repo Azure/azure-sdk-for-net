@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of AllSavingsList. </summary>
         internal AllSavingsList()
         {
-            Value = new Core.ChangeTrackingList<AllSavingsBenefitDetails>();
+            Value = new ChangeTrackingList<AllSavingsBenefitDetails>();
         }
 
         /// <summary> Initializes a new instance of AllSavingsList. </summary>

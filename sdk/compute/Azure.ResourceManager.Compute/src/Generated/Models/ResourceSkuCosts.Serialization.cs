@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> meterId = default;
-            Core.Optional<long> quantity = default;
-            Core.Optional<string> extendedUnit = default;
+            Optional<string> meterId = default;
+            Optional<long> quantity = default;
+            Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterID"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new ResourceSkuCosts(meterId.Value, Core.Optional.ToNullable(quantity), extendedUnit.Value);
+            return new ResourceSkuCosts(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value);
         }
     }
 }

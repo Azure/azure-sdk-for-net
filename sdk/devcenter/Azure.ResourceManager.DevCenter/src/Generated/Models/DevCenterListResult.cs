@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of DevCenterListResult. </summary>
         internal DevCenterListResult()
         {
-            Value = new Core.ChangeTrackingList<DevCenterData>();
+            Value = new ChangeTrackingList<DevCenterData>();
         }
 
         /// <summary> Initializes a new instance of DevCenterListResult. </summary>

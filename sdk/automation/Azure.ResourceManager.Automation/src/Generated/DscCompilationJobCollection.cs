@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _dscCompilationJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _dscCompilationJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content, cancellationToken);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscCompilationJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscCompilationJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

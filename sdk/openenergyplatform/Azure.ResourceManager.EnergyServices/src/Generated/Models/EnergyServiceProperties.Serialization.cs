@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
-    public partial class EnergyServiceProperties : Core.IUtf8JsonSerializable
+    public partial class EnergyServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AuthAppId))
+            if (Optional.IsDefined(AuthAppId))
             {
                 writer.WritePropertyName("authAppId"u8);
                 writer.WriteStringValue(AuthAppId);
             }
-            if (Core.Optional.IsCollectionDefined(DataPartitionNames))
+            if (Optional.IsCollectionDefined(DataPartitionNames))
             {
                 writer.WritePropertyName("dataPartitionNames"u8);
                 writer.WriteStartArray();
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Core.Optional<string> dnsName = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> authAppId = default;
-            Core.Optional<IList<DataPartitionName>> dataPartitionNames = default;
+            Optional<string> dnsName = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> authAppId = default;
+            Optional<IList<DataPartitionName>> dataPartitionNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsName"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     continue;
                 }
             }
-            return new EnergyServiceProperties(dnsName.Value, Core.Optional.ToNullable(provisioningState), authAppId.Value, Core.Optional.ToList(dataPartitionNames));
+            return new EnergyServiceProperties(dnsName.Value, Optional.ToNullable(provisioningState), authAppId.Value, Optional.ToList(dataPartitionNames));
         }
     }
 }

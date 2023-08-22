@@ -21,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<CommunicationIdentifierModel> to = default;
-            Core.Optional<CommunicationIdentifierModel> @from = default;
-            Core.Optional<string> serverCallId = default;
-            Core.Optional<string> callerDisplayName = default;
-            Core.Optional<AcsIncomingCallCustomContext> customContext = default;
-            Core.Optional<string> incomingCallContext = default;
-            Core.Optional<string> correlationId = default;
+            Optional<CommunicationIdentifierModel> to = default;
+            Optional<CommunicationIdentifierModel> @from = default;
+            Optional<string> serverCallId = default;
+            Optional<string> callerDisplayName = default;
+            Optional<AcsIncomingCallCustomContext> customContext = default;
+            Optional<string> incomingCallContext = default;
+            Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("to"u8))

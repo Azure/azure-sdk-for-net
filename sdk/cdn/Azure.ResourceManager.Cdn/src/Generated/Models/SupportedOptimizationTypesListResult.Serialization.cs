@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OptimizationType>> supportedOptimizationTypes = default;
+            Optional<IReadOnlyList<OptimizationType>> supportedOptimizationTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedOptimizationTypes"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new SupportedOptimizationTypesListResult(Core.Optional.ToList(supportedOptimizationTypes));
+            return new SupportedOptimizationTypesListResult(Optional.ToList(supportedOptimizationTypes));
         }
     }
 }

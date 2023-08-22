@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class NginxConfigurationPackage : Core.IUtf8JsonSerializable
+    internal partial class NginxConfigurationPackage : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Data))
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<string> data = default;
+            Optional<string> data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("data"u8))

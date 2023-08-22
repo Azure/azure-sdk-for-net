@@ -13,27 +13,27 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog
 {
-    public partial class DatadogMonitorResourceData : Core.IUtf8JsonSerializable
+    public partial class DatadogMonitorResourceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.Datadog
             {
                 return null;
             }
-            Core.Optional<ResourceSku> sku = default;
-            Core.Optional<MonitorProperties> properties = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ResourceSku> sku = default;
+            Optional<MonitorProperties> properties = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Datadog
                     continue;
                 }
             }
-            return new DatadogMonitorResourceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity);
+            return new DatadogMonitorResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity);
         }
     }
 }

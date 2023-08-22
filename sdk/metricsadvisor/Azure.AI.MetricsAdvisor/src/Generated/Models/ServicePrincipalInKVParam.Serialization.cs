@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalInKVParam : Core.IUtf8JsonSerializable
+    internal partial class ServicePrincipalInKVParam : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultEndpoint"u8);
             writer.WriteStringValue(KeyVaultEndpoint);
             writer.WritePropertyName("keyVaultClientId"u8);
             writer.WriteStringValue(KeyVaultClientId);
-            if (Core.Optional.IsDefined(KeyVaultClientSecret))
+            if (Optional.IsDefined(KeyVaultClientSecret))
             {
                 writer.WritePropertyName("keyVaultClientSecret"u8);
                 writer.WriteStringValue(KeyVaultClientSecret);
@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             string keyVaultEndpoint = default;
             string keyVaultClientId = default;
-            Core.Optional<string> keyVaultClientSecret = default;
+            Optional<string> keyVaultClientSecret = default;
             string servicePrincipalIdNameInKV = default;
             string servicePrincipalSecretNameInKV = default;
             string tenantId = default;

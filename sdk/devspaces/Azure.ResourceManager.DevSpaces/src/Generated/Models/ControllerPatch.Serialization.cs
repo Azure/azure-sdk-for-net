@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
-    public partial class ControllerPatch : Core.IUtf8JsonSerializable
+    public partial class ControllerPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TargetContainerHostCredentialsBase64))
+            if (Optional.IsDefined(TargetContainerHostCredentialsBase64))
             {
                 writer.WritePropertyName("targetContainerHostCredentialsBase64"u8);
                 writer.WriteStringValue(TargetContainerHostCredentialsBase64);

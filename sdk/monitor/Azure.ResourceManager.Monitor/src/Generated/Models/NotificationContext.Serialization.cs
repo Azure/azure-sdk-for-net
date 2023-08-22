@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> notificationSource = default;
-            Core.Optional<string> contextType = default;
+            Optional<string> notificationSource = default;
+            Optional<string> contextType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationSource"u8))

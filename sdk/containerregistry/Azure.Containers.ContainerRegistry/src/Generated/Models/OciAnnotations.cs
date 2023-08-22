@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of OciAnnotations. </summary>
         public OciAnnotations()
         {
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of OciAnnotations. </summary>

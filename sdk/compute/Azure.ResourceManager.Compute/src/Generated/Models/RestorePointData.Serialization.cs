@@ -15,14 +15,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class RestorePointData : Core.IUtf8JsonSerializable
+    public partial class RestorePointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ExcludeDisks))
+            if (Optional.IsCollectionDefined(ExcludeDisks))
             {
                 writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();
@@ -32,22 +32,22 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SourceMetadata))
+            if (Optional.IsDefined(SourceMetadata))
             {
                 writer.WritePropertyName("sourceMetadata"u8);
                 writer.WriteObjectValue(SourceMetadata);
             }
-            if (Core.Optional.IsDefined(ConsistencyMode))
+            if (Optional.IsDefined(ConsistencyMode))
             {
                 writer.WritePropertyName("consistencyMode"u8);
                 writer.WriteStringValue(ConsistencyMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TimeCreated))
+            if (Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Core.Optional.IsDefined(SourceRestorePoint))
+            if (Optional.IsDefined(SourceRestorePoint))
             {
                 writer.WritePropertyName("sourceRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceRestorePoint);
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<WritableSubResource>> excludeDisks = default;
-            Core.Optional<RestorePointSourceMetadata> sourceMetadata = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<ConsistencyModeType> consistencyMode = default;
-            Core.Optional<DateTimeOffset> timeCreated = default;
-            Core.Optional<WritableSubResource> sourceRestorePoint = default;
-            Core.Optional<RestorePointInstanceView> instanceView = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<WritableSubResource>> excludeDisks = default;
+            Optional<RestorePointSourceMetadata> sourceMetadata = default;
+            Optional<string> provisioningState = default;
+            Optional<ConsistencyModeType> consistencyMode = default;
+            Optional<DateTimeOffset> timeCreated = default;
+            Optional<WritableSubResource> sourceRestorePoint = default;
+            Optional<RestorePointInstanceView> instanceView = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new RestorePointData(id, name, type, systemData.Value, Core.Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Core.Optional.ToNullable(consistencyMode), Core.Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value);
+            return new RestorePointData(id, name, type, systemData.Value, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value);
         }
     }
 }

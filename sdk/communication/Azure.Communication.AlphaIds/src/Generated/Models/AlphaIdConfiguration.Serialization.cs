@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.AlphaIds.Models
 {
-    public partial class AlphaIdConfiguration : Core.IUtf8JsonSerializable
+    public partial class AlphaIdConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);

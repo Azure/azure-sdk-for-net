@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class OfferData : Core.IUtf8JsonSerializable
+    public partial class OfferData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PublisherId))
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (Core.Optional.IsDefined(Content))
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Core.Optional.IsDefined(ContentVersion))
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (Core.Optional.IsCollectionDefined(SkuMappings))
+            if (Optional.IsCollectionDefined(SkuMappings))
             {
                 writer.WritePropertyName("skuMappings"u8);
                 writer.WriteStartArray();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Hci
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> publisherId = default;
-            Core.Optional<string> content = default;
-            Core.Optional<string> contentVersion = default;
-            Core.Optional<IList<HciSkuMappings>> skuMappings = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> provisioningState = default;
+            Optional<string> publisherId = default;
+            Optional<string> content = default;
+            Optional<string> contentVersion = default;
+            Optional<IList<HciSkuMappings>> skuMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Hci
                     continue;
                 }
             }
-            return new OfferData(id, name, type, systemData.Value, provisioningState.Value, publisherId.Value, content.Value, contentVersion.Value, Core.Optional.ToList(skuMappings));
+            return new OfferData(id, name, type, systemData.Value, provisioningState.Value, publisherId.Value, content.Value, contentVersion.Value, Optional.ToList(skuMappings));
         }
     }
 }

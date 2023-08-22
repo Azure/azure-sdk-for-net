@@ -11,17 +11,17 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RetryPolicy : Core.IUtf8JsonSerializable
+    public partial class RetryPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 JsonSerializer.Serialize(writer, Count);
             }
-            if (Core.Optional.IsDefined(IntervalInSeconds))
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<int>> count = default;
-            Core.Optional<int> intervalInSeconds = default;
+            Optional<DataFactoryElement<int>> count = default;
+            Optional<int> intervalInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new RetryPolicy(count.Value, Core.Optional.ToNullable(intervalInSeconds));
+            return new RetryPolicy(count.Value, Optional.ToNullable(intervalInSeconds));
         }
     }
 }

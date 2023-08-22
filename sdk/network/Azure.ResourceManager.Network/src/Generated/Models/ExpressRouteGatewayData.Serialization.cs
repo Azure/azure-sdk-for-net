@@ -14,22 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteGatewayData : Core.IUtf8JsonSerializable
+    public partial class ExpressRouteGatewayData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AutoScaleConfiguration))
+            if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
-            if (Core.Optional.IsCollectionDefined(ExpressRouteConnectionList))
+            if (Optional.IsCollectionDefined(ExpressRouteConnectionList))
             {
                 writer.WritePropertyName("expressRouteConnections"u8);
                 writer.WriteStartArray();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(VirtualHub))
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (Core.Optional.IsDefined(AllowNonVirtualWanTraffic))
+            if (Optional.IsDefined(AllowNonVirtualWanTraffic))
             {
                 writer.WritePropertyName("allowNonVirtualWanTraffic"u8);
                 writer.WriteBooleanValue(AllowNonVirtualWanTraffic.Value);
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<ExpressRouteGatewayPropertiesAutoScaleConfiguration> autoScaleConfiguration = default;
-            Core.Optional<IList<ExpressRouteConnectionData>> expressRouteConnections = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<WritableSubResource> virtualHub = default;
-            Core.Optional<bool> allowNonVirtualWanTraffic = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ExpressRouteGatewayPropertiesAutoScaleConfiguration> autoScaleConfiguration = default;
+            Optional<IList<ExpressRouteConnectionData>> expressRouteConnections = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<WritableSubResource> virtualHub = default;
+            Optional<bool> allowNonVirtualWanTraffic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRouteGatewayData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), autoScaleConfiguration.Value, Core.Optional.ToList(expressRouteConnections), Core.Optional.ToNullable(provisioningState), virtualHub, Core.Optional.ToNullable(allowNonVirtualWanTraffic));
+            return new ExpressRouteGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), autoScaleConfiguration.Value, Optional.ToList(expressRouteConnections), Optional.ToNullable(provisioningState), virtualHub, Optional.ToNullable(allowNonVirtualWanTraffic));
         }
     }
 }

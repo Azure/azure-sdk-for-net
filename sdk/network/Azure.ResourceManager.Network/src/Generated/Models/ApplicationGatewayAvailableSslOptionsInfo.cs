@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptionsInfo. </summary>
         public ApplicationGatewayAvailableSslOptionsInfo()
         {
-            PredefinedPolicies = new Core.ChangeTrackingList<WritableSubResource>();
-            AvailableCipherSuites = new Core.ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
-            AvailableProtocols = new Core.ChangeTrackingList<ApplicationGatewaySslProtocol>();
+            PredefinedPolicies = new ChangeTrackingList<WritableSubResource>();
+            AvailableCipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
+            AvailableProtocols = new ChangeTrackingList<ApplicationGatewaySslProtocol>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslOptionsInfo. </summary>

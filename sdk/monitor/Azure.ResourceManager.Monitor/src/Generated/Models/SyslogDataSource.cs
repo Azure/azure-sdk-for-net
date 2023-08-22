@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of SyslogDataSource. </summary>
         public SyslogDataSource()
         {
-            Streams = new Core.ChangeTrackingList<SyslogDataSourceStream>();
-            FacilityNames = new Core.ChangeTrackingList<SyslogDataSourceFacilityName>();
-            LogLevels = new Core.ChangeTrackingList<SyslogDataSourceLogLevel>();
+            Streams = new ChangeTrackingList<SyslogDataSourceStream>();
+            FacilityNames = new ChangeTrackingList<SyslogDataSourceFacilityName>();
+            LogLevels = new ChangeTrackingList<SyslogDataSourceLogLevel>();
         }
 
         /// <summary> Initializes a new instance of SyslogDataSource. </summary>

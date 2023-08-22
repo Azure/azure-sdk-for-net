@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of AdaptiveApplicationControlGroupData. </summary>
         public AdaptiveApplicationControlGroupData()
         {
-            Issues = new Core.ChangeTrackingList<AdaptiveApplicationControlIssueSummary>();
-            VmRecommendations = new Core.ChangeTrackingList<VmRecommendation>();
-            PathRecommendations = new Core.ChangeTrackingList<PathRecommendation>();
+            Issues = new ChangeTrackingList<AdaptiveApplicationControlIssueSummary>();
+            VmRecommendations = new ChangeTrackingList<VmRecommendation>();
+            PathRecommendations = new ChangeTrackingList<PathRecommendation>();
         }
 
         /// <summary> Initializes a new instance of AdaptiveApplicationControlGroupData. </summary>

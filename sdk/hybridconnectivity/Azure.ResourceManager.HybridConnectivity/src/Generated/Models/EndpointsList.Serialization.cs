@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            Core.Optional<string> nextLink = default;
-            Core.Optional<IReadOnlyList<EndpointResourceData>> value = default;
+            Optional<string> nextLink = default;
+            Optional<IReadOnlyList<EndpointResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     continue;
                 }
             }
-            return new EndpointsList(nextLink.Value, Core.Optional.ToList(value));
+            return new EndpointsList(nextLink.Value, Optional.ToList(value));
         }
     }
 }

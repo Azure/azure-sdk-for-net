@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaTransformOutput : Core.IUtf8JsonSerializable
+    public partial class MediaTransformOutput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OnError))
+            if (Optional.IsDefined(OnError))
             {
                 writer.WritePropertyName("onError"u8);
                 writer.WriteStringValue(OnError.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RelativePriority))
+            if (Optional.IsDefined(RelativePriority))
             {
                 writer.WritePropertyName("relativePriority"u8);
                 writer.WriteStringValue(RelativePriority.Value.ToString());
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<MediaTransformOnErrorType> onError = default;
-            Core.Optional<MediaJobPriority> relativePriority = default;
+            Optional<MediaTransformOnErrorType> onError = default;
+            Optional<MediaJobPriority> relativePriority = default;
             MediaTransformPreset preset = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaTransformOutput(Core.Optional.ToNullable(onError), Core.Optional.ToNullable(relativePriority), preset);
+            return new MediaTransformOutput(Optional.ToNullable(onError), Optional.ToNullable(relativePriority), preset);
         }
     }
 }

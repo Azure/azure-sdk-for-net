@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class BestWorkerMode : Core.IUtf8JsonSerializable
+    public partial class BestWorkerMode : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScoringRule))
+            if (Optional.IsDefined(ScoringRule))
             {
                 writer.WritePropertyName("scoringRule"u8);
                 writer.WriteObjectValue(ScoringRule);
             }
-            if (Core.Optional.IsDefined(ScoringRuleOptions))
+            if (Optional.IsDefined(ScoringRuleOptions))
             {
                 writer.WritePropertyName("scoringRuleOptions"u8);
                 writer.WriteObjectValue(ScoringRuleOptions);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Core.Optional.IsDefined(MinConcurrentOffers))
+            if (Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);
                 writer.WriteNumberValue(MinConcurrentOffers);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentOffers))
+            if (Optional.IsDefined(MaxConcurrentOffers))
             {
                 writer.WritePropertyName("maxConcurrentOffers"u8);
                 writer.WriteNumberValue(MaxConcurrentOffers);
             }
-            if (Core.Optional.IsDefined(BypassSelectors))
+            if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);
@@ -52,12 +52,12 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Core.Optional<RouterRule> scoringRule = default;
-            Core.Optional<ScoringRuleOptions> scoringRuleOptions = default;
+            Optional<RouterRule> scoringRule = default;
+            Optional<ScoringRuleOptions> scoringRuleOptions = default;
             string kind = default;
-            Core.Optional<int> minConcurrentOffers = default;
-            Core.Optional<int> maxConcurrentOffers = default;
-            Core.Optional<bool> bypassSelectors = default;
+            Optional<int> minConcurrentOffers = default;
+            Optional<int> maxConcurrentOffers = default;
+            Optional<bool> bypassSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scoringRule"u8))
@@ -111,7 +111,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new BestWorkerMode(kind, minConcurrentOffers, maxConcurrentOffers, Core.Optional.ToNullable(bypassSelectors), scoringRule.Value, scoringRuleOptions.Value);
+            return new BestWorkerMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors), scoringRule.Value, scoringRuleOptions.Value);
         }
     }
 }

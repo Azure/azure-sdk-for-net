@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of CrossTenantScopes. </summary>
         internal CrossTenantScopes()
         {
-            ManagementGroups = new Core.ChangeTrackingList<string>();
-            Subscriptions = new Core.ChangeTrackingList<string>();
+            ManagementGroups = new ChangeTrackingList<string>();
+            Subscriptions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CrossTenantScopes. </summary>

@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeGroupVolume : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumeGroupVolume : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStartObject();
             writer.WritePropertyName("creationToken"u8);
             writer.WriteStringValue(CreationToken);
-            if (Core.Optional.IsDefined(ServiceLevel))
+            if (Optional.IsDefined(ServiceLevel))
             {
                 writer.WritePropertyName("serviceLevel"u8);
                 writer.WriteStringValue(ServiceLevel.Value.ToString());
             }
             writer.WritePropertyName("usageThreshold"u8);
             writer.WriteNumberValue(UsageThreshold);
-            if (Core.Optional.IsDefined(ExportPolicy))
+            if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
             }
-            if (Core.Optional.IsCollectionDefined(ProtocolTypes))
+            if (Optional.IsCollectionDefined(ProtocolTypes))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SnapshotId))
+            if (Optional.IsDefined(SnapshotId))
             {
                 if (SnapshotId != null)
                 {
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("snapshotId");
                 }
             }
-            if (Core.Optional.IsDefined(DeleteBaseSnapshot))
+            if (Optional.IsDefined(DeleteBaseSnapshot))
             {
                 writer.WritePropertyName("deleteBaseSnapshot"u8);
                 writer.WriteBooleanValue(DeleteBaseSnapshot.Value);
             }
-            if (Core.Optional.IsDefined(BackupId))
+            if (Optional.IsDefined(BackupId))
             {
                 if (BackupId != null)
                 {
@@ -90,62 +90,62 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (Core.Optional.IsDefined(NetworkFeatures))
+            if (Optional.IsDefined(NetworkFeatures))
             {
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
             }
-            if (Core.Optional.IsDefined(VolumeType))
+            if (Optional.IsDefined(VolumeType))
             {
                 writer.WritePropertyName("volumeType"u8);
                 writer.WriteStringValue(VolumeType);
             }
-            if (Core.Optional.IsDefined(DataProtection))
+            if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection);
             }
-            if (Core.Optional.IsDefined(IsRestoring))
+            if (Optional.IsDefined(IsRestoring))
             {
                 writer.WritePropertyName("isRestoring"u8);
                 writer.WriteBooleanValue(IsRestoring.Value);
             }
-            if (Core.Optional.IsDefined(IsSnapshotDirectoryVisible))
+            if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
                 writer.WritePropertyName("snapshotDirectoryVisible"u8);
                 writer.WriteBooleanValue(IsSnapshotDirectoryVisible.Value);
             }
-            if (Core.Optional.IsDefined(IsKerberosEnabled))
+            if (Optional.IsDefined(IsKerberosEnabled))
             {
                 writer.WritePropertyName("kerberosEnabled"u8);
                 writer.WriteBooleanValue(IsKerberosEnabled.Value);
             }
-            if (Core.Optional.IsDefined(SecurityStyle))
+            if (Optional.IsDefined(SecurityStyle))
             {
                 writer.WritePropertyName("securityStyle"u8);
                 writer.WriteStringValue(SecurityStyle.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsSmbEncryptionEnabled))
+            if (Optional.IsDefined(IsSmbEncryptionEnabled))
             {
                 writer.WritePropertyName("smbEncryption"u8);
                 writer.WriteBooleanValue(IsSmbEncryptionEnabled.Value);
             }
-            if (Core.Optional.IsDefined(SmbAccessBasedEnumeration))
+            if (Optional.IsDefined(SmbAccessBasedEnumeration))
             {
                 writer.WritePropertyName("smbAccessBasedEnumeration"u8);
                 writer.WriteStringValue(SmbAccessBasedEnumeration.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SmbNonBrowsable))
+            if (Optional.IsDefined(SmbNonBrowsable))
             {
                 writer.WritePropertyName("smbNonBrowsable"u8);
                 writer.WriteStringValue(SmbNonBrowsable.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsSmbContinuouslyAvailable))
+            if (Optional.IsDefined(IsSmbContinuouslyAvailable))
             {
                 writer.WritePropertyName("smbContinuouslyAvailable"u8);
                 writer.WriteBooleanValue(IsSmbContinuouslyAvailable.Value);
             }
-            if (Core.Optional.IsDefined(ThroughputMibps))
+            if (Optional.IsDefined(ThroughputMibps))
             {
                 if (ThroughputMibps != null)
                 {
@@ -157,32 +157,32 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("throughputMibps");
                 }
             }
-            if (Core.Optional.IsDefined(EncryptionKeySource))
+            if (Optional.IsDefined(EncryptionKeySource))
             {
                 writer.WritePropertyName("encryptionKeySource"u8);
                 writer.WriteStringValue(EncryptionKeySource.Value.ToString());
             }
-            if (Core.Optional.IsDefined(KeyVaultPrivateEndpointResourceId))
+            if (Optional.IsDefined(KeyVaultPrivateEndpointResourceId))
             {
                 writer.WritePropertyName("keyVaultPrivateEndpointResourceId"u8);
                 writer.WriteStringValue(KeyVaultPrivateEndpointResourceId);
             }
-            if (Core.Optional.IsDefined(IsLdapEnabled))
+            if (Optional.IsDefined(IsLdapEnabled))
             {
                 writer.WritePropertyName("ldapEnabled"u8);
                 writer.WriteBooleanValue(IsLdapEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsCoolAccessEnabled))
+            if (Optional.IsDefined(IsCoolAccessEnabled))
             {
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CoolnessPeriod))
+            if (Optional.IsDefined(CoolnessPeriod))
             {
                 writer.WritePropertyName("coolnessPeriod"u8);
                 writer.WriteNumberValue(CoolnessPeriod.Value);
             }
-            if (Core.Optional.IsDefined(UnixPermissions))
+            if (Optional.IsDefined(UnixPermissions))
             {
                 if (UnixPermissions != null)
                 {
@@ -194,42 +194,42 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("unixPermissions");
                 }
             }
-            if (Core.Optional.IsDefined(AvsDataStore))
+            if (Optional.IsDefined(AvsDataStore))
             {
                 writer.WritePropertyName("avsDataStore"u8);
                 writer.WriteStringValue(AvsDataStore.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsDefaultQuotaEnabled))
+            if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
                 writer.WritePropertyName("isDefaultQuotaEnabled"u8);
                 writer.WriteBooleanValue(IsDefaultQuotaEnabled.Value);
             }
-            if (Core.Optional.IsDefined(DefaultUserQuotaInKiBs))
+            if (Optional.IsDefined(DefaultUserQuotaInKiBs))
             {
                 writer.WritePropertyName("defaultUserQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultUserQuotaInKiBs.Value);
             }
-            if (Core.Optional.IsDefined(DefaultGroupQuotaInKiBs))
+            if (Optional.IsDefined(DefaultGroupQuotaInKiBs))
             {
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
-            if (Core.Optional.IsDefined(CapacityPoolResourceId))
+            if (Optional.IsDefined(CapacityPoolResourceId))
             {
                 writer.WritePropertyName("capacityPoolResourceId"u8);
                 writer.WriteStringValue(CapacityPoolResourceId);
             }
-            if (Core.Optional.IsDefined(ProximityPlacementGroupId))
+            if (Optional.IsDefined(ProximityPlacementGroupId))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 writer.WriteStringValue(ProximityPlacementGroupId);
             }
-            if (Core.Optional.IsDefined(VolumeSpecName))
+            if (Optional.IsDefined(VolumeSpecName))
             {
                 writer.WritePropertyName("volumeSpecName"u8);
                 writer.WriteStringValue(VolumeSpecName);
             }
-            if (Core.Optional.IsCollectionDefined(PlacementRules))
+            if (Optional.IsCollectionDefined(PlacementRules))
             {
                 writer.WritePropertyName("placementRules"u8);
                 writer.WriteStartArray();
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableSubvolumes))
+            if (Optional.IsDefined(EnableSubvolumes))
             {
                 writer.WritePropertyName("enableSubvolumes"u8);
                 writer.WriteStringValue(EnableSubvolumes.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsLargeVolume))
+            if (Optional.IsDefined(IsLargeVolume))
             {
                 writer.WritePropertyName("isLargeVolume"u8);
                 writer.WriteBooleanValue(IsLargeVolume.Value);
@@ -259,63 +259,63 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<Guid> fileSystemId = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<Guid> fileSystemId = default;
             string creationToken = default;
-            Core.Optional<NetAppFileServiceLevel> serviceLevel = default;
+            Optional<NetAppFileServiceLevel> serviceLevel = default;
             long usageThreshold = default;
-            Core.Optional<VolumePropertiesExportPolicy> exportPolicy = default;
-            Core.Optional<IList<string>> protocolTypes = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<string> snapshotId = default;
-            Core.Optional<bool> deleteBaseSnapshot = default;
-            Core.Optional<string> backupId = default;
-            Core.Optional<string> baremetalTenantId = default;
+            Optional<VolumePropertiesExportPolicy> exportPolicy = default;
+            Optional<IList<string>> protocolTypes = default;
+            Optional<string> provisioningState = default;
+            Optional<string> snapshotId = default;
+            Optional<bool> deleteBaseSnapshot = default;
+            Optional<string> backupId = default;
+            Optional<string> baremetalTenantId = default;
             ResourceIdentifier subnetId = default;
-            Core.Optional<NetAppNetworkFeature> networkFeatures = default;
-            Core.Optional<Guid> networkSiblingSetId = default;
-            Core.Optional<NetAppVolumeStorageToNetworkProximity> storageToNetworkProximity = default;
-            Core.Optional<IReadOnlyList<NetAppVolumeMountTarget>> mountTargets = default;
-            Core.Optional<string> volumeType = default;
-            Core.Optional<NetAppVolumeDataProtection> dataProtection = default;
-            Core.Optional<bool> isRestoring = default;
-            Core.Optional<bool> snapshotDirectoryVisible = default;
-            Core.Optional<bool> kerberosEnabled = default;
-            Core.Optional<NetAppVolumeSecurityStyle> securityStyle = default;
-            Core.Optional<bool> smbEncryption = default;
-            Core.Optional<SmbAccessBasedEnumeration> smbAccessBasedEnumeration = default;
-            Core.Optional<SmbNonBrowsable> smbNonBrowsable = default;
-            Core.Optional<bool> smbContinuouslyAvailable = default;
-            Core.Optional<float?> throughputMibps = default;
-            Core.Optional<float> actualThroughputMibps = default;
-            Core.Optional<NetAppEncryptionKeySource> encryptionKeySource = default;
-            Core.Optional<ResourceIdentifier> keyVaultPrivateEndpointResourceId = default;
-            Core.Optional<bool> ldapEnabled = default;
-            Core.Optional<bool> coolAccess = default;
-            Core.Optional<int> coolnessPeriod = default;
-            Core.Optional<string> unixPermissions = default;
-            Core.Optional<int?> cloneProgress = default;
-            Core.Optional<NetAppFileAccessLog> fileAccessLogs = default;
-            Core.Optional<NetAppAvsDataStore> avsDataStore = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> dataStoreResourceId = default;
-            Core.Optional<bool> isDefaultQuotaEnabled = default;
-            Core.Optional<long> defaultUserQuotaInKiBs = default;
-            Core.Optional<long> defaultGroupQuotaInKiBs = default;
-            Core.Optional<long> maximumNumberOfFiles = default;
-            Core.Optional<string> volumeGroupName = default;
-            Core.Optional<ResourceIdentifier> capacityPoolResourceId = default;
-            Core.Optional<ResourceIdentifier> proximityPlacementGroup = default;
-            Core.Optional<string> t2Network = default;
-            Core.Optional<string> volumeSpecName = default;
-            Core.Optional<bool> encrypted = default;
-            Core.Optional<IList<NetAppVolumePlacementRule>> placementRules = default;
-            Core.Optional<EnableNetAppSubvolume> enableSubvolumes = default;
-            Core.Optional<string> provisionedAvailabilityZone = default;
-            Core.Optional<bool> isLargeVolume = default;
-            Core.Optional<ResourceIdentifier> originatingResourceId = default;
+            Optional<NetAppNetworkFeature> networkFeatures = default;
+            Optional<Guid> networkSiblingSetId = default;
+            Optional<NetAppVolumeStorageToNetworkProximity> storageToNetworkProximity = default;
+            Optional<IReadOnlyList<NetAppVolumeMountTarget>> mountTargets = default;
+            Optional<string> volumeType = default;
+            Optional<NetAppVolumeDataProtection> dataProtection = default;
+            Optional<bool> isRestoring = default;
+            Optional<bool> snapshotDirectoryVisible = default;
+            Optional<bool> kerberosEnabled = default;
+            Optional<NetAppVolumeSecurityStyle> securityStyle = default;
+            Optional<bool> smbEncryption = default;
+            Optional<SmbAccessBasedEnumeration> smbAccessBasedEnumeration = default;
+            Optional<SmbNonBrowsable> smbNonBrowsable = default;
+            Optional<bool> smbContinuouslyAvailable = default;
+            Optional<float?> throughputMibps = default;
+            Optional<float> actualThroughputMibps = default;
+            Optional<NetAppEncryptionKeySource> encryptionKeySource = default;
+            Optional<ResourceIdentifier> keyVaultPrivateEndpointResourceId = default;
+            Optional<bool> ldapEnabled = default;
+            Optional<bool> coolAccess = default;
+            Optional<int> coolnessPeriod = default;
+            Optional<string> unixPermissions = default;
+            Optional<int?> cloneProgress = default;
+            Optional<NetAppFileAccessLog> fileAccessLogs = default;
+            Optional<NetAppAvsDataStore> avsDataStore = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> dataStoreResourceId = default;
+            Optional<bool> isDefaultQuotaEnabled = default;
+            Optional<long> defaultUserQuotaInKiBs = default;
+            Optional<long> defaultGroupQuotaInKiBs = default;
+            Optional<long> maximumNumberOfFiles = default;
+            Optional<string> volumeGroupName = default;
+            Optional<ResourceIdentifier> capacityPoolResourceId = default;
+            Optional<ResourceIdentifier> proximityPlacementGroup = default;
+            Optional<string> t2Network = default;
+            Optional<string> volumeSpecName = default;
+            Optional<bool> encrypted = default;
+            Optional<IList<NetAppVolumePlacementRule>> placementRules = default;
+            Optional<EnableNetAppSubvolume> enableSubvolumes = default;
+            Optional<string> provisionedAvailabilityZone = default;
+            Optional<bool> isLargeVolume = default;
+            Optional<ResourceIdentifier> originatingResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeGroupVolume(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(fileSystemId), creationToken, Core.Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Core.Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Core.Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Core.Optional.ToNullable(networkFeatures), Core.Optional.ToNullable(networkSiblingSetId), Core.Optional.ToNullable(storageToNetworkProximity), Core.Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Core.Optional.ToNullable(isRestoring), Core.Optional.ToNullable(snapshotDirectoryVisible), Core.Optional.ToNullable(kerberosEnabled), Core.Optional.ToNullable(securityStyle), Core.Optional.ToNullable(smbEncryption), Core.Optional.ToNullable(smbAccessBasedEnumeration), Core.Optional.ToNullable(smbNonBrowsable), Core.Optional.ToNullable(smbContinuouslyAvailable), Core.Optional.ToNullable(throughputMibps), Core.Optional.ToNullable(actualThroughputMibps), Core.Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Core.Optional.ToNullable(ldapEnabled), Core.Optional.ToNullable(coolAccess), Core.Optional.ToNullable(coolnessPeriod), unixPermissions.Value, Core.Optional.ToNullable(cloneProgress), Core.Optional.ToNullable(fileAccessLogs), Core.Optional.ToNullable(avsDataStore), Core.Optional.ToList(dataStoreResourceId), Core.Optional.ToNullable(isDefaultQuotaEnabled), Core.Optional.ToNullable(defaultUserQuotaInKiBs), Core.Optional.ToNullable(defaultGroupQuotaInKiBs), Core.Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Core.Optional.ToNullable(encrypted), Core.Optional.ToList(placementRules), Core.Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Core.Optional.ToNullable(isLargeVolume), originatingResourceId.Value);
+            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value);
         }
     }
 }

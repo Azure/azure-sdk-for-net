@@ -11,29 +11,29 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    public partial class TrafficManagerGeographicHierarchyData : Core.IUtf8JsonSerializable
+    public partial class TrafficManagerGeographicHierarchyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(ResourceType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GeographicHierarchy))
+            if (Optional.IsDefined(GeographicHierarchy))
             {
                 writer.WritePropertyName("geographicHierarchy"u8);
                 writer.WriteObjectValue(GeographicHierarchy);
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<TrafficManagerRegion> geographicHierarchy = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<TrafficManagerRegion> geographicHierarchy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.TrafficManager
                     continue;
                 }
             }
-            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, Core.Optional.ToNullable(type), geographicHierarchy.Value);
+            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, Optional.ToNullable(type), geographicHierarchy.Value);
         }
     }
 }

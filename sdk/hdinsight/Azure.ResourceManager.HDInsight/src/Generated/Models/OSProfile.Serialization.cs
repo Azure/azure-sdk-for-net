@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    internal partial class OSProfile : Core.IUtf8JsonSerializable
+    internal partial class OSProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinuxProfile))
+            if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxOperatingSystemProfile"u8);
                 writer.WriteObjectValue(LinuxProfile);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<HDInsightLinuxOSProfile> linuxOperatingSystemProfile = default;
+            Optional<HDInsightLinuxOSProfile> linuxOperatingSystemProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxOperatingSystemProfile"u8))

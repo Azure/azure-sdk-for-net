@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabNotificationSettings : Core.IUtf8JsonSerializable
+    public partial class DevTestLabNotificationSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TimeInMinutes))
+            if (Optional.IsDefined(TimeInMinutes))
             {
                 writer.WritePropertyName("timeInMinutes"u8);
                 writer.WriteNumberValue(TimeInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(WebhookUri))
+            if (Optional.IsDefined(WebhookUri))
             {
                 writer.WritePropertyName("webhookUrl"u8);
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(EmailRecipient))
+            if (Optional.IsDefined(EmailRecipient))
             {
                 writer.WritePropertyName("emailRecipient"u8);
                 writer.WriteStringValue(EmailRecipient);
             }
-            if (Core.Optional.IsDefined(NotificationLocale))
+            if (Optional.IsDefined(NotificationLocale))
             {
                 writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<DevTestLabEnableStatus> status = default;
-            Core.Optional<int> timeInMinutes = default;
-            Core.Optional<Uri> webhookUrl = default;
-            Core.Optional<string> emailRecipient = default;
-            Core.Optional<string> notificationLocale = default;
+            Optional<DevTestLabEnableStatus> status = default;
+            Optional<int> timeInMinutes = default;
+            Optional<Uri> webhookUrl = default;
+            Optional<string> emailRecipient = default;
+            Optional<string> notificationLocale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabNotificationSettings(Core.Optional.ToNullable(status), Core.Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value);
+            return new DevTestLabNotificationSettings(Optional.ToNullable(status), Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value);
         }
     }
 }

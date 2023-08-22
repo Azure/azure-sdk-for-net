@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NodeTypeAvailableSku>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<NodeTypeAvailableSku>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new NodeTypeListSkuResult(Core.Optional.ToList(value), nextLink.Value);
+            return new NodeTypeListSkuResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

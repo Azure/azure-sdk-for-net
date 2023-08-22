@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesDomainAvailabilityContent : Core.IUtf8JsonSerializable
+    public partial class CognitiveServicesDomainAvailabilityContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subdomainName"u8);
             writer.WriteStringValue(SubdomainName);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceType);
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);

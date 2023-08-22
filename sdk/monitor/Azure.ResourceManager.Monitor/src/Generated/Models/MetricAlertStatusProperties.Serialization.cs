@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, string>> dimensions = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> timestamp = default;
+            Optional<IReadOnlyDictionary<string, string>> dimensions = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> timestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensions"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MetricAlertStatusProperties(Core.Optional.ToDictionary(dimensions), status.Value, Core.Optional.ToNullable(timestamp));
+            return new MetricAlertStatusProperties(Optional.ToDictionary(dimensions), status.Value, Optional.ToNullable(timestamp));
         }
     }
 }

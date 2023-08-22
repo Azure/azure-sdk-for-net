@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>
         public WeeklyRetentionSchedule()
         {
-            DaysOfTheWeek = new Core.ChangeTrackingList<BackupDayOfWeek>();
-            RetentionTimes = new Core.ChangeTrackingList<DateTimeOffset>();
+            DaysOfTheWeek = new ChangeTrackingList<BackupDayOfWeek>();
+            RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
         /// <summary> Initializes a new instance of WeeklyRetentionSchedule. </summary>

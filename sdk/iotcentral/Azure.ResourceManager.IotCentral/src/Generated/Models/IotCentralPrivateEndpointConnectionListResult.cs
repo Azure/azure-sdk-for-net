@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionListResult. </summary>
         internal IotCentralPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionListResult. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ProviderProperties> properties = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<ProviderProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

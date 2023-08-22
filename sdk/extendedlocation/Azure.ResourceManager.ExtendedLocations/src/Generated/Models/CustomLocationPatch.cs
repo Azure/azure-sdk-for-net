@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <summary> Initializes a new instance of CustomLocationPatch. </summary>
         public CustomLocationPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            ClusterExtensionIds = new Core.ChangeTrackingList<ResourceIdentifier>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            ClusterExtensionIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>

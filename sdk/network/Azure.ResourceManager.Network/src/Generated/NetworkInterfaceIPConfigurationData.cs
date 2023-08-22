@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>
         public NetworkInterfaceIPConfigurationData()
         {
-            VirtualNetworkTaps = new Core.ChangeTrackingList<VirtualNetworkTapData>();
-            ApplicationGatewayBackendAddressPools = new Core.ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
-            LoadBalancerBackendAddressPools = new Core.ChangeTrackingList<BackendAddressPoolData>();
-            LoadBalancerInboundNatRules = new Core.ChangeTrackingList<InboundNatRuleData>();
-            ApplicationSecurityGroups = new Core.ChangeTrackingList<ApplicationSecurityGroupData>();
+            VirtualNetworkTaps = new ChangeTrackingList<VirtualNetworkTapData>();
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<ApplicationGatewayBackendAddressPool>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<BackendAddressPoolData>();
+            LoadBalancerInboundNatRules = new ChangeTrackingList<InboundNatRuleData>();
+            ApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationData. </summary>

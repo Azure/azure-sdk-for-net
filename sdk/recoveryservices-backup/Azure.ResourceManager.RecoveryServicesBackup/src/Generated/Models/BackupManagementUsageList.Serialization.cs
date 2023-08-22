@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BackupManagementUsage>> value = default;
+            Optional<IReadOnlyList<BackupManagementUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupManagementUsageList(Core.Optional.ToList(value));
+            return new BackupManagementUsageList(Optional.ToList(value));
         }
     }
 }

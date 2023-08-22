@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> migrationId = default;
-            Core.Optional<string> sourceDatabaseName = default;
-            Core.Optional<string> targetDatabaseName = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<ValidationStatus> status = default;
+            Optional<string> id = default;
+            Optional<string> migrationId = default;
+            Optional<string> sourceDatabaseName = default;
+            Optional<string> targetDatabaseName = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<ValidationStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrationValidationDatabaseSummaryResult(id.Value, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), Core.Optional.ToNullable(status));
+            return new MigrationValidationDatabaseSummaryResult(id.Value, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(status));
         }
     }
 }

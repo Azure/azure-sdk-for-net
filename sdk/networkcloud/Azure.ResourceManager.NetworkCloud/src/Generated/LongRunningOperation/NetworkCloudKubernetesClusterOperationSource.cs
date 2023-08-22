@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudKubernetesClusterOperationSource : Core.IOperationSource<NetworkCloudKubernetesClusterResource>
+    internal class NetworkCloudKubernetesClusterOperationSource : IOperationSource<NetworkCloudKubernetesClusterResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud
             _client = client;
         }
 
-        NetworkCloudKubernetesClusterResource Core.IOperationSource<NetworkCloudKubernetesClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkCloudKubernetesClusterResource IOperationSource<NetworkCloudKubernetesClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(document.RootElement);
             return new NetworkCloudKubernetesClusterResource(_client, data);
         }
 
-        async ValueTask<NetworkCloudKubernetesClusterResource> Core.IOperationSource<NetworkCloudKubernetesClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkCloudKubernetesClusterResource> IOperationSource<NetworkCloudKubernetesClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(document.RootElement);

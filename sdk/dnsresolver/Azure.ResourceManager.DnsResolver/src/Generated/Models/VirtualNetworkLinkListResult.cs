@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>
         internal VirtualNetworkLinkListResult()
         {
-            Value = new Core.ChangeTrackingList<DnsForwardingRulesetVirtualNetworkLinkData>();
+            Value = new ChangeTrackingList<DnsForwardingRulesetVirtualNetworkLinkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>

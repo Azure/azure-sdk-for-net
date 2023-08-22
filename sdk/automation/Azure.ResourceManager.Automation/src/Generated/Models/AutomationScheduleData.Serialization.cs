@@ -13,19 +13,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationScheduleData : Core.IUtf8JsonSerializable
+    public partial class AutomationScheduleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 if (ExpireOn != null)
                 {
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("expiryTime");
                 }
             }
-            if (Core.Optional.IsDefined(ExpireInMinutes))
+            if (Optional.IsDefined(ExpireInMinutes))
             {
                 writer.WritePropertyName("expiryTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(ExpireInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(NextRunOn))
+            if (Optional.IsDefined(NextRunOn))
             {
                 if (NextRunOn != null)
                 {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("nextRun");
                 }
             }
-            if (Core.Optional.IsDefined(NextRunInMinutes))
+            if (Optional.IsDefined(NextRunInMinutes))
             {
                 writer.WritePropertyName("nextRunOffsetMinutes"u8);
                 writer.WriteNumberValue(NextRunInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(Interval))
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
 #if NET6_0_OR_GREATER
@@ -73,32 +73,32 @@ namespace Azure.ResourceManager.Automation
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Interval.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Frequency))
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Core.Optional.IsDefined(AdvancedSchedule))
+            if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
                 writer.WriteObjectValue(AdvancedSchedule);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(LastModifiedOn))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -116,21 +116,21 @@ namespace Azure.ResourceManager.Automation
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<double> startTimeOffsetMinutes = default;
-            Core.Optional<DateTimeOffset?> expiryTime = default;
-            Core.Optional<double> expiryTimeOffsetMinutes = default;
-            Core.Optional<bool> isEnabled = default;
-            Core.Optional<DateTimeOffset?> nextRun = default;
-            Core.Optional<double> nextRunOffsetMinutes = default;
-            Core.Optional<BinaryData> interval = default;
-            Core.Optional<AutomationScheduleFrequency> frequency = default;
-            Core.Optional<string> timeZone = default;
-            Core.Optional<AutomationAdvancedSchedule> advancedSchedule = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<double> startTimeOffsetMinutes = default;
+            Optional<DateTimeOffset?> expiryTime = default;
+            Optional<double> expiryTimeOffsetMinutes = default;
+            Optional<bool> isEnabled = default;
+            Optional<DateTimeOffset?> nextRun = default;
+            Optional<double> nextRunOffsetMinutes = default;
+            Optional<BinaryData> interval = default;
+            Optional<AutomationScheduleFrequency> frequency = default;
+            Optional<string> timeZone = default;
+            Optional<AutomationAdvancedSchedule> advancedSchedule = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Automation
                     continue;
                 }
             }
-            return new AutomationScheduleData(id, name, type, systemData.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(startTimeOffsetMinutes), Core.Optional.ToNullable(expiryTime), Core.Optional.ToNullable(expiryTimeOffsetMinutes), Core.Optional.ToNullable(isEnabled), Core.Optional.ToNullable(nextRun), Core.Optional.ToNullable(nextRunOffsetMinutes), interval.Value, Core.Optional.ToNullable(frequency), timeZone.Value, advancedSchedule.Value, Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastModifiedTime), description.Value);
+            return new AutomationScheduleData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(startTimeOffsetMinutes), Optional.ToNullable(expiryTime), Optional.ToNullable(expiryTimeOffsetMinutes), Optional.ToNullable(isEnabled), Optional.ToNullable(nextRun), Optional.ToNullable(nextRunOffsetMinutes), interval.Value, Optional.ToNullable(frequency), timeZone.Value, advancedSchedule.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value);
         }
     }
 }

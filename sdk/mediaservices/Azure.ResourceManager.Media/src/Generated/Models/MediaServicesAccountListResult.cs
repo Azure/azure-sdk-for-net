@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaServicesAccountListResult. </summary>
         internal MediaServicesAccountListResult()
         {
-            Value = new Core.ChangeTrackingList<MediaServicesAccountData>();
+            Value = new ChangeTrackingList<MediaServicesAccountData>();
         }
 
         /// <summary> Initializes a new instance of MediaServicesAccountListResult. </summary>

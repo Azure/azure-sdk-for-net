@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>
         public DicomServiceAuthenticationConfiguration()
         {
-            Audiences = new Core.ChangeTrackingList<string>();
+            Audiences = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DicomServiceAuthenticationConfiguration. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="location"> The location. </param>
         public CollectorPolicyData(AzureLocation location) : base(location)
         {
-            EmissionPolicies = new Core.ChangeTrackingList<EmissionPoliciesPropertiesFormat>();
+            EmissionPolicies = new ChangeTrackingList<EmissionPoliciesPropertiesFormat>();
         }
 
         /// <summary> Initializes a new instance of CollectorPolicyData. </summary>

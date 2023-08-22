@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAssessmentStatus : Core.IUtf8JsonSerializable
+    public partial class SecurityAssessmentStatus : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
-            if (Core.Optional.IsDefined(Cause))
+            if (Optional.IsDefined(Cause))
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             SecurityAssessmentStatusCode code = default;
-            Core.Optional<string> cause = default;
-            Core.Optional<string> description = default;
+            Optional<string> cause = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))

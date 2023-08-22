@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> patchId = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> kbId = default;
-            Core.Optional<IReadOnlyList<string>> classifications = default;
-            Core.Optional<PatchInstallationState> installationState = default;
+            Optional<string> patchId = default;
+            Optional<string> name = default;
+            Optional<string> version = default;
+            Optional<string> kbId = default;
+            Optional<IReadOnlyList<string>> classifications = default;
+            Optional<PatchInstallationState> installationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchId"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new PatchInstallationDetail(patchId.Value, name.Value, version.Value, kbId.Value, Core.Optional.ToList(classifications), Core.Optional.ToNullable(installationState));
+            return new PatchInstallationDetail(patchId.Value, name.Value, version.Value, kbId.Value, Optional.ToList(classifications), Optional.ToNullable(installationState));
         }
     }
 }

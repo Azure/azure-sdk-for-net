@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<LinkerValidationResultStatus?> result = default;
-            Core.Optional<string> errorMessage = default;
-            Core.Optional<string> errorCode = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
+            Optional<LinkerValidationResultStatus?> result = default;
+            Optional<string> errorMessage = default;
+            Optional<string> errorCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new LinkerValidationResultItemInfo(name.Value, description.Value, Core.Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
+            return new LinkerValidationResultItemInfo(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value);
         }
     }
 }

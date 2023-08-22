@@ -14,14 +14,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis
 {
-    public partial class AnalysisServerData : Core.IUtf8JsonSerializable
+    public partial class AnalysisServerData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(AnalysisSku);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -36,42 +36,42 @@ namespace Azure.ResourceManager.Analysis
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AsAdministrators))
+            if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
                 writer.WriteObjectValue(AsAdministrators);
             }
-            if (Core.Optional.IsDefined(BackupBlobContainerUri))
+            if (Optional.IsDefined(BackupBlobContainerUri))
             {
                 writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(GatewayDetails))
+            if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
                 writer.WriteObjectValue(GatewayDetails);
             }
-            if (Core.Optional.IsDefined(IPv4FirewallSettings))
+            if (Optional.IsDefined(IPv4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
                 writer.WriteObjectValue(IPv4FirewallSettings);
             }
-            if (Core.Optional.IsDefined(QueryPoolConnectionMode))
+            if (Optional.IsDefined(QueryPoolConnectionMode))
             {
                 writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QueryPoolConnectionMode.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(ManagedMode))
+            if (Optional.IsDefined(ManagedMode))
             {
                 writer.WritePropertyName("managedMode"u8);
                 writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
-            if (Core.Optional.IsDefined(ServerMonitorMode))
+            if (Optional.IsDefined(ServerMonitorMode))
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
-            if (Core.Optional.IsDefined(AnalysisServerSku))
+            if (Optional.IsDefined(AnalysisServerSku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(AnalysisServerSku);
@@ -87,23 +87,23 @@ namespace Azure.ResourceManager.Analysis
                 return null;
             }
             AnalysisResourceSku sku = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ServerAdministrators> asAdministrators = default;
-            Core.Optional<Uri> backupBlobContainerUri = default;
-            Core.Optional<AnalysisGatewayDetails> gatewayDetails = default;
-            Core.Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
-            Core.Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
-            Core.Optional<AnalysisManagedMode> managedMode = default;
-            Core.Optional<ServerMonitorMode> serverMonitorMode = default;
-            Core.Optional<AnalysisState> state = default;
-            Core.Optional<AnalysisProvisioningState> provisioningState = default;
-            Core.Optional<string> serverFullName = default;
-            Core.Optional<AnalysisResourceSku> sku0 = default;
+            Optional<SystemData> systemData = default;
+            Optional<ServerAdministrators> asAdministrators = default;
+            Optional<Uri> backupBlobContainerUri = default;
+            Optional<AnalysisGatewayDetails> gatewayDetails = default;
+            Optional<AnalysisIPv4FirewallSettings> ipV4FirewallSettings = default;
+            Optional<AnalysisConnectionMode> querypoolConnectionMode = default;
+            Optional<AnalysisManagedMode> managedMode = default;
+            Optional<ServerMonitorMode> serverMonitorMode = default;
+            Optional<AnalysisState> state = default;
+            Optional<AnalysisProvisioningState> provisioningState = default;
+            Optional<string> serverFullName = default;
+            Optional<AnalysisResourceSku> sku0 = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Analysis
                     continue;
                 }
             }
-            return new AnalysisServerData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Core.Optional.ToNullable(querypoolConnectionMode), Core.Optional.ToNullable(managedMode), Core.Optional.ToNullable(serverMonitorMode), Core.Optional.ToNullable(state), Core.Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku);
+            return new AnalysisServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), Optional.ToNullable(state), Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>
         public ContainerAppQueueScaleRule()
         {
-            Auth = new Core.ChangeTrackingList<ContainerAppScaleRuleAuth>();
+            Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppQueueScaleRule. </summary>

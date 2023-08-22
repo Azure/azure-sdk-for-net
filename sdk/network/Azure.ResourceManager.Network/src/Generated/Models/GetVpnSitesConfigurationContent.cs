@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(outputBlobSasUri, nameof(outputBlobSasUri));
 
-            VpnSites = new Core.ChangeTrackingList<string>();
+            VpnSites = new ChangeTrackingList<string>();
             OutputBlobSasUri = outputBlobSasUri;
         }
 

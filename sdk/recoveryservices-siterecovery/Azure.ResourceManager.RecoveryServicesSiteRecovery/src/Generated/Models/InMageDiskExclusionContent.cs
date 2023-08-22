@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageDiskExclusionContent. </summary>
         public InMageDiskExclusionContent()
         {
-            VolumeOptions = new Core.ChangeTrackingList<InMageVolumeExclusionOptions>();
-            DiskSignatureOptions = new Core.ChangeTrackingList<InMageDiskSignatureExclusionOptions>();
+            VolumeOptions = new ChangeTrackingList<InMageVolumeExclusionOptions>();
+            DiskSignatureOptions = new ChangeTrackingList<InMageDiskSignatureExclusionOptions>();
         }
 
         /// <summary> The volume label based option for disk exclusion. </summary>

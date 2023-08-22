@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class StaticRouterRule : Core.IUtf8JsonSerializable
+    public partial class StaticRouterRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(_value))
+            if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(_value);
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Core.Optional<object> value = default;
+            Optional<object> value = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {

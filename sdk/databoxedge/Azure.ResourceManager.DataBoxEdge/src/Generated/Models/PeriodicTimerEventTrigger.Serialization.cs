@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class PeriodicTimerEventTrigger : Core.IUtf8JsonSerializable
+    public partial class PeriodicTimerEventTrigger : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteObjectValue(SourceInfo);
             writer.WritePropertyName("sinkInfo"u8);
             writer.WriteObjectValue(SinkInfo);
-            if (Core.Optional.IsDefined(CustomContextTag))
+            if (Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);
                 writer.WriteStringValue(CustomContextTag);
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             PeriodicTimerSourceInfo sourceInfo = default;
             DataBoxEdgeRoleSinkInfo sinkInfo = default;
-            Core.Optional<string> customContextTag = default;
+            Optional<string> customContextTag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

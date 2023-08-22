@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class MatchVariable : Core.IUtf8JsonSerializable
+    public partial class MatchVariable : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("variableName"u8);
             writer.WriteStringValue(VariableName.ToString());
-            if (Core.Optional.IsDefined(Selector))
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             WebApplicationFirewallMatchVariable variableName = default;
-            Core.Optional<string> selector = default;
+            Optional<string> selector = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variableName"u8))

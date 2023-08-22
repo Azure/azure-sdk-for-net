@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsHostEntity : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsHostEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OSFamily))
+            if (Optional.IsDefined(OSFamily))
             {
                 writer.WritePropertyName("osFamily"u8);
                 writer.WriteStringValue(OSFamily.Value.ToSerialString());
@@ -41,18 +41,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<ResourceIdentifier> azureId = default;
-            Core.Optional<string> dnsDomain = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<bool> isDomainJoined = default;
-            Core.Optional<string> netBiosName = default;
-            Core.Optional<string> ntDomain = default;
-            Core.Optional<string> omsAgentId = default;
-            Core.Optional<SecurityInsightsHostOSFamily> osFamily = default;
-            Core.Optional<string> osVersion = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<ResourceIdentifier> azureId = default;
+            Optional<string> dnsDomain = default;
+            Optional<string> hostName = default;
+            Optional<bool> isDomainJoined = default;
+            Optional<string> netBiosName = default;
+            Optional<string> ntDomain = default;
+            Optional<string> omsAgentId = default;
+            Optional<SecurityInsightsHostOSFamily> osFamily = default;
+            Optional<string> osVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsHostEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, azureId.Value, dnsDomain.Value, hostName.Value, Core.Optional.ToNullable(isDomainJoined), netBiosName.Value, ntDomain.Value, omsAgentId.Value, Core.Optional.ToNullable(osFamily), osVersion.Value);
+            return new SecurityInsightsHostEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, azureId.Value, dnsDomain.Value, hostName.Value, Optional.ToNullable(isDomainJoined), netBiosName.Value, ntDomain.Value, omsAgentId.Value, Optional.ToNullable(osFamily), osVersion.Value);
         }
     }
 }

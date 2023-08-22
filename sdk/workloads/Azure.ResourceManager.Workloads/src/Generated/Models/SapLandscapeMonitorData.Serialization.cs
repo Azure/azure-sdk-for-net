@@ -13,19 +13,19 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapLandscapeMonitorData : Core.IUtf8JsonSerializable
+    public partial class SapLandscapeMonitorData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Grouping))
+            if (Optional.IsDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteObjectValue(Grouping);
             }
-            if (Core.Optional.IsCollectionDefined(TopMetricsThresholds))
+            if (Optional.IsCollectionDefined(TopMetricsThresholds))
             {
                 writer.WritePropertyName("topMetricsThresholds"u8);
                 writer.WriteStartArray();
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Workloads
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SapLandscapeMonitorProvisioningState> provisioningState = default;
-            Core.Optional<SapLandscapeMonitorPropertiesGrouping> grouping = default;
-            Core.Optional<IList<SapLandscapeMonitorMetricThresholds>> topMetricsThresholds = default;
+            Optional<SystemData> systemData = default;
+            Optional<SapLandscapeMonitorProvisioningState> provisioningState = default;
+            Optional<SapLandscapeMonitorPropertiesGrouping> grouping = default;
+            Optional<IList<SapLandscapeMonitorMetricThresholds>> topMetricsThresholds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Workloads
                     continue;
                 }
             }
-            return new SapLandscapeMonitorData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), grouping.Value, Core.Optional.ToList(topMetricsThresholds));
+            return new SapLandscapeMonitorData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), grouping.Value, Optional.ToList(topMetricsThresholds));
         }
     }
 }

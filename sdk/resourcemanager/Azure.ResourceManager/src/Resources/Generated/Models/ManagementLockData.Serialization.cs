@@ -13,21 +13,21 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ManagementLockData : Core.IUtf8JsonSerializable
+    public partial class ManagementLockData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("level"u8);
             writer.WriteStringValue(Level.ToString());
-            if (Core.Optional.IsDefined(Notes))
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Core.Optional.IsCollectionDefined(Owners))
+            if (Optional.IsCollectionDefined(Owners))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Resources
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             ManagementLockLevel level = default;
-            Core.Optional<string> notes = default;
-            Core.Optional<IList<ManagementLockOwner>> owners = default;
+            Optional<string> notes = default;
+            Optional<IList<ManagementLockOwner>> owners = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new ManagementLockData(id, name, type, systemData.Value, level, notes.Value, Core.Optional.ToList(owners));
+            return new ManagementLockData(id, name, type, systemData.Value, level, notes.Value, Optional.ToList(owners));
         }
     }
 }

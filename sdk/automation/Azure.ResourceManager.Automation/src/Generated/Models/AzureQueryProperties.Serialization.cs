@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AzureQueryProperties : Core.IUtf8JsonSerializable
+    public partial class AzureQueryProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Scope))
+            if (Optional.IsCollectionDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Locations))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TagSettings))
+            if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
                 writer.WriteObjectValue(TagSettings);
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> scope = default;
-            Core.Optional<IList<AzureLocation>> locations = default;
-            Core.Optional<QueryTagSettingsProperties> tagSettings = default;
+            Optional<IList<string>> scope = default;
+            Optional<IList<AzureLocation>> locations = default;
+            Optional<QueryTagSettingsProperties> tagSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AzureQueryProperties(Core.Optional.ToList(scope), Core.Optional.ToList(locations), tagSettings.Value);
+            return new AzureQueryProperties(Optional.ToList(scope), Optional.ToList(locations), tagSettings.Value);
         }
     }
 }

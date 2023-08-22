@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCertificateProperties : Core.IUtf8JsonSerializable
+    public partial class AppServiceCertificateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyVaultId))
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (Core.Optional.IsDefined(KeyVaultSecretName))
+            if (Optional.IsDefined(KeyVaultSecretName))
             {
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> keyVaultId = default;
-            Core.Optional<string> keyVaultSecretName = default;
-            Core.Optional<KeyVaultSecretStatus> provisioningState = default;
+            Optional<ResourceIdentifier> keyVaultId = default;
+            Optional<string> keyVaultSecretName = default;
+            Optional<KeyVaultSecretStatus> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceCertificateProperties(keyVaultId.Value, keyVaultSecretName.Value, Core.Optional.ToNullable(provisioningState));
+            return new AppServiceCertificateProperties(keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

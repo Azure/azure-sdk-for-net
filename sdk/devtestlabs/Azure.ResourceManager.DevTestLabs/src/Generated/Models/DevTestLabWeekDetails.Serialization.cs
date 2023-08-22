@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabWeekDetails : Core.IUtf8JsonSerializable
+    public partial class DevTestLabWeekDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Weekdays))
+            if (Optional.IsCollectionDefined(Weekdays))
             {
                 writer.WritePropertyName("weekdays"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Time))
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> weekdays = default;
-            Core.Optional<string> time = default;
+            Optional<IList<string>> weekdays = default;
+            Optional<string> time = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("weekdays"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabWeekDetails(Core.Optional.ToList(weekdays), time.Value);
+            return new DevTestLabWeekDetails(Optional.ToList(weekdays), time.Value);
         }
     }
 }

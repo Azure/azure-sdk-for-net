@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class FacebookChannelProperties : Core.IUtf8JsonSerializable
+    public partial class FacebookChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Pages))
+            if (Optional.IsCollectionDefined(Pages))
             {
                 writer.WritePropertyName("pages"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            if (Core.Optional.IsDefined(AppSecret))
+            if (Optional.IsDefined(AppSecret))
             {
                 writer.WritePropertyName("appSecret"u8);
                 writer.WriteStringValue(AppSecret);
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<string> verifyToken = default;
-            Core.Optional<IList<FacebookPage>> pages = default;
+            Optional<string> verifyToken = default;
+            Optional<IList<FacebookPage>> pages = default;
             string appId = default;
-            Core.Optional<string> appSecret = default;
-            Core.Optional<Uri> callbackUrl = default;
+            Optional<string> appSecret = default;
+            Optional<Uri> callbackUrl = default;
             bool isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new FacebookChannelProperties(verifyToken.Value, Core.Optional.ToList(pages), appId, appSecret.Value, callbackUrl.Value, isEnabled);
+            return new FacebookChannelProperties(verifyToken.Value, Optional.ToList(pages), appId, appSecret.Value, callbackUrl.Value, isEnabled);
         }
     }
 }

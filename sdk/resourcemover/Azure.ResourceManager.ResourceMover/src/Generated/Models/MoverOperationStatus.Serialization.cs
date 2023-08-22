@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<MoverOperationStatusError> error = default;
-            Core.Optional<BinaryData> properties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<MoverOperationStatusError> error = default;
+            Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverOperationStatus(id.Value, name.Value, status.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), error.Value, properties.Value);
+            return new MoverOperationStatus(id.Value, name.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), error.Value, properties.Value);
         }
     }
 }

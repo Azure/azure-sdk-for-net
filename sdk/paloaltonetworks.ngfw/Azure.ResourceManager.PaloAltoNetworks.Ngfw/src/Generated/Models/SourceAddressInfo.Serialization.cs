@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class SourceAddressInfo : Core.IUtf8JsonSerializable
+    public partial class SourceAddressInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Cidrs))
+            if (Optional.IsCollectionDefined(Cidrs))
             {
                 writer.WritePropertyName("cidrs"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Countries))
+            if (Optional.IsCollectionDefined(Countries))
             {
                 writer.WritePropertyName("countries"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Feeds))
+            if (Optional.IsCollectionDefined(Feeds))
             {
                 writer.WritePropertyName("feeds"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PrefixLists))
+            if (Optional.IsCollectionDefined(PrefixLists))
             {
                 writer.WritePropertyName("prefixLists"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> cidrs = default;
-            Core.Optional<IList<string>> countries = default;
-            Core.Optional<IList<string>> feeds = default;
-            Core.Optional<IList<string>> prefixLists = default;
+            Optional<IList<string>> cidrs = default;
+            Optional<IList<string>> countries = default;
+            Optional<IList<string>> feeds = default;
+            Optional<IList<string>> prefixLists = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cidrs"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     continue;
                 }
             }
-            return new SourceAddressInfo(Core.Optional.ToList(cidrs), Core.Optional.ToList(countries), Core.Optional.ToList(feeds), Core.Optional.ToList(prefixLists));
+            return new SourceAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists));
         }
     }
 }

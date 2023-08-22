@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriRewriteActionProperties : Core.IUtf8JsonSerializable
+    public partial class UriRewriteActionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(SourcePattern);
             writer.WritePropertyName("destination"u8);
             writer.WriteStringValue(Destination);
-            if (Core.Optional.IsDefined(PreserveUnmatchedPath))
+            if (Optional.IsDefined(PreserveUnmatchedPath))
             {
                 writer.WritePropertyName("preserveUnmatchedPath"u8);
                 writer.WriteBooleanValue(PreserveUnmatchedPath.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             UriRewriteActionType typeName = default;
             string sourcePattern = default;
             string destination = default;
-            Core.Optional<bool> preserveUnmatchedPath = default;
+            Optional<bool> preserveUnmatchedPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UriRewriteActionProperties(typeName, sourcePattern, destination, Core.Optional.ToNullable(preserveUnmatchedPath));
+            return new UriRewriteActionProperties(typeName, sourcePattern, destination, Optional.ToNullable(preserveUnmatchedPath));
         }
     }
 }

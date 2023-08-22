@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of DtmfResult. </summary>
         internal DtmfResult()
         {
-            Tones = new Core.ChangeTrackingList<DtmfTone>();
+            Tones = new ChangeTrackingList<DtmfTone>();
         }
 
         /// <summary> Initializes a new instance of DtmfResult. </summary>

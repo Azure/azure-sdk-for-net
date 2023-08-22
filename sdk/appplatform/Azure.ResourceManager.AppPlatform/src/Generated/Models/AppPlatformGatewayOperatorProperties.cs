@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformGatewayOperatorProperties. </summary>
         internal AppPlatformGatewayOperatorProperties()
         {
-            Instances = new Core.ChangeTrackingList<AppPlatformGatewayInstance>();
+            Instances = new ChangeTrackingList<AppPlatformGatewayInstance>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformGatewayOperatorProperties. </summary>

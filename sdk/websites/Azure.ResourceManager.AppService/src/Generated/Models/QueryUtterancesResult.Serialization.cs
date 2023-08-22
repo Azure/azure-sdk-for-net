@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class QueryUtterancesResult : Core.IUtf8JsonSerializable
+    public partial class QueryUtterancesResult : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SampleUtterance))
+            if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
                 writer.WriteObjectValue(SampleUtterance);
             }
-            if (Core.Optional.IsDefined(Score))
+            if (Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<SampleUtterance> sampleUtterance = default;
-            Core.Optional<float> score = default;
+            Optional<SampleUtterance> sampleUtterance = default;
+            Optional<float> score = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sampleUtterance"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new QueryUtterancesResult(sampleUtterance.Value, Core.Optional.ToNullable(score));
+            return new QueryUtterancesResult(sampleUtterance.Value, Optional.ToNullable(score));
         }
     }
 }

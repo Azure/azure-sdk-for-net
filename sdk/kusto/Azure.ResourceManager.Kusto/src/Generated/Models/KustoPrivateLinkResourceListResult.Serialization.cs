@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<KustoPrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<KustoPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoPrivateLinkResourceListResult(Core.Optional.ToList(value));
+            return new KustoPrivateLinkResourceListResult(Optional.ToList(value));
         }
     }
 }

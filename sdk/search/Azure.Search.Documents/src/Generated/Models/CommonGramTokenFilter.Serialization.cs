@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class CommonGramTokenFilter : Core.IUtf8JsonSerializable
+    public partial class CommonGramTokenFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("commonWords"u8);
@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(IgnoreCase))
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Core.Optional.IsDefined(UseQueryMode))
+            if (Optional.IsDefined(UseQueryMode))
             {
                 writer.WritePropertyName("queryMode"u8);
                 writer.WriteBooleanValue(UseQueryMode.Value);
@@ -47,8 +47,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> commonWords = default;
-            Core.Optional<bool> ignoreCase = default;
-            Core.Optional<bool> queryMode = default;
+            Optional<bool> ignoreCase = default;
+            Optional<bool> queryMode = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CommonGramTokenFilter(odataType, name, commonWords, Core.Optional.ToNullable(ignoreCase), Core.Optional.ToNullable(queryMode));
+            return new CommonGramTokenFilter(odataType, name, commonWords, Optional.ToNullable(ignoreCase), Optional.ToNullable(queryMode));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionListResult. </summary>
         internal PostgreSqlPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<PostgreSqlPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<PostgreSqlPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlPrivateEndpointConnectionListResult. </summary>

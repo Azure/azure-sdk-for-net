@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CapacityReservationInstanceViewWithName>> capacityReservations = default;
+            Optional<IReadOnlyList<CapacityReservationInstanceViewWithName>> capacityReservations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacityReservations"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CapacityReservationGroupInstanceView(Core.Optional.ToList(capacityReservations));
+            return new CapacityReservationGroupInstanceView(Optional.ToList(capacityReservations));
         }
     }
 }

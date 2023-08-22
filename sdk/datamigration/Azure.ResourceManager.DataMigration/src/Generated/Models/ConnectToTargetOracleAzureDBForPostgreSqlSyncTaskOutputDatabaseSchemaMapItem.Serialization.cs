@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> database = default;
-            Core.Optional<IReadOnlyList<string>> schemas = default;
+            Optional<string> database = default;
+            Optional<IReadOnlyList<string>> schemas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("database"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem(database.Value, Core.Optional.ToList(schemas));
+            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem(database.Value, Optional.ToList(schemas));
         }
     }
 }

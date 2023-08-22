@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = await _azureDevOpsOrgRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityDevOpsArmOperation<AzureDevOpsOrgResource>(new AzureDevOpsOrgOperationSource(Client), _azureDevOpsOrgClientDiagnostics, Pipeline, _azureDevOpsOrgRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SecurityDevOpsArmOperation<AzureDevOpsOrgResource>(new AzureDevOpsOrgOperationSource(Client), _azureDevOpsOrgClientDiagnostics, Pipeline, _azureDevOpsOrgRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             try
             {
                 var response = _azureDevOpsOrgRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, data, cancellationToken);
-                var operation = new SecurityDevOpsArmOperation<AzureDevOpsOrgResource>(new AzureDevOpsOrgOperationSource(Client), _azureDevOpsOrgClientDiagnostics, Pipeline, _azureDevOpsOrgRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SecurityDevOpsArmOperation<AzureDevOpsOrgResource>(new AzureDevOpsOrgOperationSource(Client), _azureDevOpsOrgClientDiagnostics, Pipeline, _azureDevOpsOrgRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, azureDevOpsOrgName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsOrgRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "AzureDevOpsOrgCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "AzureDevOpsOrgCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureDevOpsOrgRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _azureDevOpsOrgRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "AzureDevOpsOrgCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureDevOpsOrgResource(Client, AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(e)), _azureDevOpsOrgClientDiagnostics, Pipeline, "AzureDevOpsOrgCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

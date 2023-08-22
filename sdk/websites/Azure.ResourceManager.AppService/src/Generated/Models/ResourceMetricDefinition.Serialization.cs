@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ResourceMetricDefinition : Core.IUtf8JsonSerializable
+    public partial class ResourceMetricDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<string> primaryAggregationType = default;
-            Core.Optional<IReadOnlyList<ResourceMetricAvailability>> metricAvailabilities = default;
-            Core.Optional<Uri> resourceUri = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> properties = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> unit = default;
+            Optional<string> primaryAggregationType = default;
+            Optional<IReadOnlyList<ResourceMetricAvailability>> metricAvailabilities = default;
+            Optional<Uri> resourceUri = default;
+            Optional<IReadOnlyDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, Core.Optional.ToList(metricAvailabilities), resourceUri.Value, Core.Optional.ToDictionary(properties), kind.Value);
+            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, Optional.ToList(metricAvailabilities), resourceUri.Value, Optional.ToDictionary(properties), kind.Value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverResourceList. </summary>
         internal MoverResourceList()
         {
-            Value = new Core.ChangeTrackingList<MoverResourceData>();
+            Value = new ChangeTrackingList<MoverResourceData>();
         }
 
         /// <summary> Initializes a new instance of MoverResourceList. </summary>

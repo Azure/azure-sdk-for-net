@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class ManagedRuleOverride : Core.IUtf8JsonSerializable
+    public partial class ManagedRuleOverride : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
-            if (Core.Optional.IsDefined(EnabledState))
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Action))
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Exclusions))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             string ruleId = default;
-            Core.Optional<ManagedRuleEnabledState> enabledState = default;
-            Core.Optional<RuleMatchActionType> action = default;
-            Core.Optional<IList<ManagedRuleExclusion>> exclusions = default;
+            Optional<ManagedRuleEnabledState> enabledState = default;
+            Optional<RuleMatchActionType> action = default;
+            Optional<IList<ManagedRuleExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ManagedRuleOverride(ruleId, Core.Optional.ToNullable(enabledState), Core.Optional.ToNullable(action), Core.Optional.ToList(exclusions));
+            return new ManagedRuleOverride(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action), Optional.ToList(exclusions));
         }
     }
 }

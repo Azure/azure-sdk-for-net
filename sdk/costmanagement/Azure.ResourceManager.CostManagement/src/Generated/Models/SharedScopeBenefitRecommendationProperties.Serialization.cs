@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class SharedScopeBenefitRecommendationProperties : Core.IUtf8JsonSerializable
+    public partial class SharedScopeBenefitRecommendationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LookBackPeriod))
+            if (Optional.IsDefined(LookBackPeriod))
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteStringValue(LookBackPeriod.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Usage))
+            if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage);
             }
-            if (Core.Optional.IsDefined(Term))
+            if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CommitmentGranularity))
+            if (Optional.IsDefined(CommitmentGranularity))
             {
                 writer.WritePropertyName("commitmentGranularity"u8);
                 writer.WriteStringValue(CommitmentGranularity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RecommendationDetails))
+            if (Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
                 writer.WriteObjectValue(RecommendationDetails);
@@ -52,18 +52,18 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> firstConsumptionDate = default;
-            Core.Optional<DateTimeOffset> lastConsumptionDate = default;
-            Core.Optional<LookBackPeriod> lookBackPeriod = default;
-            Core.Optional<int> totalHours = default;
-            Core.Optional<RecommendationUsageDetails> usage = default;
-            Core.Optional<string> armSkuName = default;
-            Core.Optional<BenefitRecommendationPeriodTerm> term = default;
-            Core.Optional<BenefitRecommendationUsageGrain> commitmentGranularity = default;
-            Core.Optional<string> currencyCode = default;
-            Core.Optional<decimal> costWithoutBenefit = default;
-            Core.Optional<AllSavingsBenefitDetails> recommendationDetails = default;
-            Core.Optional<AllSavingsList> allRecommendationDetails = default;
+            Optional<DateTimeOffset> firstConsumptionDate = default;
+            Optional<DateTimeOffset> lastConsumptionDate = default;
+            Optional<LookBackPeriod> lookBackPeriod = default;
+            Optional<int> totalHours = default;
+            Optional<RecommendationUsageDetails> usage = default;
+            Optional<string> armSkuName = default;
+            Optional<BenefitRecommendationPeriodTerm> term = default;
+            Optional<BenefitRecommendationUsageGrain> commitmentGranularity = default;
+            Optional<string> currencyCode = default;
+            Optional<decimal> costWithoutBenefit = default;
+            Optional<AllSavingsBenefitDetails> recommendationDetails = default;
+            Optional<AllSavingsList> allRecommendationDetails = default;
             BenefitRecommendationScope scope = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new SharedScopeBenefitRecommendationProperties(Core.Optional.ToNullable(firstConsumptionDate), Core.Optional.ToNullable(lastConsumptionDate), Core.Optional.ToNullable(lookBackPeriod), Core.Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Core.Optional.ToNullable(term), Core.Optional.ToNullable(commitmentGranularity), currencyCode.Value, Core.Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope);
+            return new SharedScopeBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope);
         }
     }
 }

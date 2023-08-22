@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>
         internal SecurityPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorSecurityPolicyData>();
+            Value = new ChangeTrackingList<FrontDoorSecurityPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>

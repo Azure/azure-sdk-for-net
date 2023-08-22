@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Core.Optional<IReadOnlyList<KustoSkuLocationInfoItem>> locationInfo = default;
-            Core.Optional<IReadOnlyList<BinaryData>> restrictions = default;
+            Optional<string> resourceType = default;
+            Optional<string> name = default;
+            Optional<string> tier = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
+            Optional<IReadOnlyList<KustoSkuLocationInfoItem>> locationInfo = default;
+            Optional<IReadOnlyList<BinaryData>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoSkuDescription(resourceType.Value, name.Value, tier.Value, Core.Optional.ToList(locations), Core.Optional.ToList(locationInfo), Core.Optional.ToList(restrictions));
+            return new KustoSkuDescription(resourceType.Value, name.Value, tier.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions));
         }
     }
 }

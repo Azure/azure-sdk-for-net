@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>
         internal ShareCredentialDetails()
         {
-            SupportedAccessProtocols = new Core.ChangeTrackingList<DataBoxAccessProtocol>();
+            SupportedAccessProtocols = new ChangeTrackingList<DataBoxAccessProtocol>();
         }
 
         /// <summary> Initializes a new instance of ShareCredentialDetails. </summary>

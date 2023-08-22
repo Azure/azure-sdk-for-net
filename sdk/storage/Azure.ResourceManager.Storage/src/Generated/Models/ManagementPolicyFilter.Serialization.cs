@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyFilter : Core.IUtf8JsonSerializable
+    public partial class ManagementPolicyFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PrefixMatch))
+            if (Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(BlobIndexMatch))
+            if (Optional.IsCollectionDefined(BlobIndexMatch))
             {
                 writer.WritePropertyName("blobIndexMatch"u8);
                 writer.WriteStartArray();
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> prefixMatch = default;
+            Optional<IList<string>> prefixMatch = default;
             IList<string> blobTypes = default;
-            Core.Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;
+            Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ManagementPolicyFilter(Core.Optional.ToList(prefixMatch), blobTypes, Core.Optional.ToList(blobIndexMatch));
+            return new ManagementPolicyFilter(Optional.ToList(prefixMatch), blobTypes, Optional.ToList(blobIndexMatch));
         }
     }
 }

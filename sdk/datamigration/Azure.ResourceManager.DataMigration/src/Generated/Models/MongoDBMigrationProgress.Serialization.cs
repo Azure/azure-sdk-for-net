@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, MongoDBDatabaseProgress>> databases = default;
+            Optional<IReadOnlyDictionary<string, MongoDBDatabaseProgress>> databases = default;
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Core.Optional<DateTimeOffset> lastEventTime = default;
-            Core.Optional<DateTimeOffset> lastReplayTime = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> qualifiedName = default;
+            Optional<DateTimeOffset> lastEventTime = default;
+            Optional<DateTimeOffset> lastReplayTime = default;
+            Optional<string> name = default;
+            Optional<string> qualifiedName = default;
             MongoDBProgressResultType resultType = default;
             MongoDBMigrationState state = default;
             long totalBytes = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MongoDBMigrationProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Core.Optional.ToNullable(lastEventTime), Core.Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, Core.Optional.ToDictionary(databases));
+            return new MongoDBMigrationProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, Optional.ToDictionary(databases));
         }
     }
 }

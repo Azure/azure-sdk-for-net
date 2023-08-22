@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseDataSourceResourceSkuListResult. </summary>
         internal SynapseDataSourceResourceSkuListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseDataSourceResourceSku>();
+            Value = new ChangeTrackingList<SynapseDataSourceResourceSku>();
         }
 
         /// <summary> Initializes a new instance of SynapseDataSourceResourceSkuListResult. </summary>

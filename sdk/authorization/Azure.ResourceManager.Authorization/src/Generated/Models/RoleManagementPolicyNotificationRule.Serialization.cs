@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyNotificationRule : Core.IUtf8JsonSerializable
+    public partial class RoleManagementPolicyNotificationRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NotificationDeliveryType))
+            if (Optional.IsDefined(NotificationDeliveryType))
             {
                 writer.WritePropertyName("notificationType"u8);
                 writer.WriteStringValue(NotificationDeliveryType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(NotificationLevel))
+            if (Optional.IsDefined(NotificationLevel))
             {
                 writer.WritePropertyName("notificationLevel"u8);
                 writer.WriteStringValue(NotificationLevel.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RecipientType))
+            if (Optional.IsDefined(RecipientType))
             {
                 writer.WritePropertyName("recipientType"u8);
                 writer.WriteStringValue(RecipientType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(NotificationRecipients))
+            if (Optional.IsCollectionDefined(NotificationRecipients))
             {
                 writer.WritePropertyName("notificationRecipients"u8);
                 writer.WriteStartArray();
@@ -41,19 +41,19 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AreDefaultRecipientsEnabled))
+            if (Optional.IsDefined(AreDefaultRecipientsEnabled))
             {
                 writer.WritePropertyName("isDefaultRecipientsEnabled"u8);
                 writer.WriteBooleanValue(AreDefaultRecipientsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<NotificationDeliveryType> notificationType = default;
-            Core.Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
-            Core.Optional<RoleManagementPolicyRecipientType> recipientType = default;
-            Core.Optional<IList<string>> notificationRecipients = default;
-            Core.Optional<bool> isDefaultRecipientsEnabled = default;
-            Core.Optional<string> id = default;
+            Optional<NotificationDeliveryType> notificationType = default;
+            Optional<RoleManagementPolicyNotificationLevel> notificationLevel = default;
+            Optional<RoleManagementPolicyRecipientType> recipientType = default;
+            Optional<IList<string>> notificationRecipients = default;
+            Optional<bool> isDefaultRecipientsEnabled = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Core.Optional<RoleManagementPolicyRuleTarget> target = default;
+            Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notificationType"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, Core.Optional.ToNullable(notificationType), Core.Optional.ToNullable(notificationLevel), Core.Optional.ToNullable(recipientType), Core.Optional.ToList(notificationRecipients), Core.Optional.ToNullable(isDefaultRecipientsEnabled));
+            return new RoleManagementPolicyNotificationRule(id.Value, ruleType, target.Value, Optional.ToNullable(notificationType), Optional.ToNullable(notificationLevel), Optional.ToNullable(recipientType), Optional.ToList(notificationRecipients), Optional.ToNullable(isDefaultRecipientsEnabled));
         }
     }
 }

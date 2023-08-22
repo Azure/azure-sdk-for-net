@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultPropertiesMoveDetails : Core.IUtf8JsonSerializable
+    public partial class VaultPropertiesMoveDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Core.Optional<string> operationId = default;
-            Core.Optional<DateTimeOffset> startTimeUtc = default;
-            Core.Optional<DateTimeOffset> completionTimeUtc = default;
-            Core.Optional<ResourceIdentifier> sourceResourceId = default;
-            Core.Optional<ResourceIdentifier> targetResourceId = default;
+            Optional<string> operationId = default;
+            Optional<DateTimeOffset> startTimeUtc = default;
+            Optional<DateTimeOffset> completionTimeUtc = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> targetResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     continue;
                 }
             }
-            return new VaultPropertiesMoveDetails(operationId.Value, Core.Optional.ToNullable(startTimeUtc), Core.Optional.ToNullable(completionTimeUtc), sourceResourceId.Value, targetResourceId.Value);
+            return new VaultPropertiesMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourceId.Value, targetResourceId.Value);
         }
     }
 }

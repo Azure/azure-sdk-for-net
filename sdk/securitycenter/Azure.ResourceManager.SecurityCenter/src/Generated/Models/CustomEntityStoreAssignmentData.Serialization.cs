@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class CustomEntityStoreAssignmentData : Core.IUtf8JsonSerializable
+    public partial class CustomEntityStoreAssignmentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Principal))
+            if (Optional.IsDefined(Principal))
             {
                 writer.WritePropertyName("principal"u8);
                 writer.WriteStringValue(Principal);
             }
-            if (Core.Optional.IsDefined(EntityStoreDatabaseLink))
+            if (Optional.IsDefined(EntityStoreDatabaseLink))
             {
                 writer.WritePropertyName("entityStoreDatabaseLink"u8);
                 writer.WriteStringValue(EntityStoreDatabaseLink);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> principal = default;
-            Core.Optional<string> entityStoreDatabaseLink = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> principal = default;
+            Optional<string> entityStoreDatabaseLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

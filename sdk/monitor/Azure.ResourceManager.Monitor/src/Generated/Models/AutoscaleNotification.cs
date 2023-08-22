@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public AutoscaleNotification()
         {
             Operation = MonitorOperationType.Scale;
-            Webhooks = new Core.ChangeTrackingList<WebhookNotification>();
+            Webhooks = new ChangeTrackingList<WebhookNotification>();
         }
 
         /// <summary> Initializes a new instance of AutoscaleNotification. </summary>

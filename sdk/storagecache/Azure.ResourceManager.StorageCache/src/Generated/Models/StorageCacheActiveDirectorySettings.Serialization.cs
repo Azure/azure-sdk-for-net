@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheActiveDirectorySettings : Core.IUtf8JsonSerializable
+    public partial class StorageCacheActiveDirectorySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("primaryDnsIpAddress"u8);
             writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
-            if (Core.Optional.IsDefined(SecondaryDnsIPAddress))
+            if (Optional.IsDefined(SecondaryDnsIPAddress))
             {
                 writer.WritePropertyName("secondaryDnsIpAddress"u8);
                 writer.WriteStringValue(SecondaryDnsIPAddress.ToString());
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(DomainNetBiosName);
             writer.WritePropertyName("cacheNetBiosName"u8);
             writer.WriteStringValue(CacheNetBiosName);
-            if (Core.Optional.IsDefined(Credentials))
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             IPAddress primaryDnsIPAddress = default;
-            Core.Optional<IPAddress> secondaryDnsIPAddress = default;
+            Optional<IPAddress> secondaryDnsIPAddress = default;
             string domainName = default;
             string domainNetBiosName = default;
             string cacheNetBiosName = default;
-            Core.Optional<DomainJoinedType> domainJoined = default;
-            Core.Optional<StorageCacheActiveDirectorySettingsCredentials> credentials = default;
+            Optional<DomainJoinedType> domainJoined = default;
+            Optional<StorageCacheActiveDirectorySettingsCredentials> credentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryDnsIpAddress"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress.Value, domainName, domainNetBiosName, cacheNetBiosName, Core.Optional.ToNullable(domainJoined), credentials.Value);
+            return new StorageCacheActiveDirectorySettings(primaryDnsIPAddress, secondaryDnsIPAddress.Value, domainName, domainNetBiosName, cacheNetBiosName, Optional.ToNullable(domainJoined), credentials.Value);
         }
     }
 }

@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomMultiLabelClassificationTaskParameters : Core.IUtf8JsonSerializable
+    internal partial class CustomMultiLabelClassificationTaskParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
-            if (Core.Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string projectName = default;
             string deploymentName = default;
-            Core.Optional<bool> loggingOptOut = default;
+            Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectName"u8))
@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiLabelClassificationTaskParameters(Core.Optional.ToNullable(loggingOptOut), projectName, deploymentName);
+            return new CustomMultiLabelClassificationTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName);
         }
     }
 }

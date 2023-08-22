@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Shares.Models
             Argument.AssertNotNull(nextMarker, nameof(nextMarker));
 
             ServiceEndpoint = serviceEndpoint;
-            ShareItems = new Core.ChangeTrackingList<ShareItemInternal>();
+            ShareItems = new ChangeTrackingList<ShareItemInternal>();
             NextMarker = nextMarker;
         }
 

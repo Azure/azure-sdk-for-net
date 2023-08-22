@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<Guid> mountTargetId = default;
+            Optional<Guid> mountTargetId = default;
             Guid fileSystemId = default;
-            Core.Optional<IPAddress> ipAddress = default;
-            Core.Optional<string> smbServerFqdn = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<string> smbServerFqdn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mountTargetId"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeMountTarget(Core.Optional.ToNullable(mountTargetId), fileSystemId, ipAddress.Value, smbServerFqdn.Value);
+            return new NetAppVolumeMountTarget(Optional.ToNullable(mountTargetId), fileSystemId, ipAddress.Value, smbServerFqdn.Value);
         }
     }
 }

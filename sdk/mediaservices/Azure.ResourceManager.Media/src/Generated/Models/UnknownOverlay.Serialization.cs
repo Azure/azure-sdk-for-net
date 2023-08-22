@@ -11,36 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownOverlay : Core.IUtf8JsonSerializable
+    internal partial class UnknownOverlay : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
-            if (Core.Optional.IsDefined(Start))
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
-            if (Core.Optional.IsDefined(End))
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
-            if (Core.Optional.IsDefined(FadeInDuration))
+            if (Optional.IsDefined(FadeInDuration))
             {
                 writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
-            if (Core.Optional.IsDefined(FadeOutDuration))
+            if (Optional.IsDefined(FadeOutDuration))
             {
                 writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
-            if (Core.Optional.IsDefined(AudioGainLevel))
+            if (Optional.IsDefined(AudioGainLevel))
             {
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Media.Models
             }
             string odataType = "Unknown";
             string inputLabel = default;
-            Core.Optional<TimeSpan> start = default;
-            Core.Optional<TimeSpan> end = default;
-            Core.Optional<TimeSpan> fadeInDuration = default;
-            Core.Optional<TimeSpan> fadeOutDuration = default;
-            Core.Optional<double> audioGainLevel = default;
+            Optional<TimeSpan> start = default;
+            Optional<TimeSpan> end = default;
+            Optional<TimeSpan> fadeInDuration = default;
+            Optional<TimeSpan> fadeOutDuration = default;
+            Optional<double> audioGainLevel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new UnknownOverlay(odataType, inputLabel, Core.Optional.ToNullable(start), Core.Optional.ToNullable(end), Core.Optional.ToNullable(fadeInDuration), Core.Optional.ToNullable(fadeOutDuration), Core.Optional.ToNullable(audioGainLevel));
+            return new UnknownOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel));
         }
     }
 }

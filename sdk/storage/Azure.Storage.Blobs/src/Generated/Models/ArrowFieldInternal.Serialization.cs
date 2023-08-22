@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ArrowFieldInternal : Core.IXmlSerializable
+    internal partial class ArrowFieldInternal : IXmlSerializable
     {
-        void Core.IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "Field");
             writer.WriteStartElement("Type");
             writer.WriteValue(Type);
             writer.WriteEndElement();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WriteStartElement("Name");
                 writer.WriteValue(Name);
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(Precision))
+            if (Optional.IsDefined(Precision))
             {
                 writer.WriteStartElement("Precision");
                 writer.WriteValue(Precision.Value);
                 writer.WriteEndElement();
             }
-            if (Core.Optional.IsDefined(Scale))
+            if (Optional.IsDefined(Scale))
             {
                 writer.WriteStartElement("Scale");
                 writer.WriteValue(Scale.Value);

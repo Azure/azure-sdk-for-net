@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabVmCreationContent : Core.IUtf8JsonSerializable
+    public partial class DevTestLabVmCreationContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,77 +40,77 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BulkCreationParameters))
+            if (Optional.IsDefined(BulkCreationParameters))
             {
                 writer.WritePropertyName("bulkCreationParameters"u8);
                 writer.WriteObjectValue(BulkCreationParameters);
             }
-            if (Core.Optional.IsDefined(Notes))
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Core.Optional.IsDefined(OwnerObjectId))
+            if (Optional.IsDefined(OwnerObjectId))
             {
                 writer.WritePropertyName("ownerObjectId"u8);
                 writer.WriteStringValue(OwnerObjectId);
             }
-            if (Core.Optional.IsDefined(OwnerUserPrincipalName))
+            if (Optional.IsDefined(OwnerUserPrincipalName))
             {
                 writer.WritePropertyName("ownerUserPrincipalName"u8);
                 writer.WriteStringValue(OwnerUserPrincipalName);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(CustomImageId))
+            if (Optional.IsDefined(CustomImageId))
             {
                 writer.WritePropertyName("customImageId"u8);
                 writer.WriteStringValue(CustomImageId);
             }
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Core.Optional.IsDefined(SshKey))
+            if (Optional.IsDefined(SshKey))
             {
                 writer.WritePropertyName("sshKey"u8);
                 writer.WriteStringValue(SshKey);
             }
-            if (Core.Optional.IsDefined(IsAuthenticationWithSshKey))
+            if (Optional.IsDefined(IsAuthenticationWithSshKey))
             {
                 writer.WritePropertyName("isAuthenticationWithSshKey"u8);
                 writer.WriteBooleanValue(IsAuthenticationWithSshKey.Value);
             }
-            if (Core.Optional.IsDefined(LabSubnetName))
+            if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Core.Optional.IsDefined(LabVirtualNetworkId))
+            if (Optional.IsDefined(LabVirtualNetworkId))
             {
                 writer.WritePropertyName("labVirtualNetworkId"u8);
                 writer.WriteStringValue(LabVirtualNetworkId);
             }
-            if (Core.Optional.IsDefined(DisallowPublicIPAddress))
+            if (Optional.IsDefined(DisallowPublicIPAddress))
             {
                 writer.WritePropertyName("disallowPublicIpAddress"u8);
                 writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Artifacts))
+            if (Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -120,42 +120,42 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(GalleryImageReference))
+            if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
                 writer.WriteObjectValue(GalleryImageReference);
             }
-            if (Core.Optional.IsDefined(PlanId))
+            if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Core.Optional.IsDefined(NetworkInterface))
+            if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
                 writer.WriteObjectValue(NetworkInterface);
             }
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(AllowClaim))
+            if (Optional.IsDefined(AllowClaim))
             {
                 writer.WritePropertyName("allowClaim"u8);
                 writer.WriteBooleanValue(AllowClaim.Value);
             }
-            if (Core.Optional.IsDefined(StorageType))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
             }
-            if (Core.Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Core.Optional.IsCollectionDefined(DataDiskParameters))
+            if (Optional.IsCollectionDefined(DataDiskParameters))
             {
                 writer.WritePropertyName("dataDiskParameters"u8);
                 writer.WriteStartArray();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ScheduleParameters))
+            if (Optional.IsCollectionDefined(ScheduleParameters))
             {
                 writer.WritePropertyName("scheduleParameters"u8);
                 writer.WriteStartArray();
@@ -185,33 +185,33 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<BulkCreationParameters> bulkCreationParameters = default;
-            Core.Optional<string> notes = default;
-            Core.Optional<string> ownerObjectId = default;
-            Core.Optional<string> ownerUserPrincipalName = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<string> customImageId = default;
-            Core.Optional<string> size = default;
-            Core.Optional<string> userName = default;
-            Core.Optional<string> password = default;
-            Core.Optional<string> sshKey = default;
-            Core.Optional<bool> isAuthenticationWithSshKey = default;
-            Core.Optional<string> labSubnetName = default;
-            Core.Optional<ResourceIdentifier> labVirtualNetworkId = default;
-            Core.Optional<bool> disallowPublicIPAddress = default;
-            Core.Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
-            Core.Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
-            Core.Optional<string> planId = default;
-            Core.Optional<DevTestLabNetworkInterface> networkInterface = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
-            Core.Optional<bool> allowClaim = default;
-            Core.Optional<string> storageType = default;
-            Core.Optional<string> environmentId = default;
-            Core.Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
-            Core.Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<BulkCreationParameters> bulkCreationParameters = default;
+            Optional<string> notes = default;
+            Optional<string> ownerObjectId = default;
+            Optional<string> ownerUserPrincipalName = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<string> customImageId = default;
+            Optional<string> size = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
+            Optional<string> sshKey = default;
+            Optional<bool> isAuthenticationWithSshKey = default;
+            Optional<string> labSubnetName = default;
+            Optional<ResourceIdentifier> labVirtualNetworkId = default;
+            Optional<bool> disallowPublicIPAddress = default;
+            Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
+            Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
+            Optional<string> planId = default;
+            Optional<DevTestLabNetworkInterface> networkInterface = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<bool> allowClaim = default;
+            Optional<string> storageType = default;
+            Optional<string> environmentId = default;
+            Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
+            Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabVmCreationContent(name.Value, Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Core.Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Core.Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Core.Optional.ToNullable(disallowPublicIPAddress), Core.Optional.ToList(artifacts), galleryImageReference.Value, planId.Value, networkInterface.Value, Core.Optional.ToNullable(expirationDate), Core.Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, Core.Optional.ToList(dataDiskParameters), Core.Optional.ToList(scheduleParameters));
+            return new DevTestLabVmCreationContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), galleryImageReference.Value, planId.Value, networkInterface.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters));
         }
     }
 }

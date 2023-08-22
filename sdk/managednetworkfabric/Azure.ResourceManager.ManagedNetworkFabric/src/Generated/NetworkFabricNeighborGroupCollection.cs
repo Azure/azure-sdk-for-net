@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkFabricNeighborGroupNeighborGroupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupOperationSource(Client), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, _networkFabricNeighborGroupNeighborGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupOperationSource(Client), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, _networkFabricNeighborGroupNeighborGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkFabricNeighborGroupNeighborGroupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupOperationSource(Client), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, _networkFabricNeighborGroupNeighborGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricNeighborGroupResource>(new NetworkFabricNeighborGroupOperationSource(Client), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, _networkFabricNeighborGroupNeighborGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, neighborGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricNeighborGroupNeighborGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricNeighborGroupResource(Client, NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(e)), _networkFabricNeighborGroupNeighborGroupsClientDiagnostics, Pipeline, "NetworkFabricNeighborGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

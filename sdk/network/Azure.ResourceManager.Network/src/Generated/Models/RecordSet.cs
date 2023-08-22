@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RecordSet. </summary>
         internal RecordSet()
         {
-            IPAddresses = new Core.ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecordSet. </summary>

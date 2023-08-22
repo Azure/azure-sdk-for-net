@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyHttpHeaderToInsert : Core.IUtf8JsonSerializable
+    public partial class FirewallPolicyHttpHeaderToInsert : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HeaderName))
+            if (Optional.IsDefined(HeaderName))
             {
                 writer.WritePropertyName("headerName"u8);
                 writer.WriteStringValue(HeaderName);
             }
-            if (Core.Optional.IsDefined(HeaderValue))
+            if (Optional.IsDefined(HeaderValue))
             {
                 writer.WritePropertyName("headerValue"u8);
                 writer.WriteStringValue(HeaderValue);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> headerName = default;
-            Core.Optional<string> headerValue = default;
+            Optional<string> headerName = default;
+            Optional<string> headerValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headerName"u8))

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of RoleInstanceNetworkProfile. </summary>
         internal RoleInstanceNetworkProfile()
         {
-            NetworkInterfaces = new Core.ChangeTrackingList<WritableSubResource>();
+            NetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of RoleInstanceNetworkProfile. </summary>

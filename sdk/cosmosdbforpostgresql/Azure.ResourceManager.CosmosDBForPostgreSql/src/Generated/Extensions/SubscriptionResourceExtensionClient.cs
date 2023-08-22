@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

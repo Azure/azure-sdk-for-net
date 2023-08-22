@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _mediaLiveOutputLiveOutputsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _mediaLiveOutputLiveOutputsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data, cancellationToken);
-                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MediaArmOperation<MediaLiveOutputResource>(new MediaLiveOutputOperationSource(Client), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, _mediaLiveOutputLiveOutputsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveOutputLiveOutputsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaLiveOutputLiveOutputsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaLiveOutputResource(Client, MediaLiveOutputData.DeserializeMediaLiveOutputData(e)), _mediaLiveOutputLiveOutputsClientDiagnostics, Pipeline, "MediaLiveOutputCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

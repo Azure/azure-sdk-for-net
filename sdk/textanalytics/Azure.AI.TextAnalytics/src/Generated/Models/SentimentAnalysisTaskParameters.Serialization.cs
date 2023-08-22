@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class SentimentAnalysisTaskParameters : Core.IUtf8JsonSerializable
+    internal partial class SentimentAnalysisTaskParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OpinionMining))
+            if (Optional.IsDefined(OpinionMining))
             {
                 writer.WritePropertyName("opinionMining"u8);
                 writer.WriteBooleanValue(OpinionMining.Value);
             }
-            if (Core.Optional.IsDefined(StringIndexType))
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Core.Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -44,10 +44,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<bool> opinionMining = default;
-            Core.Optional<StringIndexType> stringIndexType = default;
-            Core.Optional<string> modelVersion = default;
-            Core.Optional<bool> loggingOptOut = default;
+            Optional<bool> opinionMining = default;
+            Optional<StringIndexType> stringIndexType = default;
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("opinionMining"u8))
@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentAnalysisTaskParameters(Core.Optional.ToNullable(loggingOptOut), modelVersion.Value, Core.Optional.ToNullable(opinionMining), Core.Optional.ToNullable(stringIndexType));
+            return new SentimentAnalysisTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(opinionMining), Optional.ToNullable(stringIndexType));
         }
     }
 }

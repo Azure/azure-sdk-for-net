@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalSpacecraftLink : Core.IUtf8JsonSerializable
+    public partial class OrbitalSpacecraftLink : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Orbital.Models
             float bandwidthMHz = default;
             OrbitalLinkDirection direction = default;
             OrbitalLinkPolarization polarization = default;
-            Core.Optional<IReadOnlyList<AuthorizedGroundStation>> authorizations = default;
+            Optional<IReadOnlyList<AuthorizedGroundStation>> authorizations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new OrbitalSpacecraftLink(name, centerFrequencyMHz, bandwidthMHz, direction, polarization, Core.Optional.ToList(authorizations));
+            return new OrbitalSpacecraftLink(name, centerFrequencyMHz, bandwidthMHz, direction, polarization, Optional.ToList(authorizations));
         }
     }
 }

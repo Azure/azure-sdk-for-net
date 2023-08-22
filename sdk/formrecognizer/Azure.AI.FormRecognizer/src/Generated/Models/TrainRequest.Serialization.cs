@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class TrainRequest : Core.IUtf8JsonSerializable
+    internal partial class TrainRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source);
-            if (Core.Optional.IsDefined(SourceFilter))
+            if (Optional.IsDefined(SourceFilter))
             {
                 writer.WritePropertyName("sourceFilter"u8);
                 writer.WriteObjectValue(SourceFilter);
             }
-            if (Core.Optional.IsDefined(UseLabelFile))
+            if (Optional.IsDefined(UseLabelFile))
             {
                 writer.WritePropertyName("useLabelFile"u8);
                 writer.WriteBooleanValue(UseLabelFile.Value);
             }
-            if (Core.Optional.IsDefined(ModelName))
+            if (Optional.IsDefined(ModelName))
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName);

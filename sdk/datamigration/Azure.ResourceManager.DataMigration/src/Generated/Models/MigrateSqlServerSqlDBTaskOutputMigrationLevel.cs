@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateSqlServerSqlDBTaskOutputMigrationLevel. </summary>
         internal MigrateSqlServerSqlDBTaskOutputMigrationLevel()
         {
-            ExceptionsAndWarnings = new Core.ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
             ResultType = "MigrationLevelOutput";
         }
 

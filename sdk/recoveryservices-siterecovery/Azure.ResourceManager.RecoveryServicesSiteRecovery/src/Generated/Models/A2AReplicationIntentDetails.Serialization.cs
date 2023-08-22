@@ -19,28 +19,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> fabricObjectId = default;
-            Core.Optional<AzureLocation> primaryLocation = default;
-            Core.Optional<AzureLocation> recoveryLocation = default;
-            Core.Optional<string> recoverySubscriptionId = default;
-            Core.Optional<IReadOnlyList<A2AProtectionIntentDiskDetails>> vmDisks = default;
-            Core.Optional<IReadOnlyList<A2AProtectionIntentManagedDiskDetails>> vmManagedDisks = default;
-            Core.Optional<ResourceIdentifier> recoveryResourceGroupId = default;
-            Core.Optional<ProtectionProfileCustomDetails> protectionProfile = default;
-            Core.Optional<StorageAccountCustomDetails> primaryStagingStorageAccount = default;
-            Core.Optional<RecoveryAvailabilitySetCustomDetails> recoveryAvailabilitySet = default;
-            Core.Optional<RecoveryVirtualNetworkCustomDetails> recoveryVirtualNetwork = default;
-            Core.Optional<RecoveryProximityPlacementGroupCustomDetails> recoveryProximityPlacementGroup = default;
-            Core.Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
-            Core.Optional<string> multiVmGroupName = default;
-            Core.Optional<string> multiVmGroupId = default;
-            Core.Optional<StorageAccountCustomDetails> recoveryBootDiagStorageAccount = default;
-            Core.Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
-            Core.Optional<string> recoveryAvailabilityZone = default;
+            Optional<ResourceIdentifier> fabricObjectId = default;
+            Optional<AzureLocation> primaryLocation = default;
+            Optional<AzureLocation> recoveryLocation = default;
+            Optional<string> recoverySubscriptionId = default;
+            Optional<IReadOnlyList<A2AProtectionIntentDiskDetails>> vmDisks = default;
+            Optional<IReadOnlyList<A2AProtectionIntentManagedDiskDetails>> vmManagedDisks = default;
+            Optional<ResourceIdentifier> recoveryResourceGroupId = default;
+            Optional<ProtectionProfileCustomDetails> protectionProfile = default;
+            Optional<StorageAccountCustomDetails> primaryStagingStorageAccount = default;
+            Optional<RecoveryAvailabilitySetCustomDetails> recoveryAvailabilitySet = default;
+            Optional<RecoveryVirtualNetworkCustomDetails> recoveryVirtualNetwork = default;
+            Optional<RecoveryProximityPlacementGroupCustomDetails> recoveryProximityPlacementGroup = default;
+            Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
+            Optional<string> multiVmGroupName = default;
+            Optional<string> multiVmGroupId = default;
+            Optional<StorageAccountCustomDetails> recoveryBootDiagStorageAccount = default;
+            Optional<SiteRecoveryDiskEncryptionInfo> diskEncryptionInfo = default;
+            Optional<string> recoveryAvailabilityZone = default;
             string recoveryAvailabilityType = default;
-            Core.Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
-            Core.Optional<ResourceIdentifier> automationAccountArmId = default;
-            Core.Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
+            Optional<SiteRecoveryAgentAutoUpdateStatus> agentAutoUpdateStatus = default;
+            Optional<ResourceIdentifier> automationAccountArmId = default;
+            Optional<AutomationAccountAuthenticationType> automationAccountAuthenticationType = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new A2AReplicationIntentDetails(instanceType, fabricObjectId.Value, Core.Optional.ToNullable(primaryLocation), Core.Optional.ToNullable(recoveryLocation), recoverySubscriptionId.Value, Core.Optional.ToList(vmDisks), Core.Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, protectionProfile.Value, primaryStagingStorageAccount.Value, recoveryAvailabilitySet.Value, recoveryVirtualNetwork.Value, recoveryProximityPlacementGroup.Value, Core.Optional.ToNullable(autoProtectionOfDataDisk), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryAvailabilityType, Core.Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Core.Optional.ToNullable(automationAccountAuthenticationType));
+            return new A2AReplicationIntentDetails(instanceType, fabricObjectId.Value, Optional.ToNullable(primaryLocation), Optional.ToNullable(recoveryLocation), recoverySubscriptionId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, protectionProfile.Value, primaryStagingStorageAccount.Value, recoveryAvailabilitySet.Value, recoveryVirtualNetwork.Value, recoveryProximityPlacementGroup.Value, Optional.ToNullable(autoProtectionOfDataDisk), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryAvailabilityType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType));
         }
     }
 }

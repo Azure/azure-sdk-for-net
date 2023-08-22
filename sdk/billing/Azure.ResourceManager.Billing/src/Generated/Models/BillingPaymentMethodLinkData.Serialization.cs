@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    public partial class BillingPaymentMethodLinkData : Core.IUtf8JsonSerializable
+    public partial class BillingPaymentMethodLinkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PaymentMethod))
+            if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
                 writer.WriteObjectValue(PaymentMethod);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Billing
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<PaymentMethodProjectionProperties> paymentMethod = default;
+            Optional<SystemData> systemData = default;
+            Optional<PaymentMethodProjectionProperties> paymentMethod = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

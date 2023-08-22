@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> region = default;
-            Core.Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
-            Core.Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;
+            Optional<AzureLocation> region = default;
+            Optional<IReadOnlyList<HDInsightBillingMeters>> billingMeters = default;
+            Optional<IReadOnlyList<HDInsightDiskBillingMeters>> diskBillingMeters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightBillingResources(Core.Optional.ToNullable(region), Core.Optional.ToList(billingMeters), Core.Optional.ToList(diskBillingMeters));
+            return new HDInsightBillingResources(Optional.ToNullable(region), Optional.ToList(billingMeters), Optional.ToList(diskBillingMeters));
         }
     }
 }

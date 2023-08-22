@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeShippingAddress : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeShippingAddress : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AddressLine1))
+            if (Optional.IsDefined(AddressLine1))
             {
                 writer.WritePropertyName("addressLine1"u8);
                 writer.WriteStringValue(AddressLine1);
             }
-            if (Core.Optional.IsDefined(AddressLine2))
+            if (Optional.IsDefined(AddressLine2))
             {
                 writer.WritePropertyName("addressLine2"u8);
                 writer.WriteStringValue(AddressLine2);
             }
-            if (Core.Optional.IsDefined(AddressLine3))
+            if (Optional.IsDefined(AddressLine3))
             {
                 writer.WritePropertyName("addressLine3"u8);
                 writer.WriteStringValue(AddressLine3);
             }
-            if (Core.Optional.IsDefined(PostalCode))
+            if (Optional.IsDefined(PostalCode))
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (Core.Optional.IsDefined(City))
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<string> addressLine1 = default;
-            Core.Optional<string> addressLine2 = default;
-            Core.Optional<string> addressLine3 = default;
-            Core.Optional<string> postalCode = default;
-            Core.Optional<string> city = default;
-            Core.Optional<string> state = default;
+            Optional<string> addressLine1 = default;
+            Optional<string> addressLine2 = default;
+            Optional<string> addressLine3 = default;
+            Optional<string> postalCode = default;
+            Optional<string> city = default;
+            Optional<string> state = default;
             string country = default;
             foreach (var property in element.EnumerateObject())
             {

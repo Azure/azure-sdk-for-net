@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RtspSource : Core.IUtf8JsonSerializable
+    public partial class RtspSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Transport))
+            if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<RtspTransport> transport = default;
+            Optional<RtspTransport> transport = default;
             EndpointBase endpoint = default;
             string type = default;
             string name = default;
@@ -66,7 +66,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RtspSource(type, name, Core.Optional.ToNullable(transport), endpoint);
+            return new RtspSource(type, name, Optional.ToNullable(transport), endpoint);
         }
     }
 }

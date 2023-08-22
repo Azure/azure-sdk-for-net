@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterImageData : Core.IUtf8JsonSerializable
+    public partial class DevCenterImageData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> offer = default;
-            Core.Optional<string> sku = default;
-            Core.Optional<RecommendedMachineConfiguration> recommendedMachineConfiguration = default;
-            Core.Optional<DevCenterProvisioningState> provisioningState = default;
-            Core.Optional<DevCenterHibernateSupport> hibernateSupport = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> publisher = default;
+            Optional<string> offer = default;
+            Optional<string> sku = default;
+            Optional<RecommendedMachineConfiguration> recommendedMachineConfiguration = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
+            Optional<DevCenterHibernateSupport> hibernateSupport = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterImageData(id, name, type, systemData.Value, description.Value, publisher.Value, offer.Value, sku.Value, recommendedMachineConfiguration.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(hibernateSupport));
+            return new DevCenterImageData(id, name, type, systemData.Value, description.Value, publisher.Value, offer.Value, sku.Value, recommendedMachineConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hibernateSupport));
         }
     }
 }

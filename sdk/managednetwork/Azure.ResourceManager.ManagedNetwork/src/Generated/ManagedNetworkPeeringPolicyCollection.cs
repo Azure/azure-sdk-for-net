@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = await _managedNetworkPeeringPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = _managedNetworkPeeringPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkArmOperation<ManagedNetworkPeeringPolicyResource>(new ManagedNetworkPeeringPolicyOperationSource(Client), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, _managedNetworkPeeringPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedNetworkPeeringPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

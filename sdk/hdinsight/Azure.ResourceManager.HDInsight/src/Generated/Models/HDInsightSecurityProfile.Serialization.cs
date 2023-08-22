@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightSecurityProfile : Core.IUtf8JsonSerializable
+    public partial class HDInsightSecurityProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DirectoryType))
+            if (Optional.IsDefined(DirectoryType))
             {
                 writer.WritePropertyName("directoryType"u8);
                 writer.WriteStringValue(DirectoryType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Domain))
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Core.Optional.IsDefined(OrganizationalUnitDN))
+            if (Optional.IsDefined(OrganizationalUnitDN))
             {
                 writer.WritePropertyName("organizationalUnitDN"u8);
                 writer.WriteStringValue(OrganizationalUnitDN);
             }
-            if (Core.Optional.IsCollectionDefined(LdapUris))
+            if (Optional.IsCollectionDefined(LdapUris))
             {
                 writer.WritePropertyName("ldapsUrls"u8);
                 writer.WriteStartArray();
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DomainUsername))
+            if (Optional.IsDefined(DomainUsername))
             {
                 writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
-            if (Core.Optional.IsDefined(DomainUserPassword))
+            if (Optional.IsDefined(DomainUserPassword))
             {
                 writer.WritePropertyName("domainUserPassword"u8);
                 writer.WriteStringValue(DomainUserPassword);
             }
-            if (Core.Optional.IsCollectionDefined(ClusterUsersGroupDNs))
+            if (Optional.IsCollectionDefined(ClusterUsersGroupDNs))
             {
                 writer.WritePropertyName("clusterUsersGroupDNs"u8);
                 writer.WriteStartArray();
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AaddsResourceId))
+            if (Optional.IsDefined(AaddsResourceId))
             {
                 writer.WritePropertyName("aaddsResourceId"u8);
                 writer.WriteStringValue(AaddsResourceId);
             }
-            if (Core.Optional.IsDefined(MsiResourceId))
+            if (Optional.IsDefined(MsiResourceId))
             {
                 writer.WritePropertyName("msiResourceId"u8);
                 writer.WriteStringValue(MsiResourceId);
@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<AuthenticationDirectoryType> directoryType = default;
-            Core.Optional<string> domain = default;
-            Core.Optional<string> organizationalUnitDN = default;
-            Core.Optional<IList<Uri>> ldapsUrls = default;
-            Core.Optional<string> domainUsername = default;
-            Core.Optional<string> domainUserPassword = default;
-            Core.Optional<IList<string>> clusterUsersGroupDNs = default;
-            Core.Optional<ResourceIdentifier> aaddsResourceId = default;
-            Core.Optional<ResourceIdentifier> msiResourceId = default;
+            Optional<AuthenticationDirectoryType> directoryType = default;
+            Optional<string> domain = default;
+            Optional<string> organizationalUnitDN = default;
+            Optional<IList<Uri>> ldapsUrls = default;
+            Optional<string> domainUsername = default;
+            Optional<string> domainUserPassword = default;
+            Optional<IList<string>> clusterUsersGroupDNs = default;
+            Optional<ResourceIdentifier> aaddsResourceId = default;
+            Optional<ResourceIdentifier> msiResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryType"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightSecurityProfile(Core.Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, Core.Optional.ToList(ldapsUrls), domainUsername.Value, domainUserPassword.Value, Core.Optional.ToList(clusterUsersGroupDNs), aaddsResourceId.Value, msiResourceId.Value);
+            return new HDInsightSecurityProfile(Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, Optional.ToList(ldapsUrls), domainUsername.Value, domainUserPassword.Value, Optional.ToList(clusterUsersGroupDNs), aaddsResourceId.Value, msiResourceId.Value);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictionInfo. </summary>
         internal CognitiveServicesSkuRestrictionInfo()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            Zones = new Core.ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictionInfo. </summary>

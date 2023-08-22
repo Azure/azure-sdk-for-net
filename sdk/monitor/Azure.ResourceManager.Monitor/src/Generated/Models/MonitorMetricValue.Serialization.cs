@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             DateTimeOffset timeStamp = default;
-            Core.Optional<double> average = default;
-            Core.Optional<double> minimum = default;
-            Core.Optional<double> maximum = default;
-            Core.Optional<double> total = default;
-            Core.Optional<double> count = default;
+            Optional<double> average = default;
+            Optional<double> minimum = default;
+            Optional<double> maximum = default;
+            Optional<double> total = default;
+            Optional<double> count = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeStamp"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorMetricValue(timeStamp, Core.Optional.ToNullable(average), Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(total), Core.Optional.ToNullable(count));
+            return new MonitorMetricValue(timeStamp, Optional.ToNullable(average), Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(total), Optional.ToNullable(count));
         }
     }
 }

@@ -10,26 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class SourceCodeRepoAuthInfo : Core.IUtf8JsonSerializable
+    public partial class SourceCodeRepoAuthInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tokenType"u8);
             writer.WriteStringValue(TokenType.ToString());
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
-            if (Core.Optional.IsDefined(RefreshToken))
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Core.Optional.IsDefined(Scope))
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Core.Optional.IsDefined(ExpireInSeconds))
+            if (Optional.IsDefined(ExpireInSeconds))
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpireInSeconds.Value);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             SourceCodeRepoAuthTokenType tokenType = default;
             string token = default;
-            Core.Optional<string> refreshToken = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<int> expiresIn = default;
+            Optional<string> refreshToken = default;
+            Optional<string> scope = default;
+            Optional<int> expiresIn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokenType"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new SourceCodeRepoAuthInfo(tokenType, token, refreshToken.Value, scope.Value, Core.Optional.ToNullable(expiresIn));
+            return new SourceCodeRepoAuthInfo(tokenType, token, refreshToken.Value, scope.Value, Optional.ToNullable(expiresIn));
         }
     }
 }

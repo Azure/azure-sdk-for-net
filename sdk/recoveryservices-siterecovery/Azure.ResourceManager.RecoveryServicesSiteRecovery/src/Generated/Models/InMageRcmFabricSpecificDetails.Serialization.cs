@@ -20,22 +20,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> vmwareSiteId = default;
-            Core.Optional<ResourceIdentifier> physicalSiteId = default;
-            Core.Optional<string> serviceEndpoint = default;
-            Core.Optional<ResourceIdentifier> serviceResourceId = default;
-            Core.Optional<string> serviceContainerId = default;
-            Core.Optional<Uri> dataPlaneUri = default;
-            Core.Optional<Uri> controlPlaneUri = default;
-            Core.Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
-            Core.Optional<IReadOnlyList<RcmProxyDetails>> rcmProxies = default;
-            Core.Optional<IReadOnlyList<PushInstallerDetails>> pushInstallers = default;
-            Core.Optional<IReadOnlyList<ReplicationAgentDetails>> replicationAgents = default;
-            Core.Optional<IReadOnlyList<ReprotectAgentDetails>> reprotectAgents = default;
-            Core.Optional<IReadOnlyList<MarsAgentDetails>> marsAgents = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryDraDetails>> dras = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryAgentDetails>> agentDetails = default;
+            Optional<ResourceIdentifier> vmwareSiteId = default;
+            Optional<ResourceIdentifier> physicalSiteId = default;
+            Optional<string> serviceEndpoint = default;
+            Optional<ResourceIdentifier> serviceResourceId = default;
+            Optional<string> serviceContainerId = default;
+            Optional<Uri> dataPlaneUri = default;
+            Optional<Uri> controlPlaneUri = default;
+            Optional<IdentityProviderDetails> sourceAgentIdentityDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryProcessServerDetails>> processServers = default;
+            Optional<IReadOnlyList<RcmProxyDetails>> rcmProxies = default;
+            Optional<IReadOnlyList<PushInstallerDetails>> pushInstallers = default;
+            Optional<IReadOnlyList<ReplicationAgentDetails>> replicationAgents = default;
+            Optional<IReadOnlyList<ReprotectAgentDetails>> reprotectAgents = default;
+            Optional<IReadOnlyList<MarsAgentDetails>> marsAgents = default;
+            Optional<IReadOnlyList<SiteRecoveryDraDetails>> dras = default;
+            Optional<IReadOnlyList<SiteRecoveryAgentDetails>> agentDetails = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmFabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, Core.Optional.ToList(processServers), Core.Optional.ToList(rcmProxies), Core.Optional.ToList(pushInstallers), Core.Optional.ToList(replicationAgents), Core.Optional.ToList(reprotectAgents), Core.Optional.ToList(marsAgents), Core.Optional.ToList(dras), Core.Optional.ToList(agentDetails));
+            return new InMageRcmFabricSpecificDetails(instanceType, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, Optional.ToList(processServers), Optional.ToList(rcmProxies), Optional.ToList(pushInstallers), Optional.ToList(replicationAgents), Optional.ToList(reprotectAgents), Optional.ToList(marsAgents), Optional.ToList(dras), Optional.ToList(agentDetails));
         }
     }
 }

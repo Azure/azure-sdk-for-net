@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemAddressProperties : Core.IUtf8JsonSerializable
+    public partial class EdgeOrderItemAddressProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ShippingAddress))
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Core.Optional<EdgeOrderShippingAddress> shippingAddress = default;
+            Optional<EdgeOrderShippingAddress> shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
-            Core.Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shippingAddress"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new EdgeOrderItemAddressProperties(shippingAddress.Value, contactDetails, Core.Optional.ToNullable(addressValidationStatus));
+            return new EdgeOrderItemAddressProperties(shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus));
         }
     }
 }

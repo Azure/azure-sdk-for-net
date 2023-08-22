@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceData. </summary>
         internal AppConfigurationPrivateLinkResourceData()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceData. </summary>

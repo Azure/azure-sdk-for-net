@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DiskSecurityProfile : Core.IUtf8JsonSerializable
+    public partial class DiskSecurityProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecurityType))
+            if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SecureVmDiskEncryptionSetId))
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<DiskSecurityType> securityType = default;
-            Core.Optional<ResourceIdentifier> secureVmDiskEncryptionSetId = default;
+            Optional<DiskSecurityType> securityType = default;
+            Optional<ResourceIdentifier> secureVmDiskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityType"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new DiskSecurityProfile(Core.Optional.ToNullable(securityType), secureVmDiskEncryptionSetId.Value);
+            return new DiskSecurityProfile(Optional.ToNullable(securityType), secureVmDiskEncryptionSetId.Value);
         }
     }
 }

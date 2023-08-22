@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionListResult. </summary>
         internal AutomationPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<AutomationPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<AutomationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionListResult. </summary>

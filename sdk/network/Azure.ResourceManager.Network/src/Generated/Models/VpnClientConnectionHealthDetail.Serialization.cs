@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> vpnConnectionId = default;
-            Core.Optional<long> vpnConnectionDuration = default;
-            Core.Optional<DateTimeOffset> vpnConnectionTime = default;
-            Core.Optional<string> publicIPAddress = default;
-            Core.Optional<string> privateIPAddress = default;
-            Core.Optional<string> vpnUserName = default;
-            Core.Optional<long> maxBandwidth = default;
-            Core.Optional<long> egressPacketsTransferred = default;
-            Core.Optional<long> egressBytesTransferred = default;
-            Core.Optional<long> ingressPacketsTransferred = default;
-            Core.Optional<long> ingressBytesTransferred = default;
-            Core.Optional<long> maxPacketsPerSecond = default;
+            Optional<string> vpnConnectionId = default;
+            Optional<long> vpnConnectionDuration = default;
+            Optional<DateTimeOffset> vpnConnectionTime = default;
+            Optional<string> publicIPAddress = default;
+            Optional<string> privateIPAddress = default;
+            Optional<string> vpnUserName = default;
+            Optional<long> maxBandwidth = default;
+            Optional<long> egressPacketsTransferred = default;
+            Optional<long> egressBytesTransferred = default;
+            Optional<long> ingressPacketsTransferred = default;
+            Optional<long> ingressBytesTransferred = default;
+            Optional<long> maxPacketsPerSecond = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vpnConnectionId"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Core.Optional.ToNullable(vpnConnectionDuration), Core.Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Core.Optional.ToNullable(maxBandwidth), Core.Optional.ToNullable(egressPacketsTransferred), Core.Optional.ToNullable(egressBytesTransferred), Core.Optional.ToNullable(ingressPacketsTransferred), Core.Optional.ToNullable(ingressBytesTransferred), Core.Optional.ToNullable(maxPacketsPerSecond));
+            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond));
         }
     }
 }

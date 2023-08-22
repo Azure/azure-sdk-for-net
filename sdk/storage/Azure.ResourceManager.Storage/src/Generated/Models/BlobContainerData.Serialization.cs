@@ -15,29 +15,29 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class BlobContainerData : Core.IUtf8JsonSerializable
+    public partial class BlobContainerData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DefaultEncryptionScope))
+            if (Optional.IsDefined(DefaultEncryptionScope))
             {
                 writer.WritePropertyName("defaultEncryptionScope"u8);
                 writer.WriteStringValue(DefaultEncryptionScope);
             }
-            if (Core.Optional.IsDefined(PreventEncryptionScopeOverride))
+            if (Optional.IsDefined(PreventEncryptionScopeOverride))
             {
                 writer.WritePropertyName("denyEncryptionScopeOverride"u8);
                 writer.WriteBooleanValue(PreventEncryptionScopeOverride.Value);
             }
-            if (Core.Optional.IsDefined(PublicAccess))
+            if (Optional.IsDefined(PublicAccess))
             {
                 writer.WritePropertyName("publicAccess"u8);
                 writer.WriteStringValue(PublicAccess.Value.ToSerialString());
             }
-            if (Core.Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(ImmutableStorageWithVersioning))
+            if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
-            if (Core.Optional.IsDefined(EnableNfsV3RootSquash))
+            if (Optional.IsDefined(EnableNfsV3RootSquash))
             {
                 writer.WritePropertyName("enableNfsV3RootSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3RootSquash.Value);
             }
-            if (Core.Optional.IsDefined(EnableNfsV3AllSquash))
+            if (Optional.IsDefined(EnableNfsV3AllSquash))
             {
                 writer.WritePropertyName("enableNfsV3AllSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3AllSquash.Value);
@@ -73,30 +73,30 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> version = default;
-            Core.Optional<bool> deleted = default;
-            Core.Optional<DateTimeOffset> deletedTime = default;
-            Core.Optional<int> remainingRetentionDays = default;
-            Core.Optional<string> defaultEncryptionScope = default;
-            Core.Optional<bool> denyEncryptionScopeOverride = default;
-            Core.Optional<StoragePublicAccessType> publicAccess = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<StorageLeaseStatus> leaseStatus = default;
-            Core.Optional<StorageLeaseState> leaseState = default;
-            Core.Optional<StorageLeaseDurationType> leaseDuration = default;
-            Core.Optional<IDictionary<string, string>> metadata = default;
-            Core.Optional<BlobContainerImmutabilityPolicy> immutabilityPolicy = default;
-            Core.Optional<LegalHoldProperties> legalHold = default;
-            Core.Optional<bool> hasLegalHold = default;
-            Core.Optional<bool> hasImmutabilityPolicy = default;
-            Core.Optional<ImmutableStorageWithVersioning> immutableStorageWithVersioning = default;
-            Core.Optional<bool> enableNfsV3RootSquash = default;
-            Core.Optional<bool> enableNfsV3AllSquash = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> version = default;
+            Optional<bool> deleted = default;
+            Optional<DateTimeOffset> deletedTime = default;
+            Optional<int> remainingRetentionDays = default;
+            Optional<string> defaultEncryptionScope = default;
+            Optional<bool> denyEncryptionScopeOverride = default;
+            Optional<StoragePublicAccessType> publicAccess = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<StorageLeaseStatus> leaseStatus = default;
+            Optional<StorageLeaseState> leaseState = default;
+            Optional<StorageLeaseDurationType> leaseDuration = default;
+            Optional<IDictionary<string, string>> metadata = default;
+            Optional<BlobContainerImmutabilityPolicy> immutabilityPolicy = default;
+            Optional<LegalHoldProperties> legalHold = default;
+            Optional<bool> hasLegalHold = default;
+            Optional<bool> hasImmutabilityPolicy = default;
+            Optional<ImmutableStorageWithVersioning> immutableStorageWithVersioning = default;
+            Optional<bool> enableNfsV3RootSquash = default;
+            Optional<bool> enableNfsV3AllSquash = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new BlobContainerData(id, name, type, systemData.Value, version.Value, Core.Optional.ToNullable(deleted), Core.Optional.ToNullable(deletedTime), Core.Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Core.Optional.ToNullable(denyEncryptionScopeOverride), Core.Optional.ToNullable(publicAccess), Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(leaseStatus), Core.Optional.ToNullable(leaseState), Core.Optional.ToNullable(leaseDuration), Core.Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Core.Optional.ToNullable(hasLegalHold), Core.Optional.ToNullable(hasImmutabilityPolicy), immutableStorageWithVersioning.Value, Core.Optional.ToNullable(enableNfsV3RootSquash), Core.Optional.ToNullable(enableNfsV3AllSquash), Core.Optional.ToNullable(etag));
+            return new BlobContainerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Optional.ToNullable(denyEncryptionScopeOverride), Optional.ToNullable(publicAccess), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Optional.ToNullable(hasLegalHold), Optional.ToNullable(hasImmutabilityPolicy), immutableStorageWithVersioning.Value, Optional.ToNullable(enableNfsV3RootSquash), Optional.ToNullable(enableNfsV3AllSquash), Optional.ToNullable(etag));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class P2SVpnConnectionRequest : Core.IUtf8JsonSerializable
+    public partial class P2SVpnConnectionRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VpnConnectionIds))
+            if (Optional.IsCollectionDefined(VpnConnectionIds))
             {
                 writer.WritePropertyName("vpnConnectionIds"u8);
                 writer.WriteStartArray();

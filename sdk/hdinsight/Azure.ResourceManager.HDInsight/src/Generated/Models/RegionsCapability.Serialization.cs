@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> available = default;
+            Optional<IReadOnlyList<string>> available = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new RegionsCapability(Core.Optional.ToList(available));
+            return new RegionsCapability(Optional.ToList(available));
         }
     }
 }

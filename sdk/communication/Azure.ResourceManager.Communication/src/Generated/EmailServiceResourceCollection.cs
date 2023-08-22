@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = await _emailServiceResourceEmailServicesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = _emailServiceResourceEmailServicesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data, cancellationToken);
-                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new CommunicationArmOperation<EmailServiceResource>(new EmailServiceResourceOperationSource(Client), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, _emailServiceResourceEmailServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, emailServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Communication
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _emailServiceResourceEmailServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), _emailServiceResourceEmailServicesClientDiagnostics, Pipeline, "EmailServiceResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

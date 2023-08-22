@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen2FileDataSetMapping : Core.IUtf8JsonSerializable
+    public partial class AdlsGen2FileDataSetMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(FilePath);
             writer.WritePropertyName("fileSystem"u8);
             writer.WriteStringValue(FileSystem);
-            if (Core.Optional.IsDefined(OutputType))
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             Guid dataSetId = default;
-            Core.Optional<DataSetMappingStatus> dataSetMappingStatus = default;
+            Optional<DataSetMappingStatus> dataSetMappingStatus = default;
             string filePath = default;
             string fileSystem = default;
-            Core.Optional<DataShareOutputType> outputType = default;
-            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Optional<DataShareOutputType> outputType = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new AdlsGen2FileDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Core.Optional.ToNullable(dataSetMappingStatus), filePath, fileSystem, Core.Optional.ToNullable(outputType), Core.Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), filePath, fileSystem, Optional.ToNullable(outputType), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
         public RecurrenceSchedule()
         {
-            Minutes = new Core.ChangeTrackingList<int>();
-            Hours = new Core.ChangeTrackingList<int>();
-            WeekDays = new Core.ChangeTrackingList<DayOfWeek>();
-            MonthDays = new Core.ChangeTrackingList<int>();
-            MonthlyOccurrences = new Core.ChangeTrackingList<RecurrenceScheduleOccurrence>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            Minutes = new ChangeTrackingList<int>();
+            Hours = new ChangeTrackingList<int>();
+            WeekDays = new ChangeTrackingList<DayOfWeek>();
+            MonthDays = new ChangeTrackingList<int>();
+            MonthlyOccurrences = new ChangeTrackingList<RecurrenceScheduleOccurrence>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>

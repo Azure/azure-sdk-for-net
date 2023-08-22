@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyEnablementRule : Core.IUtf8JsonSerializable
+    public partial class RoleManagementPolicyEnablementRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(EnablementRules))
+            if (Optional.IsCollectionDefined(EnablementRules))
             {
                 writer.WritePropertyName("enabledRules"u8);
                 writer.WriteStartArray();
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
-            Core.Optional<string> id = default;
+            Optional<IList<RoleAssignmentEnablementRuleType>> enabledRules = default;
+            Optional<string> id = default;
             RoleManagementPolicyRuleType ruleType = default;
-            Core.Optional<RoleManagementPolicyRuleTarget> target = default;
+            Optional<RoleManagementPolicyRuleTarget> target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledRules"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, Core.Optional.ToList(enabledRules));
+            return new RoleManagementPolicyEnablementRule(id.Value, ruleType, target.Value, Optional.ToList(enabledRules));
         }
     }
 }

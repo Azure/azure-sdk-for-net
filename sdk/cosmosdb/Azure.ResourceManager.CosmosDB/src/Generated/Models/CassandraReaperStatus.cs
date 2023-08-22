@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraReaperStatus. </summary>
         internal CassandraReaperStatus()
         {
-            RepairRunIds = new Core.ChangeTrackingDictionary<string, string>();
-            RepairSchedules = new Core.ChangeTrackingDictionary<string, string>();
+            RepairRunIds = new ChangeTrackingDictionary<string, string>();
+            RepairSchedules = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CassandraReaperStatus. </summary>

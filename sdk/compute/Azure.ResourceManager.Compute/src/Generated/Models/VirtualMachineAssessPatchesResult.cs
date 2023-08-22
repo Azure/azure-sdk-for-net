@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineAssessPatchesResult. </summary>
         internal VirtualMachineAssessPatchesResult()
         {
-            AvailablePatches = new Core.ChangeTrackingList<VirtualMachineSoftwarePatchProperties>();
+            AvailablePatches = new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineAssessPatchesResult. </summary>

@@ -12,29 +12,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryTaskRunData : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryTaskRunData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RunRequest))
+            if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
                 writer.WriteObjectValue(RunRequest);
             }
-            if (Core.Optional.IsDefined(ForceUpdateTag))
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ContainerRegistryProvisioningState> provisioningState = default;
-            Core.Optional<ContainerRegistryRunContent> runRequest = default;
-            Core.Optional<ContainerRegistryRunData> runResult = default;
-            Core.Optional<string> forceUpdateTag = default;
+            Optional<SystemData> systemData = default;
+            Optional<ContainerRegistryProvisioningState> provisioningState = default;
+            Optional<ContainerRegistryRunContent> runRequest = default;
+            Optional<ContainerRegistryRunData> runResult = default;
+            Optional<string> forceUpdateTag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRegistryTaskRunData(id, name, type, systemData.Value, identity, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState), runRequest.Value, runResult.Value, forceUpdateTag.Value);
+            return new ContainerRegistryTaskRunData(id, name, type, systemData.Value, identity, Optional.ToNullable(location), Optional.ToNullable(provisioningState), runRequest.Value, runResult.Value, forceUpdateTag.Value);
         }
     }
 }

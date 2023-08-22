@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class FilesIdentityBasedAuthentication : Core.IUtf8JsonSerializable
+    public partial class FilesIdentityBasedAuthentication : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("directoryServiceOptions"u8);
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
-            if (Core.Optional.IsDefined(ActiveDirectoryProperties))
+            if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
                 writer.WriteObjectValue(ActiveDirectoryProperties);
             }
-            if (Core.Optional.IsDefined(DefaultSharePermission))
+            if (Optional.IsDefined(DefaultSharePermission))
             {
                 writer.WritePropertyName("defaultSharePermission"u8);
                 writer.WriteStringValue(DefaultSharePermission.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             DirectoryServiceOption directoryServiceOptions = default;
-            Core.Optional<StorageActiveDirectoryProperties> activeDirectoryProperties = default;
-            Core.Optional<DefaultSharePermission> defaultSharePermission = default;
+            Optional<StorageActiveDirectoryProperties> activeDirectoryProperties = default;
+            Optional<DefaultSharePermission> defaultSharePermission = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryServiceOptions"u8))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value, Core.Optional.ToNullable(defaultSharePermission));
+            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties.Value, Optional.ToNullable(defaultSharePermission));
         }
     }
 }

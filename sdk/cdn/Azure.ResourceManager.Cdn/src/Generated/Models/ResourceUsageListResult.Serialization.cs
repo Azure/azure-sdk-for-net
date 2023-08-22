@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CdnUsage>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<CdnUsage>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ResourceUsageListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ResourceUsageListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

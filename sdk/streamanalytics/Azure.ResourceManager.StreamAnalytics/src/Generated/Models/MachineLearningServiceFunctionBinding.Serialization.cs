@@ -11,26 +11,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningServiceFunctionBinding : Core.IUtf8JsonSerializable
+    public partial class MachineLearningServiceFunctionBinding : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Core.Optional.IsDefined(ApiKey))
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Core.Optional.IsCollectionDefined(Inputs))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Outputs))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -50,22 +50,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BatchSize))
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
             }
-            if (Core.Optional.IsDefined(NumberOfParallelRequests))
+            if (Optional.IsDefined(NumberOfParallelRequests))
             {
                 writer.WritePropertyName("numberOfParallelRequests"u8);
                 writer.WriteNumberValue(NumberOfParallelRequests.Value);
             }
-            if (Core.Optional.IsDefined(InputRequestName))
+            if (Optional.IsDefined(InputRequestName))
             {
                 writer.WritePropertyName("inputRequestName"u8);
                 writer.WriteStringValue(InputRequestName);
             }
-            if (Core.Optional.IsDefined(OutputResponseName))
+            if (Optional.IsDefined(OutputResponseName))
             {
                 writer.WritePropertyName("outputResponseName"u8);
                 writer.WriteStringValue(OutputResponseName);
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> endpoint = default;
-            Core.Optional<string> apiKey = default;
-            Core.Optional<IList<MachineLearningServiceInputColumn>> inputs = default;
-            Core.Optional<IList<MachineLearningServiceOutputColumn>> outputs = default;
-            Core.Optional<int> batchSize = default;
-            Core.Optional<int> numberOfParallelRequests = default;
-            Core.Optional<string> inputRequestName = default;
-            Core.Optional<string> outputResponseName = default;
+            Optional<string> endpoint = default;
+            Optional<string> apiKey = default;
+            Optional<IList<MachineLearningServiceInputColumn>> inputs = default;
+            Optional<IList<MachineLearningServiceOutputColumn>> outputs = default;
+            Optional<int> batchSize = default;
+            Optional<int> numberOfParallelRequests = default;
+            Optional<string> inputRequestName = default;
+            Optional<string> outputResponseName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new MachineLearningServiceFunctionBinding(type, endpoint.Value, apiKey.Value, Core.Optional.ToList(inputs), Core.Optional.ToList(outputs), Core.Optional.ToNullable(batchSize), Core.Optional.ToNullable(numberOfParallelRequests), inputRequestName.Value, outputResponseName.Value);
+            return new MachineLearningServiceFunctionBinding(type, endpoint.Value, apiKey.Value, Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToNullable(batchSize), Optional.ToNullable(numberOfParallelRequests), inputRequestName.Value, outputResponseName.Value);
         }
     }
 }

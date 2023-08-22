@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             Uri serviceUri = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> customHeaders = default;
+            Optional<IReadOnlyDictionary<string, string>> customHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceUri"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookCallbackConfig(serviceUri, Core.Optional.ToDictionary(customHeaders));
+            return new ContainerRegistryWebhookCallbackConfig(serviceUri, Optional.ToDictionary(customHeaders));
         }
     }
 }

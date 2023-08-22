@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of CustomImageList. </summary>
         internal CustomImageList()
         {
-            Value = new Core.ChangeTrackingList<DevTestLabCustomImageData>();
+            Value = new ChangeTrackingList<DevTestLabCustomImageData>();
         }
 
         /// <summary> Initializes a new instance of CustomImageList. </summary>

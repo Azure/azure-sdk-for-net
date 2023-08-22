@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         public VirtualMachineData(AzureLocation location) : base(location)
         {
-            Statuses = new Core.ChangeTrackingList<ResourceStatus>();
+            Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineData. </summary>

@@ -21,11 +21,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> ingestUrl = default;
-            Core.Optional<string> streamId = default;
-            Core.Optional<string> encoderIp = default;
-            Core.Optional<string> encoderPort = default;
-            Core.Optional<string> resultCode = default;
+            Optional<string> ingestUrl = default;
+            Optional<string> streamId = default;
+            Optional<string> encoderIp = default;
+            Optional<string> encoderPort = default;
+            Optional<string> resultCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestUrl"u8))

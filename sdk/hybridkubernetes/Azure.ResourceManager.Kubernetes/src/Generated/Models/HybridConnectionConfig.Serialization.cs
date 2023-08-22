@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
             {
                 return null;
             }
-            Core.Optional<long> expirationTime = default;
-            Core.Optional<string> hybridConnectionName = default;
-            Core.Optional<string> relay = default;
-            Core.Optional<string> token = default;
+            Optional<long> expirationTime = default;
+            Optional<string> hybridConnectionName = default;
+            Optional<string> relay = default;
+            Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expirationTime"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     continue;
                 }
             }
-            return new HybridConnectionConfig(Core.Optional.ToNullable(expirationTime), hybridConnectionName.Value, relay.Value, token.Value);
+            return new HybridConnectionConfig(Optional.ToNullable(expirationTime), hybridConnectionName.Value, relay.Value, token.Value);
         }
     }
 }

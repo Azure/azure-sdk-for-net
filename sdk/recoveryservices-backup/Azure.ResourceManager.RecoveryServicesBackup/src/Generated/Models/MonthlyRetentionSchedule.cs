@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of MonthlyRetentionSchedule. </summary>
         public MonthlyRetentionSchedule()
         {
-            RetentionTimes = new Core.ChangeTrackingList<DateTimeOffset>();
+            RetentionTimes = new ChangeTrackingList<DateTimeOffset>();
         }
 
         /// <summary> Initializes a new instance of MonthlyRetentionSchedule. </summary>

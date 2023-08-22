@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionListResult. </summary>
         internal KustoPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<KustoPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of KustoPrivateEndpointConnectionListResult. </summary>

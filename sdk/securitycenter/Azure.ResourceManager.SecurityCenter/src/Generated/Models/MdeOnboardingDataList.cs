@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>
         internal MdeOnboardingDataList()
         {
-            Value = new Core.ChangeTrackingList<MdeOnboarding>();
+            Value = new ChangeTrackingList<MdeOnboarding>();
         }
 
         /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>

@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of StorageBackupJob. </summary>
         public StorageBackupJob()
         {
-            ActionsInfo = new Core.ChangeTrackingList<JobSupportedAction>();
-            ErrorDetails = new Core.ChangeTrackingList<StorageErrorInfo>();
+            ActionsInfo = new ChangeTrackingList<JobSupportedAction>();
+            ErrorDetails = new ChangeTrackingList<StorageErrorInfo>();
             JobType = "AzureStorageJob";
         }
 

@@ -11,32 +11,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabRosterProfile : Core.IUtf8JsonSerializable
+    public partial class LabRosterProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActiveDirectoryGroupId))
+            if (Optional.IsDefined(ActiveDirectoryGroupId))
             {
                 writer.WritePropertyName("activeDirectoryGroupId"u8);
                 writer.WriteStringValue(ActiveDirectoryGroupId);
             }
-            if (Core.Optional.IsDefined(LtiContextId))
+            if (Optional.IsDefined(LtiContextId))
             {
                 writer.WritePropertyName("ltiContextId"u8);
                 writer.WriteStringValue(LtiContextId);
             }
-            if (Core.Optional.IsDefined(LmsInstance))
+            if (Optional.IsDefined(LmsInstance))
             {
                 writer.WritePropertyName("lmsInstance"u8);
                 writer.WriteStringValue(LmsInstance.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(LtiClientId))
+            if (Optional.IsDefined(LtiClientId))
             {
                 writer.WritePropertyName("ltiClientId"u8);
                 writer.WriteStringValue(LtiClientId);
             }
-            if (Core.Optional.IsDefined(LtiRosterEndpoint))
+            if (Optional.IsDefined(LtiRosterEndpoint))
             {
                 writer.WritePropertyName("ltiRosterEndpoint"u8);
                 writer.WriteStringValue(LtiRosterEndpoint.AbsoluteUri);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<string> activeDirectoryGroupId = default;
-            Core.Optional<string> ltiContextId = default;
-            Core.Optional<Uri> lmsInstance = default;
-            Core.Optional<string> ltiClientId = default;
-            Core.Optional<Uri> ltiRosterEndpoint = default;
+            Optional<string> activeDirectoryGroupId = default;
+            Optional<string> ltiContextId = default;
+            Optional<Uri> lmsInstance = default;
+            Optional<string> ltiClientId = default;
+            Optional<Uri> ltiRosterEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeDirectoryGroupId"u8))

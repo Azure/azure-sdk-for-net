@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageEncryptionService : Core.IUtf8JsonSerializable
+    public partial class StorageEncryptionService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(KeyType))
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<DateTimeOffset> lastEnabledTime = default;
-            Core.Optional<StorageEncryptionKeyType> keyType = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> lastEnabledTime = default;
+            Optional<StorageEncryptionKeyType> keyType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageEncryptionService(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(lastEnabledTime), Core.Optional.ToNullable(keyType));
+            return new StorageEncryptionService(Optional.ToNullable(enabled), Optional.ToNullable(lastEnabledTime), Optional.ToNullable(keyType));
         }
     }
 }

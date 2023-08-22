@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <summary> Initializes a new instance of IngestionPolicyPropertiesFormat. </summary>
         public IngestionPolicyPropertiesFormat()
         {
-            IngestionSources = new Core.ChangeTrackingList<IngestionSourcesPropertiesFormat>();
+            IngestionSources = new ChangeTrackingList<IngestionSourcesPropertiesFormat>();
         }
 
         /// <summary> Initializes a new instance of IngestionPolicyPropertiesFormat. </summary>

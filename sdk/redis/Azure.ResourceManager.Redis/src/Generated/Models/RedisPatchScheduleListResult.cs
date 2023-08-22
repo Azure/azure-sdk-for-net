@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of RedisPatchScheduleListResult. </summary>
         internal RedisPatchScheduleListResult()
         {
-            Value = new Core.ChangeTrackingList<RedisPatchScheduleData>();
+            Value = new ChangeTrackingList<RedisPatchScheduleData>();
         }
 
         /// <summary> Initializes a new instance of RedisPatchScheduleListResult. </summary>

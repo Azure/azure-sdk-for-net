@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<string> domainName = default;
-            Core.Optional<bool> initialSyncComplete = default;
-            Core.Optional<bool> ldapsEnabled = default;
-            Core.Optional<string> ldapsPublicCertificateInBase64 = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<ResourceIdentifier> subnetId = default;
-            Core.Optional<Guid> tenantId = default;
+            Optional<string> domainName = default;
+            Optional<bool> initialSyncComplete = default;
+            Optional<bool> ldapsEnabled = default;
+            Optional<string> ldapsPublicCertificateInBase64 = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightClusterAaddsDetail(domainName.Value, Core.Optional.ToNullable(initialSyncComplete), Core.Optional.ToNullable(ldapsEnabled), ldapsPublicCertificateInBase64.Value, resourceId.Value, subnetId.Value, Core.Optional.ToNullable(tenantId));
+            return new HDInsightClusterAaddsDetail(domainName.Value, Optional.ToNullable(initialSyncComplete), Optional.ToNullable(ldapsEnabled), ldapsPublicCertificateInBase64.Value, resourceId.Value, subnetId.Value, Optional.ToNullable(tenantId));
         }
     }
 }

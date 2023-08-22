@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ExportListResult. </summary>
         internal ExportListResult()
         {
-            Value = new Core.ChangeTrackingList<CostManagementExportData>();
+            Value = new ChangeTrackingList<CostManagementExportData>();
         }
 
         /// <summary> Initializes a new instance of ExportListResult. </summary>

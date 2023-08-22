@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> nextHopId = default;
-            Core.Optional<string> linkType = default;
-            Core.Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> context = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<long> roundTripTimeMin = default;
-            Core.Optional<long> roundTripTimeAvg = default;
-            Core.Optional<long> roundTripTimeMax = default;
+            Optional<string> nextHopId = default;
+            Optional<string> linkType = default;
+            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
+            Optional<IReadOnlyDictionary<string, string>> context = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<long> roundTripTimeMin = default;
+            Optional<long> roundTripTimeAvg = default;
+            Optional<long> roundTripTimeMax = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextHopId"u8))
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new HopLink(nextHopId.Value, linkType.Value, Core.Optional.ToList(issues), Core.Optional.ToDictionary(context), resourceId.Value, Core.Optional.ToNullable(roundTripTimeMin), Core.Optional.ToNullable(roundTripTimeAvg), Core.Optional.ToNullable(roundTripTimeMax));
+            return new HopLink(nextHopId.Value, linkType.Value, Optional.ToList(issues), Optional.ToDictionary(context), resourceId.Value, Optional.ToNullable(roundTripTimeMin), Optional.ToNullable(roundTripTimeAvg), Optional.ToNullable(roundTripTimeMax));
         }
     }
 }

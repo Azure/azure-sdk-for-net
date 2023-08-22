@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class FlowEndpoints : Core.IUtf8JsonSerializable
+    public partial class FlowEndpoints : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(OutgoingIPAddresses))
+            if (Optional.IsCollectionDefined(OutgoingIPAddresses))
             {
                 writer.WritePropertyName("outgoingIpAddresses"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AccessEndpointIPAddresses))
+            if (Optional.IsCollectionDefined(AccessEndpointIPAddresses))
             {
                 writer.WritePropertyName("accessEndpointIpAddresses"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
-            Core.Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
+            Optional<IList<FlowEndpointIPAddress>> outgoingIPAddresses = default;
+            Optional<IList<FlowEndpointIPAddress>> accessEndpointIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outgoingIpAddresses"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new FlowEndpoints(Core.Optional.ToList(outgoingIPAddresses), Core.Optional.ToList(accessEndpointIPAddresses));
+            return new FlowEndpoints(Optional.ToList(outgoingIPAddresses), Optional.ToList(accessEndpointIPAddresses));
         }
     }
 }

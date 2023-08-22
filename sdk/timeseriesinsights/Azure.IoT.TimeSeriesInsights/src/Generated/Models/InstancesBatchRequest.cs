@@ -16,8 +16,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of InstancesBatchRequest. </summary>
         public InstancesBatchRequest()
         {
-            Put = new Core.ChangeTrackingList<TimeSeriesInstance>();
-            Update = new Core.ChangeTrackingList<TimeSeriesInstance>();
+            Put = new ChangeTrackingList<TimeSeriesInstance>();
+            Update = new ChangeTrackingList<TimeSeriesInstance>();
         }
 
         /// <summary> Time series IDs or names of time series instances to return. </summary>

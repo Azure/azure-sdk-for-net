@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionConfiguration. </summary>
         public FirewallPolicyIntrusionDetectionConfiguration()
         {
-            SignatureOverrides = new Core.ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification>();
-            BypassTrafficSettings = new Core.ChangeTrackingList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>();
-            PrivateRanges = new Core.ChangeTrackingList<string>();
+            SignatureOverrides = new ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification>();
+            BypassTrafficSettings = new ChangeTrackingList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>();
+            PrivateRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetectionConfiguration. </summary>

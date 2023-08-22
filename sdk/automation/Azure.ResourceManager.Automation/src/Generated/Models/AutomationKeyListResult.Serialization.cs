@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AutomationKey>> keys = default;
+            Optional<IReadOnlyList<AutomationKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationKeyListResult(Core.Optional.ToList(keys));
+            return new AutomationKeyListResult(Optional.ToList(keys));
         }
     }
 }

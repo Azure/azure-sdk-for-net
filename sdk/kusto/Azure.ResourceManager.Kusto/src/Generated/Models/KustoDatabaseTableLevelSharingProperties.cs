@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
         public KustoDatabaseTableLevelSharingProperties()
         {
-            TablesToInclude = new Core.ChangeTrackingList<string>();
-            TablesToExclude = new Core.ChangeTrackingList<string>();
-            ExternalTablesToInclude = new Core.ChangeTrackingList<string>();
-            ExternalTablesToExclude = new Core.ChangeTrackingList<string>();
-            MaterializedViewsToInclude = new Core.ChangeTrackingList<string>();
-            MaterializedViewsToExclude = new Core.ChangeTrackingList<string>();
-            FunctionsToInclude = new Core.ChangeTrackingList<string>();
-            FunctionsToExclude = new Core.ChangeTrackingList<string>();
+            TablesToInclude = new ChangeTrackingList<string>();
+            TablesToExclude = new ChangeTrackingList<string>();
+            ExternalTablesToInclude = new ChangeTrackingList<string>();
+            ExternalTablesToExclude = new ChangeTrackingList<string>();
+            MaterializedViewsToInclude = new ChangeTrackingList<string>();
+            MaterializedViewsToExclude = new ChangeTrackingList<string>();
+            FunctionsToInclude = new ChangeTrackingList<string>();
+            FunctionsToExclude = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>

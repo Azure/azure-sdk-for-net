@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> networkSecurityGroup = default;
-            Core.Optional<EffectiveNetworkSecurityGroupAssociation> association = default;
-            Core.Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
-            Core.Optional<IReadOnlyDictionary<string, IList<string>>> tagMap = default;
+            Optional<WritableSubResource> networkSecurityGroup = default;
+            Optional<EffectiveNetworkSecurityGroupAssociation> association = default;
+            Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
+            Optional<IReadOnlyDictionary<string, IList<string>>> tagMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroup"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association.Value, Core.Optional.ToList(effectiveSecurityRules), Core.Optional.ToDictionary(tagMap));
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association.Value, Optional.ToList(effectiveSecurityRules), Optional.ToDictionary(tagMap));
         }
     }
 }

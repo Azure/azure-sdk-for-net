@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyPatch. </summary>
         public CdnWebApplicationFirewallPolicyPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> CdnWebApplicationFirewallPolicy tags. </summary>

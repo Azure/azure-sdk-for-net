@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of RouteTargetInformation. </summary>
         public RouteTargetInformation()
         {
-            ImportIPv4RouteTargets = new Core.ChangeTrackingList<string>();
-            ImportIPv6RouteTargets = new Core.ChangeTrackingList<string>();
-            ExportIPv4RouteTargets = new Core.ChangeTrackingList<string>();
-            ExportIPv6RouteTargets = new Core.ChangeTrackingList<string>();
+            ImportIPv4RouteTargets = new ChangeTrackingList<string>();
+            ImportIPv6RouteTargets = new ChangeTrackingList<string>();
+            ExportIPv4RouteTargets = new ChangeTrackingList<string>();
+            ExportIPv6RouteTargets = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RouteTargetInformation. </summary>

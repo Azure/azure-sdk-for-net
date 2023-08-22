@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    public partial class ConfluentOrganizationData : Core.IUtf8JsonSerializable
+    public partial class ConfluentOrganizationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -48,16 +48,16 @@ namespace Azure.ResourceManager.Confluent
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> createdTime = default;
-            Core.Optional<ConfluentProvisionState> provisioningState = default;
-            Core.Optional<Guid> organizationId = default;
-            Core.Optional<Uri> ssoUrl = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<ConfluentProvisionState> provisioningState = default;
+            Optional<Guid> organizationId = default;
+            Optional<Uri> ssoUrl = default;
             ConfluentOfferDetail offerDetail = default;
             ConfluentUserDetail userDetail = default;
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Confluent
                     continue;
                 }
             }
-            return new ConfluentOrganizationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(createdTime), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail);
+            return new ConfluentOrganizationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(provisioningState), Optional.ToNullable(organizationId), ssoUrl.Value, offerDetail, userDetail);
         }
     }
 }

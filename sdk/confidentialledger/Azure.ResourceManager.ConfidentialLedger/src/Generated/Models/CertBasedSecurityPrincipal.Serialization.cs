@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class CertBasedSecurityPrincipal : Core.IUtf8JsonSerializable
+    public partial class CertBasedSecurityPrincipal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Cert))
+            if (Optional.IsDefined(Cert))
             {
                 writer.WritePropertyName("cert"u8);
                 writer.WriteStringValue(Cert);
             }
-            if (Core.Optional.IsDefined(LedgerRoleName))
+            if (Optional.IsDefined(LedgerRoleName))
             {
                 writer.WritePropertyName("ledgerRoleName"u8);
                 writer.WriteStringValue(LedgerRoleName.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Core.Optional<string> cert = default;
-            Core.Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
+            Optional<string> cert = default;
+            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cert"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     continue;
                 }
             }
-            return new CertBasedSecurityPrincipal(cert.Value, Core.Optional.ToNullable(ledgerRoleName));
+            return new CertBasedSecurityPrincipal(cert.Value, Optional.ToNullable(ledgerRoleName));
         }
     }
 }

@@ -25,12 +25,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(className, nameof(className));
             Argument.AssertNotNull(jarFilePath, nameof(jarFilePath));
 
-            StorageLinkedServices = new Core.ChangeTrackingList<LinkedServiceReference>();
-            Arguments = new Core.ChangeTrackingList<object>();
+            StorageLinkedServices = new ChangeTrackingList<LinkedServiceReference>();
+            Arguments = new ChangeTrackingList<object>();
             ClassName = className;
             JarFilePath = jarFilePath;
-            JarLibs = new Core.ChangeTrackingList<object>();
-            Defines = new Core.ChangeTrackingDictionary<string, object>();
+            JarLibs = new ChangeTrackingList<object>();
+            Defines = new ChangeTrackingDictionary<string, object>();
             Type = "HDInsightMapReduce";
         }
 

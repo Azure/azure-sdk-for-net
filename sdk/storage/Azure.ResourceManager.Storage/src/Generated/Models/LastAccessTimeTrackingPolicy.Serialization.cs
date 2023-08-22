@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LastAccessTimeTrackingPolicy : Core.IUtf8JsonSerializable
+    public partial class LastAccessTimeTrackingPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TrackingGranularityInDays))
+            if (Optional.IsDefined(TrackingGranularityInDays))
             {
                 writer.WritePropertyName("trackingGranularityInDays"u8);
                 writer.WriteNumberValue(TrackingGranularityInDays.Value);
             }
-            if (Core.Optional.IsCollectionDefined(BlobType))
+            if (Optional.IsCollectionDefined(BlobType))
             {
                 writer.WritePropertyName("blobType"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             bool enable = default;
-            Core.Optional<LastAccessTimeTrackingPolicyName> name = default;
-            Core.Optional<int> trackingGranularityInDays = default;
-            Core.Optional<IList<string>> blobType = default;
+            Optional<LastAccessTimeTrackingPolicyName> name = default;
+            Optional<int> trackingGranularityInDays = default;
+            Optional<IList<string>> blobType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new LastAccessTimeTrackingPolicy(enable, Core.Optional.ToNullable(name), Core.Optional.ToNullable(trackingGranularityInDays), Core.Optional.ToList(blobType));
+            return new LastAccessTimeTrackingPolicy(enable, Optional.ToNullable(name), Optional.ToNullable(trackingGranularityInDays), Optional.ToList(blobType));
         }
     }
 }

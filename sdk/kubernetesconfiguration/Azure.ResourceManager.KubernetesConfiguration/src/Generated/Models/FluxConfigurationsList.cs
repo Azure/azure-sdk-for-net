@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of FluxConfigurationsList. </summary>
         internal FluxConfigurationsList()
         {
-            Value = new Core.ChangeTrackingList<KubernetesFluxConfigurationData>();
+            Value = new ChangeTrackingList<KubernetesFluxConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of FluxConfigurationsList. </summary>

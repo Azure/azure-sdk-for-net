@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string timespan = default;
             TimeSpan interval = default;
-            Core.Optional<string> @namespace = default;
+            Optional<string> @namespace = default;
             IReadOnlyList<MonitorTimeSeriesBaseline> baselines = default;
             foreach (var property in element.EnumerateObject())
             {

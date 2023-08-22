@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DefaultAuthorizationPolicy. </summary>
         public DefaultAuthorizationPolicy()
         {
-            AllowedApplications = new Core.ChangeTrackingList<string>();
+            AllowedApplications = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DefaultAuthorizationPolicy. </summary>

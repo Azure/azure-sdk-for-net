@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of AcsRecordingStorageInfoProperties. </summary>
         internal AcsRecordingStorageInfoProperties()
         {
-            RecordingChunks = new Core.ChangeTrackingList<AcsRecordingChunkInfoProperties>();
+            RecordingChunks = new ChangeTrackingList<AcsRecordingChunkInfoProperties>();
         }
 
         /// <summary> Initializes a new instance of AcsRecordingStorageInfoProperties. </summary>

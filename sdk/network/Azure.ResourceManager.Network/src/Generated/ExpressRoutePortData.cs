@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>
         public ExpressRoutePortData()
         {
-            Links = new Core.ChangeTrackingList<ExpressRouteLinkData>();
-            Circuits = new Core.ChangeTrackingList<WritableSubResource>();
+            Links = new ChangeTrackingList<ExpressRouteLinkData>();
+            Circuits = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of ExpressRoutePortData. </summary>

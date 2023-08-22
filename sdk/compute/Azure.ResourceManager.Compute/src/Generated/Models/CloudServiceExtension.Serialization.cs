@@ -12,39 +12,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceExtension : Core.IUtf8JsonSerializable
+    public partial class CloudServiceExtension : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Publisher))
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Core.Optional.IsDefined(CloudServiceExtensionPropertiesType))
+            if (Optional.IsDefined(CloudServiceExtensionPropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CloudServiceExtensionPropertiesType);
             }
-            if (Core.Optional.IsDefined(TypeHandlerVersion))
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Core.Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(ProtectedSettings))
+            if (Optional.IsDefined(ProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettings"u8);
 #if NET6_0_OR_GREATER
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.Compute.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
                 writer.WriteObjectValue(ProtectedSettingsFromKeyVault);
             }
-            if (Core.Optional.IsDefined(ForceUpdateTag))
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Core.Optional.IsCollectionDefined(RolesAppliedTo))
+            if (Optional.IsCollectionDefined(RolesAppliedTo))
             {
                 writer.WritePropertyName("rolesAppliedTo"u8);
                 writer.WriteStartArray();
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> type = default;
-            Core.Optional<string> typeHandlerVersion = default;
-            Core.Optional<bool> autoUpgradeMinorVersion = default;
-            Core.Optional<BinaryData> settings = default;
-            Core.Optional<BinaryData> protectedSettings = default;
-            Core.Optional<CloudServiceVaultAndSecretReference> protectedSettingsFromKeyVault = default;
-            Core.Optional<string> forceUpdateTag = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<IList<string>> rolesAppliedTo = default;
+            Optional<string> name = default;
+            Optional<string> publisher = default;
+            Optional<string> type = default;
+            Optional<string> typeHandlerVersion = default;
+            Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<BinaryData> settings = default;
+            Optional<BinaryData> protectedSettings = default;
+            Optional<CloudServiceVaultAndSecretReference> protectedSettingsFromKeyVault = default;
+            Optional<string> forceUpdateTag = default;
+            Optional<string> provisioningState = default;
+            Optional<IList<string>> rolesAppliedTo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceExtension(name.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Core.Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, protectedSettingsFromKeyVault.Value, forceUpdateTag.Value, provisioningState.Value, Core.Optional.ToList(rolesAppliedTo));
+            return new CloudServiceExtension(name.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, protectedSettingsFromKeyVault.Value, forceUpdateTag.Value, provisioningState.Value, Optional.ToList(rolesAppliedTo));
         }
     }
 }

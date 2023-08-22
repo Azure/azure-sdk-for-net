@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeSkuLocationInfo(AzureLocation location)
         {
             Location = location;
-            Zones = new Core.ChangeTrackingList<string>();
-            ZoneDetails = new Core.ChangeTrackingList<ResourceTypeSkuZoneDetail>();
-            ExtendedLocations = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
+            ZoneDetails = new ChangeTrackingList<ResourceTypeSkuZoneDetail>();
+            ExtendedLocations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ResourceTypeSkuLocationInfo. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <param name="location"> The location. </param>
         public OperationalizationClusterData(AzureLocation location) : base(location)
         {
-            ProvisioningErrors = new Core.ChangeTrackingList<ErrorResponseWrapper>();
+            ProvisioningErrors = new ChangeTrackingList<ErrorResponseWrapper>();
         }
 
         /// <summary> Initializes a new instance of OperationalizationClusterData. </summary>

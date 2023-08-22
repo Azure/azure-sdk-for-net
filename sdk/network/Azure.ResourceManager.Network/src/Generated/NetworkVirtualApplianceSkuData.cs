@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>
         public NetworkVirtualApplianceSkuData()
         {
-            AvailableVersions = new Core.ChangeTrackingList<string>();
-            AvailableScaleUnits = new Core.ChangeTrackingList<NetworkVirtualApplianceSkuInstances>();
+            AvailableVersions = new ChangeTrackingList<string>();
+            AvailableScaleUnits = new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>();
         }
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceSkuData. </summary>

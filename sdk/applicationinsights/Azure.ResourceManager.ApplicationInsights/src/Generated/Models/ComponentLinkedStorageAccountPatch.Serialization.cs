@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ComponentLinkedStorageAccountPatch : Core.IUtf8JsonSerializable
+    public partial class ComponentLinkedStorageAccountPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedStorageAccount))
+            if (Optional.IsDefined(LinkedStorageAccount))
             {
                 writer.WritePropertyName("linkedStorageAccount"u8);
                 writer.WriteStringValue(LinkedStorageAccount);

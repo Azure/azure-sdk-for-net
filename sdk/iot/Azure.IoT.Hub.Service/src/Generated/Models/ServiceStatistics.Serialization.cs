@@ -18,7 +18,7 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Core.Optional<long> connectedDeviceCount = default;
+            Optional<long> connectedDeviceCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedDeviceCount"u8))
@@ -31,7 +31,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ServiceStatistics(Core.Optional.ToNullable(connectedDeviceCount));
+            return new ServiceStatistics(Optional.ToNullable(connectedDeviceCount));
         }
     }
 }

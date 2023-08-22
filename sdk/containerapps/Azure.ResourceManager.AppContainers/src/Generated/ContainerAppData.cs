@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public ContainerAppData(AzureLocation location) : base(location)
         {
-            OutboundIPAddressList = new Core.ChangeTrackingList<IPAddress>();
+            OutboundIPAddressList = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppData. </summary>

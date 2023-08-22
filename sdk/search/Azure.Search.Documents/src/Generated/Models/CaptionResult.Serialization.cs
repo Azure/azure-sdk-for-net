@@ -19,8 +19,8 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Core.Optional<string> text = default;
-            Core.Optional<string> highlights = default;
+            Optional<string> text = default;
+            Optional<string> highlights = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

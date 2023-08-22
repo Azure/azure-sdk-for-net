@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of ProcessInfoData. </summary>
         public ProcessInfoData()
         {
-            Children = new Core.ChangeTrackingList<string>();
-            Threads = new Core.ChangeTrackingList<ProcessThreadInfo>();
-            OpenFileHandles = new Core.ChangeTrackingList<string>();
-            Modules = new Core.ChangeTrackingList<ProcessModuleInfoData>();
-            EnvironmentVariables = new Core.ChangeTrackingDictionary<string, string>();
+            Children = new ChangeTrackingList<string>();
+            Threads = new ChangeTrackingList<ProcessThreadInfo>();
+            OpenFileHandles = new ChangeTrackingList<string>();
+            Modules = new ChangeTrackingList<ProcessModuleInfoData>();
+            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ProcessInfoData. </summary>

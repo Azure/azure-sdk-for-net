@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<UpdateRunData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<UpdateRunData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new UpdateRunList(Core.Optional.ToList(value), nextLink.Value);
+            return new UpdateRunList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

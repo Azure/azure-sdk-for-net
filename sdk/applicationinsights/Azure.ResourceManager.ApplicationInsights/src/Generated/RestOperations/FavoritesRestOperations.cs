@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 uri.AppendQuery("canFetchContent", canFetchContent.Value, true);
             }
-            if (tags != null && Core.Optional.IsCollectionDefined(tags))
+            if (tags != null && Optional.IsCollectionDefined(tags))
             {
                 uri.AppendQueryDelimited("tags", tags, ",", true);
             }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(favoriteProperties);
             request.Content = content;
             _userAgent.Apply(message);
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(favoriteProperties);
             request.Content = content;
             _userAgent.Apply(message);

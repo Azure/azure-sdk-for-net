@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotServicePrivateLinkResourceListResult. </summary>
         internal BotServicePrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<BotServicePrivateLinkResourceData>();
+            Value = new ChangeTrackingList<BotServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of BotServicePrivateLinkResourceListResult. </summary>

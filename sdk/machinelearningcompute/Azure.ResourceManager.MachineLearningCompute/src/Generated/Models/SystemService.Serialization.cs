@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class SystemService : Core.IUtf8JsonSerializable
+    public partial class SystemService : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("systemServiceType"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 return null;
             }
             SystemServiceType systemServiceType = default;
-            Core.Optional<string> publicIPAddress = default;
-            Core.Optional<string> version = default;
+            Optional<string> publicIPAddress = default;
+            Optional<string> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemServiceType"u8))

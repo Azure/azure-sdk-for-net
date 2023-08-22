@@ -12,12 +12,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticsMetadata : Core.IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticsMetadata : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SupportTopicList))
+            if (Optional.IsCollectionDefined(SupportTopicList))
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(AnalysisTypes))
+            if (Optional.IsCollectionDefined(AnalysisTypes))
             {
                 writer.WritePropertyName("analysisTypes"u8);
                 writer.WriteStartArray();
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<string> author = default;
-            Core.Optional<string> category = default;
-            Core.Optional<IList<ContainerAppDiagnosticSupportTopic>> supportTopicList = default;
-            Core.Optional<IList<string>> analysisTypes = default;
-            Core.Optional<float> score = default;
+            Optional<string> description = default;
+            Optional<string> author = default;
+            Optional<string> category = default;
+            Optional<IList<ContainerAppDiagnosticSupportTopic>> supportTopicList = default;
+            Optional<IList<string>> analysisTypes = default;
+            Optional<float> score = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppDiagnosticsMetadata(id, name, type, systemData.Value, description.Value, author.Value, category.Value, Core.Optional.ToList(supportTopicList), Core.Optional.ToList(analysisTypes), Core.Optional.ToNullable(score));
+            return new ContainerAppDiagnosticsMetadata(id, name, type, systemData.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisTypes), Optional.ToNullable(score));
         }
     }
 }

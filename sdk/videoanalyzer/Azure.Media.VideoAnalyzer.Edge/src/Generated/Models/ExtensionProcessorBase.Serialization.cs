@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class ExtensionProcessorBase : Core.IUtf8JsonSerializable
+    public partial class ExtensionProcessorBase : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (Core.Optional.IsDefined(SamplingOptions))
+            if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -55,7 +55,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             EndpointBase endpoint = default;
             ImageProperties image = default;
-            Core.Optional<SamplingOptions> samplingOptions = default;
+            Optional<SamplingOptions> samplingOptions = default;
             string type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
             string name = default;
             IList<NodeInput> inputs = default;

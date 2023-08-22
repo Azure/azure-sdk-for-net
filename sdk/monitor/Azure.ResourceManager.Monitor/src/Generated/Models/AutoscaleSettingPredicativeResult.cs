@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>
         internal AutoscaleSettingPredicativeResult()
         {
-            Data = new Core.ChangeTrackingList<PredictiveValue>();
+            Data = new ChangeTrackingList<PredictiveValue>();
         }
 
         /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>

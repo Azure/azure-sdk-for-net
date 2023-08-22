@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             AzureLocation location = default;
-            Core.Optional<IReadOnlyList<string>> zones = default;
+            Optional<IReadOnlyList<string>> zones = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new KustoPoolSkuLocationInfoItem(location, Core.Optional.ToList(zones));
+            return new KustoPoolSkuLocationInfoItem(location, Optional.ToList(zones));
         }
     }
 }

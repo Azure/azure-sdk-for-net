@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CacheKeyQueryStringActionProperties : Core.IUtf8JsonSerializable
+    public partial class CacheKeyQueryStringActionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("queryStringBehavior"u8);
             writer.WriteStringValue(QueryStringBehavior.ToString());
-            if (Core.Optional.IsDefined(QueryParameters))
+            if (Optional.IsDefined(QueryParameters))
             {
                 if (QueryParameters != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             CacheKeyQueryStringActionType typeName = default;
             QueryStringBehavior queryStringBehavior = default;
-            Core.Optional<string> queryParameters = default;
+            Optional<string> queryParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))

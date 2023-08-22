@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerHeatMapQueryExperience : Core.IUtf8JsonSerializable
+    public partial class TrafficManagerHeatMapQueryExperience : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpointId"u8);
             writer.WriteNumberValue(EndpointId);
             writer.WritePropertyName("queryCount"u8);
             writer.WriteNumberValue(QueryCount);
-            if (Core.Optional.IsDefined(Latency))
+            if (Optional.IsDefined(Latency))
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(Latency.Value);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             int endpointId = default;
             int queryCount = default;
-            Core.Optional<double> latency = default;
+            Optional<double> latency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointId"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     continue;
                 }
             }
-            return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, Core.Optional.ToNullable(latency));
+            return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, Optional.ToNullable(latency));
         }
     }
 }

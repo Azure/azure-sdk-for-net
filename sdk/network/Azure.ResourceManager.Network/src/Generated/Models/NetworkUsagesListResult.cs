@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkUsagesListResult. </summary>
         internal NetworkUsagesListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkUsage>();
+            Value = new ChangeTrackingList<NetworkUsage>();
         }
 
         /// <summary> Initializes a new instance of NetworkUsagesListResult. </summary>

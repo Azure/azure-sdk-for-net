@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesModelSettings. </summary>
         internal TimeSeriesModelSettings()
         {
-            TimeSeriesIdProperties = new Core.ChangeTrackingList<TimeSeriesIdProperty>();
+            TimeSeriesIdProperties = new ChangeTrackingList<TimeSeriesIdProperty>();
         }
 
         /// <summary> Initializes a new instance of TimeSeriesModelSettings. </summary>

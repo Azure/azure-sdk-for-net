@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<string> leaseId = default;
-            Core.Optional<string> leaseTimeSeconds = default;
+            Optional<string> leaseId = default;
+            Optional<string> leaseTimeSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("leaseId"u8))

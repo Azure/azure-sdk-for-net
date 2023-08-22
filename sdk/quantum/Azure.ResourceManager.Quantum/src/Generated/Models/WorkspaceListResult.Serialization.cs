@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<QuantumWorkspaceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<QuantumWorkspaceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     continue;
                 }
             }
-            return new WorkspaceListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new WorkspaceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

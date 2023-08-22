@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class DirectLineChannelProperties : Core.IUtf8JsonSerializable
+    public partial class DirectLineChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Sites))
+            if (Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ExtensionKey1))
+            if (Optional.IsDefined(ExtensionKey1))
             {
                 writer.WritePropertyName("extensionKey1"u8);
                 writer.WriteStringValue(ExtensionKey1);
             }
-            if (Core.Optional.IsDefined(ExtensionKey2))
+            if (Optional.IsDefined(ExtensionKey2))
             {
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (Core.Optional.IsDefined(DirectLineEmbedCode))
+            if (Optional.IsDefined(DirectLineEmbedCode))
             {
                 writer.WritePropertyName("DirectLineEmbedCode"u8);
                 writer.WriteStringValue(DirectLineEmbedCode);
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<IList<DirectLineSite>> sites = default;
-            Core.Optional<string> extensionKey1 = default;
-            Core.Optional<string> extensionKey2 = default;
-            Core.Optional<string> directLineEmbedCode = default;
+            Optional<IList<DirectLineSite>> sites = default;
+            Optional<string> extensionKey1 = default;
+            Optional<string> extensionKey2 = default;
+            Optional<string> directLineEmbedCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sites"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new DirectLineChannelProperties(Core.Optional.ToList(sites), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value);
+            return new DirectLineChannelProperties(Optional.ToList(sites), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value);
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<SubResource> privateEndpoint = default;
-            Core.Optional<SynapsePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<SynapsePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))

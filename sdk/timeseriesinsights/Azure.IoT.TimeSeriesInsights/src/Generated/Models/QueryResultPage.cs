@@ -17,8 +17,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of QueryResultPage. </summary>
         internal QueryResultPage()
         {
-            Timestamps = new Core.ChangeTrackingList<DateTimeOffset>();
-            Properties = new Core.ChangeTrackingList<PropertyValues>();
+            Timestamps = new ChangeTrackingList<DateTimeOffset>();
+            Properties = new ChangeTrackingList<PropertyValues>();
         }
 
         /// <summary> Initializes a new instance of QueryResultPage. </summary>

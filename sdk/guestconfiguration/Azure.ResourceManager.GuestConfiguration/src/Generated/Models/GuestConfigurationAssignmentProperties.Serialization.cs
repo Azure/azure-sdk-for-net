@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class GuestConfigurationAssignmentProperties : Core.IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GuestConfiguration))
+            if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
                 writer.WriteObjectValue(GuestConfiguration);
             }
-            if (Core.Optional.IsDefined(LatestAssignmentReport))
+            if (Optional.IsDefined(LatestAssignmentReport))
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
                 writer.WriteObjectValue(LatestAssignmentReport);
             }
-            if (Core.Optional.IsDefined(Context))
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (Core.Optional.IsCollectionDefined(VmssVmList))
+            if (Optional.IsCollectionDefined(VmssVmList))
             {
                 if (VmssVmList != null)
                 {
@@ -58,18 +58,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> targetResourceId = default;
-            Core.Optional<GuestConfigurationNavigation> guestConfiguration = default;
-            Core.Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Core.Optional<DateTimeOffset?> lastComplianceStatusChecked = default;
-            Core.Optional<ResourceIdentifier> latestReportId = default;
-            Core.Optional<string> parameterHash = default;
-            Core.Optional<GuestConfigurationAssignmentReportInfo> latestAssignmentReport = default;
-            Core.Optional<string> context = default;
-            Core.Optional<string> assignmentHash = default;
-            Core.Optional<GuestConfigurationProvisioningState?> provisioningState = default;
-            Core.Optional<string> resourceType = default;
-            Core.Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
+            Optional<string> targetResourceId = default;
+            Optional<GuestConfigurationNavigation> guestConfiguration = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Optional<DateTimeOffset?> lastComplianceStatusChecked = default;
+            Optional<ResourceIdentifier> latestReportId = default;
+            Optional<string> parameterHash = default;
+            Optional<GuestConfigurationAssignmentReportInfo> latestAssignmentReport = default;
+            Optional<string> context = default;
+            Optional<string> assignmentHash = default;
+            Optional<GuestConfigurationProvisioningState?> provisioningState = default;
+            Optional<string> resourceType = default;
+            Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetResourceId"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Core.Optional.ToNullable(complianceStatus), Core.Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Core.Optional.ToNullable(provisioningState), resourceType.Value, Core.Optional.ToList(vmssVmList));
+            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, Optional.ToList(vmssVmList));
         }
     }
 }

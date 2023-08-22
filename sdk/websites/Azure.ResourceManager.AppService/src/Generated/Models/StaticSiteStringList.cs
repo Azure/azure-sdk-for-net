@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteStringList. </summary>
         public StaticSiteStringList()
         {
-            Properties = new Core.ChangeTrackingList<string>();
+            Properties = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StaticSiteStringList. </summary>

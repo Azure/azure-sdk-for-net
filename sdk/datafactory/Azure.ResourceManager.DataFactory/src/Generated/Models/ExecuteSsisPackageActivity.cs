@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             PackageLocation = packageLocation;
             ConnectVia = connectVia;
-            ProjectParameters = new Core.ChangeTrackingDictionary<string, SsisExecutionParameter>();
-            PackageParameters = new Core.ChangeTrackingDictionary<string, SsisExecutionParameter>();
-            ProjectConnectionManagers = new Core.ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>();
-            PackageConnectionManagers = new Core.ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>();
-            PropertyOverrides = new Core.ChangeTrackingDictionary<string, SsisPropertyOverride>();
+            ProjectParameters = new ChangeTrackingDictionary<string, SsisExecutionParameter>();
+            PackageParameters = new ChangeTrackingDictionary<string, SsisExecutionParameter>();
+            ProjectConnectionManagers = new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>();
+            PackageConnectionManagers = new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>();
+            PropertyOverrides = new ChangeTrackingDictionary<string, SsisPropertyOverride>();
             ActivityType = "ExecuteSSISPackage";
         }
 

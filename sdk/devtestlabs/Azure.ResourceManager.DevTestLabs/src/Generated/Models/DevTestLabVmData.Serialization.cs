@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabVmData : Core.IUtf8JsonSerializable
+    public partial class DevTestLabVmData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,72 +34,72 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Notes))
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Core.Optional.IsDefined(OwnerObjectId))
+            if (Optional.IsDefined(OwnerObjectId))
             {
                 writer.WritePropertyName("ownerObjectId"u8);
                 writer.WriteStringValue(OwnerObjectId);
             }
-            if (Core.Optional.IsDefined(OwnerUserPrincipalName))
+            if (Optional.IsDefined(OwnerUserPrincipalName))
             {
                 writer.WritePropertyName("ownerUserPrincipalName"u8);
                 writer.WriteStringValue(OwnerUserPrincipalName);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(CustomImageId))
+            if (Optional.IsDefined(CustomImageId))
             {
                 writer.WritePropertyName("customImageId"u8);
                 writer.WriteStringValue(CustomImageId);
             }
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Core.Optional.IsDefined(UserName))
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Core.Optional.IsDefined(SshKey))
+            if (Optional.IsDefined(SshKey))
             {
                 writer.WritePropertyName("sshKey"u8);
                 writer.WriteStringValue(SshKey);
             }
-            if (Core.Optional.IsDefined(IsAuthenticationWithSshKey))
+            if (Optional.IsDefined(IsAuthenticationWithSshKey))
             {
                 writer.WritePropertyName("isAuthenticationWithSshKey"u8);
                 writer.WriteBooleanValue(IsAuthenticationWithSshKey.Value);
             }
-            if (Core.Optional.IsDefined(LabSubnetName))
+            if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (Core.Optional.IsDefined(LabVirtualNetworkId))
+            if (Optional.IsDefined(LabVirtualNetworkId))
             {
                 writer.WritePropertyName("labVirtualNetworkId"u8);
                 writer.WriteStringValue(LabVirtualNetworkId);
             }
-            if (Core.Optional.IsDefined(DisallowPublicIPAddress))
+            if (Optional.IsDefined(DisallowPublicIPAddress))
             {
                 writer.WritePropertyName("disallowPublicIpAddress"u8);
                 writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Artifacts))
+            if (Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -109,42 +109,42 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(GalleryImageReference))
+            if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
                 writer.WriteObjectValue(GalleryImageReference);
             }
-            if (Core.Optional.IsDefined(PlanId))
+            if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (Core.Optional.IsDefined(NetworkInterface))
+            if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
                 writer.WriteObjectValue(NetworkInterface);
             }
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(AllowClaim))
+            if (Optional.IsDefined(AllowClaim))
             {
                 writer.WritePropertyName("allowClaim"u8);
                 writer.WriteBooleanValue(AllowClaim.Value);
             }
-            if (Core.Optional.IsDefined(StorageType))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
             }
-            if (Core.Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Core.Optional.IsCollectionDefined(DataDiskParameters))
+            if (Optional.IsCollectionDefined(DataDiskParameters))
             {
                 writer.WritePropertyName("dataDiskParameters"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ScheduleParameters))
+            if (Optional.IsCollectionDefined(ScheduleParameters))
             {
                 writer.WritePropertyName("scheduleParameters"u8);
                 writer.WriteStartArray();
@@ -174,47 +174,47 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> notes = default;
-            Core.Optional<string> ownerObjectId = default;
-            Core.Optional<string> ownerUserPrincipalName = default;
-            Core.Optional<string> createdByUserId = default;
-            Core.Optional<string> createdByUser = default;
-            Core.Optional<DateTimeOffset> createdDate = default;
-            Core.Optional<ResourceIdentifier> computeId = default;
-            Core.Optional<string> customImageId = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<string> size = default;
-            Core.Optional<string> userName = default;
-            Core.Optional<string> password = default;
-            Core.Optional<string> sshKey = default;
-            Core.Optional<bool> isAuthenticationWithSshKey = default;
-            Core.Optional<string> fqdn = default;
-            Core.Optional<string> labSubnetName = default;
-            Core.Optional<ResourceIdentifier> labVirtualNetworkId = default;
-            Core.Optional<bool> disallowPublicIPAddress = default;
-            Core.Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
-            Core.Optional<DevTestLabArtifactDeploymentStatus> artifactDeploymentStatus = default;
-            Core.Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
-            Core.Optional<string> planId = default;
-            Core.Optional<ComputeVmProperties> computeVm = default;
-            Core.Optional<DevTestLabNetworkInterface> networkInterface = default;
-            Core.Optional<DevTestLabApplicableSchedule> applicableSchedule = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
-            Core.Optional<bool> allowClaim = default;
-            Core.Optional<string> storageType = default;
-            Core.Optional<DevTestLabVmCreationSource> vmCreationSource = default;
-            Core.Optional<ResourceIdentifier> environmentId = default;
-            Core.Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
-            Core.Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
-            Core.Optional<string> lastKnownPowerState = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<Guid> uniqueIdentifier = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> notes = default;
+            Optional<string> ownerObjectId = default;
+            Optional<string> ownerUserPrincipalName = default;
+            Optional<string> createdByUserId = default;
+            Optional<string> createdByUser = default;
+            Optional<DateTimeOffset> createdDate = default;
+            Optional<ResourceIdentifier> computeId = default;
+            Optional<string> customImageId = default;
+            Optional<string> osType = default;
+            Optional<string> size = default;
+            Optional<string> userName = default;
+            Optional<string> password = default;
+            Optional<string> sshKey = default;
+            Optional<bool> isAuthenticationWithSshKey = default;
+            Optional<string> fqdn = default;
+            Optional<string> labSubnetName = default;
+            Optional<ResourceIdentifier> labVirtualNetworkId = default;
+            Optional<bool> disallowPublicIPAddress = default;
+            Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
+            Optional<DevTestLabArtifactDeploymentStatus> artifactDeploymentStatus = default;
+            Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
+            Optional<string> planId = default;
+            Optional<ComputeVmProperties> computeVm = default;
+            Optional<DevTestLabNetworkInterface> networkInterface = default;
+            Optional<DevTestLabApplicableSchedule> applicableSchedule = default;
+            Optional<DateTimeOffset> expirationDate = default;
+            Optional<bool> allowClaim = default;
+            Optional<string> storageType = default;
+            Optional<DevTestLabVmCreationSource> vmCreationSource = default;
+            Optional<ResourceIdentifier> environmentId = default;
+            Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
+            Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
+            Optional<string> lastKnownPowerState = default;
+            Optional<string> provisioningState = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabVmData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Core.Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Core.Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Core.Optional.ToNullable(disallowPublicIPAddress), Core.Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Core.Optional.ToNullable(expirationDate), Core.Optional.ToNullable(allowClaim), storageType.Value, Core.Optional.ToNullable(vmCreationSource), environmentId.Value, Core.Optional.ToList(dataDiskParameters), Core.Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(vmCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

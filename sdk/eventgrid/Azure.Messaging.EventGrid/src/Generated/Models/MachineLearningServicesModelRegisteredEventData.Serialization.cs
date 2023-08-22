@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> modelName = default;
-            Core.Optional<string> modelVersion = default;
-            Core.Optional<object> modelTags = default;
-            Core.Optional<object> modelProperties = default;
+            Optional<string> modelName = default;
+            Optional<string> modelVersion = default;
+            Optional<object> modelTags = default;
+            Optional<object> modelProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelName"u8))

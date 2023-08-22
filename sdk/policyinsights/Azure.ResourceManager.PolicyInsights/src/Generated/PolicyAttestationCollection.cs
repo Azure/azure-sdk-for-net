@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = await _policyAttestationAttestationsRestClient.CreateOrUpdateAtResourceAsync(Id, attestationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PolicyInsights
             try
             {
                 var response = _policyAttestationAttestationsRestClient.CreateOrUpdateAtResource(Id, attestationName, data, cancellationToken);
-                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

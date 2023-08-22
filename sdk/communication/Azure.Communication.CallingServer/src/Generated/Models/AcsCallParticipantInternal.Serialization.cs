@@ -19,8 +19,8 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Core.Optional<CommunicationIdentifierModel> identifier = default;
-            Core.Optional<bool> isMuted = default;
+            Optional<CommunicationIdentifierModel> identifier = default;
+            Optional<bool> isMuted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AcsCallParticipantInternal(identifier.Value, Core.Optional.ToNullable(isMuted));
+            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
         }
     }
 }

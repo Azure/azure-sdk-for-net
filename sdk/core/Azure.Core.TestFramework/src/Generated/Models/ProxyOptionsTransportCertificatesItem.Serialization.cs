@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
-    public partial class ProxyOptionsTransportCertificatesItem : Core.IUtf8JsonSerializable
+    public partial class ProxyOptionsTransportCertificatesItem : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PemValue))
+            if (Optional.IsDefined(PemValue))
             {
                 writer.WritePropertyName("PemValue"u8);
                 writer.WriteStringValue(PemValue);
             }
-            if (Core.Optional.IsDefined(PemKey))
+            if (Optional.IsDefined(PemKey))
             {
                 writer.WritePropertyName("PemKey"u8);
                 writer.WriteStringValue(PemKey);

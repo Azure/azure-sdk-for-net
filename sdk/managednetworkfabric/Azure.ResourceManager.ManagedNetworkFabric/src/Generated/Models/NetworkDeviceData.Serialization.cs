@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkDeviceData : Core.IUtf8JsonSerializable
+    public partial class NetworkDeviceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Annotation))
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Core.Optional.IsDefined(HostName))
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Core.Optional.IsDefined(SerialNumber))
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (Core.Optional.IsDefined(NetworkDeviceSku))
+            if (Optional.IsDefined(NetworkDeviceSku))
             {
                 writer.WritePropertyName("networkDeviceSku"u8);
                 writer.WriteStringValue(NetworkDeviceSku);
@@ -64,24 +64,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> annotation = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<string> serialNumber = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> networkDeviceSku = default;
-            Core.Optional<NetworkDeviceRole> networkDeviceRole = default;
-            Core.Optional<ResourceIdentifier> networkRackId = default;
-            Core.Optional<IPAddress> managementIPv4Address = default;
-            Core.Optional<string> managementIPv6Address = default;
-            Core.Optional<NetworkFabricConfigurationState> configurationState = default;
-            Core.Optional<NetworkFabricProvisioningState> provisioningState = default;
-            Core.Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> annotation = default;
+            Optional<string> hostName = default;
+            Optional<string> serialNumber = default;
+            Optional<string> version = default;
+            Optional<string> networkDeviceSku = default;
+            Optional<NetworkDeviceRole> networkDeviceRole = default;
+            Optional<ResourceIdentifier> networkRackId = default;
+            Optional<IPAddress> managementIPv4Address = default;
+            Optional<string> managementIPv6Address = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     continue;
                 }
             }
-            return new NetworkDeviceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, annotation.Value, hostName.Value, serialNumber.Value, version.Value, networkDeviceSku.Value, Core.Optional.ToNullable(networkDeviceRole), networkRackId.Value, managementIPv4Address.Value, managementIPv6Address.Value, Core.Optional.ToNullable(configurationState), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(administrativeState));
+            return new NetworkDeviceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, hostName.Value, serialNumber.Value, version.Value, networkDeviceSku.Value, Optional.ToNullable(networkDeviceRole), networkRackId.Value, managementIPv4Address.Value, managementIPv6Address.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    internal class NetworkCloudAgentPoolOperationSource : Core.IOperationSource<NetworkCloudAgentPoolResource>
+    internal class NetworkCloudAgentPoolOperationSource : IOperationSource<NetworkCloudAgentPoolResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.NetworkCloud
             _client = client;
         }
 
-        NetworkCloudAgentPoolResource Core.IOperationSource<NetworkCloudAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkCloudAgentPoolResource IOperationSource<NetworkCloudAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(document.RootElement);
             return new NetworkCloudAgentPoolResource(_client, data);
         }
 
-        async ValueTask<NetworkCloudAgentPoolResource> Core.IOperationSource<NetworkCloudAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkCloudAgentPoolResource> IOperationSource<NetworkCloudAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NetworkCloudAgentPoolData.DeserializeNetworkCloudAgentPoolData(document.RootElement);

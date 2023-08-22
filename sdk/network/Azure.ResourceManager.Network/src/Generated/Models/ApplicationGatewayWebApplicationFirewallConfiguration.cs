@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network.Models
             FirewallMode = firewallMode;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
-            DisabledRuleGroups = new Core.ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>();
-            Exclusions = new Core.ChangeTrackingList<ApplicationGatewayFirewallExclusion>();
+            DisabledRuleGroups = new ChangeTrackingList<ApplicationGatewayFirewallDisabledRuleGroup>();
+            Exclusions = new ChangeTrackingList<ApplicationGatewayFirewallExclusion>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>

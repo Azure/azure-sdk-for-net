@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
         public ContentKeyPolicyData()
         {
-            Options = new Core.ChangeTrackingList<ContentKeyPolicyOption>();
+            Options = new ChangeTrackingList<ContentKeyPolicyOption>();
         }
 
         /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>

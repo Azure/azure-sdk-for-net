@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = await _streamingJobFunctionFunctionsRestClient.TestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsResourceTestStatus>(new StreamAnalyticsResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsResourceTestStatus>(new StreamAnalyticsResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             try
             {
                 var response = _streamingJobFunctionFunctionsRestClient.Test(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsResourceTestStatus>(new StreamAnalyticsResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new StreamAnalyticsArmOperation<StreamAnalyticsResourceTestStatus>(new StreamAnalyticsResourceTestStatusOperationSource(), _streamingJobFunctionFunctionsClientDiagnostics, Pipeline, _streamingJobFunctionFunctionsRestClient.CreateTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceImportConfiguration : Core.IUtf8JsonSerializable
+    public partial class HealthcareApisServiceImportConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IntegrationDataStore))
+            if (Optional.IsDefined(IntegrationDataStore))
             {
                 writer.WritePropertyName("integrationDataStore"u8);
                 writer.WriteStringValue(IntegrationDataStore);
             }
-            if (Core.Optional.IsDefined(IsInitialImportMode))
+            if (Optional.IsDefined(IsInitialImportMode))
             {
                 writer.WritePropertyName("initialImportMode"u8);
                 writer.WriteBooleanValue(IsInitialImportMode.Value);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<string> integrationDataStore = default;
-            Core.Optional<bool> initialImportMode = default;
-            Core.Optional<bool> enabled = default;
+            Optional<string> integrationDataStore = default;
+            Optional<bool> initialImportMode = default;
+            Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("integrationDataStore"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisServiceImportConfiguration(integrationDataStore.Value, Core.Optional.ToNullable(initialImportMode), Core.Optional.ToNullable(enabled));
+            return new HealthcareApisServiceImportConfiguration(integrationDataStore.Value, Optional.ToNullable(initialImportMode), Optional.ToNullable(enabled));
         }
     }
 }

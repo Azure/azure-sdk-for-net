@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            IgnoreScripts = new Core.ChangeTrackingList<CjkBigramTokenFilterScripts>();
+            IgnoreScripts = new ChangeTrackingList<CjkBigramTokenFilterScripts>();
             ODataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
 

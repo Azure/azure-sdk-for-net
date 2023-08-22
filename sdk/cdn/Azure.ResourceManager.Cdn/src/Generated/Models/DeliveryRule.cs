@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(actions, nameof(actions));
 
             Order = order;
-            Conditions = new Core.ChangeTrackingList<DeliveryRuleCondition>();
+            Conditions = new ChangeTrackingList<DeliveryRuleCondition>();
             Actions = actions.ToList();
         }
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ApiPortalCustomDomainResourceList. </summary>
         internal ApiPortalCustomDomainResourceList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformApiPortalCustomDomainData>();
+            Value = new ChangeTrackingList<AppPlatformApiPortalCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of ApiPortalCustomDomainResourceList. </summary>

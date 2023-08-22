@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="location"> The location. </param>
         public MySqlServerData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<MySqlServerPrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<MySqlServerPrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of MySqlServerData. </summary>

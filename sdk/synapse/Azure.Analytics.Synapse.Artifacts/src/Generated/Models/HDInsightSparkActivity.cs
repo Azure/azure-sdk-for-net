@@ -27,8 +27,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
-            Arguments = new Core.ChangeTrackingList<object>();
-            SparkConfig = new Core.ChangeTrackingDictionary<string, object>();
+            Arguments = new ChangeTrackingList<object>();
+            SparkConfig = new ChangeTrackingDictionary<string, object>();
             Type = "HDInsightSpark";
         }
 

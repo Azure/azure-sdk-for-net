@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeDeviceNetworkSettings : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceNetworkSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<DataBoxEdgeNetworkAdapter>> networkAdapters = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<DataBoxEdgeNetworkAdapter>> networkAdapters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeDeviceNetworkSettings(id, name, type, systemData.Value, Core.Optional.ToList(networkAdapters));
+            return new DataBoxEdgeDeviceNetworkSettings(id, name, type, systemData.Value, Optional.ToList(networkAdapters));
         }
     }
 }

@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryCreateRecoveryPlanProperties : Core.IUtf8JsonSerializable
+    public partial class SiteRecoveryCreateRecoveryPlanProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("primaryFabricId"u8);
             writer.WriteStringValue(PrimaryFabricId);
             writer.WritePropertyName("recoveryFabricId"u8);
             writer.WriteStringValue(RecoveryFabricId);
-            if (Core.Optional.IsDefined(FailoverDeploymentModel))
+            if (Optional.IsDefined(FailoverDeploymentModel))
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
                 writer.WriteStringValue(FailoverDeploymentModel.Value.ToString());
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(ProviderSpecificContent))
+            if (Optional.IsCollectionDefined(ProviderSpecificContent))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
                 writer.WriteStartArray();

@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkSimPolicyData : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkSimPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WritePropertyName("ueAmbr"u8);
             writer.WriteObjectValue(UeAmbr);
             writer.WritePropertyName("defaultSlice"u8);
-            JsonSerializer.Serialize(writer, DefaultSlice); if (Core.Optional.IsDefined(RfspIndex))
+            JsonSerializer.Serialize(writer, DefaultSlice); if (Optional.IsDefined(RfspIndex))
             {
                 writer.WritePropertyName("rfspIndex"u8);
                 writer.WriteNumberValue(RfspIndex.Value);
             }
-            if (Core.Optional.IsDefined(RegistrationTimer))
+            if (Optional.IsDefined(RegistrationTimer))
             {
                 writer.WritePropertyName("registrationTimer"u8);
                 writer.WriteNumberValue(RegistrationTimer.Value);
@@ -64,18 +64,18 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Core.Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
             Ambr ueAmbr = default;
             WritableSubResource defaultSlice = default;
-            Core.Optional<int> rfspIndex = default;
-            Core.Optional<int> registrationTimer = default;
+            Optional<int> rfspIndex = default;
+            Optional<int> registrationTimer = default;
             IList<MobileNetworkSliceConfiguration> sliceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new MobileNetworkSimPolicyData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), Core.Optional.ToDictionary(siteProvisioningState), ueAmbr, defaultSlice, Core.Optional.ToNullable(rfspIndex), Core.Optional.ToNullable(registrationTimer), sliceConfigurations);
+            return new MobileNetworkSimPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToDictionary(siteProvisioningState), ueAmbr, defaultSlice, Optional.ToNullable(rfspIndex), Optional.ToNullable(registrationTimer), sliceConfigurations);
         }
     }
 }

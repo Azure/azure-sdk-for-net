@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Core.Optional<string> meterId = default;
-            Core.Optional<float> quantity = default;
-            Core.Optional<string> extendedUnit = default;
+            Optional<string> meterId = default;
+            Optional<float> quantity = default;
+            Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     continue;
                 }
             }
-            return new AvailableLabServicesSkuCost(meterId.Value, Core.Optional.ToNullable(quantity), extendedUnit.Value);
+            return new AvailableLabServicesSkuCost(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value);
         }
     }
 }

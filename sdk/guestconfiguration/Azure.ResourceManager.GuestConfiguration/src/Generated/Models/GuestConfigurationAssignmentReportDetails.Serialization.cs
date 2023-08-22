@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<Guid> jobId = default;
-            Core.Optional<GuestConfigurationAssignmentReportType> operationType = default;
-            Core.Optional<IReadOnlyList<AssignmentReportResourceInfo>> resources = default;
+            Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<Guid> jobId = default;
+            Optional<GuestConfigurationAssignmentReportType> operationType = default;
+            Optional<IReadOnlyList<AssignmentReportResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceStatus"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new GuestConfigurationAssignmentReportDetails(Core.Optional.ToNullable(complianceStatus), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(jobId), Core.Optional.ToNullable(operationType), Core.Optional.ToList(resources));
+            return new GuestConfigurationAssignmentReportDetails(Optional.ToNullable(complianceStatus), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(jobId), Optional.ToNullable(operationType), Optional.ToList(resources));
         }
     }
 }

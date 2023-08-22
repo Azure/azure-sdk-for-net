@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class SiteRecoveryMigrationItemOperationSource : Core.IOperationSource<SiteRecoveryMigrationItemResource>
+    internal class SiteRecoveryMigrationItemOperationSource : IOperationSource<SiteRecoveryMigrationItemResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        SiteRecoveryMigrationItemResource Core.IOperationSource<SiteRecoveryMigrationItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteRecoveryMigrationItemResource IOperationSource<SiteRecoveryMigrationItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(document.RootElement);
             return new SiteRecoveryMigrationItemResource(_client, data);
         }
 
-        async ValueTask<SiteRecoveryMigrationItemResource> Core.IOperationSource<SiteRecoveryMigrationItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteRecoveryMigrationItemResource> IOperationSource<SiteRecoveryMigrationItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteRecoveryMigrationItemData.DeserializeSiteRecoveryMigrationItemData(document.RootElement);

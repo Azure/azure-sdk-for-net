@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    public partial class AssetConversionInputOptions : Core.IUtf8JsonSerializable
+    public partial class AssetConversionInputOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
-            if (Core.Optional.IsDefined(StorageContainerReadListSas))
+            if (Optional.IsDefined(StorageContainerReadListSas))
             {
                 writer.WritePropertyName("storageContainerReadListSas"u8);
                 writer.WriteStringValue(StorageContainerReadListSas);
             }
-            if (Core.Optional.IsDefined(BlobPrefix))
+            if (Optional.IsDefined(BlobPrefix))
             {
                 writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
@@ -40,8 +40,8 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             Uri storageContainerUri = default;
-            Core.Optional<string> storageContainerReadListSas = default;
-            Core.Optional<string> blobPrefix = default;
+            Optional<string> storageContainerReadListSas = default;
+            Optional<string> blobPrefix = default;
             string relativeInputAssetPath = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSyncCompleteCommandProperties : Core.IUtf8JsonSerializable
+    public partial class MigrateSyncCompleteCommandProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Input))
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Core.Optional.IsDefined(CommandId))
+            if (Optional.IsDefined(CommandId))
             {
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<MigrateSyncCompleteCommandInput> input = default;
-            Core.Optional<MigrateSyncCompleteCommandOutput> output = default;
-            Core.Optional<string> commandId = default;
+            Optional<MigrateSyncCompleteCommandInput> input = default;
+            Optional<MigrateSyncCompleteCommandOutput> output = default;
+            Optional<string> commandId = default;
             CommandType commandType = default;
-            Core.Optional<IReadOnlyList<ODataError>> errors = default;
-            Core.Optional<CommandState> state = default;
+            Optional<IReadOnlyList<ODataError>> errors = default;
+            Optional<CommandState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSyncCompleteCommandProperties(commandType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), input.Value, output.Value, commandId.Value);
+            return new MigrateSyncCompleteCommandProperties(commandType, Optional.ToList(errors), Optional.ToNullable(state), input.Value, output.Value, commandId.Value);
         }
     }
 }

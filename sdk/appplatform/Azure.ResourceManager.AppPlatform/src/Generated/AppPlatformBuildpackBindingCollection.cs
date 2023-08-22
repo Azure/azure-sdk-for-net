@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformBuildpackBindingResource>(new AppPlatformBuildpackBindingOperationSource(Client), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, buildpackBindingName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformBuildpackBindingBuildpackBindingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformBuildpackBindingResource(Client, AppPlatformBuildpackBindingData.DeserializeAppPlatformBuildpackBindingData(e)), _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics, Pipeline, "AppPlatformBuildpackBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

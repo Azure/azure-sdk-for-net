@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureListResult. </summary>
         internal CosmosDBSqlStoredProcedureListResult()
         {
-            Value = new Core.ChangeTrackingList<CosmosDBSqlStoredProcedureData>();
+            Value = new ChangeTrackingList<CosmosDBSqlStoredProcedureData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlStoredProcedureListResult. </summary>

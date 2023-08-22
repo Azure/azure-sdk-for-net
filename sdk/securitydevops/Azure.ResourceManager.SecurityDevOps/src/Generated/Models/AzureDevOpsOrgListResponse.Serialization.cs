@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AzureDevOpsOrgData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AzureDevOpsOrgData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsOrgListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new AzureDevOpsOrgListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

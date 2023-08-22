@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecuritySolution : Core.IUtf8JsonSerializable
+    public partial class SecuritySolution : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SecurityFamily))
+            if (Optional.IsDefined(SecurityFamily))
             {
                 writer.WritePropertyName("securityFamily"u8);
                 writer.WriteStringValue(SecurityFamily.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Template))
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteStringValue(Template);
             }
-            if (Core.Optional.IsDefined(ProtectionStatus))
+            if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SecurityFamily> securityFamily = default;
-            Core.Optional<SecurityFamilyProvisioningState> provisioningState = default;
-            Core.Optional<string> template = default;
-            Core.Optional<string> protectionStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<SecurityFamily> securityFamily = default;
+            Optional<SecurityFamilyProvisioningState> provisioningState = default;
+            Optional<string> template = default;
+            Optional<string> protectionStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecuritySolution(id, name, type, systemData.Value, Core.Optional.ToNullable(securityFamily), Core.Optional.ToNullable(provisioningState), template.Value, protectionStatus.Value, Core.Optional.ToNullable(location));
+            return new SecuritySolution(id, name, type, systemData.Value, Optional.ToNullable(securityFamily), Optional.ToNullable(provisioningState), template.Value, protectionStatus.Value, Optional.ToNullable(location));
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkTapRuleMatchConfiguration. </summary>
         public NetworkTapRuleMatchConfiguration()
         {
-            MatchConditions = new Core.ChangeTrackingList<NetworkTapRuleMatchCondition>();
-            Actions = new Core.ChangeTrackingList<NetworkTapRuleAction>();
+            MatchConditions = new ChangeTrackingList<NetworkTapRuleMatchCondition>();
+            Actions = new ChangeTrackingList<NetworkTapRuleAction>();
         }
 
         /// <summary> Initializes a new instance of NetworkTapRuleMatchConfiguration. </summary>

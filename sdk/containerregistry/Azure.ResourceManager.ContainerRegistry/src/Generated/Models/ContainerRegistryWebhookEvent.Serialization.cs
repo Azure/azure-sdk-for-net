@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<ContainerRegistryWebhookEventRequestMessage> eventRequestMessage = default;
-            Core.Optional<ContainerRegistryWebhookEventResponseMessage> eventResponseMessage = default;
-            Core.Optional<Guid> id = default;
+            Optional<ContainerRegistryWebhookEventRequestMessage> eventRequestMessage = default;
+            Optional<ContainerRegistryWebhookEventResponseMessage> eventResponseMessage = default;
+            Optional<Guid> id = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventRequestMessage"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryWebhookEvent(Core.Optional.ToNullable(id), eventRequestMessage.Value, eventResponseMessage.Value);
+            return new ContainerRegistryWebhookEvent(Optional.ToNullable(id), eventRequestMessage.Value, eventResponseMessage.Value);
         }
     }
 }

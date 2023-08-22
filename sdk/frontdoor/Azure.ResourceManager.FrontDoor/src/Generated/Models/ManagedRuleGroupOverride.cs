@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
 
             RuleGroupName = ruleGroupName;
-            Exclusions = new Core.ChangeTrackingList<ManagedRuleExclusion>();
-            Rules = new Core.ChangeTrackingList<ManagedRuleOverride>();
+            Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();
+            Rules = new ChangeTrackingList<ManagedRuleOverride>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleGroupOverride. </summary>

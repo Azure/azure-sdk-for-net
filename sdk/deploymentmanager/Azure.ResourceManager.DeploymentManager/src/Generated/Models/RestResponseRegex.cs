@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <summary> Initializes a new instance of RestResponseRegex. </summary>
         public RestResponseRegex()
         {
-            Matches = new Core.ChangeTrackingList<string>();
+            Matches = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RestResponseRegex. </summary>

@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="location"> The location. </param>
         public WebPubSubData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new Core.ChangeTrackingList<WebPubSubSharedPrivateLinkData>();
+            PrivateEndpointConnections = new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
+            SharedPrivateLinkResources = new ChangeTrackingList<WebPubSubSharedPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubData. </summary>

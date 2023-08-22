@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of AutomationRunbookListResult. </summary>
         internal AutomationRunbookListResult()
         {
-            Value = new Core.ChangeTrackingList<AutomationRunbookData>();
+            Value = new ChangeTrackingList<AutomationRunbookData>();
         }
 
         /// <summary> Initializes a new instance of AutomationRunbookListResult. </summary>

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.MySql
         /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyData. </summary>
         public MySqlServerSecurityAlertPolicyData()
         {
-            DisabledAlerts = new Core.ChangeTrackingList<string>();
-            EmailAddresses = new Core.ChangeTrackingList<string>();
+            DisabledAlerts = new ChangeTrackingList<string>();
+            EmailAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyData. </summary>

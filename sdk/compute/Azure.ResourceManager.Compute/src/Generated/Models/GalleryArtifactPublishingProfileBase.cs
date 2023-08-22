@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>
         public GalleryArtifactPublishingProfileBase()
         {
-            TargetRegions = new Core.ChangeTrackingList<TargetRegion>();
-            TargetExtendedLocations = new Core.ChangeTrackingList<GalleryTargetExtendedLocation>();
+            TargetRegions = new ChangeTrackingList<TargetRegion>();
+            TargetExtendedLocations = new ChangeTrackingList<GalleryTargetExtendedLocation>();
         }
 
         /// <summary> Initializes a new instance of GalleryArtifactPublishingProfileBase. </summary>

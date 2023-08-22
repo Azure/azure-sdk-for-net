@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of ProviderSubscriptionStateRule. </summary>
         public ProviderSubscriptionStateRule()
         {
-            AllowedActions = new Core.ChangeTrackingList<string>();
+            AllowedActions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ProviderSubscriptionStateRule. </summary>

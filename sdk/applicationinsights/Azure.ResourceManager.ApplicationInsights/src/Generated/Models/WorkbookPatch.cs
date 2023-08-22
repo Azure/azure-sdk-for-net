@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of WorkbookPatch. </summary>
         public WorkbookPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            TagsPropertiesTags = new Core.ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            TagsPropertiesTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> The kind of workbook. Only valid value is shared. </summary>

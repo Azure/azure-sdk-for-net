@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<int> platformUpdateDomain = default;
-            Core.Optional<int> platformFaultDomain = default;
-            Core.Optional<string> privateId = default;
-            Core.Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
+            Optional<int> platformUpdateDomain = default;
+            Optional<int> platformFaultDomain = default;
+            Optional<string> privateId = default;
+            Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RoleInstanceView(Core.Optional.ToNullable(platformUpdateDomain), Core.Optional.ToNullable(platformFaultDomain), privateId.Value, Core.Optional.ToList(statuses));
+            return new RoleInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), privateId.Value, Optional.ToList(statuses));
         }
     }
 }

@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryJobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryJobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryJobResource(Client, SiteRecoveryJobData.DeserializeSiteRecoveryJobData(e)), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, "SiteRecoveryJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryJobResource(Client, SiteRecoveryJobData.DeserializeSiteRecoveryJobData(e)), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, "SiteRecoveryJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryJobReplicationJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryJobReplicationJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryJobResource(Client, SiteRecoveryJobData.DeserializeSiteRecoveryJobData(e)), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, "SiteRecoveryJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryJobResource(Client, SiteRecoveryJobData.DeserializeSiteRecoveryJobData(e)), _siteRecoveryJobReplicationJobsClientDiagnostics, Pipeline, "SiteRecoveryJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

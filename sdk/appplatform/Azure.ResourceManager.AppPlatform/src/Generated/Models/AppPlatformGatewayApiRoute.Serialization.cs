@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayApiRoute : Core.IUtf8JsonSerializable
+    public partial class AppPlatformGatewayApiRoute : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(IsSsoEnabled))
+            if (Optional.IsDefined(IsSsoEnabled))
             {
                 writer.WritePropertyName("ssoEnabled"u8);
                 writer.WriteBooleanValue(IsSsoEnabled.Value);
             }
-            if (Core.Optional.IsDefined(IsTokenRelayed))
+            if (Optional.IsDefined(IsTokenRelayed))
             {
                 writer.WritePropertyName("tokenRelay"u8);
                 writer.WriteBooleanValue(IsTokenRelayed.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Predicates))
+            if (Optional.IsCollectionDefined(Predicates))
             {
                 writer.WritePropertyName("predicates"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Filters))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Order))
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -86,15 +86,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<string> title = default;
-            Core.Optional<string> description = default;
-            Core.Optional<Uri> uri = default;
-            Core.Optional<bool> ssoEnabled = default;
-            Core.Optional<bool> tokenRelay = default;
-            Core.Optional<IList<string>> predicates = default;
-            Core.Optional<IList<string>> filters = default;
-            Core.Optional<int> order = default;
-            Core.Optional<IList<string>> tags = default;
+            Optional<string> title = default;
+            Optional<string> description = default;
+            Optional<Uri> uri = default;
+            Optional<bool> ssoEnabled = default;
+            Optional<bool> tokenRelay = default;
+            Optional<IList<string>> predicates = default;
+            Optional<IList<string>> filters = default;
+            Optional<int> order = default;
+            Optional<IList<string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Core.Optional.ToNullable(ssoEnabled), Core.Optional.ToNullable(tokenRelay), Core.Optional.ToList(predicates), Core.Optional.ToList(filters), Core.Optional.ToNullable(order), Core.Optional.ToList(tags));
+            return new AppPlatformGatewayApiRoute(title.Value, description.Value, uri.Value, Optional.ToNullable(ssoEnabled), Optional.ToNullable(tokenRelay), Optional.ToList(predicates), Optional.ToList(filters), Optional.ToNullable(order), Optional.ToList(tags));
         }
     }
 }

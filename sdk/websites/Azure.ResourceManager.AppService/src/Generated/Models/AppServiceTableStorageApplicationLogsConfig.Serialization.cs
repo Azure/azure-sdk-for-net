@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceTableStorageApplicationLogsConfig : Core.IUtf8JsonSerializable
+    public partial class AppServiceTableStorageApplicationLogsConfig : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Level))
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<WebAppLogLevel> level = default;
+            Optional<WebAppLogLevel> level = default;
             string sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceTableStorageApplicationLogsConfig(Core.Optional.ToNullable(level), sasUrl);
+            return new AppServiceTableStorageApplicationLogsConfig(Optional.ToNullable(level), sasUrl);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of RouteMapAction. </summary>
         public RouteMapAction()
         {
-            Parameters = new Core.ChangeTrackingList<RouteMapActionParameter>();
+            Parameters = new ChangeTrackingList<RouteMapActionParameter>();
         }
 
         /// <summary> Initializes a new instance of RouteMapAction. </summary>

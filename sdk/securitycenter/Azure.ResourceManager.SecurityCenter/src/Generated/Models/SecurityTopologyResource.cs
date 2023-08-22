@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityTopologyResource. </summary>
         public SecurityTopologyResource()
         {
-            TopologyResources = new Core.ChangeTrackingList<TopologySingleResource>();
+            TopologyResources = new ChangeTrackingList<TopologySingleResource>();
         }
 
         /// <summary> Initializes a new instance of SecurityTopologyResource. </summary>

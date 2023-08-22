@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of BuildpackBindingLaunchProperties. </summary>
         public BuildpackBindingLaunchProperties()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, string>();
-            Secrets = new Core.ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, string>();
+            Secrets = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of BuildpackBindingLaunchProperties. </summary>

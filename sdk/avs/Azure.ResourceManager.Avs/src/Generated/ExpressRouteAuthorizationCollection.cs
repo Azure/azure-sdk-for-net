@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _expressRouteAuthorizationAuthorizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data, cancellationToken);
-                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(new ExpressRouteAuthorizationOperationSource(Client), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, _expressRouteAuthorizationAuthorizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authorizationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteAuthorizationAuthorizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteAuthorizationResource(Client, ExpressRouteAuthorizationData.DeserializeExpressRouteAuthorizationData(e)), _expressRouteAuthorizationAuthorizationsClientDiagnostics, Pipeline, "ExpressRouteAuthorizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

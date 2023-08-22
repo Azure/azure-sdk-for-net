@@ -14,27 +14,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PrivateEndpointData : Core.IUtf8JsonSerializable
+    public partial class PrivateEndpointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Core.Optional.IsCollectionDefined(PrivateLinkServiceConnections))
+            if (Optional.IsCollectionDefined(PrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("privateLinkServiceConnections"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
+            if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(CustomDnsConfigs))
+            if (Optional.IsCollectionDefined(CustomDnsConfigs))
             {
                 writer.WritePropertyName("customDnsConfigs"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(CustomNetworkInterfaceName))
+            if (Optional.IsDefined(CustomNetworkInterfaceName))
             {
                 writer.WritePropertyName("customNetworkInterfaceName"u8);
                 writer.WriteStringValue(CustomNetworkInterfaceName);
@@ -117,22 +117,22 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ExtendedLocation> extendedLocation = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<SubnetData> subnet = default;
-            Core.Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<IList<NetworkPrivateLinkServiceConnection>> privateLinkServiceConnections = default;
-            Core.Optional<IList<NetworkPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
-            Core.Optional<IList<CustomDnsConfigProperties>> customDnsConfigs = default;
-            Core.Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
-            Core.Optional<IList<PrivateEndpointIPConfiguration>> ipConfigurations = default;
-            Core.Optional<string> customNetworkInterfaceName = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<SubnetData> subnet = default;
+            Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<IList<NetworkPrivateLinkServiceConnection>> privateLinkServiceConnections = default;
+            Optional<IList<NetworkPrivateLinkServiceConnection>> manualPrivateLinkServiceConnections = default;
+            Optional<IList<CustomDnsConfigProperties>> customDnsConfigs = default;
+            Optional<IList<ApplicationSecurityGroupData>> applicationSecurityGroups = default;
+            Optional<IList<PrivateEndpointIPConfiguration>> ipConfigurations = default;
+            Optional<string> customNetworkInterfaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new PrivateEndpointData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), extendedLocation, Core.Optional.ToNullable(etag), subnet.Value, Core.Optional.ToList(networkInterfaces), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(privateLinkServiceConnections), Core.Optional.ToList(manualPrivateLinkServiceConnections), Core.Optional.ToList(customDnsConfigs), Core.Optional.ToList(applicationSecurityGroups), Core.Optional.ToList(ipConfigurations), customNetworkInterfaceName.Value);
+            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), subnet.Value, Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateLinkServiceConnections), Optional.ToList(manualPrivateLinkServiceConnections), Optional.ToList(customDnsConfigs), Optional.ToList(applicationSecurityGroups), Optional.ToList(ipConfigurations), customNetworkInterfaceName.Value);
         }
     }
 }

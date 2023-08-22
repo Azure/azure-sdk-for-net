@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Core.Optional<string> branchName = default;
-            Core.Optional<string> branchId = default;
-            Core.Optional<string> status = default;
-            Core.Optional<IReadOnlyList<ActionStatus>> actions = default;
+            Optional<string> branchName = default;
+            Optional<string> branchId = default;
+            Optional<string> status = default;
+            Optional<IReadOnlyList<ActionStatus>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("branchName"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new BranchStatus(branchName.Value, branchId.Value, status.Value, Core.Optional.ToList(actions));
+            return new BranchStatus(branchName.Value, branchId.Value, status.Value, Optional.ToList(actions));
         }
     }
 }

@@ -22,19 +22,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> pipelineName = default;
-            Core.Optional<string> pipelineRunId = default;
-            Core.Optional<string> activityName = default;
-            Core.Optional<string> activityType = default;
-            Core.Optional<string> activityRunId = default;
-            Core.Optional<string> linkedServiceName = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> activityRunStart = default;
-            Core.Optional<DateTimeOffset> activityRunEnd = default;
-            Core.Optional<int> durationInMs = default;
-            Core.Optional<object> input = default;
-            Core.Optional<object> output = default;
-            Core.Optional<object> error = default;
+            Optional<string> pipelineName = default;
+            Optional<string> pipelineRunId = default;
+            Optional<string> activityName = default;
+            Optional<string> activityType = default;
+            Optional<string> activityRunId = default;
+            Optional<string> linkedServiceName = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> activityRunStart = default;
+            Optional<DateTimeOffset> activityRunEnd = default;
+            Optional<int> durationInMs = default;
+            Optional<object> input = default;
+            Optional<object> output = default;
+            Optional<object> error = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Core.Optional.ToNullable(activityRunStart), Core.Optional.ToNullable(activityRunEnd), Core.Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new ActivityRun(pipelineName.Value, pipelineRunId.Value, activityName.Value, activityType.Value, activityRunId.Value, linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
         }
 
         internal partial class ActivityRunConverter : JsonConverter<ActivityRun>

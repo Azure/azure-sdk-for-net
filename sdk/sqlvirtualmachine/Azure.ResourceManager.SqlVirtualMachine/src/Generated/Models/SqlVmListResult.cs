@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of SqlVmListResult. </summary>
         internal SqlVmListResult()
         {
-            Value = new Core.ChangeTrackingList<SqlVmData>();
+            Value = new ChangeTrackingList<SqlVmData>();
         }
 
         /// <summary> Initializes a new instance of SqlVmListResult. </summary>

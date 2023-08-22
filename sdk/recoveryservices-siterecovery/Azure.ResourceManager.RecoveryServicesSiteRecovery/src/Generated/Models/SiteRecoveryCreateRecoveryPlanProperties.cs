@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PrimaryFabricId = primaryFabricId;
             RecoveryFabricId = recoveryFabricId;
             Groups = groups.ToList();
-            ProviderSpecificContent = new Core.ChangeTrackingList<RecoveryPlanProviderSpecificContent>();
+            ProviderSpecificContent = new ChangeTrackingList<RecoveryPlanProviderSpecificContent>();
         }
 
         /// <summary> The primary fabric Id. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of AlertRuleResourceCollection. </summary>
         internal AlertRuleResourceCollection()
         {
-            Value = new Core.ChangeTrackingList<AlertRuleData>();
+            Value = new ChangeTrackingList<AlertRuleData>();
         }
 
         /// <summary> Initializes a new instance of AlertRuleResourceCollection. </summary>

@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationSource : Core.IUtf8JsonSerializable
+    public partial class SecurityAutomationSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EventSource))
+            if (Optional.IsDefined(EventSource))
             {
                 writer.WritePropertyName("eventSource"u8);
                 writer.WriteStringValue(EventSource.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(RuleSets))
+            if (Optional.IsCollectionDefined(RuleSets))
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<SecurityEventSource> eventSource = default;
-            Core.Optional<IList<SecurityAutomationRuleSet>> ruleSets = default;
+            Optional<SecurityEventSource> eventSource = default;
+            Optional<IList<SecurityAutomationRuleSet>> ruleSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventSource"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecurityAutomationSource(Core.Optional.ToNullable(eventSource), Core.Optional.ToList(ruleSets));
+            return new SecurityAutomationSource(Optional.ToNullable(eventSource), Optional.ToList(ruleSets));
         }
     }
 }

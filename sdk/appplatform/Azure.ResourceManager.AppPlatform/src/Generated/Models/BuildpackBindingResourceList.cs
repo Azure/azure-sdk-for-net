@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of BuildpackBindingResourceList. </summary>
         internal BuildpackBindingResourceList()
         {
-            Value = new Core.ChangeTrackingList<AppPlatformBuildpackBindingData>();
+            Value = new ChangeTrackingList<AppPlatformBuildpackBindingData>();
         }
 
         /// <summary> Initializes a new instance of BuildpackBindingResourceList. </summary>

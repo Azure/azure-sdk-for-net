@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of LoadBalancerResourceNames. </summary>
         public LoadBalancerResourceNames()
         {
-            FrontendIPConfigurationNames = new Core.ChangeTrackingList<string>();
-            BackendPoolNames = new Core.ChangeTrackingList<string>();
-            HealthProbeNames = new Core.ChangeTrackingList<string>();
+            FrontendIPConfigurationNames = new ChangeTrackingList<string>();
+            BackendPoolNames = new ChangeTrackingList<string>();
+            HealthProbeNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerResourceNames. </summary>

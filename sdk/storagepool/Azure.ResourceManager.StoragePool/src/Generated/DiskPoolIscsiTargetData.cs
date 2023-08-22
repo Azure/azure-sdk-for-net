@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.StoragePool
         {
             Argument.AssertNotNull(targetIqn, nameof(targetIqn));
 
-            ManagedByExtended = new Core.ChangeTrackingList<string>();
+            ManagedByExtended = new ChangeTrackingList<string>();
             AclMode = aclMode;
-            StaticAcls = new Core.ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>();
-            Luns = new Core.ChangeTrackingList<ManagedDiskIscsiLun>();
+            StaticAcls = new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>();
+            Luns = new ChangeTrackingList<ManagedDiskIscsiLun>();
             TargetIqn = targetIqn;
             ProvisioningState = provisioningState;
             Status = status;
-            Endpoints = new Core.ChangeTrackingList<string>();
-            Sessions = new Core.ChangeTrackingList<string>();
+            Endpoints = new ChangeTrackingList<string>();
+            Sessions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetData. </summary>

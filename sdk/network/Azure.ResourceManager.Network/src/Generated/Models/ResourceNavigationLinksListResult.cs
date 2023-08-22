@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ResourceNavigationLinksListResult. </summary>
         internal ResourceNavigationLinksListResult()
         {
-            Value = new Core.ChangeTrackingList<ResourceNavigationLink>();
+            Value = new ChangeTrackingList<ResourceNavigationLink>();
         }
 
         /// <summary> Initializes a new instance of ResourceNavigationLinksListResult. </summary>

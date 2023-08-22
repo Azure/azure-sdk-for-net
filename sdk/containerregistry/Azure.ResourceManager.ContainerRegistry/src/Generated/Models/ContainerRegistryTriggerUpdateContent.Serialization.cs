@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryTriggerUpdateContent : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryTriggerUpdateContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(TimerTriggers))
+            if (Optional.IsCollectionDefined(TimerTriggers))
             {
                 writer.WritePropertyName("timerTriggers"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourceTriggers))
+            if (Optional.IsCollectionDefined(SourceTriggers))
             {
                 writer.WritePropertyName("sourceTriggers"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BaseImageTrigger))
+            if (Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
                 writer.WriteObjectValue(BaseImageTrigger);

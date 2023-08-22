@@ -11,9 +11,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class CapabilityData : Core.IUtf8JsonSerializable
+    public partial class CapabilityData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Chaos
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> targetType = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> parametersSchema = default;
-            Core.Optional<string> urn = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> publisher = default;
+            Optional<string> targetType = default;
+            Optional<string> description = default;
+            Optional<string> parametersSchema = default;
+            Optional<string> urn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

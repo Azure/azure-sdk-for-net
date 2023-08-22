@@ -14,22 +14,22 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(ManagedVirtualNetworkSettingsConverter))]
-    public partial class ManagedVirtualNetworkSettings : Core.IUtf8JsonSerializable
+    public partial class ManagedVirtualNetworkSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PreventDataExfiltration))
+            if (Optional.IsDefined(PreventDataExfiltration))
             {
                 writer.WritePropertyName("preventDataExfiltration"u8);
                 writer.WriteBooleanValue(PreventDataExfiltration.Value);
             }
-            if (Core.Optional.IsDefined(LinkedAccessCheckOnTargetResource))
+            if (Optional.IsDefined(LinkedAccessCheckOnTargetResource))
             {
                 writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(LinkedAccessCheckOnTargetResource.Value);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
+            if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
             {
                 writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();
@@ -48,9 +48,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<bool> preventDataExfiltration = default;
-            Core.Optional<bool> linkedAccessCheckOnTargetResource = default;
-            Core.Optional<IList<string>> allowedAadTenantIdsForLinking = default;
+            Optional<bool> preventDataExfiltration = default;
+            Optional<bool> linkedAccessCheckOnTargetResource = default;
+            Optional<IList<string>> allowedAadTenantIdsForLinking = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preventDataExfiltration"u8))
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ManagedVirtualNetworkSettings(Core.Optional.ToNullable(preventDataExfiltration), Core.Optional.ToNullable(linkedAccessCheckOnTargetResource), Core.Optional.ToList(allowedAadTenantIdsForLinking));
+            return new ManagedVirtualNetworkSettings(Optional.ToNullable(preventDataExfiltration), Optional.ToNullable(linkedAccessCheckOnTargetResource), Optional.ToList(allowedAadTenantIdsForLinking));
         }
 
         internal partial class ManagedVirtualNetworkSettingsConverter : JsonConverter<ManagedVirtualNetworkSettings>

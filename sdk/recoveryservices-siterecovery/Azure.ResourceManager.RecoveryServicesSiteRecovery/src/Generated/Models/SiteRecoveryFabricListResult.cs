@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>
         internal SiteRecoveryFabricListResult()
         {
-            Value = new Core.ChangeTrackingList<SiteRecoveryFabricData>();
+            Value = new ChangeTrackingList<SiteRecoveryFabricData>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>

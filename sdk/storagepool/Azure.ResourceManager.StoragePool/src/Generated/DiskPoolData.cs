@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.StoragePool
             Argument.AssertNotNull(availabilityZones, nameof(availabilityZones));
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
-            ManagedByExtended = new Core.ChangeTrackingList<string>();
+            ManagedByExtended = new ChangeTrackingList<string>();
             ProvisioningState = provisioningState;
             AvailabilityZones = availabilityZones.ToList();
             Status = status;
-            Disks = new Core.ChangeTrackingList<WritableSubResource>();
+            Disks = new ChangeTrackingList<WritableSubResource>();
             SubnetId = subnetId;
-            AdditionalCapabilities = new Core.ChangeTrackingList<string>();
+            AdditionalCapabilities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DiskPoolData. </summary>

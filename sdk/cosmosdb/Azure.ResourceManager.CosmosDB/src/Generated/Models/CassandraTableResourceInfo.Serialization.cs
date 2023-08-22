@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraTableResourceInfo : Core.IUtf8JsonSerializable
+    public partial class CassandraTableResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TableName);
-            if (Core.Optional.IsDefined(DefaultTtl))
+            if (Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (Core.Optional.IsDefined(Schema))
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
-            if (Core.Optional.IsDefined(AnalyticalStorageTtl))
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Core.Optional<int> defaultTtl = default;
-            Core.Optional<CassandraSchema> schema = default;
-            Core.Optional<int> analyticalStorageTtl = default;
+            Optional<int> defaultTtl = default;
+            Optional<CassandraSchema> schema = default;
+            Optional<int> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraTableResourceInfo(id, Core.Optional.ToNullable(defaultTtl), schema.Value, Core.Optional.ToNullable(analyticalStorageTtl));
+            return new CassandraTableResourceInfo(id, Optional.ToNullable(defaultTtl), schema.Value, Optional.ToNullable(analyticalStorageTtl));
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>
         internal AvailableLabServicesSku()
         {
-            Capabilities = new Core.ChangeTrackingList<AvailableLabServicesSkuCapability>();
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
-            Costs = new Core.ChangeTrackingList<AvailableLabServicesSkuCost>();
-            Restrictions = new Core.ChangeTrackingList<AvailableLabServicesSkuRestrictions>();
+            Capabilities = new ChangeTrackingList<AvailableLabServicesSkuCapability>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Costs = new ChangeTrackingList<AvailableLabServicesSkuCost>();
+            Restrictions = new ChangeTrackingList<AvailableLabServicesSkuRestrictions>();
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSku. </summary>

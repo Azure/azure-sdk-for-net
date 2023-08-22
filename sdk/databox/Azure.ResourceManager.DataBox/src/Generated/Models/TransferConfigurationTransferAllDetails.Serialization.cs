@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class TransferConfigurationTransferAllDetails : Core.IUtf8JsonSerializable
+    internal partial class TransferConfigurationTransferAllDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Include))
+            if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteObjectValue(Include);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<TransferAllDetails> include = default;
+            Optional<TransferAllDetails> include = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("include"u8))

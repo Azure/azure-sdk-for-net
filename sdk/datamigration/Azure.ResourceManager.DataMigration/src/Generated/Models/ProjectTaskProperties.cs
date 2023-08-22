@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ProjectTaskProperties. </summary>
         protected ProjectTaskProperties()
         {
-            Errors = new Core.ChangeTrackingList<ODataError>();
-            Commands = new Core.ChangeTrackingList<CommandProperties>();
-            ClientData = new Core.ChangeTrackingDictionary<string, string>();
+            Errors = new ChangeTrackingList<ODataError>();
+            Commands = new ChangeTrackingList<CommandProperties>();
+            ClientData = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ProjectTaskProperties. </summary>

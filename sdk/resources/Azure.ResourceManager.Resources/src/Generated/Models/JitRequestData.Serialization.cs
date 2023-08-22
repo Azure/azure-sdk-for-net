@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class JitRequestData : Core.IUtf8JsonSerializable
+    public partial class JitRequestData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Resources
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApplicationResourceId))
+            if (Optional.IsDefined(ApplicationResourceId))
             {
                 writer.WritePropertyName("applicationResourceId"u8);
                 writer.WriteStringValue(ApplicationResourceId);
             }
-            if (Core.Optional.IsCollectionDefined(JitAuthorizationPolicies))
+            if (Optional.IsCollectionDefined(JitAuthorizationPolicies))
             {
                 writer.WritePropertyName("jitAuthorizationPolicies"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(JitSchedulingPolicy))
+            if (Optional.IsDefined(JitSchedulingPolicy))
             {
                 writer.WritePropertyName("jitSchedulingPolicy"u8);
                 writer.WriteObjectValue(JitSchedulingPolicy);
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> applicationResourceId = default;
-            Core.Optional<Guid> publisherTenantId = default;
-            Core.Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
-            Core.Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
-            Core.Optional<ResourcesProvisioningState> provisioningState = default;
-            Core.Optional<JitRequestState> jitRequestState = default;
-            Core.Optional<ArmApplicationDetails> createdBy = default;
-            Core.Optional<ArmApplicationDetails> updatedBy = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> applicationResourceId = default;
+            Optional<Guid> publisherTenantId = default;
+            Optional<IList<JitAuthorizationPolicies>> jitAuthorizationPolicies = default;
+            Optional<JitSchedulingPolicy> jitSchedulingPolicy = default;
+            Optional<ResourcesProvisioningState> provisioningState = default;
+            Optional<JitRequestState> jitRequestState = default;
+            Optional<ArmApplicationDetails> createdBy = default;
+            Optional<ArmApplicationDetails> updatedBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Resources
                     continue;
                 }
             }
-            return new JitRequestData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, applicationResourceId.Value, Core.Optional.ToNullable(publisherTenantId), Core.Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
+            return new JitRequestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(jitAuthorizationPolicies), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value);
         }
     }
 }

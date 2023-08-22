@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Argument.AssertNotNull(uri, nameof(uri));
 
             Name = name;
-            Pattern = new Core.ChangeTrackingList<string>();
+            Pattern = new ChangeTrackingList<string>();
             Uri = uri;
-            SearchPaths = new Core.ChangeTrackingList<string>();
+            SearchPaths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ConfigServerGitPatternRepository. </summary>

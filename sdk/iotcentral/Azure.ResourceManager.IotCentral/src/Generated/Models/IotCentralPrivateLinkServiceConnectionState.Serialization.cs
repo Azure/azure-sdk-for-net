@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
-    public partial class IotCentralPrivateLinkServiceConnectionState : Core.IUtf8JsonSerializable
+    public partial class IotCentralPrivateLinkServiceConnectionState : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(ActionsRequired))
+            if (Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Core.Optional<IotCentralPrivateEndpointServiceConnectionStatus> status = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> actionsRequired = default;
+            Optional<IotCentralPrivateEndpointServiceConnectionStatus> status = default;
+            Optional<string> description = default;
+            Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     continue;
                 }
             }
-            return new IotCentralPrivateLinkServiceConnectionState(Core.Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new IotCentralPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
         }
     }
 }

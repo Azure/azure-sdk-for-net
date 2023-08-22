@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RoutingConfigurationNfv : Core.IUtf8JsonSerializable
+    public partial class RoutingConfigurationNfv : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AssociatedRouteTable))
+            if (Optional.IsDefined(AssociatedRouteTable))
             {
                 writer.WritePropertyName("associatedRouteTable"u8);
                 writer.WriteObjectValue(AssociatedRouteTable);
             }
-            if (Core.Optional.IsDefined(PropagatedRouteTables))
+            if (Optional.IsDefined(PropagatedRouteTables))
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
                 writer.WriteObjectValue(PropagatedRouteTables);
             }
-            if (Core.Optional.IsDefined(InboundRouteMap))
+            if (Optional.IsDefined(InboundRouteMap))
             {
                 writer.WritePropertyName("inboundRouteMap"u8);
                 writer.WriteObjectValue(InboundRouteMap);
             }
-            if (Core.Optional.IsDefined(OutboundRouteMap))
+            if (Optional.IsDefined(OutboundRouteMap))
             {
                 writer.WritePropertyName("outboundRouteMap"u8);
                 writer.WriteObjectValue(OutboundRouteMap);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<RoutingConfigurationNfvSubResource> associatedRouteTable = default;
-            Core.Optional<PropagatedRouteTableNfv> propagatedRouteTables = default;
-            Core.Optional<RoutingConfigurationNfvSubResource> inboundRouteMap = default;
-            Core.Optional<RoutingConfigurationNfvSubResource> outboundRouteMap = default;
+            Optional<RoutingConfigurationNfvSubResource> associatedRouteTable = default;
+            Optional<PropagatedRouteTableNfv> propagatedRouteTables = default;
+            Optional<RoutingConfigurationNfvSubResource> inboundRouteMap = default;
+            Optional<RoutingConfigurationNfvSubResource> outboundRouteMap = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("associatedRouteTable"u8))

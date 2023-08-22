@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AvailableProvidersListCountry. </summary>
         internal AvailableProvidersListCountry()
         {
-            Providers = new Core.ChangeTrackingList<string>();
-            States = new Core.ChangeTrackingList<AvailableProvidersListState>();
+            Providers = new ChangeTrackingList<string>();
+            States = new ChangeTrackingList<AvailableProvidersListState>();
         }
 
         /// <summary> Initializes a new instance of AvailableProvidersListCountry. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TensorFlowDistributionConfiguration : Core.IUtf8JsonSerializable
+    public partial class TensorFlowDistributionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ParameterServerCount))
+            if (Optional.IsDefined(ParameterServerCount))
             {
                 writer.WritePropertyName("parameterServerCount"u8);
                 writer.WriteNumberValue(ParameterServerCount.Value);
             }
-            if (Core.Optional.IsDefined(WorkerCount))
+            if (Optional.IsDefined(WorkerCount))
             {
                 if (WorkerCount != null)
                 {
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> parameterServerCount = default;
-            Core.Optional<int?> workerCount = default;
+            Optional<int> parameterServerCount = default;
+            Optional<int?> workerCount = default;
             DistributionType distributionType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new TensorFlowDistributionConfiguration(distributionType, Core.Optional.ToNullable(parameterServerCount), Core.Optional.ToNullable(workerCount));
+            return new TensorFlowDistributionConfiguration(distributionType, Optional.ToNullable(parameterServerCount), Optional.ToNullable(workerCount));
         }
     }
 }

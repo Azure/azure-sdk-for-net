@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> description = default;
+            Optional<string> type = default;
+            Optional<string> groupId = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

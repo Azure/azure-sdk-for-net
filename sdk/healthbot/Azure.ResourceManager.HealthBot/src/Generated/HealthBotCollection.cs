@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HealthBot
             try
             {
                 var response = await _healthBotBotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, botName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HealthBot
             try
             {
                 var response = _healthBotBotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, botName, data, cancellationToken);
-                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthBotBotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthBotBotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthBotBotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthBotBotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
         public KubernetesFluxConfigurationData()
         {
-            Kustomizations = new Core.ChangeTrackingDictionary<string, Kustomization>();
-            ConfigurationProtectedSettings = new Core.ChangeTrackingDictionary<string, string>();
-            Statuses = new Core.ChangeTrackingList<KubernetesObjectStatus>();
+            Kustomizations = new ChangeTrackingDictionary<string, Kustomization>();
+            ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
+            Statuses = new ChangeTrackingList<KubernetesObjectStatus>();
         }
 
         /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>

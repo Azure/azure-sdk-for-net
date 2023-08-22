@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFlowDebugPackageDebugSettings. </summary>
         public DataFlowDebugPackageDebugSettings()
         {
-            SourceSettings = new Core.ChangeTrackingList<DataFlowSourceSetting>();
-            Parameters = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            SourceSettings = new ChangeTrackingList<DataFlowSourceSetting>();
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Source setting for data flow debug. </summary>

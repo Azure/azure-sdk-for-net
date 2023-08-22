@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Quota
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>
         internal QuotaRequestDetailData()
         {
-            Value = new Core.ChangeTrackingList<QuotaSubRequestDetail>();
+            Value = new ChangeTrackingList<QuotaSubRequestDetail>();
         }
 
         /// <summary> Initializes a new instance of QuotaRequestDetailData. </summary>

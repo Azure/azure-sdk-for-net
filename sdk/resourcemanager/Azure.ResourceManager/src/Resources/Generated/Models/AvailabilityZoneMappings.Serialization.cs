@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> logicalZone = default;
-            Core.Optional<string> physicalZone = default;
+            Optional<string> logicalZone = default;
+            Optional<string> physicalZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logicalZone"u8))

@@ -12,59 +12,59 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisPackageLocation : Core.IUtf8JsonSerializable
+    public partial class SsisPackageLocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PackagePath))
+            if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
                 JsonSerializer.Serialize(writer, PackagePath);
             }
-            if (Core.Optional.IsDefined(LocationType))
+            if (Optional.IsDefined(LocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PackagePassword))
+            if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
                 JsonSerializer.Serialize(writer, PackagePassword);
             }
-            if (Core.Optional.IsDefined(AccessCredential))
+            if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (Core.Optional.IsDefined(ConfigurationPath))
+            if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
                 JsonSerializer.Serialize(writer, ConfigurationPath);
             }
-            if (Core.Optional.IsDefined(ConfigurationAccessCredential))
+            if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
                 writer.WriteObjectValue(ConfigurationAccessCredential);
             }
-            if (Core.Optional.IsDefined(PackageName))
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            if (Core.Optional.IsDefined(PackageContent))
+            if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
                 JsonSerializer.Serialize(writer, PackageContent);
             }
-            if (Core.Optional.IsDefined(PackageLastModifiedDate))
+            if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
-            if (Core.Optional.IsCollectionDefined(ChildPackages))
+            if (Optional.IsCollectionDefined(ChildPackages))
             {
                 writer.WritePropertyName("childPackages"u8);
                 writer.WriteStartArray();
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> packagePath = default;
-            Core.Optional<SsisPackageLocationType> type = default;
-            Core.Optional<DataFactorySecretBaseDefinition> packagePassword = default;
-            Core.Optional<SsisAccessCredential> accessCredential = default;
-            Core.Optional<DataFactoryElement<string>> configurationPath = default;
-            Core.Optional<SsisAccessCredential> configurationAccessCredential = default;
-            Core.Optional<string> packageName = default;
-            Core.Optional<DataFactoryElement<string>> packageContent = default;
-            Core.Optional<string> packageLastModifiedDate = default;
-            Core.Optional<IList<SsisChildPackage>> childPackages = default;
+            Optional<DataFactoryElement<string>> packagePath = default;
+            Optional<SsisPackageLocationType> type = default;
+            Optional<DataFactorySecretBaseDefinition> packagePassword = default;
+            Optional<SsisAccessCredential> accessCredential = default;
+            Optional<DataFactoryElement<string>> configurationPath = default;
+            Optional<SsisAccessCredential> configurationAccessCredential = default;
+            Optional<string> packageName = default;
+            Optional<DataFactoryElement<string>> packageContent = default;
+            Optional<string> packageLastModifiedDate = default;
+            Optional<IList<SsisChildPackage>> childPackages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisPackageLocation(packagePath.Value, Core.Optional.ToNullable(type), packagePassword, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Core.Optional.ToList(childPackages));
+            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages));
         }
     }
 }

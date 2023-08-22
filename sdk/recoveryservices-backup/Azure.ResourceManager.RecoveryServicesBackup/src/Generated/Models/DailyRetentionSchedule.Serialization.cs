@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DailyRetentionSchedule : Core.IUtf8JsonSerializable
+    public partial class DailyRetentionSchedule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(RetentionTimes))
+            if (Optional.IsCollectionDefined(RetentionTimes))
             {
                 writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RetentionDuration))
+            if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<DateTimeOffset>> retentionTimes = default;
-            Core.Optional<RetentionDuration> retentionDuration = default;
+            Optional<IList<DateTimeOffset>> retentionTimes = default;
+            Optional<RetentionDuration> retentionDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionTimes"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new DailyRetentionSchedule(Core.Optional.ToList(retentionTimes), retentionDuration.Value);
+            return new DailyRetentionSchedule(Optional.ToList(retentionTimes), retentionDuration.Value);
         }
     }
 }

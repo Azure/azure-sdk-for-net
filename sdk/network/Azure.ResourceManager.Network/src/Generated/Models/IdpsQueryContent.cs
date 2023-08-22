@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IdpsQueryContent. </summary>
         public IdpsQueryContent()
         {
-            Filters = new Core.ChangeTrackingList<IdpsQueryFilterItems>();
+            Filters = new ChangeTrackingList<IdpsQueryFilterItems>();
         }
 
         /// <summary> Contain all filters names and values. </summary>

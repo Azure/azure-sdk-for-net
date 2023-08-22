@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class MapperAttributeMappings : Core.IUtf8JsonSerializable
+    internal partial class MapperAttributeMappings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AttributeMappings))
+            if (Optional.IsCollectionDefined(AttributeMappings))
             {
                 writer.WritePropertyName("attributeMappings"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<IList<MapperAttributeMapping>> attributeMappings = default;
+            Optional<IList<MapperAttributeMapping>> attributeMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attributeMappings"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperAttributeMappings(Core.Optional.ToList(attributeMappings));
+            return new MapperAttributeMappings(Optional.ToList(attributeMappings));
         }
     }
 }

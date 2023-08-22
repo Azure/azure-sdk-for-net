@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<string> volumeName = default;
-            Core.Optional<int> backupsCount = default;
-            Core.Optional<bool> policyEnabled = default;
+            Optional<string> volumeName = default;
+            Optional<int> backupsCount = default;
+            Optional<bool> policyEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("volumeName"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeBackupDetail(volumeName.Value, Core.Optional.ToNullable(backupsCount), Core.Optional.ToNullable(policyEnabled));
+            return new NetAppVolumeBackupDetail(volumeName.Value, Optional.ToNullable(backupsCount), Optional.ToNullable(policyEnabled));
         }
     }
 }

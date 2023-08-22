@@ -12,16 +12,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DeepCreatedOriginGroup : Core.IUtf8JsonSerializable
+    public partial class DeepCreatedOriginGroup : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(HealthProbeSettings))
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 if (HealthProbeSettings != null)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("healthProbeSettings");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Origins))
+            if (Optional.IsCollectionDefined(Origins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
+            if (Optional.IsDefined(TrafficRestorationTimeToHealedOrNewEndpointsInMinutes))
             {
                 if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (Core.Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
+            if (Optional.IsDefined(ResponseBasedOriginErrorDetectionSettings))
             {
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             string name = default;
-            Core.Optional<HealthProbeSettings> healthProbeSettings = default;
-            Core.Optional<IList<WritableSubResource>> origins = default;
-            Core.Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
-            Core.Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
+            Optional<HealthProbeSettings> healthProbeSettings = default;
+            Optional<IList<WritableSubResource>> origins = default;
+            Optional<int?> trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
+            Optional<ResponseBasedOriginErrorDetectionSettings> responseBasedOriginErrorDetectionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new DeepCreatedOriginGroup(name, healthProbeSettings.Value, Core.Optional.ToList(origins), Core.Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value);
+            return new DeepCreatedOriginGroup(name, healthProbeSettings.Value, Optional.ToList(origins), Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), responseBasedOriginErrorDetectionSettings.Value);
         }
     }
 }

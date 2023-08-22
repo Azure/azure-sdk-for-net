@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> The location. </param>
         public VirtualMachineScaleSetVmData(AzureLocation location) : base(location)
         {
-            Resources = new Core.ChangeTrackingList<VirtualMachineExtensionData>();
-            Zones = new Core.ChangeTrackingList<string>();
+            Resources = new ChangeTrackingList<VirtualMachineExtensionData>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmData. </summary>

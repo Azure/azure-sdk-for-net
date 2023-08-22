@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> databaseName = default;
-            Core.Optional<BackupType> backupType = default;
-            Core.Optional<IReadOnlyList<string>> backupFiles = default;
-            Core.Optional<int> position = default;
-            Core.Optional<bool> isDamaged = default;
-            Core.Optional<bool> isCompressed = default;
-            Core.Optional<int> familyCount = default;
-            Core.Optional<DateTimeOffset> backupFinishDate = default;
+            Optional<string> databaseName = default;
+            Optional<BackupType> backupType = default;
+            Optional<IReadOnlyList<string>> backupFiles = default;
+            Optional<int> position = default;
+            Optional<bool> isDamaged = default;
+            Optional<bool> isCompressed = default;
+            Optional<int> familyCount = default;
+            Optional<DateTimeOffset> backupFinishDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new DatabaseBackupInfo(databaseName.Value, Core.Optional.ToNullable(backupType), Core.Optional.ToList(backupFiles), Core.Optional.ToNullable(position), Core.Optional.ToNullable(isDamaged), Core.Optional.ToNullable(isCompressed), Core.Optional.ToNullable(familyCount), Core.Optional.ToNullable(backupFinishDate));
+            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), Optional.ToList(backupFiles), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate));
         }
     }
 }

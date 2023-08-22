@@ -14,39 +14,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
-    public partial class FirmwareData : Core.IUtf8JsonSerializable
+    public partial class FirmwareData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Core.Optional.IsDefined(Vendor))
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Core.Optional.IsDefined(Model))
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(FileSize))
+            if (Optional.IsDefined(FileSize))
             {
                 if (FileSize != null)
                 {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     writer.WriteNull("fileSize");
                 }
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(StatusMessages))
+            if (Optional.IsCollectionDefined(StatusMessages))
             {
                 writer.WritePropertyName("statusMessages"u8);
                 writer.WriteStartArray();
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> fileName = default;
-            Core.Optional<string> vendor = default;
-            Core.Optional<string> model = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> description = default;
-            Core.Optional<long?> fileSize = default;
-            Core.Optional<Status> status = default;
-            Core.Optional<IList<BinaryData>> statusMessages = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> fileName = default;
+            Optional<string> vendor = default;
+            Optional<string> model = default;
+            Optional<string> version = default;
+            Optional<string> description = default;
+            Optional<long?> fileSize = default;
+            Optional<Status> status = default;
+            Optional<IList<BinaryData>> statusMessages = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     continue;
                 }
             }
-            return new FirmwareData(id, name, type, systemData.Value, fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Core.Optional.ToNullable(fileSize), Core.Optional.ToNullable(status), Core.Optional.ToList(statusMessages), Core.Optional.ToNullable(provisioningState));
+            return new FirmwareData(id, name, type, systemData.Value, fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), Optional.ToList(statusMessages), Optional.ToNullable(provisioningState));
         }
     }
 }

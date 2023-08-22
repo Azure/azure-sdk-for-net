@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>
         public OperationalInsightsDataExportData()
         {
-            TableNames = new Core.ChangeTrackingList<string>();
+            TableNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>

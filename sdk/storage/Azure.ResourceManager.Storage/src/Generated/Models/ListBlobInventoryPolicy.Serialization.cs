@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BlobInventoryPolicyData>> value = default;
+            Optional<IReadOnlyList<BlobInventoryPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ListBlobInventoryPolicy(Core.Optional.ToList(value));
+            return new ListBlobInventoryPolicy(Optional.ToList(value));
         }
     }
 }

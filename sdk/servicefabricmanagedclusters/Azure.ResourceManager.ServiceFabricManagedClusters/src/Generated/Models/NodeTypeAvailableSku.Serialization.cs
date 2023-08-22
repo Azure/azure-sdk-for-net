@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Core.Optional<ResourceType> resourceType = default;
-            Core.Optional<NodeTypeSupportedSku> sku = default;
-            Core.Optional<NodeTypeSkuCapacity> capacity = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<NodeTypeSupportedSku> sku = default;
+            Optional<NodeTypeSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new NodeTypeAvailableSku(Core.Optional.ToNullable(resourceType), sku.Value, capacity.Value);
+            return new NodeTypeAvailableSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

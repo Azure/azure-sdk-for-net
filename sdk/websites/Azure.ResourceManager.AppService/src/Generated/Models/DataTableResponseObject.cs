@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DataTableResponseObject. </summary>
         public DataTableResponseObject()
         {
-            Columns = new Core.ChangeTrackingList<DataTableResponseColumn>();
-            Rows = new Core.ChangeTrackingList<IList<string>>();
+            Columns = new ChangeTrackingList<DataTableResponseColumn>();
+            Rows = new ChangeTrackingList<IList<string>>();
         }
 
         /// <summary> Initializes a new instance of DataTableResponseObject. </summary>

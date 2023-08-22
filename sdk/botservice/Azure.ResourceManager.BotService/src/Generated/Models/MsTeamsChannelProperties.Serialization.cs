@@ -10,34 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class MsTeamsChannelProperties : Core.IUtf8JsonSerializable
+    public partial class MsTeamsChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsCallingEnabled))
+            if (Optional.IsDefined(IsCallingEnabled))
             {
                 writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (Core.Optional.IsDefined(CallingWebhook))
+            if (Optional.IsDefined(CallingWebhook))
             {
                 writer.WritePropertyName("callingWebhook"u8);
                 writer.WriteStringValue(CallingWebhook);
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Core.Optional.IsDefined(IncomingCallRoute))
+            if (Optional.IsDefined(IncomingCallRoute))
             {
                 writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
             }
-            if (Core.Optional.IsDefined(DeploymentEnvironment))
+            if (Optional.IsDefined(DeploymentEnvironment))
             {
                 writer.WritePropertyName("deploymentEnvironment"u8);
                 writer.WriteStringValue(DeploymentEnvironment);
             }
-            if (Core.Optional.IsDefined(AcceptedTerms))
+            if (Optional.IsDefined(AcceptedTerms))
             {
                 if (AcceptedTerms != null)
                 {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<bool> enableCalling = default;
-            Core.Optional<string> callingWebhook = default;
+            Optional<bool> enableCalling = default;
+            Optional<string> callingWebhook = default;
             bool isEnabled = default;
-            Core.Optional<string> incomingCallRoute = default;
-            Core.Optional<string> deploymentEnvironment = default;
-            Core.Optional<bool?> acceptedTerms = default;
+            Optional<string> incomingCallRoute = default;
+            Optional<string> deploymentEnvironment = default;
+            Optional<bool?> acceptedTerms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableCalling"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new MsTeamsChannelProperties(Core.Optional.ToNullable(enableCalling), callingWebhook.Value, isEnabled, incomingCallRoute.Value, deploymentEnvironment.Value, Core.Optional.ToNullable(acceptedTerms));
+            return new MsTeamsChannelProperties(Optional.ToNullable(enableCalling), callingWebhook.Value, isEnabled, incomingCallRoute.Value, deploymentEnvironment.Value, Optional.ToNullable(acceptedTerms));
         }
     }
 }

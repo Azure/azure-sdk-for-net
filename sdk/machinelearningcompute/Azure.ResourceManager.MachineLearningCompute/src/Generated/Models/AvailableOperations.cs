@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <summary> Initializes a new instance of AvailableOperations. </summary>
         internal AvailableOperations()
         {
-            Value = new Core.ChangeTrackingList<ResourceOperation>();
+            Value = new ChangeTrackingList<ResourceOperation>();
         }
 
         /// <summary> Initializes a new instance of AvailableOperations. </summary>

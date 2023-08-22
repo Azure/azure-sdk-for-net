@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabEnvironmentData : Core.IUtf8JsonSerializable
+    public partial class DevTestLabEnvironmentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DevTestLabs
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeploymentProperties))
+            if (Optional.IsDefined(DeploymentProperties))
             {
                 writer.WritePropertyName("deploymentProperties"u8);
                 writer.WriteObjectValue(DeploymentProperties);
             }
-            if (Core.Optional.IsDefined(ArmTemplateDisplayName))
+            if (Optional.IsDefined(ArmTemplateDisplayName))
             {
                 writer.WritePropertyName("armTemplateDisplayName"u8);
                 writer.WriteStringValue(ArmTemplateDisplayName);
@@ -54,18 +54,18 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DevTestLabEnvironmentDeployment> deploymentProperties = default;
-            Core.Optional<string> armTemplateDisplayName = default;
-            Core.Optional<string> resourceGroupId = default;
-            Core.Optional<string> createdByUser = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<Guid> uniqueIdentifier = default;
+            Optional<SystemData> systemData = default;
+            Optional<DevTestLabEnvironmentDeployment> deploymentProperties = default;
+            Optional<string> armTemplateDisplayName = default;
+            Optional<string> resourceGroupId = default;
+            Optional<string> createdByUser = default;
+            Optional<string> provisioningState = default;
+            Optional<Guid> uniqueIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     continue;
                 }
             }
-            return new DevTestLabEnvironmentData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, deploymentProperties.Value, armTemplateDisplayName.Value, resourceGroupId.Value, createdByUser.Value, provisioningState.Value, Core.Optional.ToNullable(uniqueIdentifier));
+            return new DevTestLabEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, deploymentProperties.Value, armTemplateDisplayName.Value, resourceGroupId.Value, createdByUser.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
         }
     }
 }

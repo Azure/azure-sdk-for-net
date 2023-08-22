@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultDescription. </summary>
         internal PrivateEndpointConnectionListResultDescription()
         {
-            Value = new Core.ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionListResultDescription. </summary>

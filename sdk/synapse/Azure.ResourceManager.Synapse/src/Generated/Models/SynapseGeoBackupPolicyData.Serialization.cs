@@ -12,9 +12,9 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseGeoBackupPolicyData : Core.IUtf8JsonSerializable
+    public partial class SynapseGeoBackupPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             SynapseGeoBackupPolicyState state = default;
-            Core.Optional<string> storageType = default;
+            Optional<string> storageType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseGeoBackupPolicyData(id, name, type, systemData.Value, kind.Value, Core.Optional.ToNullable(location), state, storageType.Value);
+            return new SynapseGeoBackupPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), state, storageType.Value);
         }
     }
 }

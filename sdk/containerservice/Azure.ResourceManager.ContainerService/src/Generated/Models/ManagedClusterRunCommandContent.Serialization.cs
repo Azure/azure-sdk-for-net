@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterRunCommandContent : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterRunCommandContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (Core.Optional.IsDefined(Context))
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (Core.Optional.IsDefined(ClusterToken))
+            if (Optional.IsDefined(ClusterToken))
             {
                 writer.WritePropertyName("clusterToken"u8);
                 writer.WriteStringValue(ClusterToken);

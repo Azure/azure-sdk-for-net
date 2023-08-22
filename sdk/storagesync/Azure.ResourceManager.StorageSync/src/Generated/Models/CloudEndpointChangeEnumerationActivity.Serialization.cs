@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Core.Optional<CloudEndpointChangeEnumerationActivityState> operationState = default;
-            Core.Optional<int> statusCode = default;
-            Core.Optional<DateTimeOffset> startedTimestamp = default;
-            Core.Optional<long> processedFilesCount = default;
-            Core.Optional<long> processedDirectoriesCount = default;
-            Core.Optional<long> totalFilesCount = default;
-            Core.Optional<long> totalDirectoriesCount = default;
-            Core.Optional<long> totalSizeBytes = default;
-            Core.Optional<int> progressPercent = default;
-            Core.Optional<int> minutesRemaining = default;
-            Core.Optional<CloudEndpointChangeEnumerationTotalCountsState> totalCountsState = default;
-            Core.Optional<int> deletesProgressPercent = default;
+            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
+            Optional<CloudEndpointChangeEnumerationActivityState> operationState = default;
+            Optional<int> statusCode = default;
+            Optional<DateTimeOffset> startedTimestamp = default;
+            Optional<long> processedFilesCount = default;
+            Optional<long> processedDirectoriesCount = default;
+            Optional<long> totalFilesCount = default;
+            Optional<long> totalDirectoriesCount = default;
+            Optional<long> totalSizeBytes = default;
+            Optional<int> progressPercent = default;
+            Optional<int> minutesRemaining = default;
+            Optional<CloudEndpointChangeEnumerationTotalCountsState> totalCountsState = default;
+            Optional<int> deletesProgressPercent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     continue;
                 }
             }
-            return new CloudEndpointChangeEnumerationActivity(Core.Optional.ToNullable(lastUpdatedTimestamp), Core.Optional.ToNullable(operationState), Core.Optional.ToNullable(statusCode), Core.Optional.ToNullable(startedTimestamp), Core.Optional.ToNullable(processedFilesCount), Core.Optional.ToNullable(processedDirectoriesCount), Core.Optional.ToNullable(totalFilesCount), Core.Optional.ToNullable(totalDirectoriesCount), Core.Optional.ToNullable(totalSizeBytes), Core.Optional.ToNullable(progressPercent), Core.Optional.ToNullable(minutesRemaining), Core.Optional.ToNullable(totalCountsState), Core.Optional.ToNullable(deletesProgressPercent));
+            return new CloudEndpointChangeEnumerationActivity(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(operationState), Optional.ToNullable(statusCode), Optional.ToNullable(startedTimestamp), Optional.ToNullable(processedFilesCount), Optional.ToNullable(processedDirectoriesCount), Optional.ToNullable(totalFilesCount), Optional.ToNullable(totalDirectoriesCount), Optional.ToNullable(totalSizeBytes), Optional.ToNullable(progressPercent), Optional.ToNullable(minutesRemaining), Optional.ToNullable(totalCountsState), Optional.ToNullable(deletesProgressPercent));
         }
     }
 }

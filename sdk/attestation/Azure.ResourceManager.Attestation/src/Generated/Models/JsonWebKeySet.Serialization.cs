@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    internal partial class JsonWebKeySet : Core.IUtf8JsonSerializable
+    internal partial class JsonWebKeySet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Keys))
+            if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();

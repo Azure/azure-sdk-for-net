@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class SharedPublicIPAddressConfiguration : Core.IUtf8JsonSerializable
+    internal partial class SharedPublicIPAddressConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(InboundNatRules))
+            if (Optional.IsCollectionDefined(InboundNatRules))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<IList<DevTestLabInboundNatRule>> inboundNatRules = default;
+            Optional<IList<DevTestLabInboundNatRule>> inboundNatRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatRules"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new SharedPublicIPAddressConfiguration(Core.Optional.ToList(inboundNatRules));
+            return new SharedPublicIPAddressConfiguration(Optional.ToList(inboundNatRules));
         }
     }
 }

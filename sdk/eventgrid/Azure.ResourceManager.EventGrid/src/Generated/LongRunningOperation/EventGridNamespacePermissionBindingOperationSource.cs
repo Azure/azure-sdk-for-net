@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class EventGridNamespacePermissionBindingOperationSource : Core.IOperationSource<EventGridNamespacePermissionBindingResource>
+    internal class EventGridNamespacePermissionBindingOperationSource : IOperationSource<EventGridNamespacePermissionBindingResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        EventGridNamespacePermissionBindingResource Core.IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventGridNamespacePermissionBindingResource IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement);
             return new EventGridNamespacePermissionBindingResource(_client, data);
         }
 
-        async ValueTask<EventGridNamespacePermissionBindingResource> Core.IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventGridNamespacePermissionBindingResource> IOperationSource<EventGridNamespacePermissionBindingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridNamespacePermissionBindingData.DeserializeEventGridNamespacePermissionBindingData(document.RootElement);

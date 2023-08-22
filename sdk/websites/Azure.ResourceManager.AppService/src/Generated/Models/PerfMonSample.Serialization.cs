@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> time = default;
-            Core.Optional<string> instanceName = default;
-            Core.Optional<double> value = default;
+            Optional<DateTimeOffset> time = default;
+            Optional<string> instanceName = default;
+            Optional<double> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new PerfMonSample(Core.Optional.ToNullable(time), instanceName.Value, Core.Optional.ToNullable(value));
+            return new PerfMonSample(Optional.ToNullable(time), instanceName.Value, Optional.ToNullable(value));
         }
     }
 }

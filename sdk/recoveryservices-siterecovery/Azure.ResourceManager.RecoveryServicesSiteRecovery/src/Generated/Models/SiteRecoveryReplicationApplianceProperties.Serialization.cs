@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<SiteRecoveryApplianceSpecificDetails> providerSpecificDetails = default;
+            Optional<SiteRecoveryApplianceSpecificDetails> providerSpecificDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerSpecificDetails"u8))

@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Resources
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
-            Authorizations = new Core.ChangeTrackingList<ArmApplicationAuthorization>();
-            Artifacts = new Core.ChangeTrackingList<ArmApplicationArtifact>();
+            Authorizations = new ChangeTrackingList<ArmApplicationAuthorization>();
+            Artifacts = new ChangeTrackingList<ArmApplicationArtifact>();
         }
 
         /// <summary> Initializes a new instance of ArmApplicationData. </summary>

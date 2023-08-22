@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeOrderData : Core.IUtf8JsonSerializable
+    public partial class DataBoxEdgeOrderData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ContactInformation))
+            if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
                 writer.WriteObjectValue(ContactInformation);
             }
-            if (Core.Optional.IsDefined(ShippingAddress))
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (Core.Optional.IsDefined(ShipmentType))
+            if (Optional.IsDefined(ShipmentType))
             {
                 writer.WritePropertyName("shipmentType"u8);
                 writer.WriteStringValue(ShipmentType.Value.ToString());
@@ -45,20 +45,20 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> orderId = default;
-            Core.Optional<DataBoxEdgeContactDetails> contactInformation = default;
-            Core.Optional<DataBoxEdgeShippingAddress> shippingAddress = default;
-            Core.Optional<DataBoxEdgeOrderStatus> currentStatus = default;
-            Core.Optional<IReadOnlyList<DataBoxEdgeOrderStatus>> orderHistory = default;
-            Core.Optional<string> serialNumber = default;
-            Core.Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
-            Core.Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
-            Core.Optional<DataBoxEdgeShipmentType> shipmentType = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> orderId = default;
+            Optional<DataBoxEdgeContactDetails> contactInformation = default;
+            Optional<DataBoxEdgeShippingAddress> shippingAddress = default;
+            Optional<DataBoxEdgeOrderStatus> currentStatus = default;
+            Optional<IReadOnlyList<DataBoxEdgeOrderStatus>> orderHistory = default;
+            Optional<string> serialNumber = default;
+            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> deliveryTrackingInfo = default;
+            Optional<IReadOnlyList<DataBoxEdgeTrackingInfo>> returnTrackingInfo = default;
+            Optional<DataBoxEdgeShipmentType> shipmentType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                     continue;
                 }
             }
-            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Core.Optional.ToList(orderHistory), serialNumber.Value, Core.Optional.ToList(deliveryTrackingInfo), Core.Optional.ToList(returnTrackingInfo), Core.Optional.ToNullable(shipmentType));
+            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType));
         }
     }
 }

@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class ManagedServiceIdentity : Core.IUtf8JsonSerializable
+    public partial class ManagedServiceIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
-            if (Core.Optional.IsDefined(PrincipalId))
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsCollectionDefined(UserAssignedIdentities))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Blueprint.Models
                 return null;
             }
             ManagedServiceIdentityType type = default;
-            Core.Optional<string> principalId = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            Optional<string> principalId = default;
+            Optional<Guid> tenantId = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new ManagedServiceIdentity(type, principalId.Value, Core.Optional.ToNullable(tenantId), Core.Optional.ToDictionary(userAssignedIdentities));
+            return new ManagedServiceIdentity(type, principalId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

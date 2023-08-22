@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyList. </summary>
         internal CdnWebApplicationFirewallPolicyList()
         {
-            Value = new Core.ChangeTrackingList<CdnWebApplicationFirewallPolicyData>();
+            Value = new ChangeTrackingList<CdnWebApplicationFirewallPolicyData>();
         }
 
         /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyList. </summary>

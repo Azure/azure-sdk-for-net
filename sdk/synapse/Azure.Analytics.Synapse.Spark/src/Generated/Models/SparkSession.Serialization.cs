@@ -19,24 +19,24 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Core.Optional<SparkSessionState> livyInfo = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> workspaceName = default;
-            Core.Optional<string> sparkPoolName = default;
-            Core.Optional<string> submitterName = default;
-            Core.Optional<string> submitterId = default;
-            Core.Optional<string> artifactId = default;
-            Core.Optional<SparkJobType> jobType = default;
-            Core.Optional<SparkSessionResultType> result = default;
-            Core.Optional<SparkScheduler> schedulerInfo = default;
-            Core.Optional<SparkServicePlugin> pluginInfo = default;
-            Core.Optional<IReadOnlyList<SparkServiceError>> errorInfo = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<SparkSessionState> livyInfo = default;
+            Optional<string> name = default;
+            Optional<string> workspaceName = default;
+            Optional<string> sparkPoolName = default;
+            Optional<string> submitterName = default;
+            Optional<string> submitterId = default;
+            Optional<string> artifactId = default;
+            Optional<SparkJobType> jobType = default;
+            Optional<SparkSessionResultType> result = default;
+            Optional<SparkScheduler> schedulerInfo = default;
+            Optional<SparkServicePlugin> pluginInfo = default;
+            Optional<IReadOnlyList<SparkServiceError>> errorInfo = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             int id = default;
-            Core.Optional<string> appId = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> appInfo = default;
-            Core.Optional<LivyStates> state = default;
-            Core.Optional<IReadOnlyList<string>> log = default;
+            Optional<string> appId = default;
+            Optional<IReadOnlyDictionary<string, string>> appInfo = default;
+            Optional<LivyStates> state = default;
+            Optional<IReadOnlyList<string>> log = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livyInfo"u8))
@@ -195,7 +195,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkSession(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Core.Optional.ToNullable(jobType), Core.Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Core.Optional.ToList(errorInfo), Core.Optional.ToDictionary(tags), id, appId.Value, Core.Optional.ToDictionary(appInfo), Core.Optional.ToNullable(state), Core.Optional.ToList(log));
+            return new SparkSession(livyInfo.Value, name.Value, workspaceName.Value, sparkPoolName.Value, submitterName.Value, submitterId.Value, artifactId.Value, Optional.ToNullable(jobType), Optional.ToNullable(result), schedulerInfo.Value, pluginInfo.Value, Optional.ToList(errorInfo), Optional.ToDictionary(tags), id, appId.Value, Optional.ToDictionary(appInfo), Optional.ToNullable(state), Optional.ToList(log));
         }
     }
 }

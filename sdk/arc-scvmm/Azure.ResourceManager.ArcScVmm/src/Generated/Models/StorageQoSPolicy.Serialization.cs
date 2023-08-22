@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> id = default;
-            Core.Optional<long> iopsMaximum = default;
-            Core.Optional<long> iopsMinimum = default;
-            Core.Optional<long> bandwidthLimit = default;
-            Core.Optional<string> policyId = default;
+            Optional<string> name = default;
+            Optional<string> id = default;
+            Optional<long> iopsMaximum = default;
+            Optional<long> iopsMinimum = default;
+            Optional<long> bandwidthLimit = default;
+            Optional<string> policyId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     continue;
                 }
             }
-            return new StorageQoSPolicy(name.Value, id.Value, Core.Optional.ToNullable(iopsMaximum), Core.Optional.ToNullable(iopsMinimum), Core.Optional.ToNullable(bandwidthLimit), policyId.Value);
+            return new StorageQoSPolicy(name.Value, id.Value, Optional.ToNullable(iopsMaximum), Optional.ToNullable(iopsMinimum), Optional.ToNullable(bandwidthLimit), policyId.Value);
         }
     }
 }

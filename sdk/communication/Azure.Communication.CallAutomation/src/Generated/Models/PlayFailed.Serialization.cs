@@ -18,11 +18,11 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Core.Optional<string> callConnectionId = default;
-            Core.Optional<string> serverCallId = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<string> operationContext = default;
-            Core.Optional<ResultInformation> resultInformation = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
+            Optional<string> operationContext = default;
+            Optional<ResultInformation> resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))

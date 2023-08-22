@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         public ManagedServiceIdentity(ManagedServiceIdentityType identityType)
         {
             IdentityType = identityType;
-            UserAssignedIdentities = new Core.ChangeTrackingDictionary<string, UserAssignedIdentity>();
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of ManagedServiceIdentity. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<RouteErrorSeverity> severity = default;
-            Core.Optional<RouteErrorRange> location = default;
+            Optional<string> message = default;
+            Optional<RouteErrorSeverity> severity = default;
+            Optional<RouteErrorRange> location = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RouteCompilationError(message.Value, Core.Optional.ToNullable(severity), location.Value);
+            return new RouteCompilationError(message.Value, Optional.ToNullable(severity), location.Value);
         }
     }
 }

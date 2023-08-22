@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Core.Optional<string> operationContext = default;
+            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))

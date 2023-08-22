@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityIssueInfo. </summary>
         internal ConnectivityIssueInfo()
         {
-            Contexts = new Core.ChangeTrackingList<IDictionary<string, string>>();
+            Contexts = new ChangeTrackingList<IDictionary<string, string>>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityIssueInfo. </summary>

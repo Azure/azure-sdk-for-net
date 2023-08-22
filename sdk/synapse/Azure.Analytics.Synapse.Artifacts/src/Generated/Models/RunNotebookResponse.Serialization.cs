@@ -21,8 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<RunNotebookResult> result = default;
+            Optional<string> message = default;
+            Optional<RunNotebookResult> result = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))

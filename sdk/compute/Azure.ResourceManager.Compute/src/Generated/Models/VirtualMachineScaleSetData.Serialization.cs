@@ -15,27 +15,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetData : Core.IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Plan))
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan);
             }
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,82 +65,82 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UpgradePolicy))
+            if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
                 writer.WriteObjectValue(UpgradePolicy);
             }
-            if (Core.Optional.IsDefined(AutomaticRepairsPolicy))
+            if (Optional.IsDefined(AutomaticRepairsPolicy))
             {
                 writer.WritePropertyName("automaticRepairsPolicy"u8);
                 writer.WriteObjectValue(AutomaticRepairsPolicy);
             }
-            if (Core.Optional.IsDefined(VirtualMachineProfile))
+            if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
                 writer.WriteObjectValue(VirtualMachineProfile);
             }
-            if (Core.Optional.IsDefined(Overprovision))
+            if (Optional.IsDefined(Overprovision))
             {
                 writer.WritePropertyName("overprovision"u8);
                 writer.WriteBooleanValue(Overprovision.Value);
             }
-            if (Core.Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVms))
+            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVms))
             {
                 writer.WritePropertyName("doNotRunExtensionsOnOverprovisionedVMs"u8);
                 writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVms.Value);
             }
-            if (Core.Optional.IsDefined(SinglePlacementGroup))
+            if (Optional.IsDefined(SinglePlacementGroup))
             {
                 writer.WritePropertyName("singlePlacementGroup"u8);
                 writer.WriteBooleanValue(SinglePlacementGroup.Value);
             }
-            if (Core.Optional.IsDefined(ZoneBalance))
+            if (Optional.IsDefined(ZoneBalance))
             {
                 writer.WritePropertyName("zoneBalance"u8);
                 writer.WriteBooleanValue(ZoneBalance.Value);
             }
-            if (Core.Optional.IsDefined(PlatformFaultDomainCount))
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (Core.Optional.IsDefined(ProximityPlacementGroup))
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
-            if (Core.Optional.IsDefined(HostGroup))
+            if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
                 JsonSerializer.Serialize(writer, HostGroup);
             }
-            if (Core.Optional.IsDefined(AdditionalCapabilities))
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
-            if (Core.Optional.IsDefined(ScaleInPolicy))
+            if (Optional.IsDefined(ScaleInPolicy))
             {
                 writer.WritePropertyName("scaleInPolicy"u8);
                 writer.WriteObjectValue(ScaleInPolicy);
             }
-            if (Core.Optional.IsDefined(OrchestrationMode))
+            if (Optional.IsDefined(OrchestrationMode))
             {
                 writer.WritePropertyName("orchestrationMode"u8);
                 writer.WriteStringValue(OrchestrationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SpotRestorePolicy))
+            if (Optional.IsDefined(SpotRestorePolicy))
             {
                 writer.WritePropertyName("spotRestorePolicy"u8);
                 writer.WriteObjectValue(SpotRestorePolicy);
             }
-            if (Core.Optional.IsDefined(PriorityMixPolicy))
+            if (Optional.IsDefined(PriorityMixPolicy))
             {
                 writer.WritePropertyName("priorityMixPolicy"u8);
                 writer.WriteObjectValue(PriorityMixPolicy);
             }
-            if (Core.Optional.IsDefined(IsMaximumCapacityConstrained))
+            if (Optional.IsDefined(IsMaximumCapacityConstrained))
             {
                 writer.WritePropertyName("constrainedMaximumCapacity"u8);
                 writer.WriteBooleanValue(IsMaximumCapacityConstrained.Value);
@@ -155,36 +155,36 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<ComputeSku> sku = default;
-            Core.Optional<ComputePlan> plan = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<ExtendedLocation> extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ComputeSku> sku = default;
+            Optional<ComputePlan> plan = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IList<string>> zones = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<VirtualMachineScaleSetUpgradePolicy> upgradePolicy = default;
-            Core.Optional<AutomaticRepairsPolicy> automaticRepairsPolicy = default;
-            Core.Optional<VirtualMachineScaleSetVmProfile> virtualMachineProfile = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<bool> overprovision = default;
-            Core.Optional<bool> doNotRunExtensionsOnOverprovisionedVms = default;
-            Core.Optional<string> uniqueId = default;
-            Core.Optional<bool> singlePlacementGroup = default;
-            Core.Optional<bool> zoneBalance = default;
-            Core.Optional<int> platformFaultDomainCount = default;
-            Core.Optional<WritableSubResource> proximityPlacementGroup = default;
-            Core.Optional<WritableSubResource> hostGroup = default;
-            Core.Optional<AdditionalCapabilities> additionalCapabilities = default;
-            Core.Optional<ScaleInPolicy> scaleInPolicy = default;
-            Core.Optional<OrchestrationMode> orchestrationMode = default;
-            Core.Optional<SpotRestorePolicy> spotRestorePolicy = default;
-            Core.Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
-            Core.Optional<DateTimeOffset> timeCreated = default;
-            Core.Optional<bool> constrainedMaximumCapacity = default;
+            Optional<SystemData> systemData = default;
+            Optional<VirtualMachineScaleSetUpgradePolicy> upgradePolicy = default;
+            Optional<AutomaticRepairsPolicy> automaticRepairsPolicy = default;
+            Optional<VirtualMachineScaleSetVmProfile> virtualMachineProfile = default;
+            Optional<string> provisioningState = default;
+            Optional<bool> overprovision = default;
+            Optional<bool> doNotRunExtensionsOnOverprovisionedVms = default;
+            Optional<string> uniqueId = default;
+            Optional<bool> singlePlacementGroup = default;
+            Optional<bool> zoneBalance = default;
+            Optional<int> platformFaultDomainCount = default;
+            Optional<WritableSubResource> proximityPlacementGroup = default;
+            Optional<WritableSubResource> hostGroup = default;
+            Optional<AdditionalCapabilities> additionalCapabilities = default;
+            Optional<ScaleInPolicy> scaleInPolicy = default;
+            Optional<OrchestrationMode> orchestrationMode = default;
+            Optional<SpotRestorePolicy> spotRestorePolicy = default;
+            Optional<VirtualMachineScaleSetPriorityMixPolicy> priorityMixPolicy = default;
+            Optional<DateTimeOffset> timeCreated = default;
+            Optional<bool> constrainedMaximumCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Core.Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Core.Optional.ToNullable(overprovision), Core.Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Core.Optional.ToNullable(singlePlacementGroup), Core.Optional.ToNullable(zoneBalance), Core.Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Core.Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Core.Optional.ToNullable(timeCreated), Core.Optional.ToNullable(constrainedMaximumCapacity));
+            return new VirtualMachineScaleSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, plan.Value, identity, Optional.ToList(zones), extendedLocation, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, provisioningState.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), uniqueId.Value, Optional.ToNullable(singlePlacementGroup), Optional.ToNullable(zoneBalance), Optional.ToNullable(platformFaultDomainCount), proximityPlacementGroup, hostGroup, additionalCapabilities.Value, scaleInPolicy.Value, Optional.ToNullable(orchestrationMode), spotRestorePolicy.Value, priorityMixPolicy.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(constrainedMaximumCapacity));
         }
     }
 }

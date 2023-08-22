@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadPointInTimeRecoveryPoint. </summary>
         public WorkloadPointInTimeRecoveryPoint()
         {
-            TimeRanges = new Core.ChangeTrackingList<PointInTimeRange>();
+            TimeRanges = new ChangeTrackingList<PointInTimeRange>();
             ObjectType = "AzureWorkloadPointInTimeRecoveryPoint";
         }
 

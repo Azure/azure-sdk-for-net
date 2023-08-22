@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    internal class DeviceProvisioningServicesPrivateEndpointConnectionOperationSource : Core.IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>
+    internal class DeviceProvisioningServicesPrivateEndpointConnectionOperationSource : IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             _client = client;
         }
 
-        DeviceProvisioningServicesPrivateEndpointConnectionResource Core.IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DeviceProvisioningServicesPrivateEndpointConnectionResource IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(document.RootElement);
             return new DeviceProvisioningServicesPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<DeviceProvisioningServicesPrivateEndpointConnectionResource> Core.IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DeviceProvisioningServicesPrivateEndpointConnectionResource> IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(document.RootElement);

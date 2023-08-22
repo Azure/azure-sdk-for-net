@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppBackupPolicyBackupPoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppBackupPolicyBackupPoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new NetAppArmOperation<NetAppBackupPolicyResource>(new NetAppBackupPolicyOperationSource(Client), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, _netAppBackupPolicyBackupPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppBackupPolicyResource(Client, NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(e)), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "NetAppBackupPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppBackupPolicyResource(Client, NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(e)), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "NetAppBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppBackupPolicyResource(Client, NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(e)), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "NetAppBackupPolicyCollection.GetAll", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppBackupPolicyResource(Client, NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(e)), _netAppBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "NetAppBackupPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

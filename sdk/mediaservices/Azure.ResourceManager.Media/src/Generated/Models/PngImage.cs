@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             Argument.AssertNotNull(start, nameof(start));
 
-            Layers = new Core.ChangeTrackingList<PngLayer>();
+            Layers = new ChangeTrackingList<PngLayer>();
             OdataType = "#Microsoft.Media.PngImage";
         }
 

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    internal partial class KubernetesAzureBlobManagedIdentity : Core.IUtf8JsonSerializable
+    internal partial class KubernetesAzureBlobManagedIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClientId))
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<Guid?> clientId = default;
+            Optional<Guid?> clientId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new KubernetesAzureBlobManagedIdentity(Core.Optional.ToNullable(clientId));
+            return new KubernetesAzureBlobManagedIdentity(Optional.ToNullable(clientId));
         }
     }
 }

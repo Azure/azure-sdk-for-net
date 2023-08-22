@@ -16,8 +16,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of IndexerState. </summary>
         internal IndexerState()
         {
-            ResetDocumentKeys = new Core.ChangeTrackingList<string>();
-            ResetDataSourceDocumentIds = new Core.ChangeTrackingList<string>();
+            ResetDocumentKeys = new ChangeTrackingList<string>();
+            ResetDataSourceDocumentIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> The mode the indexer is running in. </summary>

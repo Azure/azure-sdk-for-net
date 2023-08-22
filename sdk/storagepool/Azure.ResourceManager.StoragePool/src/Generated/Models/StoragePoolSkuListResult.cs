@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of StoragePoolSkuListResult. </summary>
         internal StoragePoolSkuListResult()
         {
-            Value = new Core.ChangeTrackingList<StoragePoolSkuInfo>();
+            Value = new ChangeTrackingList<StoragePoolSkuInfo>();
         }
 
         /// <summary> Initializes a new instance of StoragePoolSkuListResult. </summary>

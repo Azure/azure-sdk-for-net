@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
-            ReferencedUris = new Core.ChangeTrackingList<Uri>();
+            ReferencedUris = new ChangeTrackingList<Uri>();
             DataType = MachineLearningDataType.Mltable;
         }
 

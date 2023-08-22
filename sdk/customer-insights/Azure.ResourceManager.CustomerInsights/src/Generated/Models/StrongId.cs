@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
             KeyPropertyNames = keyPropertyNames.ToList();
             StrongIdName = strongIdName;
-            DisplayName = new Core.ChangeTrackingDictionary<string, string>();
-            Description = new Core.ChangeTrackingDictionary<string, string>();
+            DisplayName = new ChangeTrackingDictionary<string, string>();
+            Description = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of StrongId. </summary>

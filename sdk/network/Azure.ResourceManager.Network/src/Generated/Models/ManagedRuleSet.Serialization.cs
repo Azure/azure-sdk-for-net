@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ManagedRuleSet : Core.IUtf8JsonSerializable
+    public partial class ManagedRuleSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("ruleSetType"u8);
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Core.Optional.IsCollectionDefined(RuleGroupOverrides))
+            if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Core.Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
+            Optional<IList<ManagedRuleGroupOverride>> ruleGroupOverrides = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleSetType"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Core.Optional.ToList(ruleGroupOverrides));
+            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToList(ruleGroupOverrides));
         }
     }
 }

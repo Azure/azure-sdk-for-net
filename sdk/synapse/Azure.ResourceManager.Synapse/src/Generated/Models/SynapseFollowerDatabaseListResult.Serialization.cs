@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SynapseFollowerDatabaseDefinition>> value = default;
+            Optional<IReadOnlyList<SynapseFollowerDatabaseDefinition>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseFollowerDatabaseListResult(Core.Optional.ToList(value));
+            return new SynapseFollowerDatabaseListResult(Optional.ToList(value));
         }
     }
 }

@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class QuotaProperties : Core.IUtf8JsonSerializable
+    public partial class QuotaProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Limit))
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteObjectValue(Limit);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Core.Optional.IsDefined(ResourceTypeName))
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Core.Optional<QuotaLimitJsonObject> limit = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<QuotaRequestResourceName> name = default;
-            Core.Optional<string> resourceType = default;
-            Core.Optional<TimeSpan> quotaPeriod = default;
-            Core.Optional<bool> isQuotaApplicable = default;
-            Core.Optional<BinaryData> properties = default;
+            Optional<QuotaLimitJsonObject> limit = default;
+            Optional<string> unit = default;
+            Optional<QuotaRequestResourceName> name = default;
+            Optional<string> resourceType = default;
+            Optional<TimeSpan> quotaPeriod = default;
+            Optional<bool> isQuotaApplicable = default;
+            Optional<BinaryData> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Quota.Models
                     continue;
                 }
             }
-            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, Core.Optional.ToNullable(quotaPeriod), Core.Optional.ToNullable(isQuotaApplicable), properties.Value);
+            return new QuotaProperties(limit.Value, unit.Value, name.Value, resourceType.Value, Optional.ToNullable(quotaPeriod), Optional.ToNullable(isQuotaApplicable), properties.Value);
         }
     }
 }

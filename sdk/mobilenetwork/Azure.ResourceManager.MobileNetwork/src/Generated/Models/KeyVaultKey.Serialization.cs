@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    internal partial class KeyVaultKey : Core.IUtf8JsonSerializable
+    internal partial class KeyVaultKey : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(KeyUri))
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Core.Optional<Uri> keyUrl = default;
+            Optional<Uri> keyUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyUrl"u8))

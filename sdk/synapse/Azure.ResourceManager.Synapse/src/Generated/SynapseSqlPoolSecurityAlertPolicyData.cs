@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyData. </summary>
         public SynapseSqlPoolSecurityAlertPolicyData()
         {
-            DisabledAlerts = new Core.ChangeTrackingList<string>();
-            EmailAddresses = new Core.ChangeTrackingList<string>();
+            DisabledAlerts = new ChangeTrackingList<string>();
+            EmailAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyData. </summary>

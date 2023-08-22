@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
-            Core.Optional<SubnetAssociation> subnetAssociation = default;
-            Core.Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
-            Core.Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
+            Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
+            Optional<SubnetAssociation> subnetAssociation = default;
+            Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
+            Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceAssociation"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new SecurityRuleAssociations(networkInterfaceAssociation.Value, subnetAssociation.Value, Core.Optional.ToList(defaultSecurityRules), Core.Optional.ToList(effectiveSecurityRules));
+            return new SecurityRuleAssociations(networkInterfaceAssociation.Value, subnetAssociation.Value, Optional.ToList(defaultSecurityRules), Optional.ToList(effectiveSecurityRules));
         }
     }
 }

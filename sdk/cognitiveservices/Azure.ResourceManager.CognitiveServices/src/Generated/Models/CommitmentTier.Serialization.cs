@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
-            Core.Optional<string> skuName = default;
-            Core.Optional<ServiceAccountHostingModel> hostingModel = default;
-            Core.Optional<string> planType = default;
-            Core.Optional<string> tier = default;
-            Core.Optional<int> maxCount = default;
-            Core.Optional<CommitmentQuota> quota = default;
-            Core.Optional<CommitmentCost> cost = default;
+            Optional<string> kind = default;
+            Optional<string> skuName = default;
+            Optional<ServiceAccountHostingModel> hostingModel = default;
+            Optional<string> planType = default;
+            Optional<string> tier = default;
+            Optional<int> maxCount = default;
+            Optional<CommitmentQuota> quota = default;
+            Optional<CommitmentCost> cost = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CommitmentTier(kind.Value, skuName.Value, Core.Optional.ToNullable(hostingModel), planType.Value, tier.Value, Core.Optional.ToNullable(maxCount), quota.Value, cost.Value);
+            return new CommitmentTier(kind.Value, skuName.Value, Optional.ToNullable(hostingModel), planType.Value, tier.Value, Optional.ToNullable(maxCount), quota.Value, cost.Value);
         }
     }
 }

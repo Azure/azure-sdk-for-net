@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
         public ApplicationGatewayHttpListener()
         {
-            CustomErrorConfigurations = new Core.ChangeTrackingList<ApplicationGatewayCustomError>();
-            HostNames = new Core.ChangeTrackingList<string>();
+            CustomErrorConfigurations = new ChangeTrackingList<ApplicationGatewayCustomError>();
+            HostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>

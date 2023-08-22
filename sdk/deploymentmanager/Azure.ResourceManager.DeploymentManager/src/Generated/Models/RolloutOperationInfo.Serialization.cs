@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.DeploymentManager.Models
             {
                 return null;
             }
-            Core.Optional<int> retryAttempt = default;
-            Core.Optional<bool> skipSucceededOnRetry = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<ResponseError> error = default;
+            Optional<int> retryAttempt = default;
+            Optional<bool> skipSucceededOnRetry = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retryAttempt"u8))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     continue;
                 }
             }
-            return new RolloutOperationInfo(Core.Optional.ToNullable(retryAttempt), Core.Optional.ToNullable(skipSucceededOnRetry), Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), error.Value);
+            return new RolloutOperationInfo(Optional.ToNullable(retryAttempt), Optional.ToNullable(skipSucceededOnRetry), Optional.ToNullable(startTime), Optional.ToNullable(endTime), error.Value);
         }
     }
 }

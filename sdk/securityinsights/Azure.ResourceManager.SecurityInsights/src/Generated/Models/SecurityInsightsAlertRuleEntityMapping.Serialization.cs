@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertRuleEntityMapping : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAlertRuleEntityMapping : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EntityType))
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(FieldMappings))
+            if (Optional.IsCollectionDefined(FieldMappings))
             {
                 writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<SecurityInsightsAlertRuleEntityMappingType> entityType = default;
-            Core.Optional<IList<SecurityInsightsFieldMapping>> fieldMappings = default;
+            Optional<SecurityInsightsAlertRuleEntityMappingType> entityType = default;
+            Optional<IList<SecurityInsightsFieldMapping>> fieldMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityType"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsAlertRuleEntityMapping(Core.Optional.ToNullable(entityType), Core.Optional.ToList(fieldMappings));
+            return new SecurityInsightsAlertRuleEntityMapping(Optional.ToNullable(entityType), Optional.ToList(fieldMappings));
         }
     }
 }

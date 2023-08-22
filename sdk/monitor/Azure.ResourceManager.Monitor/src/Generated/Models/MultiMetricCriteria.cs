@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Name = name;
             MetricName = metricName;
             TimeAggregation = timeAggregation;
-            Dimensions = new Core.ChangeTrackingList<MetricDimension>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Dimensions = new ChangeTrackingList<MetricDimension>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of MultiMetricCriteria. </summary>

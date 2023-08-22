@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of SliceListResult. </summary>
         internal SliceListResult()
         {
-            Value = new Core.ChangeTrackingList<MobileNetworkSliceData>();
+            Value = new ChangeTrackingList<MobileNetworkSliceData>();
         }
 
         /// <summary> Initializes a new instance of SliceListResult. </summary>

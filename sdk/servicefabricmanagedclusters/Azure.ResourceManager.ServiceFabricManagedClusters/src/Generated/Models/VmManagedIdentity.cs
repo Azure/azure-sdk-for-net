@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of VmManagedIdentity. </summary>
         public VmManagedIdentity()
         {
-            UserAssignedIdentities = new Core.ChangeTrackingList<ResourceIdentifier>();
+            UserAssignedIdentities = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of VmManagedIdentity. </summary>

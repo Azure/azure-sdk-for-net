@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
         internal SubscriptionsResponse()
         {
-            Value = new Core.ChangeTrackingList<MarketplaceSubscription>();
+            Value = new ChangeTrackingList<MarketplaceSubscription>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>

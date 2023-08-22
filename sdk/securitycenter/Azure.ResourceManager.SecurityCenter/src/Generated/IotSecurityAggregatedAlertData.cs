@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>
         public IotSecurityAggregatedAlertData()
         {
-            TopDevicesList = new Core.ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            TopDevicesList = new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>

@@ -11,26 +11,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class EventGridStreamInputDataSource : Core.IUtf8JsonSerializable
+    public partial class EventGridStreamInputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Subscriber))
+            if (Optional.IsDefined(Subscriber))
             {
                 writer.WritePropertyName("subscriber"u8);
                 writer.WriteObjectValue(Subscriber);
             }
-            if (Core.Optional.IsDefined(Schema))
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(StorageAccounts))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(EventTypes))
+            if (Optional.IsCollectionDefined(EventTypes))
             {
                 writer.WritePropertyName("eventTypes"u8);
                 writer.WriteStartArray();
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<EventHubV2StreamInputDataSource> subscriber = default;
-            Core.Optional<EventGridEventSchemaType> schema = default;
-            Core.Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
-            Core.Optional<IList<string>> eventTypes = default;
+            Optional<EventHubV2StreamInputDataSource> subscriber = default;
+            Optional<EventGridEventSchemaType> schema = default;
+            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
+            Optional<IList<string>> eventTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new EventGridStreamInputDataSource(type, subscriber.Value, Core.Optional.ToNullable(schema), Core.Optional.ToList(storageAccounts), Core.Optional.ToList(eventTypes));
+            return new EventGridStreamInputDataSource(type, subscriber.Value, Optional.ToNullable(schema), Optional.ToList(storageAccounts), Optional.ToList(eventTypes));
         }
     }
 }

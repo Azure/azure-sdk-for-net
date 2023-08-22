@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<TargetData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<TargetData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     continue;
                 }
             }
-            return new TargetListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new TargetListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

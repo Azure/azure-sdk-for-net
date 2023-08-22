@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
         public ConnectionMonitorEndpointFilter()
         {
-            Items = new Core.ChangeTrackingList<ConnectionMonitorEndpointFilterItem>();
+            Items = new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>();
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>

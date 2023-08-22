@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkLocalDiagnosticsAccessConfiguration : Core.IUtf8JsonSerializable
+    public partial class MobileNetworkLocalDiagnosticsAccessConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Core.Optional.IsDefined(HttpsServerCertificate))
+            if (Optional.IsDefined(HttpsServerCertificate))
             {
                 writer.WritePropertyName("httpsServerCertificate"u8);
                 writer.WriteObjectValue(HttpsServerCertificate);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 return null;
             }
             MobileNetworkAuthenticationType authenticationType = default;
-            Core.Optional<MobileNetworkHttpsServerCertificate> httpsServerCertificate = default;
+            Optional<MobileNetworkHttpsServerCertificate> httpsServerCertificate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authenticationType"u8))

@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             long documentCount = default;
             long storageSize = default;
-            Core.Optional<long> vectorIndexSize = default;
+            Optional<long> vectorIndexSize = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documentCount"u8))
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexStatistics(documentCount, storageSize, Core.Optional.ToNullable(vectorIndexSize));
+            return new SearchIndexStatistics(documentCount, storageSize, Optional.ToNullable(vectorIndexSize));
         }
     }
 }

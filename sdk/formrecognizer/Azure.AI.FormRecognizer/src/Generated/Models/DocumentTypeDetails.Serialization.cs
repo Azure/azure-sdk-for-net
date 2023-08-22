@@ -19,10 +19,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Core.Optional<string> description = default;
-            Core.Optional<DocumentBuildMode> buildMode = default;
+            Optional<string> description = default;
+            Optional<DocumentBuildMode> buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
-            Core.Optional<IReadOnlyDictionary<string, float>> fieldConfidence = default;
+            Optional<IReadOnlyDictionary<string, float>> fieldConfidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTypeDetails(description.Value, Core.Optional.ToNullable(buildMode), fieldSchema, Core.Optional.ToDictionary(fieldConfidence));
+            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence));
         }
     }
 }

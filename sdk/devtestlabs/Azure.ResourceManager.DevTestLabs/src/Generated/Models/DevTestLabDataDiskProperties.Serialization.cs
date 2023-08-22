@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabDataDiskProperties : Core.IUtf8JsonSerializable
+    public partial class DevTestLabDataDiskProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AttachNewDataDiskOptions))
+            if (Optional.IsDefined(AttachNewDataDiskOptions))
             {
                 writer.WritePropertyName("attachNewDataDiskOptions"u8);
                 writer.WriteObjectValue(AttachNewDataDiskOptions);
             }
-            if (Core.Optional.IsDefined(ExistingLabDiskId))
+            if (Optional.IsDefined(ExistingLabDiskId))
             {
                 writer.WritePropertyName("existingLabDiskId"u8);
                 writer.WriteStringValue(ExistingLabDiskId);
             }
-            if (Core.Optional.IsDefined(HostCaching))
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<AttachNewDataDiskDetails> attachNewDataDiskOptions = default;
-            Core.Optional<ResourceIdentifier> existingLabDiskId = default;
-            Core.Optional<DevTestLabHostCachingOption> hostCaching = default;
+            Optional<AttachNewDataDiskDetails> attachNewDataDiskOptions = default;
+            Optional<ResourceIdentifier> existingLabDiskId = default;
+            Optional<DevTestLabHostCachingOption> hostCaching = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attachNewDataDiskOptions"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions.Value, existingLabDiskId.Value, Core.Optional.ToNullable(hostCaching));
+            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions.Value, existingLabDiskId.Value, Optional.ToNullable(hostCaching));
         }
     }
 }

@@ -15,79 +15,79 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsWatchlistData : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsWatchlistData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WatchlistId))
+            if (Optional.IsDefined(WatchlistId))
             {
                 writer.WritePropertyName("watchlistId"u8);
                 writer.WriteStringValue(WatchlistId.Value);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Provider))
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(UpdatedOn))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(CreatedBy))
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (Core.Optional.IsDefined(UpdatedBy))
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(WatchlistType))
+            if (Optional.IsDefined(WatchlistType))
             {
                 writer.WritePropertyName("watchlistType"u8);
                 writer.WriteStringValue(WatchlistType);
             }
-            if (Core.Optional.IsDefined(WatchlistAlias))
+            if (Optional.IsDefined(WatchlistAlias))
             {
                 writer.WritePropertyName("watchlistAlias"u8);
                 writer.WriteStringValue(WatchlistAlias);
             }
-            if (Core.Optional.IsDefined(IsDeleted))
+            if (Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -97,37 +97,37 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultDuration))
+            if (Optional.IsDefined(DefaultDuration))
             {
                 writer.WritePropertyName("defaultDuration"u8);
                 writer.WriteStringValue(DefaultDuration.Value, "P");
             }
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(NumberOfLinesToSkip))
+            if (Optional.IsDefined(NumberOfLinesToSkip))
             {
                 writer.WritePropertyName("numberOfLinesToSkip"u8);
                 writer.WriteNumberValue(NumberOfLinesToSkip.Value);
             }
-            if (Core.Optional.IsDefined(RawContent))
+            if (Optional.IsDefined(RawContent))
             {
                 writer.WritePropertyName("rawContent"u8);
                 writer.WriteStringValue(RawContent);
             }
-            if (Core.Optional.IsDefined(ItemsSearchKey))
+            if (Optional.IsDefined(ItemsSearchKey))
             {
                 writer.WritePropertyName("itemsSearchKey"u8);
                 writer.WriteStringValue(ItemsSearchKey);
             }
-            if (Core.Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Core.Optional.IsDefined(UploadStatus))
+            if (Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
                 writer.WriteStringValue(UploadStatus);
@@ -142,31 +142,31 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> watchlistId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> provider = default;
-            Core.Optional<Source> source = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> updated = default;
-            Core.Optional<SecurityInsightsUserInfo> createdBy = default;
-            Core.Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> watchlistType = default;
-            Core.Optional<string> watchlistAlias = default;
-            Core.Optional<bool> isDeleted = default;
-            Core.Optional<IList<string>> labels = default;
-            Core.Optional<TimeSpan> defaultDuration = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<int> numberOfLinesToSkip = default;
-            Core.Optional<string> rawContent = default;
-            Core.Optional<string> itemsSearchKey = default;
-            Core.Optional<string> contentType = default;
-            Core.Optional<string> uploadStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> watchlistId = default;
+            Optional<string> displayName = default;
+            Optional<string> provider = default;
+            Optional<Source> source = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> updated = default;
+            Optional<SecurityInsightsUserInfo> createdBy = default;
+            Optional<SecurityInsightsUserInfo> updatedBy = default;
+            Optional<string> description = default;
+            Optional<string> watchlistType = default;
+            Optional<string> watchlistAlias = default;
+            Optional<bool> isDeleted = default;
+            Optional<IList<string>> labels = default;
+            Optional<TimeSpan> defaultDuration = default;
+            Optional<Guid> tenantId = default;
+            Optional<int> numberOfLinesToSkip = default;
+            Optional<string> rawContent = default;
+            Optional<string> itemsSearchKey = default;
+            Optional<string> contentType = default;
+            Optional<string> uploadStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsWatchlistData(id, name, type, systemData.Value, Core.Optional.ToNullable(watchlistId), displayName.Value, provider.Value, Core.Optional.ToNullable(source), Core.Optional.ToNullable(created), Core.Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Core.Optional.ToNullable(isDeleted), Core.Optional.ToList(labels), Core.Optional.ToNullable(defaultDuration), Core.Optional.ToNullable(tenantId), Core.Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Core.Optional.ToNullable(etag));
+            return new SecurityInsightsWatchlistData(id, name, type, systemData.Value, Optional.ToNullable(watchlistId), displayName.Value, provider.Value, Optional.ToNullable(source), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), Optional.ToList(labels), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag));
         }
     }
 }

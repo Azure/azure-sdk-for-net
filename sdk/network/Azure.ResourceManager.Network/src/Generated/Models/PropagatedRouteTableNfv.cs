@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PropagatedRouteTableNfv. </summary>
         public PropagatedRouteTableNfv()
         {
-            Labels = new Core.ChangeTrackingList<string>();
-            Ids = new Core.ChangeTrackingList<RoutingConfigurationNfvSubResource>();
+            Labels = new ChangeTrackingList<string>();
+            Ids = new ChangeTrackingList<RoutingConfigurationNfvSubResource>();
         }
 
         /// <summary> Initializes a new instance of PropagatedRouteTableNfv. </summary>

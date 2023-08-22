@@ -13,12 +13,12 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecurityAggregatedRecommendationData : Core.IUtf8JsonSerializable
+    public partial class IotSecurityAggregatedRecommendationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecommendationName))
+            if (Optional.IsDefined(RecommendationName))
             {
                 writer.WritePropertyName("recommendationName"u8);
                 writer.WriteStringValue(RecommendationName);
@@ -46,21 +46,21 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> recommendationName = default;
-            Core.Optional<string> recommendationDisplayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> recommendationTypeId = default;
-            Core.Optional<string> detectedBy = default;
-            Core.Optional<string> remediationSteps = default;
-            Core.Optional<ReportedSeverity> reportedSeverity = default;
-            Core.Optional<long> healthyDevices = default;
-            Core.Optional<long> unhealthyDeviceCount = default;
-            Core.Optional<string> logAnalyticsQuery = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> recommendationName = default;
+            Optional<string> recommendationDisplayName = default;
+            Optional<string> description = default;
+            Optional<string> recommendationTypeId = default;
+            Optional<string> detectedBy = default;
+            Optional<string> remediationSteps = default;
+            Optional<ReportedSeverity> reportedSeverity = default;
+            Optional<long> healthyDevices = default;
+            Optional<long> unhealthyDeviceCount = default;
+            Optional<string> logAnalyticsQuery = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new IotSecurityAggregatedRecommendationData(id, name, type, systemData.Value, recommendationName.Value, recommendationDisplayName.Value, description.Value, recommendationTypeId.Value, detectedBy.Value, remediationSteps.Value, Core.Optional.ToNullable(reportedSeverity), Core.Optional.ToNullable(healthyDevices), Core.Optional.ToNullable(unhealthyDeviceCount), logAnalyticsQuery.Value, Core.Optional.ToDictionary(tags));
+            return new IotSecurityAggregatedRecommendationData(id, name, type, systemData.Value, recommendationName.Value, recommendationDisplayName.Value, description.Value, recommendationTypeId.Value, detectedBy.Value, remediationSteps.Value, Optional.ToNullable(reportedSeverity), Optional.ToNullable(healthyDevices), Optional.ToNullable(unhealthyDeviceCount), logAnalyticsQuery.Value, Optional.ToDictionary(tags));
         }
     }
 }

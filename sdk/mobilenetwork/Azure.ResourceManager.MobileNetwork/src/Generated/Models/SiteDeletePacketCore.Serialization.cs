@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class SiteDeletePacketCore : Core.IUtf8JsonSerializable
+    public partial class SiteDeletePacketCore : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PacketCore))
+            if (Optional.IsDefined(PacketCore))
             {
                 writer.WritePropertyName("packetCore"u8);
                 JsonSerializer.Serialize(writer, PacketCore);

@@ -16,9 +16,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>
         internal HierarchiesBatchResponse()
         {
-            Get = new Core.ChangeTrackingList<TimeSeriesHierarchyOperationResult>();
-            Put = new Core.ChangeTrackingList<TimeSeriesHierarchyOperationResult>();
-            Delete = new Core.ChangeTrackingList<TimeSeriesOperationError>();
+            Get = new ChangeTrackingList<TimeSeriesHierarchyOperationResult>();
+            Put = new ChangeTrackingList<TimeSeriesHierarchyOperationResult>();
+            Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
         /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>

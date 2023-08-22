@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class MySqlFlexibleServerBackupData : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerBackupData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BackupType))
+            if (Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType);
             }
-            if (Core.Optional.IsDefined(CompletedOn))
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> backupType = default;
-            Core.Optional<DateTimeOffset> completedTime = default;
-            Core.Optional<string> source = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> backupType = default;
+            Optional<DateTimeOffset> completedTime = default;
+            Optional<string> source = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     continue;
                 }
             }
-            return new MySqlFlexibleServerBackupData(id, name, type, systemData.Value, backupType.Value, Core.Optional.ToNullable(completedTime), source.Value);
+            return new MySqlFlexibleServerBackupData(id, name, type, systemData.Value, backupType.Value, Optional.ToNullable(completedTime), source.Value);
         }
     }
 }

@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioTrack : Core.IUtf8JsonSerializable
+    public partial class AudioTrack : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(LanguageCode))
+            if (Optional.IsDefined(LanguageCode))
             {
                 writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (Core.Optional.IsDefined(HlsSettings))
+            if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);
             }
-            if (Core.Optional.IsDefined(DashSettings))
+            if (Optional.IsDefined(DashSettings))
             {
                 writer.WritePropertyName("dashSettings"u8);
                 writer.WriteObjectValue(DashSettings);
             }
-            if (Core.Optional.IsDefined(Mpeg4TrackId))
+            if (Optional.IsDefined(Mpeg4TrackId))
             {
                 if (Mpeg4TrackId != null)
                 {
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<string> fileName = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> languageCode = default;
-            Core.Optional<HlsSettings> hlsSettings = default;
-            Core.Optional<TrackDashSettings> dashSettings = default;
-            Core.Optional<int?> mpeg4TrackId = default;
-            Core.Optional<int> bitRate = default;
+            Optional<string> fileName = default;
+            Optional<string> displayName = default;
+            Optional<string> languageCode = default;
+            Optional<HlsSettings> hlsSettings = default;
+            Optional<TrackDashSettings> dashSettings = default;
+            Optional<int?> mpeg4TrackId = default;
+            Optional<int> bitRate = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AudioTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Core.Optional.ToNullable(mpeg4TrackId), Core.Optional.ToNullable(bitRate));
+            return new AudioTrack(odataType, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
         }
     }
 }

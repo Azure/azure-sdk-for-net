@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>
         public WebApplicationFirewallPolicyData()
         {
-            CustomRules = new Core.ChangeTrackingList<WebApplicationFirewallCustomRule>();
-            ApplicationGateways = new Core.ChangeTrackingList<ApplicationGatewayData>();
-            HttpListeners = new Core.ChangeTrackingList<WritableSubResource>();
-            PathBasedRules = new Core.ChangeTrackingList<WritableSubResource>();
+            CustomRules = new ChangeTrackingList<WebApplicationFirewallCustomRule>();
+            ApplicationGateways = new ChangeTrackingList<ApplicationGatewayData>();
+            HttpListeners = new ChangeTrackingList<WritableSubResource>();
+            PathBasedRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>

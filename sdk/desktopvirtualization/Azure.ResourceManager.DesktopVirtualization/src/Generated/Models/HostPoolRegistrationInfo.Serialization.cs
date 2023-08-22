@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class HostPoolRegistrationInfo : Core.IUtf8JsonSerializable
+    public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Token))
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (Core.Optional.IsDefined(RegistrationTokenOperation))
+            if (Optional.IsDefined(RegistrationTokenOperation))
             {
                 writer.WritePropertyName("registrationTokenOperation"u8);
                 writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> expirationTime = default;
-            Core.Optional<string> token = default;
-            Core.Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
+            Optional<DateTimeOffset> expirationTime = default;
+            Optional<string> token = default;
+            Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expirationTime"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     continue;
                 }
             }
-            return new HostPoolRegistrationInfo(Core.Optional.ToNullable(expirationTime), token.Value, Core.Optional.ToNullable(registrationTokenOperation));
+            return new HostPoolRegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation));
         }
     }
 }

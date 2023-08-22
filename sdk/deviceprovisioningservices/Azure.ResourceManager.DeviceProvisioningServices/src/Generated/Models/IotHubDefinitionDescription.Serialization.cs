@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    public partial class IotHubDefinitionDescription : Core.IUtf8JsonSerializable
+    public partial class IotHubDefinitionDescription : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApplyAllocationPolicy))
+            if (Optional.IsDefined(ApplyAllocationPolicy))
             {
                 writer.WritePropertyName("applyAllocationPolicy"u8);
                 writer.WriteBooleanValue(ApplyAllocationPolicy.Value);
             }
-            if (Core.Optional.IsDefined(AllocationWeight))
+            if (Optional.IsDefined(AllocationWeight))
             {
                 writer.WritePropertyName("allocationWeight"u8);
                 writer.WriteNumberValue(AllocationWeight.Value);
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Core.Optional<bool> applyAllocationPolicy = default;
-            Core.Optional<int> allocationWeight = default;
-            Core.Optional<string> name = default;
+            Optional<bool> applyAllocationPolicy = default;
+            Optional<int> allocationWeight = default;
+            Optional<string> name = default;
             string connectionString = default;
             AzureLocation location = default;
             foreach (var property in element.EnumerateObject())
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new IotHubDefinitionDescription(Core.Optional.ToNullable(applyAllocationPolicy), Core.Optional.ToNullable(allocationWeight), name.Value, connectionString, location);
+            return new IotHubDefinitionDescription(Optional.ToNullable(applyAllocationPolicy), Optional.ToNullable(allocationWeight), name.Value, connectionString, location);
         }
     }
 }

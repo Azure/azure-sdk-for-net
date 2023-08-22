@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<OrchestratorVersionProfile>> orchestrators = default;
+            Optional<IReadOnlyList<OrchestratorVersionProfile>> orchestrators = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("orchestrators"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new OrchestratorVersionProfileListResult(id, name, type, systemData.Value, Core.Optional.ToList(orchestrators));
+            return new OrchestratorVersionProfileListResult(id, name, type, systemData.Value, Optional.ToList(orchestrators));
         }
     }
 }

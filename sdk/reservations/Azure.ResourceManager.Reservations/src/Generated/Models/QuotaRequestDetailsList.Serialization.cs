@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<QuotaRequestDetailData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<QuotaRequestDetailData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new QuotaRequestDetailsList(Core.Optional.ToList(value), nextLink.Value);
+            return new QuotaRequestDetailsList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

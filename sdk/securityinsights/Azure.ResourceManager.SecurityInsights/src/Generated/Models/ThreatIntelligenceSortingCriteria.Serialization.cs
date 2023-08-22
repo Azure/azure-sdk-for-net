@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceSortingCriteria : Core.IUtf8JsonSerializable
+    public partial class ThreatIntelligenceSortingCriteria : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ItemKey))
+            if (Optional.IsDefined(ItemKey))
             {
                 writer.WritePropertyName("itemKey"u8);
                 writer.WriteStringValue(ItemKey);
             }
-            if (Core.Optional.IsDefined(SortOrder))
+            if (Optional.IsDefined(SortOrder))
             {
                 writer.WritePropertyName("sortOrder"u8);
                 writer.WriteStringValue(SortOrder.Value.ToString());

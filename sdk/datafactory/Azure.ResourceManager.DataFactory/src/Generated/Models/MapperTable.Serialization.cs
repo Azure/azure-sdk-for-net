@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperTable : Core.IUtf8JsonSerializable
+    public partial class MapperTable : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Schema))
+            if (Optional.IsCollectionDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStartArray();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DslConnectorProperties))
+            if (Optional.IsCollectionDefined(DslConnectorProperties))
             {
                 writer.WritePropertyName("dslConnectorProperties"u8);
                 writer.WriteStartArray();
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IList<MapperTableSchema>> schema = default;
-            Core.Optional<IList<MapperDslConnectorProperties>> dslConnectorProperties = default;
+            Optional<string> name = default;
+            Optional<IList<MapperTableSchema>> schema = default;
+            Optional<IList<MapperDslConnectorProperties>> dslConnectorProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new MapperTable(name.Value, Core.Optional.ToList(schema), Core.Optional.ToList(dslConnectorProperties));
+            return new MapperTable(name.Value, Optional.ToList(schema), Optional.ToList(dslConnectorProperties));
         }
     }
 }

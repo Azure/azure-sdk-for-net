@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of RoutingRuleData. </summary>
         public RoutingRuleData()
         {
-            FrontendEndpoints = new Core.ChangeTrackingList<WritableSubResource>();
-            AcceptedProtocols = new Core.ChangeTrackingList<FrontDoorProtocol>();
-            PatternsToMatch = new Core.ChangeTrackingList<string>();
+            FrontendEndpoints = new ChangeTrackingList<WritableSubResource>();
+            AcceptedProtocols = new ChangeTrackingList<FrontDoorProtocol>();
+            PatternsToMatch = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RoutingRuleData. </summary>

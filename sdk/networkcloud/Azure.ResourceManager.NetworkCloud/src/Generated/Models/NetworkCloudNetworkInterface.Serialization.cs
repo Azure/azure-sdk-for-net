@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<string> address = default;
-            Core.Optional<DeviceConnectionType> deviceConnectionType = default;
-            Core.Optional<string> model = default;
-            Core.Optional<long> physicalSlot = default;
-            Core.Optional<long> portCount = default;
-            Core.Optional<long> portSpeed = default;
-            Core.Optional<string> vendor = default;
+            Optional<string> address = default;
+            Optional<DeviceConnectionType> deviceConnectionType = default;
+            Optional<string> model = default;
+            Optional<long> physicalSlot = default;
+            Optional<long> portCount = default;
+            Optional<long> portSpeed = default;
+            Optional<string> vendor = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new NetworkCloudNetworkInterface(address.Value, Core.Optional.ToNullable(deviceConnectionType), model.Value, Core.Optional.ToNullable(physicalSlot), Core.Optional.ToNullable(portCount), Core.Optional.ToNullable(portSpeed), vendor.Value);
+            return new NetworkCloudNetworkInterface(address.Value, Optional.ToNullable(deviceConnectionType), model.Value, Optional.ToNullable(physicalSlot), Optional.ToNullable(portCount), Optional.ToNullable(portSpeed), vendor.Value);
         }
     }
 }

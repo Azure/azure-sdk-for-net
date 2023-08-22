@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>
         internal SkuResourceArmPaginatedResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningSkuDetail>();
+            Value = new ChangeTrackingList<MachineLearningSkuDetail>();
         }
 
         /// <summary> Initializes a new instance of SkuResourceArmPaginatedResult. </summary>

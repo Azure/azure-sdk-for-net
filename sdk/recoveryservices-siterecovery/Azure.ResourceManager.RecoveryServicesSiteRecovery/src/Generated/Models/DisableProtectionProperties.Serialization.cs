@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class DisableProtectionProperties : Core.IUtf8JsonSerializable
+    public partial class DisableProtectionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisableProtectionReason))
+            if (Optional.IsDefined(DisableProtectionReason))
             {
                 writer.WritePropertyName("disableProtectionReason"u8);
                 writer.WriteStringValue(DisableProtectionReason.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ReplicationProviderContent))
+            if (Optional.IsDefined(ReplicationProviderContent))
             {
                 writer.WritePropertyName("replicationProviderInput"u8);
                 writer.WriteObjectValue(ReplicationProviderContent);

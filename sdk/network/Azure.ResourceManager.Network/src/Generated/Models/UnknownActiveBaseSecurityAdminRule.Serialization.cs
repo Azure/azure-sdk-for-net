@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<DateTimeOffset> commitTime = default;
-            Core.Optional<string> region = default;
-            Core.Optional<string> configurationDescription = default;
-            Core.Optional<string> ruleCollectionDescription = default;
-            Core.Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Core.Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
+            Optional<string> id = default;
+            Optional<DateTimeOffset> commitTime = default;
+            Optional<string> region = default;
+            Optional<string> configurationDescription = default;
+            Optional<string> ruleCollectionDescription = default;
+            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
+            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new UnknownActiveBaseSecurityAdminRule(id.Value, Core.Optional.ToNullable(commitTime), region.Value, configurationDescription.Value, ruleCollectionDescription.Value, Core.Optional.ToList(ruleCollectionAppliesToGroups), Core.Optional.ToList(ruleGroups), kind);
+            return new UnknownActiveBaseSecurityAdminRule(id.Value, Optional.ToNullable(commitTime), region.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind);
         }
     }
 }

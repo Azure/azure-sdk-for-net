@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Resources
         public TemplateSpecVersionData(AzureLocation location)
         {
             Location = location;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            LinkedTemplates = new Core.ChangeTrackingList<LinkedTemplateArtifact>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            LinkedTemplates = new ChangeTrackingList<LinkedTemplateArtifact>();
         }
 
         /// <summary> Initializes a new instance of TemplateSpecVersionData. </summary>

@@ -13,14 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceFleetMemberData : Core.IUtf8JsonSerializable
+    public partial class ContainerServiceFleetMemberData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClusterResourceId))
+            if (Optional.IsDefined(ClusterResourceId))
             {
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> clusterResourceId = default;
-            Core.Optional<ContainerServiceFleetMemberProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> clusterResourceId = default;
+            Optional<ContainerServiceFleetMemberProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new ContainerServiceFleetMemberData(id, name, type, systemData.Value, clusterResourceId.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(etag));
+            return new ContainerServiceFleetMemberData(id, name, type, systemData.Value, clusterResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag));
         }
     }
 }

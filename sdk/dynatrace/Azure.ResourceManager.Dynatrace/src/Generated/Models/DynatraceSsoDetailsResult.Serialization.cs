@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<DynatraceSsoStatus> isSsoEnabled = default;
-            Core.Optional<Uri> metadataUrl = default;
-            Core.Optional<Uri> singleSignOnUrl = default;
-            Core.Optional<IReadOnlyList<string>> aadDomains = default;
-            Core.Optional<IReadOnlyList<string>> adminUsers = default;
+            Optional<DynatraceSsoStatus> isSsoEnabled = default;
+            Optional<Uri> metadataUrl = default;
+            Optional<Uri> singleSignOnUrl = default;
+            Optional<IReadOnlyList<string>> aadDomains = default;
+            Optional<IReadOnlyList<string>> adminUsers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSsoEnabled"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceSsoDetailsResult(Core.Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Core.Optional.ToList(aadDomains), Core.Optional.ToList(adminUsers));
+            return new DynatraceSsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers));
         }
     }
 }

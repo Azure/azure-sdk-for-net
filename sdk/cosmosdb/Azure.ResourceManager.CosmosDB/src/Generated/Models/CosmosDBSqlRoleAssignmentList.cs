@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentList. </summary>
         internal CosmosDBSqlRoleAssignmentList()
         {
-            Value = new Core.ChangeTrackingList<CosmosDBSqlRoleAssignmentData>();
+            Value = new ChangeTrackingList<CosmosDBSqlRoleAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentList. </summary>

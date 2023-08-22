@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorActivatedResourceInfo : Core.IUtf8JsonSerializable
+    public partial class FrontDoorActivatedResourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<bool> isActive = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<bool> isActive = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new FrontDoorActivatedResourceInfo(id.Value, Core.Optional.ToNullable(isActive));
+            return new FrontDoorActivatedResourceInfo(id.Value, Optional.ToNullable(isActive));
         }
     }
 }

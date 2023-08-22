@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of LoginScopes. </summary>
         public LoginScopes()
         {
-            Scopes = new Core.ChangeTrackingList<string>();
+            Scopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LoginScopes. </summary>

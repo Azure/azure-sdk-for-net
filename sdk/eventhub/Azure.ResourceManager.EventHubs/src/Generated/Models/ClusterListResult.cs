@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()
         {
-            Value = new Core.ChangeTrackingList<EventHubsClusterData>();
+            Value = new ChangeTrackingList<EventHubsClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterListResult. </summary>

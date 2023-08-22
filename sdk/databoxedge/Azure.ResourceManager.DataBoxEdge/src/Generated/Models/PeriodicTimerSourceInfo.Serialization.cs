@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class PeriodicTimerSourceInfo : Core.IUtf8JsonSerializable
+    public partial class PeriodicTimerSourceInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
-            if (Core.Optional.IsDefined(Topic))
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             DateTimeOffset startTime = default;
             string schedule = default;
-            Core.Optional<string> topic = default;
+            Optional<string> topic = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))

@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioAnalyzerPreset : Core.IUtf8JsonSerializable
+    public partial class AudioAnalyzerPreset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AudioLanguage))
+            if (Optional.IsDefined(AudioLanguage))
             {
                 writer.WritePropertyName("audioLanguage"u8);
                 writer.WriteStringValue(AudioLanguage);
             }
-            if (Core.Optional.IsDefined(Mode))
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ExperimentalOptions))
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.VideoAnalyzerPreset": return VideoAnalyzerPreset.DeserializeVideoAnalyzerPreset(element);
                 }
             }
-            Core.Optional<string> audioLanguage = default;
-            Core.Optional<AudioAnalysisMode> mode = default;
-            Core.Optional<IDictionary<string, string>> experimentalOptions = default;
+            Optional<string> audioLanguage = default;
+            Optional<AudioAnalysisMode> mode = default;
+            Optional<IDictionary<string, string>> experimentalOptions = default;
             string odataType = "#Microsoft.Media.AudioAnalyzerPreset";
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AudioAnalyzerPreset(odataType, audioLanguage.Value, Core.Optional.ToNullable(mode), Core.Optional.ToDictionary(experimentalOptions));
+            return new AudioAnalyzerPreset(odataType, audioLanguage.Value, Optional.ToNullable(mode), Optional.ToDictionary(experimentalOptions));
         }
     }
 }

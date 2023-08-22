@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public ContainerAppManagedEnvironmentData(AzureLocation location) : base(location)
         {
-            WorkloadProfiles = new Core.ChangeTrackingList<ContainerAppWorkloadProfile>();
+            WorkloadProfiles = new ChangeTrackingList<ContainerAppWorkloadProfile>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentData. </summary>

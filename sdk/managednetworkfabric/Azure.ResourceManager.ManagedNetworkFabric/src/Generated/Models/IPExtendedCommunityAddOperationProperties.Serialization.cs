@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPExtendedCommunityAddOperationProperties : Core.IUtf8JsonSerializable
+    public partial class IPExtendedCommunityAddOperationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Add))
+            if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IPExtendedCommunityIdList> @add = default;
+            Optional<IPExtendedCommunityIdList> @add = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("add"u8))

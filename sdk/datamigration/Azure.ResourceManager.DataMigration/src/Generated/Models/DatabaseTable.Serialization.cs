@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<bool> hasRows = default;
-            Core.Optional<string> name = default;
+            Optional<bool> hasRows = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hasRows"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new DatabaseTable(Core.Optional.ToNullable(hasRows), name.Value);
+            return new DatabaseTable(Optional.ToNullable(hasRows), name.Value);
         }
     }
 }

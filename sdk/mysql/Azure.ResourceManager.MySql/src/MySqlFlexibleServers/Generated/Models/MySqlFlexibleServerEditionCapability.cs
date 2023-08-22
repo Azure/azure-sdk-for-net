@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerEditionCapability. </summary>
         internal MySqlFlexibleServerEditionCapability()
         {
-            SupportedStorageEditions = new Core.ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>();
-            SupportedServerVersions = new Core.ChangeTrackingList<MySqlFlexibleServerServerVersionCapability>();
+            SupportedStorageEditions = new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>();
+            SupportedServerVersions = new ChangeTrackingList<MySqlFlexibleServerServerVersionCapability>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerEditionCapability. </summary>

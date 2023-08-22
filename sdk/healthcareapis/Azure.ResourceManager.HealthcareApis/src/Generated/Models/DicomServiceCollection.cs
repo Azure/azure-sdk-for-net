@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of DicomServiceCollection. </summary>
         internal DicomServiceCollection()
         {
-            Value = new Core.ChangeTrackingList<DicomServiceData>();
+            Value = new ChangeTrackingList<DicomServiceData>();
         }
 
         /// <summary> Initializes a new instance of DicomServiceCollection. </summary>

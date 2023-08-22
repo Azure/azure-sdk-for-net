@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of TopicSpaceData. </summary>
         public TopicSpaceData()
         {
-            TopicTemplates = new Core.ChangeTrackingList<string>();
+            TopicTemplates = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of TopicSpaceData. </summary>

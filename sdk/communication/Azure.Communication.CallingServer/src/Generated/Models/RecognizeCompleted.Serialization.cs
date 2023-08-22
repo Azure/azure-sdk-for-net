@@ -18,15 +18,15 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Core.Optional<string> operationContext = default;
-            Core.Optional<ResultInformation> resultInformation = default;
-            Core.Optional<CallMediaRecognitionType> recognitionType = default;
-            Core.Optional<CollectTonesResult> collectTonesResult = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> callConnectionId = default;
-            Core.Optional<string> serverCallId = default;
-            Core.Optional<string> correlationId = default;
-            Core.Optional<string> publicEventType = default;
+            Optional<string> operationContext = default;
+            Optional<ResultInformation> resultInformation = default;
+            Optional<CallMediaRecognitionType> recognitionType = default;
+            Optional<CollectTonesResult> collectTonesResult = default;
+            Optional<string> version = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
+            Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))

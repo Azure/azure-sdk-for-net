@@ -22,15 +22,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> dataFlowName = default;
-            Core.Optional<string> computeType = default;
-            Core.Optional<int> coreCount = default;
-            Core.Optional<int> nodeCount = default;
-            Core.Optional<string> integrationRuntimeName = default;
-            Core.Optional<string> sessionId = default;
-            Core.Optional<string> startTime = default;
-            Core.Optional<int> timeToLiveInMinutes = default;
-            Core.Optional<string> lastActivityTime = default;
+            Optional<string> dataFlowName = default;
+            Optional<string> computeType = default;
+            Optional<int> coreCount = default;
+            Optional<int> nodeCount = default;
+            Optional<string> integrationRuntimeName = default;
+            Optional<string> sessionId = default;
+            Optional<string> startTime = default;
+            Optional<int> timeToLiveInMinutes = default;
+            Optional<string> lastActivityTime = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Core.Optional.ToNullable(coreCount), Core.Optional.ToNullable(nodeCount), integrationRuntimeName.Value, sessionId.Value, startTime.Value, Core.Optional.ToNullable(timeToLiveInMinutes), lastActivityTime.Value, additionalProperties);
+            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, sessionId.Value, startTime.Value, Optional.ToNullable(timeToLiveInMinutes), lastActivityTime.Value, additionalProperties);
         }
 
         internal partial class DataFlowDebugSessionInfoConverter : JsonConverter<DataFlowDebugSessionInfo>

@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public MonitorDomain(int version)
         {
             Version = version;
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Schema version. </summary>

@@ -12,64 +12,64 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseDataMaskingRuleData : Core.IUtf8JsonSerializable
+    public partial class SynapseDataMaskingRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AliasName))
+            if (Optional.IsDefined(AliasName))
             {
                 writer.WritePropertyName("aliasName"u8);
                 writer.WriteStringValue(AliasName);
             }
-            if (Core.Optional.IsDefined(RuleState))
+            if (Optional.IsDefined(RuleState))
             {
                 writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(SchemaName))
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Core.Optional.IsDefined(TableName))
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Core.Optional.IsDefined(ColumnName))
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (Core.Optional.IsDefined(MaskingFunction))
+            if (Optional.IsDefined(MaskingFunction))
             {
                 writer.WritePropertyName("maskingFunction"u8);
                 writer.WriteStringValue(MaskingFunction.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(NumberFrom))
+            if (Optional.IsDefined(NumberFrom))
             {
                 writer.WritePropertyName("numberFrom"u8);
                 writer.WriteStringValue(NumberFrom);
             }
-            if (Core.Optional.IsDefined(NumberTo))
+            if (Optional.IsDefined(NumberTo))
             {
                 writer.WritePropertyName("numberTo"u8);
                 writer.WriteStringValue(NumberTo);
             }
-            if (Core.Optional.IsDefined(PrefixSize))
+            if (Optional.IsDefined(PrefixSize))
             {
                 writer.WritePropertyName("prefixSize"u8);
                 writer.WriteStringValue(PrefixSize);
             }
-            if (Core.Optional.IsDefined(SuffixSize))
+            if (Optional.IsDefined(SuffixSize))
             {
                 writer.WritePropertyName("suffixSize"u8);
                 writer.WriteStringValue(SuffixSize);
             }
-            if (Core.Optional.IsDefined(ReplacementString))
+            if (Optional.IsDefined(ReplacementString))
             {
                 writer.WritePropertyName("replacementString"u8);
                 writer.WriteStringValue(ReplacementString);
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.Synapse
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> kind = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> id0 = default;
-            Core.Optional<string> aliasName = default;
-            Core.Optional<SynapseDataMaskingRuleState> ruleState = default;
-            Core.Optional<string> schemaName = default;
-            Core.Optional<string> tableName = default;
-            Core.Optional<string> columnName = default;
-            Core.Optional<SynapseDataMaskingFunction> maskingFunction = default;
-            Core.Optional<string> numberFrom = default;
-            Core.Optional<string> numberTo = default;
-            Core.Optional<string> prefixSize = default;
-            Core.Optional<string> suffixSize = default;
-            Core.Optional<string> replacementString = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> id0 = default;
+            Optional<string> aliasName = default;
+            Optional<SynapseDataMaskingRuleState> ruleState = default;
+            Optional<string> schemaName = default;
+            Optional<string> tableName = default;
+            Optional<string> columnName = default;
+            Optional<SynapseDataMaskingFunction> maskingFunction = default;
+            Optional<string> numberFrom = default;
+            Optional<string> numberTo = default;
+            Optional<string> prefixSize = default;
+            Optional<string> suffixSize = default;
+            Optional<string> replacementString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseDataMaskingRuleData(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind.Value, id0.Value, aliasName.Value, Core.Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Core.Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
+            return new SynapseDataMaskingRuleData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
         }
     }
 }

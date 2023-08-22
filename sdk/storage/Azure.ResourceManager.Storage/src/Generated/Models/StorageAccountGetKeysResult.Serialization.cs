@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StorageAccountKey>> keys = default;
+            Optional<IReadOnlyList<StorageAccountKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new StorageAccountGetKeysResult(Core.Optional.ToList(keys));
+            return new StorageAccountGetKeysResult(Optional.ToList(keys));
         }
     }
 }

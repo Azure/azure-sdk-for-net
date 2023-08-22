@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             ReservationRecommendationKind kind = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> sku = default;
+            Optional<ETag> etag = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionReservationRecommendation(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(location), sku.Value);
+            return new ConsumptionReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value);
         }
     }
 }

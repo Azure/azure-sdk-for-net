@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of VirtualNetworkList. </summary>
         internal VirtualNetworkList()
         {
-            Value = new Core.ChangeTrackingList<DevTestLabVirtualNetworkData>();
+            Value = new ChangeTrackingList<DevTestLabVirtualNetworkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkList. </summary>

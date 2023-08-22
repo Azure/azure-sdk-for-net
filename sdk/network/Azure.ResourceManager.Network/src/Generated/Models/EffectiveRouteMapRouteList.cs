@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveRouteMapRouteList. </summary>
         internal EffectiveRouteMapRouteList()
         {
-            Value = new Core.ChangeTrackingList<EffectiveRouteMapRoute>();
+            Value = new ChangeTrackingList<EffectiveRouteMapRoute>();
         }
 
         /// <summary> Initializes a new instance of EffectiveRouteMapRouteList. </summary>

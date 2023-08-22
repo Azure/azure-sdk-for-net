@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsCredsAuthenticationDetailsProperties : Core.IUtf8JsonSerializable
+    public partial class AwsCredsAuthenticationDetailsProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("awsAccessKeyId"u8);
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> accountId = default;
+            Optional<string> accountId = default;
             string awsAccessKeyId = default;
             string awsSecretAccessKey = default;
-            Core.Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
-            Core.Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
+            Optional<AuthenticationProvisioningState> authenticationProvisioningState = default;
+            Optional<IReadOnlyList<SecurityCenterCloudPermission>> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new AwsCredsAuthenticationDetailsProperties(Core.Optional.ToNullable(authenticationProvisioningState), Core.Optional.ToList(grantedPermissions), authenticationType, accountId.Value, awsAccessKeyId, awsSecretAccessKey);
+            return new AwsCredsAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, accountId.Value, awsAccessKeyId, awsSecretAccessKey);
         }
     }
 }

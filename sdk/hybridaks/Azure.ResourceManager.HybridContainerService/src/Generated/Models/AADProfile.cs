@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of AADProfile. </summary>
         public AADProfile()
         {
-            AdminGroupObjectIds = new Core.ChangeTrackingList<string>();
+            AdminGroupObjectIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AADProfile. </summary>

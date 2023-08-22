@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterPodIdentity : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterPodIdentity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("namespace"u8);
             writer.WriteStringValue(Namespace);
-            if (Core.Optional.IsDefined(BindingSelector))
+            if (Optional.IsDefined(BindingSelector))
             {
                 writer.WritePropertyName("bindingSelector"u8);
                 writer.WriteStringValue(BindingSelector);
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string name = default;
             string @namespace = default;
-            Core.Optional<string> bindingSelector = default;
+            Optional<string> bindingSelector = default;
             ContainerServiceUserAssignedIdentity identity = default;
-            Core.Optional<ManagedClusterPodIdentityProvisioningState> provisioningState = default;
-            Core.Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
+            Optional<ManagedClusterPodIdentityProvisioningState> provisioningState = default;
+            Optional<ManagedClusterPodIdentityProvisioningInfo> provisioningInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector.Value, identity, Core.Optional.ToNullable(provisioningState), provisioningInfo.Value);
+            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector.Value, identity, Optional.ToNullable(provisioningState), provisioningInfo.Value);
         }
     }
 }

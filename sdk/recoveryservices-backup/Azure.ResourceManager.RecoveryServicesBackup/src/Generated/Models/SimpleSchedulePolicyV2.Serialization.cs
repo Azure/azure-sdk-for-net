@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SimpleSchedulePolicyV2 : Core.IUtf8JsonSerializable
+    public partial class SimpleSchedulePolicyV2 : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ScheduleRunFrequency))
+            if (Optional.IsDefined(ScheduleRunFrequency))
             {
                 writer.WritePropertyName("scheduleRunFrequency"u8);
                 writer.WriteStringValue(ScheduleRunFrequency.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HourlySchedule))
+            if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
                 writer.WriteObjectValue(HourlySchedule);
             }
-            if (Core.Optional.IsDefined(DailySchedule))
+            if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (Core.Optional.IsDefined(WeeklySchedule))
+            if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<ScheduleRunType> scheduleRunFrequency = default;
-            Core.Optional<BackupHourlySchedule> hourlySchedule = default;
-            Core.Optional<BackupDailySchedule> dailySchedule = default;
-            Core.Optional<BackupWeeklySchedule> weeklySchedule = default;
+            Optional<ScheduleRunType> scheduleRunFrequency = default;
+            Optional<BackupHourlySchedule> hourlySchedule = default;
+            Optional<BackupDailySchedule> dailySchedule = default;
+            Optional<BackupWeeklySchedule> weeklySchedule = default;
             string schedulePolicyType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new SimpleSchedulePolicyV2(schedulePolicyType, Core.Optional.ToNullable(scheduleRunFrequency), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value);
+            return new SimpleSchedulePolicyV2(schedulePolicyType, Optional.ToNullable(scheduleRunFrequency), hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value);
         }
     }
 }

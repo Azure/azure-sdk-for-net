@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of CommunicationsListResult. </summary>
         internal CommunicationsListResult()
         {
-            Value = new Core.ChangeTrackingList<SupportTicketCommunicationData>();
+            Value = new ChangeTrackingList<SupportTicketCommunicationData>();
         }
 
         /// <summary> Initializes a new instance of CommunicationsListResult. </summary>

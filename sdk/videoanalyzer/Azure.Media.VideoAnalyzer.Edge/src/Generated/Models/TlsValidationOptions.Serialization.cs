@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class TlsValidationOptions : Core.IUtf8JsonSerializable
+    public partial class TlsValidationOptions : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IgnoreHostname))
+            if (Optional.IsDefined(IgnoreHostname))
             {
                 writer.WritePropertyName("ignoreHostname"u8);
                 writer.WriteStringValue(IgnoreHostname);
             }
-            if (Core.Optional.IsDefined(IgnoreSignature))
+            if (Optional.IsDefined(IgnoreSignature))
             {
                 writer.WritePropertyName("ignoreSignature"u8);
                 writer.WriteStringValue(IgnoreSignature);
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<string> ignoreHostname = default;
-            Core.Optional<string> ignoreSignature = default;
+            Optional<string> ignoreHostname = default;
+            Optional<string> ignoreSignature = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ignoreHostname"u8))

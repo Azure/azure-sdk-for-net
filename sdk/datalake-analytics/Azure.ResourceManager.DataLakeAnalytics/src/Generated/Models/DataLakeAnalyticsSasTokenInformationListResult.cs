@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformationListResult. </summary>
         internal DataLakeAnalyticsSasTokenInformationListResult()
         {
-            Value = new Core.ChangeTrackingList<DataLakeAnalyticsSasTokenInformation>();
+            Value = new ChangeTrackingList<DataLakeAnalyticsSasTokenInformation>();
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformationListResult. </summary>

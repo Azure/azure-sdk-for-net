@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>
         internal ListUsagesResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningUsage>();
+            Value = new ChangeTrackingList<MachineLearningUsage>();
         }
 
         /// <summary> Initializes a new instance of ListUsagesResult. </summary>

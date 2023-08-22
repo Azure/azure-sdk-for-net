@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnServerConfigVpnClientRootCertificate : Core.IUtf8JsonSerializable
+    public partial class VpnServerConfigVpnClientRootCertificate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(PublicCertData))
+            if (Optional.IsDefined(PublicCertData))
             {
                 writer.WritePropertyName("publicCertData"u8);
 #if NET6_0_OR_GREATER
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<BinaryData> publicCertData = default;
+            Optional<string> name = default;
+            Optional<BinaryData> publicCertData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

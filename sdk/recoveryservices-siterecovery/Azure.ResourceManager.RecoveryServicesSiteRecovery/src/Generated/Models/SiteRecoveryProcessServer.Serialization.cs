@@ -21,42 +21,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> id = default;
-            Core.Optional<IPAddress> ipAddress = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<DateTimeOffset> lastHeartbeat = default;
-            Core.Optional<string> versionStatus = default;
-            Core.Optional<IReadOnlyList<MobilityServiceUpdate>> mobilityServiceUpdates = default;
-            Core.Optional<string> hostId = default;
-            Core.Optional<string> machineCount = default;
-            Core.Optional<string> replicationPairCount = default;
-            Core.Optional<string> systemLoad = default;
-            Core.Optional<string> systemLoadStatus = default;
-            Core.Optional<string> cpuLoad = default;
-            Core.Optional<string> cpuLoadStatus = default;
-            Core.Optional<long> totalMemoryInBytes = default;
-            Core.Optional<long> availableMemoryInBytes = default;
-            Core.Optional<string> memoryUsageStatus = default;
-            Core.Optional<long> totalSpaceInBytes = default;
-            Core.Optional<long> availableSpaceInBytes = default;
-            Core.Optional<string> spaceUsageStatus = default;
-            Core.Optional<string> psServiceStatus = default;
-            Core.Optional<DateTimeOffset> sslCertExpireOn = default;
-            Core.Optional<int> sslCertExpiryRemainingDays = default;
-            Core.Optional<string> osVersion = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
-            Core.Optional<DateTimeOffset> agentExpireOn = default;
-            Core.Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
-            Core.Optional<SiteRecoveryProtectionHealth> health = default;
-            Core.Optional<DateTimeOffset> psStatsRefreshTime = default;
-            Core.Optional<long> throughputUploadPendingDataInBytes = default;
-            Core.Optional<long> throughputInMBps = default;
-            Core.Optional<long> throughputInBytes = default;
-            Core.Optional<string> throughputStatus = default;
-            Core.Optional<string> marsCommunicationStatus = default;
-            Core.Optional<string> marsRegistrationStatus = default;
+            Optional<string> friendlyName = default;
+            Optional<string> id = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<string> osType = default;
+            Optional<string> agentVersion = default;
+            Optional<DateTimeOffset> lastHeartbeat = default;
+            Optional<string> versionStatus = default;
+            Optional<IReadOnlyList<MobilityServiceUpdate>> mobilityServiceUpdates = default;
+            Optional<string> hostId = default;
+            Optional<string> machineCount = default;
+            Optional<string> replicationPairCount = default;
+            Optional<string> systemLoad = default;
+            Optional<string> systemLoadStatus = default;
+            Optional<string> cpuLoad = default;
+            Optional<string> cpuLoadStatus = default;
+            Optional<long> totalMemoryInBytes = default;
+            Optional<long> availableMemoryInBytes = default;
+            Optional<string> memoryUsageStatus = default;
+            Optional<long> totalSpaceInBytes = default;
+            Optional<long> availableSpaceInBytes = default;
+            Optional<string> spaceUsageStatus = default;
+            Optional<string> psServiceStatus = default;
+            Optional<DateTimeOffset> sslCertExpireOn = default;
+            Optional<int> sslCertExpiryRemainingDays = default;
+            Optional<string> osVersion = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Optional<DateTimeOffset> agentExpireOn = default;
+            Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
+            Optional<SiteRecoveryProtectionHealth> health = default;
+            Optional<DateTimeOffset> psStatsRefreshTime = default;
+            Optional<long> throughputUploadPendingDataInBytes = default;
+            Optional<long> throughputInMBps = default;
+            Optional<long> throughputInBytes = default;
+            Optional<string> throughputStatus = default;
+            Optional<string> marsCommunicationStatus = default;
+            Optional<string> marsRegistrationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Core.Optional.ToNullable(lastHeartbeat), versionStatus.Value, Core.Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Core.Optional.ToNullable(totalMemoryInBytes), Core.Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Core.Optional.ToNullable(totalSpaceInBytes), Core.Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Core.Optional.ToNullable(sslCertExpireOn), Core.Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Core.Optional.ToList(healthErrors), Core.Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Core.Optional.ToNullable(health), Core.Optional.ToNullable(psStatsRefreshTime), Core.Optional.ToNullable(throughputUploadPendingDataInBytes), Core.Optional.ToNullable(throughputInMBps), Core.Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value);
+            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value);
         }
     }
 }

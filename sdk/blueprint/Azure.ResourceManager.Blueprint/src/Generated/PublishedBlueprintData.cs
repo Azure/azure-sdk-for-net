@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <summary> Initializes a new instance of PublishedBlueprintData. </summary>
         public PublishedBlueprintData()
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, ParameterDefinition>();
-            ResourceGroups = new Core.ChangeTrackingDictionary<string, ResourceGroupDefinition>();
+            Parameters = new ChangeTrackingDictionary<string, ParameterDefinition>();
+            ResourceGroups = new ChangeTrackingDictionary<string, ResourceGroupDefinition>();
         }
 
         /// <summary> Initializes a new instance of PublishedBlueprintData. </summary>

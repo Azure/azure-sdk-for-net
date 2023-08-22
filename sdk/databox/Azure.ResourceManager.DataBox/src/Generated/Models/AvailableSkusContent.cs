@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             TransferType = transferType;
             Country = country;
             Location = location;
-            SkuNames = new Core.ChangeTrackingList<DataBoxSkuName>();
+            SkuNames = new ChangeTrackingList<DataBoxSkuName>();
         }
 
         /// <summary> Type of the transfer. </summary>

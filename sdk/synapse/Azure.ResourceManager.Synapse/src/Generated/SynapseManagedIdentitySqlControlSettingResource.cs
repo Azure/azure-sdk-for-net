@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseManagedIdentitySqlControlSettingResource>(new SynapseManagedIdentitySqlControlSettingOperationSource(Client), _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsClientDiagnostics, Pipeline, _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SynapseArmOperation<SynapseManagedIdentitySqlControlSettingResource>(new SynapseManagedIdentitySqlControlSettingOperationSource(Client), _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsClientDiagnostics, Pipeline, _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseManagedIdentitySqlControlSettingResource>(new SynapseManagedIdentitySqlControlSettingOperationSource(Client), _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsClientDiagnostics, Pipeline, _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new SynapseArmOperation<SynapseManagedIdentitySqlControlSettingResource>(new SynapseManagedIdentitySqlControlSettingOperationSource(Client), _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsClientDiagnostics, Pipeline, _synapseManagedIdentitySqlControlSettingWorkspaceManagedIdentitySqlControlSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

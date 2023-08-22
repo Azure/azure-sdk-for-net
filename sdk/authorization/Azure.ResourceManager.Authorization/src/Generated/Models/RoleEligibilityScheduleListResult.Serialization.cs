@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<RoleEligibilityScheduleData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<RoleEligibilityScheduleData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     continue;
                 }
             }
-            return new RoleEligibilityScheduleListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new RoleEligibilityScheduleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

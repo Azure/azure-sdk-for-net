@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobInputDefinition : Core.IUtf8JsonSerializable
+    public partial class MediaJobInputDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Core.Optional.IsCollectionDefined(IncludedTracks))
+            if (Optional.IsCollectionDefined(IncludedTracks))
             {
                 writer.WritePropertyName("includedTracks"u8);
                 writer.WriteStartArray();

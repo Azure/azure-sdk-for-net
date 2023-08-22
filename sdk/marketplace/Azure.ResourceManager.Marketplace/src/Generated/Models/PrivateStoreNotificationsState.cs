@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of PrivateStoreNotificationsState. </summary>
         internal PrivateStoreNotificationsState()
         {
-            StopSellNotifications = new Core.ChangeTrackingList<StopSellNotifications>();
-            NewNotifications = new Core.ChangeTrackingList<NewPlanNotification>();
-            ApprovalRequests = new Core.ChangeTrackingList<RequestApprovalsDetails>();
+            StopSellNotifications = new ChangeTrackingList<StopSellNotifications>();
+            NewNotifications = new ChangeTrackingList<NewPlanNotification>();
+            ApprovalRequests = new ChangeTrackingList<RequestApprovalsDetails>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreNotificationsState. </summary>

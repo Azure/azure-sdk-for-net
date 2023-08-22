@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BackupProtectionIntentData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<BackupProtectionIntentData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new ProtectionIntentResourceList(Core.Optional.ToList(value), nextLink.Value);
+            return new ProtectionIntentResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

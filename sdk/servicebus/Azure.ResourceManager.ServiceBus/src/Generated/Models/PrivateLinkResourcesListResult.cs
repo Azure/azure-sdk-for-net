@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>
         internal PrivateLinkResourcesListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceBusPrivateLinkResource>();
+            Value = new ChangeTrackingList<ServiceBusPrivateLinkResource>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesListResult. </summary>

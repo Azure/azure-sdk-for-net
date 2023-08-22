@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisServiceCosmosDbConfiguration : Core.IUtf8JsonSerializable
+    public partial class HealthcareApisServiceCosmosDbConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OfferThroughput))
+            if (Optional.IsDefined(OfferThroughput))
             {
                 writer.WritePropertyName("offerThroughput"u8);
                 writer.WriteNumberValue(OfferThroughput.Value);
             }
-            if (Core.Optional.IsDefined(KeyVaultKeyUri))
+            if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<int> offerThroughput = default;
-            Core.Optional<Uri> keyVaultKeyUri = default;
+            Optional<int> offerThroughput = default;
+            Optional<Uri> keyVaultKeyUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerThroughput"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new HealthcareApisServiceCosmosDbConfiguration(Core.Optional.ToNullable(offerThroughput), keyVaultKeyUri.Value);
+            return new HealthcareApisServiceCosmosDbConfiguration(Optional.ToNullable(offerThroughput), keyVaultKeyUri.Value);
         }
     }
 }

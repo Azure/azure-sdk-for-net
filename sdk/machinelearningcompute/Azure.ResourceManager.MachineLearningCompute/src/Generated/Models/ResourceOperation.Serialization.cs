@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceOperationDisplay> display = default;
-            Core.Optional<string> origin = default;
+            Optional<string> name = default;
+            Optional<ResourceOperationDisplay> display = default;
+            Optional<string> origin = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

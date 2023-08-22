@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Redis.Models
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            Zones = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
             Location = location;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            TenantSettings = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            TenantSettings = new ChangeTrackingDictionary<string, string>();
             Sku = sku;
         }
 

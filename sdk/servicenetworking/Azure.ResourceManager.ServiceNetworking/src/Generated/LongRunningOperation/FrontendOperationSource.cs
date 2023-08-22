@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    internal class FrontendOperationSource : Core.IOperationSource<FrontendResource>
+    internal class FrontendOperationSource : IOperationSource<FrontendResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ServiceNetworking
             _client = client;
         }
 
-        FrontendResource Core.IOperationSource<FrontendResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FrontendResource IOperationSource<FrontendResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontendData.DeserializeFrontendData(document.RootElement);
             return new FrontendResource(_client, data);
         }
 
-        async ValueTask<FrontendResource> Core.IOperationSource<FrontendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FrontendResource> IOperationSource<FrontendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontendData.DeserializeFrontendData(document.RootElement);

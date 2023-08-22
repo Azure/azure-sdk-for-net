@@ -14,49 +14,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSitePatch : Core.IUtf8JsonSerializable
+    public partial class StaticSitePatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RepositoryUri))
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Branch))
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Core.Optional.IsDefined(RepositoryToken))
+            if (Optional.IsDefined(RepositoryToken))
             {
                 writer.WritePropertyName("repositoryToken"u8);
                 writer.WriteStringValue(RepositoryToken);
             }
-            if (Core.Optional.IsDefined(BuildProperties))
+            if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
                 writer.WriteObjectValue(BuildProperties);
             }
-            if (Core.Optional.IsDefined(StagingEnvironmentPolicy))
+            if (Optional.IsDefined(StagingEnvironmentPolicy))
             {
                 writer.WritePropertyName("stagingEnvironmentPolicy"u8);
                 writer.WriteStringValue(StagingEnvironmentPolicy.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(AllowConfigFileUpdates))
+            if (Optional.IsDefined(AllowConfigFileUpdates))
             {
                 writer.WritePropertyName("allowConfigFileUpdates"u8);
                 writer.WriteBooleanValue(AllowConfigFileUpdates.Value);
             }
-            if (Core.Optional.IsDefined(TemplateProperties))
+            if (Optional.IsDefined(TemplateProperties))
             {
                 writer.WritePropertyName("templateProperties"u8);
                 writer.WriteObjectValue(TemplateProperties);
@@ -71,25 +71,25 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> defaultHostname = default;
-            Core.Optional<Uri> repositoryUrl = default;
-            Core.Optional<string> branch = default;
-            Core.Optional<IReadOnlyList<string>> customDomains = default;
-            Core.Optional<string> repositoryToken = default;
-            Core.Optional<StaticSiteBuildProperties> buildProperties = default;
-            Core.Optional<IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>> privateEndpointConnections = default;
-            Core.Optional<StagingEnvironmentPolicy> stagingEnvironmentPolicy = default;
-            Core.Optional<bool> allowConfigFileUpdates = default;
-            Core.Optional<StaticSiteTemplate> templateProperties = default;
-            Core.Optional<string> contentDistributionEndpoint = default;
-            Core.Optional<string> keyVaultReferenceIdentity = default;
-            Core.Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
-            Core.Optional<string> provider = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> defaultHostname = default;
+            Optional<Uri> repositoryUrl = default;
+            Optional<string> branch = default;
+            Optional<IReadOnlyList<string>> customDomains = default;
+            Optional<string> repositoryToken = default;
+            Optional<StaticSiteBuildProperties> buildProperties = default;
+            Optional<IReadOnlyList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>> privateEndpointConnections = default;
+            Optional<StagingEnvironmentPolicy> stagingEnvironmentPolicy = default;
+            Optional<bool> allowConfigFileUpdates = default;
+            Optional<StaticSiteTemplate> templateProperties = default;
+            Optional<string> contentDistributionEndpoint = default;
+            Optional<string> keyVaultReferenceIdentity = default;
+            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
+            Optional<string> provider = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Core.Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Core.Optional.ToList(privateEndpointConnections), Core.Optional.ToNullable(stagingEnvironmentPolicy), Core.Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Core.Optional.ToList(userProvidedFunctionApps), provider.Value, kind.Value);
+            return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value, kind.Value);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of StorageProfile. </summary>
         public StorageProfile()
         {
-            Disks = new Core.ChangeTrackingList<VirtualDisk>();
-            ScsiControllers = new Core.ChangeTrackingList<VirtualScsiController>();
+            Disks = new ChangeTrackingList<VirtualDisk>();
+            ScsiControllers = new ChangeTrackingList<VirtualScsiController>();
         }
 
         /// <summary> Initializes a new instance of StorageProfile. </summary>

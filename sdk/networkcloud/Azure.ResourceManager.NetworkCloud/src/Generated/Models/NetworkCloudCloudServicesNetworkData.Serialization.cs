@@ -13,14 +13,14 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudCloudServicesNetworkData : Core.IUtf8JsonSerializable
+    public partial class NetworkCloudCloudServicesNetworkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(AdditionalEgressEndpoints))
+            if (Optional.IsCollectionDefined(AdditionalEgressEndpoints))
             {
                 writer.WritePropertyName("additionalEgressEndpoints"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableDefaultEgressEndpoints))
+            if (Optional.IsDefined(EnableDefaultEgressEndpoints))
             {
                 writer.WritePropertyName("enableDefaultEgressEndpoints"u8);
                 writer.WriteStringValue(EnableDefaultEgressEndpoints.Value.ToString());
@@ -61,23 +61,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<EgressEndpoint>> additionalEgressEndpoints = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
-            Core.Optional<ResourceIdentifier> clusterId = default;
-            Core.Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
-            Core.Optional<string> detailedStatusMessage = default;
-            Core.Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
-            Core.Optional<IReadOnlyList<EgressEndpoint>> enabledEgressEndpoints = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
-            Core.Optional<string> interfaceName = default;
-            Core.Optional<CloudServicesNetworkProvisioningState> provisioningState = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<EgressEndpoint>> additionalEgressEndpoints = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
+            Optional<ResourceIdentifier> clusterId = default;
+            Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
+            Optional<string> detailedStatusMessage = default;
+            Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
+            Optional<IReadOnlyList<EgressEndpoint>> enabledEgressEndpoints = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
+            Optional<string> interfaceName = default;
+            Optional<CloudServicesNetworkProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     continue;
                 }
             }
-            return new NetworkCloudCloudServicesNetworkData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, extendedLocation, Core.Optional.ToList(additionalEgressEndpoints), Core.Optional.ToList(associatedResourceIds), clusterId.Value, Core.Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Core.Optional.ToNullable(enableDefaultEgressEndpoints), Core.Optional.ToList(enabledEgressEndpoints), Core.Optional.ToList(hybridAksClustersAssociatedIds), interfaceName.Value, Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(virtualMachinesAssociatedIds));
+            return new NetworkCloudCloudServicesNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(additionalEgressEndpoints), Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), Optional.ToList(enabledEgressEndpoints), Optional.ToList(hybridAksClustersAssociatedIds), interfaceName.Value, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds));
         }
     }
 }

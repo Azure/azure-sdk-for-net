@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<string> scope = default;
-            Core.Optional<bool> valid = default;
+            Optional<string> scope = default;
+            Optional<bool> valid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     continue;
                 }
             }
-            return new ScopeProperties(scope.Value, Core.Optional.ToNullable(valid));
+            return new ScopeProperties(scope.Value, Optional.ToNullable(valid));
         }
     }
 }

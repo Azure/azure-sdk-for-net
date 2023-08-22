@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ArmServiceTypeHealthPolicy : Core.IUtf8JsonSerializable
+    public partial class ArmServiceTypeHealthPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxPercentUnhealthyServices))
+            if (Optional.IsDefined(MaxPercentUnhealthyServices))
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
             }
-            if (Core.Optional.IsDefined(MaxPercentUnhealthyPartitionsPerService))
+            if (Optional.IsDefined(MaxPercentUnhealthyPartitionsPerService))
             {
                 writer.WritePropertyName("maxPercentUnhealthyPartitionsPerService"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyPartitionsPerService.Value);
             }
-            if (Core.Optional.IsDefined(MaxPercentUnhealthyReplicasPerPartition))
+            if (Optional.IsDefined(MaxPercentUnhealthyReplicasPerPartition))
             {
                 writer.WritePropertyName("maxPercentUnhealthyReplicasPerPartition"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyReplicasPerPartition.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<int> maxPercentUnhealthyServices = default;
-            Core.Optional<int> maxPercentUnhealthyPartitionsPerService = default;
-            Core.Optional<int> maxPercentUnhealthyReplicasPerPartition = default;
+            Optional<int> maxPercentUnhealthyServices = default;
+            Optional<int> maxPercentUnhealthyPartitionsPerService = default;
+            Optional<int> maxPercentUnhealthyReplicasPerPartition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentUnhealthyServices"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ArmServiceTypeHealthPolicy(Core.Optional.ToNullable(maxPercentUnhealthyServices), Core.Optional.ToNullable(maxPercentUnhealthyPartitionsPerService), Core.Optional.ToNullable(maxPercentUnhealthyReplicasPerPartition));
+            return new ArmServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices), Optional.ToNullable(maxPercentUnhealthyPartitionsPerService), Optional.ToNullable(maxPercentUnhealthyReplicasPerPartition));
         }
     }
 }

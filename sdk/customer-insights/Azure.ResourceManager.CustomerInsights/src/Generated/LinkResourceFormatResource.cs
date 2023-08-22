@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = await _linkResourceFormatLinksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomerInsightsArmOperation<LinkResourceFormatResource>(new LinkResourceFormatOperationSource(Client), _linkResourceFormatLinksClientDiagnostics, Pipeline, _linkResourceFormatLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<LinkResourceFormatResource>(new LinkResourceFormatOperationSource(Client), _linkResourceFormatLinksClientDiagnostics, Pipeline, _linkResourceFormatLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CustomerInsights
             try
             {
                 var response = _linkResourceFormatLinksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CustomerInsightsArmOperation<LinkResourceFormatResource>(new LinkResourceFormatOperationSource(Client), _linkResourceFormatLinksClientDiagnostics, Pipeline, _linkResourceFormatLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new CustomerInsightsArmOperation<LinkResourceFormatResource>(new LinkResourceFormatOperationSource(Client), _linkResourceFormatLinksClientDiagnostics, Pipeline, _linkResourceFormatLinksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

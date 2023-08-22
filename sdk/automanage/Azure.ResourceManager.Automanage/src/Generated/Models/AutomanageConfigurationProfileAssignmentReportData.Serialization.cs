@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    public partial class AutomanageConfigurationProfileAssignmentReportData : Core.IUtf8JsonSerializable
+    public partial class AutomanageConfigurationProfileAssignmentReportData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Automanage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<DateTimeOffset> lastModifiedTime = default;
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<string> type0 = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> configurationProfile = default;
-            Core.Optional<IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails>> resources = default;
-            Core.Optional<ResponseError> error = default;
-            Core.Optional<string> reportFormatVersion = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<DateTimeOffset> lastModifiedTime = default;
+            Optional<TimeSpan> duration = default;
+            Optional<string> type0 = default;
+            Optional<string> status = default;
+            Optional<string> configurationProfile = default;
+            Optional<IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails>> resources = default;
+            Optional<ResponseError> error = default;
+            Optional<string> reportFormatVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automanage
                     continue;
                 }
             }
-            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), Core.Optional.ToNullable(lastModifiedTime), Core.Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Core.Optional.ToList(resources), error.Value, reportFormatVersion.Value);
+            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value);
         }
     }
 }

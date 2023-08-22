@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <summary> Initializes a new instance of CredentialResults. </summary>
         internal CredentialResults()
         {
-            Kubeconfigs = new Core.ChangeTrackingList<CredentialResult>();
+            Kubeconfigs = new ChangeTrackingList<CredentialResult>();
         }
 
         /// <summary> Initializes a new instance of CredentialResults. </summary>

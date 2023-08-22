@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="location"> The location. </param>
         public AttestationProviderData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new Core.ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<AttestationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of AttestationProviderData. </summary>

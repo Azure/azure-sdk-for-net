@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecretListResult. </summary>
         internal SecretListResult()
         {
-            Value = new Core.ChangeTrackingList<FrontDoorSecretData>();
+            Value = new ChangeTrackingList<FrontDoorSecretData>();
         }
 
         /// <summary> Initializes a new instance of SecretListResult. </summary>

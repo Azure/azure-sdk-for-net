@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> suspensionStartDate = default;
+            Optional<DateTimeOffset> suspensionStartDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("suspensionStartDate"u8))
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new SuspensionDetails(Core.Optional.ToNullable(suspensionStartDate));
+            return new SuspensionDetails(Optional.ToNullable(suspensionStartDate));
         }
     }
 }

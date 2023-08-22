@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<SecurityRuleAccess> securityRuleAccessResult = default;
-            Core.Optional<IReadOnlyList<EvaluatedNetworkSecurityGroup>> evaluatedNetworkSecurityGroups = default;
+            Optional<SecurityRuleAccess> securityRuleAccessResult = default;
+            Optional<IReadOnlyList<EvaluatedNetworkSecurityGroup>> evaluatedNetworkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("securityRuleAccessResult"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkSecurityGroupResult(Core.Optional.ToNullable(securityRuleAccessResult), Core.Optional.ToList(evaluatedNetworkSecurityGroups));
+            return new NetworkSecurityGroupResult(Optional.ToNullable(securityRuleAccessResult), Optional.ToList(evaluatedNetworkSecurityGroups));
         }
     }
 }

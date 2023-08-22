@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             ProductDetails = productDetails;
             OrderItemType = orderItemType;
-            OrderItemStageHistory = new Core.ChangeTrackingList<EdgeOrderStageDetails>();
-            NotificationEmailList = new Core.ChangeTrackingList<string>();
-            ManagementRPDetailsList = new Core.ChangeTrackingList<ResourceProviderDetails>();
+            OrderItemStageHistory = new ChangeTrackingList<EdgeOrderStageDetails>();
+            NotificationEmailList = new ChangeTrackingList<string>();
+            ManagementRPDetailsList = new ChangeTrackingList<ResourceProviderDetails>();
         }
 
         /// <summary> Initializes a new instance of EdgeOrderItemDetails. </summary>

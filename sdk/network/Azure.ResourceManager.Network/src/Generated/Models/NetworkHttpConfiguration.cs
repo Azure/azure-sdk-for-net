@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkHttpConfiguration. </summary>
         public NetworkHttpConfiguration()
         {
-            Headers = new Core.ChangeTrackingList<NetworkWatcherHttpHeader>();
-            ValidStatusCodes = new Core.ChangeTrackingList<int>();
+            Headers = new ChangeTrackingList<NetworkWatcherHttpHeader>();
+            ValidStatusCodes = new ChangeTrackingList<int>();
         }
 
         /// <summary> HTTP method. </summary>

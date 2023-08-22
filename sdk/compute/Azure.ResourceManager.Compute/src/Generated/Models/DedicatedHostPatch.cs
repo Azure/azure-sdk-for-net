@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostPatch. </summary>
         public DedicatedHostPatch()
         {
-            VirtualMachines = new Core.ChangeTrackingList<SubResource>();
+            VirtualMachines = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </summary>

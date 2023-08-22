@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountPoolScaleSettings : Core.IUtf8JsonSerializable
+    public partial class BatchAccountPoolScaleSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FixedScale))
+            if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
                 writer.WriteObjectValue(FixedScale);
             }
-            if (Core.Optional.IsDefined(AutoScale))
+            if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<BatchAccountFixedScaleSettings> fixedScale = default;
-            Core.Optional<BatchAccountAutoScaleSettings> autoScale = default;
+            Optional<BatchAccountFixedScaleSettings> fixedScale = default;
+            Optional<BatchAccountAutoScaleSettings> autoScale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fixedScale"u8))

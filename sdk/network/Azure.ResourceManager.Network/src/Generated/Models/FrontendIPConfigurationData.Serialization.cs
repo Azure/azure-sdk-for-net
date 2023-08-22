@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class FrontendIPConfigurationData : Core.IUtf8JsonSerializable
+    public partial class FrontendIPConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Zones))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -29,49 +29,49 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateIPAddress))
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Core.Optional.IsDefined(PrivateIPAllocationMethod))
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrivateIPAddressVersion))
+            if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Subnet))
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Core.Optional.IsDefined(PublicIPAddress))
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 writer.WriteObjectValue(PublicIPAddress);
             }
-            if (Core.Optional.IsDefined(PublicIPPrefix))
+            if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
                 JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
-            if (Core.Optional.IsDefined(GatewayLoadBalancer))
+            if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
                 JsonSerializer.Serialize(writer, GatewayLoadBalancer);
@@ -86,23 +86,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IList<string>> zones = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> inboundNatPools = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
-            Core.Optional<string> privateIPAddress = default;
-            Core.Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Core.Optional<NetworkIPVersion> privateIPAddressVersion = default;
-            Core.Optional<SubnetData> subnet = default;
-            Core.Optional<PublicIPAddressData> publicIPAddress = default;
-            Core.Optional<WritableSubResource> publicIPPrefix = default;
-            Core.Optional<WritableSubResource> gatewayLoadBalancer = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<IList<string>> zones = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> inboundNatPools = default;
+            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
+            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
+            Optional<string> privateIPAddress = default;
+            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
+            Optional<NetworkIPVersion> privateIPAddressVersion = default;
+            Optional<SubnetData> subnet = default;
+            Optional<PublicIPAddressData> publicIPAddress = default;
+            Optional<WritableSubResource> publicIPPrefix = default;
+            Optional<WritableSubResource> gatewayLoadBalancer = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new FrontendIPConfigurationData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToList(zones), Core.Optional.ToList(inboundNatRules), Core.Optional.ToList(inboundNatPools), Core.Optional.ToList(outboundRules), Core.Optional.ToList(loadBalancingRules), privateIPAddress.Value, Core.Optional.ToNullable(privateIPAllocationMethod), Core.Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix, gatewayLoadBalancer, Core.Optional.ToNullable(provisioningState));
+            return new FrontendIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToList(loadBalancingRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix, gatewayLoadBalancer, Optional.ToNullable(provisioningState));
         }
     }
 }

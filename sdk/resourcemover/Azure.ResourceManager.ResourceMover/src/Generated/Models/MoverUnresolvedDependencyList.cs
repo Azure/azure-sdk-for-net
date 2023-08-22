@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverUnresolvedDependencyList. </summary>
         internal MoverUnresolvedDependencyList()
         {
-            Value = new Core.ChangeTrackingList<MoverUnresolvedDependency>();
+            Value = new ChangeTrackingList<MoverUnresolvedDependency>();
         }
 
         /// <summary> Initializes a new instance of MoverUnresolvedDependencyList. </summary>

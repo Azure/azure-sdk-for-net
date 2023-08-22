@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class CustomDnsConfigProperties : Core.IUtf8JsonSerializable
+    public partial class CustomDnsConfigProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Fqdn))
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Core.Optional.IsCollectionDefined(IPAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> fqdn = default;
-            Core.Optional<IList<string>> ipAddresses = default;
+            Optional<string> fqdn = default;
+            Optional<IList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new CustomDnsConfigProperties(fqdn.Value, Core.Optional.ToList(ipAddresses));
+            return new CustomDnsConfigProperties(fqdn.Value, Optional.ToList(ipAddresses));
         }
     }
 }

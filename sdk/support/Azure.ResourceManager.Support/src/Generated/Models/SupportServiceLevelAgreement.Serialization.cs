@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportServiceLevelAgreement : Core.IUtf8JsonSerializable
+    public partial class SupportServiceLevelAgreement : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> expirationTime = default;
-            Core.Optional<int> slaMinutes = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> expirationTime = default;
+            Optional<int> slaMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Support.Models
                     continue;
                 }
             }
-            return new SupportServiceLevelAgreement(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(expirationTime), Core.Optional.ToNullable(slaMinutes));
+            return new SupportServiceLevelAgreement(Optional.ToNullable(startTime), Optional.ToNullable(expirationTime), Optional.ToNullable(slaMinutes));
         }
     }
 }

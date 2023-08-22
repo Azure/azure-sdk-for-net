@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
         public RecommendationRuleData()
         {
-            CategoryTags = new Core.ChangeTrackingList<string>();
+            CategoryTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RecommendationRuleData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityContactList. </summary>
         internal SecurityContactList()
         {
-            Value = new Core.ChangeTrackingList<SecurityContactData>();
+            Value = new ChangeTrackingList<SecurityContactData>();
         }
 
         /// <summary> Initializes a new instance of SecurityContactList. </summary>

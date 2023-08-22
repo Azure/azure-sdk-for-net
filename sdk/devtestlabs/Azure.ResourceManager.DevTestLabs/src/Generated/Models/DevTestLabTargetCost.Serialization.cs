@@ -12,22 +12,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabTargetCost : Core.IUtf8JsonSerializable
+    public partial class DevTestLabTargetCost : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Target))
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteNumberValue(Target.Value);
             }
-            if (Core.Optional.IsCollectionDefined(CostThresholds))
+            if (Optional.IsCollectionDefined(CostThresholds))
             {
                 writer.WritePropertyName("costThresholds"u8);
                 writer.WriteStartArray();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(CycleStartOn))
+            if (Optional.IsDefined(CycleStartOn))
             {
                 writer.WritePropertyName("cycleStartDateTime"u8);
                 writer.WriteStringValue(CycleStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(CycleEndOn))
+            if (Optional.IsDefined(CycleEndOn))
             {
                 writer.WritePropertyName("cycleEndDateTime"u8);
                 writer.WriteStringValue(CycleEndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(CycleType))
+            if (Optional.IsDefined(CycleType))
             {
                 writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<DevTestLabTargetCostStatus> status = default;
-            Core.Optional<int> target = default;
-            Core.Optional<IList<DevTestLabCostThreshold>> costThresholds = default;
-            Core.Optional<DateTimeOffset> cycleStartDateTime = default;
-            Core.Optional<DateTimeOffset> cycleEndDateTime = default;
-            Core.Optional<DevTestLabReportingCycleType> cycleType = default;
+            Optional<DevTestLabTargetCostStatus> status = default;
+            Optional<int> target = default;
+            Optional<IList<DevTestLabCostThreshold>> costThresholds = default;
+            Optional<DateTimeOffset> cycleStartDateTime = default;
+            Optional<DateTimeOffset> cycleEndDateTime = default;
+            Optional<DevTestLabReportingCycleType> cycleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabTargetCost(Core.Optional.ToNullable(status), Core.Optional.ToNullable(target), Core.Optional.ToList(costThresholds), Core.Optional.ToNullable(cycleStartDateTime), Core.Optional.ToNullable(cycleEndDateTime), Core.Optional.ToNullable(cycleType));
+            return new DevTestLabTargetCost(Optional.ToNullable(status), Optional.ToNullable(target), Optional.ToList(costThresholds), Optional.ToNullable(cycleStartDateTime), Optional.ToNullable(cycleEndDateTime), Optional.ToNullable(cycleType));
         }
     }
 }

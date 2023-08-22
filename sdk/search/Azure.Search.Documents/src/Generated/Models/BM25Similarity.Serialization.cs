@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class BM25Similarity : Core.IUtf8JsonSerializable
+    public partial class BM25Similarity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(K1))
+            if (Optional.IsDefined(K1))
             {
                 if (K1 != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("k1");
                 }
             }
-            if (Core.Optional.IsDefined(B))
+            if (Optional.IsDefined(B))
             {
                 if (B != null)
                 {
@@ -50,8 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<double?> k1 = default;
-            Core.Optional<double?> b = default;
+            Optional<double?> k1 = default;
+            Optional<double?> b = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -81,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new BM25Similarity(odataType, Core.Optional.ToNullable(k1), Core.Optional.ToNullable(b));
+            return new BM25Similarity(odataType, Optional.ToNullable(k1), Optional.ToNullable(b));
         }
     }
 }

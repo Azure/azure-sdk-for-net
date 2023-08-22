@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<int> alertsCount = default;
-            Core.Optional<int> bookmarksCount = default;
-            Core.Optional<int> commentsCount = default;
-            Core.Optional<IReadOnlyList<string>> alertProductNames = default;
-            Core.Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
+            Optional<int> alertsCount = default;
+            Optional<int> bookmarksCount = default;
+            Optional<int> commentsCount = default;
+            Optional<IReadOnlyList<string>> alertProductNames = default;
+            Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsCount"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentAdditionalInfo(Core.Optional.ToNullable(alertsCount), Core.Optional.ToNullable(bookmarksCount), Core.Optional.ToNullable(commentsCount), Core.Optional.ToList(alertProductNames), Core.Optional.ToList(tactics));
+            return new SecurityInsightsIncidentAdditionalInfo(Optional.ToNullable(alertsCount), Optional.ToNullable(bookmarksCount), Optional.ToNullable(commentsCount), Optional.ToList(alertProductNames), Optional.ToList(tactics));
         }
     }
 }

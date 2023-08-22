@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Initializes a new instance of MoverBulkRemoveContent. </summary>
         public MoverBulkRemoveContent()
         {
-            MoverResources = new Core.ChangeTrackingList<ResourceIdentifier>();
+            MoverResources = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>

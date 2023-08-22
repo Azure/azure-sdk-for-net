@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
         public ManagedRuleSetDefinition()
         {
-            RuleGroups = new Core.ChangeTrackingList<ManagedRuleGroupDefinition>();
+            RuleGroups = new ChangeTrackingList<ManagedRuleGroupDefinition>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>

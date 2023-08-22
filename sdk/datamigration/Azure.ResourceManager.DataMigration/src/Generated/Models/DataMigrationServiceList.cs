@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of DataMigrationServiceList. </summary>
         internal DataMigrationServiceList()
         {
-            Value = new Core.ChangeTrackingList<DataMigrationServiceData>();
+            Value = new ChangeTrackingList<DataMigrationServiceData>();
         }
 
         /// <summary> Initializes a new instance of DataMigrationServiceList. </summary>

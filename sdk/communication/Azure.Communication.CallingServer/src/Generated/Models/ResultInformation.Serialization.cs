@@ -18,9 +18,9 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Core.Optional<int> code = default;
-            Core.Optional<int> subCode = default;
-            Core.Optional<string> message = default;
+            Optional<int> code = default;
+            Optional<int> subCode = default;
+            Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -47,7 +47,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new ResultInformation(Core.Optional.ToNullable(code), Core.Optional.ToNullable(subCode), message.Value);
+            return new ResultInformation(Optional.ToNullable(code), Optional.ToNullable(subCode), message.Value);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         public SharingUpdate(SharingUpdateOperationType operationType)
         {
             OperationType = operationType;
-            Groups = new Core.ChangeTrackingList<SharingProfileGroup>();
+            Groups = new ChangeTrackingList<SharingProfileGroup>();
         }
 
         /// <summary> Initializes a new instance of SharingUpdate. </summary>

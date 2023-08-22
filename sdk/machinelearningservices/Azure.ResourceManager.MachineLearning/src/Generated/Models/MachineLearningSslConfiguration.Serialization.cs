@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSslConfiguration : Core.IUtf8JsonSerializable
+    public partial class MachineLearningSslConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Cert))
+            if (Optional.IsDefined(Cert))
             {
                 if (Cert != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cert");
                 }
             }
-            if (Core.Optional.IsDefined(Key))
+            if (Optional.IsDefined(Key))
             {
                 if (Key != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("key");
                 }
             }
-            if (Core.Optional.IsDefined(Cname))
+            if (Optional.IsDefined(Cname))
             {
                 if (Cname != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cname");
                 }
             }
-            if (Core.Optional.IsDefined(LeafDomainLabel))
+            if (Optional.IsDefined(LeafDomainLabel))
             {
                 if (LeafDomainLabel != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("leafDomainLabel");
                 }
             }
-            if (Core.Optional.IsDefined(OverwriteExistingDomain))
+            if (Optional.IsDefined(OverwriteExistingDomain))
             {
                 writer.WritePropertyName("overwriteExistingDomain"u8);
                 writer.WriteBooleanValue(OverwriteExistingDomain.Value);
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningSslConfigStatus> status = default;
-            Core.Optional<string> cert = default;
-            Core.Optional<string> key = default;
-            Core.Optional<string> cname = default;
-            Core.Optional<string> leafDomainLabel = default;
-            Core.Optional<bool> overwriteExistingDomain = default;
+            Optional<MachineLearningSslConfigStatus> status = default;
+            Optional<string> cert = default;
+            Optional<string> key = default;
+            Optional<string> cname = default;
+            Optional<string> leafDomainLabel = default;
+            Optional<bool> overwriteExistingDomain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningSslConfiguration(Core.Optional.ToNullable(status), cert.Value, key.Value, cname.Value, leafDomainLabel.Value, Core.Optional.ToNullable(overwriteExistingDomain));
+            return new MachineLearningSslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value, leafDomainLabel.Value, Optional.ToNullable(overwriteExistingDomain));
         }
     }
 }

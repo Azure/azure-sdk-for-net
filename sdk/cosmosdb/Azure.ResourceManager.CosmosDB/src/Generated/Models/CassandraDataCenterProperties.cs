@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraDataCenterProperties. </summary>
         public CassandraDataCenterProperties()
         {
-            SeedNodes = new Core.ChangeTrackingList<CassandraDataCenterSeedNode>();
+            SeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
         }
 
         /// <summary> Initializes a new instance of CassandraDataCenterProperties. </summary>

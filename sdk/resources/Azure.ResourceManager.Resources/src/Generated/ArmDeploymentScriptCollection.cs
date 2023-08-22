@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = await _armDeploymentScriptDeploymentScriptsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
             try
             {
                 var response = _armDeploymentScriptDeploymentScriptsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data, cancellationToken);
-                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new ResourcesArmOperation<ArmDeploymentScriptResource>(new ArmDeploymentScriptOperationSource(Client), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, _armDeploymentScriptDeploymentScriptsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, scriptName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _armDeploymentScriptDeploymentScriptsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), _armDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "ArmDeploymentScriptCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

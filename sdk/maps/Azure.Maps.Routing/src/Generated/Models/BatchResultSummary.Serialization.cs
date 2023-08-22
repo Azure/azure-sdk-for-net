@@ -18,8 +18,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<int> successfulRequests = default;
-            Core.Optional<int> totalRequests = default;
+            Optional<int> successfulRequests = default;
+            Optional<int> totalRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("successfulRequests"u8))
@@ -41,7 +41,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new BatchResultSummary(Core.Optional.ToNullable(successfulRequests), Core.Optional.ToNullable(totalRequests));
+            return new BatchResultSummary(Optional.ToNullable(successfulRequests), Optional.ToNullable(totalRequests));
         }
     }
 }

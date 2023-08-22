@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             bool isCapped = default;
             bool isSystemCollection = default;
             bool isView = default;
-            Core.Optional<MongoDBShardKeyInfo> shardKey = default;
+            Optional<MongoDBShardKeyInfo> shardKey = default;
             bool supportsSharding = default;
-            Core.Optional<string> viewOf = default;
+            Optional<string> viewOf = default;
             long averageDocumentSize = default;
             long dataSize = default;
             long documentCount = default;

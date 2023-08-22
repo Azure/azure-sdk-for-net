@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> code = default;
-            Core.Optional<IReadOnlyList<TroubleshootingDetails>> results = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> code = default;
+            Optional<IReadOnlyList<TroubleshootingDetails>> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TroubleshootingResult(Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), code.Value, Core.Optional.ToList(results));
+            return new TroubleshootingResult(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, Optional.ToList(results));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal CopyResult(Guid modelId)
         {
             ModelId = modelId;
-            Errors = new Core.ChangeTrackingList<FormRecognizerError>();
+            Errors = new ChangeTrackingList<FormRecognizerError>();
         }
 
         /// <summary> Initializes a new instance of CopyResult. </summary>

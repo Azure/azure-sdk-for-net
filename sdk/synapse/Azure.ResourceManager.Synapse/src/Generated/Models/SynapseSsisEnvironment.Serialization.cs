@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<long> folderId = default;
-            Core.Optional<IReadOnlyList<SynapseSsisVariable>> variables = default;
+            Optional<long> folderId = default;
+            Optional<IReadOnlyList<SynapseSsisVariable>> variables = default;
             SynapseSsisObjectMetadataType type = default;
-            Core.Optional<long> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
+            Optional<long> id = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderId"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseSsisEnvironment(type, Core.Optional.ToNullable(id), name.Value, description.Value, Core.Optional.ToNullable(folderId), Core.Optional.ToList(variables));
+            return new SynapseSsisEnvironment(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToList(variables));
         }
     }
 }

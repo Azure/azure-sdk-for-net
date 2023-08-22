@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ComputeSchedules. </summary>
         internal ComputeSchedules()
         {
-            ComputeStartStop = new Core.ChangeTrackingList<MachineLearningComputeStartStopSchedule>();
+            ComputeStartStop = new ChangeTrackingList<MachineLearningComputeStartStopSchedule>();
         }
 
         /// <summary> Initializes a new instance of ComputeSchedules. </summary>

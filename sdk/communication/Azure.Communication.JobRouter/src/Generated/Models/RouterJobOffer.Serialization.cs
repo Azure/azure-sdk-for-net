@@ -22,8 +22,8 @@ namespace Azure.Communication.JobRouter.Models
             string offerId = default;
             string jobId = default;
             int capacityCost = default;
-            Core.Optional<DateTimeOffset> offeredAt = default;
-            Core.Optional<DateTimeOffset> expiresAt = default;
+            Optional<DateTimeOffset> offeredAt = default;
+            Optional<DateTimeOffset> expiresAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new RouterJobOffer(offerId, jobId, capacityCost, Core.Optional.ToNullable(offeredAt), Core.Optional.ToNullable(expiresAt));
+            return new RouterJobOffer(offerId, jobId, capacityCost, Optional.ToNullable(offeredAt), Optional.ToNullable(expiresAt));
         }
     }
 }

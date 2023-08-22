@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    internal partial class StorageProfile : Core.IUtf8JsonSerializable
+    internal partial class StorageProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(StorageAccounts))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IList<HDInsightStorageAccountInfo>> storageaccounts = default;
+            Optional<IList<HDInsightStorageAccountInfo>> storageaccounts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageaccounts"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new StorageProfile(Core.Optional.ToList(storageaccounts));
+            return new StorageProfile(Optional.ToList(storageaccounts));
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeOverride : Core.IUtf8JsonSerializable
+    public partial class X12EnvelopeOverride : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetNamespace"u8);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(SenderApplicationId);
             writer.WritePropertyName("receiverApplicationId"u8);
             writer.WriteStringValue(ReceiverApplicationId);
-            if (Core.Optional.IsDefined(FunctionalIdentifierCode))
+            if (Optional.IsDefined(FunctionalIdentifierCode))
             {
                 writer.WritePropertyName("functionalIdentifierCode"u8);
                 writer.WriteStringValue(FunctionalIdentifierCode);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
             string headerVersion = default;
             string senderApplicationId = default;
             string receiverApplicationId = default;
-            Core.Optional<string> functionalIdentifierCode = default;
+            Optional<string> functionalIdentifierCode = default;
             X12DateFormat dateFormat = default;
             X12TimeFormat timeFormat = default;
             foreach (var property in element.EnumerateObject())

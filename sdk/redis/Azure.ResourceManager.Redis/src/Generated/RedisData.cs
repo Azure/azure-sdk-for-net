@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
-            Zones = new Core.ChangeTrackingList<string>();
-            TenantSettings = new Core.ChangeTrackingDictionary<string, string>();
+            Zones = new ChangeTrackingList<string>();
+            TenantSettings = new ChangeTrackingDictionary<string, string>();
             Sku = sku;
-            LinkedServers = new Core.ChangeTrackingList<SubResource>();
-            Instances = new Core.ChangeTrackingList<RedisInstanceDetails>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<RedisPrivateEndpointConnectionData>();
+            LinkedServers = new ChangeTrackingList<SubResource>();
+            Instances = new ChangeTrackingList<RedisInstanceDetails>();
+            PrivateEndpointConnections = new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of RedisData. </summary>

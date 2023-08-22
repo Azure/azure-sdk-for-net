@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of CapabilityListResult. </summary>
         internal CapabilityListResult()
         {
-            Value = new Core.ChangeTrackingList<CapabilityData>();
+            Value = new ChangeTrackingList<CapabilityData>();
         }
 
         /// <summary> Initializes a new instance of CapabilityListResult. </summary>

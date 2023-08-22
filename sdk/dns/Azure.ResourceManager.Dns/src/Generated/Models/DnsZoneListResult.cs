@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of DnsZoneListResult. </summary>
         internal DnsZoneListResult()
         {
-            Value = new Core.ChangeTrackingList<DnsZoneData>();
+            Value = new ChangeTrackingList<DnsZoneData>();
         }
 
         /// <summary> Initializes a new instance of DnsZoneListResult. </summary>

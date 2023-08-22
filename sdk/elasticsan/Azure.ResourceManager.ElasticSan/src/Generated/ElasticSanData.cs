@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ElasticSan
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
             BaseSizeTiB = baseSizeTiB;
             ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
-            PrivateEndpointConnections = new Core.ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanData. </summary>

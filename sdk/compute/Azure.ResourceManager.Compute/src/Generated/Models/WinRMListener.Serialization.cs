@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class WinRMListener : Core.IUtf8JsonSerializable
+    public partial class WinRMListener : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(CertificateUri))
+            if (Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<WinRMListenerProtocolType> protocol = default;
-            Core.Optional<Uri> certificateUrl = default;
+            Optional<WinRMListenerProtocolType> protocol = default;
+            Optional<Uri> certificateUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new WinRMListener(Core.Optional.ToNullable(protocol), certificateUrl.Value);
+            return new WinRMListener(Optional.ToNullable(protocol), certificateUrl.Value);
         }
     }
 }

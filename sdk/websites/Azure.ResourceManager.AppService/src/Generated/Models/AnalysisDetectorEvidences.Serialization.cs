@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AnalysisDetectorEvidences : Core.IUtf8JsonSerializable
+    public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Core.Optional.IsDefined(DetectorDefinition))
+            if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
-            if (Core.Optional.IsCollectionDefined(Metrics))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Data))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DetectorMetaData))
+            if (Optional.IsDefined(DetectorMetaData))
             {
                 writer.WritePropertyName("detectorMetaData"u8);
                 writer.WriteObjectValue(DetectorMetaData);
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> source = default;
-            Core.Optional<DetectorDefinition> detectorDefinition = default;
-            Core.Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Core.Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Core.Optional<DetectorMetadata> detectorMetaData = default;
+            Optional<string> source = default;
+            Optional<DetectorDefinition> detectorDefinition = default;
+            Optional<IList<DiagnosticMetricSet>> metrics = default;
+            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            Optional<DetectorMetadata> detectorMetaData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, Core.Optional.ToList(metrics), Core.Optional.ToList(data), detectorMetaData.Value);
+            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(data), detectorMetaData.Value);
         }
     }
 }

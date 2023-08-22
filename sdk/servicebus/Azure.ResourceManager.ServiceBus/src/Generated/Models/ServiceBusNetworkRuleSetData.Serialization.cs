@@ -13,24 +13,24 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusNetworkRuleSetData : Core.IUtf8JsonSerializable
+    public partial class ServiceBusNetworkRuleSetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsTrustedServiceAccessEnabled))
+            if (Optional.IsDefined(IsTrustedServiceAccessEnabled))
             {
                 writer.WritePropertyName("trustedServiceAccessEnabled"u8);
                 writer.WriteBooleanValue(IsTrustedServiceAccessEnabled.Value);
             }
-            if (Core.Optional.IsDefined(DefaultAction))
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(VirtualNetworkRules))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<bool> trustedServiceAccessEnabled = default;
-            Core.Optional<ServiceBusNetworkRuleSetDefaultAction> defaultAction = default;
-            Core.Optional<IList<ServiceBusNetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Core.Optional<IList<ServiceBusNetworkRuleSetIPRules>> ipRules = default;
-            Core.Optional<ServiceBusPublicNetworkAccessFlag> publicNetworkAccess = default;
+            Optional<SystemData> systemData = default;
+            Optional<bool> trustedServiceAccessEnabled = default;
+            Optional<ServiceBusNetworkRuleSetDefaultAction> defaultAction = default;
+            Optional<IList<ServiceBusNetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
+            Optional<IList<ServiceBusNetworkRuleSetIPRules>> ipRules = default;
+            Optional<ServiceBusPublicNetworkAccessFlag> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Core.Optional.ToNullable(trustedServiceAccessEnabled), Core.Optional.ToNullable(defaultAction), Core.Optional.ToList(virtualNetworkRules), Core.Optional.ToList(ipRules), Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(location));
+            return new ServiceBusNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location));
         }
     }
 }

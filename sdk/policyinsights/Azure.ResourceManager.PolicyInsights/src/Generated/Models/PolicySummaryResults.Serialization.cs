@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<Uri> queryResultsUri = default;
-            Core.Optional<int> nonCompliantResources = default;
-            Core.Optional<int> nonCompliantPolicies = default;
-            Core.Optional<IReadOnlyList<ComplianceDetail>> resourceDetails = default;
-            Core.Optional<IReadOnlyList<ComplianceDetail>> policyDetails = default;
-            Core.Optional<IReadOnlyList<ComplianceDetail>> policyGroupDetails = default;
+            Optional<Uri> queryResultsUri = default;
+            Optional<int> nonCompliantResources = default;
+            Optional<int> nonCompliantPolicies = default;
+            Optional<IReadOnlyList<ComplianceDetail>> resourceDetails = default;
+            Optional<IReadOnlyList<ComplianceDetail>> policyDetails = default;
+            Optional<IReadOnlyList<ComplianceDetail>> policyGroupDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryResultsUri"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new PolicySummaryResults(queryResultsUri.Value, Core.Optional.ToNullable(nonCompliantResources), Core.Optional.ToNullable(nonCompliantPolicies), Core.Optional.ToList(resourceDetails), Core.Optional.ToList(policyDetails), Core.Optional.ToList(policyGroupDetails));
+            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails));
         }
     }
 }

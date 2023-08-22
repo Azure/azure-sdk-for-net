@@ -15,19 +15,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class ApplicationInsightsComponentData : Core.IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,72 +42,72 @@ namespace Azure.ResourceManager.ApplicationInsights
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ApplicationType))
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("Application_Type"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(FlowType))
+            if (Optional.IsDefined(FlowType))
             {
                 writer.WritePropertyName("Flow_Type"u8);
                 writer.WriteStringValue(FlowType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(RequestSource))
+            if (Optional.IsDefined(RequestSource))
             {
                 writer.WritePropertyName("Request_Source"u8);
                 writer.WriteStringValue(RequestSource.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HockeyAppId))
+            if (Optional.IsDefined(HockeyAppId))
             {
                 writer.WritePropertyName("HockeyAppId"u8);
                 writer.WriteStringValue(HockeyAppId);
             }
-            if (Core.Optional.IsDefined(SamplingPercentage))
+            if (Optional.IsDefined(SamplingPercentage))
             {
                 writer.WritePropertyName("SamplingPercentage"u8);
                 writer.WriteNumberValue(SamplingPercentage.Value);
             }
-            if (Core.Optional.IsDefined(RetentionInDays))
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("RetentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (Core.Optional.IsDefined(IsDisableIPMasking))
+            if (Optional.IsDefined(IsDisableIPMasking))
             {
                 writer.WritePropertyName("DisableIpMasking"u8);
                 writer.WriteBooleanValue(IsDisableIPMasking.Value);
             }
-            if (Core.Optional.IsDefined(IsImmediatePurgeDataOn30Days))
+            if (Optional.IsDefined(IsImmediatePurgeDataOn30Days))
             {
                 writer.WritePropertyName("ImmediatePurgeDataOn30Days"u8);
                 writer.WriteBooleanValue(IsImmediatePurgeDataOn30Days.Value);
             }
-            if (Core.Optional.IsDefined(WorkspaceResourceId))
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("WorkspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccessForIngestion))
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccessForQuery))
+            if (Optional.IsDefined(PublicNetworkAccessForQuery))
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IngestionMode))
+            if (Optional.IsDefined(IngestionMode))
             {
                 writer.WritePropertyName("IngestionMode"u8);
                 writer.WriteStringValue(IngestionMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsDisableLocalAuth))
+            if (Optional.IsDefined(IsDisableLocalAuth))
             {
                 writer.WritePropertyName("DisableLocalAuth"u8);
                 writer.WriteBooleanValue(IsDisableLocalAuth.Value);
             }
-            if (Core.Optional.IsDefined(IsForceCustomerStorageForProfiler))
+            if (Optional.IsDefined(IsForceCustomerStorageForProfiler))
             {
                 writer.WritePropertyName("ForceCustomerStorageForProfiler"u8);
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
@@ -123,38 +123,38 @@ namespace Azure.ResourceManager.ApplicationInsights
                 return null;
             }
             string kind = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> applicationId = default;
-            Core.Optional<string> appId = default;
-            Core.Optional<string> name0 = default;
-            Core.Optional<ApplicationType> applicationType = default;
-            Core.Optional<FlowType> flowType = default;
-            Core.Optional<RequestSource> requestSource = default;
-            Core.Optional<string> instrumentationKey = default;
-            Core.Optional<DateTimeOffset> creationDate = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<string> hockeyAppId = default;
-            Core.Optional<string> hockeyAppToken = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<double> samplingPercentage = default;
-            Core.Optional<string> connectionString = default;
-            Core.Optional<int> retentionInDays = default;
-            Core.Optional<bool> disableIPMasking = default;
-            Core.Optional<bool> immediatePurgeDataOn30Days = default;
-            Core.Optional<string> workspaceResourceId = default;
-            Core.Optional<DateTimeOffset> laMigrationDate = default;
-            Core.Optional<IReadOnlyList<PrivateLinkScopedResource>> privateLinkScopedResources = default;
-            Core.Optional<PublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Core.Optional<PublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Core.Optional<IngestionMode> ingestionMode = default;
-            Core.Optional<bool> disableLocalAuth = default;
-            Core.Optional<bool> forceCustomerStorageForProfiler = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> applicationId = default;
+            Optional<string> appId = default;
+            Optional<string> name0 = default;
+            Optional<ApplicationType> applicationType = default;
+            Optional<FlowType> flowType = default;
+            Optional<RequestSource> requestSource = default;
+            Optional<string> instrumentationKey = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<Guid> tenantId = default;
+            Optional<string> hockeyAppId = default;
+            Optional<string> hockeyAppToken = default;
+            Optional<string> provisioningState = default;
+            Optional<double> samplingPercentage = default;
+            Optional<string> connectionString = default;
+            Optional<int> retentionInDays = default;
+            Optional<bool> disableIPMasking = default;
+            Optional<bool> immediatePurgeDataOn30Days = default;
+            Optional<string> workspaceResourceId = default;
+            Optional<DateTimeOffset> laMigrationDate = default;
+            Optional<IReadOnlyList<PrivateLinkScopedResource>> privateLinkScopedResources = default;
+            Optional<PublicNetworkAccessType> publicNetworkAccessForIngestion = default;
+            Optional<PublicNetworkAccessType> publicNetworkAccessForQuery = default;
+            Optional<IngestionMode> ingestionMode = default;
+            Optional<bool> disableLocalAuth = default;
+            Optional<bool> forceCustomerStorageForProfiler = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     continue;
                 }
             }
-            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, kind, Core.Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Core.Optional.ToNullable(applicationType), Core.Optional.ToNullable(flowType), Core.Optional.ToNullable(requestSource), instrumentationKey.Value, Core.Optional.ToNullable(creationDate), Core.Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Core.Optional.ToNullable(samplingPercentage), connectionString.Value, Core.Optional.ToNullable(retentionInDays), Core.Optional.ToNullable(disableIPMasking), Core.Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Core.Optional.ToNullable(laMigrationDate), Core.Optional.ToList(privateLinkScopedResources), Core.Optional.ToNullable(publicNetworkAccessForIngestion), Core.Optional.ToNullable(publicNetworkAccessForQuery), Core.Optional.ToNullable(ingestionMode), Core.Optional.ToNullable(disableLocalAuth), Core.Optional.ToNullable(forceCustomerStorageForProfiler));
+            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind, Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Optional.ToNullable(applicationType), Optional.ToNullable(flowType), Optional.ToNullable(requestSource), instrumentationKey.Value, Optional.ToNullable(creationDate), Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Optional.ToNullable(samplingPercentage), connectionString.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(disableIPMasking), Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Optional.ToNullable(laMigrationDate), Optional.ToList(privateLinkScopedResources), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(ingestionMode), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(forceCustomerStorageForProfiler));
         }
     }
 }

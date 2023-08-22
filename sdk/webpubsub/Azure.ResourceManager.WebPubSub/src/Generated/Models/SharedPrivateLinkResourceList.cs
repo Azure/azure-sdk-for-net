@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>
         internal SharedPrivateLinkResourceList()
         {
-            Value = new Core.ChangeTrackingList<WebPubSubSharedPrivateLinkData>();
+            Value = new ChangeTrackingList<WebPubSubSharedPrivateLinkData>();
         }
 
         /// <summary> Initializes a new instance of SharedPrivateLinkResourceList. </summary>

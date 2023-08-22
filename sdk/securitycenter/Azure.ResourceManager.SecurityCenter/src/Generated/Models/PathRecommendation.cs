@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of PathRecommendation. </summary>
         public PathRecommendation()
         {
-            UserSids = new Core.ChangeTrackingList<string>();
-            Usernames = new Core.ChangeTrackingList<UserRecommendation>();
+            UserSids = new ChangeTrackingList<string>();
+            Usernames = new ChangeTrackingList<UserRecommendation>();
         }
 
         /// <summary> Initializes a new instance of PathRecommendation. </summary>

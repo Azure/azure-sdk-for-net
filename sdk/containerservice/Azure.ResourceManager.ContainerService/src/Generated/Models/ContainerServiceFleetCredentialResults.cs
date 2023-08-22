@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceFleetCredentialResults. </summary>
         internal ContainerServiceFleetCredentialResults()
         {
-            Kubeconfigs = new Core.ChangeTrackingList<ContainerServiceFleetCredentialResult>();
+            Kubeconfigs = new ChangeTrackingList<ContainerServiceFleetCredentialResult>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceFleetCredentialResults. </summary>

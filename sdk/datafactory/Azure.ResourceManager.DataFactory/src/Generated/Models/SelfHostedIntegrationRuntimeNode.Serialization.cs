@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> nodeName = default;
-            Core.Optional<string> machineName = default;
-            Core.Optional<Uri> hostServiceUri = default;
-            Core.Optional<SelfHostedIntegrationRuntimeNodeStatus> status = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Core.Optional<string> versionStatus = default;
-            Core.Optional<string> version = default;
-            Core.Optional<DateTimeOffset> registerTime = default;
-            Core.Optional<DateTimeOffset> lastConnectTime = default;
-            Core.Optional<DateTimeOffset> expiryTime = default;
-            Core.Optional<DateTimeOffset> lastStartTime = default;
-            Core.Optional<DateTimeOffset> lastStopTime = default;
-            Core.Optional<IntegrationRuntimeUpdateResult> lastUpdateResult = default;
-            Core.Optional<DateTimeOffset> lastStartUpdateTime = default;
-            Core.Optional<DateTimeOffset> lastEndUpdateTime = default;
-            Core.Optional<bool> isActiveDispatcher = default;
-            Core.Optional<int> concurrentJobsLimit = default;
-            Core.Optional<int> maxConcurrentJobs = default;
+            Optional<string> nodeName = default;
+            Optional<string> machineName = default;
+            Optional<Uri> hostServiceUri = default;
+            Optional<SelfHostedIntegrationRuntimeNodeStatus> status = default;
+            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            Optional<string> versionStatus = default;
+            Optional<string> version = default;
+            Optional<DateTimeOffset> registerTime = default;
+            Optional<DateTimeOffset> lastConnectTime = default;
+            Optional<DateTimeOffset> expiryTime = default;
+            Optional<DateTimeOffset> lastStartTime = default;
+            Optional<DateTimeOffset> lastStopTime = default;
+            Optional<IntegrationRuntimeUpdateResult> lastUpdateResult = default;
+            Optional<DateTimeOffset> lastStartUpdateTime = default;
+            Optional<DateTimeOffset> lastEndUpdateTime = default;
+            Optional<bool> isActiveDispatcher = default;
+            Optional<int> concurrentJobsLimit = default;
+            Optional<int> maxConcurrentJobs = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Core.Optional.ToNullable(status), Core.Optional.ToDictionary(capabilities), versionStatus.Value, version.Value, Core.Optional.ToNullable(registerTime), Core.Optional.ToNullable(lastConnectTime), Core.Optional.ToNullable(expiryTime), Core.Optional.ToNullable(lastStartTime), Core.Optional.ToNullable(lastStopTime), Core.Optional.ToNullable(lastUpdateResult), Core.Optional.ToNullable(lastStartUpdateTime), Core.Optional.ToNullable(lastEndUpdateTime), Core.Optional.ToNullable(isActiveDispatcher), Core.Optional.ToNullable(concurrentJobsLimit), Core.Optional.ToNullable(maxConcurrentJobs), additionalProperties);
+            return new SelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), Optional.ToDictionary(capabilities), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);
         }
     }
 }

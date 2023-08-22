@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> field = default;
-            Core.Optional<IReadOnlyList<FieldRestriction>> restrictions = default;
+            Optional<string> field = default;
+            Optional<IReadOnlyList<FieldRestriction>> restrictions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("field"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new FieldRestrictions(field.Value, Core.Optional.ToList(restrictions));
+            return new FieldRestrictions(field.Value, Optional.ToList(restrictions));
         }
     }
 }

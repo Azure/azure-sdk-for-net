@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    public partial class MaintenanceApplyUpdateData : Core.IUtf8JsonSerializable
+    public partial class MaintenanceApplyUpdateData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(LastUpdatedOn))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Maintenance
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MaintenanceUpdateStatus> status = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<DateTimeOffset> lastUpdateTime = default;
+            Optional<SystemData> systemData = default;
+            Optional<MaintenanceUpdateStatus> status = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Maintenance
                     continue;
                 }
             }
-            return new MaintenanceApplyUpdateData(id, name, type, systemData.Value, Core.Optional.ToNullable(status), resourceId.Value, Core.Optional.ToNullable(lastUpdateTime));
+            return new MaintenanceApplyUpdateData(id, name, type, systemData.Value, Optional.ToNullable(status), resourceId.Value, Optional.ToNullable(lastUpdateTime));
         }
     }
 }

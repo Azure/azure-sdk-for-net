@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<int> cpuCoresCount = default;
-            Core.Optional<int> vCpusAvailable = default;
-            Core.Optional<double> memoryInGB = default;
-            Core.Optional<int> maxDataDiskCount = default;
-            Core.Optional<int> maxNicsCount = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryComputeSizeErrorDetails>> errors = default;
-            Core.Optional<string> highIopsSupported = default;
-            Core.Optional<IReadOnlyList<string>> hyperVGenerations = default;
+            Optional<string> name = default;
+            Optional<string> friendlyName = default;
+            Optional<int> cpuCoresCount = default;
+            Optional<int> vCpusAvailable = default;
+            Optional<double> memoryInGB = default;
+            Optional<int> maxDataDiskCount = default;
+            Optional<int> maxNicsCount = default;
+            Optional<IReadOnlyList<SiteRecoveryComputeSizeErrorDetails>> errors = default;
+            Optional<string> highIopsSupported = default;
+            Optional<IReadOnlyList<string>> hyperVGenerations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Core.Optional.ToNullable(cpuCoresCount), Core.Optional.ToNullable(vCpusAvailable), Core.Optional.ToNullable(memoryInGB), Core.Optional.ToNullable(maxDataDiskCount), Core.Optional.ToNullable(maxNicsCount), Core.Optional.ToList(errors), highIopsSupported.Value, Core.Optional.ToList(hyperVGenerations));
+            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations));
         }
     }
 }

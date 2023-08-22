@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> date = default;
-            Core.Optional<IotSeverityMetrics> devicesMetrics = default;
+            Optional<DateTimeOffset> date = default;
+            Optional<IotSeverityMetrics> devicesMetrics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("date"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Core.Optional.ToNullable(date), devicesMetrics.Value);
+            return new IotSecuritySolutionAnalyticsModelDevicesMetrics(Optional.ToNullable(date), devicesMetrics.Value);
         }
     }
 }

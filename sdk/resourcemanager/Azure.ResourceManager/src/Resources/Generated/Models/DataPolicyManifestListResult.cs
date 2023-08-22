@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of DataPolicyManifestListResult. </summary>
         internal DataPolicyManifestListResult()
         {
-            Value = new Core.ChangeTrackingList<DataPolicyManifestData>();
+            Value = new ChangeTrackingList<DataPolicyManifestData>();
         }
 
         /// <summary> Initializes a new instance of DataPolicyManifestListResult. </summary>

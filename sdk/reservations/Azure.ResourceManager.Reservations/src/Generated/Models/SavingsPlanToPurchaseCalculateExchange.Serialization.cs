@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Core.Optional<SavingsPlanPurchase> properties = default;
-            Core.Optional<PurchasePrice> billingCurrencyTotal = default;
+            Optional<SavingsPlanPurchase> properties = default;
+            Optional<PurchasePrice> billingCurrencyTotal = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

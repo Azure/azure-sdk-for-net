@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileAttachedDataNetworkData : Core.IUtf8JsonSerializable
+    public partial class MobileAttachedDataNetworkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(NaptConfiguration))
+            if (Optional.IsDefined(NaptConfiguration))
             {
                 writer.WritePropertyName("naptConfiguration"u8);
                 writer.WriteObjectValue(NaptConfiguration);
             }
-            if (Core.Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
+            if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {
                 writer.WritePropertyName("userEquipmentAddressPoolPrefix"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(UserEquipmentStaticAddressPoolPrefix))
+            if (Optional.IsCollectionDefined(UserEquipmentStaticAddressPoolPrefix))
             {
                 writer.WritePropertyName("userEquipmentStaticAddressPoolPrefix"u8);
                 writer.WriteStartArray();
@@ -77,18 +77,18 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneDataInterface = default;
             IList<string> dnsAddresses = default;
-            Core.Optional<NaptConfiguration> naptConfiguration = default;
-            Core.Optional<IList<string>> userEquipmentAddressPoolPrefix = default;
-            Core.Optional<IList<string>> userEquipmentStaticAddressPoolPrefix = default;
+            Optional<NaptConfiguration> naptConfiguration = default;
+            Optional<IList<string>> userEquipmentAddressPoolPrefix = default;
+            Optional<IList<string>> userEquipmentStaticAddressPoolPrefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, Core.Optional.ToList(userEquipmentAddressPoolPrefix), Core.Optional.ToList(userEquipmentStaticAddressPoolPrefix));
+            return new MobileAttachedDataNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneDataInterface, dnsAddresses, naptConfiguration.Value, Optional.ToList(userEquipmentAddressPoolPrefix), Optional.ToList(userEquipmentStaticAddressPoolPrefix));
         }
     }
 }

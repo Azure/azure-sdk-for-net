@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ContainerEvent>> events = default;
-            Core.Optional<string> state = default;
+            Optional<IReadOnlyList<ContainerEvent>> events = default;
+            Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("events"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerGroupInstanceView(Core.Optional.ToList(events), state.Value);
+            return new ContainerGroupInstanceView(Optional.ToList(events), state.Value);
         }
     }
 }

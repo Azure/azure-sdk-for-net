@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningBatchDeploymentProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningBatchDeploymentProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Compute))
+            if (Optional.IsDefined(Compute))
             {
                 if (Compute != null)
                 {
@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
-            if (Core.Optional.IsDefined(ErrorThreshold))
+            if (Optional.IsDefined(ErrorThreshold))
             {
                 writer.WritePropertyName("errorThreshold"u8);
                 writer.WriteNumberValue(ErrorThreshold.Value);
             }
-            if (Core.Optional.IsDefined(LoggingLevel))
+            if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
                 writer.WriteStringValue(LoggingLevel.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MaxConcurrencyPerInstance))
+            if (Optional.IsDefined(MaxConcurrencyPerInstance))
             {
                 writer.WritePropertyName("maxConcurrencyPerInstance"u8);
                 writer.WriteNumberValue(MaxConcurrencyPerInstance.Value);
             }
-            if (Core.Optional.IsDefined(MiniBatchSize))
+            if (Optional.IsDefined(MiniBatchSize))
             {
                 writer.WritePropertyName("miniBatchSize"u8);
                 writer.WriteNumberValue(MiniBatchSize.Value);
             }
-            if (Core.Optional.IsDefined(Model))
+            if (Optional.IsDefined(Model))
             {
                 if (Model != null)
                 {
@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("model");
                 }
             }
-            if (Core.Optional.IsDefined(OutputAction))
+            if (Optional.IsDefined(OutputAction))
             {
                 writer.WritePropertyName("outputAction"u8);
                 writer.WriteStringValue(OutputAction.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OutputFileName))
+            if (Optional.IsDefined(OutputFileName))
             {
                 writer.WritePropertyName("outputFileName"u8);
                 writer.WriteStringValue(OutputFileName);
             }
-            if (Core.Optional.IsDefined(Resources))
+            if (Optional.IsDefined(Resources))
             {
                 if (Resources != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resources");
                 }
             }
-            if (Core.Optional.IsDefined(RetrySettings))
+            if (Optional.IsDefined(RetrySettings))
             {
                 if (RetrySettings != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("retrySettings");
                 }
             }
-            if (Core.Optional.IsDefined(CodeConfiguration))
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 if (CodeConfiguration != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("codeConfiguration");
                 }
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Core.Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId))
             {
                 if (EnvironmentId != null)
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentId");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(EnvironmentVariables))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (Core.Optional.IsCollectionDefined(Properties))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -175,22 +175,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> compute = default;
-            Core.Optional<int> errorThreshold = default;
-            Core.Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
-            Core.Optional<int> maxConcurrencyPerInstance = default;
-            Core.Optional<long> miniBatchSize = default;
-            Core.Optional<MachineLearningAssetReferenceBase> model = default;
-            Core.Optional<MachineLearningBatchOutputAction> outputAction = default;
-            Core.Optional<string> outputFileName = default;
-            Core.Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
-            Core.Optional<MachineLearningDeploymentResourceConfiguration> resources = default;
-            Core.Optional<MachineLearningBatchRetrySettings> retrySettings = default;
-            Core.Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> environmentId = default;
-            Core.Optional<IDictionary<string, string>> environmentVariables = default;
-            Core.Optional<IDictionary<string, string>> properties = default;
+            Optional<string> compute = default;
+            Optional<int> errorThreshold = default;
+            Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
+            Optional<int> maxConcurrencyPerInstance = default;
+            Optional<long> miniBatchSize = default;
+            Optional<MachineLearningAssetReferenceBase> model = default;
+            Optional<MachineLearningBatchOutputAction> outputAction = default;
+            Optional<string> outputFileName = default;
+            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
+            Optional<MachineLearningDeploymentResourceConfiguration> resources = default;
+            Optional<MachineLearningBatchRetrySettings> retrySettings = default;
+            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
+            Optional<string> description = default;
+            Optional<string> environmentId = default;
+            Optional<IDictionary<string, string>> environmentVariables = default;
+            Optional<IDictionary<string, string>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compute"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Core.Optional.ToDictionary(environmentVariables), Core.Optional.ToDictionary(properties), compute.Value, Core.Optional.ToNullable(errorThreshold), Core.Optional.ToNullable(loggingLevel), Core.Optional.ToNullable(maxConcurrencyPerInstance), Core.Optional.ToNullable(miniBatchSize), model.Value, Core.Optional.ToNullable(outputAction), outputFileName.Value, Core.Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
+            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), compute.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
         }
     }
 }

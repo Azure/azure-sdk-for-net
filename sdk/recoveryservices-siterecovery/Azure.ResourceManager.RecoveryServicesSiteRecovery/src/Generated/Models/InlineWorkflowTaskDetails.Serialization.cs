@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> workflowIds = default;
+            Optional<IReadOnlyList<string>> workflowIds = default;
             string instanceType = default;
-            Core.Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            Optional<IReadOnlyList<AsrTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workflowIds"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InlineWorkflowTaskDetails(instanceType, Core.Optional.ToList(childTasks), Core.Optional.ToList(workflowIds));
+            return new InlineWorkflowTaskDetails(instanceType, Optional.ToList(childTasks), Optional.ToList(workflowIds));
         }
     }
 }

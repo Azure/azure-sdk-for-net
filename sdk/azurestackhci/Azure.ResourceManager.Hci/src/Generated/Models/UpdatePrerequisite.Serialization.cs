@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class UpdatePrerequisite : Core.IUtf8JsonSerializable
+    public partial class UpdatePrerequisite : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(UpdateType))
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Core.Optional.IsDefined(PackageName))
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<string> updateType = default;
-            Core.Optional<string> version = default;
-            Core.Optional<string> packageName = default;
+            Optional<string> updateType = default;
+            Optional<string> version = default;
+            Optional<string> packageName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updateType"u8))

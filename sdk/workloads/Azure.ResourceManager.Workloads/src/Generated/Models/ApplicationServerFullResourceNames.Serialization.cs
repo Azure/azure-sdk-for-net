@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ApplicationServerFullResourceNames : Core.IUtf8JsonSerializable
+    public partial class ApplicationServerFullResourceNames : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(VirtualMachines))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AvailabilitySetName))
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<IList<VirtualMachineResourceNames>> virtualMachines = default;
-            Core.Optional<string> availabilitySetName = default;
+            Optional<IList<VirtualMachineResourceNames>> virtualMachines = default;
+            Optional<string> availabilitySetName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachines"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new ApplicationServerFullResourceNames(Core.Optional.ToList(virtualMachines), availabilitySetName.Value);
+            return new ApplicationServerFullResourceNames(Optional.ToList(virtualMachines), availabilitySetName.Value);
         }
     }
 }

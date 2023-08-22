@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<HDInsightUsage>> value = default;
+            Optional<IReadOnlyList<HDInsightUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new UsagesListResult(Core.Optional.ToList(value));
+            return new UsagesListResult(Optional.ToList(value));
         }
     }
 }

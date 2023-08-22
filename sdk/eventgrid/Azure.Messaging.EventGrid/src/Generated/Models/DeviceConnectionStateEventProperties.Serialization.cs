@@ -18,10 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Core.Optional<string> deviceId = default;
-            Core.Optional<string> moduleId = default;
-            Core.Optional<string> hubName = default;
-            Core.Optional<DeviceConnectionStateEventInfo> deviceConnectionStateEventInfo = default;
+            Optional<string> deviceId = default;
+            Optional<string> moduleId = default;
+            Optional<string> hubName = default;
+            Optional<DeviceConnectionStateEventInfo> deviceConnectionStateEventInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceId"u8))

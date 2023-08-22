@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             string id = default;
             DocumentSentimentValue sentiment = default;
-            Core.Optional<DocumentStatistics> statistics = default;
+            Optional<DocumentStatistics> statistics = default;
             SentimentConfidenceScorePerLabel confidenceScores = default;
             IReadOnlyList<SentenceSentiment> sentences = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;

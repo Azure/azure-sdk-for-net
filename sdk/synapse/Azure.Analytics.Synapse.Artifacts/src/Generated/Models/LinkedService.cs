@@ -20,9 +20,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of LinkedService. </summary>
         public LinkedService()
         {
-            Parameters = new Core.ChangeTrackingDictionary<string, ParameterSpecification>();
-            Annotations = new Core.ChangeTrackingList<object>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, object>();
+            Parameters = new ChangeTrackingDictionary<string, ParameterSpecification>();
+            Annotations = new ChangeTrackingList<object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of LinkedService. </summary>

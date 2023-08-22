@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceListResult. </summary>
         internal RoleEligibilityScheduleInstanceListResult()
         {
-            Value = new Core.ChangeTrackingList<RoleEligibilityScheduleInstanceData>();
+            Value = new ChangeTrackingList<RoleEligibilityScheduleInstanceData>();
         }
 
         /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceListResult. </summary>

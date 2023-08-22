@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchCloudServiceConfiguration : Core.IUtf8JsonSerializable
+    public partial class BatchCloudServiceConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("osFamily"u8);
             writer.WriteStringValue(OSFamily);
-            if (Core.Optional.IsDefined(OSVersion))
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string osFamily = default;
-            Core.Optional<string> osVersion = default;
+            Optional<string> osVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osFamily"u8))

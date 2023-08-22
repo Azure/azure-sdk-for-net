@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetPatch. </summary>
         public DiskPoolIscsiTargetPatch()
         {
-            ManagedByExtended = new Core.ChangeTrackingList<string>();
-            StaticAcls = new Core.ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>();
-            Luns = new Core.ChangeTrackingList<ManagedDiskIscsiLun>();
+            ManagedByExtended = new ChangeTrackingList<string>();
+            StaticAcls = new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>();
+            Luns = new ChangeTrackingList<ManagedDiskIscsiLun>();
         }
 
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetPatch. </summary>

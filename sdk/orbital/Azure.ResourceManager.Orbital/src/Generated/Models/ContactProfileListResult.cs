@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <summary> Initializes a new instance of ContactProfileListResult. </summary>
         internal ContactProfileListResult()
         {
-            Value = new Core.ChangeTrackingList<OrbitalContactProfileData>();
+            Value = new ChangeTrackingList<OrbitalContactProfileData>();
         }
 
         /// <summary> Initializes a new instance of ContactProfileListResult. </summary>

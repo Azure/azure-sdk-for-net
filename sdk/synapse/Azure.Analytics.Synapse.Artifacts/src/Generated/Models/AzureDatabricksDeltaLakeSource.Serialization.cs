@@ -14,34 +14,34 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDatabricksDeltaLakeSourceConverter))]
-    public partial class AzureDatabricksDeltaLakeSource : Core.IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Query))
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteObjectValue(Query);
             }
-            if (Core.Optional.IsDefined(ExportSettings))
+            if (Optional.IsDefined(ExportSettings))
             {
                 writer.WritePropertyName("exportSettings"u8);
                 writer.WriteObjectValue(ExportSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(SourceRetryCount))
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Core.Optional.IsDefined(SourceRetryWait))
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -60,12 +60,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> query = default;
-            Core.Optional<AzureDatabricksDeltaLakeExportCommand> exportSettings = default;
+            Optional<object> query = default;
+            Optional<AzureDatabricksDeltaLakeExportCommand> exportSettings = default;
             string type = default;
-            Core.Optional<object> sourceRetryCount = default;
-            Core.Optional<object> sourceRetryWait = default;
-            Core.Optional<object> maxConcurrentConnections = default;
+            Optional<object> sourceRetryCount = default;
+            Optional<object> sourceRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

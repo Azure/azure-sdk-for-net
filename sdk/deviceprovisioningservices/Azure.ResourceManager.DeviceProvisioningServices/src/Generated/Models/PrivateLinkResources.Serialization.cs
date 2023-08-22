@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new PrivateLinkResources(Core.Optional.ToList(value));
+            return new PrivateLinkResources(Optional.ToList(value));
         }
     }
 }

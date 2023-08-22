@@ -21,20 +21,20 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> sku = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> sku = default;
+            Optional<ETag> etag = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> currency = default;
-            Core.Optional<ConsumptionResourceProperties> resource = default;
-            Core.Optional<string> resourceGroup = default;
-            Core.Optional<ConsumptionSavingsProperties> savings = default;
-            Core.Optional<string> scope = default;
-            Core.Optional<ConsumptionUsageProperties> usage = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> currency = default;
+            Optional<ConsumptionResourceProperties> resource = default;
+            Optional<string> resourceGroup = default;
+            Optional<ConsumptionSavingsProperties> savings = default;
+            Optional<string> scope = default;
+            Optional<ConsumptionUsageProperties> usage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionReservationRecommendationDetails(id, name, type, systemData.Value, Core.Optional.ToNullable(location), sku.Value, currency.Value, resource.Value, resourceGroup.Value, savings.Value, scope.Value, usage.Value, Core.Optional.ToNullable(etag), Core.Optional.ToDictionary(tags));
+            return new ConsumptionReservationRecommendationDetails(id, name, type, systemData.Value, Optional.ToNullable(location), sku.Value, currency.Value, resource.Value, resourceGroup.Value, savings.Value, scope.Value, usage.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags));
         }
     }
 }

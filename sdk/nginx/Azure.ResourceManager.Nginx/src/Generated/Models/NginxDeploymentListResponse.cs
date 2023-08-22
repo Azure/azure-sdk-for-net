@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of NginxDeploymentListResponse. </summary>
         internal NginxDeploymentListResponse()
         {
-            Value = new Core.ChangeTrackingList<NginxDeploymentData>();
+            Value = new ChangeTrackingList<NginxDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of NginxDeploymentListResponse. </summary>

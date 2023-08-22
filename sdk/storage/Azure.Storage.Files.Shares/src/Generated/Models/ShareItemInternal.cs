@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares.Models
 
             Name = name;
             Properties = properties;
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ShareItemInternal. </summary>

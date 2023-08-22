@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 return null;
             }
             int totalStatements = default;
-            Core.Optional<IReadOnlyList<SparkStatement>> statements = default;
+            Optional<IReadOnlyList<SparkStatement>> statements = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("total_statements"u8))
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkStatementCollection(totalStatements, Core.Optional.ToList(statements));
+            return new SparkStatementCollection(totalStatements, Optional.ToList(statements));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Subscription.Models
         /// <summary> Initializes a new instance of TenantPoliciesResult. </summary>
         internal TenantPoliciesResult()
         {
-            Value = new Core.ChangeTrackingList<TenantPolicyData>();
+            Value = new ChangeTrackingList<TenantPolicyData>();
         }
 
         /// <summary> Initializes a new instance of TenantPoliciesResult. </summary>

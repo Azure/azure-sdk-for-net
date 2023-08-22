@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DiskVolumeConfiguration : Core.IUtf8JsonSerializable
+    public partial class DiskVolumeConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Core.Optional.IsDefined(SizeInGB))
+            if (Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<long> count = default;
-            Core.Optional<long> sizeGB = default;
-            Core.Optional<SapDiskSku> sku = default;
+            Optional<long> count = default;
+            Optional<long> sizeGB = default;
+            Optional<SapDiskSku> sku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DiskVolumeConfiguration(Core.Optional.ToNullable(count), Core.Optional.ToNullable(sizeGB), sku.Value);
+            return new DiskVolumeConfiguration(Optional.ToNullable(count), Optional.ToNullable(sizeGB), sku.Value);
         }
     }
 }

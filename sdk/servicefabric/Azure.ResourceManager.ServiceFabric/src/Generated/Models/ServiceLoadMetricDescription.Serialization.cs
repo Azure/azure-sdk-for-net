@@ -10,29 +10,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ServiceLoadMetricDescription : Core.IUtf8JsonSerializable
+    public partial class ServiceLoadMetricDescription : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Weight))
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteStringValue(Weight.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrimaryDefaultLoad))
+            if (Optional.IsDefined(PrimaryDefaultLoad))
             {
                 writer.WritePropertyName("primaryDefaultLoad"u8);
                 writer.WriteNumberValue(PrimaryDefaultLoad.Value);
             }
-            if (Core.Optional.IsDefined(SecondaryDefaultLoad))
+            if (Optional.IsDefined(SecondaryDefaultLoad))
             {
                 writer.WritePropertyName("secondaryDefaultLoad"u8);
                 writer.WriteNumberValue(SecondaryDefaultLoad.Value);
             }
-            if (Core.Optional.IsDefined(DefaultLoad))
+            if (Optional.IsDefined(DefaultLoad))
             {
                 writer.WritePropertyName("defaultLoad"u8);
                 writer.WriteNumberValue(DefaultLoad.Value);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string name = default;
-            Core.Optional<ServiceLoadMetricWeight> weight = default;
-            Core.Optional<int> primaryDefaultLoad = default;
-            Core.Optional<int> secondaryDefaultLoad = default;
-            Core.Optional<int> defaultLoad = default;
+            Optional<ServiceLoadMetricWeight> weight = default;
+            Optional<int> primaryDefaultLoad = default;
+            Optional<int> secondaryDefaultLoad = default;
+            Optional<int> defaultLoad = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ServiceLoadMetricDescription(name, Core.Optional.ToNullable(weight), Core.Optional.ToNullable(primaryDefaultLoad), Core.Optional.ToNullable(secondaryDefaultLoad), Core.Optional.ToNullable(defaultLoad));
+            return new ServiceLoadMetricDescription(name, Optional.ToNullable(weight), Optional.ToNullable(primaryDefaultLoad), Optional.ToNullable(secondaryDefaultLoad), Optional.ToNullable(defaultLoad));
         }
     }
 }

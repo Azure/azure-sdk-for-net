@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ManagedClusterSnapshotData : Core.IUtf8JsonSerializable
+    public partial class ManagedClusterSnapshotData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreationData))
+            if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
-            if (Core.Optional.IsDefined(SnapshotType))
+            if (Optional.IsDefined(SnapshotType))
             {
                 writer.WritePropertyName("snapshotType"u8);
                 writer.WriteStringValue(SnapshotType.Value.ToString());
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ContainerServiceCreationData> creationData = default;
-            Core.Optional<SnapshotType> snapshotType = default;
-            Core.Optional<ManagedClusterPropertiesForSnapshot> managedClusterPropertiesReadOnly = default;
+            Optional<SystemData> systemData = default;
+            Optional<ContainerServiceCreationData> creationData = default;
+            Optional<SnapshotType> snapshotType = default;
+            Optional<ManagedClusterPropertiesForSnapshot> managedClusterPropertiesReadOnly = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService
                     continue;
                 }
             }
-            return new ManagedClusterSnapshotData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, creationData.Value, Core.Optional.ToNullable(snapshotType), managedClusterPropertiesReadOnly.Value);
+            return new ManagedClusterSnapshotData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, creationData.Value, Optional.ToNullable(snapshotType), managedClusterPropertiesReadOnly.Value);
         }
     }
 }

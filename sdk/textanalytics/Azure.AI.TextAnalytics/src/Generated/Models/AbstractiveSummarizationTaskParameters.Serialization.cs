@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AbstractiveSummarizationTaskParameters : Core.IUtf8JsonSerializable
+    internal partial class AbstractiveSummarizationTaskParameters : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Core.Optional.IsDefined(LoggingOptOut))
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Core.Optional.IsDefined(SentenceCount))
+            if (Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (Core.Optional.IsDefined(StringIndexType))
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Core.Optional<string> modelVersion = default;
-            Core.Optional<bool> loggingOptOut = default;
-            Core.Optional<int> sentenceCount = default;
-            Core.Optional<StringIndexType> stringIndexType = default;
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            Optional<int> sentenceCount = default;
+            Optional<StringIndexType> stringIndexType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -83,7 +83,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationTaskParameters(Core.Optional.ToNullable(sentenceCount), Core.Optional.ToNullable(stringIndexType), modelVersion.Value, Core.Optional.ToNullable(loggingOptOut));
+            return new AbstractiveSummarizationTaskParameters(Optional.ToNullable(sentenceCount), Optional.ToNullable(stringIndexType), modelVersion.Value, Optional.ToNullable(loggingOptOut));
         }
     }
 }

@@ -15,12 +15,12 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsAutomationRuleData : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAutomationRuleData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string displayName = default;
             int order = default;
             SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic = default;
             IList<SecurityInsightsAutomationRuleAction> actions = default;
-            Core.Optional<DateTimeOffset> lastModifiedTimeUtc = default;
-            Core.Optional<DateTimeOffset> createdTimeUtc = default;
-            Core.Optional<SecurityInsightsClientInfo> lastModifiedBy = default;
-            Core.Optional<SecurityInsightsClientInfo> createdBy = default;
+            Optional<DateTimeOffset> lastModifiedTimeUtc = default;
+            Optional<DateTimeOffset> createdTimeUtc = default;
+            Optional<SecurityInsightsClientInfo> lastModifiedBy = default;
+            Optional<SecurityInsightsClientInfo> createdBy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsAutomationRuleData(id, name, type, systemData.Value, displayName, order, triggeringLogic, actions, Core.Optional.ToNullable(lastModifiedTimeUtc), Core.Optional.ToNullable(createdTimeUtc), lastModifiedBy.Value, createdBy.Value, Core.Optional.ToNullable(etag));
+            return new SecurityInsightsAutomationRuleData(id, name, type, systemData.Value, displayName, order, triggeringLogic, actions, Optional.ToNullable(lastModifiedTimeUtc), Optional.ToNullable(createdTimeUtc), lastModifiedBy.Value, createdBy.Value, Optional.ToNullable(etag));
         }
     }
 }

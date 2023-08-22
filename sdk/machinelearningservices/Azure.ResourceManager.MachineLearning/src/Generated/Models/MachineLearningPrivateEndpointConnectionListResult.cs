@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionListResult. </summary>
         internal MachineLearningPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<MachineLearningPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of MachineLearningPrivateEndpointConnectionListResult. </summary>

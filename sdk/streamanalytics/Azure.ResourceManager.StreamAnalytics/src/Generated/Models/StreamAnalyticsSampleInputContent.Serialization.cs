@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsSampleInputContent : Core.IUtf8JsonSerializable
+    public partial class StreamAnalyticsSampleInputContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Input))
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Core.Optional.IsDefined(CompatibilityLevel))
+            if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel);
             }
-            if (Core.Optional.IsDefined(EventsUri))
+            if (Optional.IsDefined(EventsUri))
             {
                 writer.WritePropertyName("eventsUri"u8);
                 writer.WriteStringValue(EventsUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(DataLocalion))
+            if (Optional.IsDefined(DataLocalion))
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);

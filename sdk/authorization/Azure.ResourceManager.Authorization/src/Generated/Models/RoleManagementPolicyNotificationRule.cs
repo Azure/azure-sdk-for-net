@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPolicyNotificationRule. </summary>
         public RoleManagementPolicyNotificationRule()
         {
-            NotificationRecipients = new Core.ChangeTrackingList<string>();
+            NotificationRecipients = new ChangeTrackingList<string>();
             RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule;
         }
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationListResult. </summary>
         internal ContainerServiceMaintenanceConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<ContainerServiceMaintenanceConfigurationData>();
+            Value = new ChangeTrackingList<ContainerServiceMaintenanceConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationListResult. </summary>

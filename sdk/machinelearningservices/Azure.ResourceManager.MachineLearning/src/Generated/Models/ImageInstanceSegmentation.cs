@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(trainingData, nameof(trainingData));
             Argument.AssertNotNull(limitSettings, nameof(limitSettings));
 
-            SearchSpace = new Core.ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>();
+            SearchSpace = new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>();
             LimitSettings = limitSettings;
             TaskType = TaskType.ImageInstanceSegmentation;
         }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AttachedNetworkConnectionData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AttachedNetworkConnectionData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new AttachedNetworkListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new AttachedNetworkListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

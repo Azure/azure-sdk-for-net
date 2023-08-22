@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <summary> Initializes a new instance of IotCentralAppTemplate. </summary>
         internal IotCentralAppTemplate()
         {
-            Locations = new Core.ChangeTrackingList<IotCentralAppTemplateLocation>();
+            Locations = new ChangeTrackingList<IotCentralAppTemplateLocation>();
         }
 
         /// <summary> Initializes a new instance of IotCentralAppTemplate. </summary>

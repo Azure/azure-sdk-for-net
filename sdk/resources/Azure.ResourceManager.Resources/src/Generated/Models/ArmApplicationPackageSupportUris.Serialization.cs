@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<Uri> publicAzure = default;
-            Core.Optional<Uri> governmentCloud = default;
+            Optional<Uri> publicAzure = default;
+            Optional<Uri> governmentCloud = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicAzure"u8))

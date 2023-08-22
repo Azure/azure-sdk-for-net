@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> databaseName = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<SyncDatabaseMigrationReportingState> migrationState = default;
-            Core.Optional<long> incomingChanges = default;
-            Core.Optional<long> appliedChanges = default;
-            Core.Optional<long> cdcInsertCounter = default;
-            Core.Optional<long> cdcDeleteCounter = default;
-            Core.Optional<long> cdcUpdateCounter = default;
-            Core.Optional<long> fullLoadCompletedTables = default;
-            Core.Optional<long> fullLoadLoadingTables = default;
-            Core.Optional<long> fullLoadQueuedTables = default;
-            Core.Optional<long> fullLoadErroredTables = default;
-            Core.Optional<bool> initializationCompleted = default;
-            Core.Optional<long> latency = default;
-            Core.Optional<string> id = default;
+            Optional<string> databaseName = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<SyncDatabaseMigrationReportingState> migrationState = default;
+            Optional<long> incomingChanges = default;
+            Optional<long> appliedChanges = default;
+            Optional<long> cdcInsertCounter = default;
+            Optional<long> cdcDeleteCounter = default;
+            Optional<long> cdcUpdateCounter = default;
+            Optional<long> fullLoadCompletedTables = default;
+            Optional<long> fullLoadLoadingTables = default;
+            Optional<long> fullLoadQueuedTables = default;
+            Optional<long> fullLoadErroredTables = default;
+            Optional<bool> initializationCompleted = default;
+            Optional<long> latency = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), Core.Optional.ToNullable(migrationState), Core.Optional.ToNullable(incomingChanges), Core.Optional.ToNullable(appliedChanges), Core.Optional.ToNullable(cdcInsertCounter), Core.Optional.ToNullable(cdcDeleteCounter), Core.Optional.ToNullable(cdcUpdateCounter), Core.Optional.ToNullable(fullLoadCompletedTables), Core.Optional.ToNullable(fullLoadLoadingTables), Core.Optional.ToNullable(fullLoadQueuedTables), Core.Optional.ToNullable(fullLoadErroredTables), Core.Optional.ToNullable(initializationCompleted), Core.Optional.ToNullable(latency));
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(id.Value, resultType, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(migrationState), Optional.ToNullable(incomingChanges), Optional.ToNullable(appliedChanges), Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(fullLoadCompletedTables), Optional.ToNullable(fullLoadLoadingTables), Optional.ToNullable(fullLoadQueuedTables), Optional.ToNullable(fullLoadErroredTables), Optional.ToNullable(initializationCompleted), Optional.ToNullable(latency));
         }
     }
 }

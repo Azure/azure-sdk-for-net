@@ -16,27 +16,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRoutePortData : Core.IUtf8JsonSerializable
+    public partial class ExpressRoutePortData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PeeringLocation))
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (Core.Optional.IsDefined(BandwidthInGbps))
+            if (Optional.IsDefined(BandwidthInGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
-            if (Core.Optional.IsDefined(Encapsulation))
+            if (Optional.IsDefined(Encapsulation))
             {
                 writer.WritePropertyName("encapsulation"u8);
                 writer.WriteStringValue(Encapsulation.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Links))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BillingType))
+            if (Optional.IsDefined(BillingType))
             {
                 writer.WritePropertyName("billingType"u8);
                 writer.WriteStringValue(BillingType.Value.ToString());
@@ -89,25 +89,25 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<string> peeringLocation = default;
-            Core.Optional<int> bandwidthInGbps = default;
-            Core.Optional<float> provisionedBandwidthInGbps = default;
-            Core.Optional<string> mtu = default;
-            Core.Optional<ExpressRoutePortsEncapsulation> encapsulation = default;
-            Core.Optional<string> etherType = default;
-            Core.Optional<string> allocationDate = default;
-            Core.Optional<IList<ExpressRouteLinkData>> links = default;
-            Core.Optional<IReadOnlyList<WritableSubResource>> circuits = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<Guid> resourceGuid = default;
-            Core.Optional<ExpressRoutePortsBillingType> billingType = default;
+            Optional<ETag> etag = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> peeringLocation = default;
+            Optional<int> bandwidthInGbps = default;
+            Optional<float> provisionedBandwidthInGbps = default;
+            Optional<string> mtu = default;
+            Optional<ExpressRoutePortsEncapsulation> encapsulation = default;
+            Optional<string> etherType = default;
+            Optional<string> allocationDate = default;
+            Optional<IList<ExpressRouteLinkData>> links = default;
+            Optional<IReadOnlyList<WritableSubResource>> circuits = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<ExpressRoutePortsBillingType> billingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ExpressRoutePortData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), identity, peeringLocation.Value, Core.Optional.ToNullable(bandwidthInGbps), Core.Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Core.Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Core.Optional.ToList(links), Core.Optional.ToList(circuits), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(billingType));
+            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType));
         }
     }
 }

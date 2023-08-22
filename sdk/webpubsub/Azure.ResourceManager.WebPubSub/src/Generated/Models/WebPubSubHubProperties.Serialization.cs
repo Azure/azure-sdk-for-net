@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class WebPubSubHubProperties : Core.IUtf8JsonSerializable
+    public partial class WebPubSubHubProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(EventHandlers))
+            if (Optional.IsCollectionDefined(EventHandlers))
             {
                 writer.WritePropertyName("eventHandlers"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AnonymousConnectPolicy))
+            if (Optional.IsDefined(AnonymousConnectPolicy))
             {
                 writer.WritePropertyName("anonymousConnectPolicy"u8);
                 writer.WriteStringValue(AnonymousConnectPolicy);
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Core.Optional<IList<WebPubSubEventHandler>> eventHandlers = default;
-            Core.Optional<string> anonymousConnectPolicy = default;
+            Optional<IList<WebPubSubEventHandler>> eventHandlers = default;
+            Optional<string> anonymousConnectPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHandlers"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     continue;
                 }
             }
-            return new WebPubSubHubProperties(Core.Optional.ToList(eventHandlers), anonymousConnectPolicy.Value);
+            return new WebPubSubHubProperties(Optional.ToList(eventHandlers), anonymousConnectPolicy.Value);
         }
     }
 }

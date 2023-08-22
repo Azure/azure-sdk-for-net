@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>
         internal WorkItemConfigurationsListResult()
         {
-            Value = new Core.ChangeTrackingList<WorkItemConfiguration>();
+            Value = new ChangeTrackingList<WorkItemConfiguration>();
         }
 
         /// <summary> Initializes a new instance of WorkItemConfigurationsListResult. </summary>

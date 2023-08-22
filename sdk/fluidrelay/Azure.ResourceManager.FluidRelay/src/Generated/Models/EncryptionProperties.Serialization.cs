@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
-    internal partial class EncryptionProperties : Core.IUtf8JsonSerializable
+    internal partial class EncryptionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CustomerManagedKeyEncryption))
+            if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Core.Optional<CmkEncryptionProperties> customerManagedKeyEncryption = default;
+            Optional<CmkEncryptionProperties> customerManagedKeyEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerManagedKeyEncryption"u8))

@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UserArtifactSource : Core.IUtf8JsonSerializable
+    public partial class UserArtifactSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("mediaLink"u8);
             writer.WriteStringValue(MediaLink);
-            if (Core.Optional.IsDefined(DefaultConfigurationLink))
+            if (Optional.IsDefined(DefaultConfigurationLink))
             {
                 writer.WritePropertyName("defaultConfigurationLink"u8);
                 writer.WriteStringValue(DefaultConfigurationLink);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string mediaLink = default;
-            Core.Optional<string> defaultConfigurationLink = default;
+            Optional<string> defaultConfigurationLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaLink"u8))

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PeriodicModeProperties : Core.IUtf8JsonSerializable
+    public partial class PeriodicModeProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BackupIntervalInMinutes))
+            if (Optional.IsDefined(BackupIntervalInMinutes))
             {
                 writer.WritePropertyName("backupIntervalInMinutes"u8);
                 writer.WriteNumberValue(BackupIntervalInMinutes.Value);
             }
-            if (Core.Optional.IsDefined(BackupRetentionIntervalInHours))
+            if (Optional.IsDefined(BackupRetentionIntervalInHours))
             {
                 writer.WritePropertyName("backupRetentionIntervalInHours"u8);
                 writer.WriteNumberValue(BackupRetentionIntervalInHours.Value);
             }
-            if (Core.Optional.IsDefined(BackupStorageRedundancy))
+            if (Optional.IsDefined(BackupStorageRedundancy))
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<int> backupIntervalInMinutes = default;
-            Core.Optional<int> backupRetentionIntervalInHours = default;
-            Core.Optional<CosmosDBBackupStorageRedundancy> backupStorageRedundancy = default;
+            Optional<int> backupIntervalInMinutes = default;
+            Optional<int> backupRetentionIntervalInHours = default;
+            Optional<CosmosDBBackupStorageRedundancy> backupStorageRedundancy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupIntervalInMinutes"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PeriodicModeProperties(Core.Optional.ToNullable(backupIntervalInMinutes), Core.Optional.ToNullable(backupRetentionIntervalInHours), Core.Optional.ToNullable(backupStorageRedundancy));
+            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours), Optional.ToNullable(backupStorageRedundancy));
         }
     }
 }

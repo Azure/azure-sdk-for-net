@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>
         internal NotificationRegistrationListResult()
         {
-            Value = new Core.ChangeTrackingList<NotificationRegistrationData>();
+            Value = new ChangeTrackingList<NotificationRegistrationData>();
         }
 
         /// <summary> Initializes a new instance of NotificationRegistrationListResult. </summary>

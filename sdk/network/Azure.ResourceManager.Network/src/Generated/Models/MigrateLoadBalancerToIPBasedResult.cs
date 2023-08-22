@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of MigrateLoadBalancerToIPBasedResult. </summary>
         internal MigrateLoadBalancerToIPBasedResult()
         {
-            MigratedPools = new Core.ChangeTrackingList<string>();
+            MigratedPools = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of MigrateLoadBalancerToIPBasedResult. </summary>

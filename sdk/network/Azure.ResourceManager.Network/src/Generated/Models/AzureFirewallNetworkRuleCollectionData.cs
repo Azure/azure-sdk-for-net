@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollectionData. </summary>
         public AzureFirewallNetworkRuleCollectionData()
         {
-            Rules = new Core.ChangeTrackingList<AzureFirewallNetworkRule>();
+            Rules = new ChangeTrackingList<AzureFirewallNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNetworkRuleCollectionData. </summary>

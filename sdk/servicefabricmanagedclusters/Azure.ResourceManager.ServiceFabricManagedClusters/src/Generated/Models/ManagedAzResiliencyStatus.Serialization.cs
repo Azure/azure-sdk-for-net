@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ResourceAzStatus>> baseResourceStatus = default;
-            Core.Optional<bool> isClusterZoneResilient = default;
+            Optional<IReadOnlyList<ResourceAzStatus>> baseResourceStatus = default;
+            Optional<bool> isClusterZoneResilient = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseResourceStatus"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new ManagedAzResiliencyStatus(Core.Optional.ToList(baseResourceStatus), Core.Optional.ToNullable(isClusterZoneResilient));
+            return new ManagedAzResiliencyStatus(Optional.ToList(baseResourceStatus), Optional.ToNullable(isClusterZoneResilient));
         }
     }
 }

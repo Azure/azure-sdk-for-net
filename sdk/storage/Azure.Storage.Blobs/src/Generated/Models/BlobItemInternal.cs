@@ -30,8 +30,8 @@ namespace Azure.Storage.Blobs.Models
             Deleted = deleted;
             Snapshot = snapshot;
             Properties = properties;
-            Metadata = new Core.ChangeTrackingDictionary<string, string>();
-            OrMetadata = new Core.ChangeTrackingDictionary<string, string>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
+            OrMetadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of BlobItemInternal. </summary>

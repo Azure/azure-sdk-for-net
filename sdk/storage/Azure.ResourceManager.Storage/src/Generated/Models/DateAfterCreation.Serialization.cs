@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class DateAfterCreation : Core.IUtf8JsonSerializable
+    public partial class DateAfterCreation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("daysAfterCreationGreaterThan"u8);
             writer.WriteNumberValue(DaysAfterCreationGreaterThan);
-            if (Core.Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
+            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
             {
                 writer.WritePropertyName("daysAfterLastTierChangeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastTierChangeGreaterThan.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             float daysAfterCreationGreaterThan = default;
-            Core.Optional<float> daysAfterLastTierChangeGreaterThan = default;
+            Optional<float> daysAfterLastTierChangeGreaterThan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysAfterCreationGreaterThan"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new DateAfterCreation(daysAfterCreationGreaterThan, Core.Optional.ToNullable(daysAfterLastTierChangeGreaterThan));
+            return new DateAfterCreation(daysAfterCreationGreaterThan, Optional.ToNullable(daysAfterLastTierChangeGreaterThan));
         }
     }
 }

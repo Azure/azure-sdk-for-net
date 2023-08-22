@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    internal class TrafficControllerOperationSource : Core.IOperationSource<TrafficControllerResource>
+    internal class TrafficControllerOperationSource : IOperationSource<TrafficControllerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ServiceNetworking
             _client = client;
         }
 
-        TrafficControllerResource Core.IOperationSource<TrafficControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        TrafficControllerResource IOperationSource<TrafficControllerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);
             return new TrafficControllerResource(_client, data);
         }
 
-        async ValueTask<TrafficControllerResource> Core.IOperationSource<TrafficControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<TrafficControllerResource> IOperationSource<TrafficControllerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = TrafficControllerData.DeserializeTrafficControllerData(document.RootElement);

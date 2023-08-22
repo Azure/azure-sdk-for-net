@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVpnGatewayNatRulesResult. </summary>
         internal ListVpnGatewayNatRulesResult()
         {
-            Value = new Core.ChangeTrackingList<VpnGatewayNatRuleData>();
+            Value = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of ListVpnGatewayNatRulesResult. </summary>

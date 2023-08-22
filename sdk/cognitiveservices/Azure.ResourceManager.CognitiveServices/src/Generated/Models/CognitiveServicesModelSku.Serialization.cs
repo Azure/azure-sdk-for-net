@@ -12,27 +12,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesModelSku : Core.IUtf8JsonSerializable
+    public partial class CognitiveServicesModelSku : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(UsageName))
+            if (Optional.IsDefined(UsageName))
             {
                 writer.WritePropertyName("usageName"u8);
                 writer.WriteStringValue(UsageName);
             }
-            if (Core.Optional.IsDefined(DeprecationOn))
+            if (Optional.IsDefined(DeprecationOn))
             {
                 writer.WritePropertyName("deprecationDate"u8);
                 writer.WriteStringValue(DeprecationOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> usageName = default;
-            Core.Optional<DateTimeOffset> deprecationDate = default;
-            Core.Optional<CognitiveServicesCapacityConfig> capacity = default;
-            Core.Optional<IReadOnlyList<ServiceAccountCallRateLimit>> rateLimits = default;
+            Optional<string> name = default;
+            Optional<string> usageName = default;
+            Optional<DateTimeOffset> deprecationDate = default;
+            Optional<CognitiveServicesCapacityConfig> capacity = default;
+            Optional<IReadOnlyList<ServiceAccountCallRateLimit>> rateLimits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CognitiveServicesModelSku(name.Value, usageName.Value, Core.Optional.ToNullable(deprecationDate), capacity.Value, Core.Optional.ToList(rateLimits));
+            return new CognitiveServicesModelSku(name.Value, usageName.Value, Optional.ToNullable(deprecationDate), capacity.Value, Optional.ToList(rateLimits));
         }
     }
 }

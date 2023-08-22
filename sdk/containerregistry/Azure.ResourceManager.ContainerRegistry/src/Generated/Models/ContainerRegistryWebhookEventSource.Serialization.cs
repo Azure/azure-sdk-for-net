@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<string> addr = default;
-            Core.Optional<string> instanceId = default;
+            Optional<string> addr = default;
+            Optional<string> instanceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addr"u8))

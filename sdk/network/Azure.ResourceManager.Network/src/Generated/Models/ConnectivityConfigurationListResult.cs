@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectivityConfigurationListResult. </summary>
         internal ConnectivityConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<ConnectivityConfigurationData>();
+            Value = new ChangeTrackingList<ConnectivityConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of ConnectivityConfigurationListResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of SsisEnvironment. </summary>
         internal SsisEnvironment()
         {
-            Variables = new Core.ChangeTrackingList<SsisVariable>();
+            Variables = new ChangeTrackingList<SsisVariable>();
             MetadataType = SsisObjectMetadataType.Environment;
         }
 

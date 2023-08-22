@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyIntrusionDetectionConfiguration : Core.IUtf8JsonSerializable
+    public partial class FirewallPolicyIntrusionDetectionConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(SignatureOverrides))
+            if (Optional.IsCollectionDefined(SignatureOverrides))
             {
                 writer.WritePropertyName("signatureOverrides"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(BypassTrafficSettings))
+            if (Optional.IsCollectionDefined(BypassTrafficSettings))
             {
                 writer.WritePropertyName("bypassTrafficSettings"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(PrivateRanges))
+            if (Optional.IsCollectionDefined(PrivateRanges))
             {
                 writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<FirewallPolicyIntrusionDetectionSignatureSpecification>> signatureOverrides = default;
-            Core.Optional<IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>> bypassTrafficSettings = default;
-            Core.Optional<IList<string>> privateRanges = default;
+            Optional<IList<FirewallPolicyIntrusionDetectionSignatureSpecification>> signatureOverrides = default;
+            Optional<IList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>> bypassTrafficSettings = default;
+            Optional<IList<string>> privateRanges = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("signatureOverrides"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new FirewallPolicyIntrusionDetectionConfiguration(Core.Optional.ToList(signatureOverrides), Core.Optional.ToList(bypassTrafficSettings), Core.Optional.ToList(privateRanges));
+            return new FirewallPolicyIntrusionDetectionConfiguration(Optional.ToList(signatureOverrides), Optional.ToList(bypassTrafficSettings), Optional.ToList(privateRanges));
         }
     }
 }

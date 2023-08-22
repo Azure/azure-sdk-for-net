@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public RecoveryPlanPlannedFailoverProperties(PossibleOperationsDirection failoverDirection)
         {
             FailoverDirection = failoverDirection;
-            ProviderSpecificDetails = new Core.ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>();
+            ProviderSpecificDetails = new ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent>();
         }
 
         /// <summary> The failover direction. </summary>

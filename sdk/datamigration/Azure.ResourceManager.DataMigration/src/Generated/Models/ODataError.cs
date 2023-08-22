@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ODataError. </summary>
         internal ODataError()
         {
-            Details = new Core.ChangeTrackingList<ODataError>();
+            Details = new ChangeTrackingList<ODataError>();
         }
 
         /// <summary> Initializes a new instance of ODataError. </summary>

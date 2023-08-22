@@ -15,27 +15,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkData : Core.IUtf8JsonSerializable
+    public partial class VirtualNetworkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AddressSpace))
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteObjectValue(AddressSpace);
             }
-            if (Core.Optional.IsDefined(DhcpOptions))
+            if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions"u8);
                 writer.WriteObjectValue(DhcpOptions);
             }
-            if (Core.Optional.IsDefined(FlowTimeoutInMinutes))
+            if (Optional.IsDefined(FlowTimeoutInMinutes))
             {
                 writer.WritePropertyName("flowTimeoutInMinutes"u8);
                 writer.WriteNumberValue(FlowTimeoutInMinutes.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Subnets))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(VirtualNetworkPeerings))
+            if (Optional.IsCollectionDefined(VirtualNetworkPeerings))
             {
                 writer.WritePropertyName("virtualNetworkPeerings"u8);
                 writer.WriteStartArray();
@@ -83,32 +83,32 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableDdosProtection))
+            if (Optional.IsDefined(EnableDdosProtection))
             {
                 writer.WritePropertyName("enableDdosProtection"u8);
                 writer.WriteBooleanValue(EnableDdosProtection.Value);
             }
-            if (Core.Optional.IsDefined(EnableVmProtection))
+            if (Optional.IsDefined(EnableVmProtection))
             {
                 writer.WritePropertyName("enableVmProtection"u8);
                 writer.WriteBooleanValue(EnableVmProtection.Value);
             }
-            if (Core.Optional.IsDefined(DdosProtectionPlan))
+            if (Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
                 JsonSerializer.Serialize(writer, DdosProtectionPlan);
             }
-            if (Core.Optional.IsDefined(BgpCommunities))
+            if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteObjectValue(BgpCommunities);
             }
-            if (Core.Optional.IsDefined(Encryption))
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Core.Optional.IsCollectionDefined(IPAllocations))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
@@ -128,27 +128,27 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ExtendedLocation> extendedLocation = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<AddressSpace> addressSpace = default;
-            Core.Optional<DhcpOptions> dhcpOptions = default;
-            Core.Optional<int> flowTimeoutInMinutes = default;
-            Core.Optional<IList<SubnetData>> subnets = default;
-            Core.Optional<IList<VirtualNetworkPeeringData>> virtualNetworkPeerings = default;
-            Core.Optional<Guid> resourceGuid = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<bool> enableDdosProtection = default;
-            Core.Optional<bool> enableVmProtection = default;
-            Core.Optional<WritableSubResource> ddosProtectionPlan = default;
-            Core.Optional<VirtualNetworkBgpCommunities> bgpCommunities = default;
-            Core.Optional<VirtualNetworkEncryption> encryption = default;
-            Core.Optional<IList<WritableSubResource>> ipAllocations = default;
-            Core.Optional<IReadOnlyList<FlowLogData>> flowLogs = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<AddressSpace> addressSpace = default;
+            Optional<DhcpOptions> dhcpOptions = default;
+            Optional<int> flowTimeoutInMinutes = default;
+            Optional<IList<SubnetData>> subnets = default;
+            Optional<IList<VirtualNetworkPeeringData>> virtualNetworkPeerings = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<bool> enableDdosProtection = default;
+            Optional<bool> enableVmProtection = default;
+            Optional<WritableSubResource> ddosProtectionPlan = default;
+            Optional<VirtualNetworkBgpCommunities> bgpCommunities = default;
+            Optional<VirtualNetworkEncryption> encryption = default;
+            Optional<IList<WritableSubResource>> ipAllocations = default;
+            Optional<IReadOnlyList<FlowLogData>> flowLogs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VirtualNetworkData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), extendedLocation, Core.Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Core.Optional.ToNullable(flowTimeoutInMinutes), Core.Optional.ToList(subnets), Core.Optional.ToList(virtualNetworkPeerings), Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(enableDdosProtection), Core.Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, encryption.Value, Core.Optional.ToList(ipAllocations), Core.Optional.ToList(flowLogs));
+            return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), Optional.ToList(subnets), Optional.ToList(virtualNetworkPeerings), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, encryption.Value, Optional.ToList(ipAllocations), Optional.ToList(flowLogs));
         }
     }
 }

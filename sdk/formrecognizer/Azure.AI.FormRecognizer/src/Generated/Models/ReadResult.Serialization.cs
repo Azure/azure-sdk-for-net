@@ -24,8 +24,8 @@ namespace Azure.AI.FormRecognizer.Models
             float width = default;
             float height = default;
             LengthUnit unit = default;
-            Core.Optional<IReadOnlyList<TextLine>> lines = default;
-            Core.Optional<IReadOnlyList<SelectionMark>> selectionMarks = default;
+            Optional<IReadOnlyList<TextLine>> lines = default;
+            Optional<IReadOnlyList<SelectionMark>> selectionMarks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"u8))
@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new ReadResult(page, angle, width, height, unit, Core.Optional.ToList(lines), Core.Optional.ToList(selectionMarks));
+            return new ReadResult(page, angle, width, height, unit, Optional.ToList(lines), Optional.ToList(selectionMarks));
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> token = default;
+            Optional<string> token = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("token"u8))

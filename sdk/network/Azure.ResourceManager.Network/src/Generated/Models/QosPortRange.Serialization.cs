@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class QosPortRange : Core.IUtf8JsonSerializable
+    public partial class QosPortRange : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Start))
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteNumberValue(Start.Value);
             }
-            if (Core.Optional.IsDefined(End))
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<int> start = default;
-            Core.Optional<int> end = default;
+            Optional<int> start = default;
+            Optional<int> end = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("start"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new QosPortRange(Core.Optional.ToNullable(start), Core.Optional.ToNullable(end));
+            return new QosPortRange(Optional.ToNullable(start), Optional.ToNullable(end));
         }
     }
 }

@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class LogSettings : Core.IUtf8JsonSerializable
+    public partial class LogSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Category))
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Core.Optional.IsDefined(CategoryGroup))
+            if (Optional.IsDefined(CategoryGroup))
             {
                 writer.WritePropertyName("categoryGroup"u8);
                 writer.WriteStringValue(CategoryGroup);
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Core.Optional.IsDefined(RetentionPolicy))
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> category = default;
-            Core.Optional<string> categoryGroup = default;
+            Optional<string> category = default;
+            Optional<string> categoryGroup = default;
             bool enabled = default;
-            Core.Optional<RetentionPolicy> retentionPolicy = default;
+            Optional<RetentionPolicy> retentionPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))

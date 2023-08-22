@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionBudgetFilter : Core.IUtf8JsonSerializable
+    public partial class ConsumptionBudgetFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(And))
+            if (Optional.IsCollectionDefined(And))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Dimensions))
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Core.Optional.IsDefined(Tags))
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Core.Optional<IList<BudgetFilterProperties>> and = default;
-            Core.Optional<BudgetComparisonExpression> dimensions = default;
-            Core.Optional<BudgetComparisonExpression> tags = default;
+            Optional<IList<BudgetFilterProperties>> and = default;
+            Optional<BudgetComparisonExpression> dimensions = default;
+            Optional<BudgetComparisonExpression> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("and"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     continue;
                 }
             }
-            return new ConsumptionBudgetFilter(Core.Optional.ToList(and), dimensions.Value, tags.Value);
+            return new ConsumptionBudgetFilter(Optional.ToList(and), dimensions.Value, tags.Value);
         }
     }
 }

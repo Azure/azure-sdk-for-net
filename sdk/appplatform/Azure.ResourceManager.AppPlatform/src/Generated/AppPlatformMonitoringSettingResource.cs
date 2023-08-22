@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformMonitoringSettingMonitoringSettingsRestClient.UpdatePatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformMonitoringSettingMonitoringSettingsRestClient.UpdatePatch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformMonitoringSettingMonitoringSettingsRestClient.UpdatePutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformMonitoringSettingMonitoringSettingsRestClient.UpdatePut(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new AppPlatformArmOperation<AppPlatformMonitoringSettingResource>(new AppPlatformMonitoringSettingOperationSource(Client), _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics, Pipeline, _appPlatformMonitoringSettingMonitoringSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

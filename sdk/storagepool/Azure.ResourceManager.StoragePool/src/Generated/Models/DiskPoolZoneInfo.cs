@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>
         internal DiskPoolZoneInfo()
         {
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
-            AdditionalCapabilities = new Core.ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
+            AdditionalCapabilities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>

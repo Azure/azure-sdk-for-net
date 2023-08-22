@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>
         public AuthorizationRoleDefinitionData()
         {
-            Permissions = new Core.ChangeTrackingList<RoleDefinitionPermission>();
-            AssignableScopes = new Core.ChangeTrackingList<string>();
+            Permissions = new ChangeTrackingList<RoleDefinitionPermission>();
+            AssignableScopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>

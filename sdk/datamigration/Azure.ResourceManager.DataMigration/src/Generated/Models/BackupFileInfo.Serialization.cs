@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> fileLocation = default;
-            Core.Optional<int> familySequenceNumber = default;
-            Core.Optional<BackupFileStatus> status = default;
+            Optional<string> fileLocation = default;
+            Optional<int> familySequenceNumber = default;
+            Optional<BackupFileStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileLocation"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new BackupFileInfo(fileLocation.Value, Core.Optional.ToNullable(familySequenceNumber), Core.Optional.ToNullable(status));
+            return new BackupFileInfo(fileLocation.Value, Optional.ToNullable(familySequenceNumber), Optional.ToNullable(status));
         }
     }
 }

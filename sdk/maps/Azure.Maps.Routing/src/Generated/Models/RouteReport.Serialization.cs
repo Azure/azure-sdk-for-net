@@ -19,7 +19,7 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<EffectiveSetting>> effectiveSettings = default;
+            Optional<IReadOnlyList<EffectiveSetting>> effectiveSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("effectiveSettings"u8))
@@ -37,7 +37,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteReport(Core.Optional.ToList(effectiveSettings));
+            return new RouteReport(Optional.ToList(effectiveSettings));
         }
     }
 }

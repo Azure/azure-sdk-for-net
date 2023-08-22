@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<bool> nameAvailable = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> message = default;
-            Core.Optional<KustoNameUnavailableReason> reason = default;
+            Optional<bool> nameAvailable = default;
+            Optional<string> name = default;
+            Optional<string> message = default;
+            Optional<KustoNameUnavailableReason> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new KustoNameAvailabilityResult(Core.Optional.ToNullable(nameAvailable), name.Value, message.Value, Core.Optional.ToNullable(reason));
+            return new KustoNameAvailabilityResult(Optional.ToNullable(nameAvailable), name.Value, message.Value, Optional.ToNullable(reason));
         }
     }
 }

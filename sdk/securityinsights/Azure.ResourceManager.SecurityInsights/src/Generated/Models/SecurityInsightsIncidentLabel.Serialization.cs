@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIncidentLabel : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentLabel : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("labelName"u8);
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string labelName = default;
-            Core.Optional<SecurityInsightsIncidentLabelType> labelType = default;
+            Optional<SecurityInsightsIncidentLabelType> labelType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labelName"u8))
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentLabel(labelName, Core.Optional.ToNullable(labelType));
+            return new SecurityInsightsIncidentLabel(labelName, Optional.ToNullable(labelType));
         }
     }
 }

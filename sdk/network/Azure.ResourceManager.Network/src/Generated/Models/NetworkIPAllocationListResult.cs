@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkIPAllocationListResult. </summary>
         internal NetworkIPAllocationListResult()
         {
-            Value = new Core.ChangeTrackingList<IPAllocationData>();
+            Value = new ChangeTrackingList<IPAllocationData>();
         }
 
         /// <summary> Initializes a new instance of NetworkIPAllocationListResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <summary> Initializes a new instance of GetTypesPage. </summary>
         internal GetTypesPage()
         {
-            Types = new Core.ChangeTrackingList<TimeSeriesType>();
+            Types = new ChangeTrackingList<TimeSeriesType>();
         }
 
         /// <summary> Initializes a new instance of GetTypesPage. </summary>

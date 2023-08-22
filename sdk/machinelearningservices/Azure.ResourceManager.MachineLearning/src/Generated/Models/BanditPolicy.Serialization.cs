@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class BanditPolicy : Core.IUtf8JsonSerializable
+    public partial class BanditPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SlackAmount))
+            if (Optional.IsDefined(SlackAmount))
             {
                 writer.WritePropertyName("slackAmount"u8);
                 writer.WriteNumberValue(SlackAmount.Value);
             }
-            if (Core.Optional.IsDefined(SlackFactor))
+            if (Optional.IsDefined(SlackFactor))
             {
                 writer.WritePropertyName("slackFactor"u8);
                 writer.WriteNumberValue(SlackFactor.Value);
             }
-            if (Core.Optional.IsDefined(DelayEvaluation))
+            if (Optional.IsDefined(DelayEvaluation))
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (Core.Optional.IsDefined(EvaluationInterval))
+            if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<float> slackAmount = default;
-            Core.Optional<float> slackFactor = default;
-            Core.Optional<int> delayEvaluation = default;
-            Core.Optional<int> evaluationInterval = default;
+            Optional<float> slackAmount = default;
+            Optional<float> slackFactor = default;
+            Optional<int> delayEvaluation = default;
+            Optional<int> evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new BanditPolicy(Core.Optional.ToNullable(delayEvaluation), Core.Optional.ToNullable(evaluationInterval), policyType, Core.Optional.ToNullable(slackAmount), Core.Optional.ToNullable(slackFactor));
+            return new BanditPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, Optional.ToNullable(slackAmount), Optional.ToNullable(slackFactor));
         }
     }
 }

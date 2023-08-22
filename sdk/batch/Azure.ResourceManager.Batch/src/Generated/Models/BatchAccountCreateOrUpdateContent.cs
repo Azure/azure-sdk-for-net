@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Batch.Models
         public BatchAccountCreateOrUpdateContent(AzureLocation location)
         {
             Location = location;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            AllowedAuthenticationModes = new Core.ChangeTrackingList<BatchAuthenticationMode>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
         }
 
         /// <summary> The region in which to create the account. </summary>

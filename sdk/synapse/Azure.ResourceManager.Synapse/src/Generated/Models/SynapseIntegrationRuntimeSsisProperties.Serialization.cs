@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeSsisProperties : Core.IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CatalogInfo))
+            if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
                 writer.WriteObjectValue(CatalogInfo);
             }
-            if (Core.Optional.IsDefined(LicenseType))
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(CustomSetupScriptProperties))
+            if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
                 writer.WriteObjectValue(CustomSetupScriptProperties);
             }
-            if (Core.Optional.IsDefined(DataProxyProperties))
+            if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
                 writer.WriteObjectValue(DataProxyProperties);
             }
-            if (Core.Optional.IsDefined(Edition))
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ExpressCustomSetupProperties))
+            if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
             {
                 writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<SynapseIntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Core.Optional<SynapseIntegrationRuntimeLicenseType> licenseType = default;
-            Core.Optional<SynapseIntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Core.Optional<SynapseIntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Core.Optional<SynapseIntegrationRuntimeEdition> edition = default;
-            Core.Optional<IList<SynapseCustomSetupBase>> expressCustomSetupProperties = default;
+            Optional<SynapseIntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
+            Optional<SynapseIntegrationRuntimeLicenseType> licenseType = default;
+            Optional<SynapseIntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
+            Optional<SynapseIntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
+            Optional<SynapseIntegrationRuntimeEdition> edition = default;
+            Optional<IList<SynapseCustomSetupBase>> expressCustomSetupProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeSsisProperties(catalogInfo.Value, Core.Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Core.Optional.ToNullable(edition), Core.Optional.ToList(expressCustomSetupProperties), additionalProperties);
+            return new SynapseIntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), additionalProperties);
         }
     }
 }

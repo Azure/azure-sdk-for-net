@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of WorkloadRecoveryPoint. </summary>
         public WorkloadRecoveryPoint()
         {
-            RecoveryPointTierDetails = new Core.ChangeTrackingList<RecoveryPointTierInformationV2>();
-            RecoveryPointMoveReadinessInfo = new Core.ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
+            RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
+            RecoveryPointMoveReadinessInfo = new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
             ObjectType = "AzureWorkloadRecoveryPoint";
         }
 

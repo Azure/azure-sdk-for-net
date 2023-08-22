@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    public partial class IotCentralAppData : Core.IUtf8JsonSerializable
+    public partial class IotCentralAppData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.IotCentral
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Subdomain))
+            if (Optional.IsDefined(Subdomain))
             {
                 writer.WritePropertyName("subdomain"u8);
                 writer.WriteStringValue(Subdomain);
             }
-            if (Core.Optional.IsDefined(Template))
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteStringValue(Template);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsDefined(NetworkRuleSets))
+            if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
                 writer.WriteObjectValue(NetworkRuleSets);
@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.IotCentral
                 return null;
             }
             IotCentralAppSkuInfo sku = default;
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IotCentralProvisioningState> provisioningState = default;
-            Core.Optional<Guid> applicationId = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> subdomain = default;
-            Core.Optional<string> template = default;
-            Core.Optional<IotCentralAppState> state = default;
-            Core.Optional<IotCentralPublicNetworkAccess> publicNetworkAccess = default;
-            Core.Optional<IotCentralNetworkRuleSets> networkRuleSets = default;
-            Core.Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<SystemData> systemData = default;
+            Optional<IotCentralProvisioningState> provisioningState = default;
+            Optional<Guid> applicationId = default;
+            Optional<string> displayName = default;
+            Optional<string> subdomain = default;
+            Optional<string> template = default;
+            Optional<IotCentralAppState> state = default;
+            Optional<IotCentralPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IotCentralNetworkRuleSets> networkRuleSets = default;
+            Optional<IReadOnlyList<IotCentralPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.IotCentral
                     continue;
                 }
             }
-            return new IotCentralAppData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, sku, identity, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(applicationId), displayName.Value, subdomain.Value, template.Value, Core.Optional.ToNullable(state), Core.Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, Core.Optional.ToList(privateEndpointConnections));
+            return new IotCentralAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(applicationId), displayName.Value, subdomain.Value, template.Value, Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

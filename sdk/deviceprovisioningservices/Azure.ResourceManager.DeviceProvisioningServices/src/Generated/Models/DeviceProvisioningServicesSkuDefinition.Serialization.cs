@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Core.Optional<DeviceProvisioningServicesSku> name = default;
+            Optional<DeviceProvisioningServicesSku> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     continue;
                 }
             }
-            return new DeviceProvisioningServicesSkuDefinition(Core.Optional.ToNullable(name));
+            return new DeviceProvisioningServicesSkuDefinition(Optional.ToNullable(name));
         }
     }
 }

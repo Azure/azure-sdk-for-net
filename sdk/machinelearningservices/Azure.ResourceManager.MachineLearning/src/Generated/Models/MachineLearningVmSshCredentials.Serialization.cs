@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVmSshCredentials : Core.IUtf8JsonSerializable
+    public partial class MachineLearningVmSshCredentials : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Username))
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Core.Optional.IsDefined(Password))
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Core.Optional.IsDefined(PublicKeyData))
+            if (Optional.IsDefined(PublicKeyData))
             {
                 writer.WritePropertyName("publicKeyData"u8);
                 writer.WriteStringValue(PublicKeyData);
             }
-            if (Core.Optional.IsDefined(PrivateKeyData))
+            if (Optional.IsDefined(PrivateKeyData))
             {
                 writer.WritePropertyName("privateKeyData"u8);
                 writer.WriteStringValue(PrivateKeyData);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> username = default;
-            Core.Optional<string> password = default;
-            Core.Optional<string> publicKeyData = default;
-            Core.Optional<string> privateKeyData = default;
+            Optional<string> username = default;
+            Optional<string> password = default;
+            Optional<string> publicKeyData = default;
+            Optional<string> privateKeyData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))

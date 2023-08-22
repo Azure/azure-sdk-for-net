@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(managementNetworkConfiguration, nameof(managementNetworkConfiguration));
 
             NetworkFabricSku = networkFabricSku;
-            RouterIds = new Core.ChangeTrackingList<string>();
+            RouterIds = new ChangeTrackingList<string>();
             NetworkFabricControllerId = networkFabricControllerId;
             ServerCountPerRack = serverCountPerRack;
             IPv4Prefix = ipv4Prefix;
             FabricAsn = fabricAsn;
             TerminalServerConfiguration = terminalServerConfiguration;
             ManagementNetworkConfiguration = managementNetworkConfiguration;
-            Racks = new Core.ChangeTrackingList<string>();
-            L2IsolationDomains = new Core.ChangeTrackingList<string>();
-            L3IsolationDomains = new Core.ChangeTrackingList<string>();
+            Racks = new ChangeTrackingList<string>();
+            L2IsolationDomains = new ChangeTrackingList<string>();
+            L3IsolationDomains = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NetworkFabricData. </summary>

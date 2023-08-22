@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PolicyEvaluationResult>> policyEvaluations = default;
+            Optional<IReadOnlyList<PolicyEvaluationResult>> policyEvaluations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyEvaluations"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new CheckRestrictionsResultContentEvaluationResult(Core.Optional.ToList(policyEvaluations));
+            return new CheckRestrictionsResultContentEvaluationResult(Optional.ToList(policyEvaluations));
         }
     }
 }

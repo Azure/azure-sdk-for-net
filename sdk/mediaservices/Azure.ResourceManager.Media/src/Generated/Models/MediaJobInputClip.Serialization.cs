@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobInputClip : Core.IUtf8JsonSerializable
+    public partial class MediaJobInputClip : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Files))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Start))
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
-            if (Core.Optional.IsDefined(End))
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);
             }
-            if (Core.Optional.IsDefined(Label))
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Core.Optional.IsCollectionDefined(InputDefinitions))
+            if (Optional.IsCollectionDefined(InputDefinitions))
             {
                 writer.WritePropertyName("inputDefinitions"u8);
                 writer.WriteStartArray();
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Media.Models
                     case "#Microsoft.Media.JobInputHttp": return MediaJobInputHttp.DeserializeMediaJobInputHttp(element);
                 }
             }
-            Core.Optional<IList<string>> files = default;
-            Core.Optional<ClipTime> start = default;
-            Core.Optional<ClipTime> end = default;
-            Core.Optional<string> label = default;
-            Core.Optional<IList<MediaJobInputDefinition>> inputDefinitions = default;
+            Optional<IList<string>> files = default;
+            Optional<ClipTime> start = default;
+            Optional<ClipTime> end = default;
+            Optional<string> label = default;
+            Optional<IList<MediaJobInputDefinition>> inputDefinitions = default;
             string odataType = "#Microsoft.Media.JobInputClip";
             foreach (var property in element.EnumerateObject())
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new MediaJobInputClip(odataType, Core.Optional.ToList(files), start.Value, end.Value, label.Value, Core.Optional.ToList(inputDefinitions));
+            return new MediaJobInputClip(odataType, Optional.ToList(files), start.Value, end.Value, label.Value, Optional.ToList(inputDefinitions));
         }
     }
 }

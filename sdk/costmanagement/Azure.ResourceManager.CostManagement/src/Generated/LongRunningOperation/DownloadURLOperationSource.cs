@@ -14,15 +14,15 @@ using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    internal class DownloadURLOperationSource : Core.IOperationSource<DownloadURL>
+    internal class DownloadURLOperationSource : IOperationSource<DownloadURL>
     {
-        DownloadURL Core.IOperationSource<DownloadURL>.CreateResult(Response response, CancellationToken cancellationToken)
+        DownloadURL IOperationSource<DownloadURL>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return DownloadURL.DeserializeDownloadURL(document.RootElement);
         }
 
-        async ValueTask<DownloadURL> Core.IOperationSource<DownloadURL>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DownloadURL> IOperationSource<DownloadURL>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return DownloadURL.DeserializeDownloadURL(document.RootElement);

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkManagerCommit : Core.IUtf8JsonSerializable
+    public partial class NetworkManagerCommit : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetLocations"u8);
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsCollectionDefined(ConfigurationIds))
+            if (Optional.IsCollectionDefined(ConfigurationIds))
             {
                 writer.WritePropertyName("configurationIds"u8);
                 writer.WriteStartArray();
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> commitId = default;
+            Optional<string> commitId = default;
             IList<string> targetLocations = default;
-            Core.Optional<IList<string>> configurationIds = default;
+            Optional<IList<string>> configurationIds = default;
             NetworkConfigurationDeploymentType commitType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkManagerCommit(commitId.Value, targetLocations, Core.Optional.ToList(configurationIds), commitType);
+            return new NetworkManagerCommit(commitId.Value, targetLocations, Optional.ToList(configurationIds), commitType);
         }
     }
 }

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ApplicationMetricDescription : Core.IUtf8JsonSerializable
+    public partial class ApplicationMetricDescription : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(MaximumCapacity))
+            if (Optional.IsDefined(MaximumCapacity))
             {
                 writer.WritePropertyName("maximumCapacity"u8);
                 writer.WriteNumberValue(MaximumCapacity.Value);
             }
-            if (Core.Optional.IsDefined(ReservationCapacity))
+            if (Optional.IsDefined(ReservationCapacity))
             {
                 writer.WritePropertyName("reservationCapacity"u8);
                 writer.WriteNumberValue(ReservationCapacity.Value);
             }
-            if (Core.Optional.IsDefined(TotalApplicationCapacity))
+            if (Optional.IsDefined(TotalApplicationCapacity))
             {
                 writer.WritePropertyName("totalApplicationCapacity"u8);
                 writer.WriteNumberValue(TotalApplicationCapacity.Value);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<long> maximumCapacity = default;
-            Core.Optional<long> reservationCapacity = default;
-            Core.Optional<long> totalApplicationCapacity = default;
+            Optional<string> name = default;
+            Optional<long> maximumCapacity = default;
+            Optional<long> reservationCapacity = default;
+            Optional<long> totalApplicationCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ApplicationMetricDescription(name.Value, Core.Optional.ToNullable(maximumCapacity), Core.Optional.ToNullable(reservationCapacity), Core.Optional.ToNullable(totalApplicationCapacity));
+            return new ApplicationMetricDescription(name.Value, Optional.ToNullable(maximumCapacity), Optional.ToNullable(reservationCapacity), Optional.ToNullable(totalApplicationCapacity));
         }
     }
 }

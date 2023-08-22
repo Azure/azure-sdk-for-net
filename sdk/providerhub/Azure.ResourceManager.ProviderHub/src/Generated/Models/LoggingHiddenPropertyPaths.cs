@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>
         public LoggingHiddenPropertyPaths()
         {
-            HiddenPathsOnRequest = new Core.ChangeTrackingList<string>();
-            HiddenPathsOnResponse = new Core.ChangeTrackingList<string>();
+            HiddenPathsOnRequest = new ChangeTrackingList<string>();
+            HiddenPathsOnResponse = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of LoggingHiddenPropertyPaths. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FirewallPolicySnat. </summary>
         public FirewallPolicySnat()
         {
-            PrivateRanges = new Core.ChangeTrackingList<string>();
+            PrivateRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FirewallPolicySnat. </summary>

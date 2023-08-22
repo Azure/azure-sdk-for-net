@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class VirtualNetworksPropertiesInfraVnetProfileHci : Core.IUtf8JsonSerializable
+    public partial class VirtualNetworksPropertiesInfraVnetProfileHci : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MocGroup))
+            if (Optional.IsDefined(MocGroup))
             {
                 writer.WritePropertyName("mocGroup"u8);
                 writer.WriteStringValue(MocGroup);
             }
-            if (Core.Optional.IsDefined(MocLocation))
+            if (Optional.IsDefined(MocLocation))
             {
                 writer.WritePropertyName("mocLocation"u8);
                 writer.WriteStringValue(MocLocation);
             }
-            if (Core.Optional.IsDefined(MocVnetName))
+            if (Optional.IsDefined(MocVnetName))
             {
                 writer.WritePropertyName("mocVnetName"u8);
                 writer.WriteStringValue(MocVnetName);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> mocGroup = default;
-            Core.Optional<string> mocLocation = default;
-            Core.Optional<string> mocVnetName = default;
+            Optional<string> mocGroup = default;
+            Optional<string> mocLocation = default;
+            Optional<string> mocVnetName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mocGroup"u8))

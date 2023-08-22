@@ -18,7 +18,7 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Core.Optional<ErrorData> error = default;
+            Optional<ErrorData> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))

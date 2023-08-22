@@ -11,59 +11,59 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestorableSqlContainerPropertiesResourceContainer : Core.IUtf8JsonSerializable
+    public partial class RestorableSqlContainerPropertiesResourceContainer : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(ContainerName);
-            if (Core.Optional.IsDefined(IndexingPolicy))
+            if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
                 writer.WriteObjectValue(IndexingPolicy);
             }
-            if (Core.Optional.IsDefined(PartitionKey))
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteObjectValue(PartitionKey);
             }
-            if (Core.Optional.IsDefined(DefaultTtl))
+            if (Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (Core.Optional.IsDefined(UniqueKeyPolicy))
+            if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
                 writer.WriteObjectValue(UniqueKeyPolicy);
             }
-            if (Core.Optional.IsDefined(ConflictResolutionPolicy))
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
-            if (Core.Optional.IsDefined(ClientEncryptionPolicy))
+            if (Optional.IsDefined(ClientEncryptionPolicy))
             {
                 writer.WritePropertyName("clientEncryptionPolicy"u8);
                 writer.WriteObjectValue(ClientEncryptionPolicy);
             }
-            if (Core.Optional.IsDefined(AnalyticalStorageTtl))
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Core.Optional.IsDefined(RestoreParameters))
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Core.Optional.IsDefined(CreateMode))
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MaterializedViewDefinition))
+            if (Optional.IsDefined(MaterializedViewDefinition))
             {
                 writer.WritePropertyName("materializedViewDefinition"u8);
                 writer.WriteObjectValue(MaterializedViewDefinition);
@@ -77,21 +77,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> self = default;
-            Core.Optional<string> rid = default;
-            Core.Optional<float> ts = default;
-            Core.Optional<ETag> etag = default;
+            Optional<string> self = default;
+            Optional<string> rid = default;
+            Optional<float> ts = default;
+            Optional<ETag> etag = default;
             string id = default;
-            Core.Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Core.Optional<CosmosDBContainerPartitionKey> partitionKey = default;
-            Core.Optional<int> defaultTtl = default;
-            Core.Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
-            Core.Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
-            Core.Optional<CosmosDBClientEncryptionPolicy> clientEncryptionPolicy = default;
-            Core.Optional<long> analyticalStorageTtl = default;
-            Core.Optional<ResourceRestoreParameters> restoreParameters = default;
-            Core.Optional<CosmosDBAccountCreateMode> createMode = default;
-            Core.Optional<MaterializedViewDefinition> materializedViewDefinition = default;
+            Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
+            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
+            Optional<int> defaultTtl = default;
+            Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
+            Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<CosmosDBClientEncryptionPolicy> clientEncryptionPolicy = default;
+            Optional<long> analyticalStorageTtl = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
+            Optional<MaterializedViewDefinition> materializedViewDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_self"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Core.Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Core.Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Core.Optional.ToNullable(createMode), materializedViewDefinition.Value, self.Value, rid.Value, Core.Optional.ToNullable(ts), Core.Optional.ToNullable(etag));
+            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), materializedViewDefinition.Value, self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

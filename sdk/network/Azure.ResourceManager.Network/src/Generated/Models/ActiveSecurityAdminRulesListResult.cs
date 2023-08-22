@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ActiveSecurityAdminRulesListResult. </summary>
         internal ActiveSecurityAdminRulesListResult()
         {
-            Value = new Core.ChangeTrackingList<ActiveBaseSecurityAdminRule>();
+            Value = new ChangeTrackingList<ActiveBaseSecurityAdminRule>();
         }
 
         /// <summary> Initializes a new instance of ActiveSecurityAdminRulesListResult. </summary>

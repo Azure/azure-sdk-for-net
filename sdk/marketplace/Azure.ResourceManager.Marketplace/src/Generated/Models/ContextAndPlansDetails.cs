@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of ContextAndPlansDetails. </summary>
         public ContextAndPlansDetails()
         {
-            PlanIds = new Core.ChangeTrackingList<string>();
+            PlanIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Plan's context, e.g. subscription ID, tenant ID. </summary>

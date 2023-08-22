@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadErrorInfo : Core.IUtf8JsonSerializable
+    public partial class WorkloadErrorInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ErrorCode))
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (Core.Optional.IsDefined(ErrorString))
+            if (Optional.IsDefined(ErrorString))
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (Core.Optional.IsDefined(ErrorTitle))
+            if (Optional.IsDefined(ErrorTitle))
             {
                 writer.WritePropertyName("errorTitle"u8);
                 writer.WriteStringValue(ErrorTitle);
             }
-            if (Core.Optional.IsCollectionDefined(Recommendations))
+            if (Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(AdditionalDetails))
+            if (Optional.IsDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<int> errorCode = default;
-            Core.Optional<string> errorString = default;
-            Core.Optional<string> errorTitle = default;
-            Core.Optional<IList<string>> recommendations = default;
-            Core.Optional<string> additionalDetails = default;
+            Optional<int> errorCode = default;
+            Optional<string> errorString = default;
+            Optional<string> errorTitle = default;
+            Optional<IList<string>> recommendations = default;
+            Optional<string> additionalDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadErrorInfo(Core.Optional.ToNullable(errorCode), errorString.Value, errorTitle.Value, Core.Optional.ToList(recommendations), additionalDetails.Value);
+            return new WorkloadErrorInfo(Optional.ToNullable(errorCode), errorString.Value, errorTitle.Value, Optional.ToList(recommendations), additionalDetails.Value);
         }
     }
 }

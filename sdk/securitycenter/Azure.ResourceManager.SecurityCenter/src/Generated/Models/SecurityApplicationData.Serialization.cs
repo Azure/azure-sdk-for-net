@@ -14,29 +14,29 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityApplicationData : Core.IUtf8JsonSerializable
+    public partial class SecurityApplicationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(SourceResourceType))
+            if (Optional.IsDefined(SourceResourceType))
             {
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(ConditionSets))
+            if (Optional.IsCollectionDefined(ConditionSets))
             {
                 writer.WritePropertyName("conditionSets"u8);
                 writer.WriteStartArray();
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<ApplicationSourceResourceType> sourceResourceType = default;
-            Core.Optional<IList<BinaryData>> conditionSets = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<string> description = default;
+            Optional<ApplicationSourceResourceType> sourceResourceType = default;
+            Optional<IList<BinaryData>> conditionSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     continue;
                 }
             }
-            return new SecurityApplicationData(id, name, type, systemData.Value, displayName.Value, description.Value, Core.Optional.ToNullable(sourceResourceType), Core.Optional.ToList(conditionSets));
+            return new SecurityApplicationData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(sourceResourceType), Optional.ToList(conditionSets));
         }
     }
 }

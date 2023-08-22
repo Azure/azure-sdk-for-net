@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxDeploymentUpdateProperties : Core.IUtf8JsonSerializable
+    public partial class NginxDeploymentUpdateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(EnableDiagnosticsSupport))
+            if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Core.Optional.IsDefined(Logging))
+            if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);

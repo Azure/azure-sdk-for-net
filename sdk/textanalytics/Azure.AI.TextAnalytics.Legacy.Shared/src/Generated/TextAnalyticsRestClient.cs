@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             if (body != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Core.Utf8JsonRequestContent();
+                var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(body);
                 request.Content = content;
             }
@@ -66,7 +66,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </remarks>
-        public async Task<Core.ResponseWithHeaders<TextAnalyticsAnalyzeHeaders>> AnalyzeAsync(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TextAnalyticsAnalyzeHeaders>> AnalyzeAsync(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeRequest(body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -74,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -84,7 +84,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="body"> Collection of documents to analyze and tasks to execute. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Submit a collection of text documents for analysis. Specify one or more unique tasks to be executed. </remarks>
-        public Core.ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> Analyze(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TextAnalyticsAnalyzeHeaders> Analyze(AnalyzeBatchInput body = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateAnalyzeRequest(body);
             _pipeline.Send(message, cancellationToken);
@@ -92,7 +92,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -286,7 +286,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Cancel healthcare prediction job. </remarks>
-        public async Task<Core.ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders>> CancelHealthJobAsync(Guid jobId, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders>> CancelHealthJobAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelHealthJobRequest(jobId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -294,7 +294,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -304,7 +304,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="jobId"> Job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Cancel healthcare prediction job. </remarks>
-        public Core.ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> CancelHealthJob(Guid jobId, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> CancelHealthJob(Guid jobId, CancellationToken cancellationToken = default)
         {
             using var message = CreateCancelHealthJobRequest(jobId);
             _pipeline.Send(message, cancellationToken);
@@ -312,7 +312,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -343,7 +343,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
@@ -357,7 +357,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         /// <remarks> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </remarks>
-        public async Task<Core.ResponseWithHeaders<TextAnalyticsHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<TextAnalyticsHealthHeaders>> HealthAsync(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -370,7 +370,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -384,7 +384,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         /// <remarks> Start a healthcare analysis job to recognize healthcare related entities (drugs, conditions, symptoms, etc) and their relations. </remarks>
-        public Core.ResponseWithHeaders<TextAnalyticsHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<TextAnalyticsHealthHeaders> Health(MultiLanguageBatchInput input, string modelVersion = null, StringIndexType? stringIndexType = null, bool? loggingOptOut = null, CancellationToken cancellationToken = default)
         {
             if (input == null)
             {
@@ -397,7 +397,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             switch (message.Response.Status)
             {
                 case 202:
-                    return Core.ResponseWithHeaders.FromValue(headers, message.Response);
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -432,7 +432,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
@@ -532,14 +532,14 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            if (piiCategories != null && Core.Optional.IsCollectionDefined(piiCategories))
+            if (piiCategories != null && Optional.IsCollectionDefined(piiCategories))
             {
                 uri.AppendQueryDelimited("piiCategories", piiCategories, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
@@ -648,7 +648,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
@@ -743,7 +743,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
@@ -836,7 +836,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
@@ -937,7 +937,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Core.Utf8JsonRequestContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;

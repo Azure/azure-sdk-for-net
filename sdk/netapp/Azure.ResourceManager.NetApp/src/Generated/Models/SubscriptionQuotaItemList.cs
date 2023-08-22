@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>
         internal SubscriptionQuotaItemList()
         {
-            Value = new Core.ChangeTrackingList<NetAppSubscriptionQuotaItem>();
+            Value = new ChangeTrackingList<NetAppSubscriptionQuotaItem>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionQuotaItemList. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class SiteRecoveryPolicyOperationSource : Core.IOperationSource<SiteRecoveryPolicyResource>
+    internal class SiteRecoveryPolicyOperationSource : IOperationSource<SiteRecoveryPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _client = client;
         }
 
-        SiteRecoveryPolicyResource Core.IOperationSource<SiteRecoveryPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteRecoveryPolicyResource IOperationSource<SiteRecoveryPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(document.RootElement);
             return new SiteRecoveryPolicyResource(_client, data);
         }
 
-        async ValueTask<SiteRecoveryPolicyResource> Core.IOperationSource<SiteRecoveryPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteRecoveryPolicyResource> IOperationSource<SiteRecoveryPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(document.RootElement);

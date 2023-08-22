@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenancePatchConfiguration : Core.IUtf8JsonSerializable
+    public partial class MaintenancePatchConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RebootSetting))
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
-            if (Core.Optional.IsDefined(WindowsParameters))
+            if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
-            if (Core.Optional.IsDefined(LinuxParameters))
+            if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Core.Optional<MaintenanceRebootOption> rebootSetting = default;
-            Core.Optional<MaintenanceWindowsPatchSettings> windowsParameters = default;
-            Core.Optional<MaintenanceLinuxPatchSettings> linuxParameters = default;
+            Optional<MaintenanceRebootOption> rebootSetting = default;
+            Optional<MaintenanceWindowsPatchSettings> windowsParameters = default;
+            Optional<MaintenanceLinuxPatchSettings> linuxParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rebootSetting"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     continue;
                 }
             }
-            return new MaintenancePatchConfiguration(Core.Optional.ToNullable(rebootSetting), windowsParameters.Value, linuxParameters.Value);
+            return new MaintenancePatchConfiguration(Optional.ToNullable(rebootSetting), windowsParameters.Value, linuxParameters.Value);
         }
     }
 }

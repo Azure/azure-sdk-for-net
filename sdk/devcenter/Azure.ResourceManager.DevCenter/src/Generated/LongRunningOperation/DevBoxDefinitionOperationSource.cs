@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    internal class DevBoxDefinitionOperationSource : Core.IOperationSource<DevBoxDefinitionResource>
+    internal class DevBoxDefinitionOperationSource : IOperationSource<DevBoxDefinitionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevCenter
             _client = client;
         }
 
-        DevBoxDefinitionResource Core.IOperationSource<DevBoxDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DevBoxDefinitionResource IOperationSource<DevBoxDefinitionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DevBoxDefinitionData.DeserializeDevBoxDefinitionData(document.RootElement);
             return new DevBoxDefinitionResource(_client, data);
         }
 
-        async ValueTask<DevBoxDefinitionResource> Core.IOperationSource<DevBoxDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DevBoxDefinitionResource> IOperationSource<DevBoxDefinitionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DevBoxDefinitionData.DeserializeDevBoxDefinitionData(document.RootElement);

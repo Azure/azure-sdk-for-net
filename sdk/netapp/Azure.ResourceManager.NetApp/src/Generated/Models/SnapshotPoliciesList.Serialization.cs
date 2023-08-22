@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SnapshotPolicyData>> value = default;
+            Optional<IReadOnlyList<SnapshotPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new SnapshotPoliciesList(Core.Optional.ToList(value));
+            return new SnapshotPoliciesList(Optional.ToList(value));
         }
     }
 }

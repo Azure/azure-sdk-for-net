@@ -20,23 +20,23 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> configurationDescription = default;
-            Core.Optional<string> ruleCollectionDescription = default;
-            Core.Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Core.Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> configurationDescription = default;
+            Optional<string> ruleCollectionDescription = default;
+            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
+            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
             EffectiveAdminRuleKind kind = default;
-            Core.Optional<string> description = default;
-            Core.Optional<SecurityConfigurationRuleProtocol> protocol = default;
-            Core.Optional<IReadOnlyList<AddressPrefixItem>> sources = default;
-            Core.Optional<IReadOnlyList<AddressPrefixItem>> destinations = default;
-            Core.Optional<IReadOnlyList<string>> sourcePortRanges = default;
-            Core.Optional<IReadOnlyList<string>> destinationPortRanges = default;
-            Core.Optional<SecurityConfigurationRuleAccess> access = default;
-            Core.Optional<int> priority = default;
-            Core.Optional<SecurityConfigurationRuleDirection> direction = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<Guid> resourceGuid = default;
+            Optional<string> description = default;
+            Optional<SecurityConfigurationRuleProtocol> protocol = default;
+            Optional<IReadOnlyList<AddressPrefixItem>> sources = default;
+            Optional<IReadOnlyList<AddressPrefixItem>> destinations = default;
+            Optional<IReadOnlyList<string>> sourcePortRanges = default;
+            Optional<IReadOnlyList<string>> destinationPortRanges = default;
+            Optional<SecurityConfigurationRuleAccess> access = default;
+            Optional<int> priority = default;
+            Optional<SecurityConfigurationRuleDirection> direction = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new EffectiveSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Core.Optional.ToList(ruleCollectionAppliesToGroups), Core.Optional.ToList(ruleGroups), kind, description.Value, Core.Optional.ToNullable(protocol), Core.Optional.ToList(sources), Core.Optional.ToList(destinations), Core.Optional.ToList(sourcePortRanges), Core.Optional.ToList(destinationPortRanges), Core.Optional.ToNullable(access), Core.Optional.ToNullable(priority), Core.Optional.ToNullable(direction), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceGuid));
+            return new EffectiveSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, description.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

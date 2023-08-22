@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class LocalNetworkGatewayOperationSource : Core.IOperationSource<LocalNetworkGatewayResource>
+    internal class LocalNetworkGatewayOperationSource : IOperationSource<LocalNetworkGatewayResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        LocalNetworkGatewayResource Core.IOperationSource<LocalNetworkGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LocalNetworkGatewayResource IOperationSource<LocalNetworkGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement);
             return new LocalNetworkGatewayResource(_client, data);
         }
 
-        async ValueTask<LocalNetworkGatewayResource> Core.IOperationSource<LocalNetworkGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LocalNetworkGatewayResource> IOperationSource<LocalNetworkGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(document.RootElement);

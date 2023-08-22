@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> timestampString = default;
-            Core.Optional<string> eventTypeString = default;
-            Core.Optional<string> eventText = default;
+            Optional<string> timestampString = default;
+            Optional<string> eventTypeString = default;
+            Optional<string> eventText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestampString"u8))

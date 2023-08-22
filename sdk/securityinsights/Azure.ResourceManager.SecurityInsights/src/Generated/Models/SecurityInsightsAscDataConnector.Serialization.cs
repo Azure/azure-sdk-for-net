@@ -12,26 +12,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAscDataConnector : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAscDataConnector : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DataTypes))
+            if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteObjectValue(DataTypes);
             }
-            if (Core.Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             DataConnectorKind kind = default;
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SecurityInsightsAlertsDataTypeOfDataConnector> dataTypes = default;
-            Core.Optional<string> subscriptionId = default;
+            Optional<SystemData> systemData = default;
+            Optional<SecurityInsightsAlertsDataTypeOfDataConnector> dataTypes = default;
+            Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsAscDataConnector(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), dataTypes.Value, subscriptionId.Value);
+            return new SecurityInsightsAscDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), dataTypes.Value, subscriptionId.Value);
         }
     }
 }

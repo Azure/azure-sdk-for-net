@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<ArchiveStatusType> state = default;
-            Core.Optional<DateTimeOffset> lastCompletionTime = default;
-            Core.Optional<DateTimeOffset> lastStartedTime = default;
-            Core.Optional<int> percentComplete = default;
-            Core.Optional<string> errorCode = default;
-            Core.Optional<string> errorMessage = default;
+            Optional<ArchiveStatusType> state = default;
+            Optional<DateTimeOffset> lastCompletionTime = default;
+            Optional<DateTimeOffset> lastStartedTime = default;
+            Optional<int> percentComplete = default;
+            Optional<string> errorCode = default;
+            Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new AmlFileSystemArchiveStatus(Core.Optional.ToNullable(state), Core.Optional.ToNullable(lastCompletionTime), Core.Optional.ToNullable(lastStartedTime), Core.Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
+            return new AmlFileSystemArchiveStatus(Optional.ToNullable(state), Optional.ToNullable(lastCompletionTime), Optional.ToNullable(lastStartedTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value);
         }
     }
 }

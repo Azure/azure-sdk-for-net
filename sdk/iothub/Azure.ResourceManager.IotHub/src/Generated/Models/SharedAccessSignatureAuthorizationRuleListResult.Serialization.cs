@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SharedAccessSignatureAuthorizationRule>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<SharedAccessSignatureAuthorizationRule>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new SharedAccessSignatureAuthorizationRuleListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new SharedAccessSignatureAuthorizationRuleListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -10,57 +10,57 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaPolicyContent : Core.IUtf8JsonSerializable
+    public partial class HyperVReplicaPolicyContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RecoveryPoints))
+            if (Optional.IsDefined(RecoveryPoints))
             {
                 writer.WritePropertyName("recoveryPoints"u8);
                 writer.WriteNumberValue(RecoveryPoints.Value);
             }
-            if (Core.Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (Core.Optional.IsDefined(Compression))
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(Compression);
             }
-            if (Core.Optional.IsDefined(InitialReplicationMethod))
+            if (Optional.IsDefined(InitialReplicationMethod))
             {
                 writer.WritePropertyName("initialReplicationMethod"u8);
                 writer.WriteStringValue(InitialReplicationMethod);
             }
-            if (Core.Optional.IsDefined(OnlineReplicationStartTime))
+            if (Optional.IsDefined(OnlineReplicationStartTime))
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (Core.Optional.IsDefined(OfflineReplicationImportPath))
+            if (Optional.IsDefined(OfflineReplicationImportPath))
             {
                 writer.WritePropertyName("offlineReplicationImportPath"u8);
                 writer.WriteStringValue(OfflineReplicationImportPath);
             }
-            if (Core.Optional.IsDefined(OfflineReplicationExportPath))
+            if (Optional.IsDefined(OfflineReplicationExportPath))
             {
                 writer.WritePropertyName("offlineReplicationExportPath"u8);
                 writer.WriteStringValue(OfflineReplicationExportPath);
             }
-            if (Core.Optional.IsDefined(ReplicationPort))
+            if (Optional.IsDefined(ReplicationPort))
             {
                 writer.WritePropertyName("replicationPort"u8);
                 writer.WriteNumberValue(ReplicationPort.Value);
             }
-            if (Core.Optional.IsDefined(AllowedAuthenticationType))
+            if (Optional.IsDefined(AllowedAuthenticationType))
             {
                 writer.WritePropertyName("allowedAuthenticationType"u8);
                 writer.WriteNumberValue(AllowedAuthenticationType.Value);
             }
-            if (Core.Optional.IsDefined(ReplicaDeletion))
+            if (Optional.IsDefined(ReplicaDeletion))
             {
                 writer.WritePropertyName("replicaDeletion"u8);
                 writer.WriteStringValue(ReplicaDeletion);

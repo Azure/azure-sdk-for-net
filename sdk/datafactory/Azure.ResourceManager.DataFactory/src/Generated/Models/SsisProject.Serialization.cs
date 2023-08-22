@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<long> folderId = default;
-            Core.Optional<long> version = default;
-            Core.Optional<IReadOnlyList<SsisEnvironmentReference>> environmentRefs = default;
-            Core.Optional<IReadOnlyList<SsisParameterInfo>> parameters = default;
+            Optional<long> folderId = default;
+            Optional<long> version = default;
+            Optional<IReadOnlyList<SsisEnvironmentReference>> environmentRefs = default;
+            Optional<IReadOnlyList<SsisParameterInfo>> parameters = default;
             SsisObjectMetadataType type = default;
-            Core.Optional<long> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> description = default;
+            Optional<long> id = default;
+            Optional<string> name = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new SsisProject(type, Core.Optional.ToNullable(id), name.Value, description.Value, Core.Optional.ToNullable(folderId), Core.Optional.ToNullable(version), Core.Optional.ToList(environmentRefs), Core.Optional.ToList(parameters));
+            return new SsisProject(type, Optional.ToNullable(id), name.Value, description.Value, Optional.ToNullable(folderId), Optional.ToNullable(version), Optional.ToList(environmentRefs), Optional.ToList(parameters));
         }
     }
 }

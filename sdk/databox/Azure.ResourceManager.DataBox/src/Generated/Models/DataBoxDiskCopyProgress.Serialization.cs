@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> serialNumber = default;
-            Core.Optional<long> bytesCopied = default;
-            Core.Optional<int> percentComplete = default;
-            Core.Optional<DataBoxCopyStatus> status = default;
-            Core.Optional<ResponseError> error = default;
-            Core.Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            Optional<string> serialNumber = default;
+            Optional<long> bytesCopied = default;
+            Optional<int> percentComplete = default;
+            Optional<DataBoxCopyStatus> status = default;
+            Optional<ResponseError> error = default;
+            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxDiskCopyProgress(serialNumber.Value, Core.Optional.ToNullable(bytesCopied), Core.Optional.ToNullable(percentComplete), Core.Optional.ToNullable(status), error.Value, Core.Optional.ToList(actions));
+            return new DataBoxDiskCopyProgress(serialNumber.Value, Optional.ToNullable(bytesCopied), Optional.ToNullable(percentComplete), Optional.ToNullable(status), error.Value, Optional.ToList(actions));
         }
     }
 }

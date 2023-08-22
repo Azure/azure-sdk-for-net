@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<KustoAvailableSkuDetails>> value = default;
+            Optional<IReadOnlyList<KustoAvailableSkuDetails>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new ListResourceSkusResult(Core.Optional.ToList(value));
+            return new ListResourceSkusResult(Optional.ToList(value));
         }
     }
 }

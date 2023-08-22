@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of VaultHealthProperties. </summary>
         internal VaultHealthProperties()
         {
-            VaultErrors = new Core.ChangeTrackingList<SiteRecoveryHealthError>();
+            VaultErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of VaultHealthProperties. </summary>

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagedNetworkGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ManagedNetworkGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     continue;
                 }
             }
-            return new ManagedNetworkGroupListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagedNetworkGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

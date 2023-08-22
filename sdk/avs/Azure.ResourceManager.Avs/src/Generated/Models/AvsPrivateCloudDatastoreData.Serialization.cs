@@ -13,19 +13,19 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudDatastoreData : Core.IUtf8JsonSerializable
+    public partial class AvsPrivateCloudDatastoreData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetAppVolume))
+            if (Optional.IsDefined(NetAppVolume))
             {
                 writer.WritePropertyName("netAppVolume"u8);
                 JsonSerializer.Serialize(writer, NetAppVolume);
             }
-            if (Core.Optional.IsDefined(DiskPoolVolume))
+            if (Optional.IsDefined(DiskPoolVolume))
             {
                 writer.WritePropertyName("diskPoolVolume"u8);
                 writer.WriteObjectValue(DiskPoolVolume);
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Avs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<AvsPrivateCloudDatastoreProvisioningState> provisioningState = default;
-            Core.Optional<WritableSubResource> netAppVolume = default;
-            Core.Optional<DiskPoolVolume> diskPoolVolume = default;
-            Core.Optional<DatastoreStatus> status = default;
+            Optional<SystemData> systemData = default;
+            Optional<AvsPrivateCloudDatastoreProvisioningState> provisioningState = default;
+            Optional<WritableSubResource> netAppVolume = default;
+            Optional<DiskPoolVolume> diskPoolVolume = default;
+            Optional<DatastoreStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs
                     continue;
                 }
             }
-            return new AvsPrivateCloudDatastoreData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), netAppVolume, diskPoolVolume.Value, Core.Optional.ToNullable(status));
+            return new AvsPrivateCloudDatastoreData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), netAppVolume, diskPoolVolume.Value, Optional.ToNullable(status));
         }
     }
 }

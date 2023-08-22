@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class ExceptionPolicy : Core.IUtf8JsonSerializable
+    public partial class ExceptionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsCollectionDefined(_exceptionRules))
+            if (Optional.IsCollectionDefined(_exceptionRules))
             {
                 writer.WritePropertyName("exceptionRules"u8);
                 writer.WriteStartObject();
@@ -42,9 +42,9 @@ namespace Azure.Communication.JobRouter.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<IDictionary<string, ExceptionRule>> exceptionRules = default;
+            Optional<string> id = default;
+            Optional<string> name = default;
+            Optional<IDictionary<string, ExceptionRule>> exceptionRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -72,7 +72,7 @@ namespace Azure.Communication.JobRouter.Models
                     continue;
                 }
             }
-            return new ExceptionPolicy(id.Value, name.Value, Core.Optional.ToDictionary(exceptionRules));
+            return new ExceptionPolicy(id.Value, name.Value, Optional.ToDictionary(exceptionRules));
         }
     }
 }

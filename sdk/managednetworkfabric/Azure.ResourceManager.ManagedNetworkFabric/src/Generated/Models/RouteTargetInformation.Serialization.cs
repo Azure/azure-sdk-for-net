@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class RouteTargetInformation : Core.IUtf8JsonSerializable
+    public partial class RouteTargetInformation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(ImportIPv4RouteTargets))
+            if (Optional.IsCollectionDefined(ImportIPv4RouteTargets))
             {
                 writer.WritePropertyName("importIpv4RouteTargets"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ImportIPv6RouteTargets))
+            if (Optional.IsCollectionDefined(ImportIPv6RouteTargets))
             {
                 writer.WritePropertyName("importIpv6RouteTargets"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExportIPv4RouteTargets))
+            if (Optional.IsCollectionDefined(ExportIPv4RouteTargets))
             {
                 writer.WritePropertyName("exportIpv4RouteTargets"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ExportIPv6RouteTargets))
+            if (Optional.IsCollectionDefined(ExportIPv6RouteTargets))
             {
                 writer.WritePropertyName("exportIpv6RouteTargets"u8);
                 writer.WriteStartArray();
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> importIPv4RouteTargets = default;
-            Core.Optional<IList<string>> importIPv6RouteTargets = default;
-            Core.Optional<IList<string>> exportIPv4RouteTargets = default;
-            Core.Optional<IList<string>> exportIPv6RouteTargets = default;
+            Optional<IList<string>> importIPv4RouteTargets = default;
+            Optional<IList<string>> importIPv6RouteTargets = default;
+            Optional<IList<string>> exportIPv4RouteTargets = default;
+            Optional<IList<string>> exportIPv6RouteTargets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("importIpv4RouteTargets"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new RouteTargetInformation(Core.Optional.ToList(importIPv4RouteTargets), Core.Optional.ToList(importIPv6RouteTargets), Core.Optional.ToList(exportIPv4RouteTargets), Core.Optional.ToList(exportIPv6RouteTargets));
+            return new RouteTargetInformation(Optional.ToList(importIPv4RouteTargets), Optional.ToList(importIPv6RouteTargets), Optional.ToList(exportIPv4RouteTargets), Optional.ToList(exportIPv6RouteTargets));
         }
     }
 }

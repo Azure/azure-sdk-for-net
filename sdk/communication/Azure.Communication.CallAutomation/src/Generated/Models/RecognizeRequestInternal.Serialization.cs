@@ -10,31 +10,31 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RecognizeRequestInternal : Core.IUtf8JsonSerializable
+    internal partial class RecognizeRequestInternal : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("recognizeInputType"u8);
             writer.WriteStringValue(RecognizeInputType.ToString());
-            if (Core.Optional.IsDefined(PlayPrompt))
+            if (Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);
                 writer.WriteObjectValue(PlayPrompt);
             }
-            if (Core.Optional.IsDefined(InterruptCallMediaOperation))
+            if (Optional.IsDefined(InterruptCallMediaOperation))
             {
                 writer.WritePropertyName("interruptCallMediaOperation"u8);
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
             writer.WriteObjectValue(RecognizeOptions);
-            if (Core.Optional.IsDefined(OperationContext))
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Core.Optional.IsDefined(CallbackUri))
+            if (Optional.IsDefined(CallbackUri))
             {
                 writer.WritePropertyName("callbackUri"u8);
                 writer.WriteStringValue(CallbackUri);

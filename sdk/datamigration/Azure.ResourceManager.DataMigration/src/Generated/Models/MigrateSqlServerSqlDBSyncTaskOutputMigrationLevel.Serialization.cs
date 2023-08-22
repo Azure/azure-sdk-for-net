@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<string> sourceServerVersion = default;
-            Core.Optional<string> sourceServer = default;
-            Core.Optional<string> targetServerVersion = default;
-            Core.Optional<string> targetServer = default;
-            Core.Optional<int> databaseCount = default;
-            Core.Optional<string> id = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<string> sourceServerVersion = default;
+            Optional<string> sourceServer = default;
+            Optional<string> targetServerVersion = default;
+            Optional<string> targetServer = default;
+            Optional<int> databaseCount = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(id.Value, resultType, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), sourceServerVersion.Value, sourceServer.Value, targetServerVersion.Value, targetServer.Value, Core.Optional.ToNullable(databaseCount));
+            return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerVersion.Value, sourceServer.Value, targetServerVersion.Value, targetServer.Value, Optional.ToNullable(databaseCount));
         }
     }
 }

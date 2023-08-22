@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    internal partial class ScopeCluster : Core.IUtf8JsonSerializable
+    internal partial class ScopeCluster : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ReleaseNamespace))
+            if (Optional.IsDefined(ReleaseNamespace))
             {
                 writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<string> releaseNamespace = default;
+            Optional<string> releaseNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("releaseNamespace"u8))

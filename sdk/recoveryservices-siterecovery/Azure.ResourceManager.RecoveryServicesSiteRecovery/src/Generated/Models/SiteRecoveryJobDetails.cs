@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>
         protected SiteRecoveryJobDetails()
         {
-            AffectedObjectDetails = new Core.ChangeTrackingDictionary<string, string>();
+            AffectedObjectDetails = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryJobDetails. </summary>

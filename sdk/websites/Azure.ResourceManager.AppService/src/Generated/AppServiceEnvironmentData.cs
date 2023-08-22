@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="location"> The location. </param>
         public AppServiceEnvironmentData(AzureLocation location) : base(location)
         {
-            ClusterSettings = new Core.ChangeTrackingList<AppServiceNameValuePair>();
-            UserWhitelistedIPRanges = new Core.ChangeTrackingList<string>();
+            ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
+            UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>

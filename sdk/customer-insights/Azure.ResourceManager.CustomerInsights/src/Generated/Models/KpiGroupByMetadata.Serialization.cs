@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, string>> displayName = default;
-            Core.Optional<string> fieldName = default;
-            Core.Optional<string> fieldType = default;
+            Optional<IReadOnlyDictionary<string, string>> displayName = default;
+            Optional<string> fieldName = default;
+            Optional<string> fieldType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new KpiGroupByMetadata(Core.Optional.ToDictionary(displayName), fieldName.Value, fieldType.Value);
+            return new KpiGroupByMetadata(Optional.ToDictionary(displayName), fieldName.Value, fieldType.Value);
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<byte[]> key = default;
-            Core.Optional<IReadOnlyList<MediaAssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
+            Optional<byte[]> key = default;
+            Optional<IReadOnlyList<MediaAssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new StorageEncryptedAssetDecryptionInfo(key.Value, Core.Optional.ToList(assetFileEncryptionMetadata));
+            return new StorageEncryptedAssetDecryptionInfo(key.Value, Optional.ToList(assetFileEncryptionMetadata));
         }
     }
 }

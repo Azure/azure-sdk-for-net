@@ -12,49 +12,49 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentAgreement : Core.IUtf8JsonSerializable
+    public partial class ConfluentAgreement : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Publisher))
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Core.Optional.IsDefined(Product))
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Core.Optional.IsDefined(Plan))
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (Core.Optional.IsDefined(LicenseTextLink))
+            if (Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
-            if (Core.Optional.IsDefined(PrivacyPolicyLink))
+            if (Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (Core.Optional.IsDefined(RetrieveOn))
+            if (Optional.IsDefined(RetrieveOn))
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(Signature))
+            if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Core.Optional.IsDefined(IsAccepted))
+            if (Optional.IsDefined(IsAccepted))
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(IsAccepted.Value);
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Confluent.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> publisher = default;
-            Core.Optional<string> product = default;
-            Core.Optional<string> plan = default;
-            Core.Optional<string> licenseTextLink = default;
-            Core.Optional<string> privacyPolicyLink = default;
-            Core.Optional<DateTimeOffset> retrieveDatetime = default;
-            Core.Optional<string> signature = default;
-            Core.Optional<bool> accepted = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> publisher = default;
+            Optional<string> product = default;
+            Optional<string> plan = default;
+            Optional<string> licenseTextLink = default;
+            Optional<string> privacyPolicyLink = default;
+            Optional<DateTimeOffset> retrieveDatetime = default;
+            Optional<string> signature = default;
+            Optional<bool> accepted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     continue;
                 }
             }
-            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Core.Optional.ToNullable(retrieveDatetime), signature.Value, Core.Optional.ToNullable(accepted));
+            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
         }
     }
 }

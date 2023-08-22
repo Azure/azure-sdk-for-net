@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of DpmErrorInfo. </summary>
         public DpmErrorInfo()
         {
-            Recommendations = new Core.ChangeTrackingList<string>();
+            Recommendations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DpmErrorInfo. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostInstanceView. </summary>
         internal DedicatedHostInstanceView()
         {
-            Statuses = new Core.ChangeTrackingList<InstanceViewStatus>();
+            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostInstanceView. </summary>

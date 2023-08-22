@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticMetricSample : Core.IUtf8JsonSerializable
+    public partial class DiagnosticMetricSample : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Core.Optional.IsDefined(RoleInstance))
+            if (Optional.IsDefined(RoleInstance))
             {
                 writer.WritePropertyName("roleInstance"u8);
                 writer.WriteStringValue(RoleInstance);
             }
-            if (Core.Optional.IsDefined(Total))
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Core.Optional.IsDefined(Maximum))
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Core.Optional.IsDefined(Minimum))
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Core.Optional.IsDefined(IsAggregated))
+            if (Optional.IsDefined(IsAggregated))
             {
                 writer.WritePropertyName("isAggregated"u8);
                 writer.WriteBooleanValue(IsAggregated.Value);
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> timestamp = default;
-            Core.Optional<string> roleInstance = default;
-            Core.Optional<double> total = default;
-            Core.Optional<double> maximum = default;
-            Core.Optional<double> minimum = default;
-            Core.Optional<bool> isAggregated = default;
+            Optional<DateTimeOffset> timestamp = default;
+            Optional<string> roleInstance = default;
+            Optional<double> total = default;
+            Optional<double> maximum = default;
+            Optional<double> minimum = default;
+            Optional<bool> isAggregated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new DiagnosticMetricSample(Core.Optional.ToNullable(timestamp), roleInstance.Value, Core.Optional.ToNullable(total), Core.Optional.ToNullable(maximum), Core.Optional.ToNullable(minimum), Core.Optional.ToNullable(isAggregated));
+            return new DiagnosticMetricSample(Optional.ToNullable(timestamp), roleInstance.Value, Optional.ToNullable(total), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(isAggregated));
         }
     }
 }

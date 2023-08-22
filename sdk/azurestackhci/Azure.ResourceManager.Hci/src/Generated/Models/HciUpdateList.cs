@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of HciUpdateList. </summary>
         internal HciUpdateList()
         {
-            Value = new Core.ChangeTrackingList<UpdateData>();
+            Value = new ChangeTrackingList<UpdateData>();
         }
 
         /// <summary> Initializes a new instance of HciUpdateList. </summary>

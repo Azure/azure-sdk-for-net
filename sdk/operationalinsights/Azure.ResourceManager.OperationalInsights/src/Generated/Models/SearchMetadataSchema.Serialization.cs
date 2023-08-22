@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<int> version = default;
+            Optional<string> name = default;
+            Optional<int> version = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     continue;
                 }
             }
-            return new SearchMetadataSchema(name.Value, Core.Optional.ToNullable(version));
+            return new SearchMetadataSchema(name.Value, Optional.ToNullable(version));
         }
     }
 }

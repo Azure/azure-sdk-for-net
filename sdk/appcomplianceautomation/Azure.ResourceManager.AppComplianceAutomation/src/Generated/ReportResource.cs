@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = await _reportResourceReportRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation(_reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateDeleteRequest(Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation(_reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = _reportResourceReportRestClient.Delete(Id.Name, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation(_reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateDeleteRequest(Id.Name).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation(_reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = await _reportResourceReportRestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateUpdateRequest(Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateUpdateRequest(Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             try
             {
                 var response = _reportResourceReportRestClient.Update(Id.Name, patch, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateUpdateRequest(Id.Name, patch).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new AppComplianceAutomationArmOperation<ReportResource>(new ReportResourceOperationSource(Client), _reportResourceReportClientDiagnostics, Pipeline, _reportResourceReportRestClient.CreateUpdateRequest(Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

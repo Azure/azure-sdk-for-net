@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of ManagedHsmNetworkRuleSet. </summary>
         public ManagedHsmNetworkRuleSet()
         {
-            IPRules = new Core.ChangeTrackingList<ManagedHsmIPRule>();
-            VirtualNetworkRules = new Core.ChangeTrackingList<ManagedHsmVirtualNetworkRule>();
+            IPRules = new ChangeTrackingList<ManagedHsmIPRule>();
+            VirtualNetworkRules = new ChangeTrackingList<ManagedHsmVirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of ManagedHsmNetworkRuleSet. </summary>

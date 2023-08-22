@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ForecastFilter. </summary>
         public ForecastFilter()
         {
-            And = new Core.ChangeTrackingList<ForecastFilter>();
-            Or = new Core.ChangeTrackingList<ForecastFilter>();
+            And = new ChangeTrackingList<ForecastFilter>();
+            Or = new ChangeTrackingList<ForecastFilter>();
         }
 
         /// <summary> The logical "AND" expression. Must have at least 2 items. </summary>

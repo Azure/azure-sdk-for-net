@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NetworkFabricAccessControlListPatch. </summary>
         public NetworkFabricAccessControlListPatch()
         {
-            MatchConfigurations = new Core.ChangeTrackingList<AccessControlListMatchConfiguration>();
-            DynamicMatchConfigurations = new Core.ChangeTrackingList<CommonDynamicMatchConfiguration>();
+            MatchConfigurations = new ChangeTrackingList<AccessControlListMatchConfiguration>();
+            DynamicMatchConfigurations = new ChangeTrackingList<CommonDynamicMatchConfiguration>();
         }
 
         /// <summary> Input method to configure Access Control List. </summary>

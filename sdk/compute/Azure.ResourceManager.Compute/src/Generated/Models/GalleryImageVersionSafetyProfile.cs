@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryImageVersionSafetyProfile. </summary>
         public GalleryImageVersionSafetyProfile()
         {
-            PolicyViolations = new Core.ChangeTrackingList<GalleryImageVersionPolicyViolation>();
+            PolicyViolations = new ChangeTrackingList<GalleryImageVersionPolicyViolation>();
         }
 
         /// <summary> Initializes a new instance of GalleryImageVersionSafetyProfile. </summary>

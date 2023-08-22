@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.FluidRelay
 {
-    public partial class FluidRelayContainerData : Core.IUtf8JsonSerializable
+    public partial class FluidRelayContainerData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.FluidRelay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> frsTenantId = default;
-            Core.Optional<Guid> frsContainerId = default;
-            Core.Optional<FluidRelayProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<DateTimeOffset> lastAccessTime = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> frsTenantId = default;
+            Optional<Guid> frsContainerId = default;
+            Optional<FluidRelayProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<DateTimeOffset> lastAccessTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.FluidRelay
                     continue;
                 }
             }
-            return new FluidRelayContainerData(id, name, type, systemData.Value, Core.Optional.ToNullable(frsTenantId), Core.Optional.ToNullable(frsContainerId), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(lastAccessTime));
+            return new FluidRelayContainerData(id, name, type, systemData.Value, Optional.ToNullable(frsTenantId), Optional.ToNullable(frsContainerId), Optional.ToNullable(provisioningState), Optional.ToNullable(creationTime), Optional.ToNullable(lastAccessTime));
         }
     }
 }

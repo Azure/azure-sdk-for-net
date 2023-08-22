@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ChangeThresholdConditionPatch : Core.IUtf8JsonSerializable
+    internal partial class ChangeThresholdConditionPatch : IUtf8JsonSerializable
     {
     }
 }

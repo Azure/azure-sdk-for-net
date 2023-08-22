@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class NamespaceTopicOperationSource : Core.IOperationSource<NamespaceTopicResource>
+    internal class NamespaceTopicOperationSource : IOperationSource<NamespaceTopicResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        NamespaceTopicResource Core.IOperationSource<NamespaceTopicResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NamespaceTopicResource IOperationSource<NamespaceTopicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = NamespaceTopicData.DeserializeNamespaceTopicData(document.RootElement);
             return new NamespaceTopicResource(_client, data);
         }
 
-        async ValueTask<NamespaceTopicResource> Core.IOperationSource<NamespaceTopicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NamespaceTopicResource> IOperationSource<NamespaceTopicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = NamespaceTopicData.DeserializeNamespaceTopicData(document.RootElement);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ResourceGroupListResult. </summary>
         internal ResourceGroupListResult()
         {
-            Value = new Core.ChangeTrackingList<ResourceGroupData>();
+            Value = new ChangeTrackingList<ResourceGroupData>();
         }
 
         /// <summary> Initializes a new instance of ResourceGroupListResult. </summary>

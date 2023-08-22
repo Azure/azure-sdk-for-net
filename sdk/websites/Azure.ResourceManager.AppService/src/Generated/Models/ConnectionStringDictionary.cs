@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of ConnectionStringDictionary. </summary>
         public ConnectionStringDictionary()
         {
-            Properties = new Core.ChangeTrackingDictionary<string, ConnStringValueTypePair>();
+            Properties = new ChangeTrackingDictionary<string, ConnStringValueTypePair>();
         }
 
         /// <summary> Initializes a new instance of ConnectionStringDictionary. </summary>

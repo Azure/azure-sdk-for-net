@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         /// <summary> Initializes a new instance of EnergyServicePatch. </summary>
         public EnergyServicePatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Resource tags. </summary>

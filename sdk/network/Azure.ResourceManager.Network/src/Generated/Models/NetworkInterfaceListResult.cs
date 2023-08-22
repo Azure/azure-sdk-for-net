@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceListResult. </summary>
         internal NetworkInterfaceListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkInterfaceData>();
+            Value = new ChangeTrackingList<NetworkInterfaceData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceListResult. </summary>

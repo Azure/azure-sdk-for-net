@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Dns
         /// <param name="location"> The location. </param>
         public DnsZoneData(AzureLocation location) : base(location)
         {
-            NameServers = new Core.ChangeTrackingList<string>();
-            RegistrationVirtualNetworks = new Core.ChangeTrackingList<WritableSubResource>();
-            ResolutionVirtualNetworks = new Core.ChangeTrackingList<WritableSubResource>();
+            NameServers = new ChangeTrackingList<string>();
+            RegistrationVirtualNetworks = new ChangeTrackingList<WritableSubResource>();
+            ResolutionVirtualNetworks = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of DnsZoneData. </summary>

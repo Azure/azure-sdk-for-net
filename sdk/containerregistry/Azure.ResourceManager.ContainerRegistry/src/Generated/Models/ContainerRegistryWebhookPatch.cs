@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryWebhookPatch. </summary>
         public ContainerRegistryWebhookPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            CustomHeaders = new Core.ChangeTrackingDictionary<string, string>();
-            Actions = new Core.ChangeTrackingList<ContainerRegistryWebhookAction>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            CustomHeaders = new ChangeTrackingDictionary<string, string>();
+            Actions = new ChangeTrackingList<ContainerRegistryWebhookAction>();
         }
 
         /// <summary> The tags for the webhook. </summary>

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Initializes a new instance of TrafficManagerEndpointData. </summary>
         public TrafficManagerEndpointData()
         {
-            GeoMapping = new Core.ChangeTrackingList<string>();
-            Subnets = new Core.ChangeTrackingList<TrafficManagerEndpointSubnetInfo>();
-            CustomHeaders = new Core.ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>();
+            GeoMapping = new ChangeTrackingList<string>();
+            Subnets = new ChangeTrackingList<TrafficManagerEndpointSubnetInfo>();
+            CustomHeaders = new ChangeTrackingList<TrafficManagerEndpointCustomHeaderInfo>();
         }
 
         /// <summary> Initializes a new instance of TrafficManagerEndpointData. </summary>

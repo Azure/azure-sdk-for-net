@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> isMultiVmSyncPoint = default;
+            Optional<string> isMultiVmSyncPoint = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {

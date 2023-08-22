@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPCommunityRule : Core.IUtf8JsonSerializable
+    public partial class IPCommunityRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
             writer.WritePropertyName("sequenceNumber"u8);
             writer.WriteNumberValue(SequenceNumber);
-            if (Core.Optional.IsCollectionDefined(WellKnownCommunities))
+            if (Optional.IsCollectionDefined(WellKnownCommunities))
             {
                 writer.WritePropertyName("wellKnownCommunities"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             CommunityActionType action = default;
             long sequenceNumber = default;
-            Core.Optional<IList<WellKnownCommunity>> wellKnownCommunities = default;
+            Optional<IList<WellKnownCommunity>> wellKnownCommunities = default;
             IList<string> communityMembers = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IPCommunityRule(action, sequenceNumber, Core.Optional.ToList(wellKnownCommunities), communityMembers);
+            return new IPCommunityRule(action, sequenceNumber, Optional.ToList(wellKnownCommunities), communityMembers);
         }
     }
 }

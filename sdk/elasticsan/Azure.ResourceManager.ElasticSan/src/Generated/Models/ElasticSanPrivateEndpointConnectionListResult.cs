@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionListResult. </summary>
         internal ElasticSanPrivateEndpointConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
+            Value = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanPrivateEndpointConnectionListResult. </summary>

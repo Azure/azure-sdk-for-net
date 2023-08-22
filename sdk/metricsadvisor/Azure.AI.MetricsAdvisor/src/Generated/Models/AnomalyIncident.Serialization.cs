@@ -19,9 +19,9 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> dataFeedId = default;
-            Core.Optional<string> metricId = default;
-            Core.Optional<string> anomalyDetectionConfigurationId = default;
+            Optional<string> dataFeedId = default;
+            Optional<string> metricId = default;
+            Optional<string> anomalyDetectionConfigurationId = default;
             string incidentId = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastTime = default;

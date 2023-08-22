@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>
         public P2SVpnGatewayData()
         {
-            P2SConnectionConfigurations = new Core.ChangeTrackingList<P2SConnectionConfiguration>();
-            CustomDnsServers = new Core.ChangeTrackingList<string>();
+            P2SConnectionConfigurations = new ChangeTrackingList<P2SConnectionConfiguration>();
+            CustomDnsServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of P2SVpnGatewayData. </summary>

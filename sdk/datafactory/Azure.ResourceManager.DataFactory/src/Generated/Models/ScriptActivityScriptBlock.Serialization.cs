@@ -12,16 +12,16 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ScriptActivityScriptBlock : Core.IUtf8JsonSerializable
+    public partial class ScriptActivityScriptBlock : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             JsonSerializer.Serialize(writer, Text);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScriptType.ToString());
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> text = default;
             DataFactoryScriptType type = default;
-            Core.Optional<IList<ScriptActivityParameter>> parameters = default;
+            Optional<IList<ScriptActivityParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new ScriptActivityScriptBlock(text, type, Core.Optional.ToList(parameters));
+            return new ScriptActivityScriptBlock(text, type, Optional.ToList(parameters));
         }
     }
 }

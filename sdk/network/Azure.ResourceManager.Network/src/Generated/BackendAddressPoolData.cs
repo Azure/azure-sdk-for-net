@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
         public BackendAddressPoolData()
         {
-            TunnelInterfaces = new Core.ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
-            LoadBalancerBackendAddresses = new Core.ChangeTrackingList<LoadBalancerBackendAddress>();
-            BackendIPConfigurations = new Core.ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
-            LoadBalancingRules = new Core.ChangeTrackingList<WritableSubResource>();
-            OutboundRules = new Core.ChangeTrackingList<WritableSubResource>();
-            InboundNatRules = new Core.ChangeTrackingList<WritableSubResource>();
+            TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
+            LoadBalancerBackendAddresses = new ChangeTrackingList<LoadBalancerBackendAddress>();
+            BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
+            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
+            OutboundRules = new ChangeTrackingList<WritableSubResource>();
+            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>

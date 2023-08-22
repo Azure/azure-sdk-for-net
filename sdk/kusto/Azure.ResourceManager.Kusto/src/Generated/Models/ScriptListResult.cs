@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of ScriptListResult. </summary>
         internal ScriptListResult()
         {
-            Value = new Core.ChangeTrackingList<KustoScriptData>();
+            Value = new ChangeTrackingList<KustoScriptData>();
         }
 
         /// <summary> Initializes a new instance of ScriptListResult. </summary>

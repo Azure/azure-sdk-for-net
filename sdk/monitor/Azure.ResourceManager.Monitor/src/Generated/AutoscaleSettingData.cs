@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor
             Argument.AssertNotNull(profiles, nameof(profiles));
 
             Profiles = profiles.ToList();
-            Notifications = new Core.ChangeTrackingList<AutoscaleNotification>();
+            Notifications = new ChangeTrackingList<AutoscaleNotification>();
         }
 
         /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RateLimitRule : Core.IUtf8JsonSerializable
+    public partial class RateLimitRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("rateLimitThreshold"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteNumberValue(RateLimitDurationInMinutes);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(EnabledState))
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn.Models
             int rateLimitThreshold = default;
             int rateLimitDurationInMinutes = default;
             string name = default;
-            Core.Optional<CustomRuleEnabledState> enabledState = default;
+            Optional<CustomRuleEnabledState> enabledState = default;
             int priority = default;
             IList<CustomRuleMatchCondition> matchConditions = default;
             OverrideActionType action = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new RateLimitRule(name, Core.Optional.ToNullable(enabledState), priority, matchConditions, action, rateLimitThreshold, rateLimitDurationInMinutes);
+            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, rateLimitThreshold, rateLimitDurationInMinutes);
         }
     }
 }

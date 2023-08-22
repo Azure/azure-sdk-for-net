@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<GuestConfigurationAssignmentReportProperties> properties = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<GuestConfigurationAssignmentReportProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

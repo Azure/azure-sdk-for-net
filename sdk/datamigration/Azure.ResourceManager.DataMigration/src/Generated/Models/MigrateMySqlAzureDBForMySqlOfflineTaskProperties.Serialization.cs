@@ -11,29 +11,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskProperties : Core.IUtf8JsonSerializable
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Input))
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Core.Optional.IsDefined(IsCloneable))
+            if (Optional.IsDefined(IsCloneable))
             {
                 writer.WritePropertyName("isCloneable"u8);
                 writer.WriteBooleanValue(IsCloneable.Value);
             }
-            if (Core.Optional.IsDefined(TaskId))
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Core.Optional.IsCollectionDefined(ClientData))
+            if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<MigrateMySqlAzureDBForMySqlOfflineTaskInput> input = default;
-            Core.Optional<IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>> output = default;
-            Core.Optional<bool> isCloneable = default;
-            Core.Optional<string> taskId = default;
+            Optional<MigrateMySqlAzureDBForMySqlOfflineTaskInput> input = default;
+            Optional<IReadOnlyList<MigrateMySqlAzureDBForMySqlOfflineTaskOutput>> output = default;
+            Optional<bool> isCloneable = default;
+            Optional<string> taskId = default;
             TaskType taskType = default;
-            Core.Optional<IReadOnlyList<ODataError>> errors = default;
-            Core.Optional<TaskState> state = default;
-            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Core.Optional<IDictionary<string, string>> clientData = default;
+            Optional<IReadOnlyList<ODataError>> errors = default;
+            Optional<TaskState> state = default;
+            Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData), input.Value, Core.Optional.ToList(output), Core.Optional.ToNullable(isCloneable), taskId.Value);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), Optional.ToNullable(isCloneable), taskId.Value);
         }
     }
 }

@@ -11,37 +11,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class PathRecommendation : Core.IUtf8JsonSerializable
+    public partial class PathRecommendation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Core.Optional.IsDefined(Action))
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IotSecurityRecommendationType))
+            if (Optional.IsDefined(IotSecurityRecommendationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PublisherInfo))
+            if (Optional.IsDefined(PublisherInfo))
             {
                 writer.WritePropertyName("publisherInfo"u8);
                 writer.WriteObjectValue(PublisherInfo);
             }
-            if (Core.Optional.IsDefined(IsCommon))
+            if (Optional.IsDefined(IsCommon))
             {
                 writer.WritePropertyName("common"u8);
                 writer.WriteBooleanValue(IsCommon.Value);
             }
-            if (Core.Optional.IsCollectionDefined(UserSids))
+            if (Optional.IsCollectionDefined(UserSids))
             {
                 writer.WritePropertyName("userSids"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Usernames))
+            if (Optional.IsCollectionDefined(Usernames))
             {
                 writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FileType))
+            if (Optional.IsDefined(FileType))
             {
                 writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ConfigurationStatus))
+            if (Optional.IsDefined(ConfigurationStatus))
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> path = default;
-            Core.Optional<RecommendationAction> action = default;
-            Core.Optional<IotSecurityRecommendationType> type = default;
-            Core.Optional<SecurityCenterPublisherInfo> publisherInfo = default;
-            Core.Optional<bool> common = default;
-            Core.Optional<IList<string>> userSids = default;
-            Core.Optional<IList<UserRecommendation>> usernames = default;
-            Core.Optional<PathRecommendationFileType> fileType = default;
-            Core.Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
+            Optional<string> path = default;
+            Optional<RecommendationAction> action = default;
+            Optional<IotSecurityRecommendationType> type = default;
+            Optional<SecurityCenterPublisherInfo> publisherInfo = default;
+            Optional<bool> common = default;
+            Optional<IList<string>> userSids = default;
+            Optional<IList<UserRecommendation>> usernames = default;
+            Optional<PathRecommendationFileType> fileType = default;
+            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new PathRecommendation(path.Value, Core.Optional.ToNullable(action), Core.Optional.ToNullable(type), publisherInfo.Value, Core.Optional.ToNullable(common), Core.Optional.ToList(userSids), Core.Optional.ToList(usernames), Core.Optional.ToNullable(fileType), Core.Optional.ToNullable(configurationStatus));
+            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), Optional.ToList(userSids), Optional.ToList(usernames), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus));
         }
     }
 }

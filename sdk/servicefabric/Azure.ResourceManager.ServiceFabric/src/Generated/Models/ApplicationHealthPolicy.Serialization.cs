@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ApplicationHealthPolicy : Core.IUtf8JsonSerializable
+    public partial class ApplicationHealthPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DefaultServiceTypeHealthPolicy))
+            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (Core.Optional.IsCollectionDefined(ServiceTypeHealthPolicies))
+            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicies))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Core.Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
-            Core.Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicies = default;
+            Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
+            Optional<IDictionary<string, ServiceTypeHealthPolicy>> serviceTypeHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultServiceTypeHealthPolicy"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     continue;
                 }
             }
-            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy.Value, Core.Optional.ToDictionary(serviceTypeHealthPolicies));
+            return new ApplicationHealthPolicy(defaultServiceTypeHealthPolicy.Value, Optional.ToDictionary(serviceTypeHealthPolicies));
         }
     }
 }

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class SearchAlongRouteRequest : Core.IUtf8JsonSerializable
+    internal partial class SearchAlongRouteRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Route))
+            if (Optional.IsDefined(Route))
             {
                 writer.WritePropertyName("route"u8);
                 writer.WriteObjectValue(Route);

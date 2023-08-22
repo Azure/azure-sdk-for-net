@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of UsagesLimits. </summary>
         internal UsagesLimits()
         {
-            Value = new Core.ChangeTrackingList<CurrentUsagesBaseData>();
+            Value = new ChangeTrackingList<CurrentUsagesBaseData>();
         }
 
         /// <summary> Initializes a new instance of UsagesLimits. </summary>

@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class AttestSgxEnclaveRequest : Core.IUtf8JsonSerializable
+    internal partial class AttestSgxEnclaveRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Quote))
+            if (Optional.IsDefined(Quote))
             {
                 writer.WritePropertyName("quote"u8);
                 writer.WriteBase64StringValue(Quote, "U");
             }
-            if (Core.Optional.IsDefined(RuntimeData))
+            if (Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
                 writer.WriteObjectValue(RuntimeData);
             }
-            if (Core.Optional.IsDefined(InitTimeData))
+            if (Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
                 writer.WriteObjectValue(InitTimeData);
             }
-            if (Core.Optional.IsDefined(DraftPolicyForAttestation))
+            if (Optional.IsDefined(DraftPolicyForAttestation))
             {
                 writer.WritePropertyName("draftPolicyForAttestation"u8);
                 writer.WriteStringValue(DraftPolicyForAttestation);

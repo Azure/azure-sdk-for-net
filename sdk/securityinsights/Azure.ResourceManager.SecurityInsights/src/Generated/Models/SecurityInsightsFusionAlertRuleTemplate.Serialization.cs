@@ -13,31 +13,31 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsFusionAlertRuleTemplate : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsFusionAlertRuleTemplate : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AlertRulesCreatedByTemplateCount))
+            if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsCollectionDefined(RequiredDataConnectors))
+            if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Severity))
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(Tactics))
+            if (Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Techniques))
+            if (Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<int> alertRulesCreatedByTemplateCount = default;
-            Core.Optional<DateTimeOffset> createdDateUTC = default;
-            Core.Optional<DateTimeOffset> lastUpdatedDateUTC = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Core.Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
-            Core.Optional<SecurityInsightsAlertSeverity> severity = default;
-            Core.Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
-            Core.Optional<IList<string>> techniques = default;
+            Optional<SystemData> systemData = default;
+            Optional<int> alertRulesCreatedByTemplateCount = default;
+            Optional<DateTimeOffset> createdDateUTC = default;
+            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
+            Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
+            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
+            Optional<SecurityInsightsAlertSeverity> severity = default;
+            Optional<IList<SecurityInsightsAttackTactic>> tactics = default;
+            Optional<IList<string>> techniques = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsFusionAlertRuleTemplate(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(alertRulesCreatedByTemplateCount), Core.Optional.ToNullable(createdDateUTC), Core.Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Core.Optional.ToList(requiredDataConnectors), Core.Optional.ToNullable(status), Core.Optional.ToNullable(severity), Core.Optional.ToList(tactics), Core.Optional.ToList(techniques));
+            return new SecurityInsightsFusionAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToNullable(severity), Optional.ToList(tactics), Optional.ToList(techniques));
         }
     }
 }

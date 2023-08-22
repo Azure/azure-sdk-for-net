@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingTwinProperties : Core.IUtf8JsonSerializable
+    public partial class RoutingTwinProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Desired))
+            if (Optional.IsDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
 #if NET6_0_OR_GREATER
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 JsonSerializer.Serialize(writer, JsonDocument.Parse(Desired.ToString()).RootElement);
 #endif
             }
-            if (Core.Optional.IsDefined(Reported))
+            if (Optional.IsDefined(Reported))
             {
                 writer.WritePropertyName("reported"u8);
 #if NET6_0_OR_GREATER

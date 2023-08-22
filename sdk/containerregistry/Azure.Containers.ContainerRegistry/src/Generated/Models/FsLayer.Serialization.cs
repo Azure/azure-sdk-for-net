@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<string> blobSum = default;
+            Optional<string> blobSum = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobSum"u8))

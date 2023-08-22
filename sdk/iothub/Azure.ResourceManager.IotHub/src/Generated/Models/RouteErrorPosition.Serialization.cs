@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Core.Optional<int> line = default;
-            Core.Optional<int> column = default;
+            Optional<int> line = default;
+            Optional<int> column = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("line"u8))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RouteErrorPosition(Core.Optional.ToNullable(line), Core.Optional.ToNullable(column));
+            return new RouteErrorPosition(Optional.ToNullable(line), Optional.ToNullable(column));
         }
     }
 }

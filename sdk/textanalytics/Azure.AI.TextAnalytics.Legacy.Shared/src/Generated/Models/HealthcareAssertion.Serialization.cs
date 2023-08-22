@@ -19,9 +19,9 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Core.Optional<Conditionality> conditionality = default;
-            Core.Optional<Certainty> certainty = default;
-            Core.Optional<Association> association = default;
+            Optional<Conditionality> conditionality = default;
+            Optional<Certainty> certainty = default;
+            Optional<Association> association = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareAssertion(Core.Optional.ToNullable(conditionality), Core.Optional.ToNullable(certainty), Core.Optional.ToNullable(association));
+            return new HealthcareAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
         }
     }
 }

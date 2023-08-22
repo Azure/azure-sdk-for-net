@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<HybridComputePrivateLinkResourceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<HybridComputePrivateLinkResourceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new HybridComputePrivateLinkResourceListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new HybridComputePrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

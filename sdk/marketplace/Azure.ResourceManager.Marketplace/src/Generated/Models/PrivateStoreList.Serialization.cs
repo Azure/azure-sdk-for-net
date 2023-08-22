@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PrivateStoreData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PrivateStoreData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStoreList(Core.Optional.ToList(value), nextLink.Value);
+            return new PrivateStoreList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.StoragePool.Models
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             Sku = sku;
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
-            ManagedByExtended = new Core.ChangeTrackingList<string>();
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
-            Disks = new Core.ChangeTrackingList<WritableSubResource>();
+            ManagedByExtended = new ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
+            Disks = new ChangeTrackingList<WritableSubResource>();
             SubnetId = subnetId;
-            AdditionalCapabilities = new Core.ChangeTrackingList<string>();
+            AdditionalCapabilities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Determines the SKU of the Disk Pool. </summary>

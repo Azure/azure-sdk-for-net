@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake.Models
         {
             Argument.AssertNotNull(blobItems, nameof(blobItems));
 
-            BlobPrefixes = new Core.ChangeTrackingList<BlobPrefix>();
+            BlobPrefixes = new ChangeTrackingList<BlobPrefix>();
             BlobItems = blobItems.ToList();
         }
 

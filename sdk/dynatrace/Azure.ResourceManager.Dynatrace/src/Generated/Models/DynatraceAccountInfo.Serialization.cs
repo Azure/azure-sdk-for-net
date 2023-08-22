@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceAccountInfo : Core.IUtf8JsonSerializable
+    public partial class DynatraceAccountInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountId))
+            if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Core.Optional.IsDefined(RegionId))
+            if (Optional.IsDefined(RegionId))
             {
                 writer.WritePropertyName("regionId"u8);
                 writer.WriteStringValue(RegionId);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<string> accountId = default;
-            Core.Optional<string> regionId = default;
+            Optional<string> accountId = default;
+            Optional<string> regionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Core.Optional<string> currency = default;
-            Core.Optional<float> value = default;
+            Optional<string> currency = default;
+            Optional<float> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currency"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new BillingAmount(currency.Value, Core.Optional.ToNullable(value));
+            return new BillingAmount(currency.Value, Optional.ToNullable(value));
         }
     }
 }

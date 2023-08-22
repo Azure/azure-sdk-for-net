@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRule. </summary>
         public ApplicationGatewayRewriteRule()
         {
-            Conditions = new Core.ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>();
+            Conditions = new ChangeTrackingList<ApplicationGatewayRewriteRuleCondition>();
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRule. </summary>

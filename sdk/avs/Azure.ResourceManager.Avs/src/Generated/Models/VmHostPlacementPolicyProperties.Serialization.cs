@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class VmHostPlacementPolicyProperties : Core.IUtf8JsonSerializable
+    public partial class VmHostPlacementPolicyProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vmMembers"u8);
@@ -37,24 +37,24 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteEndArray();
             writer.WritePropertyName("affinityType"u8);
             writer.WriteStringValue(AffinityType.ToString());
-            if (Core.Optional.IsDefined(AffinityStrength))
+            if (Optional.IsDefined(AffinityStrength))
             {
                 writer.WritePropertyName("affinityStrength"u8);
                 writer.WriteStringValue(AffinityStrength.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AzureHybridBenefitType))
+            if (Optional.IsDefined(AzureHybridBenefitType))
             {
                 writer.WritePropertyName("azureHybridBenefitType"u8);
                 writer.WriteStringValue(AzureHybridBenefitType.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
-            Core.Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
-            Core.Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
+            Optional<VmHostPlacementPolicyAffinityStrength> affinityStrength = default;
+            Optional<AzureHybridBenefitType> azureHybridBenefitType = default;
             PlacementPolicyType type = default;
-            Core.Optional<PlacementPolicyState> state = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            Optional<PlacementPolicyState> state = default;
+            Optional<string> displayName = default;
+            Optional<PlacementPolicyProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmMembers"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Avs.Models
                     continue;
                 }
             }
-            return new VmHostPlacementPolicyProperties(type, Core.Optional.ToNullable(state), displayName.Value, Core.Optional.ToNullable(provisioningState), vmMembers, hostMembers, affinityType, Core.Optional.ToNullable(affinityStrength), Core.Optional.ToNullable(azureHybridBenefitType));
+            return new VmHostPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), vmMembers, hostMembers, affinityType, Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType));
         }
     }
 }

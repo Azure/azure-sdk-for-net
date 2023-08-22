@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> migrationId = default;
-            Core.Optional<string> sourceDatabaseName = default;
-            Core.Optional<string> targetDatabaseName = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<DateTimeOffset> endedOn = default;
-            Core.Optional<DataIntegrityValidationResult> dataIntegrityValidationResult = default;
-            Core.Optional<SchemaComparisonValidationResult> schemaValidationResult = default;
-            Core.Optional<QueryAnalysisValidationResult> queryAnalysisValidationResult = default;
-            Core.Optional<ValidationStatus> status = default;
-            Core.Optional<string> id = default;
+            Optional<string> migrationId = default;
+            Optional<string> sourceDatabaseName = default;
+            Optional<string> targetDatabaseName = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<DateTimeOffset> endedOn = default;
+            Optional<DataIntegrityValidationResult> dataIntegrityValidationResult = default;
+            Optional<SchemaComparisonValidationResult> schemaValidationResult = default;
+            Optional<QueryAnalysisValidationResult> queryAnalysisValidationResult = default;
+            Optional<ValidationStatus> status = default;
+            Optional<string> id = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id.Value, resultType, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Core.Optional.ToNullable(startedOn), Core.Optional.ToNullable(endedOn), dataIntegrityValidationResult.Value, schemaValidationResult.Value, queryAnalysisValidationResult.Value, Core.Optional.ToNullable(status));
+            return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(id.Value, resultType, migrationId.Value, sourceDatabaseName.Value, targetDatabaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), dataIntegrityValidationResult.Value, schemaValidationResult.Value, queryAnalysisValidationResult.Value, Optional.ToNullable(status));
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Core.Optional<string> accountName = default;
-            Core.Optional<DataAccountType> dataAccountType = default;
-            Core.Optional<string> accountConnectionString = default;
-            Core.Optional<IReadOnlyList<ShareCredentialDetails>> shareCredentialDetails = default;
+            Optional<string> accountName = default;
+            Optional<DataAccountType> dataAccountType = default;
+            Optional<string> accountConnectionString = default;
+            Optional<IReadOnlyList<ShareCredentialDetails>> shareCredentialDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     continue;
                 }
             }
-            return new DataBoxAccountCredentialDetails(accountName.Value, Core.Optional.ToNullable(dataAccountType), accountConnectionString.Value, Core.Optional.ToList(shareCredentialDetails));
+            return new DataBoxAccountCredentialDetails(accountName.Value, Optional.ToNullable(dataAccountType), accountConnectionString.Value, Optional.ToList(shareCredentialDetails));
         }
     }
 }

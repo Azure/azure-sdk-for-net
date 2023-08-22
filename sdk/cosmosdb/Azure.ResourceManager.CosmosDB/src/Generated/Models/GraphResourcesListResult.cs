@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of GraphResourcesListResult. </summary>
         internal GraphResourcesListResult()
         {
-            Value = new Core.ChangeTrackingList<GraphResourceGetResultData>();
+            Value = new ChangeTrackingList<GraphResourceGetResultData>();
         }
 
         /// <summary> Initializes a new instance of GraphResourcesListResult. </summary>

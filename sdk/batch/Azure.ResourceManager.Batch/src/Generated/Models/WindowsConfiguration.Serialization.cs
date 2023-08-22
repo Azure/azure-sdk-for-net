@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class WindowsConfiguration : Core.IUtf8JsonSerializable
+    internal partial class WindowsConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsAutomaticUpdateEnabled))
+            if (Optional.IsDefined(IsAutomaticUpdateEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpdates"u8);
                 writer.WriteBooleanValue(IsAutomaticUpdateEnabled.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Core.Optional<bool> enableAutomaticUpdates = default;
+            Optional<bool> enableAutomaticUpdates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableAutomaticUpdates"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new WindowsConfiguration(Core.Optional.ToNullable(enableAutomaticUpdates));
+            return new WindowsConfiguration(Optional.ToNullable(enableAutomaticUpdates));
         }
     }
 }

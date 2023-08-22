@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails>> details = default;
+            Optional<IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new CollectionsToSubscriptionsMappingResult(Core.Optional.ToDictionary(details));
+            return new CollectionsToSubscriptionsMappingResult(Optional.ToDictionary(details));
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> cityName = default;
-            Core.Optional<IReadOnlyList<string>> providers = default;
+            Optional<string> cityName = default;
+            Optional<IReadOnlyList<string>> providers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cityName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AvailableProvidersListCity(cityName.Value, Core.Optional.ToList(providers));
+            return new AvailableProvidersListCity(cityName.Value, Optional.ToList(providers));
         }
     }
 }

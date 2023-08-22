@@ -10,51 +10,51 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class EventHubV2StreamInputDataSource : Core.IUtf8JsonSerializable
+    public partial class EventHubV2StreamInputDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServiceBusNamespace))
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (Core.Optional.IsDefined(SharedAccessPolicyName))
+            if (Optional.IsDefined(SharedAccessPolicyName))
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (Core.Optional.IsDefined(SharedAccessPolicyKey))
+            if (Optional.IsDefined(SharedAccessPolicyKey))
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (Core.Optional.IsDefined(AuthenticationMode))
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EventHubName))
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (Core.Optional.IsDefined(PartitionCount))
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Core.Optional.IsDefined(ConsumerGroupName))
+            if (Optional.IsDefined(ConsumerGroupName))
             {
                 writer.WritePropertyName("consumerGroupName"u8);
                 writer.WriteStringValue(ConsumerGroupName);
             }
-            if (Core.Optional.IsDefined(PrefetchCount))
+            if (Optional.IsDefined(PrefetchCount))
             {
                 writer.WritePropertyName("prefetchCount"u8);
                 writer.WriteNumberValue(PrefetchCount.Value);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> serviceBusNamespace = default;
-            Core.Optional<string> sharedAccessPolicyName = default;
-            Core.Optional<string> sharedAccessPolicyKey = default;
-            Core.Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
-            Core.Optional<string> eventHubName = default;
-            Core.Optional<int> partitionCount = default;
-            Core.Optional<string> consumerGroupName = default;
-            Core.Optional<int> prefetchCount = default;
+            Optional<string> serviceBusNamespace = default;
+            Optional<string> sharedAccessPolicyName = default;
+            Optional<string> sharedAccessPolicyKey = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            Optional<string> eventHubName = default;
+            Optional<int> partitionCount = default;
+            Optional<string> consumerGroupName = default;
+            Optional<int> prefetchCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new EventHubV2StreamInputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Core.Optional.ToNullable(authenticationMode), eventHubName.Value, Core.Optional.ToNullable(partitionCount), consumerGroupName.Value, Core.Optional.ToNullable(prefetchCount));
+            return new EventHubV2StreamInputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), eventHubName.Value, Optional.ToNullable(partitionCount), consumerGroupName.Value, Optional.ToNullable(prefetchCount));
         }
     }
 }

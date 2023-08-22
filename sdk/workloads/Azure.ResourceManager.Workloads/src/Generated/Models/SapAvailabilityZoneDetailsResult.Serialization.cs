@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<SapAvailabilityZonePair>> availabilityZonePairs = default;
+            Optional<IReadOnlyList<SapAvailabilityZonePair>> availabilityZonePairs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityZonePairs"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new SapAvailabilityZoneDetailsResult(Core.Optional.ToList(availabilityZonePairs));
+            return new SapAvailabilityZoneDetailsResult(Optional.ToList(availabilityZonePairs));
         }
     }
 }

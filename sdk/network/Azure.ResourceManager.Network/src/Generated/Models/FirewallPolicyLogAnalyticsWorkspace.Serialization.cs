@@ -11,17 +11,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyLogAnalyticsWorkspace : Core.IUtf8JsonSerializable
+    public partial class FirewallPolicyLogAnalyticsWorkspace : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Region))
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Core.Optional.IsDefined(WorkspaceId))
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 JsonSerializer.Serialize(writer, WorkspaceId);
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> region = default;
-            Core.Optional<WritableSubResource> workspaceId = default;
+            Optional<string> region = default;
+            Optional<WritableSubResource> workspaceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("region"u8))

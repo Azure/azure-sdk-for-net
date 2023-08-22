@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxConfigurationFile : Core.IUtf8JsonSerializable
+    public partial class NginxConfigurationFile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Content))
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Core.Optional.IsDefined(VirtualPath))
+            if (Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Core.Optional<string> content = default;
-            Core.Optional<string> virtualPath = default;
+            Optional<string> content = default;
+            Optional<string> virtualPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))

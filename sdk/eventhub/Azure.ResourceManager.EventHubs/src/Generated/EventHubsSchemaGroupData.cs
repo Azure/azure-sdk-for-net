@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
         public EventHubsSchemaGroupData()
         {
-            GroupProperties = new Core.ChangeTrackingDictionary<string, string>();
+            GroupProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of CalculatePriceResultProperties. </summary>
         internal CalculatePriceResultProperties()
         {
-            PaymentSchedule = new Core.ChangeTrackingList<PaymentDetail>();
+            PaymentSchedule = new ChangeTrackingList<PaymentDetail>();
         }
 
         /// <summary> Initializes a new instance of CalculatePriceResultProperties. </summary>

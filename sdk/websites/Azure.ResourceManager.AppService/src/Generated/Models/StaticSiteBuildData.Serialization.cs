@@ -14,12 +14,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class StaticSiteBuildData : Core.IUtf8JsonSerializable
+    public partial class StaticSiteBuildData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> buildId = default;
-            Core.Optional<string> sourceBranch = default;
-            Core.Optional<string> pullRequestTitle = default;
-            Core.Optional<string> hostname = default;
-            Core.Optional<DateTimeOffset> createdTimeUtc = default;
-            Core.Optional<DateTimeOffset> lastUpdatedOn = default;
-            Core.Optional<StaticSiteBuildStatus> status = default;
-            Core.Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> buildId = default;
+            Optional<string> sourceBranch = default;
+            Optional<string> pullRequestTitle = default;
+            Optional<string> hostname = default;
+            Optional<DateTimeOffset> createdTimeUtc = default;
+            Optional<DateTimeOffset> lastUpdatedOn = default;
+            Optional<StaticSiteBuildStatus> status = default;
+            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new StaticSiteBuildData(id, name, type, systemData.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Core.Optional.ToNullable(createdTimeUtc), Core.Optional.ToNullable(lastUpdatedOn), Core.Optional.ToNullable(status), Core.Optional.ToList(userProvidedFunctionApps), kind.Value);
+            return new StaticSiteBuildData(id, name, type, systemData.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps), kind.Value);
         }
     }
 }

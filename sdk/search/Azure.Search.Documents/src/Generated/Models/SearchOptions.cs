@@ -17,9 +17,9 @@ namespace Azure.Search.Documents
         /// <summary> Initializes a new instance of SearchOptions. </summary>
         public SearchOptions()
         {
-            Facets = new Core.ChangeTrackingList<string>();
-            ScoringParameters = new Core.ChangeTrackingList<string>();
-            Vectors = new Core.ChangeTrackingList<SearchQueryVector>();
+            Facets = new ChangeTrackingList<string>();
+            ScoringParameters = new ChangeTrackingList<string>();
+            Vectors = new ChangeTrackingList<SearchQueryVector>();
         }
 
         /// <summary> Initializes a new instance of SearchOptions. </summary>

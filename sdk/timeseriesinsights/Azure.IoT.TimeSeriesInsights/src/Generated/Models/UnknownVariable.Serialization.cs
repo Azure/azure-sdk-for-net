@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class UnknownVariable : Core.IUtf8JsonSerializable
+    internal partial class UnknownVariable : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Core.Optional.IsDefined(Filter))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -32,7 +32,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             string kind = "Unknown";
-            Core.Optional<TimeSeriesExpression> filter = default;
+            Optional<TimeSeriesExpression> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))

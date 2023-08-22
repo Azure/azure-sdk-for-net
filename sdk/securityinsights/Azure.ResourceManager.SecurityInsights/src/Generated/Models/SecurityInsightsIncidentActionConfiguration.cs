@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsIncidentActionConfiguration. </summary>
         public SecurityInsightsIncidentActionConfiguration()
         {
-            Labels = new Core.ChangeTrackingList<SecurityInsightsIncidentLabel>();
+            Labels = new ChangeTrackingList<SecurityInsightsIncidentLabel>();
         }
 
         /// <summary> Initializes a new instance of SecurityInsightsIncidentActionConfiguration. </summary>

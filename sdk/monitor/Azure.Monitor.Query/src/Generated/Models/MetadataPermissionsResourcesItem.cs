@@ -22,7 +22,7 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
-            DenyTables = new Core.ChangeTrackingList<string>();
+            DenyTables = new ChangeTrackingList<string>();
         }
 
         /// <summary> The resource ID on the permission indication. </summary>

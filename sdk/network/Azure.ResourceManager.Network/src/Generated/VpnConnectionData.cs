@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnConnectionData. </summary>
         public VpnConnectionData()
         {
-            IPsecPolicies = new Core.ChangeTrackingList<IPsecPolicy>();
-            TrafficSelectorPolicies = new Core.ChangeTrackingList<TrafficSelectorPolicy>();
-            VpnLinkConnections = new Core.ChangeTrackingList<VpnSiteLinkConnectionData>();
+            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
+            VpnLinkConnections = new ChangeTrackingList<VpnSiteLinkConnectionData>();
         }
 
         /// <summary> Initializes a new instance of VpnConnectionData. </summary>

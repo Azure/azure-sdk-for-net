@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppInstanceProbe : Core.IUtf8JsonSerializable
+    public partial class AppInstanceProbe : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProbeAction))
+            if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
                 writer.WriteObjectValue(ProbeAction);
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
-            if (Core.Optional.IsDefined(InitialDelayInSeconds))
+            if (Optional.IsDefined(InitialDelayInSeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelayInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(PeriodInSeconds))
+            if (Optional.IsDefined(PeriodInSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (Core.Optional.IsDefined(FailureThreshold))
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Core.Optional.IsDefined(SuccessThreshold))
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<AppInstanceProbeAction> probeAction = default;
+            Optional<AppInstanceProbeAction> probeAction = default;
             bool disableProbe = default;
-            Core.Optional<int> initialDelaySeconds = default;
-            Core.Optional<int> periodSeconds = default;
-            Core.Optional<int> timeoutSeconds = default;
-            Core.Optional<int> failureThreshold = default;
-            Core.Optional<int> successThreshold = default;
+            Optional<int> initialDelaySeconds = default;
+            Optional<int> periodSeconds = default;
+            Optional<int> timeoutSeconds = default;
+            Optional<int> failureThreshold = default;
+            Optional<int> successThreshold = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("probeAction"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppInstanceProbe(probeAction.Value, disableProbe, Core.Optional.ToNullable(initialDelaySeconds), Core.Optional.ToNullable(periodSeconds), Core.Optional.ToNullable(timeoutSeconds), Core.Optional.ToNullable(failureThreshold), Core.Optional.ToNullable(successThreshold));
+            return new AppInstanceProbe(probeAction.Value, disableProbe, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold));
         }
     }
 }

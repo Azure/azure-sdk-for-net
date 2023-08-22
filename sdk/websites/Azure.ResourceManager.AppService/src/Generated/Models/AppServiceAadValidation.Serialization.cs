@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceAadValidation : Core.IUtf8JsonSerializable
+    public partial class AppServiceAadValidation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(JwtClaimChecks))
+            if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
                 writer.WriteObjectValue(JwtClaimChecks);
             }
-            if (Core.Optional.IsCollectionDefined(AllowedAudiences))
+            if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DefaultAuthorizationPolicy))
+            if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
                 writer.WriteObjectValue(DefaultAuthorizationPolicy);
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<JwtClaimChecks> jwtClaimChecks = default;
-            Core.Optional<IList<string>> allowedAudiences = default;
-            Core.Optional<DefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
+            Optional<JwtClaimChecks> jwtClaimChecks = default;
+            Optional<IList<string>> allowedAudiences = default;
+            Optional<DefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jwtClaimChecks"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceAadValidation(jwtClaimChecks.Value, Core.Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value);
+            return new AppServiceAadValidation(jwtClaimChecks.Value, Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value);
         }
     }
 }

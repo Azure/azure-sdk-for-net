@@ -10,39 +10,39 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryExceptionDetails : Core.IUtf8JsonSerializable
+    internal partial class TelemetryExceptionDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Core.Optional.IsDefined(OuterId))
+            if (Optional.IsDefined(OuterId))
             {
                 writer.WritePropertyName("outerId"u8);
                 writer.WriteNumberValue(OuterId.Value);
             }
-            if (Core.Optional.IsDefined(TypeName))
+            if (Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Core.Optional.IsDefined(HasFullStack))
+            if (Optional.IsDefined(HasFullStack))
             {
                 writer.WritePropertyName("hasFullStack"u8);
                 writer.WriteBooleanValue(HasFullStack.Value);
             }
-            if (Core.Optional.IsDefined(Stack))
+            if (Optional.IsDefined(Stack))
             {
                 writer.WritePropertyName("stack"u8);
                 writer.WriteStringValue(Stack);
             }
-            if (Core.Optional.IsCollectionDefined(ParsedStack))
+            if (Optional.IsCollectionDefined(ParsedStack))
             {
                 writer.WritePropertyName("parsedStack"u8);
                 writer.WriteStartArray();

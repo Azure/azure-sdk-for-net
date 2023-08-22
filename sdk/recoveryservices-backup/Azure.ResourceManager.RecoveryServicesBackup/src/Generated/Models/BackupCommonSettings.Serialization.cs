@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupCommonSettings : Core.IUtf8JsonSerializable
+    public partial class BackupCommonSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Core.Optional.IsDefined(IsSqlCompression))
+            if (Optional.IsDefined(IsSqlCompression))
             {
                 writer.WritePropertyName("issqlcompression"u8);
                 writer.WriteBooleanValue(IsSqlCompression.Value);
             }
-            if (Core.Optional.IsDefined(IsCompression))
+            if (Optional.IsDefined(IsCompression))
             {
                 writer.WritePropertyName("isCompression"u8);
                 writer.WriteBooleanValue(IsCompression.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> timeZone = default;
-            Core.Optional<bool> isSqlCompression = default;
-            Core.Optional<bool> isCompression = default;
+            Optional<string> timeZone = default;
+            Optional<bool> isSqlCompression = default;
+            Optional<bool> isCompression = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeZone"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new BackupCommonSettings(timeZone.Value, Core.Optional.ToNullable(isSqlCompression), Core.Optional.ToNullable(isCompression));
+            return new BackupCommonSettings(timeZone.Value, Optional.ToNullable(isSqlCompression), Optional.ToNullable(isCompression));
         }
     }
 }

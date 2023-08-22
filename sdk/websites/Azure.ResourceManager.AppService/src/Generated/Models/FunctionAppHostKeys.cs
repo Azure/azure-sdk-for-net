@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of FunctionAppHostKeys. </summary>
         internal FunctionAppHostKeys()
         {
-            FunctionKeys = new Core.ChangeTrackingDictionary<string, string>();
-            SystemKeys = new Core.ChangeTrackingDictionary<string, string>();
+            FunctionKeys = new ChangeTrackingDictionary<string, string>();
+            SystemKeys = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of FunctionAppHostKeys. </summary>

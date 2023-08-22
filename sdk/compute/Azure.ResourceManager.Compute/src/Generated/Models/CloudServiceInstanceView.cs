@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>
         internal CloudServiceInstanceView()
         {
-            PrivateIds = new Core.ChangeTrackingList<string>();
-            Statuses = new Core.ChangeTrackingList<ResourceInstanceViewStatus>();
+            PrivateIds = new ChangeTrackingList<string>();
+            Statuses = new ChangeTrackingList<ResourceInstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>

@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ArcAgentProfile : Core.IUtf8JsonSerializable
+    public partial class ArcAgentProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AgentVersion))
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Core.Optional.IsDefined(AgentAutoUpgrade))
+            if (Optional.IsDefined(AgentAutoUpgrade))
             {
                 writer.WritePropertyName("agentAutoUpgrade"u8);
                 writer.WriteStringValue(AgentAutoUpgrade.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<AutoUpgradeOption> agentAutoUpgrade = default;
+            Optional<string> agentVersion = default;
+            Optional<AutoUpgradeOption> agentAutoUpgrade = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentVersion"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ArcAgentProfile(agentVersion.Value, Core.Optional.ToNullable(agentAutoUpgrade));
+            return new ArcAgentProfile(agentVersion.Value, Optional.ToNullable(agentAutoUpgrade));
         }
     }
 }

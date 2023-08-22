@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsOfficeDataConnectorDataTypes : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsOfficeDataConnectorDataTypes : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Exchange))
+            if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (Core.Optional.IsDefined(SharePoint))
+            if (Optional.IsDefined(SharePoint))
             {
                 writer.WritePropertyName("sharePoint"u8);
                 writer.WriteObjectValue(SharePoint);
             }
-            if (Core.Optional.IsDefined(Teams))
+            if (Optional.IsDefined(Teams))
             {
                 writer.WritePropertyName("teams"u8);
                 writer.WriteObjectValue(Teams);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<OfficeDataConnectorDataTypesExchange> exchange = default;
-            Core.Optional<OfficeDataConnectorDataTypesSharePoint> sharePoint = default;
-            Core.Optional<OfficeDataConnectorDataTypesTeams> teams = default;
+            Optional<OfficeDataConnectorDataTypesExchange> exchange = default;
+            Optional<OfficeDataConnectorDataTypesSharePoint> sharePoint = default;
+            Optional<OfficeDataConnectorDataTypesTeams> teams = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exchange"u8))

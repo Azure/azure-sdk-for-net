@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class DeviceProperties : Core.IUtf8JsonSerializable
+    public partial class DeviceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DeviceVendor))
+            if (Optional.IsDefined(DeviceVendor))
             {
                 writer.WritePropertyName("deviceVendor"u8);
                 writer.WriteStringValue(DeviceVendor);
             }
-            if (Core.Optional.IsDefined(DeviceModel))
+            if (Optional.IsDefined(DeviceModel))
             {
                 writer.WritePropertyName("deviceModel"u8);
                 writer.WriteStringValue(DeviceModel);
             }
-            if (Core.Optional.IsDefined(LinkSpeedInMbps))
+            if (Optional.IsDefined(LinkSpeedInMbps))
             {
                 writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> deviceVendor = default;
-            Core.Optional<string> deviceModel = default;
-            Core.Optional<int> linkSpeedInMbps = default;
+            Optional<string> deviceVendor = default;
+            Optional<string> deviceModel = default;
+            Optional<int> linkSpeedInMbps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deviceVendor"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new DeviceProperties(deviceVendor.Value, deviceModel.Value, Core.Optional.ToNullable(linkSpeedInMbps));
+            return new DeviceProperties(deviceVendor.Value, deviceModel.Value, Optional.ToNullable(linkSpeedInMbps));
         }
     }
 }

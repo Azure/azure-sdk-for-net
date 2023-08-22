@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> diskId = default;
-            Core.Optional<string> seedManagedDiskId = default;
-            Core.Optional<string> replicaDiskType = default;
-            Core.Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Core.Optional<string> targetDiskName = default;
+            Optional<string> diskId = default;
+            Optional<string> seedManagedDiskId = default;
+            Optional<string> replicaDiskType = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            Optional<string> targetDiskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))

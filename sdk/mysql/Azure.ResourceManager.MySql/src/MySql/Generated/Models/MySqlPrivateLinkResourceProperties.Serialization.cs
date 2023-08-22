@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Core.Optional<string> groupId = default;
-            Core.Optional<IReadOnlyList<string>> requiredMembers = default;
+            Optional<string> groupId = default;
+            Optional<IReadOnlyList<string>> requiredMembers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlPrivateLinkResourceProperties(groupId.Value, Core.Optional.ToList(requiredMembers));
+            return new MySqlPrivateLinkResourceProperties(groupId.Value, Optional.ToList(requiredMembers));
         }
     }
 }

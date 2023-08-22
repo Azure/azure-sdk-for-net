@@ -16,10 +16,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of MappingDataFlow. </summary>
         public MappingDataFlow()
         {
-            Sources = new Core.ChangeTrackingList<DataFlowSource>();
-            Sinks = new Core.ChangeTrackingList<DataFlowSink>();
-            Transformations = new Core.ChangeTrackingList<Transformation>();
-            ScriptLines = new Core.ChangeTrackingList<string>();
+            Sources = new ChangeTrackingList<DataFlowSource>();
+            Sinks = new ChangeTrackingList<DataFlowSink>();
+            Transformations = new ChangeTrackingList<Transformation>();
+            ScriptLines = new ChangeTrackingList<string>();
             Type = "MappingDataFlow";
         }
 

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="location"> The location. </param>
         public HybridContainerServiceAgentPoolData(AzureLocation location) : base(location)
         {
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
-            NodeLabels = new Core.ChangeTrackingDictionary<string, string>();
-            NodeTaints = new Core.ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
+            NodeLabels = new ChangeTrackingDictionary<string, string>();
+            NodeTaints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HybridContainerServiceAgentPoolData. </summary>

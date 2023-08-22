@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of AlertPropertiesDetails. </summary>
         public AlertPropertiesDetails()
         {
-            ResourceGroupFilter = new Core.ChangeTrackingList<BinaryData>();
-            ResourceFilter = new Core.ChangeTrackingList<BinaryData>();
-            MeterFilter = new Core.ChangeTrackingList<BinaryData>();
-            ContactEmails = new Core.ChangeTrackingList<string>();
-            ContactGroups = new Core.ChangeTrackingList<string>();
-            ContactRoles = new Core.ChangeTrackingList<string>();
+            ResourceGroupFilter = new ChangeTrackingList<BinaryData>();
+            ResourceFilter = new ChangeTrackingList<BinaryData>();
+            MeterFilter = new ChangeTrackingList<BinaryData>();
+            ContactEmails = new ChangeTrackingList<string>();
+            ContactGroups = new ChangeTrackingList<string>();
+            ContactRoles = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AlertPropertiesDetails. </summary>

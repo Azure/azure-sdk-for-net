@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerSkillset : Core.IUtf8JsonSerializable
+    public partial class SearchIndexerSkillset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -30,22 +30,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(CognitiveServicesAccount))
+            if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices"u8);
                 writer.WriteObjectValue(CognitiveServicesAccount);
             }
-            if (Core.Optional.IsDefined(KnowledgeStore))
+            if (Optional.IsDefined(KnowledgeStore))
             {
                 writer.WritePropertyName("knowledgeStore"u8);
                 writer.WriteObjectValue(KnowledgeStore);
             }
-            if (Core.Optional.IsDefined(_etag))
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (Core.Optional.IsDefined(EncryptionKey))
+            if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
@@ -67,12 +67,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Core.Optional<string> description = default;
+            Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;
-            Core.Optional<CognitiveServicesAccount> cognitiveServices = default;
-            Core.Optional<KnowledgeStore> knowledgeStore = default;
-            Core.Optional<string> odataEtag = default;
-            Core.Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            Optional<CognitiveServicesAccount> cognitiveServices = default;
+            Optional<KnowledgeStore> knowledgeStore = default;
+            Optional<string> odataEtag = default;
+            Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

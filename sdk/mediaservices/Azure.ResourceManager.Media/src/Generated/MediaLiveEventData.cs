@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="location"> The location. </param>
         public MediaLiveEventData(AzureLocation location) : base(location)
         {
-            Transcriptions = new Core.ChangeTrackingList<LiveEventTranscription>();
-            StreamOptions = new Core.ChangeTrackingList<StreamOptionsFlag>();
+            Transcriptions = new ChangeTrackingList<LiveEventTranscription>();
+            StreamOptions = new ChangeTrackingList<StreamOptionsFlag>();
         }
 
         /// <summary> Initializes a new instance of MediaLiveEventData. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class EventGridNamespaceOperationSource : Core.IOperationSource<EventGridNamespaceResource>
+    internal class EventGridNamespaceOperationSource : IOperationSource<EventGridNamespaceResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.EventGrid
             _client = client;
         }
 
-        EventGridNamespaceResource Core.IOperationSource<EventGridNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventGridNamespaceResource IOperationSource<EventGridNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = EventGridNamespaceData.DeserializeEventGridNamespaceData(document.RootElement);
             return new EventGridNamespaceResource(_client, data);
         }
 
-        async ValueTask<EventGridNamespaceResource> Core.IOperationSource<EventGridNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventGridNamespaceResource> IOperationSource<EventGridNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = EventGridNamespaceData.DeserializeEventGridNamespaceData(document.RootElement);

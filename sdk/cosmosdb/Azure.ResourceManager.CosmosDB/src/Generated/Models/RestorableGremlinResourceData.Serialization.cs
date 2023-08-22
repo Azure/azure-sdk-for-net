@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> databaseName = default;
-            Core.Optional<IReadOnlyList<string>> graphNames = default;
+            Optional<string> databaseName = default;
+            Optional<IReadOnlyList<string>> graphNames = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new RestorableGremlinResourceData(id, name, type, systemData.Value, databaseName.Value, Core.Optional.ToList(graphNames));
+            return new RestorableGremlinResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(graphNames));
         }
     }
 }

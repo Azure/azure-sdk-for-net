@@ -16,7 +16,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
         internal KnowledgeBaseAnswerDialog()
         {
-            Prompts = new Core.ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
+            Prompts = new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>

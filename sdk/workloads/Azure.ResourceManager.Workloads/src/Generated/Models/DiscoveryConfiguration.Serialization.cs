@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DiscoveryConfiguration : Core.IUtf8JsonSerializable
+    public partial class DiscoveryConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CentralServerVmId))
+            if (Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
-            if (Core.Optional.IsDefined(ManagedRgStorageAccountName))
+            if (Optional.IsDefined(ManagedRgStorageAccountName))
             {
                 writer.WritePropertyName("managedRgStorageAccountName"u8);
                 writer.WriteStringValue(ManagedRgStorageAccountName);
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> centralServerVmId = default;
-            Core.Optional<string> managedRgStorageAccountName = default;
-            Core.Optional<AzureLocation> appLocation = default;
+            Optional<ResourceIdentifier> centralServerVmId = default;
+            Optional<string> managedRgStorageAccountName = default;
+            Optional<AzureLocation> appLocation = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, managedRgStorageAccountName.Value, Core.Optional.ToNullable(appLocation));
+            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, managedRgStorageAccountName.Value, Optional.ToNullable(appLocation));
         }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Core.Optional<TimeSeriesInstance> instance = default;
-            Core.Optional<TimeSeriesOperationError> error = default;
+            Optional<TimeSeriesInstance> instance = default;
+            Optional<TimeSeriesOperationError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instance"u8))

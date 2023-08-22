@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryCredentials : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryCredentials : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SourceRegistry))
+            if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
                 writer.WriteObjectValue(SourceRegistry);
             }
-            if (Core.Optional.IsCollectionDefined(CustomRegistries))
+            if (Optional.IsCollectionDefined(CustomRegistries))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartObject();
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Core.Optional<SourceRegistryCredentials> sourceRegistry = default;
-            Core.Optional<IDictionary<string, CustomRegistryCredentials>> customRegistries = default;
+            Optional<SourceRegistryCredentials> sourceRegistry = default;
+            Optional<IDictionary<string, CustomRegistryCredentials>> customRegistries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceRegistry"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryCredentials(sourceRegistry.Value, Core.Optional.ToDictionary(customRegistries));
+            return new ContainerRegistryCredentials(sourceRegistry.Value, Optional.ToDictionary(customRegistries));
         }
     }
 }

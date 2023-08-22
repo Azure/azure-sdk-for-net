@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Core.Optional<WritableSubResource> privateEndpoint = default;
-            Core.Optional<PostgreSqlServerPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Core.Optional<PostgreSqlPrivateEndpointProvisioningState> provisioningState = default;
+            Optional<WritableSubResource> privateEndpoint = default;
+            Optional<PostgreSqlServerPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
+            Optional<PostgreSqlPrivateEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpoint"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     continue;
                 }
             }
-            return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, Core.Optional.ToNullable(provisioningState));
+            return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

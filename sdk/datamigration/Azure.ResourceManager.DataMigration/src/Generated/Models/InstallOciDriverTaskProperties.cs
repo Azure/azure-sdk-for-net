@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of InstallOciDriverTaskProperties. </summary>
         public InstallOciDriverTaskProperties()
         {
-            Output = new Core.ChangeTrackingList<InstallOciDriverTaskOutput>();
+            Output = new ChangeTrackingList<InstallOciDriverTaskOutput>();
             TaskType = TaskType.ServiceInstallOci;
         }
 

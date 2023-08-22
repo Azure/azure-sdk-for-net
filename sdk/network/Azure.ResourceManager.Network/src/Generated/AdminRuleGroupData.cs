@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of AdminRuleGroupData. </summary>
         public AdminRuleGroupData()
         {
-            AppliesToGroups = new Core.ChangeTrackingList<NetworkManagerSecurityGroupItem>();
+            AppliesToGroups = new ChangeTrackingList<NetworkManagerSecurityGroupItem>();
         }
 
         /// <summary> Initializes a new instance of AdminRuleGroupData. </summary>

@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualHubEffectiveRoute. </summary>
         internal VirtualHubEffectiveRoute()
         {
-            AddressPrefixes = new Core.ChangeTrackingList<string>();
-            NextHops = new Core.ChangeTrackingList<string>();
+            AddressPrefixes = new ChangeTrackingList<string>();
+            NextHops = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of VirtualHubEffectiveRoute. </summary>

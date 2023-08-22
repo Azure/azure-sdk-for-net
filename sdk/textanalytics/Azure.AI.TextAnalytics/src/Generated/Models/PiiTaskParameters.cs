@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of PiiTaskParameters. </summary>
         public PiiTaskParameters()
         {
-            PiiCategories = new Core.ChangeTrackingList<PiiEntityCategory>();
+            PiiCategories = new ChangeTrackingList<PiiEntityCategory>();
         }
 
         /// <summary> Initializes a new instance of PiiTaskParameters. </summary>

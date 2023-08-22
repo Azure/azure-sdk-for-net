@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrivateLinkServiceListResult. </summary>
         internal PrivateLinkServiceListResult()
         {
-            Value = new Core.ChangeTrackingList<PrivateLinkServiceData>();
+            Value = new ChangeTrackingList<PrivateLinkServiceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceListResult. </summary>

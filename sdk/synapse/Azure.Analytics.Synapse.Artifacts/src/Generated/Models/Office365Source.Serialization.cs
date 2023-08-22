@@ -14,54 +14,54 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(Office365SourceConverter))]
-    public partial class Office365Source : Core.IUtf8JsonSerializable
+    public partial class Office365Source : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AllowedGroups))
+            if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
                 writer.WriteObjectValue(AllowedGroups);
             }
-            if (Core.Optional.IsDefined(UserScopeFilterUri))
+            if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
                 writer.WriteObjectValue(UserScopeFilterUri);
             }
-            if (Core.Optional.IsDefined(DateFilterColumn))
+            if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
                 writer.WriteObjectValue(DateFilterColumn);
             }
-            if (Core.Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteObjectValue(StartTime);
             }
-            if (Core.Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteObjectValue(EndTime);
             }
-            if (Core.Optional.IsDefined(OutputColumns))
+            if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns"u8);
                 writer.WriteObjectValue(OutputColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(SourceRetryCount))
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (Core.Optional.IsDefined(SourceRetryWait))
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentConnections))
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<object> allowedGroups = default;
-            Core.Optional<object> userScopeFilterUri = default;
-            Core.Optional<object> dateFilterColumn = default;
-            Core.Optional<object> startTime = default;
-            Core.Optional<object> endTime = default;
-            Core.Optional<object> outputColumns = default;
+            Optional<object> allowedGroups = default;
+            Optional<object> userScopeFilterUri = default;
+            Optional<object> dateFilterColumn = default;
+            Optional<object> startTime = default;
+            Optional<object> endTime = default;
+            Optional<object> outputColumns = default;
             string type = default;
-            Core.Optional<object> sourceRetryCount = default;
-            Core.Optional<object> sourceRetryWait = default;
-            Core.Optional<object> maxConcurrentConnections = default;
+            Optional<object> sourceRetryCount = default;
+            Optional<object> sourceRetryWait = default;
+            Optional<object> maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())

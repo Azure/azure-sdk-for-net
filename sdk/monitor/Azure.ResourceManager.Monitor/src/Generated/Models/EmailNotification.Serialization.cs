@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EmailNotification : Core.IUtf8JsonSerializable
+    public partial class EmailNotification : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SendToSubscriptionAdministrator))
+            if (Optional.IsDefined(SendToSubscriptionAdministrator))
             {
                 writer.WritePropertyName("sendToSubscriptionAdministrator"u8);
                 writer.WriteBooleanValue(SendToSubscriptionAdministrator.Value);
             }
-            if (Core.Optional.IsDefined(SendToSubscriptionCoAdministrators))
+            if (Optional.IsDefined(SendToSubscriptionCoAdministrators))
             {
                 writer.WritePropertyName("sendToSubscriptionCoAdministrators"u8);
                 writer.WriteBooleanValue(SendToSubscriptionCoAdministrators.Value);
             }
-            if (Core.Optional.IsCollectionDefined(CustomEmails))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<bool> sendToSubscriptionAdministrator = default;
-            Core.Optional<bool> sendToSubscriptionCoAdministrators = default;
-            Core.Optional<IList<string>> customEmails = default;
+            Optional<bool> sendToSubscriptionAdministrator = default;
+            Optional<bool> sendToSubscriptionCoAdministrators = default;
+            Optional<IList<string>> customEmails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendToSubscriptionAdministrator"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new EmailNotification(Core.Optional.ToNullable(sendToSubscriptionAdministrator), Core.Optional.ToNullable(sendToSubscriptionCoAdministrators), Core.Optional.ToList(customEmails));
+            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), Optional.ToList(customEmails));
         }
     }
 }

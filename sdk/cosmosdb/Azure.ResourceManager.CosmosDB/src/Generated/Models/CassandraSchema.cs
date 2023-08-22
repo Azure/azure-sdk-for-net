@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CassandraSchema. </summary>
         public CassandraSchema()
         {
-            Columns = new Core.ChangeTrackingList<CassandraColumn>();
-            PartitionKeys = new Core.ChangeTrackingList<CassandraPartitionKey>();
-            ClusterKeys = new Core.ChangeTrackingList<CassandraClusterKey>();
+            Columns = new ChangeTrackingList<CassandraColumn>();
+            PartitionKeys = new ChangeTrackingList<CassandraPartitionKey>();
+            ClusterKeys = new ChangeTrackingList<CassandraClusterKey>();
         }
 
         /// <summary> Initializes a new instance of CassandraSchema. </summary>

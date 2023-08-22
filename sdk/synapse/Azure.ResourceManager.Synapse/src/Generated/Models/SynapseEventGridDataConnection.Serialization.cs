@@ -11,12 +11,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseEventGridDataConnection : Core.IUtf8JsonSerializable
+    public partial class SynapseEventGridDataConnection : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -25,42 +25,42 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StorageAccountResourceId))
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Core.Optional.IsDefined(EventHubResourceId))
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (Core.Optional.IsDefined(ConsumerGroup))
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Core.Optional.IsDefined(TableName))
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (Core.Optional.IsDefined(MappingRuleName))
+            if (Optional.IsDefined(MappingRuleName))
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (Core.Optional.IsDefined(DataFormat))
+            if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IgnoreFirstRecord))
+            if (Optional.IsDefined(IgnoreFirstRecord))
             {
                 writer.WritePropertyName("ignoreFirstRecord"u8);
                 writer.WriteBooleanValue(IgnoreFirstRecord.Value);
             }
-            if (Core.Optional.IsDefined(BlobStorageEventType))
+            if (Optional.IsDefined(BlobStorageEventType))
             {
                 writer.WritePropertyName("blobStorageEventType"u8);
                 writer.WriteStringValue(BlobStorageEventType.Value.ToString());
@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             SynapseDataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Core.Optional<ResourceIdentifier> eventHubResourceId = default;
-            Core.Optional<string> consumerGroup = default;
-            Core.Optional<string> tableName = default;
-            Core.Optional<string> mappingRuleName = default;
-            Core.Optional<SynapseEventGridDataFormat> dataFormat = default;
-            Core.Optional<bool> ignoreFirstRecord = default;
-            Core.Optional<SynapseBlobStorageEventType> blobStorageEventType = default;
-            Core.Optional<ResourceProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> eventHubResourceId = default;
+            Optional<string> consumerGroup = default;
+            Optional<string> tableName = default;
+            Optional<string> mappingRuleName = default;
+            Optional<SynapseEventGridDataFormat> dataFormat = default;
+            Optional<bool> ignoreFirstRecord = default;
+            Optional<SynapseBlobStorageEventType> blobStorageEventType = default;
+            Optional<ResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new SynapseEventGridDataConnection(id, name, type, systemData.Value, Core.Optional.ToNullable(location), kind, storageAccountResourceId.Value, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Core.Optional.ToNullable(dataFormat), Core.Optional.ToNullable(ignoreFirstRecord), Core.Optional.ToNullable(blobStorageEventType), Core.Optional.ToNullable(provisioningState));
+            return new SynapseEventGridDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, storageAccountResourceId.Value, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToNullable(ignoreFirstRecord), Optional.ToNullable(blobStorageEventType), Optional.ToNullable(provisioningState));
         }
     }
 }

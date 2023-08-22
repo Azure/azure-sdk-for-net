@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation(_machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation(_machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation(_machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningOnlineDeploymentResource>(new MachineLearningOnlineDeploymentOperationSource(Client), _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, count, skip);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningSkuDetail.DeserializeMachineLearningSkuDetail, _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics, Pipeline, "MachineLearningOnlineDeploymentResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of NotificationEndpoint. </summary>
         public NotificationEndpoint()
         {
-            Locations = new Core.ChangeTrackingList<AzureLocation>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of NotificationEndpoint. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> id = default;
             FrontDoorUsageUnit unit = default;
             long currentValue = default;
             long limit = default;

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>
         public TriggeredWebJobData()
         {
-            Settings = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of TriggeredWebJobData. </summary>

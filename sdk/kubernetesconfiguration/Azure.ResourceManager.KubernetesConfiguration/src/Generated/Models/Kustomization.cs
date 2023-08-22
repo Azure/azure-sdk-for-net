@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of Kustomization. </summary>
         public Kustomization()
         {
-            DependsOn = new Core.ChangeTrackingList<string>();
+            DependsOn = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of Kustomization. </summary>

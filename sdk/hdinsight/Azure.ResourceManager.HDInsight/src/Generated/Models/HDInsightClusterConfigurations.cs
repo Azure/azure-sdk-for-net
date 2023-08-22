@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>
         internal HDInsightClusterConfigurations()
         {
-            Configurations = new Core.ChangeTrackingDictionary<string, IDictionary<string, string>>();
+            Configurations = new ChangeTrackingDictionary<string, IDictionary<string, string>>();
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>

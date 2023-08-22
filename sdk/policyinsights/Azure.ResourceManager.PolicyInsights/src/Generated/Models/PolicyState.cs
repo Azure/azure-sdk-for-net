@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of PolicyState. </summary>
         internal PolicyState()
         {
-            PolicyDefinitionGroupNames = new Core.ChangeTrackingList<string>();
-            Components = new Core.ChangeTrackingList<ComponentStateDetails>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            PolicyDefinitionGroupNames = new ChangeTrackingList<string>();
+            Components = new ChangeTrackingList<ComponentStateDetails>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of PolicyState. </summary>

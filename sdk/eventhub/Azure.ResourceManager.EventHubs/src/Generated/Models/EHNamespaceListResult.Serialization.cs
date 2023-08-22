@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<EventHubsNamespaceData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<EventHubsNamespaceData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new EHNamespaceListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new EHNamespaceListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

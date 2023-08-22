@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> mechanismType = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> subState = default;
-            Core.Optional<DateTimeOffset> sendTime = default;
-            Core.Optional<string> detail = default;
+            Optional<string> mechanismType = default;
+            Optional<string> name = default;
+            Optional<string> status = default;
+            Optional<string> subState = default;
+            Optional<DateTimeOffset> sendTime = default;
+            Optional<string> detail = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("MechanismType"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Core.Optional.ToNullable(sendTime), detail.Value);
+            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value);
         }
     }
 }

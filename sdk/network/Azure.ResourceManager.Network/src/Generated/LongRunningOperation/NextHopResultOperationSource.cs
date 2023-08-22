@@ -14,15 +14,15 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class NextHopResultOperationSource : Core.IOperationSource<NextHopResult>
+    internal class NextHopResultOperationSource : IOperationSource<NextHopResult>
     {
-        NextHopResult Core.IOperationSource<NextHopResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        NextHopResult IOperationSource<NextHopResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return NextHopResult.DeserializeNextHopResult(document.RootElement);
         }
 
-        async ValueTask<NextHopResult> Core.IOperationSource<NextHopResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NextHopResult> IOperationSource<NextHopResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return NextHopResult.DeserializeNextHopResult(document.RootElement);

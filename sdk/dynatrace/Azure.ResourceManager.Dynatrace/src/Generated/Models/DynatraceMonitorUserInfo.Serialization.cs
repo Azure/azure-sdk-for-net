@@ -10,32 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceMonitorUserInfo : Core.IUtf8JsonSerializable
+    public partial class DynatraceMonitorUserInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FirstName))
+            if (Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Core.Optional.IsDefined(LastName))
+            if (Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Core.Optional.IsDefined(EmailAddress))
+            if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Core.Optional.IsDefined(PhoneNumber))
+            if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Core.Optional.IsDefined(Country))
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<string> firstName = default;
-            Core.Optional<string> lastName = default;
-            Core.Optional<string> emailAddress = default;
-            Core.Optional<string> phoneNumber = default;
-            Core.Optional<string> country = default;
+            Optional<string> firstName = default;
+            Optional<string> lastName = default;
+            Optional<string> emailAddress = default;
+            Optional<string> phoneNumber = default;
+            Optional<string> country = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstName"u8))

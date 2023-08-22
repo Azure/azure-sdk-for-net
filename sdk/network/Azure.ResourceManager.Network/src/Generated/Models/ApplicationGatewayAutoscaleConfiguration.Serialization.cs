@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayAutoscaleConfiguration : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayAutoscaleConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("minCapacity"u8);
             writer.WriteNumberValue(MinCapacity);
-            if (Core.Optional.IsDefined(MaxCapacity))
+            if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int minCapacity = default;
-            Core.Optional<int> maxCapacity = default;
+            Optional<int> maxCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minCapacity"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, Core.Optional.ToNullable(maxCapacity));
+            return new ApplicationGatewayAutoscaleConfiguration(minCapacity, Optional.ToNullable(maxCapacity));
         }
     }
 }

@@ -25,8 +25,8 @@ namespace Azure.Monitor.Query.Models
 
             Id = id;
             Name = name;
-            Labels = new Core.ChangeTrackingList<string>();
-            Columns = new Core.ChangeTrackingList<MetadataTableColumnsItem>();
+            Labels = new ChangeTrackingList<string>();
+            Columns = new ChangeTrackingList<MetadataTableColumnsItem>();
         }
 
         /// <summary> The ID of the table. </summary>

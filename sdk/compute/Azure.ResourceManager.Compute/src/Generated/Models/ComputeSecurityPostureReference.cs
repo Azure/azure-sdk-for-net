@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of ComputeSecurityPostureReference. </summary>
         public ComputeSecurityPostureReference()
         {
-            ExcludeExtensions = new Core.ChangeTrackingList<VirtualMachineExtensionData>();
+            ExcludeExtensions = new ChangeTrackingList<VirtualMachineExtensionData>();
         }
 
         /// <summary> Initializes a new instance of ComputeSecurityPostureReference. </summary>

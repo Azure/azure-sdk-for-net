@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Core.Optional<string> status = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> properties = default;
-            Core.Optional<string> error = default;
+            Optional<string> status = default;
+            Optional<string> name = default;
+            Optional<string> properties = default;
+            Optional<string> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))

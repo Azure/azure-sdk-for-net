@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BgpPeerStatusListResult. </summary>
         internal BgpPeerStatusListResult()
         {
-            Value = new Core.ChangeTrackingList<BgpPeerStatus>();
+            Value = new ChangeTrackingList<BgpPeerStatus>();
         }
 
         /// <summary> Initializes a new instance of BgpPeerStatusListResult. </summary>

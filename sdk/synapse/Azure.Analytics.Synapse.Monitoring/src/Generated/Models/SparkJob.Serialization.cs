@@ -20,21 +20,21 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             {
                 return null;
             }
-            Core.Optional<string> state = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> submitter = default;
-            Core.Optional<string> compute = default;
-            Core.Optional<string> sparkApplicationId = default;
-            Core.Optional<string> livyId = default;
-            Core.Optional<IReadOnlyList<string>> timing = default;
-            Core.Optional<string> sparkJobDefinition = default;
-            Core.Optional<IReadOnlyList<SparkJob>> pipeline = default;
-            Core.Optional<string> jobType = default;
-            Core.Optional<DateTimeOffset?> submitTime = default;
-            Core.Optional<DateTimeOffset?> endTime = default;
-            Core.Optional<string> queuedDuration = default;
-            Core.Optional<string> runningDuration = default;
-            Core.Optional<string> totalDuration = default;
+            Optional<string> state = default;
+            Optional<string> name = default;
+            Optional<string> submitter = default;
+            Optional<string> compute = default;
+            Optional<string> sparkApplicationId = default;
+            Optional<string> livyId = default;
+            Optional<IReadOnlyList<string>> timing = default;
+            Optional<string> sparkJobDefinition = default;
+            Optional<IReadOnlyList<SparkJob>> pipeline = default;
+            Optional<string> jobType = default;
+            Optional<DateTimeOffset?> submitTime = default;
+            Optional<DateTimeOffset?> endTime = default;
+            Optional<string> queuedDuration = default;
+            Optional<string> runningDuration = default;
+            Optional<string> totalDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Core.Optional.ToList(timing), sparkJobDefinition.Value, Core.Optional.ToList(pipeline), jobType.Value, Core.Optional.ToNullable(submitTime), Core.Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
+            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, Optional.ToList(timing), sparkJobDefinition.Value, Optional.ToList(pipeline), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
         }
     }
 }

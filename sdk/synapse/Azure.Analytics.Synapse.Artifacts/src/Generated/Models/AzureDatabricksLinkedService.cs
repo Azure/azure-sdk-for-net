@@ -22,9 +22,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(domain, nameof(domain));
 
             Domain = domain;
-            NewClusterSparkConf = new Core.ChangeTrackingDictionary<string, object>();
-            NewClusterSparkEnvVars = new Core.ChangeTrackingDictionary<string, object>();
-            NewClusterCustomTags = new Core.ChangeTrackingDictionary<string, object>();
+            NewClusterSparkConf = new ChangeTrackingDictionary<string, object>();
+            NewClusterSparkEnvVars = new ChangeTrackingDictionary<string, object>();
+            NewClusterCustomTags = new ChangeTrackingDictionary<string, object>();
             Type = "AzureDatabricks";
         }
 

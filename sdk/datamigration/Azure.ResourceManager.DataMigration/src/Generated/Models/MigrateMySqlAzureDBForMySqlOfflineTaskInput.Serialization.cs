@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskInput : Core.IUtf8JsonSerializable
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(MakeSourceServerReadOnly))
+            if (Optional.IsDefined(MakeSourceServerReadOnly))
             {
                 writer.WritePropertyName("makeSourceServerReadOnly"u8);
                 writer.WriteBooleanValue(MakeSourceServerReadOnly.Value);
             }
-            if (Core.Optional.IsDefined(StartedOn))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Core.Optional.IsCollectionDefined(OptionalAgentSettings))
+            if (Optional.IsCollectionDefined(OptionalAgentSettings))
             {
                 writer.WritePropertyName("optionalAgentSettings"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(EncryptedKeyForSecureFields))
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             MySqlConnectionInfo sourceConnectionInfo = default;
             MySqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = default;
-            Core.Optional<bool> makeSourceServerReadOnly = default;
-            Core.Optional<DateTimeOffset> startedOn = default;
-            Core.Optional<IDictionary<string, string>> optionalAgentSettings = default;
-            Core.Optional<string> encryptedKeyForSecureFields = default;
+            Optional<bool> makeSourceServerReadOnly = default;
+            Optional<DateTimeOffset> startedOn = default;
+            Optional<IDictionary<string, string>> optionalAgentSettings = default;
+            Optional<string> encryptedKeyForSecureFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, Core.Optional.ToNullable(makeSourceServerReadOnly), Core.Optional.ToNullable(startedOn), Core.Optional.ToDictionary(optionalAgentSettings), encryptedKeyForSecureFields.Value);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, Optional.ToNullable(makeSourceServerReadOnly), Optional.ToNullable(startedOn), Optional.ToDictionary(optionalAgentSettings), encryptedKeyForSecureFields.Value);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PhysicalPartitionStorageInfo>> physicalPartitionStorageInfoCollection = default;
+            Optional<IReadOnlyList<PhysicalPartitionStorageInfo>> physicalPartitionStorageInfoCollection = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("physicalPartitionStorageInfoCollection"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new PhysicalPartitionStorageInfoCollection(Core.Optional.ToList(physicalPartitionStorageInfoCollection));
+            return new PhysicalPartitionStorageInfoCollection(Optional.ToList(physicalPartitionStorageInfoCollection));
         }
     }
 }

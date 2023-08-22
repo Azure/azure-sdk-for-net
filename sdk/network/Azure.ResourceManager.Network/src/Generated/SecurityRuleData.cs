@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of SecurityRuleData. </summary>
         public SecurityRuleData()
         {
-            SourceAddressPrefixes = new Core.ChangeTrackingList<string>();
-            SourceApplicationSecurityGroups = new Core.ChangeTrackingList<ApplicationSecurityGroupData>();
-            DestinationAddressPrefixes = new Core.ChangeTrackingList<string>();
-            DestinationApplicationSecurityGroups = new Core.ChangeTrackingList<ApplicationSecurityGroupData>();
-            SourcePortRanges = new Core.ChangeTrackingList<string>();
-            DestinationPortRanges = new Core.ChangeTrackingList<string>();
+            SourceAddressPrefixes = new ChangeTrackingList<string>();
+            SourceApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
+            DestinationAddressPrefixes = new ChangeTrackingList<string>();
+            DestinationApplicationSecurityGroups = new ChangeTrackingList<ApplicationSecurityGroupData>();
+            SourcePortRanges = new ChangeTrackingList<string>();
+            DestinationPortRanges = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of SecurityRuleData. </summary>

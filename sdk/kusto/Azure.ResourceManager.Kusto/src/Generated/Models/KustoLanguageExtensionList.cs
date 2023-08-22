@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
         public KustoLanguageExtensionList()
         {
-            Value = new Core.ChangeTrackingList<KustoLanguageExtension>();
+            Value = new ChangeTrackingList<KustoLanguageExtension>();
         }
 
         /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>

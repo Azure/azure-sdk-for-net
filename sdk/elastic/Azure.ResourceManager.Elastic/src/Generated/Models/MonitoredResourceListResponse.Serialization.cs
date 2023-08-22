@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MonitoredResource>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MonitoredResource>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     continue;
                 }
             }
-            return new MonitoredResourceListResponse(Core.Optional.ToList(value), nextLink.Value);
+            return new MonitoredResourceListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AddressSpace. </summary>
         public AddressSpace()
         {
-            AddressPrefixes = new Core.ChangeTrackingList<string>();
+            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AddressSpace. </summary>

@@ -15,34 +15,34 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsBookmarkData : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsBookmarkData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(CreatedBy))
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsCollectionDefined(Labels))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -52,47 +52,47 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Notes))
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Core.Optional.IsDefined(Query))
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Core.Optional.IsDefined(QueryResult))
+            if (Optional.IsDefined(QueryResult))
             {
                 writer.WritePropertyName("queryResult"u8);
                 writer.WriteStringValue(QueryResult);
             }
-            if (Core.Optional.IsDefined(UpdatedOn))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(UpdatedBy))
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (Core.Optional.IsDefined(EventOn))
+            if (Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(QueryStartOn))
+            if (Optional.IsDefined(QueryStartOn))
             {
                 writer.WritePropertyName("queryStartTime"u8);
                 writer.WriteStringValue(QueryStartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(QueryEndOn))
+            if (Optional.IsDefined(QueryEndOn))
             {
                 writer.WritePropertyName("queryEndTime"u8);
                 writer.WriteStringValue(QueryEndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(IncidentInfo))
+            if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
                 writer.WriteObjectValue(IncidentInfo);
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<SecurityInsightsUserInfo> createdBy = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<IList<string>> labels = default;
-            Core.Optional<string> notes = default;
-            Core.Optional<string> query = default;
-            Core.Optional<string> queryResult = default;
-            Core.Optional<DateTimeOffset> updated = default;
-            Core.Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Core.Optional<DateTimeOffset> eventTime = default;
-            Core.Optional<DateTimeOffset> queryStartTime = default;
-            Core.Optional<DateTimeOffset> queryEndTime = default;
-            Core.Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
+            Optional<SystemData> systemData = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<SecurityInsightsUserInfo> createdBy = default;
+            Optional<string> displayName = default;
+            Optional<IList<string>> labels = default;
+            Optional<string> notes = default;
+            Optional<string> query = default;
+            Optional<string> queryResult = default;
+            Optional<DateTimeOffset> updated = default;
+            Optional<SecurityInsightsUserInfo> updatedBy = default;
+            Optional<DateTimeOffset> eventTime = default;
+            Optional<DateTimeOffset> queryStartTime = default;
+            Optional<DateTimeOffset> queryEndTime = default;
+            Optional<SecurityInsightsBookmarkIncidentInfo> incidentInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsBookmarkData(id, name, type, systemData.Value, Core.Optional.ToNullable(created), createdBy.Value, displayName.Value, Core.Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Core.Optional.ToNullable(updated), updatedBy.Value, Core.Optional.ToNullable(eventTime), Core.Optional.ToNullable(queryStartTime), Core.Optional.ToNullable(queryEndTime), incidentInfo.Value, Core.Optional.ToNullable(etag));
+            return new SecurityInsightsBookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToNullable(etag));
         }
     }
 }

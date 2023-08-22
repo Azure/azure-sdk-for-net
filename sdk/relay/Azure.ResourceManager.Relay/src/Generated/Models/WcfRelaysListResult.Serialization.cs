@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<WcfRelayData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<WcfRelayData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Relay.Models
                     continue;
                 }
             }
-            return new WcfRelaysListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new WcfRelaysListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

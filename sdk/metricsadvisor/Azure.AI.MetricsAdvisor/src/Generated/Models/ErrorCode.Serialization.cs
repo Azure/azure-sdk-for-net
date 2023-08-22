@@ -18,8 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Core.Optional<string> message = default;
-            Core.Optional<string> code = default;
+            Optional<string> message = default;
+            Optional<string> code = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))

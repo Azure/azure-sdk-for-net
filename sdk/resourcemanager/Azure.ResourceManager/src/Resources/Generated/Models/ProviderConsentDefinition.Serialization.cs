@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    internal partial class ProviderConsentDefinition : Core.IUtf8JsonSerializable
+    internal partial class ProviderConsentDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConsentToAuthorization))
+            if (Optional.IsDefined(ConsentToAuthorization))
             {
                 writer.WritePropertyName("consentToAuthorization"u8);
                 writer.WriteBooleanValue(ConsentToAuthorization.Value);

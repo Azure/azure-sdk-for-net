@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ScopeMapPatch. </summary>
         public ScopeMapPatch()
         {
-            Actions = new Core.ChangeTrackingList<string>();
+            Actions = new ChangeTrackingList<string>();
         }
 
         /// <summary> The user friendly description of the scope map. </summary>

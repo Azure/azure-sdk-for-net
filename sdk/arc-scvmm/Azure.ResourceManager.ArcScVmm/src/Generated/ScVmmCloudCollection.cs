@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = await _scVmmCloudCloudsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ArcScVmm
             try
             {
                 var response = _scVmmCloudCloudsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data, cancellationToken);
-                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

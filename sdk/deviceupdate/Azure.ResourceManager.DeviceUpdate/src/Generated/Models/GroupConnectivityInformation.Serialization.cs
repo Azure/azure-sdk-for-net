@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class GroupConnectivityInformation : Core.IUtf8JsonSerializable
+    public partial class GroupConnectivityInformation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(CustomerVisibleFqdns))
+            if (Optional.IsCollectionDefined(CustomerVisibleFqdns))
             {
                 writer.WritePropertyName("customerVisibleFqdns"u8);
                 writer.WriteStartArray();
@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RedirectMapId))
+            if (Optional.IsDefined(RedirectMapId))
             {
                 writer.WritePropertyName("redirectMapId"u8);
                 writer.WriteStringValue(RedirectMapId);
             }
-            if (Core.Optional.IsDefined(PrivateLinkServiceArmRegion))
+            if (Optional.IsDefined(PrivateLinkServiceArmRegion))
             {
                 writer.WritePropertyName("privateLinkServiceArmRegion"u8);
                 writer.WriteStringValue(PrivateLinkServiceArmRegion);
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Core.Optional<string> groupId = default;
-            Core.Optional<string> memberName = default;
-            Core.Optional<IList<string>> customerVisibleFqdns = default;
-            Core.Optional<string> internalFqdn = default;
-            Core.Optional<string> redirectMapId = default;
-            Core.Optional<string> privateLinkServiceArmRegion = default;
+            Optional<string> groupId = default;
+            Optional<string> memberName = default;
+            Optional<IList<string>> customerVisibleFqdns = default;
+            Optional<string> internalFqdn = default;
+            Optional<string> redirectMapId = default;
+            Optional<string> privateLinkServiceArmRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     continue;
                 }
             }
-            return new GroupConnectivityInformation(groupId.Value, memberName.Value, Core.Optional.ToList(customerVisibleFqdns), internalFqdn.Value, redirectMapId.Value, privateLinkServiceArmRegion.Value);
+            return new GroupConnectivityInformation(groupId.Value, memberName.Value, Optional.ToList(customerVisibleFqdns), internalFqdn.Value, redirectMapId.Value, privateLinkServiceArmRegion.Value);
         }
     }
 }

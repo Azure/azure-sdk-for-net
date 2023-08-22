@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Initializes a new instance of AgentPoolProfile. </summary>
         public AgentPoolProfile()
         {
-            AvailabilityZones = new Core.ChangeTrackingList<string>();
-            NodeLabels = new Core.ChangeTrackingDictionary<string, string>();
-            NodeTaints = new Core.ChangeTrackingList<string>();
+            AvailabilityZones = new ChangeTrackingList<string>();
+            NodeLabels = new ChangeTrackingDictionary<string, string>();
+            NodeTaints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AgentPoolProfile. </summary>

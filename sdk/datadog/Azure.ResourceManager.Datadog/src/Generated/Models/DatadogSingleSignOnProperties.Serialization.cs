@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class DatadogSingleSignOnProperties : Core.IUtf8JsonSerializable
+    public partial class DatadogSingleSignOnProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(SingleSignOnState))
+            if (Optional.IsDefined(SingleSignOnState))
             {
                 writer.WritePropertyName("singleSignOnState"u8);
                 writer.WriteStringValue(SingleSignOnState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(EnterpriseAppId))
+            if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<SingleSignOnState> singleSignOnState = default;
-            Core.Optional<string> enterpriseAppId = default;
-            Core.Optional<Uri> singleSignOnUrl = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<SingleSignOnState> singleSignOnState = default;
+            Optional<string> enterpriseAppId = default;
+            Optional<Uri> singleSignOnUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     continue;
                 }
             }
-            return new DatadogSingleSignOnProperties(Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value);
+            return new DatadogSingleSignOnProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(singleSignOnState), enterpriseAppId.Value, singleSignOnUrl.Value);
         }
     }
 }

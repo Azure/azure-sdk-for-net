@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(networkConfiguration, nameof(networkConfiguration));
 
             ExtendedLocation = extendedLocation;
-            AttachedNetworkIds = new Core.ChangeTrackingList<ResourceIdentifier>();
-            AvailableUpgrades = new Core.ChangeTrackingList<AvailableUpgrade>();
+            AttachedNetworkIds = new ChangeTrackingList<ResourceIdentifier>();
+            AvailableUpgrades = new ChangeTrackingList<AvailableUpgrade>();
             ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
-            FeatureStatuses = new Core.ChangeTrackingList<FeatureStatus>();
+            FeatureStatuses = new ChangeTrackingList<FeatureStatus>();
             InitialAgentPoolConfigurations = initialAgentPoolConfigurations.ToList();
             KubernetesVersion = kubernetesVersion;
             NetworkConfiguration = networkConfiguration;
-            Nodes = new Core.ChangeTrackingList<KubernetesClusterNode>();
+            Nodes = new ChangeTrackingList<KubernetesClusterNode>();
         }
 
         /// <summary> Initializes a new instance of NetworkCloudKubernetesClusterData. </summary>

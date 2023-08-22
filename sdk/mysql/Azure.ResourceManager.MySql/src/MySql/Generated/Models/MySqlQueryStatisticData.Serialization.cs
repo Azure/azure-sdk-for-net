@@ -13,34 +13,34 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlQueryStatisticData : Core.IUtf8JsonSerializable
+    public partial class MySqlQueryStatisticData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QueryId))
+            if (Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(AggregationFunction))
+            if (Optional.IsDefined(AggregationFunction))
             {
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (Core.Optional.IsCollectionDefined(DatabaseNames))
+            if (Optional.IsCollectionDefined(DatabaseNames))
             {
                 writer.WritePropertyName("databaseNames"u8);
                 writer.WriteStartArray();
@@ -50,27 +50,27 @@ namespace Azure.ResourceManager.MySql
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(QueryExecutionCount))
+            if (Optional.IsDefined(QueryExecutionCount))
             {
                 writer.WritePropertyName("queryExecutionCount"u8);
                 writer.WriteNumberValue(QueryExecutionCount.Value);
             }
-            if (Core.Optional.IsDefined(MetricName))
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (Core.Optional.IsDefined(MetricDisplayName))
+            if (Optional.IsDefined(MetricDisplayName))
             {
                 writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(MetricDisplayName);
             }
-            if (Core.Optional.IsDefined(MetricValue))
+            if (Optional.IsDefined(MetricValue))
             {
                 writer.WritePropertyName("metricValue"u8);
                 writer.WriteNumberValue(MetricValue.Value);
             }
-            if (Core.Optional.IsDefined(MetricValueUnit))
+            if (Optional.IsDefined(MetricValueUnit))
             {
                 writer.WritePropertyName("metricValueUnit"u8);
                 writer.WriteStringValue(MetricValueUnit);
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> queryId = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> aggregationFunction = default;
-            Core.Optional<IList<string>> databaseNames = default;
-            Core.Optional<long> queryExecutionCount = default;
-            Core.Optional<string> metricName = default;
-            Core.Optional<string> metricDisplayName = default;
-            Core.Optional<double> metricValue = default;
-            Core.Optional<string> metricValueUnit = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> queryId = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> aggregationFunction = default;
+            Optional<IList<string>> databaseNames = default;
+            Optional<long> queryExecutionCount = default;
+            Optional<string> metricName = default;
+            Optional<string> metricDisplayName = default;
+            Optional<double> metricValue = default;
+            Optional<string> metricValueUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MySql
                     continue;
                 }
             }
-            return new MySqlQueryStatisticData(id, name, type, systemData.Value, queryId.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), aggregationFunction.Value, Core.Optional.ToList(databaseNames), Core.Optional.ToNullable(queryExecutionCount), metricName.Value, metricDisplayName.Value, Core.Optional.ToNullable(metricValue), metricValueUnit.Value);
+            return new MySqlQueryStatisticData(id, name, type, systemData.Value, queryId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), aggregationFunction.Value, Optional.ToList(databaseNames), Optional.ToNullable(queryExecutionCount), metricName.Value, metricDisplayName.Value, Optional.ToNullable(metricValue), metricValueUnit.Value);
         }
     }
 }

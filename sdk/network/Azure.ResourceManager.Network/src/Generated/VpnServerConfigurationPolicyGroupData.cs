@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupData. </summary>
         public VpnServerConfigurationPolicyGroupData()
         {
-            PolicyMembers = new Core.ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>();
-            P2SConnectionConfigurations = new Core.ChangeTrackingList<WritableSubResource>();
+            PolicyMembers = new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>();
+            P2SConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupData. </summary>

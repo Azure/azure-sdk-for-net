@@ -19,13 +19,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Core.Optional<DocumentTableCellKind> kind = default;
+            Optional<DocumentTableCellKind> kind = default;
             int rowIndex = default;
             int columnIndex = default;
-            Core.Optional<int> rowSpan = default;
-            Core.Optional<int> columnSpan = default;
+            Optional<int> rowSpan = default;
+            Optional<int> columnSpan = default;
             string content = default;
-            Core.Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -96,7 +96,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentTableCell(Core.Optional.ToNullable(kind), rowIndex, columnIndex, Core.Optional.ToNullable(rowSpan), Core.Optional.ToNullable(columnSpan), content, Core.Optional.ToList(boundingRegions), spans);
+            return new DocumentTableCell(Optional.ToNullable(kind), rowIndex, columnIndex, Optional.ToNullable(rowSpan), Optional.ToNullable(columnSpan), content, Optional.ToList(boundingRegions), spans);
         }
     }
 }

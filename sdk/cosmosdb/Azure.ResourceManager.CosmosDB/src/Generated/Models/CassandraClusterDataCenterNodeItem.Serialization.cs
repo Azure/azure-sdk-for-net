@@ -20,23 +20,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> address = default;
-            Core.Optional<CassandraNodeState> state = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> cassandraProcessStatus = default;
-            Core.Optional<string> load = default;
-            Core.Optional<IReadOnlyList<string>> tokens = default;
-            Core.Optional<int> size = default;
-            Core.Optional<Guid> hostId = default;
-            Core.Optional<string> rack = default;
-            Core.Optional<string> timestamp = default;
-            Core.Optional<long> diskUsedKB = default;
-            Core.Optional<long> diskFreeKB = default;
-            Core.Optional<long> memoryUsedKB = default;
-            Core.Optional<long> memoryBuffersAndCachedKB = default;
-            Core.Optional<long> memoryFreeKB = default;
-            Core.Optional<long> memoryTotalKB = default;
-            Core.Optional<double> cpuUsage = default;
+            Optional<string> address = default;
+            Optional<CassandraNodeState> state = default;
+            Optional<string> status = default;
+            Optional<string> cassandraProcessStatus = default;
+            Optional<string> load = default;
+            Optional<IReadOnlyList<string>> tokens = default;
+            Optional<int> size = default;
+            Optional<Guid> hostId = default;
+            Optional<string> rack = default;
+            Optional<string> timestamp = default;
+            Optional<long> diskUsedKB = default;
+            Optional<long> diskFreeKB = default;
+            Optional<long> memoryUsedKB = default;
+            Optional<long> memoryBuffersAndCachedKB = default;
+            Optional<long> memoryFreeKB = default;
+            Optional<long> memoryTotalKB = default;
+            Optional<double> cpuUsage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterDataCenterNodeItem(address.Value, Core.Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Core.Optional.ToList(tokens), Core.Optional.ToNullable(size), Core.Optional.ToNullable(hostId), rack.Value, timestamp.Value, Core.Optional.ToNullable(diskUsedKB), Core.Optional.ToNullable(diskFreeKB), Core.Optional.ToNullable(memoryUsedKB), Core.Optional.ToNullable(memoryBuffersAndCachedKB), Core.Optional.ToNullable(memoryFreeKB), Core.Optional.ToNullable(memoryTotalKB), Core.Optional.ToNullable(cpuUsage));
+            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage));
         }
     }
 }

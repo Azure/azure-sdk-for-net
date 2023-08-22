@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>
         internal ContainerAppCustomHostnameAnalysisResult()
         {
-            CNameRecords = new Core.ChangeTrackingList<string>();
-            TxtRecords = new Core.ChangeTrackingList<string>();
-            ARecords = new Core.ChangeTrackingList<string>();
-            AlternateCNameRecords = new Core.ChangeTrackingList<string>();
-            AlternateTxtRecords = new Core.ChangeTrackingList<string>();
+            CNameRecords = new ChangeTrackingList<string>();
+            TxtRecords = new ChangeTrackingList<string>();
+            ARecords = new ChangeTrackingList<string>();
+            AlternateCNameRecords = new ChangeTrackingList<string>();
+            AlternateTxtRecords = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppCustomHostnameAnalysisResult. </summary>

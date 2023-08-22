@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of ClientAuthenticationSettings. </summary>
         public ClientAuthenticationSettings()
         {
-            AlternativeAuthenticationNameSources = new Core.ChangeTrackingList<AlternativeAuthenticationNameSource>();
+            AlternativeAuthenticationNameSources = new ChangeTrackingList<AlternativeAuthenticationNameSource>();
         }
 
         /// <summary> Initializes a new instance of ClientAuthenticationSettings. </summary>

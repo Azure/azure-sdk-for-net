@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <summary> Initializes a new instance of LoadTestResourcePageList. </summary>
         internal LoadTestResourcePageList()
         {
-            Value = new Core.ChangeTrackingList<LoadTestingResourceData>();
+            Value = new ChangeTrackingList<LoadTestingResourceData>();
         }
 
         /// <summary> Initializes a new instance of LoadTestResourcePageList. </summary>

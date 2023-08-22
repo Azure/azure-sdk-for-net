@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Core.Optional<string> environmentId = default;
-            Core.Optional<string> environmentName = default;
-            Core.Optional<DynatraceBillingPlanInfo> planData = default;
+            Optional<string> environmentId = default;
+            Optional<string> environmentName = default;
+            Optional<DynatraceBillingPlanInfo> planData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentId"u8))

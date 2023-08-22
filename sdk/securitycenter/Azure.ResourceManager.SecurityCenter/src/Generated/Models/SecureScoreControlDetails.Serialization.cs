@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecureScoreControlDetails : Core.IUtf8JsonSerializable
+    public partial class SecureScoreControlDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Definition))
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<int> healthyResourceCount = default;
-            Core.Optional<int> unhealthyResourceCount = default;
-            Core.Optional<int> notApplicableResourceCount = default;
-            Core.Optional<long> weight = default;
-            Core.Optional<SecureScoreControlDefinitionItem> definition = default;
-            Core.Optional<int> max = default;
-            Core.Optional<double> current = default;
-            Core.Optional<double> percentage = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<int> healthyResourceCount = default;
+            Optional<int> unhealthyResourceCount = default;
+            Optional<int> notApplicableResourceCount = default;
+            Optional<long> weight = default;
+            Optional<SecureScoreControlDefinitionItem> definition = default;
+            Optional<int> max = default;
+            Optional<double> current = default;
+            Optional<double> percentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new SecureScoreControlDetails(id, name, type, systemData.Value, displayName.Value, Core.Optional.ToNullable(healthyResourceCount), Core.Optional.ToNullable(unhealthyResourceCount), Core.Optional.ToNullable(notApplicableResourceCount), Core.Optional.ToNullable(weight), definition.Value, Core.Optional.ToNullable(max), Core.Optional.ToNullable(current), Core.Optional.ToNullable(percentage));
+            return new SecureScoreControlDetails(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(healthyResourceCount), Optional.ToNullable(unhealthyResourceCount), Optional.ToNullable(notApplicableResourceCount), Optional.ToNullable(weight), definition.Value, Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage));
         }
     }
 }

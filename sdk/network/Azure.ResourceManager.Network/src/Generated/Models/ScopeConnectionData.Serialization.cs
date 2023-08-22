@@ -14,24 +14,24 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ScopeConnectionData : Core.IUtf8JsonSerializable
+    public partial class ScopeConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> tenantId = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<ScopeConnectionState> connectionState = default;
-            Core.Optional<string> description = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> tenantId = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<ScopeConnectionState> connectionState = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new ScopeConnectionData(id, name, type, systemData.Value, Core.Optional.ToNullable(tenantId), resourceId.Value, Core.Optional.ToNullable(connectionState), description.Value, Core.Optional.ToNullable(etag));
+            return new ScopeConnectionData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), resourceId.Value, Optional.ToNullable(connectionState), description.Value, Optional.ToNullable(etag));
         }
     }
 }

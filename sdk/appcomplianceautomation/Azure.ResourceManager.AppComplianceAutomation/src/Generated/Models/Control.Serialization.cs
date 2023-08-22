@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Core.Optional<string> controlId = default;
-            Core.Optional<string> controlShortName = default;
-            Core.Optional<string> controlFullName = default;
-            Core.Optional<ControlType> controlType = default;
-            Core.Optional<string> controlDescription = default;
-            Core.Optional<string> controlDescriptionHyperLink = default;
-            Core.Optional<ControlStatus> controlStatus = default;
-            Core.Optional<IReadOnlyList<Assessment>> assessments = default;
+            Optional<string> controlId = default;
+            Optional<string> controlShortName = default;
+            Optional<string> controlFullName = default;
+            Optional<ControlType> controlType = default;
+            Optional<string> controlDescription = default;
+            Optional<string> controlDescriptionHyperLink = default;
+            Optional<ControlStatus> controlStatus = default;
+            Optional<IReadOnlyList<Assessment>> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("controlId"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     continue;
                 }
             }
-            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Core.Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Core.Optional.ToNullable(controlStatus), Core.Optional.ToList(assessments));
+            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), Optional.ToList(assessments));
         }
     }
 }

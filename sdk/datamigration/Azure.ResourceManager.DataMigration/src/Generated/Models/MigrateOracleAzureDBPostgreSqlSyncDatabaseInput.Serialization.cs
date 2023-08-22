@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateOracleAzureDBPostgreSqlSyncDatabaseInput : Core.IUtf8JsonSerializable
+    public partial class MigrateOracleAzureDBPostgreSqlSyncDatabaseInput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CaseManipulation))
+            if (Optional.IsDefined(CaseManipulation))
             {
                 writer.WritePropertyName("caseManipulation"u8);
                 writer.WriteStringValue(CaseManipulation);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Core.Optional.IsDefined(SchemaName))
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (Core.Optional.IsCollectionDefined(TableMap))
+            if (Optional.IsCollectionDefined(TableMap))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(TargetDatabaseName))
+            if (Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Core.Optional.IsCollectionDefined(MigrationSetting))
+            if (Optional.IsCollectionDefined(MigrationSetting))
             {
                 writer.WritePropertyName("migrationSetting"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(SourceSetting))
+            if (Optional.IsCollectionDefined(SourceSetting))
             {
                 writer.WritePropertyName("sourceSetting"u8);
                 writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsCollectionDefined(TargetSetting))
+            if (Optional.IsCollectionDefined(TargetSetting))
             {
                 writer.WritePropertyName("targetSetting"u8);
                 writer.WriteStartObject();
@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> caseManipulation = default;
-            Core.Optional<string> name = default;
-            Core.Optional<string> schemaName = default;
-            Core.Optional<IDictionary<string, string>> tableMap = default;
-            Core.Optional<string> targetDatabaseName = default;
-            Core.Optional<IDictionary<string, string>> migrationSetting = default;
-            Core.Optional<IDictionary<string, string>> sourceSetting = default;
-            Core.Optional<IDictionary<string, string>> targetSetting = default;
+            Optional<string> caseManipulation = default;
+            Optional<string> name = default;
+            Optional<string> schemaName = default;
+            Optional<IDictionary<string, string>> tableMap = default;
+            Optional<string> targetDatabaseName = default;
+            Optional<IDictionary<string, string>> migrationSetting = default;
+            Optional<IDictionary<string, string>> sourceSetting = default;
+            Optional<IDictionary<string, string>> targetSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("caseManipulation"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(caseManipulation.Value, name.Value, schemaName.Value, Core.Optional.ToDictionary(tableMap), targetDatabaseName.Value, Core.Optional.ToDictionary(migrationSetting), Core.Optional.ToDictionary(sourceSetting), Core.Optional.ToDictionary(targetSetting));
+            return new MigrateOracleAzureDBPostgreSqlSyncDatabaseInput(caseManipulation.Value, name.Value, schemaName.Value, Optional.ToDictionary(tableMap), targetDatabaseName.Value, Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting));
         }
     }
 }

@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayWebApplicationFirewallConfiguration : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayWebApplicationFirewallConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Core.Optional.IsCollectionDefined(DisabledRuleGroups))
+            if (Optional.IsCollectionDefined(DisabledRuleGroups))
             {
                 writer.WritePropertyName("disabledRuleGroups"u8);
                 writer.WriteStartArray();
@@ -34,27 +34,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RequestBodyCheck))
+            if (Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (Core.Optional.IsDefined(MaxRequestBodySize))
+            if (Optional.IsDefined(MaxRequestBodySize))
             {
                 writer.WritePropertyName("maxRequestBodySize"u8);
                 writer.WriteNumberValue(MaxRequestBodySize.Value);
             }
-            if (Core.Optional.IsDefined(MaxRequestBodySizeInKb))
+            if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (Core.Optional.IsDefined(FileUploadLimitInMb))
+            if (Optional.IsDefined(FileUploadLimitInMb))
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Exclusions))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayFirewallMode firewallMode = default;
             string ruleSetType = default;
             string ruleSetVersion = default;
-            Core.Optional<IList<ApplicationGatewayFirewallDisabledRuleGroup>> disabledRuleGroups = default;
-            Core.Optional<bool> requestBodyCheck = default;
-            Core.Optional<int> maxRequestBodySize = default;
-            Core.Optional<int> maxRequestBodySizeInKb = default;
-            Core.Optional<int> fileUploadLimitInMb = default;
-            Core.Optional<IList<ApplicationGatewayFirewallExclusion>> exclusions = default;
+            Optional<IList<ApplicationGatewayFirewallDisabledRuleGroup>> disabledRuleGroups = default;
+            Optional<bool> requestBodyCheck = default;
+            Optional<int> maxRequestBodySize = default;
+            Optional<int> maxRequestBodySizeInKb = default;
+            Optional<int> fileUploadLimitInMb = default;
+            Optional<IList<ApplicationGatewayFirewallExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, Core.Optional.ToList(disabledRuleGroups), Core.Optional.ToNullable(requestBodyCheck), Core.Optional.ToNullable(maxRequestBodySize), Core.Optional.ToNullable(maxRequestBodySizeInKb), Core.Optional.ToNullable(fileUploadLimitInMb), Core.Optional.ToList(exclusions));
+            return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, Optional.ToList(disabledRuleGroups), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySize), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb), Optional.ToList(exclusions));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of VirtualMachineUpdateProperties. </summary>
         public VirtualMachineUpdateProperties()
         {
-            AvailabilitySets = new Core.ChangeTrackingList<AvailabilitySetListItem>();
+            AvailabilitySets = new ChangeTrackingList<AvailabilitySetListItem>();
         }
 
         /// <summary> Defines the resource properties. </summary>

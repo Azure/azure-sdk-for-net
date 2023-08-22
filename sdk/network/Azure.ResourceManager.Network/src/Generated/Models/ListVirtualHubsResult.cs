@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ListVirtualHubsResult. </summary>
         internal ListVirtualHubsResult()
         {
-            Value = new Core.ChangeTrackingList<VirtualHubData>();
+            Value = new ChangeTrackingList<VirtualHubData>();
         }
 
         /// <summary> Initializes a new instance of ListVirtualHubsResult. </summary>

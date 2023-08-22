@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>
         internal ManagedIntegrationRuntimeNode()
         {
-            Errors = new Core.ChangeTrackingList<ManagedIntegrationRuntimeError>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Errors = new ChangeTrackingList<ManagedIntegrationRuntimeError>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>

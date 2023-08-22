@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<IReadOnlyList<SecurityRuleData>> securityRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new SubnetAssociation(id.Value, Core.Optional.ToList(securityRules));
+            return new SubnetAssociation(id.Value, Optional.ToList(securityRules));
         }
     }
 }

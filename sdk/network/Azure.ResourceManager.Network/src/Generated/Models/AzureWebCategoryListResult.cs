@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of AzureWebCategoryListResult. </summary>
         internal AzureWebCategoryListResult()
         {
-            Value = new Core.ChangeTrackingList<AzureWebCategoryData>();
+            Value = new ChangeTrackingList<AzureWebCategoryData>();
         }
 
         /// <summary> Initializes a new instance of AzureWebCategoryListResult. </summary>

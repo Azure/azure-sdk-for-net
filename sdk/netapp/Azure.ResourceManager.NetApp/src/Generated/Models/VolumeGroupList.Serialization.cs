@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<NetAppVolumeGroupResult>> value = default;
+            Optional<IReadOnlyList<NetAppVolumeGroupResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new VolumeGroupList(Core.Optional.ToList(value));
+            return new VolumeGroupList(Optional.ToList(value));
         }
     }
 }

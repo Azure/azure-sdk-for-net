@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ImmutableStorageWithVersioning : Core.IUtf8JsonSerializable
+    public partial class ImmutableStorageWithVersioning : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<DateTimeOffset> timeStamp = default;
-            Core.Optional<ImmutableStorageWithVersioningMigrationState> migrationState = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> timeStamp = default;
+            Optional<ImmutableStorageWithVersioningMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new ImmutableStorageWithVersioning(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(timeStamp), Core.Optional.ToNullable(migrationState));
+            return new ImmutableStorageWithVersioning(Optional.ToNullable(enabled), Optional.ToNullable(timeStamp), Optional.ToNullable(migrationState));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of FileStorageInfo. </summary>
         internal FileStorageInfo()
         {
-            Headers = new Core.ChangeTrackingDictionary<string, string>();
+            Headers = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of FileStorageInfo. </summary>

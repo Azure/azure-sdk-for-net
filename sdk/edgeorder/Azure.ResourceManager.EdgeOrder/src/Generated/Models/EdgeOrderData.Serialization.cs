@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    public partial class EdgeOrderData : Core.IUtf8JsonSerializable
+    public partial class EdgeOrderData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.EdgeOrder
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyList<ResourceIdentifier>> orderItemIds = default;
-            Core.Optional<EdgeOrderStageDetails> currentStage = default;
-            Core.Optional<IReadOnlyList<EdgeOrderStageDetails>> orderStageHistory = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> orderItemIds = default;
+            Optional<EdgeOrderStageDetails> currentStage = default;
+            Optional<IReadOnlyList<EdgeOrderStageDetails>> orderStageHistory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.EdgeOrder
                     continue;
                 }
             }
-            return new EdgeOrderData(id, name, type, systemData.Value, Core.Optional.ToList(orderItemIds), currentStage.Value, Core.Optional.ToList(orderStageHistory));
+            return new EdgeOrderData(id, name, type, systemData.Value, Optional.ToList(orderItemIds), currentStage.Value, Optional.ToList(orderStageHistory));
         }
     }
 }

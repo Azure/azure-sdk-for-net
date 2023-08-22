@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> commitTime = default;
-            Core.Optional<string> region = default;
-            Core.Optional<NetworkManagerDeploymentState> deploymentStatus = default;
-            Core.Optional<IReadOnlyList<string>> configurationIds = default;
-            Core.Optional<NetworkConfigurationDeploymentType> deploymentType = default;
-            Core.Optional<string> errorMessage = default;
+            Optional<DateTimeOffset> commitTime = default;
+            Optional<string> region = default;
+            Optional<NetworkManagerDeploymentState> deploymentStatus = default;
+            Optional<IReadOnlyList<string>> configurationIds = default;
+            Optional<NetworkConfigurationDeploymentType> deploymentType = default;
+            Optional<string> errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitTime"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkManagerDeploymentStatus(Core.Optional.ToNullable(commitTime), region.Value, Core.Optional.ToNullable(deploymentStatus), Core.Optional.ToList(configurationIds), Core.Optional.ToNullable(deploymentType), errorMessage.Value);
+            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value);
         }
     }
 }

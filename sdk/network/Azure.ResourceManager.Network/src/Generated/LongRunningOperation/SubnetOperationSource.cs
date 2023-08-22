@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class SubnetOperationSource : Core.IOperationSource<SubnetResource>
+    internal class SubnetOperationSource : IOperationSource<SubnetResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        SubnetResource Core.IOperationSource<SubnetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SubnetResource IOperationSource<SubnetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SubnetData.DeserializeSubnetData(document.RootElement);
             return new SubnetResource(_client, data);
         }
 
-        async ValueTask<SubnetResource> Core.IOperationSource<SubnetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SubnetResource> IOperationSource<SubnetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SubnetData.DeserializeSubnetData(document.RootElement);

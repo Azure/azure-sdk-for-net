@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> diskId = default;
-            Core.Optional<string> diskName = default;
-            Core.Optional<string> diskSizeInMB = default;
-            Core.Optional<string> diskType = default;
-            Core.Optional<string> diskConfiguration = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryDiskVolumeDetails>> volumeList = default;
+            Optional<string> diskId = default;
+            Optional<string> diskName = default;
+            Optional<string> diskSizeInMB = default;
+            Optional<string> diskType = default;
+            Optional<string> diskConfiguration = default;
+            Optional<IReadOnlyList<SiteRecoveryDiskVolumeDetails>> volumeList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageDiskDetails(diskId.Value, diskName.Value, diskSizeInMB.Value, diskType.Value, diskConfiguration.Value, Core.Optional.ToList(volumeList));
+            return new InMageDiskDetails(diskId.Value, diskName.Value, diskSizeInMB.Value, diskType.Value, diskConfiguration.Value, Optional.ToList(volumeList));
         }
     }
 }

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<string> publicIPAddress = default;
-            Core.Optional<string> privateIPAddress = default;
-            Core.Optional<string> instanceName = default;
+            Optional<string> name = default;
+            Optional<string> publicIPAddress = default;
+            Optional<string> privateIPAddress = default;
+            Optional<string> instanceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    internal partial class SapStorageConfiguration : Core.IUtf8JsonSerializable
+    internal partial class SapStorageConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(TransportFileShareConfiguration))
+            if (Optional.IsDefined(TransportFileShareConfiguration))
             {
                 writer.WritePropertyName("transportFileShareConfiguration"u8);
                 writer.WriteObjectValue(TransportFileShareConfiguration);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<FileShareConfiguration> transportFileShareConfiguration = default;
+            Optional<FileShareConfiguration> transportFileShareConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transportFileShareConfiguration"u8))

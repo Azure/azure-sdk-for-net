@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentListResult. </summary>
         internal SynapseClusterPrincipalAssignmentListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseClusterPrincipalAssignmentData>();
+            Value = new ChangeTrackingList<SynapseClusterPrincipalAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentListResult. </summary>

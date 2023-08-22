@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of MessageExampleSequence. </summary>
         public MessageExampleSequence()
         {
-            Messages = new Core.ChangeTrackingList<MessageExample>();
+            Messages = new ChangeTrackingList<MessageExample>();
         }
 
         /// <summary> Initializes a new instance of MessageExampleSequence. </summary>

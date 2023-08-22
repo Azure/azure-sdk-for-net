@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>
         protected BackupGenericProtectionPolicy()
         {
-            ResourceGuardOperationRequests = new Core.ChangeTrackingList<string>();
+            ResourceGuardOperationRequests = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BackupGenericProtectionPolicy. </summary>

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<ResourceType> resourceType = default;
-            Core.Optional<IReadOnlyList<GlobalCsmSkuDescription>> skus = default;
+            Optional<ResourceType> resourceType = default;
+            Optional<IReadOnlyList<GlobalCsmSkuDescription>> skus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceSkuResult(Core.Optional.ToNullable(resourceType), Core.Optional.ToList(skus));
+            return new AppServiceSkuResult(Optional.ToNullable(resourceType), Optional.ToList(skus));
         }
     }
 }

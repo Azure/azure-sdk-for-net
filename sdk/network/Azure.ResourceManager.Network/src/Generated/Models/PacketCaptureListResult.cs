@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
         internal PacketCaptureListResult()
         {
-            Value = new Core.ChangeTrackingList<PacketCaptureData>();
+            Value = new ChangeTrackingList<PacketCaptureData>();
         }
 
         /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>

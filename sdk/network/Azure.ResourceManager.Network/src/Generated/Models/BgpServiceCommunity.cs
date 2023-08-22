@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
         public BgpServiceCommunity()
         {
-            BgpCommunities = new Core.ChangeTrackingList<BgpCommunity>();
+            BgpCommunities = new ChangeTrackingList<BgpCommunity>();
         }
 
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>

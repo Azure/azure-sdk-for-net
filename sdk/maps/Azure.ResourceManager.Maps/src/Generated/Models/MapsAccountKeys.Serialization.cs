@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> primaryKeyLastUpdated = default;
-            Core.Optional<string> primaryKey = default;
-            Core.Optional<string> secondaryKey = default;
-            Core.Optional<DateTimeOffset> secondaryKeyLastUpdated = default;
+            Optional<DateTimeOffset> primaryKeyLastUpdated = default;
+            Optional<string> primaryKey = default;
+            Optional<string> secondaryKey = default;
+            Optional<DateTimeOffset> secondaryKeyLastUpdated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKeyLastUpdated"u8))
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Maps.Models
                     continue;
                 }
             }
-            return new MapsAccountKeys(Core.Optional.ToNullable(primaryKeyLastUpdated), primaryKey.Value, secondaryKey.Value, Core.Optional.ToNullable(secondaryKeyLastUpdated));
+            return new MapsAccountKeys(Optional.ToNullable(primaryKeyLastUpdated), primaryKey.Value, secondaryKey.Value, Optional.ToNullable(secondaryKeyLastUpdated));
         }
     }
 }

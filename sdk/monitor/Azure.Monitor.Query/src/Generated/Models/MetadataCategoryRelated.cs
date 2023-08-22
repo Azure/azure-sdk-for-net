@@ -16,11 +16,11 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of MetadataCategoryRelated. </summary>
         internal MetadataCategoryRelated()
         {
-            Tables = new Core.ChangeTrackingList<string>();
-            Functions = new Core.ChangeTrackingList<string>();
-            ResourceTypes = new Core.ChangeTrackingList<string>();
-            Queries = new Core.ChangeTrackingList<string>();
-            Solutions = new Core.ChangeTrackingList<string>();
+            Tables = new ChangeTrackingList<string>();
+            Functions = new ChangeTrackingList<string>();
+            ResourceTypes = new ChangeTrackingList<string>();
+            Queries = new ChangeTrackingList<string>();
+            Solutions = new ChangeTrackingList<string>();
         }
 
         /// <summary> The tables related to the category. </summary>

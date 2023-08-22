@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of KubernetesObjectStatus. </summary>
         internal KubernetesObjectStatus()
         {
-            StatusConditions = new Core.ChangeTrackingList<KubernetesObjectStatusCondition>();
+            StatusConditions = new ChangeTrackingList<KubernetesObjectStatusCondition>();
         }
 
         /// <summary> Initializes a new instance of KubernetesObjectStatus. </summary>

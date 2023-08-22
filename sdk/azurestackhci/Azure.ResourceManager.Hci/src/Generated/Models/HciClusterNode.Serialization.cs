@@ -19,20 +19,20 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<float> id = default;
-            Core.Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Core.Optional<ClusterNodeType> nodeType = default;
-            Core.Optional<string> ehcResourceId = default;
-            Core.Optional<string> manufacturer = default;
-            Core.Optional<string> model = default;
-            Core.Optional<string> osName = default;
-            Core.Optional<string> osVersion = default;
-            Core.Optional<string> osDisplayVersion = default;
-            Core.Optional<string> serialNumber = default;
-            Core.Optional<float> coreCount = default;
-            Core.Optional<float> memoryInGiB = default;
-            Core.Optional<DateTimeOffset> lastLicensingTimestamp = default;
+            Optional<string> name = default;
+            Optional<float> id = default;
+            Optional<WindowsServerSubscription> windowsServerSubscription = default;
+            Optional<ClusterNodeType> nodeType = default;
+            Optional<string> ehcResourceId = default;
+            Optional<string> manufacturer = default;
+            Optional<string> model = default;
+            Optional<string> osName = default;
+            Optional<string> osVersion = default;
+            Optional<string> osDisplayVersion = default;
+            Optional<string> serialNumber = default;
+            Optional<float> coreCount = default;
+            Optional<float> memoryInGiB = default;
+            Optional<DateTimeOffset> lastLicensingTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Hci.Models
                     continue;
                 }
             }
-            return new HciClusterNode(name.Value, Core.Optional.ToNullable(id), Core.Optional.ToNullable(windowsServerSubscription), Core.Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Core.Optional.ToNullable(coreCount), Core.Optional.ToNullable(memoryInGiB), Core.Optional.ToNullable(lastLicensingTimestamp));
+            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp));
         }
     }
 }

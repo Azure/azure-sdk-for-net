@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AutoscaleSettingPatch : Core.IUtf8JsonSerializable
+    public partial class AutoscaleSettingPatch : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Profiles))
+            if (Optional.IsCollectionDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Notifications))
+            if (Optional.IsCollectionDefined(Notifications))
             {
                 if (Notifications != null)
                 {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("notifications");
                 }
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(PredictiveAutoscalePolicy))
+            if (Optional.IsDefined(PredictiveAutoscalePolicy))
             {
                 if (PredictiveAutoscalePolicy != null)
                 {
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("predictiveAutoscalePolicy");
                 }
             }
-            if (Core.Optional.IsDefined(AutoscaleSettingName))
+            if (Optional.IsDefined(AutoscaleSettingName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(AutoscaleSettingName);
             }
-            if (Core.Optional.IsDefined(TargetResourceId))
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceUri"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (Core.Optional.IsDefined(TargetResourceLocation))
+            if (Optional.IsDefined(TargetResourceLocation))
             {
                 writer.WritePropertyName("targetResourceLocation"u8);
                 writer.WriteStringValue(TargetResourceLocation.Value);

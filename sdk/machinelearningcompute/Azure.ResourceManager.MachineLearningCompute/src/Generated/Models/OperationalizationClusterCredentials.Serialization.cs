@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Core.Optional<StorageAccountCredentials> storageAccount = default;
-            Core.Optional<ContainerRegistryCredentials> containerRegistry = default;
-            Core.Optional<ContainerServiceCredentials> containerService = default;
-            Core.Optional<AppInsightsCredentials> appInsights = default;
-            Core.Optional<ServiceAuthConfiguration> serviceAuthConfiguration = default;
-            Core.Optional<SslConfiguration> sslConfiguration = default;
+            Optional<StorageAccountCredentials> storageAccount = default;
+            Optional<ContainerRegistryCredentials> containerRegistry = default;
+            Optional<ContainerServiceCredentials> containerService = default;
+            Optional<AppInsightsCredentials> appInsights = default;
+            Optional<ServiceAuthConfiguration> serviceAuthConfiguration = default;
+            Optional<SslConfiguration> sslConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccount"u8))

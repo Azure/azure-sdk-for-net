@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             Argument.AssertNotNull(command, nameof(command));
 
-            Arguments = new Core.ChangeTrackingList<string>();
+            Arguments = new ChangeTrackingList<string>();
             Command = command;
         }
 

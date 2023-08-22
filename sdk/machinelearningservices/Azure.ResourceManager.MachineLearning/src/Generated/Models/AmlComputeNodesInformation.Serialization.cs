@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AmlComputeNodeInformation>> nodes = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AmlComputeNodeInformation>> nodes = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodes"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AmlComputeNodesInformation(Core.Optional.ToList(nodes), nextLink.Value);
+            return new AmlComputeNodesInformation(Optional.ToList(nodes), nextLink.Value);
         }
     }
 }

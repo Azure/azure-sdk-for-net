@@ -21,8 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<object> info = default;
+            Optional<string> type = default;
+            Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))

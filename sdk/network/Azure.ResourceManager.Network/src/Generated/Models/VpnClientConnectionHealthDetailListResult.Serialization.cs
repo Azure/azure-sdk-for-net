@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<VpnClientConnectionHealthDetail>> value = default;
+            Optional<IReadOnlyList<VpnClientConnectionHealthDetail>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new VpnClientConnectionHealthDetailListResult(Core.Optional.ToList(value));
+            return new VpnClientConnectionHealthDetailListResult(Optional.ToList(value));
         }
     }
 }

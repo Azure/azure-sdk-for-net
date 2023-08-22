@@ -14,64 +14,64 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnConnectionData : Core.IUtf8JsonSerializable
+    public partial class VpnConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RemoteVpnSite))
+            if (Optional.IsDefined(RemoteVpnSite))
             {
                 writer.WritePropertyName("remoteVpnSite"u8);
                 JsonSerializer.Serialize(writer, RemoteVpnSite);
             }
-            if (Core.Optional.IsDefined(RoutingWeight))
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (Core.Optional.IsDefined(DpdTimeoutSeconds))
+            if (Optional.IsDefined(DpdTimeoutSeconds))
             {
                 writer.WritePropertyName("dpdTimeoutSeconds"u8);
                 writer.WriteNumberValue(DpdTimeoutSeconds.Value);
             }
-            if (Core.Optional.IsDefined(VpnConnectionProtocolType))
+            if (Optional.IsDefined(VpnConnectionProtocolType))
             {
                 writer.WritePropertyName("vpnConnectionProtocolType"u8);
                 writer.WriteStringValue(VpnConnectionProtocolType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ConnectionBandwidth))
+            if (Optional.IsDefined(ConnectionBandwidth))
             {
                 writer.WritePropertyName("connectionBandwidth"u8);
                 writer.WriteNumberValue(ConnectionBandwidth.Value);
             }
-            if (Core.Optional.IsDefined(SharedKey))
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (Core.Optional.IsDefined(EnableBgp))
+            if (Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Core.Optional.IsDefined(UsePolicyBasedTrafficSelectors))
+            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (Core.Optional.IsCollectionDefined(IPsecPolicies))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(TrafficSelectorPolicies))
+            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();
@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(EnableRateLimiting))
+            if (Optional.IsDefined(EnableRateLimiting))
             {
                 writer.WritePropertyName("enableRateLimiting"u8);
                 writer.WriteBooleanValue(EnableRateLimiting.Value);
             }
-            if (Core.Optional.IsDefined(EnableInternetSecurity))
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Core.Optional.IsDefined(UseLocalAzureIPAddress))
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
-            if (Core.Optional.IsCollectionDefined(VpnLinkConnections))
+            if (Optional.IsCollectionDefined(VpnLinkConnections))
             {
                 writer.WritePropertyName("vpnLinkConnections"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(RoutingConfiguration))
+            if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration);
@@ -131,29 +131,29 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<WritableSubResource> remoteVpnSite = default;
-            Core.Optional<int> routingWeight = default;
-            Core.Optional<int> dpdTimeoutSeconds = default;
-            Core.Optional<VpnConnectionStatus> connectionStatus = default;
-            Core.Optional<VirtualNetworkGatewayConnectionProtocol> vpnConnectionProtocolType = default;
-            Core.Optional<long> ingressBytesTransferred = default;
-            Core.Optional<long> egressBytesTransferred = default;
-            Core.Optional<int> connectionBandwidth = default;
-            Core.Optional<string> sharedKey = default;
-            Core.Optional<bool> enableBgp = default;
-            Core.Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Core.Optional<IList<IPsecPolicy>> ipsecPolicies = default;
-            Core.Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
-            Core.Optional<bool> enableRateLimiting = default;
-            Core.Optional<bool> enableInternetSecurity = default;
-            Core.Optional<bool> useLocalAzureIPAddress = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<IList<VpnSiteLinkConnectionData>> vpnLinkConnections = default;
-            Core.Optional<RoutingConfiguration> routingConfiguration = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<WritableSubResource> remoteVpnSite = default;
+            Optional<int> routingWeight = default;
+            Optional<int> dpdTimeoutSeconds = default;
+            Optional<VpnConnectionStatus> connectionStatus = default;
+            Optional<VirtualNetworkGatewayConnectionProtocol> vpnConnectionProtocolType = default;
+            Optional<long> ingressBytesTransferred = default;
+            Optional<long> egressBytesTransferred = default;
+            Optional<int> connectionBandwidth = default;
+            Optional<string> sharedKey = default;
+            Optional<bool> enableBgp = default;
+            Optional<bool> usePolicyBasedTrafficSelectors = default;
+            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
+            Optional<IList<TrafficSelectorPolicy>> trafficSelectorPolicies = default;
+            Optional<bool> enableRateLimiting = default;
+            Optional<bool> enableInternetSecurity = default;
+            Optional<bool> useLocalAzureIPAddress = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<IList<VpnSiteLinkConnectionData>> vpnLinkConnections = default;
+            Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new VpnConnectionData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), remoteVpnSite, Core.Optional.ToNullable(routingWeight), Core.Optional.ToNullable(dpdTimeoutSeconds), Core.Optional.ToNullable(connectionStatus), Core.Optional.ToNullable(vpnConnectionProtocolType), Core.Optional.ToNullable(ingressBytesTransferred), Core.Optional.ToNullable(egressBytesTransferred), Core.Optional.ToNullable(connectionBandwidth), sharedKey.Value, Core.Optional.ToNullable(enableBgp), Core.Optional.ToNullable(usePolicyBasedTrafficSelectors), Core.Optional.ToList(ipsecPolicies), Core.Optional.ToList(trafficSelectorPolicies), Core.Optional.ToNullable(enableRateLimiting), Core.Optional.ToNullable(enableInternetSecurity), Core.Optional.ToNullable(useLocalAzureIPAddress), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(vpnLinkConnections), routingConfiguration.Value);
+            return new VpnConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), remoteVpnSite, Optional.ToNullable(routingWeight), Optional.ToNullable(dpdTimeoutSeconds), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToList(trafficSelectorPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(vpnLinkConnections), routingConfiguration.Value);
         }
     }
 }

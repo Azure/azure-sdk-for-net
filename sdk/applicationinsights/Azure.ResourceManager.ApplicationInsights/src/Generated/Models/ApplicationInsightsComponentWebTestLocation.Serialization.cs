@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> tag = default;
+            Optional<string> displayName = default;
+            Optional<string> tag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("DisplayName"u8))

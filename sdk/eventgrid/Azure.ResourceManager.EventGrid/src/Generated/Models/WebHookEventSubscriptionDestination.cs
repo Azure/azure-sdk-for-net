@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of WebHookEventSubscriptionDestination. </summary>
         public WebHookEventSubscriptionDestination()
         {
-            DeliveryAttributeMappings = new Core.ChangeTrackingList<DeliveryAttributeMapping>();
+            DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
             EndpointType = EndpointType.WebHook;
         }
 

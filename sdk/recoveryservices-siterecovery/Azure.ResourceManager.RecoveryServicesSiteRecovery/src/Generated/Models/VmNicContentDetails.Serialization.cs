@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VmNicContentDetails : Core.IUtf8JsonSerializable
+    public partial class VmNicContentDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NicId))
+            if (Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (Core.Optional.IsCollectionDefined(IPConfigs))
+            if (Optional.IsCollectionDefined(IPConfigs))
             {
                 writer.WritePropertyName("ipConfigs"u8);
                 writer.WriteStartArray();
@@ -30,62 +30,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SelectionType))
+            if (Optional.IsDefined(SelectionType))
             {
                 writer.WritePropertyName("selectionType"u8);
                 writer.WriteStringValue(SelectionType);
             }
-            if (Core.Optional.IsDefined(RecoveryNetworkSecurityGroupId))
+            if (Optional.IsDefined(RecoveryNetworkSecurityGroupId))
             {
                 writer.WritePropertyName("recoveryNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(RecoveryNetworkSecurityGroupId);
             }
-            if (Core.Optional.IsDefined(IsAcceleratedNetworkingOnRecoveryEnabled))
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnRecoveryEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnRecovery"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnRecoveryEnabled.Value);
             }
-            if (Core.Optional.IsDefined(TfoNetworkSecurityGroupId))
+            if (Optional.IsDefined(TfoNetworkSecurityGroupId))
             {
                 writer.WritePropertyName("tfoNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(TfoNetworkSecurityGroupId);
             }
-            if (Core.Optional.IsDefined(IsAcceleratedNetworkingOnTfoEnabled))
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnTfoEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnTfo"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnTfoEnabled.Value);
             }
-            if (Core.Optional.IsDefined(RecoveryNicName))
+            if (Optional.IsDefined(RecoveryNicName))
             {
                 writer.WritePropertyName("recoveryNicName"u8);
                 writer.WriteStringValue(RecoveryNicName);
             }
-            if (Core.Optional.IsDefined(RecoveryNicResourceGroupName))
+            if (Optional.IsDefined(RecoveryNicResourceGroupName))
             {
                 writer.WritePropertyName("recoveryNicResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryNicResourceGroupName);
             }
-            if (Core.Optional.IsDefined(IsReuseExistingNicAllowed))
+            if (Optional.IsDefined(IsReuseExistingNicAllowed))
             {
                 writer.WritePropertyName("reuseExistingNic"u8);
                 writer.WriteBooleanValue(IsReuseExistingNicAllowed.Value);
             }
-            if (Core.Optional.IsDefined(TfoNicName))
+            if (Optional.IsDefined(TfoNicName))
             {
                 writer.WritePropertyName("tfoNicName"u8);
                 writer.WriteStringValue(TfoNicName);
             }
-            if (Core.Optional.IsDefined(TfoNicResourceGroupName))
+            if (Optional.IsDefined(TfoNicResourceGroupName))
             {
                 writer.WritePropertyName("tfoNicResourceGroupName"u8);
                 writer.WriteStringValue(TfoNicResourceGroupName);
             }
-            if (Core.Optional.IsDefined(IsTfoReuseExistingNicAllowed))
+            if (Optional.IsDefined(IsTfoReuseExistingNicAllowed))
             {
                 writer.WritePropertyName("tfoReuseExistingNic"u8);
                 writer.WriteBooleanValue(IsTfoReuseExistingNicAllowed.Value);
             }
-            if (Core.Optional.IsDefined(TargetNicName))
+            if (Optional.IsDefined(TargetNicName))
             {
                 writer.WritePropertyName("targetNicName"u8);
                 writer.WriteStringValue(TargetNicName);

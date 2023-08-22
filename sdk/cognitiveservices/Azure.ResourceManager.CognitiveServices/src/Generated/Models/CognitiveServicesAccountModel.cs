@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesAccountModel. </summary>
         public CognitiveServicesAccountModel()
         {
-            Skus = new Core.ChangeTrackingList<CognitiveServicesModelSku>();
-            Capabilities = new Core.ChangeTrackingDictionary<string, string>();
-            FinetuneCapabilities = new Core.ChangeTrackingDictionary<string, string>();
+            Skus = new ChangeTrackingList<CognitiveServicesModelSku>();
+            Capabilities = new ChangeTrackingDictionary<string, string>();
+            FinetuneCapabilities = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountModel. </summary>

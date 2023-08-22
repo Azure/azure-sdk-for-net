@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadInquiryDetails : Core.IUtf8JsonSerializable
+    public partial class WorkloadInquiryDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(WorkloadInquiryDetailsType))
+            if (Optional.IsDefined(WorkloadInquiryDetailsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkloadInquiryDetailsType);
             }
-            if (Core.Optional.IsDefined(ItemCount))
+            if (Optional.IsDefined(ItemCount))
             {
                 writer.WritePropertyName("itemCount"u8);
                 writer.WriteNumberValue(ItemCount.Value);
             }
-            if (Core.Optional.IsDefined(InquiryValidation))
+            if (Optional.IsDefined(InquiryValidation))
             {
                 writer.WritePropertyName("inquiryValidation"u8);
                 writer.WriteObjectValue(InquiryValidation);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<long> itemCount = default;
-            Core.Optional<InquiryValidation> inquiryValidation = default;
+            Optional<string> type = default;
+            Optional<long> itemCount = default;
+            Optional<InquiryValidation> inquiryValidation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new WorkloadInquiryDetails(type.Value, Core.Optional.ToNullable(itemCount), inquiryValidation.Value);
+            return new WorkloadInquiryDetails(type.Value, Optional.ToNullable(itemCount), inquiryValidation.Value);
         }
     }
 }

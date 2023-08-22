@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedCertificateProperties : Core.IUtf8JsonSerializable
+    public partial class ManagedCertificateProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Core.Optional<string> subject = default;
-            Core.Optional<DateTimeOffset> expirationDate = default;
+            Optional<string> subject = default;
+            Optional<DateTimeOffset> expirationDate = default;
             SecretType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new ManagedCertificateProperties(type, subject.Value, Core.Optional.ToNullable(expirationDate));
+            return new ManagedCertificateProperties(type, subject.Value, Optional.ToNullable(expirationDate));
         }
     }
 }

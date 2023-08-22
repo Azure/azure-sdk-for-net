@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <summary> Initializes a new instance of MySqlAdvisorListResult. </summary>
         internal MySqlAdvisorListResult()
         {
-            Value = new Core.ChangeTrackingList<MySqlAdvisorData>();
+            Value = new ChangeTrackingList<MySqlAdvisorData>();
         }
 
         /// <summary> Initializes a new instance of MySqlAdvisorListResult. </summary>

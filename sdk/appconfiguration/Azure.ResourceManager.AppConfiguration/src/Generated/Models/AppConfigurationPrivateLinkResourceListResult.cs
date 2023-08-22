@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceListResult. </summary>
         internal AppConfigurationPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<AppConfigurationPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<AppConfigurationPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceListResult. </summary>

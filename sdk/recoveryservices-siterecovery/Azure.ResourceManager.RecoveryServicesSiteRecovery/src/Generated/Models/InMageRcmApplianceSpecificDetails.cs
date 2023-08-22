@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageRcmApplianceSpecificDetails. </summary>
         internal InMageRcmApplianceSpecificDetails()
         {
-            Appliances = new Core.ChangeTrackingList<InMageRcmApplianceDetails>();
+            Appliances = new ChangeTrackingList<InMageRcmApplianceDetails>();
             InstanceType = "InMageRcm";
         }
 

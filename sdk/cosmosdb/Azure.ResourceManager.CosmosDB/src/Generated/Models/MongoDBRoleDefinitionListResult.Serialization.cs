@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<MongoDBRoleDefinitionData>> value = default;
+            Optional<IReadOnlyList<MongoDBRoleDefinitionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new MongoDBRoleDefinitionListResult(Core.Optional.ToList(value));
+            return new MongoDBRoleDefinitionListResult(Optional.ToList(value));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryDataFlowProperties. </summary>
         protected DataFactoryDataFlowProperties()
         {
-            Annotations = new Core.ChangeTrackingList<BinaryData>();
+            Annotations = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryDataFlowProperties. </summary>

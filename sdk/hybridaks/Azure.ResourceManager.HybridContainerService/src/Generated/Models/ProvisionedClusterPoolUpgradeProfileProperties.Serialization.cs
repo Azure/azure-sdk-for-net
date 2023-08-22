@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClusterPoolUpgradeProfileProperties : Core.IUtf8JsonSerializable
+    public partial class ProvisionedClusterPoolUpgradeProfileProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> kubernetesVersion = default;
-            Core.Optional<bool> isPreview = default;
+            Optional<string> kubernetesVersion = default;
+            Optional<bool> isPreview = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion.Value, Core.Optional.ToNullable(isPreview));
+            return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion.Value, Optional.ToNullable(isPreview));
         }
     }
 }

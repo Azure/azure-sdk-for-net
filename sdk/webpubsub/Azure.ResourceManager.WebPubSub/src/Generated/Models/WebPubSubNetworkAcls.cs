@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
         public WebPubSubNetworkAcls()
         {
-            PrivateEndpoints = new Core.ChangeTrackingList<PrivateEndpointAcl>();
+            PrivateEndpoints = new ChangeTrackingList<PrivateEndpointAcl>();
         }
 
         /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>

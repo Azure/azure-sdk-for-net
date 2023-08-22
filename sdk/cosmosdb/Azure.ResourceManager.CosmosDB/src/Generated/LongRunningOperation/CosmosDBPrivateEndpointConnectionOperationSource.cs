@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CosmosDBPrivateEndpointConnectionOperationSource : Core.IOperationSource<CosmosDBPrivateEndpointConnectionResource>
+    internal class CosmosDBPrivateEndpointConnectionOperationSource : IOperationSource<CosmosDBPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
             _client = client;
         }
 
-        CosmosDBPrivateEndpointConnectionResource Core.IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CosmosDBPrivateEndpointConnectionResource IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(document.RootElement);
             return new CosmosDBPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<CosmosDBPrivateEndpointConnectionResource> Core.IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CosmosDBPrivateEndpointConnectionResource> IOperationSource<CosmosDBPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CosmosDBPrivateEndpointConnectionData.DeserializeCosmosDBPrivateEndpointConnectionData(document.RootElement);

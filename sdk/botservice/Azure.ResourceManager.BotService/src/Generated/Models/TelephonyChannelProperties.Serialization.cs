@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelephonyChannelProperties : Core.IUtf8JsonSerializable
+    public partial class TelephonyChannelProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(PhoneNumbers))
+            if (Optional.IsCollectionDefined(PhoneNumbers))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ApiConfigurations))
+            if (Optional.IsCollectionDefined(ApiConfigurations))
             {
                 writer.WritePropertyName("apiConfigurations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (Core.Optional.IsDefined(CognitiveServiceRegion))
+            if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (Core.Optional.IsDefined(DefaultLocale))
+            if (Optional.IsDefined(DefaultLocale))
             {
                 if (DefaultLocale != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale");
                 }
             }
-            if (Core.Optional.IsDefined(PremiumSku))
+            if (Optional.IsDefined(PremiumSku))
             {
                 if (PremiumSku != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("premiumSKU");
                 }
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Core.Optional<IList<TelephonyPhoneNumbers>> phoneNumbers = default;
-            Core.Optional<IList<TelephonyChannelResourceApiConfiguration>> apiConfigurations = default;
-            Core.Optional<string> cognitiveServiceSubscriptionKey = default;
-            Core.Optional<string> cognitiveServiceRegion = default;
-            Core.Optional<string> defaultLocale = default;
-            Core.Optional<string> premiumSku = default;
-            Core.Optional<bool> isEnabled = default;
+            Optional<IList<TelephonyPhoneNumbers>> phoneNumbers = default;
+            Optional<IList<TelephonyChannelResourceApiConfiguration>> apiConfigurations = default;
+            Optional<string> cognitiveServiceSubscriptionKey = default;
+            Optional<string> cognitiveServiceRegion = default;
+            Optional<string> defaultLocale = default;
+            Optional<string> premiumSku = default;
+            Optional<bool> isEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phoneNumbers"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.BotService.Models
                     continue;
                 }
             }
-            return new TelephonyChannelProperties(Core.Optional.ToList(phoneNumbers), Core.Optional.ToList(apiConfigurations), cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, defaultLocale.Value, premiumSku.Value, Core.Optional.ToNullable(isEnabled));
+            return new TelephonyChannelProperties(Optional.ToList(phoneNumbers), Optional.ToList(apiConfigurations), cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, defaultLocale.Value, premiumSku.Value, Optional.ToNullable(isEnabled));
         }
     }
 }

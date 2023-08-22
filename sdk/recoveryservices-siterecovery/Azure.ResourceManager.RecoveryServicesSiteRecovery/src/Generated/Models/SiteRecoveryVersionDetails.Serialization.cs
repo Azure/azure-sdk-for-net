@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> version = default;
-            Core.Optional<DateTimeOffset> expireOn = default;
-            Core.Optional<SiteRecoveryAgentVersionStatus> status = default;
+            Optional<string> version = default;
+            Optional<DateTimeOffset> expireOn = default;
+            Optional<SiteRecoveryAgentVersionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new SiteRecoveryVersionDetails(version.Value, Core.Optional.ToNullable(expireOn), Core.Optional.ToNullable(status));
+            return new SiteRecoveryVersionDetails(version.Value, Optional.ToNullable(expireOn), Optional.ToNullable(status));
         }
     }
 }

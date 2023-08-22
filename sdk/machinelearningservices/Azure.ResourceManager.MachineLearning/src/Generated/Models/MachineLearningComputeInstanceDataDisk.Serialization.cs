@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningCachingType> caching = default;
-            Core.Optional<int> diskSizeGB = default;
-            Core.Optional<int> lun = default;
-            Core.Optional<MachineLearningStorageAccountType> storageAccountType = default;
+            Optional<MachineLearningCachingType> caching = default;
+            Optional<int> diskSizeGB = default;
+            Optional<int> lun = default;
+            Optional<MachineLearningStorageAccountType> storageAccountType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("caching"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningComputeInstanceDataDisk(Core.Optional.ToNullable(caching), Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(lun), Core.Optional.ToNullable(storageAccountType));
+            return new MachineLearningComputeInstanceDataDisk(Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(lun), Optional.ToNullable(storageAccountType));
         }
     }
 }

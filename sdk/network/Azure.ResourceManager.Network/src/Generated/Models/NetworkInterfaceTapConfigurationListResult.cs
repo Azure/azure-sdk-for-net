@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationListResult. </summary>
         internal NetworkInterfaceTapConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
+            Value = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationListResult. </summary>

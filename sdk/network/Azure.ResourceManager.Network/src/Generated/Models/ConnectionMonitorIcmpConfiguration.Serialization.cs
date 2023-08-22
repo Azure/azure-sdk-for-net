@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ConnectionMonitorIcmpConfiguration : Core.IUtf8JsonSerializable
+    internal partial class ConnectionMonitorIcmpConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisableTraceRoute))
+            if (Optional.IsDefined(DisableTraceRoute))
             {
                 writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<bool> disableTraceRoute = default;
+            Optional<bool> disableTraceRoute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableTraceRoute"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorIcmpConfiguration(Core.Optional.ToNullable(disableTraceRoute));
+            return new ConnectionMonitorIcmpConfiguration(Optional.ToNullable(disableTraceRoute));
         }
     }
 }

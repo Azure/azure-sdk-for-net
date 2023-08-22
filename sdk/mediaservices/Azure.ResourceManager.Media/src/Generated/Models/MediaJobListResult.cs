@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaJobListResult. </summary>
         internal MediaJobListResult()
         {
-            Value = new Core.ChangeTrackingList<MediaJobData>();
+            Value = new ChangeTrackingList<MediaJobData>();
         }
 
         /// <summary> Initializes a new instance of MediaJobListResult. </summary>

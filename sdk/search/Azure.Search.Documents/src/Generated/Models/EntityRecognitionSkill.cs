@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            Categories = new Core.ChangeTrackingList<EntityCategory>();
+            Categories = new ChangeTrackingList<EntityCategory>();
             ODataType = "#Microsoft.Skills.Text.EntityRecognitionSkill";
         }
 

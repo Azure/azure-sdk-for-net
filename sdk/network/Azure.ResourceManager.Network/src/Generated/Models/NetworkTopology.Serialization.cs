@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<DateTimeOffset> createdDateTime = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<IReadOnlyList<TopologyResourceInfo>> resources = default;
+            Optional<string> id = default;
+            Optional<DateTimeOffset> createdDateTime = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<IReadOnlyList<TopologyResourceInfo>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new NetworkTopology(id.Value, Core.Optional.ToNullable(createdDateTime), Core.Optional.ToNullable(lastModified), Core.Optional.ToList(resources));
+            return new NetworkTopology(id.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(lastModified), Optional.ToList(resources));
         }
     }
 }

@@ -13,14 +13,14 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    public partial class StorageTargetData : Core.IUtf8JsonSerializable
+    public partial class StorageTargetData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Junctions))
+            if (Optional.IsCollectionDefined(Junctions))
             {
                 writer.WritePropertyName("junctions"u8);
                 writer.WriteStartArray();
@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TargetType))
+            if (Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Nfs3))
+            if (Optional.IsDefined(Nfs3))
             {
                 writer.WritePropertyName("nfs3"u8);
                 writer.WriteObjectValue(Nfs3);
             }
-            if (Core.Optional.IsDefined(Clfs))
+            if (Optional.IsDefined(Clfs))
             {
                 writer.WritePropertyName("clfs"u8);
                 writer.WriteObjectValue(Clfs);
             }
-            if (Core.Optional.IsDefined(Unknown))
+            if (Optional.IsDefined(Unknown))
             {
                 writer.WritePropertyName("unknown"u8);
                 writer.WriteObjectValue(Unknown);
             }
-            if (Core.Optional.IsDefined(BlobNfs))
+            if (Optional.IsDefined(BlobNfs))
             {
                 writer.WritePropertyName("blobNfs"u8);
                 writer.WriteObjectValue(BlobNfs);
@@ -70,20 +70,20 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Core.Optional<AzureLocation> location = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IList<NamespaceJunction>> junctions = default;
-            Core.Optional<StorageTargetType> targetType = default;
-            Core.Optional<StorageCacheProvisioningStateType> provisioningState = default;
-            Core.Optional<StorageTargetOperationalStateType> state = default;
-            Core.Optional<Nfs3Target> nfs3 = default;
-            Core.Optional<ClfsTarget> clfs = default;
-            Core.Optional<UnknownTarget> unknown = default;
-            Core.Optional<BlobNfsTarget> blobNfs = default;
-            Core.Optional<int> allocationPercentage = default;
+            Optional<SystemData> systemData = default;
+            Optional<IList<NamespaceJunction>> junctions = default;
+            Optional<StorageTargetType> targetType = default;
+            Optional<StorageCacheProvisioningStateType> provisioningState = default;
+            Optional<StorageTargetOperationalStateType> state = default;
+            Optional<Nfs3Target> nfs3 = default;
+            Optional<ClfsTarget> clfs = default;
+            Optional<UnknownTarget> unknown = default;
+            Optional<BlobNfsTarget> blobNfs = default;
+            Optional<int> allocationPercentage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StorageCache
                     continue;
                 }
             }
-            return new StorageTargetData(id, name, type, systemData.Value, Core.Optional.ToList(junctions), Core.Optional.ToNullable(targetType), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(state), nfs3.Value, clfs.Value, unknown.Value, blobNfs.Value, Core.Optional.ToNullable(allocationPercentage), Core.Optional.ToNullable(location));
+            return new StorageTargetData(id, name, type, systemData.Value, Optional.ToList(junctions), Optional.ToNullable(targetType), Optional.ToNullable(provisioningState), Optional.ToNullable(state), nfs3.Value, clfs.Value, unknown.Value, blobNfs.Value, Optional.ToNullable(allocationPercentage), Optional.ToNullable(location));
         }
     }
 }

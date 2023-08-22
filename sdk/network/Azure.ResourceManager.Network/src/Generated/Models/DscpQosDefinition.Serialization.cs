@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class DscpQosDefinition : Core.IUtf8JsonSerializable
+    public partial class DscpQosDefinition : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Markings))
+            if (Optional.IsCollectionDefined(Markings))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourceIPRanges))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationIPRanges))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourcePortRanges))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationPortRanges))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<IList<int>> markings = default;
-            Core.Optional<IList<QosIPRange>> sourceIPRanges = default;
-            Core.Optional<IList<QosIPRange>> destinationIPRanges = default;
-            Core.Optional<IList<QosPortRange>> sourcePortRanges = default;
-            Core.Optional<IList<QosPortRange>> destinationPortRanges = default;
-            Core.Optional<ProtocolType> protocol = default;
+            Optional<IList<int>> markings = default;
+            Optional<IList<QosIPRange>> sourceIPRanges = default;
+            Optional<IList<QosIPRange>> destinationIPRanges = default;
+            Optional<IList<QosPortRange>> sourcePortRanges = default;
+            Optional<IList<QosPortRange>> destinationPortRanges = default;
+            Optional<ProtocolType> protocol = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("markings"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new DscpQosDefinition(Core.Optional.ToList(markings), Core.Optional.ToList(sourceIPRanges), Core.Optional.ToList(destinationIPRanges), Core.Optional.ToList(sourcePortRanges), Core.Optional.ToList(destinationPortRanges), Core.Optional.ToNullable(protocol));
+            return new DscpQosDefinition(Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol));
         }
     }
 }

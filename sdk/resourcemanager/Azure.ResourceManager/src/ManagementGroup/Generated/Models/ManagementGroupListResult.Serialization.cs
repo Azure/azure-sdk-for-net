@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<ManagementGroupData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<ManagementGroupData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     continue;
                 }
             }
-            return new ManagementGroupListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new ManagementGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

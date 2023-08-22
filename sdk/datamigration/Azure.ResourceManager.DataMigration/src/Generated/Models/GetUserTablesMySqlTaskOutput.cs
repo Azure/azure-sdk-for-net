@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of GetUserTablesMySqlTaskOutput. </summary>
         internal GetUserTablesMySqlTaskOutput()
         {
-            ValidationErrors = new Core.ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of GetUserTablesMySqlTaskOutput. </summary>

@@ -13,9 +13,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAccountEntity : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsAccountEntity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -36,21 +36,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
-            Core.Optional<string> friendlyName = default;
-            Core.Optional<string> aadTenantId = default;
-            Core.Optional<string> aadUserId = default;
-            Core.Optional<string> accountName = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<string> hostEntityId = default;
-            Core.Optional<bool> isDomainJoined = default;
-            Core.Optional<string> ntDomain = default;
-            Core.Optional<Guid> objectGuid = default;
-            Core.Optional<string> puid = default;
-            Core.Optional<string> sid = default;
-            Core.Optional<string> upnSuffix = default;
-            Core.Optional<string> dnsDomain = default;
+            Optional<SystemData> systemData = default;
+            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            Optional<string> friendlyName = default;
+            Optional<string> aadTenantId = default;
+            Optional<string> aadUserId = default;
+            Optional<string> accountName = default;
+            Optional<string> displayName = default;
+            Optional<string> hostEntityId = default;
+            Optional<bool> isDomainJoined = default;
+            Optional<string> ntDomain = default;
+            Optional<Guid> objectGuid = default;
+            Optional<string> puid = default;
+            Optional<string> sid = default;
+            Optional<string> upnSuffix = default;
+            Optional<string> dnsDomain = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsAccountEntity(id, name, type, systemData.Value, kind, Core.Optional.ToDictionary(additionalData), friendlyName.Value, aadTenantId.Value, aadUserId.Value, accountName.Value, displayName.Value, hostEntityId.Value, Core.Optional.ToNullable(isDomainJoined), ntDomain.Value, Core.Optional.ToNullable(objectGuid), puid.Value, sid.Value, upnSuffix.Value, dnsDomain.Value);
+            return new SecurityInsightsAccountEntity(id, name, type, systemData.Value, kind, Optional.ToDictionary(additionalData), friendlyName.Value, aadTenantId.Value, aadUserId.Value, accountName.Value, displayName.Value, hostEntityId.Value, Optional.ToNullable(isDomainJoined), ntDomain.Value, Optional.ToNullable(objectGuid), puid.Value, sid.Value, upnSuffix.Value, dnsDomain.Value);
         }
     }
 }

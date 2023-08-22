@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<int> limit = default;
-            Core.Optional<string> unit = default;
-            Core.Optional<int> currentValue = default;
-            Core.Optional<StorageCacheUsageName> name = default;
+            Optional<int> limit = default;
+            Optional<string> unit = default;
+            Optional<int> currentValue = default;
+            Optional<StorageCacheUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheUsage(Core.Optional.ToNullable(limit), unit.Value, Core.Optional.ToNullable(currentValue), name.Value);
+            return new StorageCacheUsage(Optional.ToNullable(limit), unit.Value, Optional.ToNullable(currentValue), name.Value);
         }
     }
 }

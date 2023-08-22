@@ -15,18 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class DataFactoryData : Core.IUtf8JsonSerializable
+    public partial class DataFactoryData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PurviewConfiguration))
+            if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
                 writer.WriteObjectValue(PurviewConfiguration);
             }
-            if (Core.Optional.IsDefined(RepoConfiguration))
+            if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
             }
-            if (Core.Optional.IsCollectionDefined(GlobalParameters))
+            if (Optional.IsCollectionDefined(GlobalParameters))
             {
                 writer.WritePropertyName("globalParameters"u8);
                 writer.WriteStartObject();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.DataFactory
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Encryption))
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<ETag> eTag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> eTag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> provisioningState = default;
-            Core.Optional<DateTimeOffset> createTime = default;
-            Core.Optional<string> version = default;
-            Core.Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
-            Core.Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Core.Optional<IDictionary<string, DataFactoryGlobalParameterProperties>> globalParameters = default;
-            Core.Optional<DataFactoryEncryptionConfiguration> encryption = default;
-            Core.Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> provisioningState = default;
+            Optional<DateTimeOffset> createTime = default;
+            Optional<string> version = default;
+            Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
+            Optional<FactoryRepoConfiguration> repoConfiguration = default;
+            Optional<IDictionary<string, DataFactoryGlobalParameterProperties>> globalParameters = default;
+            Optional<DataFactoryEncryptionConfiguration> encryption = default;
+            Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, provisioningState.Value, Core.Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Core.Optional.ToDictionary(globalParameters), encryption.Value, Core.Optional.ToNullable(publicNetworkAccess), Core.Optional.ToNullable(eTag), additionalProperties);
+            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
         }
     }
 }

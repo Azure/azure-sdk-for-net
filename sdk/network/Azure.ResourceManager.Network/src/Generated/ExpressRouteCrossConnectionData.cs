@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>
         public ExpressRouteCrossConnectionData()
         {
-            Peerings = new Core.ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
+            Peerings = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionData. </summary>

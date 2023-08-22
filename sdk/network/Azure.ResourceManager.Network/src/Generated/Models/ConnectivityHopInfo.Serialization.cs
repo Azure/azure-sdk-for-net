@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> id = default;
-            Core.Optional<string> address = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<IReadOnlyList<string>> nextHopIds = default;
-            Core.Optional<IReadOnlyList<string>> previousHopIds = default;
-            Core.Optional<IReadOnlyList<HopLink>> links = default;
-            Core.Optional<IReadOnlyList<HopLink>> previousLinks = default;
-            Core.Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
+            Optional<string> type = default;
+            Optional<string> id = default;
+            Optional<string> address = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<IReadOnlyList<string>> nextHopIds = default;
+            Optional<IReadOnlyList<string>> previousHopIds = default;
+            Optional<IReadOnlyList<HopLink>> links = default;
+            Optional<IReadOnlyList<HopLink>> previousLinks = default;
+            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, Core.Optional.ToList(nextHopIds), Core.Optional.ToList(previousHopIds), Core.Optional.ToList(links), Core.Optional.ToList(previousLinks), Core.Optional.ToList(issues));
+            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues));
         }
     }
 }

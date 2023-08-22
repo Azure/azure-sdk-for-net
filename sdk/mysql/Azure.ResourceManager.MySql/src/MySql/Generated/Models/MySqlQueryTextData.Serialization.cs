@@ -11,19 +11,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlQueryTextData : Core.IUtf8JsonSerializable
+    public partial class MySqlQueryTextData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(QueryId))
+            if (Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (Core.Optional.IsDefined(QueryText))
+            if (Optional.IsDefined(QueryText))
             {
                 writer.WritePropertyName("queryText"u8);
                 writer.WriteStringValue(QueryText);
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.MySql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> queryId = default;
-            Core.Optional<string> queryText = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> queryId = default;
+            Optional<string> queryText = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
         public CosmosDBLocationProperties()
         {
-            BackupStorageRedundancies = new Core.ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
+            BackupStorageRedundancies = new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>

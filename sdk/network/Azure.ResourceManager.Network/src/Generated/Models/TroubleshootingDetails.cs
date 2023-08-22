@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of TroubleshootingDetails. </summary>
         internal TroubleshootingDetails()
         {
-            RecommendedActions = new Core.ChangeTrackingList<TroubleshootingRecommendedActions>();
+            RecommendedActions = new ChangeTrackingList<TroubleshootingRecommendedActions>();
         }
 
         /// <summary> Initializes a new instance of TroubleshootingDetails. </summary>

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Core.Optional<string> kubernetesVersion = default;
-            Core.Optional<ManagedClusterSku> sku = default;
-            Core.Optional<bool> enableRbac = default;
-            Core.Optional<ContainerServiceNetworkProfileForSnapshot> networkProfile = default;
+            Optional<string> kubernetesVersion = default;
+            Optional<ManagedClusterSku> sku = default;
+            Optional<bool> enableRbac = default;
+            Optional<ContainerServiceNetworkProfileForSnapshot> networkProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion.Value, sku.Value, Core.Optional.ToNullable(enableRbac), networkProfile.Value);
+            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion.Value, sku.Value, Optional.ToNullable(enableRbac), networkProfile.Value);
         }
     }
 }

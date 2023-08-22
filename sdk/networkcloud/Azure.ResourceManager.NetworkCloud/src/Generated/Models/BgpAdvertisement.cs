@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             Argument.AssertNotNull(ipAddressPools, nameof(ipAddressPools));
 
-            Communities = new Core.ChangeTrackingList<string>();
+            Communities = new ChangeTrackingList<string>();
             IPAddressPools = ipAddressPools.ToList();
-            Peers = new Core.ChangeTrackingList<string>();
+            Peers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of BgpAdvertisement. </summary>

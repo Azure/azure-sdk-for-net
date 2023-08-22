@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of EventHubCompatibleEndpointProperties. </summary>
         public EventHubCompatibleEndpointProperties()
         {
-            PartitionIds = new Core.ChangeTrackingList<string>();
+            PartitionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of EventHubCompatibleEndpointProperties. </summary>

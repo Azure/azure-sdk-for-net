@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<string> unit = default;
-            Core.Optional<DateTimeOffset> nextResetTime = default;
-            Core.Optional<long> currentValue = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<LocalizableString> name = default;
+            Optional<string> unit = default;
+            Optional<DateTimeOffset> nextResetTime = default;
+            Optional<long> currentValue = default;
+            Optional<long> limit = default;
+            Optional<LocalizableString> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new CsmUsageQuota(unit.Value, Core.Optional.ToNullable(nextResetTime), Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), name.Value);
+            return new CsmUsageQuota(unit.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value);
         }
     }
 }

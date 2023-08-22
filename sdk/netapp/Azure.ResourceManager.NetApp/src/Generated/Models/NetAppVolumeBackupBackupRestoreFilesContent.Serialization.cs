@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBackupBackupRestoreFilesContent : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumeBackupBackupRestoreFilesContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("fileList"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Core.Optional.IsDefined(RestoreFilePath))
+            if (Optional.IsDefined(RestoreFilePath))
             {
                 writer.WritePropertyName("restoreFilePath"u8);
                 writer.WriteStringValue(RestoreFilePath);

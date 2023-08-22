@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<int> vCores = default;
-            Core.Optional<int> supportedIops = default;
-            Core.Optional<long> supportedMemoryPerVcoreMb = default;
-            Core.Optional<IReadOnlyList<string>> supportedZones = default;
-            Core.Optional<IReadOnlyList<PostgreSqlFlexibleServerHAMode>> supportedHaMode = default;
-            Core.Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<int> vCores = default;
+            Optional<int> supportedIops = default;
+            Optional<long> supportedMemoryPerVcoreMb = default;
+            Optional<IReadOnlyList<string>> supportedZones = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerHAMode>> supportedHaMode = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerSkuCapability(Core.Optional.ToNullable(status), reason.Value, name.Value, Core.Optional.ToNullable(vCores), Core.Optional.ToNullable(supportedIops), Core.Optional.ToNullable(supportedMemoryPerVcoreMb), Core.Optional.ToList(supportedZones), Core.Optional.ToList(supportedHaMode));
+            return new PostgreSqlFlexibleServerSkuCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVcoreMb), Optional.ToList(supportedZones), Optional.ToList(supportedHaMode));
         }
     }
 }

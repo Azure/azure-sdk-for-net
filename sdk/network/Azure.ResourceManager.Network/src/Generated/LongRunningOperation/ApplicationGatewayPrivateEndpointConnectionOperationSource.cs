@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ApplicationGatewayPrivateEndpointConnectionOperationSource : Core.IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>
+    internal class ApplicationGatewayPrivateEndpointConnectionOperationSource : IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network
             _client = client;
         }
 
-        ApplicationGatewayPrivateEndpointConnectionResource Core.IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApplicationGatewayPrivateEndpointConnectionResource IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement);
             return new ApplicationGatewayPrivateEndpointConnectionResource(_client, data);
         }
 
-        async ValueTask<ApplicationGatewayPrivateEndpointConnectionResource> Core.IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApplicationGatewayPrivateEndpointConnectionResource> IOperationSource<ApplicationGatewayPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = ApplicationGatewayPrivateEndpointConnectionData.DeserializeApplicationGatewayPrivateEndpointConnectionData(document.RootElement);

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CloudServiceExtensionProfile : Core.IUtf8JsonSerializable
+    internal partial class CloudServiceExtensionProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Extensions))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IList<CloudServiceExtension>> extensions = default;
+            Optional<IList<CloudServiceExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensions"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceExtensionProfile(Core.Optional.ToList(extensions));
+            return new CloudServiceExtensionProfile(Optional.ToList(extensions));
         }
     }
 }

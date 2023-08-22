@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubBaiduCredential : Core.IUtf8JsonSerializable
+    public partial class NotificationHubBaiduCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BaiduApiKey))
+            if (Optional.IsDefined(BaiduApiKey))
             {
                 writer.WritePropertyName("baiduApiKey"u8);
                 writer.WriteStringValue(BaiduApiKey);
             }
-            if (Core.Optional.IsDefined(BaiduEndpoint))
+            if (Optional.IsDefined(BaiduEndpoint))
             {
                 writer.WritePropertyName("baiduEndPoint"u8);
                 writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(BaiduSecretKey))
+            if (Optional.IsDefined(BaiduSecretKey))
             {
                 writer.WritePropertyName("baiduSecretKey"u8);
                 writer.WriteStringValue(BaiduSecretKey);
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Core.Optional<string> baiduApiKey = default;
-            Core.Optional<Uri> baiduEndPoint = default;
-            Core.Optional<string> baiduSecretKey = default;
+            Optional<string> baiduApiKey = default;
+            Optional<Uri> baiduEndPoint = default;
+            Optional<string> baiduSecretKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

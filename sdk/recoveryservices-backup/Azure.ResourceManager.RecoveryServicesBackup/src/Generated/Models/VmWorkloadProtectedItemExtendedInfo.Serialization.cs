@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadProtectedItemExtendedInfo : Core.IUtf8JsonSerializable
+    public partial class VmWorkloadProtectedItemExtendedInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OldestRecoverOn))
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(OldestRecoveryPointInVault))
+            if (Optional.IsDefined(OldestRecoveryPointInVault))
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
                 writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
             }
-            if (Core.Optional.IsDefined(OldestRecoveryPointInArchive))
+            if (Optional.IsDefined(OldestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
             }
-            if (Core.Optional.IsDefined(NewestRecoveryPointInArchive))
+            if (Optional.IsDefined(NewestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
             }
-            if (Core.Optional.IsDefined(RecoveryPointCount))
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (Core.Optional.IsDefined(PolicyState))
+            if (Optional.IsDefined(PolicyState))
             {
                 writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
             }
-            if (Core.Optional.IsDefined(RecoveryModel))
+            if (Optional.IsDefined(RecoveryModel))
             {
                 writer.WritePropertyName("recoveryModel"u8);
                 writer.WriteStringValue(RecoveryModel);
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Core.Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
-            Core.Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;
-            Core.Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
-            Core.Optional<int> recoveryPointCount = default;
-            Core.Optional<string> policyState = default;
-            Core.Optional<string> recoveryModel = default;
+            Optional<DateTimeOffset> oldestRecoveryPoint = default;
+            Optional<DateTimeOffset> oldestRecoveryPointInVault = default;
+            Optional<DateTimeOffset> oldestRecoveryPointInArchive = default;
+            Optional<DateTimeOffset> newestRecoveryPointInArchive = default;
+            Optional<int> recoveryPointCount = default;
+            Optional<string> policyState = default;
+            Optional<string> recoveryModel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oldestRecoveryPoint"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new VmWorkloadProtectedItemExtendedInfo(Core.Optional.ToNullable(oldestRecoveryPoint), Core.Optional.ToNullable(oldestRecoveryPointInVault), Core.Optional.ToNullable(oldestRecoveryPointInArchive), Core.Optional.ToNullable(newestRecoveryPointInArchive), Core.Optional.ToNullable(recoveryPointCount), policyState.Value, recoveryModel.Value);
+            return new VmWorkloadProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(oldestRecoveryPointInVault), Optional.ToNullable(oldestRecoveryPointInArchive), Optional.ToNullable(newestRecoveryPointInArchive), Optional.ToNullable(recoveryPointCount), policyState.Value, recoveryModel.Value);
         }
     }
 }

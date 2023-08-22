@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState> accessibility = default;
-            Core.Optional<string> domainName = default;
-            Core.Optional<IReadOnlyList<string>> ports = default;
+            Optional<IntegrationServiceEnvironmentNetworkEndPointAccessibilityState> accessibility = default;
+            Optional<string> domainName = default;
+            Optional<IReadOnlyList<string>> ports = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessibility"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new IntegrationServiceEnvironmentNetworkEndpoint(Core.Optional.ToNullable(accessibility), domainName.Value, Core.Optional.ToList(ports));
+            return new IntegrationServiceEnvironmentNetworkEndpoint(Optional.ToNullable(accessibility), domainName.Value, Optional.ToList(ports));
         }
     }
 }

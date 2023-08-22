@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class FirewallPolicyTransportSecurity : Core.IUtf8JsonSerializable
+    internal partial class FirewallPolicyTransportSecurity : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CertificateAuthority))
+            if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteObjectValue(CertificateAuthority);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<FirewallPolicyCertificateAuthority> certificateAuthority = default;
+            Optional<FirewallPolicyCertificateAuthority> certificateAuthority = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateAuthority"u8))

@@ -11,24 +11,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringServiceLocation : Core.IUtf8JsonSerializable
+    public partial class PeeringServiceLocation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Country))
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Core.Optional.IsDefined(State))
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Core.Optional.IsDefined(AzureRegion))
+            if (Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Peering.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> country = default;
-            Core.Optional<string> state = default;
-            Core.Optional<AzureLocation> azureRegion = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> country = default;
+            Optional<string> state = default;
+            Optional<AzureLocation> azureRegion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Core.Optional.ToNullable(azureRegion));
+            return new PeeringServiceLocation(id, name, type, systemData.Value, country.Value, state.Value, Optional.ToNullable(azureRegion));
         }
     }
 }

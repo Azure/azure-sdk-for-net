@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of ManagedGrafanaProperties. </summary>
         public ManagedGrafanaProperties()
         {
-            OutboundIPs = new Core.ChangeTrackingList<string>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<GrafanaPrivateEndpointConnectionData>();
+            OutboundIPs = new ChangeTrackingList<string>();
+            PrivateEndpointConnections = new ChangeTrackingList<GrafanaPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ManagedGrafanaProperties. </summary>

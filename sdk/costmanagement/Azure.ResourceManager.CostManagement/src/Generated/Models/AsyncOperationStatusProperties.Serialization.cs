@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Core.Optional<BenefitUtilizationSummaryReportSchema> reportUrl = default;
-            Core.Optional<BenefitUtilizationSummaryReportSchema> secondaryReportUrl = default;
-            Core.Optional<DateTimeOffset> validUntil = default;
+            Optional<BenefitUtilizationSummaryReportSchema> reportUrl = default;
+            Optional<BenefitUtilizationSummaryReportSchema> secondaryReportUrl = default;
+            Optional<DateTimeOffset> validUntil = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reportUrl"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new AsyncOperationStatusProperties(Core.Optional.ToNullable(reportUrl), Core.Optional.ToNullable(secondaryReportUrl), Core.Optional.ToNullable(validUntil));
+            return new AsyncOperationStatusProperties(Optional.ToNullable(reportUrl), Optional.ToNullable(secondaryReportUrl), Optional.ToNullable(validUntil));
         }
     }
 }

@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubMpnsCredential : Core.IUtf8JsonSerializable
+    public partial class NotificationHubMpnsCredential : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MpnsCertificate))
+            if (Optional.IsDefined(MpnsCertificate))
             {
                 writer.WritePropertyName("mpnsCertificate"u8);
                 writer.WriteStringValue(MpnsCertificate);
             }
-            if (Core.Optional.IsDefined(CertificateKey))
+            if (Optional.IsDefined(CertificateKey))
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Core.Optional.IsDefined(ThumbprintString))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Core.Optional<string> mpnsCertificate = default;
-            Core.Optional<string> certificateKey = default;
-            Core.Optional<string> thumbprint = default;
+            Optional<string> mpnsCertificate = default;
+            Optional<string> certificateKey = default;
+            Optional<string> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))

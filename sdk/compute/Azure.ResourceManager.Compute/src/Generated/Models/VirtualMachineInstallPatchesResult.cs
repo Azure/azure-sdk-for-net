@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineInstallPatchesResult. </summary>
         internal VirtualMachineInstallPatchesResult()
         {
-            Patches = new Core.ChangeTrackingList<PatchInstallationDetail>();
+            Patches = new ChangeTrackingList<PatchInstallationDetail>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineInstallPatchesResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>
         internal QuantumJobQuotaList()
         {
-            Value = new Core.ChangeTrackingList<QuantumJobQuota>();
+            Value = new ChangeTrackingList<QuantumJobQuota>();
         }
 
         /// <summary> Initializes a new instance of QuantumJobQuotaList. </summary>

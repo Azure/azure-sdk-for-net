@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
-    public partial class FederatedIdentityCredentialData : Core.IUtf8JsonSerializable
+    public partial class FederatedIdentityCredentialData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IssuerUri))
+            if (Optional.IsDefined(IssuerUri))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(Subject))
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Core.Optional.IsCollectionDefined(Audiences))
+            if (Optional.IsCollectionDefined(Audiences))
             {
                 writer.WritePropertyName("audiences"u8);
                 writer.WriteStartArray();
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Uri> issuer = default;
-            Core.Optional<string> subject = default;
-            Core.Optional<IList<string>> audiences = default;
+            Optional<SystemData> systemData = default;
+            Optional<Uri> issuer = default;
+            Optional<string> subject = default;
+            Optional<IList<string>> audiences = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     continue;
                 }
             }
-            return new FederatedIdentityCredentialData(id, name, type, systemData.Value, issuer.Value, subject.Value, Core.Optional.ToList(audiences));
+            return new FederatedIdentityCredentialData(id, name, type, systemData.Value, issuer.Value, subject.Value, Optional.ToList(audiences));
         }
     }
 }

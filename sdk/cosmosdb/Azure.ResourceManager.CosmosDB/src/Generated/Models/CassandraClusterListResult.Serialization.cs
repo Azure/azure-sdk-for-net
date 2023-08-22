@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<CassandraClusterData>> value = default;
+            Optional<IReadOnlyList<CassandraClusterData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterListResult(Core.Optional.ToList(value));
+            return new CassandraClusterListResult(Optional.ToList(value));
         }
     }
 }

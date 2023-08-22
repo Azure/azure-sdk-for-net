@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(contentPaths, nameof(contentPaths));
 
             ContentPaths = contentPaths.ToList();
-            Domains = new Core.ChangeTrackingList<string>();
+            Domains = new ChangeTrackingList<string>();
         }
 
         /// <summary> The path to the content to be purged. Can describe a file path or a wild card directory. </summary>

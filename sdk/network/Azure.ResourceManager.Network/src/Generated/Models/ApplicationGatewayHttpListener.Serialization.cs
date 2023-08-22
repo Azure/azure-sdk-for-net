@@ -13,59 +13,59 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayHttpListener : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayHttpListener : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FrontendIPConfiguration))
+            if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
-            if (Core.Optional.IsDefined(FrontendPort))
+            if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
                 JsonSerializer.Serialize(writer, FrontendPort);
             }
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Core.Optional.IsDefined(HostName))
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Core.Optional.IsDefined(SslCertificate))
+            if (Optional.IsDefined(SslCertificate))
             {
                 writer.WritePropertyName("sslCertificate"u8);
                 JsonSerializer.Serialize(writer, SslCertificate);
             }
-            if (Core.Optional.IsDefined(SslProfile))
+            if (Optional.IsDefined(SslProfile))
             {
                 writer.WritePropertyName("sslProfile"u8);
                 JsonSerializer.Serialize(writer, SslProfile);
             }
-            if (Core.Optional.IsDefined(RequireServerNameIndication))
+            if (Optional.IsDefined(RequireServerNameIndication))
             {
                 writer.WritePropertyName("requireServerNameIndication"u8);
                 writer.WriteBooleanValue(RequireServerNameIndication.Value);
             }
-            if (Core.Optional.IsCollectionDefined(CustomErrorConfigurations))
+            if (Optional.IsCollectionDefined(CustomErrorConfigurations))
             {
                 writer.WritePropertyName("customErrorConfigurations"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(FirewallPolicy))
+            if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
                 JsonSerializer.Serialize(writer, FirewallPolicy);
             }
-            if (Core.Optional.IsCollectionDefined(HostNames))
+            if (Optional.IsCollectionDefined(HostNames))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -100,21 +100,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<WritableSubResource> frontendIPConfiguration = default;
-            Core.Optional<WritableSubResource> frontendPort = default;
-            Core.Optional<ApplicationGatewayProtocol> protocol = default;
-            Core.Optional<string> hostName = default;
-            Core.Optional<WritableSubResource> sslCertificate = default;
-            Core.Optional<WritableSubResource> sslProfile = default;
-            Core.Optional<bool> requireServerNameIndication = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
-            Core.Optional<WritableSubResource> firewallPolicy = default;
-            Core.Optional<IList<string>> hostNames = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<WritableSubResource> frontendIPConfiguration = default;
+            Optional<WritableSubResource> frontendPort = default;
+            Optional<ApplicationGatewayProtocol> protocol = default;
+            Optional<string> hostName = default;
+            Optional<WritableSubResource> sslCertificate = default;
+            Optional<WritableSubResource> sslProfile = default;
+            Optional<bool> requireServerNameIndication = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
+            Optional<WritableSubResource> firewallPolicy = default;
+            Optional<IList<string>> hostNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Core.Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Core.Optional.ToNullable(requireServerNameIndication), Core.Optional.ToNullable(provisioningState), Core.Optional.ToList(customErrorConfigurations), firewallPolicy, Core.Optional.ToList(hostNames));
+            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), firewallPolicy, Optional.ToList(hostNames));
         }
     }
 }

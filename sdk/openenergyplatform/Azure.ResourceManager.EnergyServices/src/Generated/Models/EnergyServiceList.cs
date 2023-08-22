@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         /// <summary> Initializes a new instance of EnergyServiceList. </summary>
         internal EnergyServiceList()
         {
-            Value = new Core.ChangeTrackingList<EnergyServiceData>();
+            Value = new ChangeTrackingList<EnergyServiceData>();
         }
 
         /// <summary> Initializes a new instance of EnergyServiceList. </summary>

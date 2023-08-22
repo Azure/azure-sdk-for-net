@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of QueryResult. </summary>
         internal QueryResult()
         {
-            Columns = new Core.ChangeTrackingList<QueryColumn>();
-            Rows = new Core.ChangeTrackingList<IList<BinaryData>>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Columns = new ChangeTrackingList<QueryColumn>();
+            Rows = new ChangeTrackingList<IList<BinaryData>>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of QueryResult. </summary>

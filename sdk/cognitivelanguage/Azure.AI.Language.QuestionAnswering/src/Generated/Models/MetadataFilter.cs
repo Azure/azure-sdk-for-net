@@ -16,7 +16,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary> Initializes a new instance of MetadataFilter. </summary>
         public MetadataFilter()
         {
-            Metadata = new Core.ChangeTrackingList<MetadataRecord>();
+            Metadata = new ChangeTrackingList<MetadataRecord>();
         }
 
         /// <summary> Gets the metadata. </summary>

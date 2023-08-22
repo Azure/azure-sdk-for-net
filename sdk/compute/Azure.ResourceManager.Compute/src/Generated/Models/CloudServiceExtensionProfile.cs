@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of CloudServiceExtensionProfile. </summary>
         public CloudServiceExtensionProfile()
         {
-            Extensions = new Core.ChangeTrackingList<CloudServiceExtension>();
+            Extensions = new ChangeTrackingList<CloudServiceExtension>();
         }
 
         /// <summary> Initializes a new instance of CloudServiceExtensionProfile. </summary>

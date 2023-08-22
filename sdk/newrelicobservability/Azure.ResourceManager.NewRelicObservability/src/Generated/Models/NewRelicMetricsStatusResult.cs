@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of NewRelicMetricsStatusResult. </summary>
         internal NewRelicMetricsStatusResult()
         {
-            AzureResourceIds = new Core.ChangeTrackingList<string>();
+            AzureResourceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NewRelicMetricsStatusResult. </summary>

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <summary> Initializes a new instance of PostgreSqlFirewallRuleListResult. </summary>
         internal PostgreSqlFirewallRuleListResult()
         {
-            Value = new Core.ChangeTrackingList<PostgreSqlFirewallRuleData>();
+            Value = new ChangeTrackingList<PostgreSqlFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFirewallRuleListResult. </summary>

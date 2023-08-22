@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of MediaServicesAccountPatch. </summary>
         public MediaServicesAccountPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            StorageAccounts = new Core.ChangeTrackingList<MediaServicesStorageAccount>();
-            PrivateEndpointConnections = new Core.ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            StorageAccounts = new ChangeTrackingList<MediaServicesStorageAccount>();
+            PrivateEndpointConnections = new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>();
         }
 
         /// <summary> Resource tags. </summary>

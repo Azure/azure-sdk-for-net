@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of WidgetTypeListResult. </summary>
         internal WidgetTypeListResult()
         {
-            Value = new Core.ChangeTrackingList<WidgetTypeResourceFormatData>();
+            Value = new ChangeTrackingList<WidgetTypeResourceFormatData>();
         }
 
         /// <summary> Initializes a new instance of WidgetTypeListResult. </summary>

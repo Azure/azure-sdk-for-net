@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class TransferOffersContent : Core.IUtf8JsonSerializable
+    public partial class TransferOffersContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(TargetCollections))
+            if (Optional.IsCollectionDefined(TargetCollections))
             {
                 writer.WritePropertyName("targetCollections"u8);
                 writer.WriteStartArray();
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Operation))
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Core.Optional.IsCollectionDefined(OfferIdsList))
+            if (Optional.IsCollectionDefined(OfferIdsList))
             {
                 writer.WritePropertyName("offerIdsList"u8);
                 writer.WriteStartArray();

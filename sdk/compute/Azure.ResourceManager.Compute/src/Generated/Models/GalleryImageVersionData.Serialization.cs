@@ -13,12 +13,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class GalleryImageVersionData : Core.IUtf8JsonSerializable
+    public partial class GalleryImageVersionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.Compute
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PublishingProfile))
+            if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
                 writer.WriteObjectValue(PublishingProfile);
             }
-            if (Core.Optional.IsDefined(StorageProfile))
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (Core.Optional.IsDefined(SafetyProfile))
+            if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
                 writer.WriteObjectValue(SafetyProfile);
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
-            Core.Optional<GalleryProvisioningState> provisioningState = default;
-            Core.Optional<GalleryImageVersionStorageProfile> storageProfile = default;
-            Core.Optional<GalleryImageVersionSafetyProfile> safetyProfile = default;
-            Core.Optional<ReplicationStatus> replicationStatus = default;
+            Optional<SystemData> systemData = default;
+            Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
+            Optional<GalleryProvisioningState> provisioningState = default;
+            Optional<GalleryImageVersionStorageProfile> storageProfile = default;
+            Optional<GalleryImageVersionSafetyProfile> safetyProfile = default;
+            Optional<ReplicationStatus> replicationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryImageVersionData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, publishingProfile.Value, Core.Optional.ToNullable(provisioningState), storageProfile.Value, safetyProfile.Value, replicationStatus.Value);
+            return new GalleryImageVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, safetyProfile.Value, replicationStatus.Value);
         }
     }
 }

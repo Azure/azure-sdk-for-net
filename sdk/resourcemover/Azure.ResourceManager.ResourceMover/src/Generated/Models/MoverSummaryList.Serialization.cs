@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Core.Optional<string> fieldName = default;
-            Core.Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
+            Optional<string> fieldName = default;
+            Optional<IReadOnlyList<MoverSummaryItemInfo>> summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     continue;
                 }
             }
-            return new MoverSummaryList(fieldName.Value, Core.Optional.ToList(summary));
+            return new MoverSummaryList(fieldName.Value, Optional.ToList(summary));
         }
     }
 }

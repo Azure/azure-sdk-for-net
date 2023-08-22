@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOfferingMdeAutoProvisioning : Core.IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOfferingMdeAutoProvisioning : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(Configuration))
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
 #if NET6_0_OR_GREATER
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<BinaryData> configuration = default;
+            Optional<bool> enabled = default;
+            Optional<BinaryData> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new DefenderForServersAwsOfferingMdeAutoProvisioning(Core.Optional.ToNullable(enabled), configuration.Value);
+            return new DefenderForServersAwsOfferingMdeAutoProvisioning(Optional.ToNullable(enabled), configuration.Value);
         }
     }
 }

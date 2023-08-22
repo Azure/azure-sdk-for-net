@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>
         internal MonitorPrivateLinkResourceListResult()
         {
-            Value = new Core.ChangeTrackingList<MonitorPrivateLinkResourceData>();
+            Value = new ChangeTrackingList<MonitorPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkResourceListResult. </summary>

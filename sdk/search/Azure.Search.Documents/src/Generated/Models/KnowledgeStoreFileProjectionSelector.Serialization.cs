@@ -11,34 +11,34 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KnowledgeStoreFileProjectionSelector : Core.IUtf8JsonSerializable
+    public partial class KnowledgeStoreFileProjectionSelector : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainer"u8);
             writer.WriteStringValue(StorageContainer);
-            if (Core.Optional.IsDefined(ReferenceKeyName))
+            if (Optional.IsDefined(ReferenceKeyName))
             {
                 writer.WritePropertyName("referenceKeyName"u8);
                 writer.WriteStringValue(ReferenceKeyName);
             }
-            if (Core.Optional.IsDefined(GeneratedKeyName))
+            if (Optional.IsDefined(GeneratedKeyName))
             {
                 writer.WritePropertyName("generatedKeyName"u8);
                 writer.WriteStringValue(GeneratedKeyName);
             }
-            if (Core.Optional.IsDefined(Source))
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Core.Optional.IsDefined(SourceContext))
+            if (Optional.IsDefined(SourceContext))
             {
                 writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
-            if (Core.Optional.IsCollectionDefined(Inputs))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -58,11 +58,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string storageContainer = default;
-            Core.Optional<string> referenceKeyName = default;
-            Core.Optional<string> generatedKeyName = default;
-            Core.Optional<string> source = default;
-            Core.Optional<string> sourceContext = default;
-            Core.Optional<IList<InputFieldMappingEntry>> inputs = default;
+            Optional<string> referenceKeyName = default;
+            Optional<string> generatedKeyName = default;
+            Optional<string> source = default;
+            Optional<string> sourceContext = default;
+            Optional<IList<InputFieldMappingEntry>> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageContainer"u8))
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreFileProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Core.Optional.ToList(inputs), storageContainer);
+            return new KnowledgeStoreFileProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), storageContainer);
         }
     }
 }

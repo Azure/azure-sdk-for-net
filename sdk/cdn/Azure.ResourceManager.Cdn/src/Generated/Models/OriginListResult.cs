@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of OriginListResult. </summary>
         internal OriginListResult()
         {
-            Value = new Core.ChangeTrackingList<CdnOriginData>();
+            Value = new ChangeTrackingList<CdnOriginData>();
         }
 
         /// <summary> Initializes a new instance of OriginListResult. </summary>

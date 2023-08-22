@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CommitmentPeriod : Core.IUtf8JsonSerializable
+    public partial class CommitmentPeriod : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Tier))
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Core.Optional.IsDefined(Count))
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Core.Optional<string> tier = default;
-            Core.Optional<int> count = default;
-            Core.Optional<CommitmentQuota> quota = default;
-            Core.Optional<DateTimeOffset> startDate = default;
-            Core.Optional<DateTimeOffset> endDate = default;
+            Optional<string> tier = default;
+            Optional<int> count = default;
+            Optional<CommitmentQuota> quota = default;
+            Optional<DateTimeOffset> startDate = default;
+            Optional<DateTimeOffset> endDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tier"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     continue;
                 }
             }
-            return new CommitmentPeriod(tier.Value, Core.Optional.ToNullable(count), quota.Value, Core.Optional.ToNullable(startDate), Core.Optional.ToNullable(endDate));
+            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate));
         }
     }
 }

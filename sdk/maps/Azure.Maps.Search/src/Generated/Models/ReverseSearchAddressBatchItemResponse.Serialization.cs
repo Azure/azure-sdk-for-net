@@ -19,9 +19,9 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<ErrorDetail> error = default;
-            Core.Optional<SearchSummary> summary = default;
-            Core.Optional<IReadOnlyList<ReverseSearchAddressItem>> addresses = default;
+            Optional<ErrorDetail> error = default;
+            Optional<SearchSummary> summary = default;
+            Optional<IReadOnlyList<ReverseSearchAddressItem>> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -57,7 +57,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressBatchItemResponse(summary.Value, Core.Optional.ToList(addresses), error.Value);
+            return new ReverseSearchAddressBatchItemResponse(summary.Value, Optional.ToList(addresses), error.Value);
         }
     }
 }

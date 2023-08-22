@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Core.Optional<string> category = default;
-            Core.Optional<IReadOnlyList<LoadTestingEndpointDependency>> endpoints = default;
+            Optional<string> category = default;
+            Optional<IReadOnlyList<LoadTestingEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, Core.Optional.ToList(endpoints));
+            return new LoadTestingOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints));
         }
     }
 }

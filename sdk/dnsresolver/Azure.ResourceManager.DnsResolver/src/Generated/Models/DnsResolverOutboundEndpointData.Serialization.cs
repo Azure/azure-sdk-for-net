@@ -16,12 +16,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    public partial class DnsResolverOutboundEndpointData : Core.IUtf8JsonSerializable
+    public partial class DnsResolverOutboundEndpointData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             WritableSubResource subnet = default;
-            Core.Optional<DnsResolverProvisioningState> provisioningState = default;
-            Core.Optional<Guid> resourceGuid = default;
+            Optional<DnsResolverProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DnsResolver
                     continue;
                 }
             }
-            return new DnsResolverOutboundEndpointData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, Core.Optional.ToNullable(etag), subnet, Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(resourceGuid));
+            return new DnsResolverOutboundEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), subnet, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

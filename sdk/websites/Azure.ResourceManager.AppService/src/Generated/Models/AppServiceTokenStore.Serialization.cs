@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceTokenStore : Core.IUtf8JsonSerializable
+    public partial class AppServiceTokenStore : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(TokenRefreshExtensionHours))
+            if (Optional.IsDefined(TokenRefreshExtensionHours))
             {
                 writer.WritePropertyName("tokenRefreshExtensionHours"u8);
                 writer.WriteNumberValue(TokenRefreshExtensionHours.Value);
             }
-            if (Core.Optional.IsDefined(FileSystem))
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
-            if (Core.Optional.IsDefined(AzureBlobStorage))
+            if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<double> tokenRefreshExtensionHours = default;
-            Core.Optional<FileSystemTokenStore> fileSystem = default;
-            Core.Optional<AppServiceBlobStorageTokenStore> azureBlobStorage = default;
+            Optional<bool> enabled = default;
+            Optional<double> tokenRefreshExtensionHours = default;
+            Optional<FileSystemTokenStore> fileSystem = default;
+            Optional<AppServiceBlobStorageTokenStore> azureBlobStorage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceTokenStore(Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(tokenRefreshExtensionHours), fileSystem.Value, azureBlobStorage.Value);
+            return new AppServiceTokenStore(Optional.ToNullable(enabled), Optional.ToNullable(tokenRefreshExtensionHours), fileSystem.Value, azureBlobStorage.Value);
         }
     }
 }

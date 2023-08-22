@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> odataId = default;
-            Core.Optional<string> odataContext = default;
-            Core.Optional<PolicySummaryResults> results = default;
-            Core.Optional<IReadOnlyList<PolicyAssignmentSummary>> policyAssignments = default;
+            Optional<string> odataId = default;
+            Optional<string> odataContext = default;
+            Optional<PolicySummaryResults> results = default;
+            Optional<IReadOnlyList<PolicyAssignmentSummary>> policyAssignments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.id"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new PolicySummary(odataId.Value, odataContext.Value, results.Value, Core.Optional.ToList(policyAssignments));
+            return new PolicySummary(odataId.Value, odataContext.Value, results.Value, Optional.ToList(policyAssignments));
         }
     }
 }

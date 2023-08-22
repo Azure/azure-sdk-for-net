@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of DataConnectionValidationResults. </summary>
         internal DataConnectionValidationResults()
         {
-            Value = new Core.ChangeTrackingList<DataConnectionValidationResult>();
+            Value = new ChangeTrackingList<DataConnectionValidationResult>();
         }
 
         /// <summary> Initializes a new instance of DataConnectionValidationResults. </summary>

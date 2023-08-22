@@ -14,19 +14,19 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(MappingDataFlowConverter))]
-    public partial class MappingDataFlow : Core.IUtf8JsonSerializable
+    public partial class MappingDataFlow : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -41,14 +41,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Folder))
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Sources))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Sinks))
+            if (Optional.IsCollectionDefined(Sinks))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Transformations))
+            if (Optional.IsCollectionDefined(Transformations))
             {
                 writer.WritePropertyName("transformations"u8);
                 writer.WriteStartArray();
@@ -78,12 +78,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Script))
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Core.Optional.IsCollectionDefined(ScriptLines))
+            if (Optional.IsCollectionDefined(ScriptLines))
             {
                 writer.WritePropertyName("scriptLines"u8);
                 writer.WriteStartArray();
@@ -104,14 +104,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<object>> annotations = default;
-            Core.Optional<DataFlowFolder> folder = default;
-            Core.Optional<IList<DataFlowSource>> sources = default;
-            Core.Optional<IList<DataFlowSink>> sinks = default;
-            Core.Optional<IList<Transformation>> transformations = default;
-            Core.Optional<string> script = default;
-            Core.Optional<IList<string>> scriptLines = default;
+            Optional<string> description = default;
+            Optional<IList<object>> annotations = default;
+            Optional<DataFlowFolder> folder = default;
+            Optional<IList<DataFlowSource>> sources = default;
+            Optional<IList<DataFlowSink>> sinks = default;
+            Optional<IList<Transformation>> transformations = default;
+            Optional<string> script = default;
+            Optional<IList<string>> scriptLines = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, Core.Optional.ToList(annotations), folder.Value, Core.Optional.ToList(sources), Core.Optional.ToList(sinks), Core.Optional.ToList(transformations), script.Value, Core.Optional.ToList(scriptLines));
+            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
         }
 
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>

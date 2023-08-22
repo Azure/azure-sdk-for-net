@@ -11,32 +11,32 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ScriptActivityParameter : Core.IUtf8JsonSerializable
+    public partial class ScriptActivityParameter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, Name);
             }
-            if (Core.Optional.IsDefined(ParameterType))
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 JsonSerializer.Serialize(writer, Value);
             }
-            if (Core.Optional.IsDefined(Direction))
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Size))
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<DataFactoryElement<string>> name = default;
-            Core.Optional<ScriptActivityParameterType> type = default;
-            Core.Optional<DataFactoryElement<string>> value = default;
-            Core.Optional<ScriptActivityParameterDirection> direction = default;
-            Core.Optional<int> size = default;
+            Optional<DataFactoryElement<string>> name = default;
+            Optional<ScriptActivityParameterType> type = default;
+            Optional<DataFactoryElement<string>> value = default;
+            Optional<ScriptActivityParameterDirection> direction = default;
+            Optional<int> size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new ScriptActivityParameter(name.Value, Core.Optional.ToNullable(type), value.Value, Core.Optional.ToNullable(direction), Core.Optional.ToNullable(size));
+            return new ScriptActivityParameter(name.Value, Optional.ToNullable(type), value.Value, Optional.ToNullable(direction), Optional.ToNullable(size));
         }
     }
 }

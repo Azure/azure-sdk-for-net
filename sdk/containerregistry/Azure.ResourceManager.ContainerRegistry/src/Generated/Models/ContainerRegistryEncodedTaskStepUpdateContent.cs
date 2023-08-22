@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStepUpdateContent. </summary>
         public ContainerRegistryEncodedTaskStepUpdateContent()
         {
-            Values = new Core.ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
+            Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();
             StepType = ContainerRegistryTaskStepType.EncodedTask;
         }
 

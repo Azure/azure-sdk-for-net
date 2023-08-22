@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Core.Optional<string> articleContent = default;
-            Core.Optional<string> articleId = default;
-            Core.Optional<BinaryData> parameters = default;
+            Optional<string> articleContent = default;
+            Optional<string> articleId = default;
+            Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("articleContent"u8))

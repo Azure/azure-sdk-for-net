@@ -12,29 +12,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationSpecificProperties : Core.IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationSpecificProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("operatingSystem"u8);
             writer.WriteStringValue(OperatingSystem.ToSerialString());
-            if (Core.Optional.IsDefined(Windows))
+            if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
                 writer.WriteObjectValue(Windows);
             }
-            if (Core.Optional.IsDefined(Linux))
+            if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
                 writer.WriteObjectValue(Linux);
             }
-            if (Core.Optional.IsDefined(Duration))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Core.Optional.IsCollectionDefined(AzureVirtualMachines))
+            if (Optional.IsCollectionDefined(AzureVirtualMachines))
             {
                 writer.WritePropertyName("azureVirtualMachines"u8);
                 writer.WriteStartArray();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(NonAzureComputerNames))
+            if (Optional.IsCollectionDefined(NonAzureComputerNames))
             {
                 writer.WritePropertyName("nonAzureComputerNames"u8);
                 writer.WriteStartArray();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Targets))
+            if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteObjectValue(Targets);
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             SoftwareUpdateConfigurationOperatingSystemType operatingSystem = default;
-            Core.Optional<WindowsUpdateConfigurationProperties> windows = default;
-            Core.Optional<LinuxUpdateConfigurationProperties> linux = default;
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<IList<string>> azureVirtualMachines = default;
-            Core.Optional<IList<string>> nonAzureComputerNames = default;
-            Core.Optional<SoftwareUpdateConfigurationTargetProperties> targets = default;
+            Optional<WindowsUpdateConfigurationProperties> windows = default;
+            Optional<LinuxUpdateConfigurationProperties> linux = default;
+            Optional<TimeSpan> duration = default;
+            Optional<IList<string>> azureVirtualMachines = default;
+            Optional<IList<string>> nonAzureComputerNames = default;
+            Optional<SoftwareUpdateConfigurationTargetProperties> targets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatingSystem"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Core.Optional.ToNullable(duration), Core.Optional.ToList(azureVirtualMachines), Core.Optional.ToList(nonAzureComputerNames), targets.Value);
+            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), Optional.ToList(azureVirtualMachines), Optional.ToList(nonAzureComputerNames), targets.Value);
         }
     }
 }

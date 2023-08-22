@@ -13,12 +13,12 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsLinkedServiceData : Core.IUtf8JsonSerializable
+    public partial class OperationalInsightsLinkedServiceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.OperationalInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Core.Optional.IsDefined(WriteAccessResourceId))
+            if (Optional.IsDefined(WriteAccessResourceId))
             {
                 writer.WritePropertyName("writeAccessResourceId"u8);
                 writer.WriteStringValue(WriteAccessResourceId);
             }
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<ResourceIdentifier> writeAccessResourceId = default;
-            Core.Optional<OperationalInsightsLinkedServiceEntityStatus> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<ResourceIdentifier> writeAccessResourceId = default;
+            Optional<OperationalInsightsLinkedServiceEntityStatus> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new OperationalInsightsLinkedServiceData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), resourceId.Value, writeAccessResourceId.Value, Core.Optional.ToNullable(provisioningState));
+            return new OperationalInsightsLinkedServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), resourceId.Value, writeAccessResourceId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

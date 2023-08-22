@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>
         internal EmergingIssueImpact()
         {
-            Regions = new Core.ChangeTrackingList<EmergingIssueImpactedRegion>();
+            Regions = new ChangeTrackingList<EmergingIssueImpactedRegion>();
         }
 
         /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>

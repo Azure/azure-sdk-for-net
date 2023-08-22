@@ -14,19 +14,19 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class ContentKeyPolicyData : Core.IUtf8JsonSerializable
+    public partial class ContentKeyPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsCollectionDefined(Options))
+            if (Optional.IsCollectionDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> policyId = default;
-            Core.Optional<DateTimeOffset> created = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<string> description = default;
-            Core.Optional<IList<ContentKeyPolicyOption>> options = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> policyId = default;
+            Optional<DateTimeOffset> created = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<string> description = default;
+            Optional<IList<ContentKeyPolicyOption>> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new ContentKeyPolicyData(id, name, type, systemData.Value, Core.Optional.ToNullable(policyId), Core.Optional.ToNullable(created), Core.Optional.ToNullable(lastModified), description.Value, Core.Optional.ToList(options));
+            return new ContentKeyPolicyData(id, name, type, systemData.Value, Optional.ToNullable(policyId), Optional.ToNullable(created), Optional.ToNullable(lastModified), description.Value, Optional.ToList(options));
         }
     }
 }

@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorPrivateLinkAccessModeSettingsExclusion : Core.IUtf8JsonSerializable
+    public partial class MonitorPrivateLinkAccessModeSettingsExclusion : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateEndpointConnectionName))
+            if (Optional.IsDefined(PrivateEndpointConnectionName))
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (Core.Optional.IsDefined(QueryAccessMode))
+            if (Optional.IsDefined(QueryAccessMode))
             {
                 writer.WritePropertyName("queryAccessMode"u8);
                 writer.WriteStringValue(QueryAccessMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IngestionAccessMode))
+            if (Optional.IsDefined(IngestionAccessMode))
             {
                 writer.WritePropertyName("ingestionAccessMode"u8);
                 writer.WriteStringValue(IngestionAccessMode.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<string> privateEndpointConnectionName = default;
-            Core.Optional<MonitorPrivateLinkAccessMode> queryAccessMode = default;
-            Core.Optional<MonitorPrivateLinkAccessMode> ingestionAccessMode = default;
+            Optional<string> privateEndpointConnectionName = default;
+            Optional<MonitorPrivateLinkAccessMode> queryAccessMode = default;
+            Optional<MonitorPrivateLinkAccessMode> ingestionAccessMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privateEndpointConnectionName"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     continue;
                 }
             }
-            return new MonitorPrivateLinkAccessModeSettingsExclusion(privateEndpointConnectionName.Value, Core.Optional.ToNullable(queryAccessMode), Core.Optional.ToNullable(ingestionAccessMode));
+            return new MonitorPrivateLinkAccessModeSettingsExclusion(privateEndpointConnectionName.Value, Optional.ToNullable(queryAccessMode), Optional.ToNullable(ingestionAccessMode));
         }
     }
 }

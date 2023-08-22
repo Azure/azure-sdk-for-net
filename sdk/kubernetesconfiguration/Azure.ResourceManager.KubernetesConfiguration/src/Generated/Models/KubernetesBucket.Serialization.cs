@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesBucket : Core.IUtf8JsonSerializable
+    public partial class KubernetesBucket : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Core.Optional.IsDefined(BucketName))
+            if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
                 writer.WriteStringValue(BucketName);
             }
-            if (Core.Optional.IsDefined(UseInsecureCommunication))
+            if (Optional.IsDefined(UseInsecureCommunication))
             {
                 writer.WritePropertyName("insecure"u8);
                 writer.WriteBooleanValue(UseInsecureCommunication.Value);
             }
-            if (Core.Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (Core.Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (Core.Optional.IsDefined(AccessKey))
+            if (Optional.IsDefined(AccessKey))
             {
                 if (AccessKey != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("accessKey");
                 }
             }
-            if (Core.Optional.IsDefined(LocalAuthRef))
+            if (Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {
@@ -88,13 +88,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Core.Optional<Uri> url = default;
-            Core.Optional<string> bucketName = default;
-            Core.Optional<bool> insecure = default;
-            Core.Optional<long?> timeoutInSeconds = default;
-            Core.Optional<long?> syncIntervalInSeconds = default;
-            Core.Optional<string> accessKey = default;
-            Core.Optional<string> localAuthRef = default;
+            Optional<Uri> url = default;
+            Optional<string> bucketName = default;
+            Optional<bool> insecure = default;
+            Optional<long?> timeoutInSeconds = default;
+            Optional<long?> syncIntervalInSeconds = default;
+            Optional<string> accessKey = default;
+            Optional<string> localAuthRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     continue;
                 }
             }
-            return new KubernetesBucket(url.Value, bucketName.Value, Core.Optional.ToNullable(insecure), Core.Optional.ToNullable(timeoutInSeconds), Core.Optional.ToNullable(syncIntervalInSeconds), accessKey.Value, localAuthRef.Value);
+            return new KubernetesBucket(url.Value, bucketName.Value, Optional.ToNullable(insecure), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), accessKey.Value, localAuthRef.Value);
         }
     }
 }

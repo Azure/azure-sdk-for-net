@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of CognitiveServicesNetworkRuleSet. </summary>
         public CognitiveServicesNetworkRuleSet()
         {
-            IPRules = new Core.ChangeTrackingList<CognitiveServicesIPRule>();
-            VirtualNetworkRules = new Core.ChangeTrackingList<CognitiveServicesVirtualNetworkRule>();
+            IPRules = new ChangeTrackingList<CognitiveServicesIPRule>();
+            VirtualNetworkRules = new ChangeTrackingList<CognitiveServicesVirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesNetworkRuleSet. </summary>

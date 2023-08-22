@@ -11,69 +11,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class ProcessModuleInfoData : Core.IUtf8JsonSerializable
+    public partial class ProcessModuleInfoData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(BaseAddress))
+            if (Optional.IsDefined(BaseAddress))
             {
                 writer.WritePropertyName("base_address"u8);
                 writer.WriteStringValue(BaseAddress);
             }
-            if (Core.Optional.IsDefined(FileName))
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Core.Optional.IsDefined(Href))
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Core.Optional.IsDefined(FilePath))
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("file_path"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Core.Optional.IsDefined(ModuleMemorySize))
+            if (Optional.IsDefined(ModuleMemorySize))
             {
                 writer.WritePropertyName("module_memory_size"u8);
                 writer.WriteNumberValue(ModuleMemorySize.Value);
             }
-            if (Core.Optional.IsDefined(FileVersion))
+            if (Optional.IsDefined(FileVersion))
             {
                 writer.WritePropertyName("file_version"u8);
                 writer.WriteStringValue(FileVersion);
             }
-            if (Core.Optional.IsDefined(FileDescription))
+            if (Optional.IsDefined(FileDescription))
             {
                 writer.WritePropertyName("file_description"u8);
                 writer.WriteStringValue(FileDescription);
             }
-            if (Core.Optional.IsDefined(Product))
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Core.Optional.IsDefined(ProductVersion))
+            if (Optional.IsDefined(ProductVersion))
             {
                 writer.WritePropertyName("product_version"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (Core.Optional.IsDefined(IsDebug))
+            if (Optional.IsDefined(IsDebug))
             {
                 writer.WritePropertyName("is_debug"u8);
                 writer.WriteBooleanValue(IsDebug.Value);
             }
-            if (Core.Optional.IsDefined(Language))
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -88,22 +88,22 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
-            Core.Optional<string> kind = default;
+            Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> baseAddress = default;
-            Core.Optional<string> fileName = default;
-            Core.Optional<string> href = default;
-            Core.Optional<string> filePath = default;
-            Core.Optional<int> moduleMemorySize = default;
-            Core.Optional<string> fileVersion = default;
-            Core.Optional<string> fileDescription = default;
-            Core.Optional<string> product = default;
-            Core.Optional<string> productVersion = default;
-            Core.Optional<bool> isDebug = default;
-            Core.Optional<string> language = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> baseAddress = default;
+            Optional<string> fileName = default;
+            Optional<string> href = default;
+            Optional<string> filePath = default;
+            Optional<int> moduleMemorySize = default;
+            Optional<string> fileVersion = default;
+            Optional<string> fileDescription = default;
+            Optional<string> product = default;
+            Optional<string> productVersion = default;
+            Optional<bool> isDebug = default;
+            Optional<string> language = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new ProcessModuleInfoData(id, name, type, systemData.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Core.Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Core.Optional.ToNullable(isDebug), language.Value, kind.Value);
+            return new ProcessModuleInfoData(id, name, type, systemData.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value, kind.Value);
         }
     }
 }

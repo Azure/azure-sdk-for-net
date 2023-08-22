@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>
         internal ValidateMigrationInputSqlServerSqlMITaskOutput()
         {
-            RestoreDatabaseNameErrors = new Core.ChangeTrackingList<ReportableException>();
-            BackupFolderErrors = new Core.ChangeTrackingList<ReportableException>();
-            BackupShareCredentialsErrors = new Core.ChangeTrackingList<ReportableException>();
-            BackupStorageAccountErrors = new Core.ChangeTrackingList<ReportableException>();
-            ExistingBackupErrors = new Core.ChangeTrackingList<ReportableException>();
+            RestoreDatabaseNameErrors = new ChangeTrackingList<ReportableException>();
+            BackupFolderErrors = new ChangeTrackingList<ReportableException>();
+            BackupShareCredentialsErrors = new ChangeTrackingList<ReportableException>();
+            BackupStorageAccountErrors = new ChangeTrackingList<ReportableException>();
+            ExistingBackupErrors = new ChangeTrackingList<ReportableException>();
         }
 
         /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>

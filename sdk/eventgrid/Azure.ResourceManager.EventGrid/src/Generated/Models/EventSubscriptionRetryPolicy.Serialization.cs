@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventSubscriptionRetryPolicy : Core.IUtf8JsonSerializable
+    public partial class EventSubscriptionRetryPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxDeliveryAttempts))
+            if (Optional.IsDefined(MaxDeliveryAttempts))
             {
                 writer.WritePropertyName("maxDeliveryAttempts"u8);
                 writer.WriteNumberValue(MaxDeliveryAttempts.Value);
             }
-            if (Core.Optional.IsDefined(EventTimeToLiveInMinutes))
+            if (Optional.IsDefined(EventTimeToLiveInMinutes))
             {
                 writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<int> maxDeliveryAttempts = default;
-            Core.Optional<int> eventTimeToLiveInMinutes = default;
+            Optional<int> maxDeliveryAttempts = default;
+            Optional<int> eventTimeToLiveInMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxDeliveryAttempts"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new EventSubscriptionRetryPolicy(Core.Optional.ToNullable(maxDeliveryAttempts), Core.Optional.ToNullable(eventTimeToLiveInMinutes));
+            return new EventSubscriptionRetryPolicy(Optional.ToNullable(maxDeliveryAttempts), Optional.ToNullable(eventTimeToLiveInMinutes));
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    internal class DynatraceSingleSignOnOperationSource : Core.IOperationSource<DynatraceSingleSignOnResource>
+    internal class DynatraceSingleSignOnOperationSource : IOperationSource<DynatraceSingleSignOnResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Dynatrace
             _client = client;
         }
 
-        DynatraceSingleSignOnResource Core.IOperationSource<DynatraceSingleSignOnResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DynatraceSingleSignOnResource IOperationSource<DynatraceSingleSignOnResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(document.RootElement);
             return new DynatraceSingleSignOnResource(_client, data);
         }
 
-        async ValueTask<DynatraceSingleSignOnResource> Core.IOperationSource<DynatraceSingleSignOnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DynatraceSingleSignOnResource> IOperationSource<DynatraceSingleSignOnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = DynatraceSingleSignOnData.DeserializeDynatraceSingleSignOnData(document.RootElement);

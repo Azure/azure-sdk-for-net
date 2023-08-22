@@ -12,17 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KubernetesClusterNetworkConfiguration : Core.IUtf8JsonSerializable
+    public partial class KubernetesClusterNetworkConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AttachedNetworkConfiguration))
+            if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
                 writer.WriteObjectValue(AttachedNetworkConfiguration);
             }
-            if (Core.Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
+            if (Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
             {
                 writer.WritePropertyName("bgpServiceLoadBalancerConfiguration"u8);
                 writer.WriteObjectValue(BgpServiceLoadBalancerConfiguration);
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(CloudServicesNetworkId);
             writer.WritePropertyName("cniNetworkId"u8);
             writer.WriteStringValue(CniNetworkId);
-            if (Core.Optional.IsDefined(DnsServiceIP))
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
                 writer.WriteStringValue(DnsServiceIP.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(PodCidrs))
+            if (Optional.IsCollectionDefined(PodCidrs))
             {
                 writer.WritePropertyName("podCidrs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ServiceCidrs))
+            if (Optional.IsCollectionDefined(ServiceCidrs))
             {
                 writer.WritePropertyName("serviceCidrs"u8);
                 writer.WriteStartArray();
@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Core.Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
-            Core.Optional<BgpServiceLoadBalancerConfiguration> bgpServiceLoadBalancerConfiguration = default;
+            Optional<AttachedNetworkConfiguration> attachedNetworkConfiguration = default;
+            Optional<BgpServiceLoadBalancerConfiguration> bgpServiceLoadBalancerConfiguration = default;
             ResourceIdentifier cloudServicesNetworkId = default;
             ResourceIdentifier cniNetworkId = default;
-            Core.Optional<IPAddress> dnsServiceIP = default;
-            Core.Optional<IList<string>> podCidrs = default;
-            Core.Optional<IList<string>> serviceCidrs = default;
+            Optional<IPAddress> dnsServiceIP = default;
+            Optional<IList<string>> podCidrs = default;
+            Optional<IList<string>> serviceCidrs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attachedNetworkConfiguration"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new KubernetesClusterNetworkConfiguration(attachedNetworkConfiguration.Value, bgpServiceLoadBalancerConfiguration.Value, cloudServicesNetworkId, cniNetworkId, dnsServiceIP.Value, Core.Optional.ToList(podCidrs), Core.Optional.ToList(serviceCidrs));
+            return new KubernetesClusterNetworkConfiguration(attachedNetworkConfiguration.Value, bgpServiceLoadBalancerConfiguration.Value, cloudServicesNetworkId, cniNetworkId, dnsServiceIP.Value, Optional.ToList(podCidrs), Optional.ToList(serviceCidrs));
         }
     }
 }

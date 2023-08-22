@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    internal partial class LogFilesDataSourceSettings : Core.IUtf8JsonSerializable
+    internal partial class LogFilesDataSourceSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Text))
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteObjectValue(Text);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<LogFileSettingsText> text = default;
+            Optional<LogFileSettingsText> text = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))

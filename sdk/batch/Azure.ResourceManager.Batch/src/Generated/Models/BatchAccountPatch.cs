@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchAccountPatch. </summary>
         public BatchAccountPatch()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
-            AllowedAuthenticationModes = new Core.ChangeTrackingList<BatchAuthenticationMode>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            AllowedAuthenticationModes = new ChangeTrackingList<BatchAuthenticationMode>();
         }
 
         /// <summary> The user-specified tags associated with the account. </summary>

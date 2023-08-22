@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = await _digitalTwinsDescriptionDigitalTwinsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins
             try
             {
                 var response = _digitalTwinsDescriptionDigitalTwinsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DigitalTwinsArmOperation<DigitalTwinsDescriptionResource>(new DigitalTwinsDescriptionOperationSource(Client), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, _digitalTwinsDescriptionDigitalTwinsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsDescriptionDigitalTwinsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsDescriptionDigitalTwinsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "DigitalTwinsDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "DigitalTwinsDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsDescriptionDigitalTwinsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _digitalTwinsDescriptionDigitalTwinsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "DigitalTwinsDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), _digitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "DigitalTwinsDescriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

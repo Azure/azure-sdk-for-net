@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class LongTermRetentionPolicy : Core.IUtf8JsonSerializable
+    public partial class LongTermRetentionPolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DailySchedule))
+            if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (Core.Optional.IsDefined(WeeklySchedule))
+            if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
             }
-            if (Core.Optional.IsDefined(MonthlySchedule))
+            if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
                 writer.WriteObjectValue(MonthlySchedule);
             }
-            if (Core.Optional.IsDefined(YearlySchedule))
+            if (Optional.IsDefined(YearlySchedule))
             {
                 writer.WritePropertyName("yearlySchedule"u8);
                 writer.WriteObjectValue(YearlySchedule);
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<DailyRetentionSchedule> dailySchedule = default;
-            Core.Optional<WeeklyRetentionSchedule> weeklySchedule = default;
-            Core.Optional<MonthlyRetentionSchedule> monthlySchedule = default;
-            Core.Optional<YearlyRetentionSchedule> yearlySchedule = default;
+            Optional<DailyRetentionSchedule> dailySchedule = default;
+            Optional<WeeklyRetentionSchedule> weeklySchedule = default;
+            Optional<MonthlyRetentionSchedule> monthlySchedule = default;
+            Optional<YearlyRetentionSchedule> yearlySchedule = default;
             string retentionPolicyType = default;
             foreach (var property in element.EnumerateObject())
             {

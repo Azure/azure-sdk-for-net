@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> name = default;
-            Core.Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
+            Optional<IReadOnlyList<string>> name = default;
+            Optional<IReadOnlyList<StoragePoolSkuCapability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     continue;
                 }
             }
-            return new StoragePoolSkuZoneDetails(Core.Optional.ToList(name), Core.Optional.ToList(capabilities));
+            return new StoragePoolSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
         }
     }
 }

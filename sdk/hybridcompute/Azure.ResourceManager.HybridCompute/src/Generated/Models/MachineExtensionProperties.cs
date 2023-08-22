@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>
         public MachineExtensionProperties()
         {
-            Settings = new Core.ChangeTrackingDictionary<string, BinaryData>();
-            ProtectedSettings = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Settings = new ChangeTrackingDictionary<string, BinaryData>();
+            ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of MachineExtensionProperties. </summary>

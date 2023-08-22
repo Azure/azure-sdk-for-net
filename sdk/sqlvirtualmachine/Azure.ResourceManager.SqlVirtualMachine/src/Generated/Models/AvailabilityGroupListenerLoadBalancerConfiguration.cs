@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of AvailabilityGroupListenerLoadBalancerConfiguration. </summary>
         public AvailabilityGroupListenerLoadBalancerConfiguration()
         {
-            SqlVmInstances = new Core.ChangeTrackingList<ResourceIdentifier>();
+            SqlVmInstances = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of AvailabilityGroupListenerLoadBalancerConfiguration. </summary>

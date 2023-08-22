@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> vmSKUs = default;
+            Optional<IReadOnlyList<string>> vmSKUs = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSKUs"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     continue;
                 }
             }
-            return new VmSkuListResult(id, name, type, systemData.Value, Core.Optional.ToList(vmSKUs));
+            return new VmSkuListResult(id, name, type, systemData.Value, Optional.ToList(vmSKUs));
         }
     }
 }

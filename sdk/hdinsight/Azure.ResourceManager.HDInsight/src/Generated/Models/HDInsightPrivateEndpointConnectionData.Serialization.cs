@@ -13,9 +13,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    public partial class HDInsightPrivateEndpointConnectionData : Core.IUtf8JsonSerializable
+    public partial class HDInsightPrivateEndpointConnectionData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.HDInsight
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<SubResource> privateEndpoint = default;
+            Optional<SystemData> systemData = default;
+            Optional<SubResource> privateEndpoint = default;
             HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            Core.Optional<string> linkIdentifier = default;
-            Core.Optional<HDInsightPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            Optional<string> linkIdentifier = default;
+            Optional<HDInsightPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight
                     continue;
                 }
             }
-            return new HDInsightPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, linkIdentifier.Value, Core.Optional.ToNullable(provisioningState));
+            return new HDInsightPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, linkIdentifier.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

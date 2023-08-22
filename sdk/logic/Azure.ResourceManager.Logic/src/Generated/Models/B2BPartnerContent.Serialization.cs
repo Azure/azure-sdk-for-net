@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class B2BPartnerContent : Core.IUtf8JsonSerializable
+    internal partial class B2BPartnerContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(BusinessIdentities))
+            if (Optional.IsCollectionDefined(BusinessIdentities))
             {
                 writer.WritePropertyName("businessIdentities"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<IList<IntegrationAccountBusinessIdentity>> businessIdentities = default;
+            Optional<IList<IntegrationAccountBusinessIdentity>> businessIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("businessIdentities"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new B2BPartnerContent(Core.Optional.ToList(businessIdentities));
+            return new B2BPartnerContent(Optional.ToList(businessIdentities));
         }
     }
 }

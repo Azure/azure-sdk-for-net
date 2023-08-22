@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PolicyOverride : Core.IUtf8JsonSerializable
+    public partial class PolicyOverride : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Core.Optional.IsCollectionDefined(Selectors))
+            if (Optional.IsCollectionDefined(Selectors))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<PolicyOverrideKind> kind = default;
-            Core.Optional<string> value = default;
-            Core.Optional<IList<ResourceSelectorExpression>> selectors = default;
+            Optional<PolicyOverrideKind> kind = default;
+            Optional<string> value = default;
+            Optional<IList<ResourceSelectorExpression>> selectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PolicyOverride(Core.Optional.ToNullable(kind), value.Value, Core.Optional.ToList(selectors));
+            return new PolicyOverride(Optional.ToNullable(kind), value.Value, Optional.ToList(selectors));
         }
     }
 }

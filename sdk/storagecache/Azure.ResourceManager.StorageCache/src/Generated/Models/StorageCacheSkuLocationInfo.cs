@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of StorageCacheSkuLocationInfo. </summary>
         internal StorageCacheSkuLocationInfo()
         {
-            Zones = new Core.ChangeTrackingList<string>();
+            Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of StorageCacheSkuLocationInfo. </summary>

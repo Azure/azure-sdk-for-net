@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of SiteRecoveryPointListResult. </summary>
         internal SiteRecoveryPointListResult()
         {
-            Value = new Core.ChangeTrackingList<SiteRecoveryPointData>();
+            Value = new ChangeTrackingList<SiteRecoveryPointData>();
         }
 
         /// <summary> Initializes a new instance of SiteRecoveryPointListResult. </summary>

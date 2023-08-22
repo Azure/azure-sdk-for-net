@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>
         internal DatastoreResourceArmPaginatedResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningDatastoreData>();
+            Value = new ChangeTrackingList<MachineLearningDatastoreData>();
         }
 
         /// <summary> Initializes a new instance of DatastoreResourceArmPaginatedResult. </summary>

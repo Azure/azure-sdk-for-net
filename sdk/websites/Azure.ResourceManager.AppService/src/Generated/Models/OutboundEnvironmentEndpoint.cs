@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
         internal OutboundEnvironmentEndpoint()
         {
-            Endpoints = new Core.ChangeTrackingList<AppServiceEndpointDependency>();
+            Endpoints = new ChangeTrackingList<AppServiceEndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>

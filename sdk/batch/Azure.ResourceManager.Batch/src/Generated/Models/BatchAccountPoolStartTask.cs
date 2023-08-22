@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of BatchAccountPoolStartTask. </summary>
         public BatchAccountPoolStartTask()
         {
-            ResourceFiles = new Core.ChangeTrackingList<BatchResourceFile>();
-            EnvironmentSettings = new Core.ChangeTrackingList<BatchEnvironmentSetting>();
+            ResourceFiles = new ChangeTrackingList<BatchResourceFile>();
+            EnvironmentSettings = new ChangeTrackingList<BatchEnvironmentSetting>();
         }
 
         /// <summary> Initializes a new instance of BatchAccountPoolStartTask. </summary>

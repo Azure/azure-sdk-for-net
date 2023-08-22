@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Initializes a new instance of GuestAgentData. </summary>
         public GuestAgentData()
         {
-            Statuses = new Core.ChangeTrackingList<ResourceStatus>();
+            Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
         /// <summary> Initializes a new instance of GuestAgentData. </summary>

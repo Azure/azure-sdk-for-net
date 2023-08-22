@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <summary> Initializes a new instance of PagedLabServicesSkus. </summary>
         internal PagedLabServicesSkus()
         {
-            Value = new Core.ChangeTrackingList<AvailableLabServicesSku>();
+            Value = new ChangeTrackingList<AvailableLabServicesSku>();
         }
 
         /// <summary> Initializes a new instance of PagedLabServicesSkus. </summary>

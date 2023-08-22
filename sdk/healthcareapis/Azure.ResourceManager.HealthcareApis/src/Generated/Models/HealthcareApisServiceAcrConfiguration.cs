@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of HealthcareApisServiceAcrConfiguration. </summary>
         public HealthcareApisServiceAcrConfiguration()
         {
-            LoginServers = new Core.ChangeTrackingList<string>();
-            OciArtifacts = new Core.ChangeTrackingList<HealthcareApisServiceOciArtifactEntry>();
+            LoginServers = new ChangeTrackingList<string>();
+            OciArtifacts = new ChangeTrackingList<HealthcareApisServiceOciArtifactEntry>();
         }
 
         /// <summary> Initializes a new instance of HealthcareApisServiceAcrConfiguration. </summary>

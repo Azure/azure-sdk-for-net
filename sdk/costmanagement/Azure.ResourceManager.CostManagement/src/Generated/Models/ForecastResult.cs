@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Initializes a new instance of ForecastResult. </summary>
         internal ForecastResult()
         {
-            Columns = new Core.ChangeTrackingList<ForecastColumn>();
-            Rows = new Core.ChangeTrackingList<IList<BinaryData>>();
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Columns = new ChangeTrackingList<ForecastColumn>();
+            Rows = new ChangeTrackingList<IList<BinaryData>>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ForecastResult. </summary>

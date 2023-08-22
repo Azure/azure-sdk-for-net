@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAksComputeProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningAksComputeProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ClusterFqdn))
+            if (Optional.IsDefined(ClusterFqdn))
             {
                 if (ClusterFqdn != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clusterFqdn");
                 }
             }
-            if (Core.Optional.IsDefined(AgentCount))
+            if (Optional.IsDefined(AgentCount))
             {
                 if (AgentCount != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("agentCount");
                 }
             }
-            if (Core.Optional.IsDefined(AgentVmSize))
+            if (Optional.IsDefined(AgentVmSize))
             {
                 if (AgentVmSize != null)
                 {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("agentVmSize");
                 }
             }
-            if (Core.Optional.IsDefined(ClusterPurpose))
+            if (Optional.IsDefined(ClusterPurpose))
             {
                 writer.WritePropertyName("clusterPurpose"u8);
                 writer.WriteStringValue(ClusterPurpose.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SslConfiguration))
+            if (Optional.IsDefined(SslConfiguration))
             {
                 if (SslConfiguration != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sslConfiguration");
                 }
             }
-            if (Core.Optional.IsDefined(AksNetworkingConfiguration))
+            if (Optional.IsDefined(AksNetworkingConfiguration))
             {
                 if (AksNetworkingConfiguration != null)
                 {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("aksNetworkingConfiguration");
                 }
             }
-            if (Core.Optional.IsDefined(LoadBalancerType))
+            if (Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
                 writer.WriteStringValue(LoadBalancerType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(LoadBalancerSubnet))
+            if (Optional.IsDefined(LoadBalancerSubnet))
             {
                 if (LoadBalancerSubnet != null)
                 {
@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<string> clusterFqdn = default;
-            Core.Optional<IReadOnlyList<MachineLearningComputeSystemService>> systemServices = default;
-            Core.Optional<int?> agentCount = default;
-            Core.Optional<string> agentVmSize = default;
-            Core.Optional<MachineLearningClusterPurpose> clusterPurpose = default;
-            Core.Optional<MachineLearningSslConfiguration> sslConfiguration = default;
-            Core.Optional<MachineLearningAksNetworkingConfiguration> aksNetworkingConfiguration = default;
-            Core.Optional<MachineLearningLoadBalancerType> loadBalancerType = default;
-            Core.Optional<string> loadBalancerSubnet = default;
+            Optional<string> clusterFqdn = default;
+            Optional<IReadOnlyList<MachineLearningComputeSystemService>> systemServices = default;
+            Optional<int?> agentCount = default;
+            Optional<string> agentVmSize = default;
+            Optional<MachineLearningClusterPurpose> clusterPurpose = default;
+            Optional<MachineLearningSslConfiguration> sslConfiguration = default;
+            Optional<MachineLearningAksNetworkingConfiguration> aksNetworkingConfiguration = default;
+            Optional<MachineLearningLoadBalancerType> loadBalancerType = default;
+            Optional<string> loadBalancerSubnet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterFqdn"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningAksComputeProperties(clusterFqdn.Value, Core.Optional.ToList(systemServices), Core.Optional.ToNullable(agentCount), agentVmSize.Value, Core.Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Core.Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value);
+            return new MachineLearningAksComputeProperties(clusterFqdn.Value, Optional.ToList(systemServices), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value);
         }
     }
 }

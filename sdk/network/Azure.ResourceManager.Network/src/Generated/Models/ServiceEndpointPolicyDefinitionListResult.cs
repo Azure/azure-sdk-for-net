@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionListResult. </summary>
         internal ServiceEndpointPolicyDefinitionListResult()
         {
-            Value = new Core.ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
+            Value = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionListResult. </summary>

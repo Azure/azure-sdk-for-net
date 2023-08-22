@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskProperties : Core.IUtf8JsonSerializable
+    public partial class MigrateSqlServerSqlMISyncTaskProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Input))
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Core.Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (Core.Optional.IsCollectionDefined(ClientData))
+            if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<MigrateSqlServerSqlMISyncTaskInput> input = default;
-            Core.Optional<IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput>> output = default;
-            Core.Optional<string> createdOn = default;
+            Optional<MigrateSqlServerSqlMISyncTaskInput> input = default;
+            Optional<IReadOnlyList<MigrateSqlServerSqlMISyncTaskOutput>> output = default;
+            Optional<string> createdOn = default;
             TaskType taskType = default;
-            Core.Optional<IReadOnlyList<ODataError>> errors = default;
-            Core.Optional<TaskState> state = default;
-            Core.Optional<IReadOnlyList<CommandProperties>> commands = default;
-            Core.Optional<IDictionary<string, string>> clientData = default;
+            Optional<IReadOnlyList<ODataError>> errors = default;
+            Optional<TaskState> state = default;
+            Optional<IReadOnlyList<CommandProperties>> commands = default;
+            Optional<IDictionary<string, string>> clientData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new MigrateSqlServerSqlMISyncTaskProperties(taskType, Core.Optional.ToList(errors), Core.Optional.ToNullable(state), Core.Optional.ToList(commands), Core.Optional.ToDictionary(clientData), input.Value, Core.Optional.ToList(output), createdOn.Value);
+            return new MigrateSqlServerSqlMISyncTaskProperties(taskType, Optional.ToList(errors), Optional.ToNullable(state), Optional.ToList(commands), Optional.ToDictionary(clientData), input.Value, Optional.ToList(output), createdOn.Value);
         }
     }
 }

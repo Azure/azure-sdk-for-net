@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Initializes a new instance of KubernetesClusterExtensionPatch. </summary>
         public KubernetesClusterExtensionPatch()
         {
-            ConfigurationSettings = new Core.ChangeTrackingDictionary<string, string>();
-            ConfigurationProtectedSettings = new Core.ChangeTrackingDictionary<string, string>();
+            ConfigurationSettings = new ChangeTrackingDictionary<string, string>();
+            ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Flag to note if this extension participates in auto upgrade of minor version, or not. </summary>

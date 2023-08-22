@@ -10,47 +10,47 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RollingUpgradePolicy : Core.IUtf8JsonSerializable
+    public partial class RollingUpgradePolicy : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxBatchInstancePercent))
+            if (Optional.IsDefined(MaxBatchInstancePercent))
             {
                 writer.WritePropertyName("maxBatchInstancePercent"u8);
                 writer.WriteNumberValue(MaxBatchInstancePercent.Value);
             }
-            if (Core.Optional.IsDefined(MaxUnhealthyInstancePercent))
+            if (Optional.IsDefined(MaxUnhealthyInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyInstancePercent.Value);
             }
-            if (Core.Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
+            if (Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyUpgradedInstancePercent.Value);
             }
-            if (Core.Optional.IsDefined(PauseTimeBetweenBatches))
+            if (Optional.IsDefined(PauseTimeBetweenBatches))
             {
                 writer.WritePropertyName("pauseTimeBetweenBatches"u8);
                 writer.WriteStringValue(PauseTimeBetweenBatches);
             }
-            if (Core.Optional.IsDefined(EnableCrossZoneUpgrade))
+            if (Optional.IsDefined(EnableCrossZoneUpgrade))
             {
                 writer.WritePropertyName("enableCrossZoneUpgrade"u8);
                 writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
             }
-            if (Core.Optional.IsDefined(PrioritizeUnhealthyInstances))
+            if (Optional.IsDefined(PrioritizeUnhealthyInstances))
             {
                 writer.WritePropertyName("prioritizeUnhealthyInstances"u8);
                 writer.WriteBooleanValue(PrioritizeUnhealthyInstances.Value);
             }
-            if (Core.Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
+            if (Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
             {
                 writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
             }
-            if (Core.Optional.IsDefined(IsMaxSurgeEnabled))
+            if (Optional.IsDefined(IsMaxSurgeEnabled))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteBooleanValue(IsMaxSurgeEnabled.Value);
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<int> maxBatchInstancePercent = default;
-            Core.Optional<int> maxUnhealthyInstancePercent = default;
-            Core.Optional<int> maxUnhealthyUpgradedInstancePercent = default;
-            Core.Optional<string> pauseTimeBetweenBatches = default;
-            Core.Optional<bool> enableCrossZoneUpgrade = default;
-            Core.Optional<bool> prioritizeUnhealthyInstances = default;
-            Core.Optional<bool> rollbackFailedInstancesOnPolicyBreach = default;
-            Core.Optional<bool> maxSurge = default;
+            Optional<int> maxBatchInstancePercent = default;
+            Optional<int> maxUnhealthyInstancePercent = default;
+            Optional<int> maxUnhealthyUpgradedInstancePercent = default;
+            Optional<string> pauseTimeBetweenBatches = default;
+            Optional<bool> enableCrossZoneUpgrade = default;
+            Optional<bool> prioritizeUnhealthyInstances = default;
+            Optional<bool> rollbackFailedInstancesOnPolicyBreach = default;
+            Optional<bool> maxSurge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxBatchInstancePercent"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new RollingUpgradePolicy(Core.Optional.ToNullable(maxBatchInstancePercent), Core.Optional.ToNullable(maxUnhealthyInstancePercent), Core.Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Core.Optional.ToNullable(enableCrossZoneUpgrade), Core.Optional.ToNullable(prioritizeUnhealthyInstances), Core.Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), Core.Optional.ToNullable(maxSurge));
+            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances), Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), Optional.ToNullable(maxSurge));
         }
     }
 }

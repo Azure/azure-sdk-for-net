@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<long> iops = default;
-            Core.Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Core.Optional<string> reason = default;
+            Optional<string> name = default;
+            Optional<long> iops = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorageTierCapability(Core.Optional.ToNullable(status), reason.Value, name.Value, Core.Optional.ToNullable(iops));
+            return new PostgreSqlFlexibleServerStorageTierCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(iops));
         }
     }
 }

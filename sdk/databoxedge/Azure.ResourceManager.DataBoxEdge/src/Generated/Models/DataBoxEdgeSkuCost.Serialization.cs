@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<string> meterId = default;
-            Core.Optional<long> quantity = default;
-            Core.Optional<string> extendedUnit = default;
+            Optional<string> meterId = default;
+            Optional<long> quantity = default;
+            Optional<string> extendedUnit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     continue;
                 }
             }
-            return new DataBoxEdgeSkuCost(meterId.Value, Core.Optional.ToNullable(quantity), extendedUnit.Value);
+            return new DataBoxEdgeSkuCost(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value);
         }
     }
 }

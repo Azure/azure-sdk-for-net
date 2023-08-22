@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AuthPlatform : Core.IUtf8JsonSerializable
+    public partial class AuthPlatform : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Core.Optional.IsDefined(RuntimeVersion))
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (Core.Optional.IsDefined(ConfigFilePath))
+            if (Optional.IsDefined(ConfigFilePath))
             {
                 writer.WritePropertyName("configFilePath"u8);
                 writer.WriteStringValue(ConfigFilePath);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<bool> enabled = default;
-            Core.Optional<string> runtimeVersion = default;
-            Core.Optional<string> configFilePath = default;
+            Optional<bool> enabled = default;
+            Optional<string> runtimeVersion = default;
+            Optional<string> configFilePath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AuthPlatform(Core.Optional.ToNullable(enabled), runtimeVersion.Value, configFilePath.Value);
+            return new AuthPlatform(Optional.ToNullable(enabled), runtimeVersion.Value, configFilePath.Value);
         }
     }
 }

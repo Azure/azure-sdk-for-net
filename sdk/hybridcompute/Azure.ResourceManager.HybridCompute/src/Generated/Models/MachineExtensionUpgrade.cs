@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineExtensionUpgrade. </summary>
         public MachineExtensionUpgrade()
         {
-            ExtensionTargets = new Core.ChangeTrackingDictionary<string, ExtensionTargetProperties>();
+            ExtensionTargets = new ChangeTrackingDictionary<string, ExtensionTargetProperties>();
         }
 
         /// <summary> Describes the Extension Target Properties. </summary>

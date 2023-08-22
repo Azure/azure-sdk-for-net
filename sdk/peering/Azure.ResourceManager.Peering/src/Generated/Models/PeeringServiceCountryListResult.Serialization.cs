@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<PeeringServiceCountry>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<PeeringServiceCountry>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
                     continue;
                 }
             }
-            return new PeeringServiceCountryListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new PeeringServiceCountryListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

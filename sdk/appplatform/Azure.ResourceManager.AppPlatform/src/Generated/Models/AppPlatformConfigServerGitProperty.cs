@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            Repositories = new Core.ChangeTrackingList<ConfigServerGitPatternRepository>();
+            Repositories = new ChangeTrackingList<ConfigServerGitPatternRepository>();
             Uri = uri;
-            SearchPaths = new Core.ChangeTrackingList<string>();
+            SearchPaths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of AppPlatformConfigServerGitProperty. </summary>

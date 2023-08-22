@@ -11,19 +11,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryEncodedTaskRunContent : Core.IUtf8JsonSerializable
+    public partial class ContainerRegistryEncodedTaskRunContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
-            if (Core.Optional.IsDefined(EncodedValuesContent))
+            if (Optional.IsDefined(EncodedValuesContent))
             {
                 writer.WritePropertyName("encodedValuesContent"u8);
                 writer.WriteStringValue(EncodedValuesContent);
             }
-            if (Core.Optional.IsCollectionDefined(Values))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -33,41 +33,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
             writer.WriteObjectValue(Platform);
-            if (Core.Optional.IsDefined(AgentConfiguration))
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration);
             }
-            if (Core.Optional.IsDefined(SourceLocation))
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation);
             }
-            if (Core.Optional.IsDefined(Credentials))
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Core.Optional.IsDefined(IsArchiveEnabled))
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Core.Optional.IsDefined(AgentPoolName))
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Core.Optional.IsDefined(LogTemplate))
+            if (Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string encodedTaskContent = default;
-            Core.Optional<string> encodedValuesContent = default;
-            Core.Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
-            Core.Optional<int> timeout = default;
+            Optional<string> encodedValuesContent = default;
+            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            Optional<int> timeout = default;
             ContainerRegistryPlatformProperties platform = default;
-            Core.Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
-            Core.Optional<string> sourceLocation = default;
-            Core.Optional<ContainerRegistryCredentials> credentials = default;
+            Optional<ContainerRegistryAgentProperties> agentConfiguration = default;
+            Optional<string> sourceLocation = default;
+            Optional<ContainerRegistryCredentials> credentials = default;
             string type = default;
-            Core.Optional<bool> isArchiveEnabled = default;
-            Core.Optional<string> agentPoolName = default;
-            Core.Optional<string> logTemplate = default;
+            Optional<bool> isArchiveEnabled = default;
+            Optional<string> agentPoolName = default;
+            Optional<string> logTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedTaskContent"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryEncodedTaskRunContent(type, Core.Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, encodedTaskContent, encodedValuesContent.Value, Core.Optional.ToList(values), Core.Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
+            return new ContainerRegistryEncodedTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
         }
     }
 }

@@ -12,24 +12,24 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    public partial class RedisLinkedServerWithPropertyData : Core.IUtf8JsonSerializable
+    public partial class RedisLinkedServerWithPropertyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LinkedRedisCacheId))
+            if (Optional.IsDefined(LinkedRedisCacheId))
             {
                 writer.WritePropertyName("linkedRedisCacheId"u8);
                 writer.WriteStringValue(LinkedRedisCacheId);
             }
-            if (Core.Optional.IsDefined(LinkedRedisCacheLocation))
+            if (Optional.IsDefined(LinkedRedisCacheLocation))
             {
                 writer.WritePropertyName("linkedRedisCacheLocation"u8);
                 writer.WriteStringValue(LinkedRedisCacheLocation.Value);
             }
-            if (Core.Optional.IsDefined(ServerRole))
+            if (Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole.Value.ToSerialString());
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<ResourceIdentifier> linkedRedisCacheId = default;
-            Core.Optional<AzureLocation> linkedRedisCacheLocation = default;
-            Core.Optional<RedisLinkedServerRole> serverRole = default;
-            Core.Optional<string> geoReplicatedPrimaryHostName = default;
-            Core.Optional<string> primaryHostName = default;
-            Core.Optional<string> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<ResourceIdentifier> linkedRedisCacheId = default;
+            Optional<AzureLocation> linkedRedisCacheLocation = default;
+            Optional<RedisLinkedServerRole> serverRole = default;
+            Optional<string> geoReplicatedPrimaryHostName = default;
+            Optional<string> primaryHostName = default;
+            Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Redis
                     continue;
                 }
             }
-            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, Core.Optional.ToNullable(linkedRedisCacheLocation), Core.Optional.ToNullable(serverRole), geoReplicatedPrimaryHostName.Value, primaryHostName.Value, provisioningState.Value);
+            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, Optional.ToNullable(linkedRedisCacheLocation), Optional.ToNullable(serverRole), geoReplicatedPrimaryHostName.Value, primaryHostName.Value, provisioningState.Value);
         }
     }
 }

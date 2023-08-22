@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkTopology. </summary>
         internal NetworkTopology()
         {
-            Resources = new Core.ChangeTrackingList<TopologyResourceInfo>();
+            Resources = new ChangeTrackingList<TopologyResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of NetworkTopology. </summary>

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class EnqueueServerProperties : Core.IUtf8JsonSerializable
+    public partial class EnqueueServerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteEndObject();
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Core.Optional<string> hostname = default;
-            Core.Optional<string> ipAddress = default;
-            Core.Optional<long?> port = default;
-            Core.Optional<SapHealthState> health = default;
+            Optional<string> hostname = default;
+            Optional<string> ipAddress = default;
+            Optional<long?> port = default;
+            Optional<SapHealthState> health = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostname"u8))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new EnqueueServerProperties(hostname.Value, ipAddress.Value, Core.Optional.ToNullable(port), Core.Optional.ToNullable(health));
+            return new EnqueueServerProperties(hostname.Value, ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(health));
         }
     }
 }

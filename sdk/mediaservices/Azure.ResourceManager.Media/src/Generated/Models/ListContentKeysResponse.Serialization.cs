@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<StreamingLocatorContentKey>> contentKeys = default;
+            Optional<IReadOnlyList<StreamingLocatorContentKey>> contentKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentKeys"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ListContentKeysResponse(Core.Optional.ToList(contentKeys));
+            return new ListContentKeysResponse(Optional.ToList(contentKeys));
         }
     }
 }

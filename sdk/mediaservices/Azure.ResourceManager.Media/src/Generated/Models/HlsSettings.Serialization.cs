@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class HlsSettings : Core.IUtf8JsonSerializable
+    public partial class HlsSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsDefault))
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Core.Optional.IsDefined(IsForced))
+            if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("forced"u8);
                 writer.WriteBooleanValue(IsForced.Value);
             }
-            if (Core.Optional.IsDefined(Characteristics))
+            if (Optional.IsDefined(Characteristics))
             {
                 writer.WritePropertyName("characteristics"u8);
                 writer.WriteStringValue(Characteristics);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Core.Optional<bool> @default = default;
-            Core.Optional<bool> forced = default;
-            Core.Optional<string> characteristics = default;
+            Optional<bool> @default = default;
+            Optional<bool> forced = default;
+            Optional<string> characteristics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new HlsSettings(Core.Optional.ToNullable(@default), Core.Optional.ToNullable(forced), characteristics.Value);
+            return new HlsSettings(Optional.ToNullable(@default), Optional.ToNullable(forced), characteristics.Value);
         }
     }
 }

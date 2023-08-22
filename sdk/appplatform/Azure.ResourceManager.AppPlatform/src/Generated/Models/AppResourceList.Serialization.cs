@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<AppPlatformAppData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<AppPlatformAppData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppResourceList(Core.Optional.ToList(value), nextLink.Value);
+            return new AppResourceList(Optional.ToList(value), nextLink.Value);
         }
     }
 }

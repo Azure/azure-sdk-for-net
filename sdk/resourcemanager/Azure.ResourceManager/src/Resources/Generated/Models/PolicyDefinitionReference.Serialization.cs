@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PolicyDefinitionReference : Core.IUtf8JsonSerializable
+    public partial class PolicyDefinitionReference : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("policyDefinitionId"u8);
             writer.WriteStringValue(PolicyDefinitionId);
-            if (Core.Optional.IsCollectionDefined(Parameters))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(PolicyDefinitionReferenceId))
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (Core.Optional.IsCollectionDefined(GroupNames))
+            if (Optional.IsCollectionDefined(GroupNames))
             {
                 writer.WritePropertyName("groupNames"u8);
                 writer.WriteStartArray();
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string policyDefinitionId = default;
-            Core.Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
-            Core.Optional<string> policyDefinitionReferenceId = default;
-            Core.Optional<IList<string>> groupNames = default;
+            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
+            Optional<string> policyDefinitionReferenceId = default;
+            Optional<IList<string>> groupNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new PolicyDefinitionReference(policyDefinitionId, Core.Optional.ToDictionary(parameters), policyDefinitionReferenceId.Value, Core.Optional.ToList(groupNames));
+            return new PolicyDefinitionReference(policyDefinitionId, Optional.ToDictionary(parameters), policyDefinitionReferenceId.Value, Optional.ToList(groupNames));
         }
     }
 }

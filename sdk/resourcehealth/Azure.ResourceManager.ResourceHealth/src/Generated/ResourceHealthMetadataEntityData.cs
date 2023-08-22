@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> Initializes a new instance of ResourceHealthMetadataEntityData. </summary>
         internal ResourceHealthMetadataEntityData()
         {
-            DependsOn = new Core.ChangeTrackingList<string>();
-            ApplicableScenarios = new Core.ChangeTrackingList<MetadataEntityScenario>();
-            SupportedValues = new Core.ChangeTrackingList<MetadataSupportedValueDetail>();
+            DependsOn = new ChangeTrackingList<string>();
+            ApplicableScenarios = new ChangeTrackingList<MetadataEntityScenario>();
+            SupportedValues = new ChangeTrackingList<MetadataSupportedValueDetail>();
         }
 
         /// <summary> Initializes a new instance of ResourceHealthMetadataEntityData. </summary>

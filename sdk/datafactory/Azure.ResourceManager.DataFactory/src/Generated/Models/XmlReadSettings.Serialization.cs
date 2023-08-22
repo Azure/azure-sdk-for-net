@@ -13,32 +13,32 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class XmlReadSettings : Core.IUtf8JsonSerializable
+    public partial class XmlReadSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(CompressionProperties))
+            if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
-            if (Core.Optional.IsDefined(ValidationMode))
+            if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
                 JsonSerializer.Serialize(writer, ValidationMode);
             }
-            if (Core.Optional.IsDefined(DetectDataType))
+            if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
                 JsonSerializer.Serialize(writer, DetectDataType);
             }
-            if (Core.Optional.IsDefined(Namespaces))
+            if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
                 JsonSerializer.Serialize(writer, Namespaces);
             }
-            if (Core.Optional.IsDefined(NamespacePrefixes))
+            if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
 #if NET6_0_OR_GREATER
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<CompressionReadSettings> compressionProperties = default;
-            Core.Optional<DataFactoryElement<string>> validationMode = default;
-            Core.Optional<DataFactoryElement<bool>> detectDataType = default;
-            Core.Optional<DataFactoryElement<bool>> namespaces = default;
-            Core.Optional<BinaryData> namespacePrefixes = default;
+            Optional<CompressionReadSettings> compressionProperties = default;
+            Optional<DataFactoryElement<string>> validationMode = default;
+            Optional<DataFactoryElement<bool>> detectDataType = default;
+            Optional<DataFactoryElement<bool>> namespaces = default;
+            Optional<BinaryData> namespacePrefixes = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();

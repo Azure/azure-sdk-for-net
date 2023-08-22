@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceIdentifier> resourceId = default;
-            Core.Optional<AssociationType> associationType = default;
+            Optional<string> name = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<AssociationType> associationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new TopologyAssociation(name.Value, resourceId.Value, Core.Optional.ToNullable(associationType));
+            return new TopologyAssociation(name.Value, resourceId.Value, Optional.ToNullable(associationType));
         }
     }
 }

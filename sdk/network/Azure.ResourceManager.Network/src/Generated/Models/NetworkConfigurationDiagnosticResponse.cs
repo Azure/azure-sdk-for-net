@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticResponse. </summary>
         internal NetworkConfigurationDiagnosticResponse()
         {
-            Results = new Core.ChangeTrackingList<NetworkConfigurationDiagnosticResult>();
+            Results = new ChangeTrackingList<NetworkConfigurationDiagnosticResult>();
         }
 
         /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticResponse. </summary>

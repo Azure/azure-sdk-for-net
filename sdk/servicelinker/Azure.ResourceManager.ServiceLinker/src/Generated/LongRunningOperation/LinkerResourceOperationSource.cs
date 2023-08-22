@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    internal class LinkerResourceOperationSource : Core.IOperationSource<LinkerResource>
+    internal class LinkerResourceOperationSource : IOperationSource<LinkerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ServiceLinker
             _client = client;
         }
 
-        LinkerResource Core.IOperationSource<LinkerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        LinkerResource IOperationSource<LinkerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement);
             return new LinkerResource(_client, data);
         }
 
-        async ValueTask<LinkerResource> Core.IOperationSource<LinkerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<LinkerResource> IOperationSource<LinkerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = LinkerResourceData.DeserializeLinkerResourceData(document.RootElement);

@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Authorization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> emailAddress = default;
-            Core.Optional<string> role = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> emailAddress = default;
+            Optional<string> role = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))

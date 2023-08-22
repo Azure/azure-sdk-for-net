@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class OSProfileLinuxConfiguration : Core.IUtf8JsonSerializable
+    public partial class OSProfileLinuxConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("patchSettings"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AssessmentMode))
+            if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PatchMode))
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Core.Optional<AssessmentModeType> assessmentMode = default;
-            Core.Optional<PatchModeType> patchMode = default;
+            Optional<AssessmentModeType> assessmentMode = default;
+            Optional<PatchModeType> patchMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchSettings"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new OSProfileLinuxConfiguration(Core.Optional.ToNullable(assessmentMode), Core.Optional.ToNullable(patchMode));
+            return new OSProfileLinuxConfiguration(Optional.ToNullable(assessmentMode), Optional.ToNullable(patchMode));
         }
     }
 }

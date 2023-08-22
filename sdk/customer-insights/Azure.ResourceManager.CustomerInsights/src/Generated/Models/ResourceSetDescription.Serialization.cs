@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ResourceSetDescription : Core.IUtf8JsonSerializable
+    public partial class ResourceSetDescription : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Elements))
+            if (Optional.IsCollectionDefined(Elements))
             {
                 writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Exceptions))
+            if (Optional.IsCollectionDefined(Exceptions))
             {
                 writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Core.Optional<IList<string>> elements = default;
-            Core.Optional<IList<string>> exceptions = default;
+            Optional<IList<string>> elements = default;
+            Optional<IList<string>> exceptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("elements"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     continue;
                 }
             }
-            return new ResourceSetDescription(Core.Optional.ToList(elements), Core.Optional.ToList(exceptions));
+            return new ResourceSetDescription(Optional.ToList(elements), Optional.ToList(exceptions));
         }
     }
 }

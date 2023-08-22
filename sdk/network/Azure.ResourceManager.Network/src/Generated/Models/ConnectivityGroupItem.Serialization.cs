@@ -10,19 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityGroupItem : Core.IUtf8JsonSerializable
+    public partial class ConnectivityGroupItem : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("networkGroupId"u8);
             writer.WriteStringValue(NetworkGroupId);
-            if (Core.Optional.IsDefined(UseHubGateway))
+            if (Optional.IsDefined(UseHubGateway))
             {
                 writer.WritePropertyName("useHubGateway"u8);
                 writer.WriteStringValue(UseHubGateway.Value.ToString());
             }
-            if (Core.Optional.IsDefined(IsGlobal))
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string networkGroupId = default;
-            Core.Optional<HubGatewayUsageFlag> useHubGateway = default;
-            Core.Optional<GlobalMeshSupportFlag> isGlobal = default;
+            Optional<HubGatewayUsageFlag> useHubGateway = default;
+            Optional<GlobalMeshSupportFlag> isGlobal = default;
             GroupConnectivity groupConnectivity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectivityGroupItem(networkGroupId, Core.Optional.ToNullable(useHubGateway), Core.Optional.ToNullable(isGlobal), groupConnectivity);
+            return new ConnectivityGroupItem(networkGroupId, Optional.ToNullable(useHubGateway), Optional.ToNullable(isGlobal), groupConnectivity);
         }
     }
 }

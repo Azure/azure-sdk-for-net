@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UserManagedHttpsContent : Core.IUtf8JsonSerializable
+    public partial class UserManagedHttpsContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (Core.Optional.IsDefined(MinimumTlsVersion))
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             KeyVaultCertificateSource certificateSourceParameters = default;
             CertificateSource certificateSource = default;
             SecureDeliveryProtocolType protocolType = default;
-            Core.Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new UserManagedHttpsContent(certificateSource, protocolType, Core.Optional.ToNullable(minimumTlsVersion), certificateSourceParameters);
+            return new UserManagedHttpsContent(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), certificateSourceParameters);
         }
     }
 }

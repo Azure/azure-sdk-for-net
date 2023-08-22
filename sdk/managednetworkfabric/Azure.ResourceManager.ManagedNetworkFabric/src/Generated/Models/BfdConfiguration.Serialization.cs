@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class BfdConfiguration : Core.IUtf8JsonSerializable
+    public partial class BfdConfiguration : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IntervalInMilliSeconds))
+            if (Optional.IsDefined(IntervalInMilliSeconds))
             {
                 writer.WritePropertyName("intervalInMilliSeconds"u8);
                 writer.WriteNumberValue(IntervalInMilliSeconds.Value);
             }
-            if (Core.Optional.IsDefined(Multiplier))
+            if (Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<BfdAdministrativeState> administrativeState = default;
-            Core.Optional<int> intervalInMilliSeconds = default;
-            Core.Optional<int> multiplier = default;
+            Optional<BfdAdministrativeState> administrativeState = default;
+            Optional<int> intervalInMilliSeconds = default;
+            Optional<int> multiplier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administrativeState"u8))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new BfdConfiguration(Core.Optional.ToNullable(administrativeState), Core.Optional.ToNullable(intervalInMilliSeconds), Core.Optional.ToNullable(multiplier));
+            return new BfdConfiguration(Optional.ToNullable(administrativeState), Optional.ToNullable(intervalInMilliSeconds), Optional.ToNullable(multiplier));
         }
     }
 }

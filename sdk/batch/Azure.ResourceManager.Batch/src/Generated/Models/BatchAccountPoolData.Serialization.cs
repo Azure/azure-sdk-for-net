@@ -15,59 +15,59 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchAccountPoolData : Core.IUtf8JsonSerializable
+    public partial class BatchAccountPoolData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Identity))
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Core.Optional.IsDefined(VmSize))
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Core.Optional.IsDefined(DeploymentConfiguration))
+            if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
                 writer.WriteObjectValue(DeploymentConfiguration);
             }
-            if (Core.Optional.IsDefined(ScaleSettings))
+            if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
                 writer.WriteObjectValue(ScaleSettings);
             }
-            if (Core.Optional.IsDefined(InterNodeCommunication))
+            if (Optional.IsDefined(InterNodeCommunication))
             {
                 writer.WritePropertyName("interNodeCommunication"u8);
                 writer.WriteStringValue(InterNodeCommunication.Value.ToSerialString());
             }
-            if (Core.Optional.IsDefined(NetworkConfiguration))
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (Core.Optional.IsDefined(TaskSlotsPerNode))
+            if (Optional.IsDefined(TaskSlotsPerNode))
             {
                 writer.WritePropertyName("taskSlotsPerNode"u8);
                 writer.WriteNumberValue(TaskSlotsPerNode.Value);
             }
-            if (Core.Optional.IsDefined(TaskSchedulingPolicy))
+            if (Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
                 writer.WriteObjectValue(TaskSchedulingPolicy);
             }
-            if (Core.Optional.IsCollectionDefined(UserAccounts))
+            if (Optional.IsCollectionDefined(UserAccounts))
             {
                 writer.WritePropertyName("userAccounts"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(StartTask))
+            if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask);
             }
-            if (Core.Optional.IsCollectionDefined(Certificates))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationPackages))
+            if (Optional.IsCollectionDefined(ApplicationPackages))
             {
                 writer.WritePropertyName("applicationPackages"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ApplicationLicenses))
+            if (Optional.IsCollectionDefined(ApplicationLicenses))
             {
                 writer.WritePropertyName("applicationLicenses"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(MountConfiguration))
+            if (Optional.IsCollectionDefined(MountConfiguration))
             {
                 writer.WritePropertyName("mountConfiguration"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TargetNodeCommunicationMode))
+            if (Optional.IsDefined(TargetNodeCommunicationMode))
             {
                 writer.WritePropertyName("targetNodeCommunicationMode"u8);
                 writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToSerialString());
@@ -147,39 +147,39 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            Core.Optional<ManagedServiceIdentity> identity = default;
-            Core.Optional<ETag> etag = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
-            Core.Optional<DateTimeOffset> creationTime = default;
-            Core.Optional<BatchAccountPoolProvisioningState> provisioningState = default;
-            Core.Optional<DateTimeOffset> provisioningStateTransitionTime = default;
-            Core.Optional<BatchAccountPoolAllocationState> allocationState = default;
-            Core.Optional<DateTimeOffset> allocationStateTransitionTime = default;
-            Core.Optional<string> vmSize = default;
-            Core.Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
-            Core.Optional<int> currentDedicatedNodes = default;
-            Core.Optional<int> currentLowPriorityNodes = default;
-            Core.Optional<BatchAccountPoolScaleSettings> scaleSettings = default;
-            Core.Optional<BatchAccountPoolAutoScaleRun> autoScaleRun = default;
-            Core.Optional<InterNodeCommunicationState> interNodeCommunication = default;
-            Core.Optional<BatchNetworkConfiguration> networkConfiguration = default;
-            Core.Optional<int> taskSlotsPerNode = default;
-            Core.Optional<TaskSchedulingPolicy> taskSchedulingPolicy = default;
-            Core.Optional<IList<BatchUserAccount>> userAccounts = default;
-            Core.Optional<IList<BatchAccountPoolMetadataItem>> metadata = default;
-            Core.Optional<BatchAccountPoolStartTask> startTask = default;
-            Core.Optional<IList<BatchCertificateReference>> certificates = default;
-            Core.Optional<IList<BatchApplicationPackageReference>> applicationPackages = default;
-            Core.Optional<IList<string>> applicationLicenses = default;
-            Core.Optional<BatchResizeOperationStatus> resizeOperationStatus = default;
-            Core.Optional<IList<BatchMountConfiguration>> mountConfiguration = default;
-            Core.Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
-            Core.Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> displayName = default;
+            Optional<DateTimeOffset> lastModified = default;
+            Optional<DateTimeOffset> creationTime = default;
+            Optional<BatchAccountPoolProvisioningState> provisioningState = default;
+            Optional<DateTimeOffset> provisioningStateTransitionTime = default;
+            Optional<BatchAccountPoolAllocationState> allocationState = default;
+            Optional<DateTimeOffset> allocationStateTransitionTime = default;
+            Optional<string> vmSize = default;
+            Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
+            Optional<int> currentDedicatedNodes = default;
+            Optional<int> currentLowPriorityNodes = default;
+            Optional<BatchAccountPoolScaleSettings> scaleSettings = default;
+            Optional<BatchAccountPoolAutoScaleRun> autoScaleRun = default;
+            Optional<InterNodeCommunicationState> interNodeCommunication = default;
+            Optional<BatchNetworkConfiguration> networkConfiguration = default;
+            Optional<int> taskSlotsPerNode = default;
+            Optional<TaskSchedulingPolicy> taskSchedulingPolicy = default;
+            Optional<IList<BatchUserAccount>> userAccounts = default;
+            Optional<IList<BatchAccountPoolMetadataItem>> metadata = default;
+            Optional<BatchAccountPoolStartTask> startTask = default;
+            Optional<IList<BatchCertificateReference>> certificates = default;
+            Optional<IList<BatchApplicationPackageReference>> applicationPackages = default;
+            Optional<IList<string>> applicationLicenses = default;
+            Optional<BatchResizeOperationStatus> resizeOperationStatus = default;
+            Optional<IList<BatchMountConfiguration>> mountConfiguration = default;
+            Optional<NodeCommunicationMode> targetNodeCommunicationMode = default;
+            Optional<NodeCommunicationMode?> currentNodeCommunicationMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Batch
                     continue;
                 }
             }
-            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Core.Optional.ToNullable(lastModified), Core.Optional.ToNullable(creationTime), Core.Optional.ToNullable(provisioningState), Core.Optional.ToNullable(provisioningStateTransitionTime), Core.Optional.ToNullable(allocationState), Core.Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Core.Optional.ToNullable(currentDedicatedNodes), Core.Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Core.Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Core.Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Core.Optional.ToList(userAccounts), Core.Optional.ToList(metadata), startTask.Value, Core.Optional.ToList(certificates), Core.Optional.ToList(applicationPackages), Core.Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Core.Optional.ToList(mountConfiguration), Core.Optional.ToNullable(targetNodeCommunicationMode), Core.Optional.ToNullable(currentNodeCommunicationMode), Core.Optional.ToNullable(etag));
+            return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToNullable(etag));
         }
     }
 }

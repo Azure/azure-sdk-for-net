@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningProbeSettings : Core.IUtf8JsonSerializable
+    public partial class MachineLearningProbeSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(FailureThreshold))
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Core.Optional.IsDefined(InitialDelay))
+            if (Optional.IsDefined(InitialDelay))
             {
                 if (InitialDelay != null)
                 {
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("initialDelay");
                 }
             }
-            if (Core.Optional.IsDefined(Period))
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteStringValue(Period.Value, "P");
             }
-            if (Core.Optional.IsDefined(SuccessThreshold))
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Core.Optional.IsDefined(Timeout))
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> failureThreshold = default;
-            Core.Optional<TimeSpan?> initialDelay = default;
-            Core.Optional<TimeSpan> period = default;
-            Core.Optional<int> successThreshold = default;
-            Core.Optional<TimeSpan> timeout = default;
+            Optional<int> failureThreshold = default;
+            Optional<TimeSpan?> initialDelay = default;
+            Optional<TimeSpan> period = default;
+            Optional<int> successThreshold = default;
+            Optional<TimeSpan> timeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningProbeSettings(Core.Optional.ToNullable(failureThreshold), Core.Optional.ToNullable(initialDelay), Core.Optional.ToNullable(period), Core.Optional.ToNullable(successThreshold), Core.Optional.ToNullable(timeout));
+            return new MachineLearningProbeSettings(Optional.ToNullable(failureThreshold), Optional.ToNullable(initialDelay), Optional.ToNullable(period), Optional.ToNullable(successThreshold), Optional.ToNullable(timeout));
         }
     }
 }

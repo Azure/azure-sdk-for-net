@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of PreRestoreContent. </summary>
         public PreRestoreContent()
         {
-            RestoreFileSpec = new Core.ChangeTrackingList<RestoreFileSpec>();
+            RestoreFileSpec = new ChangeTrackingList<RestoreFileSpec>();
         }
 
         /// <summary> Pre Restore partition. </summary>

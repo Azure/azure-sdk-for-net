@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation(_netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppVolumeQuotaRuleResource>(new NetAppVolumeQuotaRuleOperationSource(Client), _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<NetAppVolumeQuotaRuleResource>(new NetAppVolumeQuotaRuleOperationSource(Client), _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppVolumeQuotaRuleResource>(new NetAppVolumeQuotaRuleOperationSource(Client), _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<NetAppVolumeQuotaRuleResource>(new NetAppVolumeQuotaRuleOperationSource(Client), _netAppVolumeQuotaRuleVolumeQuotaRulesClientDiagnostics, Pipeline, _netAppVolumeQuotaRuleVolumeQuotaRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal class FrontDoorSecurityPolicyOperationSource : Core.IOperationSource<FrontDoorSecurityPolicyResource>
+    internal class FrontDoorSecurityPolicyOperationSource : IOperationSource<FrontDoorSecurityPolicyResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Cdn
             _client = client;
         }
 
-        FrontDoorSecurityPolicyResource Core.IOperationSource<FrontDoorSecurityPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        FrontDoorSecurityPolicyResource IOperationSource<FrontDoorSecurityPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(document.RootElement);
             return new FrontDoorSecurityPolicyResource(_client, data);
         }
 
-        async ValueTask<FrontDoorSecurityPolicyResource> Core.IOperationSource<FrontDoorSecurityPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<FrontDoorSecurityPolicyResource> IOperationSource<FrontDoorSecurityPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(document.RootElement);

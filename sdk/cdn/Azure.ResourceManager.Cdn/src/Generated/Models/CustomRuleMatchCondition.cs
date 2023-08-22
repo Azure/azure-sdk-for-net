@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchVariable = matchVariable;
             MatchOperator = matchOperator;
             MatchValue = matchValue.ToList();
-            Transforms = new Core.ChangeTrackingList<TransformType>();
+            Transforms = new ChangeTrackingList<TransformType>();
         }
 
         /// <summary> Initializes a new instance of CustomRuleMatchCondition. </summary>

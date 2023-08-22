@@ -14,13 +14,13 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    public partial class ConnectedClusterData : Core.IUtf8JsonSerializable
+    public partial class ConnectedClusterData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
-            JsonSerializer.Serialize(writer, Identity); if (Core.Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, Identity); if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.Kubernetes
             writer.WriteStartObject();
             writer.WritePropertyName("agentPublicKeyCertificate"u8);
             writer.WriteStringValue(AgentPublicKeyCertificate);
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Distribution))
+            if (Optional.IsDefined(Distribution))
             {
                 writer.WritePropertyName("distribution"u8);
                 writer.WriteStringValue(Distribution);
             }
-            if (Core.Optional.IsDefined(Infrastructure))
+            if (Optional.IsDefined(Infrastructure))
             {
                 writer.WritePropertyName("infrastructure"u8);
                 writer.WriteStringValue(Infrastructure);
             }
-            if (Core.Optional.IsDefined(PrivateLinkState))
+            if (Optional.IsDefined(PrivateLinkState))
             {
                 writer.WritePropertyName("privateLinkState"u8);
                 writer.WriteStringValue(PrivateLinkState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrivateLinkScopeResourceId))
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);
@@ -73,26 +73,26 @@ namespace Azure.ResourceManager.Kubernetes
                 return null;
             }
             ManagedServiceIdentity identity = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             string agentPublicKeyCertificate = default;
-            Core.Optional<string> kubernetesVersion = default;
-            Core.Optional<int> totalNodeCount = default;
-            Core.Optional<int> totalCoreCount = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> distribution = default;
-            Core.Optional<string> infrastructure = default;
-            Core.Optional<string> offering = default;
-            Core.Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
-            Core.Optional<DateTimeOffset> lastConnectivityTime = default;
-            Core.Optional<ConnectivityStatus> connectivityStatus = default;
-            Core.Optional<PrivateLinkState> privateLinkState = default;
-            Core.Optional<string> privateLinkScopeResourceId = default;
+            Optional<string> kubernetesVersion = default;
+            Optional<int> totalNodeCount = default;
+            Optional<int> totalCoreCount = default;
+            Optional<string> agentVersion = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> distribution = default;
+            Optional<string> infrastructure = default;
+            Optional<string> offering = default;
+            Optional<DateTimeOffset> managedIdentityCertificateExpirationTime = default;
+            Optional<DateTimeOffset> lastConnectivityTime = default;
+            Optional<ConnectivityStatus> connectivityStatus = default;
+            Optional<PrivateLinkState> privateLinkState = default;
+            Optional<string> privateLinkScopeResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Kubernetes
                     continue;
                 }
             }
-            return new ConnectedClusterData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Core.Optional.ToNullable(totalNodeCount), Core.Optional.ToNullable(totalCoreCount), agentVersion.Value, Core.Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Core.Optional.ToNullable(managedIdentityCertificateExpirationTime), Core.Optional.ToNullable(lastConnectivityTime), Core.Optional.ToNullable(connectivityStatus), Core.Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value);
+            return new ConnectedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, agentPublicKeyCertificate, kubernetesVersion.Value, Optional.ToNullable(totalNodeCount), Optional.ToNullable(totalCoreCount), agentVersion.Value, Optional.ToNullable(provisioningState), distribution.Value, infrastructure.Value, offering.Value, Optional.ToNullable(managedIdentityCertificateExpirationTime), Optional.ToNullable(lastConnectivityTime), Optional.ToNullable(connectivityStatus), Optional.ToNullable(privateLinkState), privateLinkScopeResourceId.Value);
         }
     }
 }

@@ -13,17 +13,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    public partial class CognitiveServicesAccountDeploymentData : Core.IUtf8JsonSerializable
+    public partial class CognitiveServicesAccountDeploymentData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return null;
             }
-            Core.Optional<CognitiveServicesSku> sku = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<CognitiveServicesAccountDeploymentProperties> properties = default;
+            Optional<CognitiveServicesSku> sku = default;
+            Optional<ETag> etag = default;
+            Optional<CognitiveServicesAccountDeploymentProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new CognitiveServicesAccountDeploymentData(id, name, type, systemData.Value, sku.Value, Core.Optional.ToNullable(etag), properties.Value);
+            return new CognitiveServicesAccountDeploymentData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(etag), properties.Value);
         }
     }
 }

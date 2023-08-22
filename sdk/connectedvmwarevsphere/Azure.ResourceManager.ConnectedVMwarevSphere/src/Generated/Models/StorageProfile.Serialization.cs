@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class StorageProfile : Core.IUtf8JsonSerializable
+    public partial class StorageProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Disks))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<IList<VirtualDisk>> disks = default;
-            Core.Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
+            Optional<IList<VirtualDisk>> disks = default;
+            Optional<IReadOnlyList<VirtualScsiController>> scsiControllers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disks"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new StorageProfile(Core.Optional.ToList(disks), Core.Optional.ToList(scsiControllers));
+            return new StorageProfile(Optional.ToList(disks), Optional.ToList(scsiControllers));
         }
     }
 }

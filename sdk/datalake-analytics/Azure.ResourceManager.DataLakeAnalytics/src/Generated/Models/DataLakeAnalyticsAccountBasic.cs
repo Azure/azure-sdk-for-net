@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>
         internal DataLakeAnalyticsAccountBasic()
         {
-            Tags = new Core.ChangeTrackingDictionary<string, string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of DataLakeAnalyticsAccountBasic. </summary>

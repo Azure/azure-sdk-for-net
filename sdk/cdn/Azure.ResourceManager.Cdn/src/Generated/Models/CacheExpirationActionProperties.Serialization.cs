@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CacheExpirationActionProperties : Core.IUtf8JsonSerializable
+    public partial class CacheExpirationActionProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CacheBehavior.ToString());
             writer.WritePropertyName("cacheType"u8);
             writer.WriteStringValue(CacheType.ToString());
-            if (Core.Optional.IsDefined(CacheDuration))
+            if (Optional.IsDefined(CacheDuration))
             {
                 if (CacheDuration != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheExpirationActionType typeName = default;
             CacheBehaviorSetting cacheBehavior = default;
             CdnCacheLevel cacheType = default;
-            Core.Optional<TimeSpan?> cacheDuration = default;
+            Optional<TimeSpan?> cacheDuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     continue;
                 }
             }
-            return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, Core.Optional.ToNullable(cacheDuration));
+            return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, Optional.ToNullable(cacheDuration));
         }
     }
 }

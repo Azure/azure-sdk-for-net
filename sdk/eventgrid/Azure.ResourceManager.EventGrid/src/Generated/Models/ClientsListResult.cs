@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of ClientsListResult. </summary>
         internal ClientsListResult()
         {
-            Value = new Core.ChangeTrackingList<EventGridNamespaceClientData>();
+            Value = new ChangeTrackingList<EventGridNamespaceClientData>();
         }
 
         /// <summary> Initializes a new instance of ClientsListResult. </summary>

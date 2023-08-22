@@ -22,7 +22,7 @@ namespace Azure.IoT.TimeSeriesInsights
             Argument.AssertNotNull(searchString, nameof(searchString));
 
             SearchString = searchString;
-            Path = new Core.ChangeTrackingList<string>();
+            Path = new ChangeTrackingList<string>();
         }
 
         /// <summary> Query search string that will be matched to the attributes of time series instances. Example: "floor 100". Case-insensitive, must be present, but can be empty string. </summary>

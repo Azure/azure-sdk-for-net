@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of ExchangePeeringProperties. </summary>
         public ExchangePeeringProperties()
         {
-            Connections = new Core.ChangeTrackingList<PeeringExchangeConnection>();
+            Connections = new ChangeTrackingList<PeeringExchangeConnection>();
         }
 
         /// <summary> Initializes a new instance of ExchangePeeringProperties. </summary>

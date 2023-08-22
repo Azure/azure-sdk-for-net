@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterGalleryData : Core.IUtf8JsonSerializable
+    public partial class DevCenterGalleryData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(GalleryResourceId))
+            if (Optional.IsDefined(GalleryResourceId))
             {
                 writer.WritePropertyName("galleryResourceId"u8);
                 writer.WriteStringValue(GalleryResourceId);
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<DevCenterProvisioningState> provisioningState = default;
-            Core.Optional<ResourceIdentifier> galleryResourceId = default;
+            Optional<SystemData> systemData = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
+            Optional<ResourceIdentifier> galleryResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevCenter
                     continue;
                 }
             }
-            return new DevCenterGalleryData(id, name, type, systemData.Value, Core.Optional.ToNullable(provisioningState), galleryResourceId.Value);
+            return new DevCenterGalleryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), galleryResourceId.Value);
         }
     }
 }

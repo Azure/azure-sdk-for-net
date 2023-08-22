@@ -14,26 +14,26 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsFusionAlertRule : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsFusionAlertRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Core.Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AlertRuleTemplateName))
+            if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName"u8);
                 writer.WriteStringValue(AlertRuleTemplateName);
             }
-            if (Core.Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             AlertRuleKind kind = default;
-            Core.Optional<ETag> etag = default;
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> alertRuleTemplateName = default;
-            Core.Optional<string> description = default;
-            Core.Optional<string> displayName = default;
-            Core.Optional<bool> enabled = default;
-            Core.Optional<DateTimeOffset> lastModifiedUtc = default;
-            Core.Optional<SecurityInsightsAlertSeverity> severity = default;
-            Core.Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
-            Core.Optional<IReadOnlyList<string>> techniques = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> alertRuleTemplateName = default;
+            Optional<string> description = default;
+            Optional<string> displayName = default;
+            Optional<bool> enabled = default;
+            Optional<DateTimeOffset> lastModifiedUtc = default;
+            Optional<SecurityInsightsAlertSeverity> severity = default;
+            Optional<IReadOnlyList<SecurityInsightsAttackTactic>> tactics = default;
+            Optional<IReadOnlyList<string>> techniques = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsFusionAlertRule(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(etag), alertRuleTemplateName.Value, description.Value, displayName.Value, Core.Optional.ToNullable(enabled), Core.Optional.ToNullable(lastModifiedUtc), Core.Optional.ToNullable(severity), Core.Optional.ToList(tactics), Core.Optional.ToList(techniques));
+            return new SecurityInsightsFusionAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToNullable(severity), Optional.ToList(tactics), Optional.ToList(techniques));
         }
     }
 }

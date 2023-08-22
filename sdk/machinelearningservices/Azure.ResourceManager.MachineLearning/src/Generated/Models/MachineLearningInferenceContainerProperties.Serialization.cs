@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningInferenceContainerProperties : Core.IUtf8JsonSerializable
+    public partial class MachineLearningInferenceContainerProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(LivenessRoute))
+            if (Optional.IsDefined(LivenessRoute))
             {
                 writer.WritePropertyName("livenessRoute"u8);
                 writer.WriteObjectValue(LivenessRoute);
             }
-            if (Core.Optional.IsDefined(ReadinessRoute))
+            if (Optional.IsDefined(ReadinessRoute))
             {
                 writer.WritePropertyName("readinessRoute"u8);
                 writer.WriteObjectValue(ReadinessRoute);
             }
-            if (Core.Optional.IsDefined(ScoringRoute))
+            if (Optional.IsDefined(ScoringRoute))
             {
                 writer.WritePropertyName("scoringRoute"u8);
                 writer.WriteObjectValue(ScoringRoute);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
-            Core.Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
-            Core.Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
+            Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
+            Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
+            Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livenessRoute"u8))

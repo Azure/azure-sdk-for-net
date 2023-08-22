@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstancePolicySettings : Core.IUtf8JsonSerializable
+    public partial class BackupInstancePolicySettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(DataStoreParametersList))
+            if (Optional.IsCollectionDefined(DataStoreParametersList))
             {
                 writer.WritePropertyName("dataStoreParametersList"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(BackupDataSourceParametersList))
+            if (Optional.IsCollectionDefined(BackupDataSourceParametersList))
             {
                 writer.WritePropertyName("backupDatasourceParametersList"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Core.Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
-            Core.Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
+            Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
+            Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataStoreParametersList"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     continue;
                 }
             }
-            return new BackupInstancePolicySettings(Core.Optional.ToList(dataStoreParametersList), Core.Optional.ToList(backupDatasourceParametersList));
+            return new BackupInstancePolicySettings(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList));
         }
     }
 }

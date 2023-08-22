@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of SecurityInsightsRegistryValueEntity. </summary>
         public SecurityInsightsRegistryValueEntity()
         {
-            AdditionalData = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.RegistryValue;
         }
 

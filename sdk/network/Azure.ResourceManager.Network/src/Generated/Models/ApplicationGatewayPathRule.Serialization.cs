@@ -13,24 +13,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayPathRule : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayPathRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Paths))
+            if (Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -40,32 +40,32 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(BackendAddressPool))
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
-            if (Core.Optional.IsDefined(BackendHttpSettings))
+            if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
                 JsonSerializer.Serialize(writer, BackendHttpSettings);
             }
-            if (Core.Optional.IsDefined(RedirectConfiguration))
+            if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration"u8);
                 JsonSerializer.Serialize(writer, RedirectConfiguration);
             }
-            if (Core.Optional.IsDefined(RewriteRuleSet))
+            if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet"u8);
                 JsonSerializer.Serialize(writer, RewriteRuleSet);
             }
-            if (Core.Optional.IsDefined(LoadDistributionPolicy))
+            if (Optional.IsDefined(LoadDistributionPolicy))
             {
                 writer.WritePropertyName("loadDistributionPolicy"u8);
                 JsonSerializer.Serialize(writer, LoadDistributionPolicy);
             }
-            if (Core.Optional.IsDefined(FirewallPolicy))
+            if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
                 JsonSerializer.Serialize(writer, FirewallPolicy);
@@ -80,18 +80,18 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<IList<string>> paths = default;
-            Core.Optional<WritableSubResource> backendAddressPool = default;
-            Core.Optional<WritableSubResource> backendHttpSettings = default;
-            Core.Optional<WritableSubResource> redirectConfiguration = default;
-            Core.Optional<WritableSubResource> rewriteRuleSet = default;
-            Core.Optional<WritableSubResource> loadDistributionPolicy = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<WritableSubResource> firewallPolicy = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<IList<string>> paths = default;
+            Optional<WritableSubResource> backendAddressPool = default;
+            Optional<WritableSubResource> backendHttpSettings = default;
+            Optional<WritableSubResource> redirectConfiguration = default;
+            Optional<WritableSubResource> rewriteRuleSet = default;
+            Optional<WritableSubResource> loadDistributionPolicy = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<WritableSubResource> firewallPolicy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayPathRule(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, loadDistributionPolicy, Core.Optional.ToNullable(provisioningState), firewallPolicy);
+            return new ApplicationGatewayPathRule(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToList(paths), backendAddressPool, backendHttpSettings, redirectConfiguration, rewriteRuleSet, loadDistributionPolicy, Optional.ToNullable(provisioningState), firewallPolicy);
         }
     }
 }

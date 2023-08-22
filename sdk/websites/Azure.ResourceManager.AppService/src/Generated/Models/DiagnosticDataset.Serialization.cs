@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DiagnosticDataset : Core.IUtf8JsonSerializable
+    public partial class DiagnosticDataset : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Table))
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (Core.Optional.IsDefined(RenderingProperties))
+            if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Core.Optional<DataTableResponseObject> table = default;
-            Core.Optional<DiagnosticDataRendering> renderingProperties = default;
+            Optional<DataTableResponseObject> table = default;
+            Optional<DiagnosticDataRendering> renderingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("table"u8))

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Core.Optional<AsymmetricEncryptedSecret> encryptedSecret = default;
-            Core.Optional<string> keyVaultId = default;
+            Optional<AsymmetricEncryptedSecret> encryptedSecret = default;
+            Optional<string> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryptedSecret"u8))

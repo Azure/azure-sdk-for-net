@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>
         public NetworkRuleSet()
         {
-            VirtualNetworkRules = new Core.ChangeTrackingList<ElasticSanVirtualNetworkRule>();
+            VirtualNetworkRules = new ChangeTrackingList<ElasticSanVirtualNetworkRule>();
         }
 
         /// <summary> Initializes a new instance of NetworkRuleSet. </summary>

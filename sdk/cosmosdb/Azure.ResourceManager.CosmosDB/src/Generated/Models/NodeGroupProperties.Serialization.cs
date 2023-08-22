@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class NodeGroupProperties : Core.IUtf8JsonSerializable
+    public partial class NodeGroupProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Core.Optional.IsDefined(DiskSizeInGB))
+            if (Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);
             }
-            if (Core.Optional.IsDefined(EnableHa))
+            if (Optional.IsDefined(EnableHa))
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(EnableHa.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> sku = default;
-            Core.Optional<long> diskSizeGB = default;
-            Core.Optional<bool> enableHa = default;
+            Optional<string> sku = default;
+            Optional<long> diskSizeGB = default;
+            Optional<bool> enableHa = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new NodeGroupProperties(sku.Value, Core.Optional.ToNullable(diskSizeGB), Core.Optional.ToNullable(enableHa));
+            return new NodeGroupProperties(sku.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(enableHa));
         }
     }
 }

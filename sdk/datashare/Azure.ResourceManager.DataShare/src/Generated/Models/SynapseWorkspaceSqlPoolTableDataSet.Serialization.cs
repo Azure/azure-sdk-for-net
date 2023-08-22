@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class SynapseWorkspaceSqlPoolTableDataSet : Core.IUtf8JsonSerializable
+    public partial class SynapseWorkspaceSqlPoolTableDataSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> dataSetId = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> dataSetId = default;
             ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(dataSetId), synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), synapseWorkspaceSqlPoolTableResourceId);
         }
     }
 }

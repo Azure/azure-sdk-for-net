@@ -18,11 +18,11 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Core.Optional<string> crv = default;
-            Core.Optional<string> kid = default;
-            Core.Optional<string> kty = default;
-            Core.Optional<string> x = default;
-            Core.Optional<string> y = default;
+            Optional<string> crv = default;
+            Optional<string> kid = default;
+            Optional<string> kty = default;
+            Optional<string> x = default;
+            Optional<string> y = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crv"u8))

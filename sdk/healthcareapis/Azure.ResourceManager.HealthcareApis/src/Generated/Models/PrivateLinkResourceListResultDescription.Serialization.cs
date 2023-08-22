@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<HealthcareApisPrivateLinkResourceData>> value = default;
+            Optional<IReadOnlyList<HealthcareApisPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     continue;
                 }
             }
-            return new PrivateLinkResourceListResultDescription(Core.Optional.ToList(value));
+            return new PrivateLinkResourceListResultDescription(Optional.ToList(value));
         }
     }
 }

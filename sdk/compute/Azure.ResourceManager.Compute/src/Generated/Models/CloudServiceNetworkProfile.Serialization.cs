@@ -12,12 +12,12 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceNetworkProfile : Core.IUtf8JsonSerializable
+    public partial class CloudServiceNetworkProfile : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(LoadBalancerConfigurations))
+            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SlotType))
+            if (Optional.IsDefined(SlotType))
             {
                 writer.WritePropertyName("slotType"u8);
                 writer.WriteStringValue(SlotType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SwappableCloudService))
+            if (Optional.IsDefined(SwappableCloudService))
             {
                 writer.WritePropertyName("swappableCloudService"u8);
                 JsonSerializer.Serialize(writer, SwappableCloudService);
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Core.Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
-            Core.Optional<CloudServiceSlotType> slotType = default;
-            Core.Optional<WritableSubResource> swappableCloudService = default;
+            Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Optional<CloudServiceSlotType> slotType = default;
+            Optional<WritableSubResource> swappableCloudService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerConfigurations"u8))
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new CloudServiceNetworkProfile(Core.Optional.ToList(loadBalancerConfigurations), Core.Optional.ToNullable(slotType), swappableCloudService);
+            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), Optional.ToNullable(slotType), swappableCloudService);
         }
     }
 }

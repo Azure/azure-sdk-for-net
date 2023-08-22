@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Name = name;
             Priority = priority;
             Action = action;
-            MatchConditions = new Core.ChangeTrackingList<RulesEngineMatchCondition>();
+            MatchConditions = new ChangeTrackingList<RulesEngineMatchCondition>();
         }
 
         /// <summary> Initializes a new instance of RulesEngineRule. </summary>

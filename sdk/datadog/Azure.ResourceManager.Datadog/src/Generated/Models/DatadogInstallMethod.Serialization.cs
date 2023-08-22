@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Core.Optional<string> tool = default;
-            Core.Optional<string> toolVersion = default;
-            Core.Optional<string> installerVersion = default;
+            Optional<string> tool = default;
+            Optional<string> toolVersion = default;
+            Optional<string> installerVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tool"u8))

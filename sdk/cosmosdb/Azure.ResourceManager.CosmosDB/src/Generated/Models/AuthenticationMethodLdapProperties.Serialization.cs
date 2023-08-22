@@ -11,42 +11,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class AuthenticationMethodLdapProperties : Core.IUtf8JsonSerializable
+    public partial class AuthenticationMethodLdapProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ServerHostname))
+            if (Optional.IsDefined(ServerHostname))
             {
                 writer.WritePropertyName("serverHostname"u8);
                 writer.WriteStringValue(ServerHostname);
             }
-            if (Core.Optional.IsDefined(ServerPort))
+            if (Optional.IsDefined(ServerPort))
             {
                 writer.WritePropertyName("serverPort"u8);
                 writer.WriteNumberValue(ServerPort.Value);
             }
-            if (Core.Optional.IsDefined(ServiceUserDistinguishedName))
+            if (Optional.IsDefined(ServiceUserDistinguishedName))
             {
                 writer.WritePropertyName("serviceUserDistinguishedName"u8);
                 writer.WriteStringValue(ServiceUserDistinguishedName);
             }
-            if (Core.Optional.IsDefined(ServiceUserPassword))
+            if (Optional.IsDefined(ServiceUserPassword))
             {
                 writer.WritePropertyName("serviceUserPassword"u8);
                 writer.WriteStringValue(ServiceUserPassword);
             }
-            if (Core.Optional.IsDefined(SearchBaseDistinguishedName))
+            if (Optional.IsDefined(SearchBaseDistinguishedName))
             {
                 writer.WritePropertyName("searchBaseDistinguishedName"u8);
                 writer.WriteStringValue(SearchBaseDistinguishedName);
             }
-            if (Core.Optional.IsDefined(SearchFilterTemplate))
+            if (Optional.IsDefined(SearchFilterTemplate))
             {
                 writer.WritePropertyName("searchFilterTemplate"u8);
                 writer.WriteStringValue(SearchFilterTemplate);
             }
-            if (Core.Optional.IsCollectionDefined(ServerCertificates))
+            if (Optional.IsCollectionDefined(ServerCertificates))
             {
                 writer.WritePropertyName("serverCertificates"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ConnectionTimeoutInMs))
+            if (Optional.IsDefined(ConnectionTimeoutInMs))
             {
                 writer.WritePropertyName("connectionTimeoutInMs"u8);
                 writer.WriteNumberValue(ConnectionTimeoutInMs.Value);
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Core.Optional<string> serverHostname = default;
-            Core.Optional<int> serverPort = default;
-            Core.Optional<string> serviceUserDistinguishedName = default;
-            Core.Optional<string> serviceUserPassword = default;
-            Core.Optional<string> searchBaseDistinguishedName = default;
-            Core.Optional<string> searchFilterTemplate = default;
-            Core.Optional<IList<CassandraCertificate>> serverCertificates = default;
-            Core.Optional<int> connectionTimeoutInMs = default;
+            Optional<string> serverHostname = default;
+            Optional<int> serverPort = default;
+            Optional<string> serviceUserDistinguishedName = default;
+            Optional<string> serviceUserPassword = default;
+            Optional<string> searchBaseDistinguishedName = default;
+            Optional<string> searchFilterTemplate = default;
+            Optional<IList<CassandraCertificate>> serverCertificates = default;
+            Optional<int> connectionTimeoutInMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverHostname"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new AuthenticationMethodLdapProperties(serverHostname.Value, Core.Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, Core.Optional.ToList(serverCertificates), Core.Optional.ToNullable(connectionTimeoutInMs));
+            return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, Optional.ToList(serverCertificates), Optional.ToNullable(connectionTimeoutInMs));
         }
     }
 }

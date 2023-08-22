@@ -10,42 +10,42 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVFailoverIPConfigDetails : Core.IUtf8JsonSerializable
+    public partial class HyperVFailoverIPConfigDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IPConfigName))
+            if (Optional.IsDefined(IPConfigName))
             {
                 writer.WritePropertyName("ipConfigName"u8);
                 writer.WriteStringValue(IPConfigName);
             }
-            if (Core.Optional.IsDefined(IsPrimary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (Core.Optional.IsDefined(IsSeletedForFailover))
+            if (Optional.IsDefined(IsSeletedForFailover))
             {
                 writer.WritePropertyName("isSeletedForFailover"u8);
                 writer.WriteBooleanValue(IsSeletedForFailover.Value);
             }
-            if (Core.Optional.IsDefined(RecoverySubnetName))
+            if (Optional.IsDefined(RecoverySubnetName))
             {
                 writer.WritePropertyName("recoverySubnetName"u8);
                 writer.WriteStringValue(RecoverySubnetName);
             }
-            if (Core.Optional.IsDefined(RecoveryStaticIPAddress))
+            if (Optional.IsDefined(RecoveryStaticIPAddress))
             {
                 writer.WritePropertyName("recoveryStaticIPAddress"u8);
                 writer.WriteStringValue(RecoveryStaticIPAddress.ToString());
             }
-            if (Core.Optional.IsDefined(RecoveryPublicIPAddressId))
+            if (Optional.IsDefined(RecoveryPublicIPAddressId))
             {
                 writer.WritePropertyName("recoveryPublicIPAddressId"u8);
                 writer.WriteStringValue(RecoveryPublicIPAddressId);
             }
-            if (Core.Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
+            if (Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
             {
                 writer.WritePropertyName("recoveryLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(TfoSubnetName))
+            if (Optional.IsDefined(TfoSubnetName))
             {
                 writer.WritePropertyName("tfoSubnetName"u8);
                 writer.WriteStringValue(TfoSubnetName);
             }
-            if (Core.Optional.IsDefined(TfoStaticIPAddress))
+            if (Optional.IsDefined(TfoStaticIPAddress))
             {
                 writer.WritePropertyName("tfoStaticIPAddress"u8);
                 writer.WriteStringValue(TfoStaticIPAddress.ToString());
             }
-            if (Core.Optional.IsDefined(TfoPublicIPAddressId))
+            if (Optional.IsDefined(TfoPublicIPAddressId))
             {
                 writer.WritePropertyName("tfoPublicIPAddressId"u8);
                 writer.WriteStringValue(TfoPublicIPAddressId);
             }
-            if (Core.Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
+            if (Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
             {
                 writer.WritePropertyName("tfoLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();

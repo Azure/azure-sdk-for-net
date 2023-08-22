@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabDataDiskStorageTypeInfo : Core.IUtf8JsonSerializable
+    public partial class DevTestLabDataDiskStorageTypeInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Lun))
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteStringValue(Lun);
             }
-            if (Core.Optional.IsDefined(StorageType))
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<string> lun = default;
-            Core.Optional<DevTestLabStorageType> storageType = default;
+            Optional<string> lun = default;
+            Optional<DevTestLabStorageType> storageType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new DevTestLabDataDiskStorageTypeInfo(lun.Value, Core.Optional.ToNullable(storageType));
+            return new DevTestLabDataDiskStorageTypeInfo(lun.Value, Optional.ToNullable(storageType));
         }
     }
 }

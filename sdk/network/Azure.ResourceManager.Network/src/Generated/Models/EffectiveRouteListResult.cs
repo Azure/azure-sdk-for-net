@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of EffectiveRouteListResult. </summary>
         internal EffectiveRouteListResult()
         {
-            Value = new Core.ChangeTrackingList<EffectiveRoute>();
+            Value = new ChangeTrackingList<EffectiveRoute>();
         }
 
         /// <summary> Initializes a new instance of EffectiveRouteListResult. </summary>

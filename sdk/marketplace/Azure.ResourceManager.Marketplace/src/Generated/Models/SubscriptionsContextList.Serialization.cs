@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> subscriptionsIds = default;
+            Optional<IReadOnlyList<string>> subscriptionsIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionsIds"u8))
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new SubscriptionsContextList(Core.Optional.ToList(subscriptionsIds));
+            return new SubscriptionsContextList(Optional.ToList(subscriptionsIds));
         }
     }
 }

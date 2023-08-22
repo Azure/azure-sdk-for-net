@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> liveToken = default;
+            Optional<string> liveToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("liveToken"u8))

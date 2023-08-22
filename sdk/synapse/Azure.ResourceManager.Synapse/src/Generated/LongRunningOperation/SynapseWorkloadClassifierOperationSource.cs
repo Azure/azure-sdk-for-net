@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseWorkloadClassifierOperationSource : Core.IOperationSource<SynapseWorkloadClassifierResource>
+    internal class SynapseWorkloadClassifierOperationSource : IOperationSource<SynapseWorkloadClassifierResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseWorkloadClassifierResource Core.IOperationSource<SynapseWorkloadClassifierResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseWorkloadClassifierResource IOperationSource<SynapseWorkloadClassifierResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(document.RootElement);
             return new SynapseWorkloadClassifierResource(_client, data);
         }
 
-        async ValueTask<SynapseWorkloadClassifierResource> Core.IOperationSource<SynapseWorkloadClassifierResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseWorkloadClassifierResource> IOperationSource<SynapseWorkloadClassifierResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(document.RootElement);

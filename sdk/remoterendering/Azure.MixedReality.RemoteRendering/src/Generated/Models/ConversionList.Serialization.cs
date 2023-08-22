@@ -20,7 +20,7 @@ namespace Azure.MixedReality.RemoteRendering
                 return null;
             }
             IReadOnlyList<AssetConversion> conversions = default;
-            Core.Optional<string> nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conversions"u8))

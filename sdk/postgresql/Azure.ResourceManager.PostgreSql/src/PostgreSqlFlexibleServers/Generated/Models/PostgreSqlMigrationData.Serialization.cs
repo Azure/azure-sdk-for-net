@@ -14,12 +14,12 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlMigrationData : Core.IUtf8JsonSerializable
+    public partial class PostgreSqlMigrationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,32 +34,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MigrationMode))
+            if (Optional.IsDefined(MigrationMode))
             {
                 writer.WritePropertyName("migrationMode"u8);
                 writer.WriteStringValue(MigrationMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SourceDbServerResourceId))
+            if (Optional.IsDefined(SourceDbServerResourceId))
             {
                 writer.WritePropertyName("sourceDbServerResourceId"u8);
                 writer.WriteStringValue(SourceDbServerResourceId);
             }
-            if (Core.Optional.IsDefined(SourceDbServerFullyQualifiedDomainName))
+            if (Optional.IsDefined(SourceDbServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("sourceDbServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(SourceDbServerFullyQualifiedDomainName);
             }
-            if (Core.Optional.IsDefined(TargetDbServerFullyQualifiedDomainName))
+            if (Optional.IsDefined(TargetDbServerFullyQualifiedDomainName))
             {
                 writer.WritePropertyName("targetDbServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(TargetDbServerFullyQualifiedDomainName);
             }
-            if (Core.Optional.IsDefined(SecretParameters))
+            if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
                 writer.WriteObjectValue(SecretParameters);
             }
-            if (Core.Optional.IsCollectionDefined(DbsToMigrate))
+            if (Optional.IsCollectionDefined(DbsToMigrate))
             {
                 writer.WritePropertyName("dbsToMigrate"u8);
                 writer.WriteStartArray();
@@ -69,37 +69,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(SetupLogicalReplicationOnSourceDbIfNeeded))
+            if (Optional.IsDefined(SetupLogicalReplicationOnSourceDbIfNeeded))
             {
                 writer.WritePropertyName("setupLogicalReplicationOnSourceDbIfNeeded"u8);
                 writer.WriteStringValue(SetupLogicalReplicationOnSourceDbIfNeeded.Value.ToString());
             }
-            if (Core.Optional.IsDefined(OverwriteDbsInTarget))
+            if (Optional.IsDefined(OverwriteDbsInTarget))
             {
                 writer.WritePropertyName("overwriteDbsInTarget"u8);
                 writer.WriteStringValue(OverwriteDbsInTarget.Value.ToString());
             }
-            if (Core.Optional.IsDefined(MigrationWindowStartTimeInUtc))
+            if (Optional.IsDefined(MigrationWindowStartTimeInUtc))
             {
                 writer.WritePropertyName("migrationWindowStartTimeInUtc"u8);
                 writer.WriteStringValue(MigrationWindowStartTimeInUtc.Value, "O");
             }
-            if (Core.Optional.IsDefined(MigrationWindowEndTimeInUtc))
+            if (Optional.IsDefined(MigrationWindowEndTimeInUtc))
             {
                 writer.WritePropertyName("migrationWindowEndTimeInUtc"u8);
                 writer.WriteStringValue(MigrationWindowEndTimeInUtc.Value, "O");
             }
-            if (Core.Optional.IsDefined(StartDataMigration))
+            if (Optional.IsDefined(StartDataMigration))
             {
                 writer.WritePropertyName("startDataMigration"u8);
                 writer.WriteStringValue(StartDataMigration.Value.ToString());
             }
-            if (Core.Optional.IsDefined(TriggerCutover))
+            if (Optional.IsDefined(TriggerCutover))
             {
                 writer.WritePropertyName("triggerCutover"u8);
                 writer.WriteStringValue(TriggerCutover.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DbsToTriggerCutoverOn))
+            if (Optional.IsCollectionDefined(DbsToTriggerCutoverOn))
             {
                 writer.WritePropertyName("dbsToTriggerCutoverOn"u8);
                 writer.WriteStartArray();
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Cancel))
+            if (Optional.IsDefined(Cancel))
             {
                 writer.WritePropertyName("cancel"u8);
                 writer.WriteStringValue(Cancel.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(DbsToCancelMigrationOn))
+            if (Optional.IsCollectionDefined(DbsToCancelMigrationOn))
             {
                 writer.WritePropertyName("dbsToCancelMigrationOn"u8);
                 writer.WriteStartArray();
@@ -134,32 +134,32 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            Core.Optional<IDictionary<string, string>> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<string> migrationId = default;
-            Core.Optional<PostgreSqlMigrationStatus> currentStatus = default;
-            Core.Optional<PostgreSqlMigrationMode> migrationMode = default;
-            Core.Optional<PostgreSqlServerMetadata> sourceDbServerMetadata = default;
-            Core.Optional<PostgreSqlServerMetadata> targetDbServerMetadata = default;
-            Core.Optional<ResourceIdentifier> sourceDbServerResourceId = default;
-            Core.Optional<string> sourceDbServerFullyQualifiedDomainName = default;
-            Core.Optional<ResourceIdentifier> targetDbServerResourceId = default;
-            Core.Optional<string> targetDbServerFullyQualifiedDomainName = default;
-            Core.Optional<PostgreSqlMigrationSecretParameters> secretParameters = default;
-            Core.Optional<IList<string>> dbsToMigrate = default;
-            Core.Optional<PostgreSqlMigrationLogicalReplicationOnSourceDb> setupLogicalReplicationOnSourceDbIfNeeded = default;
-            Core.Optional<PostgreSqlMigrationOverwriteDbsInTarget> overwriteDbsInTarget = default;
-            Core.Optional<DateTimeOffset> migrationWindowStartTimeInUtc = default;
-            Core.Optional<DateTimeOffset> migrationWindowEndTimeInUtc = default;
-            Core.Optional<PostgreSqlMigrationStartDataMigration> startDataMigration = default;
-            Core.Optional<PostgreSqlMigrationTriggerCutover> triggerCutover = default;
-            Core.Optional<IList<string>> dbsToTriggerCutoverOn = default;
-            Core.Optional<PostgreSqlMigrationCancel> cancel = default;
-            Core.Optional<IList<string>> dbsToCancelMigrationOn = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> migrationId = default;
+            Optional<PostgreSqlMigrationStatus> currentStatus = default;
+            Optional<PostgreSqlMigrationMode> migrationMode = default;
+            Optional<PostgreSqlServerMetadata> sourceDbServerMetadata = default;
+            Optional<PostgreSqlServerMetadata> targetDbServerMetadata = default;
+            Optional<ResourceIdentifier> sourceDbServerResourceId = default;
+            Optional<string> sourceDbServerFullyQualifiedDomainName = default;
+            Optional<ResourceIdentifier> targetDbServerResourceId = default;
+            Optional<string> targetDbServerFullyQualifiedDomainName = default;
+            Optional<PostgreSqlMigrationSecretParameters> secretParameters = default;
+            Optional<IList<string>> dbsToMigrate = default;
+            Optional<PostgreSqlMigrationLogicalReplicationOnSourceDb> setupLogicalReplicationOnSourceDbIfNeeded = default;
+            Optional<PostgreSqlMigrationOverwriteDbsInTarget> overwriteDbsInTarget = default;
+            Optional<DateTimeOffset> migrationWindowStartTimeInUtc = default;
+            Optional<DateTimeOffset> migrationWindowEndTimeInUtc = default;
+            Optional<PostgreSqlMigrationStartDataMigration> startDataMigration = default;
+            Optional<PostgreSqlMigrationTriggerCutover> triggerCutover = default;
+            Optional<IList<string>> dbsToTriggerCutoverOn = default;
+            Optional<PostgreSqlMigrationCancel> cancel = default;
+            Optional<IList<string>> dbsToCancelMigrationOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     continue;
                 }
             }
-            return new PostgreSqlMigrationData(id, name, type, systemData.Value, Core.Optional.ToDictionary(tags), location, migrationId.Value, currentStatus.Value, Core.Optional.ToNullable(migrationMode), sourceDbServerMetadata.Value, targetDbServerMetadata.Value, sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerResourceId.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Core.Optional.ToList(dbsToMigrate), Core.Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Core.Optional.ToNullable(overwriteDbsInTarget), Core.Optional.ToNullable(migrationWindowStartTimeInUtc), Core.Optional.ToNullable(migrationWindowEndTimeInUtc), Core.Optional.ToNullable(startDataMigration), Core.Optional.ToNullable(triggerCutover), Core.Optional.ToList(dbsToTriggerCutoverOn), Core.Optional.ToNullable(cancel), Core.Optional.ToList(dbsToCancelMigrationOn));
+            return new PostgreSqlMigrationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, migrationId.Value, currentStatus.Value, Optional.ToNullable(migrationMode), sourceDbServerMetadata.Value, targetDbServerMetadata.Value, sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerResourceId.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Optional.ToList(dbsToMigrate), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(migrationWindowEndTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), Optional.ToList(dbsToTriggerCutoverOn), Optional.ToNullable(cancel), Optional.ToList(dbsToCancelMigrationOn));
         }
     }
 }

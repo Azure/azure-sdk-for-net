@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class SignalGateProcessor : Core.IUtf8JsonSerializable
+    public partial class SignalGateProcessor : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ActivationEvaluationWindow))
+            if (Optional.IsDefined(ActivationEvaluationWindow))
             {
                 writer.WritePropertyName("activationEvaluationWindow"u8);
                 writer.WriteStringValue(ActivationEvaluationWindow);
             }
-            if (Core.Optional.IsDefined(ActivationSignalOffset))
+            if (Optional.IsDefined(ActivationSignalOffset))
             {
                 writer.WritePropertyName("activationSignalOffset"u8);
                 writer.WriteStringValue(ActivationSignalOffset);
             }
-            if (Core.Optional.IsDefined(MinimumActivationTime))
+            if (Optional.IsDefined(MinimumActivationTime))
             {
                 writer.WritePropertyName("minimumActivationTime"u8);
                 writer.WriteStringValue(MinimumActivationTime);
             }
-            if (Core.Optional.IsDefined(MaximumActivationTime))
+            if (Optional.IsDefined(MaximumActivationTime))
             {
                 writer.WritePropertyName("maximumActivationTime"u8);
                 writer.WriteStringValue(MaximumActivationTime);
@@ -56,10 +56,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Core.Optional<string> activationEvaluationWindow = default;
-            Core.Optional<string> activationSignalOffset = default;
-            Core.Optional<string> minimumActivationTime = default;
-            Core.Optional<string> maximumActivationTime = default;
+            Optional<string> activationEvaluationWindow = default;
+            Optional<string> activationSignalOffset = default;
+            Optional<string> minimumActivationTime = default;
+            Optional<string> maximumActivationTime = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;

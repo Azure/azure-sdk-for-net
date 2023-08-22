@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationListResult. </summary>
         internal LoadBalancerFrontendIPConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<FrontendIPConfigurationData>();
+            Value = new ChangeTrackingList<FrontendIPConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationListResult. </summary>

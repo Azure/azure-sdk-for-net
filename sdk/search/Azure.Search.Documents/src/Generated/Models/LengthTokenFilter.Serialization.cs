@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class LengthTokenFilter : Core.IUtf8JsonSerializable
+    public partial class LengthTokenFilter : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MinLength))
+            if (Optional.IsDefined(MinLength))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(MinLength.Value);
             }
-            if (Core.Optional.IsDefined(MaxLength))
+            if (Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(MaxLength.Value);
@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Core.Optional<int> min = default;
-            Core.Optional<int> max = default;
+            Optional<int> min = default;
+            Optional<int> max = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(odataType, name, Core.Optional.ToNullable(min), Core.Optional.ToNullable(max));
+            return new LengthTokenFilter(odataType, name, Optional.ToNullable(min), Optional.ToNullable(max));
         }
     }
 }

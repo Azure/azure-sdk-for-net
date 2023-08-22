@@ -15,27 +15,27 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceData : Core.IUtf8JsonSerializable
+    public partial class NetworkInterfaceData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ExtendedLocation))
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(NetworkSecurityGroup))
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 writer.WriteObjectValue(NetworkSecurityGroup);
             }
-            if (Core.Optional.IsCollectionDefined(IPConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -63,52 +63,52 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(DnsSettings))
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Core.Optional.IsDefined(EnableAcceleratedNetworking))
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (Core.Optional.IsDefined(DisableTcpStateTracking))
+            if (Optional.IsDefined(DisableTcpStateTracking))
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
                 writer.WriteBooleanValue(DisableTcpStateTracking.Value);
             }
-            if (Core.Optional.IsDefined(EnableIPForwarding))
+            if (Optional.IsDefined(EnableIPForwarding))
             {
                 writer.WritePropertyName("enableIPForwarding"u8);
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
-            if (Core.Optional.IsDefined(WorkloadType))
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            if (Core.Optional.IsDefined(NicType))
+            if (Optional.IsDefined(NicType))
             {
                 writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(PrivateLinkService))
+            if (Optional.IsDefined(PrivateLinkService))
             {
                 writer.WritePropertyName("privateLinkService"u8);
                 writer.WriteObjectValue(PrivateLinkService);
             }
-            if (Core.Optional.IsDefined(MigrationPhase))
+            if (Optional.IsDefined(MigrationPhase))
             {
                 writer.WritePropertyName("migrationPhase"u8);
                 writer.WriteStringValue(MigrationPhase.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AuxiliaryMode))
+            if (Optional.IsDefined(AuxiliaryMode))
             {
                 writer.WritePropertyName("auxiliaryMode"u8);
                 writer.WriteStringValue(AuxiliaryMode.Value.ToString());
             }
-            if (Core.Optional.IsDefined(AuxiliarySku))
+            if (Optional.IsDefined(AuxiliarySku))
             {
                 writer.WritePropertyName("auxiliarySku"u8);
                 writer.WriteStringValue(AuxiliarySku.Value.ToString());
@@ -123,35 +123,35 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ExtendedLocation> extendedLocation = default;
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<WritableSubResource> virtualMachine = default;
-            Core.Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
-            Core.Optional<PrivateEndpointData> privateEndpoint = default;
-            Core.Optional<IList<NetworkInterfaceIPConfigurationData>> ipConfigurations = default;
-            Core.Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> tapConfigurations = default;
-            Core.Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
-            Core.Optional<string> macAddress = default;
-            Core.Optional<bool> primary = default;
-            Core.Optional<bool> vnetEncryptionSupported = default;
-            Core.Optional<bool> enableAcceleratedNetworking = default;
-            Core.Optional<bool> disableTcpStateTracking = default;
-            Core.Optional<bool> enableIPForwarding = default;
-            Core.Optional<IReadOnlyList<string>> hostedWorkloads = default;
-            Core.Optional<WritableSubResource> dscpConfiguration = default;
-            Core.Optional<Guid> resourceGuid = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
-            Core.Optional<string> workloadType = default;
-            Core.Optional<NetworkInterfaceNicType> nicType = default;
-            Core.Optional<PrivateLinkServiceData> privateLinkService = default;
-            Core.Optional<NetworkInterfaceMigrationPhase> migrationPhase = default;
-            Core.Optional<NetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Core.Optional<NetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<WritableSubResource> virtualMachine = default;
+            Optional<NetworkSecurityGroupData> networkSecurityGroup = default;
+            Optional<PrivateEndpointData> privateEndpoint = default;
+            Optional<IList<NetworkInterfaceIPConfigurationData>> ipConfigurations = default;
+            Optional<IReadOnlyList<NetworkInterfaceTapConfigurationData>> tapConfigurations = default;
+            Optional<NetworkInterfaceDnsSettings> dnsSettings = default;
+            Optional<string> macAddress = default;
+            Optional<bool> primary = default;
+            Optional<bool> vnetEncryptionSupported = default;
+            Optional<bool> enableAcceleratedNetworking = default;
+            Optional<bool> disableTcpStateTracking = default;
+            Optional<bool> enableIPForwarding = default;
+            Optional<IReadOnlyList<string>> hostedWorkloads = default;
+            Optional<WritableSubResource> dscpConfiguration = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<string> workloadType = default;
+            Optional<NetworkInterfaceNicType> nicType = default;
+            Optional<PrivateLinkServiceData> privateLinkService = default;
+            Optional<NetworkInterfaceMigrationPhase> migrationPhase = default;
+            Optional<NetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
+            Optional<NetworkInterfaceAuxiliarySku> auxiliarySku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new NetworkInterfaceData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), extendedLocation, Core.Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Core.Optional.ToList(ipConfigurations), Core.Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Core.Optional.ToNullable(primary), Core.Optional.ToNullable(vnetEncryptionSupported), Core.Optional.ToNullable(enableAcceleratedNetworking), Core.Optional.ToNullable(disableTcpStateTracking), Core.Optional.ToNullable(enableIPForwarding), Core.Optional.ToList(hostedWorkloads), dscpConfiguration, Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(provisioningState), workloadType.Value, Core.Optional.ToNullable(nicType), privateLinkService.Value, Core.Optional.ToNullable(migrationPhase), Core.Optional.ToNullable(auxiliaryMode), Core.Optional.ToNullable(auxiliarySku));
+            return new NetworkInterfaceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, Optional.ToList(ipConfigurations), Optional.ToList(tapConfigurations), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(vnetEncryptionSupported), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableIPForwarding), Optional.ToList(hostedWorkloads), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
         }
     }
 }

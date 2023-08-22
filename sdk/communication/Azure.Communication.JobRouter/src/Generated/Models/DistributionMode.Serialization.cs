@@ -10,24 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class DistributionMode : Core.IUtf8JsonSerializable
+    public partial class DistributionMode : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Core.Optional.IsDefined(MinConcurrentOffers))
+            if (Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);
                 writer.WriteNumberValue(MinConcurrentOffers);
             }
-            if (Core.Optional.IsDefined(MaxConcurrentOffers))
+            if (Optional.IsDefined(MaxConcurrentOffers))
             {
                 writer.WritePropertyName("maxConcurrentOffers"u8);
                 writer.WriteNumberValue(MaxConcurrentOffers);
             }
-            if (Core.Optional.IsDefined(BypassSelectors))
+            if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);

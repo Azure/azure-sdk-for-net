@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
-            TargetTags = new Core.ChangeTrackingList<string>();
-            UntaggedTargetRepositories = new Core.ChangeTrackingList<string>();
+            TargetTags = new ChangeTrackingList<string>();
+            UntaggedTargetRepositories = new ChangeTrackingList<string>();
         }
 
         /// <summary> The source of the image. </summary>

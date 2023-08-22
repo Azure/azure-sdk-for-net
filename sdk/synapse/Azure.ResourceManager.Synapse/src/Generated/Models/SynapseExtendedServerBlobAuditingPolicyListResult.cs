@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseExtendedServerBlobAuditingPolicyListResult. </summary>
         internal SynapseExtendedServerBlobAuditingPolicyListResult()
         {
-            Value = new Core.ChangeTrackingList<SynapseExtendedServerBlobAuditingPolicyData>();
+            Value = new ChangeTrackingList<SynapseExtendedServerBlobAuditingPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SynapseExtendedServerBlobAuditingPolicyListResult. </summary>

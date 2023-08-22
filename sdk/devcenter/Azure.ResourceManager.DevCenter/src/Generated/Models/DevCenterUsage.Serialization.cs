@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Core.Optional<long> currentValue = default;
-            Core.Optional<long> limit = default;
-            Core.Optional<DevCenterUsageUnit> unit = default;
-            Core.Optional<DevCenterUsageName> name = default;
+            Optional<long> currentValue = default;
+            Optional<long> limit = default;
+            Optional<DevCenterUsageUnit> unit = default;
+            Optional<DevCenterUsageName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentValue"u8))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     continue;
                 }
             }
-            return new DevCenterUsage(Core.Optional.ToNullable(currentValue), Core.Optional.ToNullable(limit), Core.Optional.ToNullable(unit), name.Value);
+            return new DevCenterUsage(Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(unit), name.Value);
         }
     }
 }

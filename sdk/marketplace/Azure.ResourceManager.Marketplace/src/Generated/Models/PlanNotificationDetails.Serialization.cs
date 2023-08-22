@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Core.Optional<string> planId = default;
-            Core.Optional<string> planDisplayName = default;
+            Optional<string> planId = default;
+            Optional<string> planDisplayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("planId"u8))

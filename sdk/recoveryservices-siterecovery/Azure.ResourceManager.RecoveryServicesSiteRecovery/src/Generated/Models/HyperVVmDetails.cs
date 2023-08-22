@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
         internal HyperVVmDetails()
         {
-            DiskDetails = new Core.ChangeTrackingList<SiteRecoveryDiskDetails>();
+            DiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
             InstanceType = "HyperVVirtualMachine";
         }
 

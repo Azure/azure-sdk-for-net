@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class AttachNewDataDiskDetails : Core.IUtf8JsonSerializable
+    public partial class AttachNewDataDiskDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(DiskSizeGiB))
+            if (Optional.IsDefined(DiskSizeGiB))
             {
                 writer.WritePropertyName("diskSizeGiB"u8);
                 writer.WriteNumberValue(DiskSizeGiB.Value);
             }
-            if (Core.Optional.IsDefined(DiskName))
+            if (Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (Core.Optional.IsDefined(DiskType))
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Core.Optional<int> diskSizeGiB = default;
-            Core.Optional<string> diskName = default;
-            Core.Optional<DevTestLabStorageType> diskType = default;
+            Optional<int> diskSizeGiB = default;
+            Optional<string> diskName = default;
+            Optional<DevTestLabStorageType> diskType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSizeGiB"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     continue;
                 }
             }
-            return new AttachNewDataDiskDetails(Core.Optional.ToNullable(diskSizeGiB), diskName.Value, Core.Optional.ToNullable(diskType));
+            return new AttachNewDataDiskDetails(Optional.ToNullable(diskSizeGiB), diskName.Value, Optional.ToNullable(diskType));
         }
     }
 }

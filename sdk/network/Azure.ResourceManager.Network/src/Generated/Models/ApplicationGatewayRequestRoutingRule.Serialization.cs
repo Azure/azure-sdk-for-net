@@ -12,64 +12,64 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRequestRoutingRule : Core.IUtf8JsonSerializable
+    public partial class ApplicationGatewayRequestRoutingRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(RuleType))
+            if (Optional.IsDefined(RuleType))
             {
                 writer.WritePropertyName("ruleType"u8);
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Priority))
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Core.Optional.IsDefined(BackendAddressPool))
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
-            if (Core.Optional.IsDefined(BackendHttpSettings))
+            if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
                 JsonSerializer.Serialize(writer, BackendHttpSettings);
             }
-            if (Core.Optional.IsDefined(HttpListener))
+            if (Optional.IsDefined(HttpListener))
             {
                 writer.WritePropertyName("httpListener"u8);
                 JsonSerializer.Serialize(writer, HttpListener);
             }
-            if (Core.Optional.IsDefined(UrlPathMap))
+            if (Optional.IsDefined(UrlPathMap))
             {
                 writer.WritePropertyName("urlPathMap"u8);
                 JsonSerializer.Serialize(writer, UrlPathMap);
             }
-            if (Core.Optional.IsDefined(RewriteRuleSet))
+            if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet"u8);
                 JsonSerializer.Serialize(writer, RewriteRuleSet);
             }
-            if (Core.Optional.IsDefined(RedirectConfiguration))
+            if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration"u8);
                 JsonSerializer.Serialize(writer, RedirectConfiguration);
             }
-            if (Core.Optional.IsDefined(LoadDistributionPolicy))
+            if (Optional.IsDefined(LoadDistributionPolicy))
             {
                 writer.WritePropertyName("loadDistributionPolicy"u8);
                 JsonSerializer.Serialize(writer, LoadDistributionPolicy);
@@ -84,20 +84,20 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<ApplicationGatewayRequestRoutingRuleType> ruleType = default;
-            Core.Optional<int> priority = default;
-            Core.Optional<WritableSubResource> backendAddressPool = default;
-            Core.Optional<WritableSubResource> backendHttpSettings = default;
-            Core.Optional<WritableSubResource> httpListener = default;
-            Core.Optional<WritableSubResource> urlPathMap = default;
-            Core.Optional<WritableSubResource> rewriteRuleSet = default;
-            Core.Optional<WritableSubResource> redirectConfiguration = default;
-            Core.Optional<WritableSubResource> loadDistributionPolicy = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<ApplicationGatewayRequestRoutingRuleType> ruleType = default;
+            Optional<int> priority = default;
+            Optional<WritableSubResource> backendAddressPool = default;
+            Optional<WritableSubResource> backendHttpSettings = default;
+            Optional<WritableSubResource> httpListener = default;
+            Optional<WritableSubResource> urlPathMap = default;
+            Optional<WritableSubResource> rewriteRuleSet = default;
+            Optional<WritableSubResource> redirectConfiguration = default;
+            Optional<WritableSubResource> loadDistributionPolicy = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationGatewayRequestRoutingRule(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(etag), Core.Optional.ToNullable(ruleType), Core.Optional.ToNullable(priority), backendAddressPool, backendHttpSettings, httpListener, urlPathMap, rewriteRuleSet, redirectConfiguration, loadDistributionPolicy, Core.Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayRequestRoutingRule(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(ruleType), Optional.ToNullable(priority), backendAddressPool, backendHttpSettings, httpListener, urlPathMap, rewriteRuleSet, redirectConfiguration, loadDistributionPolicy, Optional.ToNullable(provisioningState));
         }
     }
 }

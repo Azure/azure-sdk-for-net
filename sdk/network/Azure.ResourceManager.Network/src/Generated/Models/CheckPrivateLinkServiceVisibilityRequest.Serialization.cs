@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class CheckPrivateLinkServiceVisibilityRequest : Core.IUtf8JsonSerializable
+    public partial class CheckPrivateLinkServiceVisibilityRequest : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrivateLinkServiceAlias))
+            if (Optional.IsDefined(PrivateLinkServiceAlias))
             {
                 writer.WritePropertyName("privateLinkServiceAlias"u8);
                 writer.WriteStringValue(PrivateLinkServiceAlias);

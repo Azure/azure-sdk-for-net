@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerNetwork : Core.IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerNetwork : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Core.Optional.IsDefined(DelegatedSubnetResourceId))
+            if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
                 writer.WritePropertyName("delegatedSubnetResourceId"u8);
                 writer.WriteStringValue(DelegatedSubnetResourceId);
             }
-            if (Core.Optional.IsDefined(PrivateDnsZoneResourceId))
+            if (Optional.IsDefined(PrivateDnsZoneResourceId))
             {
                 writer.WritePropertyName("privateDnsZoneResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneResourceId);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Core.Optional<MySqlFlexibleServerEnableStatusEnum> publicNetworkAccess = default;
-            Core.Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
-            Core.Optional<ResourceIdentifier> privateDnsZoneResourceId = default;
+            Optional<MySqlFlexibleServerEnableStatusEnum> publicNetworkAccess = default;
+            Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
+            Optional<ResourceIdentifier> privateDnsZoneResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     continue;
                 }
             }
-            return new MySqlFlexibleServerNetwork(Core.Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneResourceId.Value);
+            return new MySqlFlexibleServerNetwork(Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneResourceId.Value);
         }
     }
 }

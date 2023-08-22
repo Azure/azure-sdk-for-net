@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundSecurityRules : Core.IUtf8JsonSerializable
+    public partial class InboundSecurityRules : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Core.Optional.IsDefined(SourceAddressPrefix))
+            if (Optional.IsDefined(SourceAddressPrefix))
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (Core.Optional.IsDefined(DestinationPortRange))
+            if (Optional.IsDefined(DestinationPortRange))
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteNumberValue(DestinationPortRange.Value);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<InboundSecurityRulesProtocol> protocol = default;
-            Core.Optional<string> sourceAddressPrefix = default;
-            Core.Optional<int> destinationPortRange = default;
+            Optional<InboundSecurityRulesProtocol> protocol = default;
+            Optional<string> sourceAddressPrefix = default;
+            Optional<int> destinationPortRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new InboundSecurityRules(Core.Optional.ToNullable(protocol), sourceAddressPrefix.Value, Core.Optional.ToNullable(destinationPortRange));
+            return new InboundSecurityRules(Optional.ToNullable(protocol), sourceAddressPrefix.Value, Optional.ToNullable(destinationPortRange));
         }
     }
 }

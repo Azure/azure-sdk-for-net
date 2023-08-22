@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Core.Optional<string> queryText = default;
-            Core.Optional<long> statementsInBatch = default;
-            Core.Optional<ExecutionStatistics> sourceResult = default;
-            Core.Optional<ExecutionStatistics> targetResult = default;
+            Optional<string> queryText = default;
+            Optional<long> statementsInBatch = default;
+            Optional<ExecutionStatistics> sourceResult = default;
+            Optional<ExecutionStatistics> targetResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryText"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     continue;
                 }
             }
-            return new QueryExecutionResult(queryText.Value, Core.Optional.ToNullable(statementsInBatch), sourceResult.Value, targetResult.Value);
+            return new QueryExecutionResult(queryText.Value, Optional.ToNullable(statementsInBatch), sourceResult.Value, targetResult.Value);
         }
     }
 }

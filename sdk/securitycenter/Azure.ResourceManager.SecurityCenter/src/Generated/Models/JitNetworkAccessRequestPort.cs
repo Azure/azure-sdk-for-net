@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public JitNetworkAccessRequestPort(int number, DateTimeOffset endOn, JitNetworkAccessPortStatus status, JitNetworkAccessPortStatusReason statusReason)
         {
             Number = number;
-            AllowedSourceAddressPrefixes = new Core.ChangeTrackingList<string>();
+            AllowedSourceAddressPrefixes = new ChangeTrackingList<string>();
             EndOn = endOn;
             Status = status;
             StatusReason = statusReason;

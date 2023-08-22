@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> neighbor = default;
-            Core.Optional<int> v = default;
-            Core.Optional<int> @as = default;
-            Core.Optional<string> upDown = default;
-            Core.Optional<string> statePfxRcd = default;
+            Optional<string> neighbor = default;
+            Optional<int> v = default;
+            Optional<int> @as = default;
+            Optional<string> upDown = default;
+            Optional<string> statePfxRcd = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("neighbor"u8))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ExpressRouteCircuitRoutesTableSummary(neighbor.Value, Core.Optional.ToNullable(v), Core.Optional.ToNullable(@as), upDown.Value, statePfxRcd.Value);
+            return new ExpressRouteCircuitRoutesTableSummary(neighbor.Value, Optional.ToNullable(v), Optional.ToNullable(@as), upDown.Value, statePfxRcd.Value);
         }
     }
 }

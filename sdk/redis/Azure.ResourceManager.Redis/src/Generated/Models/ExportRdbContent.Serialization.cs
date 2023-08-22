@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class ExportRdbContent : Core.IUtf8JsonSerializable
+    public partial class ExportRdbContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Format))
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(Prefix);
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
-            if (Core.Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (Core.Optional.IsDefined(StorageSubscriptionId))
+            if (Optional.IsDefined(StorageSubscriptionId))
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);

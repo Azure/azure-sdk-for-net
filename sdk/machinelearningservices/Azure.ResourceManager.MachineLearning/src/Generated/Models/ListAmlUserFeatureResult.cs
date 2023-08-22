@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of ListAmlUserFeatureResult. </summary>
         internal ListAmlUserFeatureResult()
         {
-            Value = new Core.ChangeTrackingList<MachineLearningUserFeature>();
+            Value = new ChangeTrackingList<MachineLearningUserFeature>();
         }
 
         /// <summary> Initializes a new instance of ListAmlUserFeatureResult. </summary>

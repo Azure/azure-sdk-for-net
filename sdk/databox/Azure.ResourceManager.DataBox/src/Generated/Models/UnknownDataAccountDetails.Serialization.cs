@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataAccountDetails : Core.IUtf8JsonSerializable
+    internal partial class UnknownDataAccountDetails : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (Core.Optional.IsDefined(SharePassword))
+            if (Optional.IsDefined(SharePassword))
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountType dataAccountType = default;
-            Core.Optional<string> sharePassword = default;
+            Optional<string> sharePassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataAccountType"u8))

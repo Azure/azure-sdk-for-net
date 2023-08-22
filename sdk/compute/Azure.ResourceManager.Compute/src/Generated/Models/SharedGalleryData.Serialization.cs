@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<string> uniqueId = default;
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
+            Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryData(name.Value, Core.Optional.ToNullable(location), uniqueId.Value);
+            return new SharedGalleryData(name.Value, Optional.ToNullable(location), uniqueId.Value);
         }
     }
 }

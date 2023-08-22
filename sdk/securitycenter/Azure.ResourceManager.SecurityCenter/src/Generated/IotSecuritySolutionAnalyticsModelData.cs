@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelData. </summary>
         public IotSecuritySolutionAnalyticsModelData()
         {
-            DevicesMetrics = new Core.ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
-            TopAlertedDevices = new Core.ChangeTrackingList<IotSecurityAlertedDevice>();
-            MostPrevalentDeviceAlerts = new Core.ChangeTrackingList<IotSecurityDeviceAlert>();
-            MostPrevalentDeviceRecommendations = new Core.ChangeTrackingList<IotSecurityDeviceRecommendation>();
+            DevicesMetrics = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
+            TopAlertedDevices = new ChangeTrackingList<IotSecurityAlertedDevice>();
+            MostPrevalentDeviceAlerts = new ChangeTrackingList<IotSecurityDeviceAlert>();
+            MostPrevalentDeviceRecommendations = new ChangeTrackingList<IotSecurityDeviceRecommendation>();
         }
 
         /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelData. </summary>

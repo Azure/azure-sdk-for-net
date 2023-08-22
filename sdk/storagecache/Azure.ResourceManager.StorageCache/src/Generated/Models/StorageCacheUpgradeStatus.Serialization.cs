@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Core.Optional<string> currentFirmwareVersion = default;
-            Core.Optional<StorageCacheFirmwareStatusType> firmwareUpdateStatus = default;
-            Core.Optional<DateTimeOffset> firmwareUpdateDeadline = default;
-            Core.Optional<DateTimeOffset> lastFirmwareUpdate = default;
-            Core.Optional<string> pendingFirmwareVersion = default;
+            Optional<string> currentFirmwareVersion = default;
+            Optional<StorageCacheFirmwareStatusType> firmwareUpdateStatus = default;
+            Optional<DateTimeOffset> firmwareUpdateDeadline = default;
+            Optional<DateTimeOffset> lastFirmwareUpdate = default;
+            Optional<string> pendingFirmwareVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentFirmwareVersion"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     continue;
                 }
             }
-            return new StorageCacheUpgradeStatus(currentFirmwareVersion.Value, Core.Optional.ToNullable(firmwareUpdateStatus), Core.Optional.ToNullable(firmwareUpdateDeadline), Core.Optional.ToNullable(lastFirmwareUpdate), pendingFirmwareVersion.Value);
+            return new StorageCacheUpgradeStatus(currentFirmwareVersion.Value, Optional.ToNullable(firmwareUpdateStatus), Optional.ToNullable(firmwareUpdateDeadline), Optional.ToNullable(lastFirmwareUpdate), pendingFirmwareVersion.Value);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of PrepareNetworkPoliciesContent. </summary>
         public PrepareNetworkPoliciesContent()
         {
-            NetworkIntentPolicyConfigurations = new Core.ChangeTrackingList<NetworkIntentPolicyConfiguration>();
+            NetworkIntentPolicyConfigurations = new ChangeTrackingList<NetworkIntentPolicyConfiguration>();
         }
 
         /// <summary> The name of the service for which subnet is being prepared for. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
         public ManagedRuleSetList()
         {
-            ManagedRuleSets = new Core.ChangeTrackingList<WafPolicyManagedRuleSet>();
+            ManagedRuleSets = new ChangeTrackingList<WafPolicyManagedRuleSet>();
         }
 
         /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>

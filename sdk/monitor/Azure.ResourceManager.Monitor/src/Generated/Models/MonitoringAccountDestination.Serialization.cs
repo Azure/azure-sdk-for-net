@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitoringAccountDestination : Core.IUtf8JsonSerializable
+    public partial class MonitoringAccountDestination : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AccountResourceId))
+            if (Optional.IsDefined(AccountResourceId))
             {
                 writer.WritePropertyName("accountResourceId"u8);
                 writer.WriteStringValue(AccountResourceId);
             }
-            if (Core.Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> accountResourceId = default;
-            Core.Optional<string> accountId = default;
-            Core.Optional<string> name = default;
+            Optional<ResourceIdentifier> accountResourceId = default;
+            Optional<string> accountId = default;
+            Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountResourceId"u8))

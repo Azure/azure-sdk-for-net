@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    internal partial class AwsCloudTrailDataConnectorDataTypes : Core.IUtf8JsonSerializable
+    internal partial class AwsCloudTrailDataConnectorDataTypes : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Logs))
+            if (Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteObjectValue(Logs);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
+            Optional<AwsCloudTrailDataConnectorDataTypesLogs> logs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logs"u8))

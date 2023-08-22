@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of StorageApplianceEnableRemoteVendorManagementContent. </summary>
         public StorageApplianceEnableRemoteVendorManagementContent()
         {
-            SupportEndpoints = new Core.ChangeTrackingList<string>();
+            SupportEndpoints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Field Deprecated. This field is not used and will be rejected if provided. The list of IPv4 subnets (in CIDR format), IPv6 subnets (in CIDR format), or hostnames that the storage appliance needs accessible in order to turn on the remote vendor management. </summary>

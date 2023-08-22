@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of CaCertificatesListResult. </summary>
         internal CaCertificatesListResult()
         {
-            Value = new Core.ChangeTrackingList<CaCertificateData>();
+            Value = new ChangeTrackingList<CaCertificateData>();
         }
 
         /// <summary> Initializes a new instance of CaCertificatesListResult. </summary>

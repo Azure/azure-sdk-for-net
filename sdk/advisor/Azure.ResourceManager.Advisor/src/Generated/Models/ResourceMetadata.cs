@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>
         public ResourceMetadata()
         {
-            Action = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Action = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>

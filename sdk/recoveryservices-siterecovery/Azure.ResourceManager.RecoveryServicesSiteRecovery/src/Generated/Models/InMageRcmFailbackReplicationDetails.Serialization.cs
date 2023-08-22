@@ -20,35 +20,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> internalIdentifier = default;
-            Core.Optional<ResourceIdentifier> azureVirtualMachineId = default;
-            Core.Optional<string> multiVmGroupName = default;
-            Core.Optional<string> reprotectAgentId = default;
-            Core.Optional<string> reprotectAgentName = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<ResourceIdentifier> logStorageAccountId = default;
-            Core.Optional<string> targetvCenterId = default;
-            Core.Optional<string> targetDataStoreName = default;
-            Core.Optional<string> targetVmName = default;
-            Core.Optional<int> initialReplicationProgressPercentage = default;
-            Core.Optional<long> initialReplicationProcessedBytes = default;
-            Core.Optional<long> initialReplicationTransferredBytes = default;
-            Core.Optional<VmReplicationProgressHealth> initialReplicationProgressHealth = default;
-            Core.Optional<int> resyncProgressPercentage = default;
-            Core.Optional<long> resyncProcessedBytes = default;
-            Core.Optional<long> resyncTransferredBytes = default;
-            Core.Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
-            Core.Optional<string> resyncRequired = default;
-            Core.Optional<SiteRecoveryResyncState> resyncState = default;
-            Core.Optional<IReadOnlyList<InMageRcmFailbackProtectedDiskDetails>> protectedDisks = default;
-            Core.Optional<InMageRcmFailbackMobilityAgentDetails> mobilityAgentDetails = default;
-            Core.Optional<IReadOnlyList<InMageRcmFailbackNicDetails>> vmNics = default;
-            Core.Optional<DateTimeOffset> lastPlannedFailoverStartTime = default;
-            Core.Optional<PlannedFailoverStatus> lastPlannedFailoverStatus = default;
-            Core.Optional<InMageRcmFailbackDiscoveredProtectedVmDetails> discoveredVmDetails = default;
-            Core.Optional<ResourceIdentifier> lastUsedPolicyId = default;
-            Core.Optional<string> lastUsedPolicyFriendlyName = default;
-            Core.Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
+            Optional<string> internalIdentifier = default;
+            Optional<ResourceIdentifier> azureVirtualMachineId = default;
+            Optional<string> multiVmGroupName = default;
+            Optional<string> reprotectAgentId = default;
+            Optional<string> reprotectAgentName = default;
+            Optional<string> osType = default;
+            Optional<ResourceIdentifier> logStorageAccountId = default;
+            Optional<string> targetvCenterId = default;
+            Optional<string> targetDataStoreName = default;
+            Optional<string> targetVmName = default;
+            Optional<int> initialReplicationProgressPercentage = default;
+            Optional<long> initialReplicationProcessedBytes = default;
+            Optional<long> initialReplicationTransferredBytes = default;
+            Optional<VmReplicationProgressHealth> initialReplicationProgressHealth = default;
+            Optional<int> resyncProgressPercentage = default;
+            Optional<long> resyncProcessedBytes = default;
+            Optional<long> resyncTransferredBytes = default;
+            Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
+            Optional<string> resyncRequired = default;
+            Optional<SiteRecoveryResyncState> resyncState = default;
+            Optional<IReadOnlyList<InMageRcmFailbackProtectedDiskDetails>> protectedDisks = default;
+            Optional<InMageRcmFailbackMobilityAgentDetails> mobilityAgentDetails = default;
+            Optional<IReadOnlyList<InMageRcmFailbackNicDetails>> vmNics = default;
+            Optional<DateTimeOffset> lastPlannedFailoverStartTime = default;
+            Optional<PlannedFailoverStatus> lastPlannedFailoverStatus = default;
+            Optional<InMageRcmFailbackDiscoveredProtectedVmDetails> discoveredVmDetails = default;
+            Optional<ResourceIdentifier> lastUsedPolicyId = default;
+            Optional<string> lastUsedPolicyFriendlyName = default;
+            Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmFailbackReplicationDetails(instanceType, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Core.Optional.ToNullable(initialReplicationProgressPercentage), Core.Optional.ToNullable(initialReplicationProcessedBytes), Core.Optional.ToNullable(initialReplicationTransferredBytes), Core.Optional.ToNullable(initialReplicationProgressHealth), Core.Optional.ToNullable(resyncProgressPercentage), Core.Optional.ToNullable(resyncProcessedBytes), Core.Optional.ToNullable(resyncTransferredBytes), Core.Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Core.Optional.ToNullable(resyncState), Core.Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Core.Optional.ToList(vmNics), Core.Optional.ToNullable(lastPlannedFailoverStartTime), Core.Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Core.Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
+            return new InMageRcmFailbackReplicationDetails(instanceType, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Optional.ToList(vmNics), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
         }
     }
 }

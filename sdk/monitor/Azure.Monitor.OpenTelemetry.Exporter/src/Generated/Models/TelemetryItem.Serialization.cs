@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryItem : Core.IUtf8JsonSerializable
+    internal partial class TelemetryItem : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("ver"u8);
                 writer.WriteNumberValue(Version.Value);
@@ -24,22 +24,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("time"u8);
             writer.WriteStringValue(Time, "O");
-            if (Core.Optional.IsDefined(SampleRate))
+            if (Optional.IsDefined(SampleRate))
             {
                 writer.WritePropertyName("sampleRate"u8);
                 writer.WriteNumberValue(SampleRate.Value);
             }
-            if (Core.Optional.IsDefined(Sequence))
+            if (Optional.IsDefined(Sequence))
             {
                 writer.WritePropertyName("seq"u8);
                 writer.WriteStringValue(Sequence);
             }
-            if (Core.Optional.IsDefined(InstrumentationKey))
+            if (Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("iKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Core.Optional.IsDefined(Data))
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteObjectValue(Data);

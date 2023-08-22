@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SecurityGroupViewResult. </summary>
         internal SecurityGroupViewResult()
         {
-            NetworkInterfaces = new Core.ChangeTrackingList<SecurityGroupNetworkInterface>();
+            NetworkInterfaces = new ChangeTrackingList<SecurityGroupNetworkInterface>();
         }
 
         /// <summary> Initializes a new instance of SecurityGroupViewResult. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Initializes a new instance of SummarizeResults. </summary>
         internal SummarizeResults()
         {
-            Value = new Core.ChangeTrackingList<PolicySummary>();
+            Value = new ChangeTrackingList<PolicySummary>();
         }
 
         /// <summary> Initializes a new instance of SummarizeResults. </summary>

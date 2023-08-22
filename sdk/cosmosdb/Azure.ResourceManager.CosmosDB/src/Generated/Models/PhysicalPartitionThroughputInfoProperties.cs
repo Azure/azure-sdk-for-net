@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoProperties. </summary>
         public PhysicalPartitionThroughputInfoProperties()
         {
-            PhysicalPartitionThroughputInfo = new Core.ChangeTrackingList<PhysicalPartitionThroughputInfoResource>();
+            PhysicalPartitionThroughputInfo = new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>();
         }
 
         /// <summary> Initializes a new instance of PhysicalPartitionThroughputInfoProperties. </summary>

@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Interval = interval;
             StartTime = startTime;
             MaxConcurrency = maxConcurrency;
-            DependsOn = new Core.ChangeTrackingList<DependencyReference>();
+            DependsOn = new ChangeTrackingList<DependencyReference>();
             Type = "TumblingWindowTrigger";
         }
 

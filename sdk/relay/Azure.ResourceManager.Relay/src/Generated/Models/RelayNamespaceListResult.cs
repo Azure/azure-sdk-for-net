@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of RelayNamespaceListResult. </summary>
         internal RelayNamespaceListResult()
         {
-            Value = new Core.ChangeTrackingList<RelayNamespaceData>();
+            Value = new ChangeTrackingList<RelayNamespaceData>();
         }
 
         /// <summary> Initializes a new instance of RelayNamespaceListResult. </summary>

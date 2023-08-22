@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         {
             From = @from;
             Total = total;
-            Sessions = new Core.ChangeTrackingList<SparkSession>();
+            Sessions = new ChangeTrackingList<SparkSession>();
         }
 
         /// <summary> Initializes a new instance of SparkSessionCollection. </summary>

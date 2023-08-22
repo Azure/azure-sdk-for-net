@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityMLAnalyticsSettingsDataSource : Core.IUtf8JsonSerializable
+    public partial class SecurityMLAnalyticsSettingsDataSource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ConnectorId))
+            if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (Core.Optional.IsCollectionDefined(DataTypes))
+            if (Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<string> connectorId = default;
-            Core.Optional<IList<string>> dataTypes = default;
+            Optional<string> connectorId = default;
+            Optional<IList<string>> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectorId"u8))
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityMLAnalyticsSettingsDataSource(connectorId.Value, Core.Optional.ToList(dataTypes));
+            return new SecurityMLAnalyticsSettingsDataSource(connectorId.Value, Optional.ToList(dataTypes));
         }
     }
 }

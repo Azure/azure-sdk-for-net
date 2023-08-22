@@ -11,22 +11,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridPartnerContent : Core.IUtf8JsonSerializable
+    public partial class EventGridPartnerContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PartnerRegistrationImmutableId))
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (Core.Optional.IsDefined(PartnerName))
+            if (Optional.IsDefined(PartnerName))
             {
                 writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
-            if (Core.Optional.IsDefined(AuthorizationExpireOn))
+            if (Optional.IsDefined(AuthorizationExpireOn))
             {
                 writer.WritePropertyName("authorizationExpirationTimeInUtc"u8);
                 writer.WriteStringValue(AuthorizationExpireOn.Value, "O");
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Core.Optional<Guid> partnerRegistrationImmutableId = default;
-            Core.Optional<string> partnerName = default;
-            Core.Optional<DateTimeOffset> authorizationExpirationTimeInUtc = default;
+            Optional<Guid> partnerRegistrationImmutableId = default;
+            Optional<string> partnerName = default;
+            Optional<DateTimeOffset> authorizationExpirationTimeInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partnerRegistrationImmutableId"u8))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     continue;
                 }
             }
-            return new EventGridPartnerContent(Core.Optional.ToNullable(partnerRegistrationImmutableId), partnerName.Value, Core.Optional.ToNullable(authorizationExpirationTimeInUtc));
+            return new EventGridPartnerContent(Optional.ToNullable(partnerRegistrationImmutableId), partnerName.Value, Optional.ToNullable(authorizationExpirationTimeInUtc));
         }
     }
 }

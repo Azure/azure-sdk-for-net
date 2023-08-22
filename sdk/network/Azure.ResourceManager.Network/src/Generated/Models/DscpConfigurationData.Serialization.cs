@@ -14,22 +14,22 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class DscpConfigurationData : Core.IUtf8JsonSerializable
+    public partial class DscpConfigurationData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Core.Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Core.Optional.IsCollectionDefined(Markings))
+            if (Optional.IsCollectionDefined(Markings))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourceIPRanges))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationIPRanges))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(SourcePortRanges))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(DestinationPortRanges))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(Protocol))
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(QosDefinitionCollection))
+            if (Optional.IsCollectionDefined(QosDefinitionCollection))
             {
                 writer.WritePropertyName("qosDefinitionCollection"u8);
                 writer.WriteStartArray();
@@ -117,23 +117,23 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Core.Optional<ETag> etag = default;
-            Core.Optional<ResourceIdentifier> id = default;
-            Core.Optional<string> name = default;
-            Core.Optional<ResourceType> type = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<IDictionary<string, string>> tags = default;
-            Core.Optional<IList<int>> markings = default;
-            Core.Optional<IList<QosIPRange>> sourceIPRanges = default;
-            Core.Optional<IList<QosIPRange>> destinationIPRanges = default;
-            Core.Optional<IList<QosPortRange>> sourcePortRanges = default;
-            Core.Optional<IList<QosPortRange>> destinationPortRanges = default;
-            Core.Optional<ProtocolType> protocol = default;
-            Core.Optional<IList<DscpQosDefinition>> qosDefinitionCollection = default;
-            Core.Optional<string> qosCollectionId = default;
-            Core.Optional<IReadOnlyList<NetworkInterfaceData>> associatedNetworkInterfaces = default;
-            Core.Optional<Guid> resourceGuid = default;
-            Core.Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<int>> markings = default;
+            Optional<IList<QosIPRange>> sourceIPRanges = default;
+            Optional<IList<QosIPRange>> destinationIPRanges = default;
+            Optional<IList<QosPortRange>> sourcePortRanges = default;
+            Optional<IList<QosPortRange>> destinationPortRanges = default;
+            Optional<ProtocolType> protocol = default;
+            Optional<IList<DscpQosDefinition>> qosDefinitionCollection = default;
+            Optional<string> qosCollectionId = default;
+            Optional<IReadOnlyList<NetworkInterfaceData>> associatedNetworkInterfaces = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new DscpConfigurationData(id.Value, name.Value, Core.Optional.ToNullable(type), Core.Optional.ToNullable(location), Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(etag), Core.Optional.ToList(markings), Core.Optional.ToList(sourceIPRanges), Core.Optional.ToList(destinationIPRanges), Core.Optional.ToList(sourcePortRanges), Core.Optional.ToList(destinationPortRanges), Core.Optional.ToNullable(protocol), Core.Optional.ToList(qosDefinitionCollection), qosCollectionId.Value, Core.Optional.ToList(associatedNetworkInterfaces), Core.Optional.ToNullable(resourceGuid), Core.Optional.ToNullable(provisioningState));
+            return new DscpConfigurationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), Optional.ToList(markings), Optional.ToList(sourceIPRanges), Optional.ToList(destinationIPRanges), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(protocol), Optional.ToList(qosDefinitionCollection), qosCollectionId.Value, Optional.ToList(associatedNetworkInterfaces), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
         }
     }
 }

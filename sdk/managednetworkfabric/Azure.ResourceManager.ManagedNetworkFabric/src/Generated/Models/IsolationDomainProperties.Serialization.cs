@@ -11,17 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IsolationDomainProperties : Core.IUtf8JsonSerializable
+    public partial class IsolationDomainProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Encapsulation))
+            if (Optional.IsDefined(Encapsulation))
             {
                 writer.WritePropertyName("encapsulation"u8);
                 writer.WriteStringValue(Encapsulation.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(NeighborGroupIds))
+            if (Optional.IsCollectionDefined(NeighborGroupIds))
             {
                 writer.WritePropertyName("neighborGroupIds"u8);
                 writer.WriteStartArray();
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<IsolationDomainEncapsulationType> encapsulation = default;
-            Core.Optional<IList<ResourceIdentifier>> neighborGroupIds = default;
+            Optional<IsolationDomainEncapsulationType> encapsulation = default;
+            Optional<IList<ResourceIdentifier>> neighborGroupIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encapsulation"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new IsolationDomainProperties(Core.Optional.ToNullable(encapsulation), Core.Optional.ToList(neighborGroupIds));
+            return new IsolationDomainProperties(Optional.ToNullable(encapsulation), Optional.ToList(neighborGroupIds));
         }
     }
 }

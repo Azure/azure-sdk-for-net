@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer
             Argument.AssertNotNull(callLocator, nameof(callLocator));
 
             CallLocator = callLocator;
-            ChannelAffinity = new Core.ChangeTrackingList<ChannelAffinityInternal>();
+            ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
         }
 
         /// <summary> The call locator. </summary>

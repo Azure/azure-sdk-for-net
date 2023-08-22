@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <summary> Initializes a new instance of FarmBeatsExtensionListResponse. </summary>
         internal FarmBeatsExtensionListResponse()
         {
-            Value = new Core.ChangeTrackingList<FarmBeatsExtensionData>();
+            Value = new ChangeTrackingList<FarmBeatsExtensionData>();
         }
 
         /// <summary> Initializes a new instance of FarmBeatsExtensionListResponse. </summary>

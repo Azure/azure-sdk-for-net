@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualApplianceSkuProperties : Core.IUtf8JsonSerializable
+    public partial class VirtualApplianceSkuProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Vendor))
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Core.Optional.IsDefined(BundledScaleUnit))
+            if (Optional.IsDefined(BundledScaleUnit))
             {
                 writer.WritePropertyName("bundledScaleUnit"u8);
                 writer.WriteStringValue(BundledScaleUnit);
             }
-            if (Core.Optional.IsDefined(MarketPlaceVersion))
+            if (Optional.IsDefined(MarketPlaceVersion))
             {
                 writer.WritePropertyName("marketPlaceVersion"u8);
                 writer.WriteStringValue(MarketPlaceVersion);
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<string> vendor = default;
-            Core.Optional<string> bundledScaleUnit = default;
-            Core.Optional<string> marketPlaceVersion = default;
+            Optional<string> vendor = default;
+            Optional<string> bundledScaleUnit = default;
+            Optional<string> marketPlaceVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vendor"u8))

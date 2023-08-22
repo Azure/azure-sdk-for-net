@@ -12,17 +12,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
-    public partial class ManagedNetworkPeeringPolicyData : Core.IUtf8JsonSerializable
+    public partial class ManagedNetworkPeeringPolicyData : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Core.Optional.IsDefined(Location))
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ManagedNetwork
             {
                 return null;
             }
-            Core.Optional<ManagedNetworkPeeringPolicyProperties> properties = default;
-            Core.Optional<AzureLocation> location = default;
+            Optional<ManagedNetworkPeeringPolicyProperties> properties = default;
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
+            Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     continue;
                 }
             }
-            return new ManagedNetworkPeeringPolicyData(id, name, type, systemData.Value, properties.Value, Core.Optional.ToNullable(location));
+            return new ManagedNetworkPeeringPolicyData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location));
         }
     }
 }

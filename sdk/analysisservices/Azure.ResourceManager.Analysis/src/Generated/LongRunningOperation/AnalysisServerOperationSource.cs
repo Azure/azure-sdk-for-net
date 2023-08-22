@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Analysis
 {
-    internal class AnalysisServerOperationSource : Core.IOperationSource<AnalysisServerResource>
+    internal class AnalysisServerOperationSource : IOperationSource<AnalysisServerResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Analysis
             _client = client;
         }
 
-        AnalysisServerResource Core.IOperationSource<AnalysisServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AnalysisServerResource IOperationSource<AnalysisServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);
             return new AnalysisServerResource(_client, data);
         }
 
-        async ValueTask<AnalysisServerResource> Core.IOperationSource<AnalysisServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AnalysisServerResource> IOperationSource<AnalysisServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = AnalysisServerData.DeserializeAnalysisServerData(document.RootElement);

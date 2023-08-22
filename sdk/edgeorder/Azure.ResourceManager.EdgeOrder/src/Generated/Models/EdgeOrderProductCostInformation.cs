@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of EdgeOrderProductCostInformation. </summary>
         internal EdgeOrderProductCostInformation()
         {
-            BillingMeterDetails = new Core.ChangeTrackingList<EdgeOrderProductBillingMeterDetails>();
+            BillingMeterDetails = new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>();
         }
 
         /// <summary> Initializes a new instance of EdgeOrderProductCostInformation. </summary>

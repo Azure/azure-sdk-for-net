@@ -14,15 +14,15 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    internal class GetGroupIdListForLdapUserResultOperationSource : Core.IOperationSource<GetGroupIdListForLdapUserResult>
+    internal class GetGroupIdListForLdapUserResultOperationSource : IOperationSource<GetGroupIdListForLdapUserResult>
     {
-        GetGroupIdListForLdapUserResult Core.IOperationSource<GetGroupIdListForLdapUserResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        GetGroupIdListForLdapUserResult IOperationSource<GetGroupIdListForLdapUserResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             return GetGroupIdListForLdapUserResult.DeserializeGetGroupIdListForLdapUserResult(document.RootElement);
         }
 
-        async ValueTask<GetGroupIdListForLdapUserResult> Core.IOperationSource<GetGroupIdListForLdapUserResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GetGroupIdListForLdapUserResult> IOperationSource<GetGroupIdListForLdapUserResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return GetGroupIdListForLdapUserResult.DeserializeGetGroupIdListForLdapUserResult(document.RootElement);

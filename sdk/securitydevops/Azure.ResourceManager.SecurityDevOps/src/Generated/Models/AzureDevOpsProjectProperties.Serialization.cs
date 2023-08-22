@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class AzureDevOpsProjectProperties : Core.IUtf8JsonSerializable
+    public partial class AzureDevOpsProjectProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Core.Optional.IsDefined(ProjectId))
+            if (Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
-            if (Core.Optional.IsDefined(OrgName))
+            if (Optional.IsDefined(OrgName))
             {
                 writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
-            if (Core.Optional.IsDefined(AutoDiscovery))
+            if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Core.Optional<ProvisioningState> provisioningState = default;
-            Core.Optional<string> projectId = default;
-            Core.Optional<string> orgName = default;
-            Core.Optional<AutoDiscovery> autoDiscovery = default;
+            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> projectId = default;
+            Optional<string> orgName = default;
+            Optional<AutoDiscovery> autoDiscovery = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     continue;
                 }
             }
-            return new AzureDevOpsProjectProperties(Core.Optional.ToNullable(provisioningState), projectId.Value, orgName.Value, Core.Optional.ToNullable(autoDiscovery));
+            return new AzureDevOpsProjectProperties(Optional.ToNullable(provisioningState), projectId.Value, orgName.Value, Optional.ToNullable(autoDiscovery));
         }
     }
 }

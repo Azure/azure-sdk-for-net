@@ -12,9 +12,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class KustoClusterDataSet : Core.IUtf8JsonSerializable
+    public partial class KustoClusterDataSet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Core.Optional<SystemData> systemData = default;
-            Core.Optional<Guid> dataSetId = default;
+            Optional<SystemData> systemData = default;
+            Optional<Guid> dataSetId = default;
             ResourceIdentifier kustoClusterResourceId = default;
-            Core.Optional<AzureLocation> location = default;
-            Core.Optional<DataShareProvisioningState> provisioningState = default;
+            Optional<AzureLocation> location = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new KustoClusterDataSet(id, name, type, systemData.Value, kind, Core.Optional.ToNullable(dataSetId), kustoClusterResourceId, Core.Optional.ToNullable(location), Core.Optional.ToNullable(provisioningState));
+            return new KustoClusterDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
         }
     }
 }

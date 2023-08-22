@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkManagerEffectiveConnectivityConfigurationListResult. </summary>
         internal NetworkManagerEffectiveConnectivityConfigurationListResult()
         {
-            Value = new Core.ChangeTrackingList<EffectiveConnectivityConfiguration>();
+            Value = new ChangeTrackingList<EffectiveConnectivityConfiguration>();
         }
 
         /// <summary> Initializes a new instance of NetworkManagerEffectiveConnectivityConfigurationListResult. </summary>

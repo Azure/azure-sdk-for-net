@@ -10,27 +10,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class Layer3IPPrefixProperties : Core.IUtf8JsonSerializable
+    public partial class Layer3IPPrefixProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(PrimaryIPv4Prefix))
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (Core.Optional.IsDefined(PrimaryIPv6Prefix))
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (Core.Optional.IsDefined(SecondaryIPv4Prefix))
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (Core.Optional.IsDefined(SecondaryIPv6Prefix))
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Core.Optional<string> primaryIPv4Prefix = default;
-            Core.Optional<string> primaryIPv6Prefix = default;
-            Core.Optional<string> secondaryIPv4Prefix = default;
-            Core.Optional<string> secondaryIPv6Prefix = default;
+            Optional<string> primaryIPv4Prefix = default;
+            Optional<string> primaryIPv6Prefix = default;
+            Optional<string> secondaryIPv4Prefix = default;
+            Optional<string> secondaryIPv6Prefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryIpv4Prefix"u8))

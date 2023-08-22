@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> resourceType = default;
-            Core.Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
+            Optional<string> resourceType = default;
+            Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceTypeAliases(resourceType.Value, Core.Optional.ToList(aliases));
+            return new ResourceTypeAliases(resourceType.Value, Optional.ToList(aliases));
         }
     }
 }

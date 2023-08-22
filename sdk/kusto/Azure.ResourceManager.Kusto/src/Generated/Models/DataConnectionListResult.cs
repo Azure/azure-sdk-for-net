@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of DataConnectionListResult. </summary>
         internal DataConnectionListResult()
         {
-            Value = new Core.ChangeTrackingList<KustoDataConnectionData>();
+            Value = new ChangeTrackingList<KustoDataConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DataConnectionListResult. </summary>

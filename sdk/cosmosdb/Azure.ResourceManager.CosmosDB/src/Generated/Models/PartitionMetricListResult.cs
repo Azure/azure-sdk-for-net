@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of PartitionMetricListResult. </summary>
         internal PartitionMetricListResult()
         {
-            Value = new Core.ChangeTrackingList<PartitionMetric>();
+            Value = new ChangeTrackingList<PartitionMetric>();
         }
 
         /// <summary> Initializes a new instance of PartitionMetricListResult. </summary>

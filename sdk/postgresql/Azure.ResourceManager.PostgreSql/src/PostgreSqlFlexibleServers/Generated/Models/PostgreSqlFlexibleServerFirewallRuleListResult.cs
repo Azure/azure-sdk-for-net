@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFirewallRuleListResult. </summary>
         internal PostgreSqlFlexibleServerFirewallRuleListResult()
         {
-            Value = new Core.ChangeTrackingList<PostgreSqlFlexibleServerFirewallRuleData>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerFirewallRuleData>();
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFirewallRuleListResult. </summary>

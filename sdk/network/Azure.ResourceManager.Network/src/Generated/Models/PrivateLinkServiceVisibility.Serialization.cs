@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<bool> visible = default;
+            Optional<bool> visible = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("visible"u8))
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new PrivateLinkServiceVisibility(Core.Optional.ToNullable(visible));
+            return new PrivateLinkServiceVisibility(Optional.ToNullable(visible));
         }
     }
 }

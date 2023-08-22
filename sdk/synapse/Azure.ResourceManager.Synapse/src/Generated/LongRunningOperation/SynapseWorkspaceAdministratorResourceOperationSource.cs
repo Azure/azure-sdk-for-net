@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
-    internal class SynapseWorkspaceAdministratorResourceOperationSource : Core.IOperationSource<SynapseWorkspaceAdministratorResource>
+    internal class SynapseWorkspaceAdministratorResourceOperationSource : IOperationSource<SynapseWorkspaceAdministratorResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Synapse
             _client = client;
         }
 
-        SynapseWorkspaceAdministratorResource Core.IOperationSource<SynapseWorkspaceAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SynapseWorkspaceAdministratorResource IOperationSource<SynapseWorkspaceAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SynapseWorkspaceAadAdminInfoData.DeserializeSynapseWorkspaceAadAdminInfoData(document.RootElement);
             return new SynapseWorkspaceAdministratorResource(_client, data);
         }
 
-        async ValueTask<SynapseWorkspaceAdministratorResource> Core.IOperationSource<SynapseWorkspaceAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SynapseWorkspaceAdministratorResource> IOperationSource<SynapseWorkspaceAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SynapseWorkspaceAadAdminInfoData.DeserializeSynapseWorkspaceAadAdminInfoData(document.RootElement);

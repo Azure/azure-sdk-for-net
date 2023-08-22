@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<BillingSubscriptionAliasData>> value = default;
-            Core.Optional<string> nextLink = default;
+            Optional<IReadOnlyList<BillingSubscriptionAliasData>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Billing.Models
                     continue;
                 }
             }
-            return new BillingSubscriptionAliasListResult(Core.Optional.ToList(value), nextLink.Value);
+            return new BillingSubscriptionAliasListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

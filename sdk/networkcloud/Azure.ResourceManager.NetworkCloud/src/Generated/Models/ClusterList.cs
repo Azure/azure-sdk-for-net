@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of ClusterList. </summary>
         internal ClusterList()
         {
-            Value = new Core.ChangeTrackingList<NetworkCloudClusterData>();
+            Value = new ChangeTrackingList<NetworkCloudClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterList. </summary>

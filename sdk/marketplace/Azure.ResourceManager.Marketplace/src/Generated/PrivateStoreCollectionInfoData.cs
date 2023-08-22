@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
         public PrivateStoreCollectionInfoData()
         {
-            SubscriptionsList = new Core.ChangeTrackingList<string>();
+            SubscriptionsList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>

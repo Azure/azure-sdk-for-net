@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class FeaturesRule : Core.IUtf8JsonSerializable
+    internal partial class FeaturesRule : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("requiredFeaturesPolicy"u8);

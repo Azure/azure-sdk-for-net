@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Inputs = new Core.ChangeTrackingList<InputFieldMappingEntry>();
+            Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
         }
 
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>

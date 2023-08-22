@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorOutput : Core.IUtf8JsonSerializable
+    public partial class ConnectionMonitorOutput : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(OutputType))
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(WorkspaceSettings))
+            if (Optional.IsDefined(WorkspaceSettings))
             {
                 writer.WritePropertyName("workspaceSettings"u8);
                 writer.WriteObjectValue(WorkspaceSettings);
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<OutputType> type = default;
-            Core.Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
+            Optional<OutputType> type = default;
+            Optional<ConnectionMonitorWorkspaceSettings> workspaceSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ConnectionMonitorOutput(Core.Optional.ToNullable(type), workspaceSettings.Value);
+            return new ConnectionMonitorOutput(Optional.ToNullable(type), workspaceSettings.Value);
         }
     }
 }

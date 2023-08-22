@@ -12,37 +12,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmBackupJob : Core.IUtf8JsonSerializable
+    public partial class DpmBackupJob : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Duration))
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Core.Optional.IsDefined(DpmServerName))
+            if (Optional.IsDefined(DpmServerName))
             {
                 writer.WritePropertyName("dpmServerName"u8);
                 writer.WriteStringValue(DpmServerName);
             }
-            if (Core.Optional.IsDefined(ContainerName))
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (Core.Optional.IsDefined(ContainerType))
+            if (Optional.IsDefined(ContainerType))
             {
                 writer.WritePropertyName("containerType"u8);
                 writer.WriteStringValue(ContainerType);
             }
-            if (Core.Optional.IsDefined(WorkloadType))
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
-            if (Core.Optional.IsCollectionDefined(ActionsInfo))
+            if (Optional.IsCollectionDefined(ActionsInfo))
             {
                 writer.WritePropertyName("actionsInfo"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsCollectionDefined(ErrorDetails))
+            if (Optional.IsCollectionDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -62,42 +62,42 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Core.Optional.IsDefined(ExtendedInfo))
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (Core.Optional.IsDefined(EntityFriendlyName))
+            if (Optional.IsDefined(EntityFriendlyName))
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (Core.Optional.IsDefined(BackupManagementType))
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Operation))
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Core.Optional.IsDefined(Status))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Core.Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Core.Optional.IsDefined(ActivityId))
+            if (Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -113,21 +113,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Core.Optional<TimeSpan> duration = default;
-            Core.Optional<string> dpmServerName = default;
-            Core.Optional<string> containerName = default;
-            Core.Optional<string> containerType = default;
-            Core.Optional<string> workloadType = default;
-            Core.Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Core.Optional<IList<DpmErrorInfo>> errorDetails = default;
-            Core.Optional<DpmBackupJobExtendedInfo> extendedInfo = default;
-            Core.Optional<string> entityFriendlyName = default;
-            Core.Optional<BackupManagementType> backupManagementType = default;
-            Core.Optional<string> operation = default;
-            Core.Optional<string> status = default;
-            Core.Optional<DateTimeOffset> startTime = default;
-            Core.Optional<DateTimeOffset> endTime = default;
-            Core.Optional<string> activityId = default;
+            Optional<TimeSpan> duration = default;
+            Optional<string> dpmServerName = default;
+            Optional<string> containerName = default;
+            Optional<string> containerType = default;
+            Optional<string> workloadType = default;
+            Optional<IList<JobSupportedAction>> actionsInfo = default;
+            Optional<IList<DpmErrorInfo>> errorDetails = default;
+            Optional<DpmBackupJobExtendedInfo> extendedInfo = default;
+            Optional<string> entityFriendlyName = default;
+            Optional<BackupManagementType> backupManagementType = default;
+            Optional<string> operation = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<string> activityId = default;
             string jobType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new DpmBackupJob(entityFriendlyName.Value, Core.Optional.ToNullable(backupManagementType), operation.Value, status.Value, Core.Optional.ToNullable(startTime), Core.Optional.ToNullable(endTime), activityId.Value, jobType, Core.Optional.ToNullable(duration), dpmServerName.Value, containerName.Value, containerType.Value, workloadType.Value, Core.Optional.ToList(actionsInfo), Core.Optional.ToList(errorDetails), extendedInfo.Value);
+            return new DpmBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), dpmServerName.Value, containerName.Value, containerType.Value, workloadType.Value, Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
         }
     }
 }

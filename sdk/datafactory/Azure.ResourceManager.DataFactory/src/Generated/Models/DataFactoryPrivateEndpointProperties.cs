@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of DataFactoryPrivateEndpointProperties. </summary>
         public DataFactoryPrivateEndpointProperties()
         {
-            Fqdns = new Core.ChangeTrackingList<string>();
-            AdditionalProperties = new Core.ChangeTrackingDictionary<string, BinaryData>();
+            Fqdns = new ChangeTrackingList<string>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of DataFactoryPrivateEndpointProperties. </summary>

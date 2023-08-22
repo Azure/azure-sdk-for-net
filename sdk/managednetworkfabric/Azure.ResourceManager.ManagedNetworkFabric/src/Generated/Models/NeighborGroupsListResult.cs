@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NeighborGroupsListResult. </summary>
         internal NeighborGroupsListResult()
         {
-            Value = new Core.ChangeTrackingList<NetworkFabricNeighborGroupData>();
+            Value = new ChangeTrackingList<NetworkFabricNeighborGroupData>();
         }
 
         /// <summary> Initializes a new instance of NeighborGroupsListResult. </summary>

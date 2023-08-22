@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class ServicePrincipalParamPatch : Core.IUtf8JsonSerializable
+    internal partial class ServicePrincipalParamPatch : IUtf8JsonSerializable
     {
     }
 }

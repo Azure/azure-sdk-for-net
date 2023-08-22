@@ -10,22 +10,22 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ApplicationDiagnosticContent : Core.IUtf8JsonSerializable
+    public partial class ApplicationDiagnosticContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(AppInstance))
+            if (Optional.IsDefined(AppInstance))
             {
                 writer.WritePropertyName("appInstance"u8);
                 writer.WriteStringValue(AppInstance);
             }
-            if (Core.Optional.IsDefined(FilePath))
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Core.Optional.IsDefined(DurationValue))
+            if (Optional.IsDefined(DurationValue))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(DurationValue);

@@ -11,39 +11,39 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PowerQuerySource : Core.IUtf8JsonSerializable
+    public partial class PowerQuerySource : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Script))
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (Core.Optional.IsDefined(SchemaLinkedService))
+            if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 JsonSerializer.Serialize(writer, SchemaLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Core.Optional.IsDefined(Description))
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Core.Optional.IsDefined(Dataset))
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (Core.Optional.IsDefined(LinkedService))
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Core.Optional.IsDefined(Flowlet))
+            if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -57,13 +57,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Core.Optional<string> script = default;
-            Core.Optional<DataFactoryLinkedServiceReference> schemaLinkedService = default;
+            Optional<string> script = default;
+            Optional<DataFactoryLinkedServiceReference> schemaLinkedService = default;
             string name = default;
-            Core.Optional<string> description = default;
-            Core.Optional<DatasetReference> dataset = default;
-            Core.Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Core.Optional<DataFlowReference> flowlet = default;
+            Optional<string> description = default;
+            Optional<DatasetReference> dataset = default;
+            Optional<DataFactoryLinkedServiceReference> linkedService = default;
+            Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("script"u8))

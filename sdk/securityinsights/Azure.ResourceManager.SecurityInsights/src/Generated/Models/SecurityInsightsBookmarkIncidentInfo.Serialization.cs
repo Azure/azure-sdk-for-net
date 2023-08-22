@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsBookmarkIncidentInfo : Core.IUtf8JsonSerializable
+    public partial class SecurityInsightsBookmarkIncidentInfo : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IncidentId))
+            if (Optional.IsDefined(IncidentId))
             {
                 writer.WritePropertyName("incidentId"u8);
                 writer.WriteStringValue(IncidentId.Value);
             }
-            if (Core.Optional.IsDefined(Severity))
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Core.Optional.IsDefined(Title))
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Core.Optional.IsDefined(RelationName))
+            if (Optional.IsDefined(RelationName))
             {
                 writer.WritePropertyName("relationName"u8);
                 writer.WriteStringValue(RelationName);
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Core.Optional<Guid> incidentId = default;
-            Core.Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Core.Optional<string> title = default;
-            Core.Optional<string> relationName = default;
+            Optional<Guid> incidentId = default;
+            Optional<SecurityInsightsIncidentSeverity> severity = default;
+            Optional<string> title = default;
+            Optional<string> relationName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("incidentId"u8))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new SecurityInsightsBookmarkIncidentInfo(Core.Optional.ToNullable(incidentId), Core.Optional.ToNullable(severity), title.Value, relationName.Value);
+            return new SecurityInsightsBookmarkIncidentInfo(Optional.ToNullable(incidentId), Optional.ToNullable(severity), title.Value, relationName.Value);
         }
     }
 }

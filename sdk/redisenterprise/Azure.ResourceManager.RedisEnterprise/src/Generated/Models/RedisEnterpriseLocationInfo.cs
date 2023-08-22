@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of RedisEnterpriseLocationInfo. </summary>
         internal RedisEnterpriseLocationInfo()
         {
-            Capabilities = new Core.ChangeTrackingList<RedisEnterpriseCapability>();
+            Capabilities = new ChangeTrackingList<RedisEnterpriseCapability>();
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseLocationInfo. </summary>

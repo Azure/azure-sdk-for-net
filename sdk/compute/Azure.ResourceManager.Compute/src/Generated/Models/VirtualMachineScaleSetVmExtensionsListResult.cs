@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsListResult. </summary>
         internal VirtualMachineScaleSetVmExtensionsListResult()
         {
-            Value = new Core.ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>();
+            Value = new ChangeTrackingList<VirtualMachineScaleSetVmExtensionData>();
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionsListResult. </summary>

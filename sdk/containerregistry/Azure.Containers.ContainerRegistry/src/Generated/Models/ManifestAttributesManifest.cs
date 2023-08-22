@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of ManifestAttributesManifest. </summary>
         internal ManifestAttributesManifest()
         {
-            References = new Core.ChangeTrackingList<ArtifactManifestPlatform>();
+            References = new ChangeTrackingList<ArtifactManifestPlatform>();
         }
 
         /// <summary> List of manifest attributes details. </summary>

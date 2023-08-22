@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceProperties. </summary>
         internal DeviceProvisioningServicesPrivateLinkResourceProperties()
         {
-            RequiredMembers = new Core.ChangeTrackingList<string>();
-            RequiredZoneNames = new Core.ChangeTrackingList<string>();
+            RequiredMembers = new ChangeTrackingList<string>();
+            RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceProperties. </summary>

@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeRelocationProperties : Core.IUtf8JsonSerializable
+    public partial class NetAppVolumeRelocationProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(IsRelocationRequested))
+            if (Optional.IsDefined(IsRelocationRequested))
             {
                 writer.WritePropertyName("relocationRequested"u8);
                 writer.WriteBooleanValue(IsRelocationRequested.Value);
@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Core.Optional<bool> relocationRequested = default;
-            Core.Optional<bool> readyToBeFinalized = default;
+            Optional<bool> relocationRequested = default;
+            Optional<bool> readyToBeFinalized = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relocationRequested"u8))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeRelocationProperties(Core.Optional.ToNullable(relocationRequested), Core.Optional.ToNullable(readyToBeFinalized));
+            return new NetAppVolumeRelocationProperties(Optional.ToNullable(relocationRequested), Optional.ToNullable(readyToBeFinalized));
         }
     }
 }

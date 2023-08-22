@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<DateTimeOffset> timeStamp = default;
-            Core.Optional<int> score = default;
+            Optional<DateTimeOffset> timeStamp = default;
+            Optional<int> score = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeStamp"u8))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new AzureReachabilityReportLatencyInfo(Core.Optional.ToNullable(timeStamp), Core.Optional.ToNullable(score));
+            return new AzureReachabilityReportLatencyInfo(Optional.ToNullable(timeStamp), Optional.ToNullable(score));
         }
     }
 }

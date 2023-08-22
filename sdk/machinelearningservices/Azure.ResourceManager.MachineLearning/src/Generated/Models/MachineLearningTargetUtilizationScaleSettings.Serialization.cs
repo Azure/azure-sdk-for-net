@@ -11,27 +11,27 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTargetUtilizationScaleSettings : Core.IUtf8JsonSerializable
+    public partial class MachineLearningTargetUtilizationScaleSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(MaxInstances))
+            if (Optional.IsDefined(MaxInstances))
             {
                 writer.WritePropertyName("maxInstances"u8);
                 writer.WriteNumberValue(MaxInstances.Value);
             }
-            if (Core.Optional.IsDefined(MinInstances))
+            if (Optional.IsDefined(MinInstances))
             {
                 writer.WritePropertyName("minInstances"u8);
                 writer.WriteNumberValue(MinInstances.Value);
             }
-            if (Core.Optional.IsDefined(PollingInterval))
+            if (Optional.IsDefined(PollingInterval))
             {
                 writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteStringValue(PollingInterval.Value, "P");
             }
-            if (Core.Optional.IsDefined(TargetUtilizationPercentage))
+            if (Optional.IsDefined(TargetUtilizationPercentage))
             {
                 writer.WritePropertyName("targetUtilizationPercentage"u8);
                 writer.WriteNumberValue(TargetUtilizationPercentage.Value);
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<int> maxInstances = default;
-            Core.Optional<int> minInstances = default;
-            Core.Optional<TimeSpan> pollingInterval = default;
-            Core.Optional<int> targetUtilizationPercentage = default;
+            Optional<int> maxInstances = default;
+            Optional<int> minInstances = default;
+            Optional<TimeSpan> pollingInterval = default;
+            Optional<int> targetUtilizationPercentage = default;
             ScaleType scaleType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningTargetUtilizationScaleSettings(scaleType, Core.Optional.ToNullable(maxInstances), Core.Optional.ToNullable(minInstances), Core.Optional.ToNullable(pollingInterval), Core.Optional.ToNullable(targetUtilizationPercentage));
+            return new MachineLearningTargetUtilizationScaleSettings(scaleType, Optional.ToNullable(maxInstances), Optional.ToNullable(minInstances), Optional.ToNullable(pollingInterval), Optional.ToNullable(targetUtilizationPercentage));
         }
     }
 }

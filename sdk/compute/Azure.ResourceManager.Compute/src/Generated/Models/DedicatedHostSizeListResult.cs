@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of DedicatedHostSizeListResult. </summary>
         internal DedicatedHostSizeListResult()
         {
-            Value = new Core.ChangeTrackingList<string>();
+            Value = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DedicatedHostSizeListResult. </summary>

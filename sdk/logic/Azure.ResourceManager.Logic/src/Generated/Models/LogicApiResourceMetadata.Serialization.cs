@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Core.Optional<string> source = default;
-            Core.Optional<string> brandColor = default;
-            Core.Optional<string> hideKey = default;
-            Core.Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Core.Optional<LogicApiType> apiType = default;
-            Core.Optional<LogicWsdlService> wsdlService = default;
-            Core.Optional<LogicWsdlImportMethod> wsdlImportMethod = default;
-            Core.Optional<string> connectionType = default;
-            Core.Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Core.Optional<LogicApiDeploymentParameterMetadataSet> deploymentParameters = default;
+            Optional<string> source = default;
+            Optional<string> brandColor = default;
+            Optional<string> hideKey = default;
+            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<LogicApiType> apiType = default;
+            Optional<LogicWsdlService> wsdlService = default;
+            Optional<LogicWsdlImportMethod> wsdlImportMethod = default;
+            Optional<string> connectionType = default;
+            Optional<LogicWorkflowProvisioningState> provisioningState = default;
+            Optional<LogicApiDeploymentParameterMetadataSet> deploymentParameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic.Models
                     continue;
                 }
             }
-            return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, Core.Optional.ToDictionary(tags), Core.Optional.ToNullable(apiType), wsdlService.Value, Core.Optional.ToNullable(wsdlImportMethod), connectionType.Value, Core.Optional.ToNullable(provisioningState), deploymentParameters.Value);
+            return new LogicApiResourceMetadata(source.Value, brandColor.Value, hideKey.Value, Optional.ToDictionary(tags), Optional.ToNullable(apiType), wsdlService.Value, Optional.ToNullable(wsdlImportMethod), connectionType.Value, Optional.ToNullable(provisioningState), deploymentParameters.Value);
         }
     }
 }

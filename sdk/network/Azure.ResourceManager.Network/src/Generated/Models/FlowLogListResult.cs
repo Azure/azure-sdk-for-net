@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of FlowLogListResult. </summary>
         internal FlowLogListResult()
         {
-            Value = new Core.ChangeTrackingList<FlowLogData>();
+            Value = new ChangeTrackingList<FlowLogData>();
         }
 
         /// <summary> Initializes a new instance of FlowLogListResult. </summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = await _networkDeviceInterfaceNetworkInterfacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkInterfaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(new NetworkDeviceInterfaceOperationSource(Client), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkInterfaceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(new NetworkDeviceInterfaceOperationSource(Client), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkInterfaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             try
             {
                 var response = _networkDeviceInterfaceNetworkInterfacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkInterfaceName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(new NetworkDeviceInterfaceOperationSource(Client), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkInterfaceName, data).Request, response, Core.OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new ManagedNetworkFabricArmOperation<NetworkDeviceInterfaceResource>(new NetworkDeviceInterfaceOperationSource(Client), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, _networkDeviceInterfaceNetworkInterfacesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkInterfaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceInterfaceNetworkInterfacesRestClient.CreateListByNetworkDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceInterfaceNetworkInterfacesRestClient.CreateListByNetworkDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceInterfaceResource(Client, NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(e)), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "NetworkDeviceInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceInterfaceResource(Client, NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(e)), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "NetworkDeviceInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkDeviceInterfaceNetworkInterfacesRestClient.CreateListByNetworkDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkDeviceInterfaceNetworkInterfacesRestClient.CreateListByNetworkDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceInterfaceResource(Client, NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(e)), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "NetworkDeviceInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkDeviceInterfaceResource(Client, NetworkDeviceInterfaceData.DeserializeNetworkDeviceInterfaceData(e)), _networkDeviceInterfaceNetworkInterfacesClientDiagnostics, Pipeline, "NetworkDeviceInterfaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             try
             {
                 var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountCredentialResource(Client, DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(e)), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountCredentialResource(Client, DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(e)), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountCredentialResource(Client, DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(e)), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountCredentialResource(Client, DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(e)), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

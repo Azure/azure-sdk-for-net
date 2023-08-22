@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformConfigurationServiceProperties : Core.IUtf8JsonSerializable
+    public partial class AppPlatformConfigurationServiceProperties : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Settings))
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteObjectValue(Settings);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Core.Optional<AppPlatformConfigurationServiceProvisioningState> provisioningState = default;
-            Core.Optional<AppPlatformConfigurationServiceRequirements> resourceRequests = default;
-            Core.Optional<IReadOnlyList<AppPlatformConfigurationServiceInstance>> instances = default;
-            Core.Optional<AppPlatformConfigurationServiceSettings> settings = default;
+            Optional<AppPlatformConfigurationServiceProvisioningState> provisioningState = default;
+            Optional<AppPlatformConfigurationServiceRequirements> resourceRequests = default;
+            Optional<IReadOnlyList<AppPlatformConfigurationServiceInstance>> instances = default;
+            Optional<AppPlatformConfigurationServiceSettings> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformConfigurationServiceProperties(Core.Optional.ToNullable(provisioningState), resourceRequests.Value, Core.Optional.ToList(instances), settings.Value);
+            return new AppPlatformConfigurationServiceProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, Optional.ToList(instances), settings.Value);
         }
     }
 }

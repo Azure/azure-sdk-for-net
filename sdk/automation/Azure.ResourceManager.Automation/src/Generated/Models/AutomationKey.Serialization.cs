@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Core.Optional<AutomationKeyName> keyName = default;
-            Core.Optional<AutomationKeyPermission> permissions = default;
-            Core.Optional<string> value = default;
+            Optional<AutomationKeyName> keyName = default;
+            Optional<AutomationKeyPermission> permissions = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("KeyName"u8))
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
                     continue;
                 }
             }
-            return new AutomationKey(Core.Optional.ToNullable(keyName), Core.Optional.ToNullable(permissions), value.Value);
+            return new AutomationKey(Optional.ToNullable(keyName), Optional.ToNullable(permissions), value.Value);
         }
     }
 }

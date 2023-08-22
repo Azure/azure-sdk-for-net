@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotHub
 {
-    internal class IotHubDescriptionOperationSource : Core.IOperationSource<IotHubDescriptionResource>
+    internal class IotHubDescriptionOperationSource : IOperationSource<IotHubDescriptionResource>
     {
         private readonly ArmClient _client;
 
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.IotHub
             _client = client;
         }
 
-        IotHubDescriptionResource Core.IOperationSource<IotHubDescriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IotHubDescriptionResource IOperationSource<IotHubDescriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);
             return new IotHubDescriptionResource(_client, data);
         }
 
-        async ValueTask<IotHubDescriptionResource> Core.IOperationSource<IotHubDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IotHubDescriptionResource> IOperationSource<IotHubDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement);

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Core.Optional<ResourceIdentifier> id = default;
+            Optional<ResourceIdentifier> id = default;
             NetworkUsageUnit unit = default;
             long currentValue = default;
             long limit = default;

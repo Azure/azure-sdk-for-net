@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _customIPPrefixRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _customIPPrefixRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data, cancellationToken);
-                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data).Request, response, Core.OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<CustomIPPrefixResource>(new CustomIPPrefixOperationSource(Client), _customIPPrefixClientDiagnostics, Pipeline, _customIPPrefixRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customIPPrefixName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customIPPrefixRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customIPPrefixRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customIPPrefixRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return Core.PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), _customIPPrefixClientDiagnostics, Pipeline, "CustomIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

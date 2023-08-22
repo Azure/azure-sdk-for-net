@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningStackEnsembleSettings : Core.IUtf8JsonSerializable
+    public partial class MachineLearningStackEnsembleSettings : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(StackMetaLearnerKWargs))
+            if (Optional.IsDefined(StackMetaLearnerKWargs))
             {
                 if (StackMetaLearnerKWargs != null)
                 {
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackMetaLearnerKWargs");
                 }
             }
-            if (Core.Optional.IsDefined(StackMetaLearnerTrainPercentage))
+            if (Optional.IsDefined(StackMetaLearnerTrainPercentage))
             {
                 writer.WritePropertyName("stackMetaLearnerTrainPercentage"u8);
                 writer.WriteNumberValue(StackMetaLearnerTrainPercentage.Value);
             }
-            if (Core.Optional.IsDefined(StackMetaLearnerType))
+            if (Optional.IsDefined(StackMetaLearnerType))
             {
                 writer.WritePropertyName("stackMetaLearnerType"u8);
                 writer.WriteStringValue(StackMetaLearnerType.Value.ToString());
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Core.Optional<BinaryData> stackMetaLearnerKWargs = default;
-            Core.Optional<double> stackMetaLearnerTrainPercentage = default;
-            Core.Optional<MachineLearningStackMetaLearnerType> stackMetaLearnerType = default;
+            Optional<BinaryData> stackMetaLearnerKWargs = default;
+            Optional<double> stackMetaLearnerTrainPercentage = default;
+            Optional<MachineLearningStackMetaLearnerType> stackMetaLearnerType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stackMetaLearnerKWargs"u8))
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs.Value, Core.Optional.ToNullable(stackMetaLearnerTrainPercentage), Core.Optional.ToNullable(stackMetaLearnerType));
+            return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs.Value, Optional.ToNullable(stackMetaLearnerTrainPercentage), Optional.ToNullable(stackMetaLearnerType));
         }
     }
 }

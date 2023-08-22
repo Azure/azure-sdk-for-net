@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of MySqlFlexibleServerServerVersionCapability. </summary>
         internal MySqlFlexibleServerServerVersionCapability()
         {
-            SupportedSkus = new Core.ChangeTrackingList<MySqlFlexibleServerSkuCapability>();
+            SupportedSkus = new ChangeTrackingList<MySqlFlexibleServerSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of MySqlFlexibleServerServerVersionCapability. </summary>

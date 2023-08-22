@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
         public VirtualMachineScaleSetUpdateIPConfiguration()
         {
-            ApplicationGatewayBackendAddressPools = new Core.ChangeTrackingList<WritableSubResource>();
-            ApplicationSecurityGroups = new Core.ChangeTrackingList<WritableSubResource>();
-            LoadBalancerBackendAddressPools = new Core.ChangeTrackingList<WritableSubResource>();
-            LoadBalancerInboundNatPools = new Core.ChangeTrackingList<WritableSubResource>();
+            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
+            LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> The IP configuration name. </summary>

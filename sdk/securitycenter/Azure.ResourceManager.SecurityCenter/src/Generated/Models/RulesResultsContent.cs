@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of RulesResultsContent. </summary>
         public RulesResultsContent()
         {
-            Results = new Core.ChangeTrackingDictionary<string, IList<IList<string>>>();
+            Results = new ChangeTrackingDictionary<string, IList<IList<string>>>();
         }
 
         /// <summary> Take results from latest scan. </summary>

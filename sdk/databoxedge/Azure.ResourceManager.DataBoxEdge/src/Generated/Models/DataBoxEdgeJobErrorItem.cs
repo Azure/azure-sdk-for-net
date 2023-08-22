@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of DataBoxEdgeJobErrorItem. </summary>
         internal DataBoxEdgeJobErrorItem()
         {
-            Recommendations = new Core.ChangeTrackingList<string>();
+            Recommendations = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeJobErrorItem. </summary>

@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> The location. </param>
         public DdosProtectionPlanData(AzureLocation location) : base(location)
         {
-            PublicIPAddresses = new Core.ChangeTrackingList<WritableSubResource>();
-            VirtualNetworks = new Core.ChangeTrackingList<WritableSubResource>();
+            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
+            VirtualNetworks = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of DdosProtectionPlanData. </summary>

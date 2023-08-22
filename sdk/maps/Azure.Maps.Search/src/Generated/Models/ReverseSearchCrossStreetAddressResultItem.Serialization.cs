@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Core.Optional<MapsAddress> address = default;
-            Core.Optional<string> position = default;
+            Optional<MapsAddress> address = default;
+            Optional<string> position = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))

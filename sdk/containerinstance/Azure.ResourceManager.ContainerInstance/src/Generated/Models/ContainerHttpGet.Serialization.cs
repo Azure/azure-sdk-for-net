@@ -11,24 +11,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerHttpGet : Core.IUtf8JsonSerializable
+    public partial class ContainerHttpGet : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Core.Optional.IsDefined(Scheme))
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
             }
-            if (Core.Optional.IsCollectionDefined(HttpHeaders))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Core.Optional<string> path = default;
+            Optional<string> path = default;
             int port = default;
-            Core.Optional<ContainerHttpGetScheme> scheme = default;
-            Core.Optional<IList<ContainerHttpHeader>> httpHeaders = default;
+            Optional<ContainerHttpGetScheme> scheme = default;
+            Optional<IList<ContainerHttpHeader>> httpHeaders = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     continue;
                 }
             }
-            return new ContainerHttpGet(path.Value, port, Core.Optional.ToNullable(scheme), Core.Optional.ToList(httpHeaders));
+            return new ContainerHttpGet(path.Value, port, Optional.ToNullable(scheme), Optional.ToList(httpHeaders));
         }
     }
 }

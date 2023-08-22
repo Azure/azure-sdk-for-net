@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
 
             VirtualNetworkGateway1 = virtualNetworkGateway1;
             ConnectionType = connectionType;
-            TunnelConnectionStatus = new Core.ChangeTrackingList<TunnelConnectionHealth>();
-            GatewayCustomBgpIPAddresses = new Core.ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
-            IPsecPolicies = new Core.ChangeTrackingList<IPsecPolicy>();
-            TrafficSelectorPolicies = new Core.ChangeTrackingList<TrafficSelectorPolicy>();
+            TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
+            GatewayCustomBgpIPAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
+            IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
+            TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionListEntity. </summary>

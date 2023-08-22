@@ -16,11 +16,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of ManifestWrapper. </summary>
         internal ManifestWrapper()
         {
-            Manifests = new Core.ChangeTrackingList<ManifestListAttributes>();
-            Layers = new Core.ChangeTrackingList<OciDescriptor>();
-            FsLayers = new Core.ChangeTrackingList<FsLayer>();
-            History = new Core.ChangeTrackingList<History>();
-            Signatures = new Core.ChangeTrackingList<ImageSignature>();
+            Manifests = new ChangeTrackingList<ManifestListAttributes>();
+            Layers = new ChangeTrackingList<OciDescriptor>();
+            FsLayers = new ChangeTrackingList<FsLayer>();
+            History = new ChangeTrackingList<History>();
+            Signatures = new ChangeTrackingList<ImageSignature>();
         }
 
         /// <summary> Initializes a new instance of ManifestWrapper. </summary>

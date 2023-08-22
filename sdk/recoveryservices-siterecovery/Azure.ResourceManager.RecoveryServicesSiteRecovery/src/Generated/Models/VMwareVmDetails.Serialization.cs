@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Core.Optional<string> agentGeneratedId = default;
-            Core.Optional<string> agentInstalled = default;
-            Core.Optional<string> osType = default;
-            Core.Optional<string> agentVersion = default;
-            Core.Optional<IPAddress> ipAddress = default;
-            Core.Optional<string> poweredOn = default;
-            Core.Optional<string> vCenterInfrastructureId = default;
-            Core.Optional<string> discoveryType = default;
-            Core.Optional<IReadOnlyList<InMageDiskDetails>> diskDetails = default;
-            Core.Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
+            Optional<string> agentGeneratedId = default;
+            Optional<string> agentInstalled = default;
+            Optional<string> osType = default;
+            Optional<string> agentVersion = default;
+            Optional<IPAddress> ipAddress = default;
+            Optional<string> poweredOn = default;
+            Optional<string> vCenterInfrastructureId = default;
+            Optional<string> discoveryType = default;
+            Optional<IReadOnlyList<InMageDiskDetails>> diskDetails = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> validationErrors = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new VMwareVmDetails(instanceType, agentGeneratedId.Value, agentInstalled.Value, osType.Value, agentVersion.Value, ipAddress.Value, poweredOn.Value, vCenterInfrastructureId.Value, discoveryType.Value, Core.Optional.ToList(diskDetails), Core.Optional.ToList(validationErrors));
+            return new VMwareVmDetails(instanceType, agentGeneratedId.Value, agentInstalled.Value, osType.Value, agentVersion.Value, ipAddress.Value, poweredOn.Value, vCenterInfrastructureId.Value, discoveryType.Value, Optional.ToList(diskDetails), Optional.ToList(validationErrors));
         }
     }
 }

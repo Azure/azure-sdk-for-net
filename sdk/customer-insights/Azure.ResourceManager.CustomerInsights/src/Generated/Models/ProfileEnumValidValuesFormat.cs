@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <summary> Initializes a new instance of ProfileEnumValidValuesFormat. </summary>
         public ProfileEnumValidValuesFormat()
         {
-            LocalizedValueNames = new Core.ChangeTrackingDictionary<string, string>();
+            LocalizedValueNames = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ProfileEnumValidValuesFormat. </summary>

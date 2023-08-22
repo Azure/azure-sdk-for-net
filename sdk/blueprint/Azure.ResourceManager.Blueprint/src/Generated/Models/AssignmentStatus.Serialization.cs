@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Core.Optional<IReadOnlyList<string>> managedResources = default;
-            Core.Optional<DateTimeOffset> timeCreated = default;
-            Core.Optional<DateTimeOffset> lastModified = default;
+            Optional<IReadOnlyList<string>> managedResources = default;
+            Optional<DateTimeOffset> timeCreated = default;
+            Optional<DateTimeOffset> lastModified = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedResources"u8))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     continue;
                 }
             }
-            return new AssignmentStatus(Core.Optional.ToNullable(timeCreated), Core.Optional.ToNullable(lastModified), Core.Optional.ToList(managedResources));
+            return new AssignmentStatus(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified), Optional.ToList(managedResources));
         }
     }
 }

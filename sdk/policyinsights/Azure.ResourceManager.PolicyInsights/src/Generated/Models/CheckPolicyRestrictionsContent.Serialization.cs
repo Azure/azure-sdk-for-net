@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class CheckPolicyRestrictionsContent : Core.IUtf8JsonSerializable
+    public partial class CheckPolicyRestrictionsContent : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceDetails"u8);
             writer.WriteObjectValue(ResourceDetails);
-            if (Core.Optional.IsCollectionDefined(PendingFields))
+            if (Optional.IsCollectionDefined(PendingFields))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();

@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Core.Optional<string> id = default;
-            Core.Optional<string> edition = default;
-            Core.Optional<int> vCore = default;
-            Core.Optional<string> hardwareGeneration = default;
-            Core.Optional<int> maxBackupRetentionDays = default;
-            Core.Optional<int> minBackupRetentionDays = default;
-            Core.Optional<int> maxStorageMB = default;
-            Core.Optional<int> minStorageMB = default;
+            Optional<string> id = default;
+            Optional<string> edition = default;
+            Optional<int> vCore = default;
+            Optional<string> hardwareGeneration = default;
+            Optional<int> maxBackupRetentionDays = default;
+            Optional<int> minBackupRetentionDays = default;
+            Optional<int> maxStorageMB = default;
+            Optional<int> minStorageMB = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
                     continue;
                 }
             }
-            return new MySqlPerformanceTierServiceLevelObjectives(id.Value, edition.Value, Core.Optional.ToNullable(vCore), hardwareGeneration.Value, Core.Optional.ToNullable(maxBackupRetentionDays), Core.Optional.ToNullable(minBackupRetentionDays), Core.Optional.ToNullable(maxStorageMB), Core.Optional.ToNullable(minStorageMB));
+            return new MySqlPerformanceTierServiceLevelObjectives(id.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minStorageMB));
         }
     }
 }

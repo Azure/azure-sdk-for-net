@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceSkuResult. </summary>
         internal AppServiceSkuResult()
         {
-            Skus = new Core.ChangeTrackingList<GlobalCsmSkuDescription>();
+            Skus = new ChangeTrackingList<GlobalCsmSkuDescription>();
         }
 
         /// <summary> Initializes a new instance of AppServiceSkuResult. </summary>

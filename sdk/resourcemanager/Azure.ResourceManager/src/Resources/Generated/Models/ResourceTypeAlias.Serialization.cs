@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Core.Optional<string> name = default;
-            Core.Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
-            Core.Optional<ResourceTypeAliasType> type = default;
-            Core.Optional<string> defaultPath = default;
-            Core.Optional<ResourceTypeAliasPattern> defaultPattern = default;
-            Core.Optional<ResourceTypeAliasPathMetadata> defaultMetadata = default;
+            Optional<string> name = default;
+            Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
+            Optional<ResourceTypeAliasType> type = default;
+            Optional<string> defaultPath = default;
+            Optional<ResourceTypeAliasPattern> defaultPattern = default;
+            Optional<ResourceTypeAliasPathMetadata> defaultMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceTypeAlias(name.Value, Core.Optional.ToList(paths), Core.Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
+            return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
         }
     }
 }

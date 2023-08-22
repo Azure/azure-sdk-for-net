@@ -16,7 +16,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary> Initializes a new instance of BatchResponse. </summary>
         internal BatchResponse()
         {
-            Responses = new Core.ChangeTrackingList<BatchQueryResponse>();
+            Responses = new ChangeTrackingList<BatchQueryResponse>();
         }
 
         /// <summary> Initializes a new instance of BatchResponse. </summary>

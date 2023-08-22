@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
         internal VirtualNetworkTapListResult()
         {
-            Value = new Core.ChangeTrackingList<VirtualNetworkTapData>();
+            Value = new ChangeTrackingList<VirtualNetworkTapData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>

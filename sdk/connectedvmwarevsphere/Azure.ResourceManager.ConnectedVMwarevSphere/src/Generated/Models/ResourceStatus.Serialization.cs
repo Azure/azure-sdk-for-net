@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Core.Optional<string> type = default;
-            Core.Optional<string> status = default;
-            Core.Optional<string> reason = default;
-            Core.Optional<string> message = default;
-            Core.Optional<string> severity = default;
-            Core.Optional<DateTimeOffset> lastUpdatedAt = default;
+            Optional<string> type = default;
+            Optional<string> status = default;
+            Optional<string> reason = default;
+            Optional<string> message = default;
+            Optional<string> severity = default;
+            Optional<DateTimeOffset> lastUpdatedAt = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     continue;
                 }
             }
-            return new ResourceStatus(type.Value, status.Value, reason.Value, message.Value, severity.Value, Core.Optional.ToNullable(lastUpdatedAt));
+            return new ResourceStatus(type.Value, status.Value, reason.Value, message.Value, severity.Value, Optional.ToNullable(lastUpdatedAt));
         }
     }
 }

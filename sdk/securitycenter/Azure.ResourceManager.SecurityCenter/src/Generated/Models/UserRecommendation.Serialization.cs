@@ -10,17 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class UserRecommendation : Core.IUtf8JsonSerializable
+    public partial class UserRecommendation : IUtf8JsonSerializable
     {
-        void Core.IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Core.Optional.IsDefined(Username))
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Core.Optional.IsDefined(RecommendationAction))
+            if (Optional.IsDefined(RecommendationAction))
             {
                 writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Core.Optional<string> username = default;
-            Core.Optional<RecommendationAction> recommendationAction = default;
+            Optional<string> username = default;
+            Optional<RecommendationAction> recommendationAction = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     continue;
                 }
             }
-            return new UserRecommendation(username.Value, Core.Optional.ToNullable(recommendationAction));
+            return new UserRecommendation(username.Value, Optional.ToNullable(recommendationAction));
         }
     }
 }

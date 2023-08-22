@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Core.Optional<float> succeededCount = default;
-            Core.Optional<float> failedCount = default;
-            Core.Optional<float> expiringCount = default;
-            Core.Optional<float> expiredCount = default;
-            Core.Optional<float> pendingCount = default;
-            Core.Optional<float> cancelledCount = default;
-            Core.Optional<float> processingCount = default;
-            Core.Optional<float> noBenefitCount = default;
-            Core.Optional<float> warningCount = default;
+            Optional<float> succeededCount = default;
+            Optional<float> failedCount = default;
+            Optional<float> expiringCount = default;
+            Optional<float> expiredCount = default;
+            Optional<float> pendingCount = default;
+            Optional<float> cancelledCount = default;
+            Optional<float> processingCount = default;
+            Optional<float> noBenefitCount = default;
+            Optional<float> warningCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeededCount"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     continue;
                 }
             }
-            return new SavingsPlanSummaryCount(Core.Optional.ToNullable(succeededCount), Core.Optional.ToNullable(failedCount), Core.Optional.ToNullable(expiringCount), Core.Optional.ToNullable(expiredCount), Core.Optional.ToNullable(pendingCount), Core.Optional.ToNullable(cancelledCount), Core.Optional.ToNullable(processingCount), Core.Optional.ToNullable(noBenefitCount), Core.Optional.ToNullable(warningCount));
+            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount));
         }
     }
 }
