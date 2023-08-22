@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ResourceConnector.Tests
 {
-    public class Azure.ResourceManager.ResourceConnectorManagementTestBase : ManagementRecordedTestBase<Azure.ResourceManager.ResourceConnectorManagementTestEnvironment>
+    public class ResourceConnectorManagementTestBase : ManagementRecordedTestBase<ResourceConnectorManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
-        protected Azure.ResourceManager.ResourceConnectorManagementTestBase(bool isAsync, RecordedTestMode mode)
+        protected ResourceConnectorManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
         }
 
-        protected Azure.ResourceManager.ResourceConnectorManagementTestBase(bool isAsync)
+        protected ResourceConnectorManagementTestBase(bool isAsync)
             : base(isAsync)
         {
         }

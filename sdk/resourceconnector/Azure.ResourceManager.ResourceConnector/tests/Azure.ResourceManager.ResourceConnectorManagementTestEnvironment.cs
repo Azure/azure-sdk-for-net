@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.ResourceConnector.Tests
 {
-    public class Azure.ResourceManager.ResourceConnectorManagementTestEnvironment : TestEnvironment
+    public class ResourceConnectorManagementTestEnvironment : TestEnvironment
     {
     }
 }
