@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Host
         private const int DefaultMaxDequeueCount = 5;
 
         private int _maxDegreeOfParallelism;
-        private int _maxDequeueCount = DefaultMaxDequeueCount;
+        private int _poisonBlobThreshold = DefaultMaxDequeueCount;
 
         /// <summary>
         /// Constructs a new instance.
@@ -56,9 +56,9 @@ namespace Microsoft.Azure.WebJobs.Host
         /// Poison Blobs
         /// </see>.
         /// </summary>
-        public int MaxDequeueCount
+        public int PoisonBlobThreshold
         {
-            get { return _maxDequeueCount; }
+            get { return _poisonBlobThreshold; }
 
             set
             {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host
                     throw new ArgumentException("MaxDequeueCount must not be less than 1.", nameof(value));
                 }
 
-                _maxDequeueCount = value;
+                _poisonBlobThreshold = value;
             }
         }
 
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.WebJobs.Host
             JObject options = new JObject
             {
                 { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism },
-                { nameof(MaxDequeueCount), MaxDequeueCount }
+                { nameof(PoisonBlobThreshold), PoisonBlobThreshold }
             };
 
             return options.ToString(Formatting.Indented);

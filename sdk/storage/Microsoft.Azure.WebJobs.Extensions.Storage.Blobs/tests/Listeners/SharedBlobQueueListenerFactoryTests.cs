@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var blobOptions = new BlobsOptions()
             {
                 MaxDegreeOfParallelism = maxDegreeOfParallelism,
-                MaxDequeueCount = maxDequeueCount,
+                PoisonBlobThreshold = maxDequeueCount,
             };
 
             // Act

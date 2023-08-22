@@ -3,7 +3,7 @@
 ## 5.2.0 (2023-08-10)
 
 ### Features Added
-- Added support for `BlobsOptions.MaxDequeueCount`
+- Added support for `BlobsOptions.PoisonBlobThreshold`
 
 ## 5.1.3 (2023-06-26)
 - Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)
