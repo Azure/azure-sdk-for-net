@@ -37,19 +37,9 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ResourceId => "BlockBlob";
 
         /// <summary>
-        /// Gets the URL of the storage resource.
+        /// Gets the Uri of the StorageResource
         /// </summary>
         public override Uri Uri => BlobClient.Uri;
-
-        /// <summary>
-        /// Gets the path of the storage resource.
-        /// </summary>
-        public override string Path => BlobClient.Name;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.

@@ -528,9 +528,9 @@ namespace Azure.Storage.DataMovement
         {
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
-            if (!sourceResource.CanProduceUri)
+            if (sourceResource.IsLocalResource())
             {
-                if (destinationResource.CanProduceUri)
+                if (!destinationResource.IsLocalResource())
                 {
                     // Stream to Uri job (Upload Job)
                     StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
@@ -570,7 +570,7 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Source is remote
-                if (destinationResource.CanProduceUri)
+                if (!destinationResource.IsLocalResource())
                 {
                     // Service to Service Job (Copy job)
                     ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(
@@ -647,9 +647,9 @@ namespace Azure.Storage.DataMovement
         {
             // If the resource cannot produce a Uri, it means it can only produce a local path
             // From here we only support an upload job
-            if (!sourceResource.CanProduceUri)
+            if (sourceResource.IsLocalResource())
             {
-                if (destinationResource.CanProduceUri)
+                if (!destinationResource.IsLocalResource())
                 {
                     // Stream to Uri job (Upload Job)
                     StreamToUriTransferJob streamToUriJob = new StreamToUriTransferJob(
@@ -696,7 +696,7 @@ namespace Azure.Storage.DataMovement
             else
             {
                 // Source is remote
-                if (destinationResource.CanProduceUri)
+                if (!destinationResource.IsLocalResource())
                 {
                     // Service to Service Job (Copy job)
                     ServiceToServiceTransferJob serviceToServiceJob = new ServiceToServiceTransferJob(

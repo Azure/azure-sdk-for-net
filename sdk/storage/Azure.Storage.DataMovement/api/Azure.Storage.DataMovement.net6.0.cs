@@ -85,8 +85,6 @@ namespace Azure.Storage.DataMovement
     public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
         public LocalDirectoryStorageResourceContainer(string path) { }
-        protected internal override bool CanProduceUri { get { throw null; } }
-        public override string Path { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
         protected internal override Azure.Storage.DataMovement.StorageResourceItem GetStorageResourceReference(string childPath) { throw null; }
         protected internal override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -102,10 +100,8 @@ namespace Azure.Storage.DataMovement
     public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResourceItem
     {
         public LocalFileStorageResource(string path) { }
-        protected internal override bool CanProduceUri { get { throw null; } }
         protected internal override long? Length { get { throw null; } }
         protected internal override long MaxChunkSize { get { throw null; } }
-        public override string Path { get { throw null; } }
         protected internal override string ResourceId { get { throw null; } }
         protected internal override Azure.Storage.DataMovement.DataTransferOrder TransferType { get { throw null; } }
         public override System.Uri Uri { get { throw null; } }
@@ -127,9 +123,7 @@ namespace Azure.Storage.DataMovement
     public abstract partial class StorageResource
     {
         protected StorageResource() { }
-        protected internal abstract bool CanProduceUri { get; }
         protected internal abstract bool IsContainer { get; }
-        public abstract string Path { get; }
         public abstract System.Uri Uri { get; }
     }
     public abstract partial class StorageResourceContainer : Azure.Storage.DataMovement.StorageResource

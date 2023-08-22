@@ -16,22 +16,12 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
-        private string _path;
+        private Uri _uri;
 
         /// <summary>
         /// Gets the path
         /// </summary>
-        public override string Path => _path;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected internal override bool CanProduceUri => false;
-
-        /// <summary>
-        /// Cannot get Uri. Will throw NotSupportedException();
-        /// </summary>
-        public override Uri Uri => throw new NotSupportedException();
+        public override Uri Uri => _uri;
 
         /// <summary>
         /// Constructor
@@ -40,7 +30,13 @@ namespace Azure.Storage.DataMovement
         public LocalDirectoryStorageResourceContainer(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
-            _path = path;
+            UriBuilder uriBuilder= new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = path,
+            };
+            _uri = uriBuilder.Uri;
         }
 
         /// <summary>
@@ -50,7 +46,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         protected internal override StorageResourceItem GetStorageResourceReference(string childPath)
         {
-            string concatPath = System.IO.Path.Combine(Path, childPath);
+            Uri concatPath = _uri.AppendToPath(childPath);
             return new LocalFileStorageResource(concatPath);
         }
 
@@ -64,7 +60,7 @@ namespace Azure.Storage.DataMovement
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            PathScanner scanner = new PathScanner(_path);
+            PathScanner scanner = new PathScanner(_uri.LocalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
                 // Skip over directories for now since directory creation is unnecessary.

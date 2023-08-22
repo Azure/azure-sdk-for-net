@@ -21,8 +21,14 @@ namespace Azure.Storage.DataMovement.Blobs
         internal BlobContainerClient BlobContainerClient { get; }
         internal string DirectoryPrefix { get; }
         private BlobStorageResourceContainerOptions _options;
+        private Uri _uri;
 
         private bool IsDirectory => DirectoryPrefix != null;
+
+        /// <summary>
+        /// Gets Uri of the Storage Resource.
+        /// </summary>
+        public override Uri Uri => _uri;
 
         /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
@@ -38,29 +44,13 @@ namespace Azure.Storage.DataMovement.Blobs
             _options = options;
             DirectoryPrefix = _options?.BlobDirectoryPrefix;
 
-            Uri = DirectoryPrefix != null
+            _uri = DirectoryPrefix != null
                 ? new BlobUriBuilder(BlobContainerClient.Uri)
                 {
                     BlobName = DirectoryPrefix,
                 }.ToUri()
                 : BlobContainerClient.Uri;
         }
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected override bool CanProduceUri => true;
-
-        /// <summary>
-        /// Gets the path of the storage resource.
-        /// Return empty string since we are using the root of the container.
-        /// </summary>
-        public override string Path => DirectoryPrefix ?? string.Empty;
-
-        /// <summary>
-        /// Gets the URL of the storage resource.
-        /// </summary>
-        public override Uri Uri { get; }
 
         /// <summary>
         /// Retrieves a single blob resource based on this respective resource.

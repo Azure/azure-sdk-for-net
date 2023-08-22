@@ -51,8 +51,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             ExtensionMockTransferManager.OnStartTransferContainerAsync = (sourceResource, destinationResource, transferOptions) =>
             {
-                Assert.AreEqual(directoryPath, sourceResource.Path);
-                Assert.AreEqual(blobUri, destinationResource.Uri);
+                Assert.AreEqual(directoryPath, sourceResource.Uri.LocalPath);
+                Assert.AreEqual(blobUri, destinationResource.Uri.AbsoluteUri);
                 Assert.AreEqual(options, transferOptions);
                 Assert.IsInstanceOf<BlobStorageResourceContainer>(destinationResource);
 
@@ -98,8 +98,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             ExtensionMockTransferManager.OnStartTransferContainerAsync = (sourceResource, destinationResource, transferOptions) =>
             {
-                Assert.AreEqual(directoryPath, destinationResource.Path);
-                Assert.AreEqual(blobUri, sourceResource.Uri);
+                Assert.AreEqual(directoryPath, destinationResource.Uri.LocalPath);
+                Assert.AreEqual(blobUri, sourceResource.Uri.AbsoluteUri);
                 Assert.AreEqual(options, transferOptions);
                 Assert.IsInstanceOf(expSourceResourceType, sourceResource);
 

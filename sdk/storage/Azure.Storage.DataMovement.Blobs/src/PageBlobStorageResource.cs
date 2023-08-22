@@ -28,19 +28,9 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ResourceId => "PageBlob";
 
         /// <summary>
-        /// Gets the URL of the storage resource.
+        /// Gets the Uri of the Storage Resource
         /// </summary>
         public override Uri Uri => BlobClient.Uri;
-
-        /// <summary>
-        /// Gets the path of the resource.
-        /// </summary>
-        public override string Path => BlobClient.Name;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -240,6 +230,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
+
             await BlobClient.UploadPagesFromUriAsync(
                 sourceResource.Uri,
                 sourceRange: range,

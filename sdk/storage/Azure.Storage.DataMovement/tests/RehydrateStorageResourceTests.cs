@@ -132,8 +132,8 @@ namespace Azure.Storage.DataMovement.Tests
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             Random random = new();
             string transferId = GetNewTransferId();
-            string sourcePath = random.NextString(20);
-            string destinationPath = random.NextString(15);
+            string sourcePath = string.Concat("/", random.NextString(20));
+            string destinationPath = string.Concat("/", random.NextString(15));
             string originalPath = isSource ? sourcePath : destinationPath;
 
             StorageResourceType sourceType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
@@ -160,7 +160,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
                     : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None);
 
-            Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.AreEqual(originalPath, storageResource.Uri.LocalPath);
             Assert.IsInstanceOf(typeof(LocalFileStorageResource), storageResource);
         }
 
@@ -172,9 +172,9 @@ namespace Azure.Storage.DataMovement.Tests
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             Random random = new();
             string transferId = GetNewTransferId();
-            string sourceParentPath = random.NextString(20);
+            string sourceParentPath = string.Concat("/", random.NextString(20));
             List<string> sourcePaths = new List<string>();
-            string destinationParentPath = random.NextString(15);
+            string destinationParentPath = string.Concat("/", random.NextString(15));
             List<string> destinationPaths = new List<string>();
             int jobPartCount = 10;
             for (int i = 0; i< jobPartCount; i++)
@@ -210,7 +210,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
                     : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None);
 
-            Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.AreEqual(originalPath, storageResource.Uri.LocalPath);
             Assert.IsInstanceOf(typeof(LocalDirectoryStorageResourceContainer), storageResource);
         }
     }

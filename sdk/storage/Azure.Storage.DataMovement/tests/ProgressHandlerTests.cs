@@ -325,6 +325,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, true)
             };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
             // Act - Start transfer
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);

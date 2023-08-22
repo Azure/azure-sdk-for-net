@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResourceItem childDestinationResource;
                 if (transferType == TransferDirection.Upload)
                 {
-                    string destinationChildName = childSourceResource.Path.Substring(sourceResource.Path.Length + 1);
+                    string destinationChildName = childSourceResource.Uri.LocalPath.Substring(sourceResource.Uri.LocalPath.Length + 1);
                     childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName);
                 }
                 else
@@ -70,7 +70,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 // Verify Upload by downloading the blob and comparing the values
                 BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationResource.Uri);
-                using (FileStream fileStream = File.OpenRead(sourceResource.Path))
+                using (FileStream fileStream = File.OpenRead(sourceResource.Uri.LocalPath))
                 {
                     await DownloadAndAssertAsync(fileStream, destinationContainer.GetBlockBlobClient(destinationBuilder.BlobName));
                 }
@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 // Verify Download
                 BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceResource.Uri);
-                using (FileStream fileStream = File.OpenRead(destinationResource.Path))
+                using (FileStream fileStream = File.OpenRead(destinationResource.Uri.LocalPath))
                 {
                     await DownloadAndAssertAsync(fileStream, sourceContainer.GetBlockBlobClient(sourceBuilder.BlobName));
                 }
