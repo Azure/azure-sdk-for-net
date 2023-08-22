@@ -272,29 +272,5 @@ namespace Azure.Storage.DataMovement
             }
             return Task.FromResult(false);
         }
-
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="transferProperties">
-        /// The properties of the transfer to rehydrate.
-        /// </param>
-        /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static LocalFileStorageResource RehydrateResource(
-            DataTransferProperties transferProperties,
-            bool isSource)
-        {
-            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
-
-            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
-
-            return new LocalFileStorageResource(storedPath);
-        }
     }
 }
