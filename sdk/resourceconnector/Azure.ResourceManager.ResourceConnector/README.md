@@ -1,6 +1,8 @@
 # Microsoft Azure Azure.ResourceManager.ResourceConnector management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Arc resource connector or azure arc resource bridge is a Microsoft managed product that is part of the core Azure Arc platform. It is designed to host other Azure Arc services. The resource bridge supports VM self-servicing and management from Azure, for virtualized Windows and Linux virtual machines hosted in an on-premises environments (Arc Enabled VMware vSphere, Azure Stack HCI, Arc-enabled SCVMM).
+
+Arc resource bridge is a packaged virtual machine that hosts a management Kubernetes cluster and requires minimal user management. The virtual machine is deployed on the on-premises infrastructure, and an ARM resource of Arc resource bridge is created in Azure. The two resources are then connected, allowing VM self-service and management from Azure. The on-premises resource bridge uses guest management to tag local resources, making them available in Azure.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,7 +12,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started 
+## Getting started
 
 ### Install the package
 
