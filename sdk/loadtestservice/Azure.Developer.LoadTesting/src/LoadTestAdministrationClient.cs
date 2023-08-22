@@ -139,7 +139,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns></returns>
         public virtual async Task<Response<Test>> CreateOrUpdateTestAsync(Test test, CancellationToken cancellationToken = default)
         {
-            if (test is not IJsonModelSerializable serializable)
+            if (test is not IModelJsonSerializable<Test> serializable)
             {
                 throw new InvalidCastException("model is not serializable");
             }
@@ -168,7 +168,7 @@ namespace Azure.Developer.LoadTesting
         /// <returns></returns>
         public virtual Response<Test> CreateOrUpdateTest(Test test, CancellationToken cancellationToken = default)
         {
-            if (test is not IJsonModelSerializable serializable)
+            if (test is not IModelJsonSerializable<Test> serializable)
             {
                 throw new InvalidCastException("model is not serializable");
             }

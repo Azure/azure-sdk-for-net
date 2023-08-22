@@ -10,6 +10,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
     public class ModelX : BaseModel, IUtf8JsonSerializable, IModelJsonSerializable<ModelX>
     {
+        #region Model impl
         public ModelX()
             : base(null)
         {
@@ -25,32 +26,23 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
         }
 
         public int XProperty { get; private set; }
+        #endregion
 
+        #region Serialize
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelX>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
-
-        public static implicit operator RequestContent(ModelX modelX)
-        {
-            if (modelX == null)
-            {
-                return null;
-            }
-
-            return RequestContent.Create(modelX, ModelSerializerOptions.DefaultWireOptions);
-        }
-
-        public static explicit operator ModelX(Response response)
-        {
-            Argument.AssertNotNull(response, nameof(response));
-
-            using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
-        }
 
         void IModelJsonSerializable<ModelX>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             Serialize(writer, options);
+        }
+
+        BinaryData IModelSerializable<ModelX>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
         }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
@@ -75,6 +67,25 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
+        //public method to serialize with internal interface
+        public void Serialize(Utf8JsonWriter writer)
+        {
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
+
+        public static implicit operator RequestContent(ModelX modelX)
+        {
+            if (modelX == null)
+            {
+                return null;
+            }
+
+            return RequestContent.Create(modelX, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        #endregion
+
+        #region Deserialize
         internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
@@ -113,19 +124,6 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             return new ModelX(kind, name, xProperty, rawData);
         }
 
-        ModelX IModelSerializable<ModelX>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
-
-            return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
-        }
-
-        //public method to serialize with internal interface
-        public void Serialize(Utf8JsonWriter writer)
-        {
-            ((IUtf8JsonSerializable)this).Write(writer);
-        }
-
         ModelX IModelJsonSerializable<ModelX>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
@@ -134,11 +132,20 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             return DeserializeModelX(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ModelX>.Serialize(ModelSerializerOptions options)
+        ModelX IModelSerializable<ModelX>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelSerializer.SerializeCore(this, options);
+            return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
+
+        public static explicit operator ModelX(Response response)
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
+            return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
+        #endregion
     }
 }

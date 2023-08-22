@@ -9,12 +9,41 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class Test : IUtf8JsonSerializable
+    public partial class Test : IUtf8JsonSerializable, IModelJsonSerializable<Test>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        #region Serialize
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Test>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<Test>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+
+            switch (options.Format.ToString())
+            {
+                case "J":
+                case "W":
+                    Serialize(writer, options);
+                    break;
+                case "P":
+                    SerializePatch(writer);
+                    break;
+                default:
+                    // Exception was thrown by ValidateFormat.
+                    break;
+            }
+        }
+
+        BinaryData IModelSerializable<Test>.Serialize(ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(PassFailCriteria))
@@ -82,7 +111,17 @@ namespace Azure.Developer.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static Test DeserializeTest(JsonElement element)
+        private void SerializePatch(Utf8JsonWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static implicit operator RequestContent(Test model)
+            => RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        #endregion Serialize
+
+        #region Deserialize
+        internal static Test DeserializeTest(JsonElement element, ModelSerializerOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -231,5 +270,29 @@ namespace Azure.Developer.LoadTesting.Models
             }
             return new Test(passFailCriteria.Value, Optional.ToDictionary(secrets), certificate.Value, Optional.ToDictionary(environmentVariables), loadTestConfiguration.Value, inputArtifacts.Value, testId.Value, description.Value, displayName.Value, subnetId.Value, keyvaultReferenceIdentityType.Value, keyvaultReferenceIdentityId.Value, Optional.ToNullable(createdDateTime), createdBy.Value, Optional.ToNullable(lastModifiedDateTime), lastModifiedBy.Value);
         }
+
+        Test IModelJsonSerializable<Test>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeTest(doc.RootElement, options);
+        }
+
+        Test IModelSerializable<Test>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+            return DeserializeTest(JsonDocument.Parse(data.ToString()).RootElement, options);
+        }
+
+        public static explicit operator Test(Response response)
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
+            return DeserializeTest(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
+        #endregion Deserialize
+
+        //void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Test>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
     }
 }
