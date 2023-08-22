@@ -1084,49 +1084,6 @@ namespace Azure.Core.Serialization
         [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)]
         public System.Type TypeToActivate { get { throw null; } }
     }
-    public partial class ChangeList
-    {
-        public ChangeList() { }
-        public Azure.Core.Serialization.ChangeListElement RootElement { get { throw null; } }
-        public void WriteMergePatch(System.Text.Json.Utf8JsonWriter writer) { }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct ChangeListDictionary<T> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>, System.Collections.Generic.IDictionary<string, T>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, T>>, System.Collections.IEnumerable
-    {
-        private object _dummy;
-        private int _dummyPrimitive;
-        public ChangeListDictionary(Azure.Core.Serialization.ChangeListElement changes) { throw null; }
-        public ChangeListDictionary(Azure.Core.Serialization.ChangeListElement changes, System.Collections.Generic.Dictionary<string, T> dictionary) { throw null; }
-        public T this[string key] { get { throw null; } set { } }
-        int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Count { get { throw null; } }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.IsReadOnly { get { throw null; } }
-        System.Collections.Generic.ICollection<string> System.Collections.Generic.IDictionary<string, T>.Keys { get { throw null; } }
-        System.Collections.Generic.ICollection<T> System.Collections.Generic.IDictionary<string, T>.Values { get { throw null; } }
-        public void Add(string key, T value) { }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Add(System.Collections.Generic.KeyValuePair<string, T> item) { }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Clear() { }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Contains(System.Collections.Generic.KeyValuePair<string, T> item) { throw null; }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.CopyTo(System.Collections.Generic.KeyValuePair<string, T>[] array, int arrayIndex) { }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Remove(System.Collections.Generic.KeyValuePair<string, T> item) { throw null; }
-        bool System.Collections.Generic.IDictionary<string, T>.ContainsKey(string key) { throw null; }
-        bool System.Collections.Generic.IDictionary<string, T>.Remove(string key) { throw null; }
-        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, T>>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-        public bool TryGetValue(string key, [System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute(false)] out T value) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ChangeListElement
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Azure.Core.Serialization.ChangeListElement GetElement(string path) { throw null; }
-        public void Remove(string path) { }
-        public void Set(string path, Azure.Core.Serialization.IModelJsonSerializable<object> value) { }
-        public void Set(string path, System.DateTimeOffset? value) { }
-        public void Set(string path, int? value) { }
-        public void Set(string path, string value) { }
-        public void Set<T>(string path, T value) { }
-    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -1171,6 +1128,10 @@ namespace Azure.Core.Serialization
         T Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options);
         System.BinaryData Serialize(Azure.Core.Serialization.ModelSerializerOptions options);
     }
+    public partial interface IPatchModel
+    {
+        bool HasChanges { get; }
+    }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
@@ -1188,6 +1149,39 @@ namespace Azure.Core.Serialization
     {
         UseExact = 0,
         CamelCase = 1,
+    }
+    public partial class MergePatchDictionary<T> : Azure.Core.Serialization.IPatchModel, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>, System.Collections.Generic.IDictionary<string, T>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, T>>, System.Collections.IEnumerable
+    {
+        public MergePatchDictionary(System.Action<System.Text.Json.Utf8JsonWriter, T> writeValue) { }
+        public MergePatchDictionary(System.Collections.Generic.Dictionary<string, T> dictionary, System.Action<System.Text.Json.Utf8JsonWriter, T> writeValue) { }
+        public bool HasChanges { get { throw null; } }
+        public T this[string key] { get { throw null; } set { } }
+        int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Count { get { throw null; } }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.IsReadOnly { get { throw null; } }
+        System.Collections.Generic.ICollection<string> System.Collections.Generic.IDictionary<string, T>.Keys { get { throw null; } }
+        System.Collections.Generic.ICollection<T> System.Collections.Generic.IDictionary<string, T>.Values { get { throw null; } }
+        public void Add(string key, T value) { }
+        public void SerializePatch(System.Text.Json.Utf8JsonWriter writer) { }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Add(System.Collections.Generic.KeyValuePair<string, T> item) { }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Clear() { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Contains(System.Collections.Generic.KeyValuePair<string, T> item) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.CopyTo(System.Collections.Generic.KeyValuePair<string, T>[] array, int arrayIndex) { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, T>>.Remove(System.Collections.Generic.KeyValuePair<string, T> item) { throw null; }
+        bool System.Collections.Generic.IDictionary<string, T>.ContainsKey(string key) { throw null; }
+        bool System.Collections.Generic.IDictionary<string, T>.Remove(string key) { throw null; }
+        System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>> System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, T>>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetValue(string key, [System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute(false)] out T value) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct MergePatchValue<T>
+    {
+        private T _value;
+        private int _dummyPrimitive;
+        public MergePatchValue(T value) { throw null; }
+        public bool HasChanged { get { throw null; } }
+        public T Value { get { throw null; } set { } }
+        public static implicit operator T (Azure.Core.Serialization.MergePatchValue<T> value) { throw null; }
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelJsonSerializable<object>>
     {
