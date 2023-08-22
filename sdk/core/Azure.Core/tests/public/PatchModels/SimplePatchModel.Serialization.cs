@@ -69,39 +69,41 @@ namespace Azure.Core.Tests.PatchModels
         {
             writer.WriteStartObject();
 
-            // It's required for GET, so assume we have it
-            if (Name == null)
-            {
-                throw new InvalidOperationException("'name' was not initialized during Deserialization.");
-            }
-
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
 
-            // It's required for GET, so assume we have it
-            if (Count == null)
-            {
-                throw new InvalidOperationException("'count' was not initialized during Deserialization.");
-            }
-
             writer.WritePropertyName("count");
-            writer.WriteNumberValue(Count.Value);
-
-            // It's required for GET, so assume we have it
-            if (UpdatedOn == null)
-            {
-                throw new InvalidOperationException("'updatedOn' was not initialized during Deserialization.");
-            }
+            writer.WriteNumberValue(Count);
 
             writer.WritePropertyName("updatedOn");
-            writer.WriteStringValue(UpdatedOn.Value!, "O");
+            writer.WriteStringValue(UpdatedOn, "O");
 
             writer.WriteEndObject();
         }
 
         private void SerializePatch(Utf8JsonWriter writer)
         {
-            _rootChanges.WriteMergePatch(writer);
+            writer.WriteStartObject();
+
+            if (_name.HasChanged)
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+
+            if (_count.HasChanged)
+            {
+                writer.WritePropertyName("count");
+                writer.WriteNumberValue(Count);
+            }
+
+            if (_updatedOn.HasChanged)
+            {
+                writer.WritePropertyName("updatedOn");
+                writer.WriteStringValue(UpdatedOn, "O");
+            }
+
+            writer.WriteEndObject();
         }
 
         void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)

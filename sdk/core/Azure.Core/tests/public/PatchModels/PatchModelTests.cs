@@ -40,7 +40,7 @@ namespace Azure.Core.Tests.Public
             model.UpdatedOn = updateTime;
 
             // TODO: fix test
-            Assert.AreEqual($"{{\"updatedOn\":\"{updateTime:O}\"}}", GetPatchJson(model));
+            Assert.AreEqual($"{{\"updatedOn\":\"{updateTime.UtcDateTime:O}\"}}", GetPatchJson(model));
             //ValidatePatch($"{{\"updatedOn\":\"{updateTime:O}\"}}", model);
         }
 

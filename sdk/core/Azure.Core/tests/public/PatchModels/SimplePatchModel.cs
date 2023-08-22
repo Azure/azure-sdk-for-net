@@ -11,15 +11,11 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class SimplePatchModel
     {
-        private readonly ChangeList _rootChanges = new();
-        private readonly ChangeListElement _changes;
-
         /// <summary>
         /// Public constructor.
         /// </summary>
         public SimplePatchModel()
         {
-            _changes = _rootChanges.RootElement;
         }
 
         /// <summary>
@@ -28,14 +24,12 @@ namespace Azure.Core.Tests.PatchModels
         /// <param name="element"></param>
         internal SimplePatchModel(string name, int count, DateTimeOffset updatedOn)
         {
-            _name = name;
-            _count = count;
-            _updatedOn = updatedOn;
-
-            _changes = _rootChanges.RootElement;
+            _name = new Changed<string>(name);
+            _count = new Changed<int>(count);
+            _updatedOn = new Changed<DateTimeOffset>(updatedOn);
         }
 
-        private string _name;
+        private Changed<string> _name;
         /// <summary>
         /// Optional string property corresponding to JSON """{"name": "abc"}""".
         /// </summary>
@@ -44,36 +38,33 @@ namespace Azure.Core.Tests.PatchModels
             get => _name;
             set
             {
-                _name = value;
-                _changes.Set("name", value);
+                _name.Value = value;
             }
         }
 
-        private int? _count;
+        private Changed<int> _count;
         /// <summary>
         /// Optional int property corresponding to JSON """{"count": 1}""".
         /// </summary>
-        public int? Count
+        public int Count
         {
             get => _count;
             set
             {
-                _count = value;
-                _changes.Set("count", value);
+                _count.Value = value;
             }
         }
 
-        private DateTimeOffset? _updatedOn;
+        private Changed<DateTimeOffset> _updatedOn;
         /// <summary>
         /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
         /// </summary>
-        public DateTimeOffset? UpdatedOn
+        public DateTimeOffset UpdatedOn
         {
             get => _updatedOn;
             set
             {
-                _updatedOn = value;
-                _changes.Set("updatedOn", value);
+                _updatedOn.Value = value;
             }
         }
     }
