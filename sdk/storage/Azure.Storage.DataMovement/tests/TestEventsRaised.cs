@@ -24,6 +24,14 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     internal class TestEventsRaised : IDisposable
     {
+        private static readonly DataTransferStatus InProgressStatus = new DataTransferStatus(DataTransferStatus.TransferState.InProgress, false, false);
+        private static readonly DataTransferStatus InProgressFailedStatus = new DataTransferStatus(DataTransferStatus.TransferState.InProgress, true, false);
+        private static readonly DataTransferStatus InProgressSkippedStatus = new DataTransferStatus(DataTransferStatus.TransferState.InProgress, false, true);
+        private static readonly DataTransferStatus StoppingFailedStatus = new DataTransferStatus(DataTransferStatus.TransferState.Stopping, true, false);
+        private static readonly DataTransferStatus SuccessfulCompletedStatus = new DataTransferStatus(DataTransferStatus.TransferState.Completed, false, false);
+        private static readonly DataTransferStatus SkippedCompletedStatus = new DataTransferStatus(DataTransferStatus.TransferState.Completed, false, true);
+        private static readonly DataTransferStatus FailedCompletedStatus = new DataTransferStatus(DataTransferStatus.TransferState.Completed, true, false);
+
         public List<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
         public List<TransferItemSkippedEventArgs> SkippedEvents { get; internal set; }
@@ -128,9 +136,9 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.TransferState.Completed },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    SuccessfulCompletedStatus },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         /// <summary>
@@ -149,9 +157,9 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.TransferState.CompletedWithSkippedTransfers },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    SkippedCompletedStatus },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         /// <summary>
@@ -170,10 +178,11 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.CancellationInProgress,
-                    DataTransferStatus.TransferState.CompletedWithFailedTransfers },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    InProgressFailedStatus,
+                    StoppingFailedStatus,
+                    FailedCompletedStatus },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         /// <summary>
@@ -193,9 +202,9 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.TransferState.Completed },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    SuccessfulCompletedStatus },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         /// <summary>
@@ -223,10 +232,11 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.CancellationInProgress,
-                    DataTransferStatus.TransferState.CompletedWithFailedTransfers },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    InProgressFailedStatus,
+                    StoppingFailedStatus,
+                    FailedCompletedStatus },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         /// <summary>
@@ -254,9 +264,11 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.TransferState.CompletedWithFailedTransfers },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    InProgressFailedStatus,
+                    StoppingFailedStatus,
+                    FailedCompletedStatus },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         /// <summary>
@@ -274,9 +286,10 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.TransferState.CompletedWithSkippedTransfers },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    InProgressSkippedStatus,
+                    SkippedCompletedStatus },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         public async Task AssertPausedCheck()
@@ -287,9 +300,10 @@ namespace Azure.Storage.DataMovement.Tests
             await WaitForStatusEventsAsync().ConfigureAwait(false);
             CollectionAssert.AreEqual(
                 new DataTransferStatus[] {
-                    DataTransferStatus.InProgress,
-                    DataTransferStatus.TransferState.Paused },
-                StatusEvents.Select(e => e.StorageTransferStatus));
+                    InProgressStatus,
+                    new DataTransferStatus(DataTransferStatus.TransferState.Pausing, false, false),
+                    new DataTransferStatus(DataTransferStatus.TransferState.Paused, false, false) },
+                StatusEvents.Select(e => e.TransferStatus));
         }
 
         /// <summary>

@@ -395,13 +395,29 @@ namespace Azure.Storage.DataMovement.Tests
                 await stream.ReadAsync(rehydratePriorityTypeBuffer, 0, oneByte);
                 Assert.AreEqual((byte)DefaultRehydratePriorityType, rehydratePriorityTypeBuffer[0]);
 
-                byte[] atomicJobStatusBuffer = new byte[oneByte];
-                await stream.ReadAsync(atomicJobStatusBuffer, 0, oneByte);
-                Assert.AreEqual((byte)DefaultJobStatus, atomicJobStatusBuffer[0]);
+                byte[] atomicJobStateBuffer = new byte[oneByte];
+                await stream.ReadAsync(atomicJobStateBuffer, 0, oneByte);
+                Assert.AreEqual((byte)DefaultJobStatus.State, atomicJobStateBuffer[0]);
 
-                byte[] atomicPartStatusBuffer = new byte[oneByte];
-                await stream.ReadAsync(atomicPartStatusBuffer, 0, oneByte);
-                Assert.AreEqual((byte)DefaultPartStatus, atomicPartStatusBuffer[0]);
+                byte[] atomicJobHasFailedItemsBuffer = new byte[oneByte];
+                await stream.ReadAsync(atomicJobHasFailedItemsBuffer, 0, oneByte);
+                Assert.AreEqual((byte)DefaultJobStatus.State, atomicJobHasFailedItemsBuffer[0]);
+
+                byte[] atomicJobHasSkippedItemsBuffer = new byte[oneByte];
+                await stream.ReadAsync(atomicJobHasSkippedItemsBuffer, 0, oneByte);
+                Assert.AreEqual((byte)DefaultJobStatus.State, atomicJobHasSkippedItemsBuffer[0]);
+
+                byte[] atomicPartStateBuffer = new byte[oneByte];
+                await stream.ReadAsync(atomicPartStateBuffer, 0, oneByte);
+                Assert.AreEqual((byte)DefaultPartStatus.State, atomicPartStateBuffer[0]);
+
+                byte[] atomiPartHasFailedItemsBuffer = new byte[oneByte];
+                await stream.ReadAsync(atomiPartHasFailedItemsBuffer, 0, oneByte);
+                Assert.AreEqual((byte)DefaultJobStatus.State, atomiPartHasFailedItemsBuffer[0]);
+
+                byte[] atomicPartHasSkippedItemsBuffer = new byte[oneByte];
+                await stream.ReadAsync(atomicPartHasSkippedItemsBuffer, 0, oneByte);
+                Assert.AreEqual((byte)DefaultJobStatus.State, atomicPartHasSkippedItemsBuffer[0]);
             }
         }
 

@@ -313,7 +313,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async Task JobPartEvent(TransferStatusEventArgs args)
         {
-            DataTransferStatus jobPartStatus = args.StorageTransferStatus;
+            DataTransferStatus jobPartStatus = args.TransferStatus;
             DataTransferStatus jobStatus = _dataTransfer._state.GetTransferStatus();
 
             // Keep track of paused, failed, and skipped which we will use to determine final job status

@@ -385,7 +385,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.IsTrue(await destinationClient.ExistsAsync());
             // Verify Upload - That we skipped over and didn't reupload something new.
@@ -437,7 +438,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(await destinationClient.ExistsAsync());
             await testEventsRaised.AssertSingleFailedCheck();
             Assert.NotNull(testEventsRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
@@ -526,7 +528,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck();
             Assert.NotNull(testEventsRaised.FailedEvents.First().Exception, "Excepted failure: Failure was supposed to be raised during the test");
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
@@ -579,7 +582,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck();
             Assert.NotNull(testEventsRaised.FailedEvents.First().Exception, "Excepted failure: Failure was supposed to be raised during the test");
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
@@ -678,7 +682,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck();
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
@@ -711,7 +716,8 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
         }
 
         [RecordedTest]
@@ -764,7 +770,8 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleFailedCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
@@ -796,7 +803,8 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
         }
         #endregion
     }

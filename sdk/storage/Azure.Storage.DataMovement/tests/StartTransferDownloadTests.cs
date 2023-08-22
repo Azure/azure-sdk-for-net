@@ -117,7 +117,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options[i].TransferStatusChanged += (TransferStatusEventArgs args) =>
                 {
                     // Assert
-                    if (args.StorageTransferStatus == DataTransferStatus.TransferState.Completed)
+                    if (args.TransferStatus.HasCompletedSuccessfully)
                     {
                         completed = true;
                     }
@@ -285,7 +285,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(skippedSeen);
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -327,7 +328,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck();
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -692,7 +694,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
             await testEventsRaised.AssertSingleSkippedCheck();
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -735,7 +738,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck();
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -1152,7 +1156,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
             await testEventsRaised.AssertSingleSkippedCheck();
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -1195,7 +1200,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck();
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -1446,7 +1452,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventRaised.AssertSingleFailedCheck();
             Assert.AreEqual(1, testEventRaised.FailedEvents.Count);
             Assert.IsTrue(testEventRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
@@ -1481,7 +1488,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
             await testEventRaised.AssertSingleSkippedCheck();
         }
 
@@ -1545,7 +1553,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithFailedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck();
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
         }
@@ -1580,7 +1589,8 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferStatus.TransferState.CompletedWithSkippedTransfers, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Completed, transfer.TransferStatus);
+            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
         }
         #endregion
     }

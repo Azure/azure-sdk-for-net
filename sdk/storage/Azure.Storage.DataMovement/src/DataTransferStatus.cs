@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
@@ -9,7 +10,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the status of the Transfer Job.
     /// </summary>
-    public class DataTransferStatus
+    public class DataTransferStatus : IEquatable<DataTransferStatus>
     {
         private object _stateLock = new object();
         private object _hasSkippedLock = new object();
@@ -178,5 +179,15 @@ namespace Azure.Storage.DataMovement
             }
             return false;
         }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>Returns true if the current object is equal to the other parameter; otherwise, false.</returns>
+        public bool Equals(DataTransferStatus other)
+            => State.Equals(other.State) &&
+            HasFailedItems.Equals(other.HasFailedItems) &&
+            HasSkippedItems.Equals(other.HasSkippedItems);
     }
 }

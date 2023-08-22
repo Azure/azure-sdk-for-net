@@ -964,9 +964,9 @@ namespace Azure.Storage.DataMovement.Tests
             List<Mock<DataTransfer>> pausable = new();
             List<Mock<DataTransfer>> unpausable = new();
             TransferManager manager = new();
-            foreach (DataTransferStatus state in Enum.GetValues(typeof(DataTransferStatus)).Cast<DataTransferStatus>())
+            foreach (DataTransferStatus status in Enum.GetValues(typeof(DataTransferStatus)).Cast<DataTransferStatus>())
             {
-                bool canPause = state == DataTransferStatus.InProgress;
+                bool canPause = status.State == DataTransferStatus.TransferState.InProgress;
                 Mock<DataTransfer> transfer = new(MockBehavior.Loose)
                 {
                     CallBase = true,

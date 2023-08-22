@@ -46,8 +46,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption DefaultDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption DefaultPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType DefaultRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal const DataTransferStatus DefaultJobStatus = new DataTransferStatus();
-        internal const DataTransferStatus DefaultPartStatus = DataTransferStatus.Queued;
+        internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatusInternal(DataTransferStatus.TransferState.Queued, false, false);
+        internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatusInternal(DataTransferStatus.TransferState.Queued, false, false);
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
             string version = DataMovementConstants.PlanFile.SchemaVersion,
@@ -95,8 +95,8 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartDeleteSnapshotsOption deleteSnapshotsOption = DefaultDeleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption = DefaultPermanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType = DefaultRehydratePriorityType,
-            DataTransferStatus atomicJobStatus = DefaultJobStatus,
-            DataTransferStatus atomicPartStatus = DefaultPartStatus)
+            DataTransferStatus atomicJobStatus = default,
+            DataTransferStatus atomicPartStatus = default)
         {
             if (startTime == default)
             {
@@ -108,6 +108,8 @@ namespace Azure.Storage.DataMovement.Tests
             }
             metadata ??= DataProvider.BuildMetadata();
             blobTags ??= DataProvider.BuildTags();
+            atomicJobStatus ??= DefaultJobStatus;
+            atomicPartStatus ??= DefaultPartStatus;
 
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
                 blobType: blobType,
