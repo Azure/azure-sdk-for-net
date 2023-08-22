@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MobileNetwork
         private MobileNetworksRestOperations _mobileNetworkRestClient;
         private ClientDiagnostics _packetCoreControlPlaneClientDiagnostics;
         private PacketCoreControlPlanesRestOperations _packetCoreControlPlaneRestClient;
-        private ClientDiagnostics _simGroupClientDiagnostics;
-        private SimGroupsRestOperations _simGroupRestClient;
+        private ClientDiagnostics _mobileNetworkSimGroupSimGroupsClientDiagnostics;
+        private SimGroupsRestOperations _mobileNetworkSimGroupSimGroupsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,13 +39,20 @@ namespace Azure.ResourceManager.MobileNetwork
         private MobileNetworksRestOperations MobileNetworkRestClient => _mobileNetworkRestClient ??= new MobileNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MobileNetworkResource.ResourceType));
         private ClientDiagnostics PacketCoreControlPlaneClientDiagnostics => _packetCoreControlPlaneClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", PacketCoreControlPlaneResource.ResourceType.Namespace, Diagnostics);
         private PacketCoreControlPlanesRestOperations PacketCoreControlPlaneRestClient => _packetCoreControlPlaneRestClient ??= new PacketCoreControlPlanesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PacketCoreControlPlaneResource.ResourceType));
-        private ClientDiagnostics SimGroupClientDiagnostics => _simGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", SimGroupResource.ResourceType.Namespace, Diagnostics);
-        private SimGroupsRestOperations SimGroupRestClient => _simGroupRestClient ??= new SimGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SimGroupResource.ResourceType));
+        private ClientDiagnostics MobileNetworkSimGroupSimGroupsClientDiagnostics => _mobileNetworkSimGroupSimGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", MobileNetworkSimGroupResource.ResourceType.Namespace, Diagnostics);
+        private SimGroupsRestOperations MobileNetworkSimGroupSimGroupsRestClient => _mobileNetworkSimGroupSimGroupsRestClient ??= new SimGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MobileNetworkSimGroupResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of SubscriptionPacketCoreControlPlaneVersionResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
+        public virtual SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions()
+        {
+            return GetCachedClient(Client => new SubscriptionPacketCoreControlPlaneVersionCollection(Client, Id));
         }
 
         /// <summary>
@@ -150,12 +157,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SimGroupResource> GetSimGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroupsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SimGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SimGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), SimGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSimGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,12 +179,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SimGroupResource> GetSimGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SimGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SimGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SimGroupResource(Client, SimGroupData.DeserializeSimGroupData(e)), SimGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSimGroups", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
     }
 }

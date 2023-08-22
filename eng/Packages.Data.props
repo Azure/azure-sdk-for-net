@@ -174,7 +174,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230811.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230821.3" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230131.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
@@ -224,6 +224,7 @@
     <PackageReference Update="Microsoft.AspNetCore.Mvc.Testing" Version="2.2.0" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.3" />
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.1.25" />
+    <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" Version="2.1.40" />
     <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.1.4" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
@@ -302,7 +303,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <TestProxyVersion>1.0.0-dev.20230802.1</TestProxyVersion>
+    <TestProxyVersion>1.0.0-dev.20230821.1</TestProxyVersion>
   </PropertyGroup>
 
 </Project>

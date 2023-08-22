@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -127,6 +128,9 @@ namespace Azure.Messaging.EventHubs.Producer
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private volatile bool _isClosed;
+
+        /// <summary>The client diagnostics instance used to instrument events when enqueueing.</summary>
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that this producer is currently associated with, which will likely be similar
@@ -459,6 +463,13 @@ namespace Azure.Messaging.EventHubs.Producer
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             _producer = new EventHubProducerClient(connectionString, eventHubName, (clientOptions ?? DefaultOptions).ToEventHubProducerClientOptions());
+
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                _producer.FullyQualifiedNamespace,
+                _producer.EventHubName);
         }
 
         /// <summary>
@@ -520,6 +531,13 @@ namespace Azure.Messaging.EventHubs.Producer
                                               EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
             _producer = new EventHubProducerClient(connection, (clientOptions ?? DefaultOptions).ToEventHubProducerClientOptions());
+
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                _producer.FullyQualifiedNamespace,
+                _producer.EventHubName);
         }
 
         /// <summary>
@@ -538,6 +556,12 @@ namespace Azure.Messaging.EventHubs.Producer
                                                 EventHubBufferedProducerClientOptions clientOptions = default) : this(clientOptions)
         {
             _producer = producer;
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                _producer.FullyQualifiedNamespace,
+                _producer.EventHubName);
         }
 
         /// <summary>
@@ -575,6 +599,13 @@ namespace Azure.Messaging.EventHubs.Producer
                 AzureNamedKeyCredential keyCred =>  new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, keyCred, options),
                 _ => throw new ArgumentException(Resources.UnsupportedCredential, nameof(credential))
             };
+
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.EventHubsServiceContext,
+                _producer.FullyQualifiedNamespace,
+                _producer.EventHubName);
         }
 
         /// <summary>
@@ -789,6 +820,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 var partitionState = _activePartitionStateMap.GetOrAdd(partitionId, partitionId => new PartitionPublishingState(partitionId, _options));
                 var writer = partitionState.PendingEventsWriter;
 
+                _clientDiagnostics.InstrumentMessage(eventData.Properties, DiagnosticProperty.EventActivityName, out _, out _);
                 await writer.WriteAsync(eventData, cancellationToken).ConfigureAwait(false);
 
                 var count = Interlocked.Increment(ref _totalBufferedEventCount);
@@ -968,6 +1000,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     var activePartitionState = partitionState ?? _activePartitionStateMap.GetOrAdd(eventPartitionId, partitionId => new PartitionPublishingState(eventPartitionId, _options));
                     var writer = activePartitionState.PendingEventsWriter;
 
+                    _clientDiagnostics.InstrumentMessage(eventData.Properties, DiagnosticProperty.EventActivityName, out _, out _);
                     await writer.WriteAsync(eventData, cancellationToken).ConfigureAwait(false);
 
                     var count = Interlocked.Increment(ref _totalBufferedEventCount);
