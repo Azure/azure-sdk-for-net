@@ -47,9 +47,9 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                if (_child.Value == null)
+                if (_child.Value == null && !_child.HasChanged)
                 {
-                    _child = new Changed<ChildPatchModel>(null);
+                    _child = new Changed<ChildPatchModel>(new ChildPatchModel());
                 }
 
                 return _child;

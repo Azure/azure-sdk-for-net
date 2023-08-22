@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.Public
 
             model.Child.B = "bb";
 
-            //ValidatePatch("""{"child": {"b": "bb"}}""", model);
+            ValidatePatch("""{"child": {"b": "bb"}}""", model);
 
             model.Child.A = "aa";
 

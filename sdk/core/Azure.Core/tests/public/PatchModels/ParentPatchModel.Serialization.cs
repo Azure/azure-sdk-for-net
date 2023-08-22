@@ -73,13 +73,23 @@ namespace Azure.Core.Tests.PatchModels
         {
             writer.WriteStartObject();
 
-            writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            if (_id.HasChanged)
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
 
             if (_child.HasChanged)
             {
                 writer.WritePropertyName("child");
-                Child.SerializeFull(writer);
+                if (Child == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    Child.SerializeFull(writer);
+                }
             }
             else if (_child.Value.HasChanges)
             {
