@@ -240,7 +240,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             if (string.IsNullOrWhiteSpace(connectionName))
             {
-                connectionName = ConnectionStringNames.Storage; // default
+                connectionName = ConnectionStrings.AzureWebJobsStorage; // default
             }
 
             var blobDetails = new BlobParameterBindingDataContent()

@@ -137,6 +137,7 @@ namespace Azure.Storage
             internal const int QueueEndpointPortNumber = 10001;
             internal const int TableEndpointPortNumber = 10002;
 
+            internal const string AzureWebJobsStorage = "AzureWebJobsStorage";
             internal const string UseDevelopmentSetting = "UseDevelopmentStorage";
             internal const string DevelopmentProxyUriSetting = "DevelopmentStorageProxyUri";
             internal const string DefaultEndpointsProtocolSetting = "DefaultEndpointsProtocol";
