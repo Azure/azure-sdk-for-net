@@ -3,8 +3,7 @@
 
 namespace Azure.Core.Serialization
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public struct MergePatchValue<T>
+    internal struct MergePatchValue<T>
     {
         private bool _changed;
         private T _value;
@@ -31,5 +30,4 @@ namespace Azure.Core.Serialization
 
         public bool HasChanged => _changed;
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
