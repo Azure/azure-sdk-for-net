@@ -33,7 +33,7 @@ namespace Azure.Core.Tests.PatchModels
                 }
             }
 
-            return new CollectionPatchModel(id, new MergePatchDictionary<string>(variables));
+            return new CollectionPatchModel(id, new MergePatchDictionary<string>(variables, (w, s) => w.WriteStringValue(s)));
         }
 
         CollectionPatchModel IModelJsonSerializable<CollectionPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -89,7 +89,21 @@ namespace Azure.Core.Tests.PatchModels
 
         private void SerializePatch(Utf8JsonWriter writer)
         {
-            _rootChanges.WriteMergePatch(writer);
+            writer.WriteStartObject();
+
+            if (_id.HasChanged)
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
+            }
+
+            if (_variables != null && _variables.HasChanges)
+            {
+                writer.WritePropertyName("variables");
+                _variables.SerializePatch(writer);
+            }
+
+            writer.WriteEndObject();
         }
 
         void IModelJsonSerializable<CollectionPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)

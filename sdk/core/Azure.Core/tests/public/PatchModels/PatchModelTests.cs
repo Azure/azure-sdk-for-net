@@ -218,6 +218,16 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanPatchCollectionProperty_DeleteItem()
+        {
+            CollectionPatchModel model = new();
+            model.Variables["abc"] = "123";
+            model.Variables.Remove("abc");
+
+            ValidatePatch("""{"variables": {"abc": null}}""", model);
+        }
+
+        [Test]
         public void CanRoundTripCollectionPatchModel()
         {
             BinaryData json = BinaryData.FromString("""
@@ -244,6 +254,11 @@ namespace Azure.Core.Tests.Public
 
             ValidateSerialize("""{"id": "abc","variables":{"a": "a2","b": "bb"}}""", model);
             ValidatePatch("""{"variables": {"a":"a2"}}""", model);
+
+            model.Variables.Remove("b");
+
+            ValidateSerialize("""{"id": "abc","variables":{"a": "a2"}}""", model);
+            ValidatePatch("""{"variables": {"a":"a2", "b": null}}""", model);
         }
         #endregion
 

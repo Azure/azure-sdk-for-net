@@ -43,7 +43,8 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                _variables ??= new MergePatchDictionary<string>();
+                // TODO: can s be null?  How do we delete collection items?
+                _variables ??= new MergePatchDictionary<string>((w, s) => w.WriteStringValue(s));
                 return _variables;
             }
         }
