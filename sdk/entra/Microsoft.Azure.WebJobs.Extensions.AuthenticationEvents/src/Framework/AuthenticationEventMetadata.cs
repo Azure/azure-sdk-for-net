@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Net.Http;
 using System.Reflection;
@@ -71,7 +72,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
             if (validate)
             {
-                Helpers.ValidateGraph(eventRequest);
+                try
+                {
+                    Helpers.ValidateGraph(eventRequest);
+                }
+                catch (ValidationException exception)
+                {
+                    throw new RequestValidationException(exception.Message);
+                }
             }
 
             responseInfo.SetValue(eventRequest, eventResponse);

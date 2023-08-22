@@ -127,7 +127,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 UnauthorizedAccessException => RequestStatusType.TokenInvalid,
                 ValidationException => RequestStatusType.ValidationError,
-                _ => RequestStatusType.Failed,
+				RequestValidationException => RequestStatusType.ValidationError,
+				_ => RequestStatusType.Failed,
             };
 
             if (eventResponseHandler.Response != null)

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             if (success == false)
             {
-                var ex = Assert.Throws<ValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
+                var ex = Assert.Throws<RequestValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
                 Assert.AreEqual(exceptionMessage, ex.Message);
             }
             else
