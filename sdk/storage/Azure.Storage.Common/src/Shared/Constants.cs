@@ -653,6 +653,9 @@ namespace Azure.Storage
 
         internal static class ClientSideEncryption
         {
+            public const string HttpMessagePropertyKeyV1 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V1";
+            public const string HttpMessagePropertyKeyV2 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V2";
+
             public const string AgentMetadataKey = "EncryptionLibrary";
 
             public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";
