@@ -143,60 +143,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             }
         }
 
-        [Test]
-        public async Task RehydrateBlobResource_SasAsync()
-        {
-            string sourceLocalPath = CreateTempFile(SampleFileContent);
-            string connectionString = ConnectionString;
-            string containerName = Randomize("sample-container");
-
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-            await container.CreateIfNotExistsAsync();
-            try
-            {
-                StorageResource source = new LocalFileStorageResource(sourceLocalPath);
-                StorageResource destination = new BlockBlobStorageResource(container.GetBlockBlobClient("sample-blob"));
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
-
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: source,
-                    destinationResource: destination);
-                await dataTransfer.PauseAsync();
-
-                DataTransferProperties info = await transferManager.GetResumableTransfersAsync().FirstAsync();
-
-                StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
-                AzureSasCredential GenerateMySasCredential(string blobUri)
-                {
-                    Uri fullSasUri = new BlobClient(new Uri(blobUri), sharedKeyCredential).GenerateSasUri(
-                        BlobSasPermissions.All, DateTimeOffset.Now + TimeSpan.FromDays(1));
-                    return new AzureSasCredential(fullSasUri.Query);
-                }
-
-                #region Snippet:RehydrateBlobResource
-                StorageResource sourceResource = null;
-                StorageResource destinationResource = null;
-                if (BlobStorageResources.TryGetResourceProviders(
-                    info,
-                    out BlobStorageResourceProvider blobSrcProvider,
-                    out BlobStorageResourceProvider blobDstProvider))
-                {
-                    sourceResource ??= await blobSrcProvider?.CreateResourceAsync(
-                        GenerateMySasCredential(info.SourcePath));
-                    destinationResource ??= await blobSrcProvider?.CreateResourceAsync(
-                        GenerateMySasCredential(info.DestinationPath));
-                }
-                #endregion
-
-                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(dataTransfer.Id, sourceResource, destinationResource);
-                await resumedTransfer.WaitForCompletionAsync();
-            }
-            finally
-            {
-                await container.DeleteIfExistsAsync();
-            }
-        }
-
         /// <summary>
         /// Use a shared key to access a Storage Account to download two separate blobs.
         /// </summary>
@@ -859,44 +805,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Pause from the Transfer Manager using the Transfer Id
                 await transferManager.PauseTransferIfRunningAsync(transferId);
 
-                StorageSharedKeyCredential GetMyCredential(string uri)
-                    => new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
-
-                async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
-                {
-                    StorageResource sourceResource = null, destinationResource = null;
-                    if (BlobStorageResources.TryGetResourceProviders(
-                        info,
-                        out BlobStorageResourceProvider blobSrcProvider,
-                        out BlobStorageResourceProvider blobDstProvider))
-                    {
-                        sourceResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.SourcePath));
-                        destinationResource ??= await blobSrcProvider.MakeResourceAsync(GetMyCredential(info.DestinationPath));
-                    }
-                    if (LocalStorageResources.TryGetResourceProviders(
-                        info,
-                        out LocalStorageResourceProvider localSrcProvider,
-                        out LocalStorageResourceProvider localDstProvider))
-                    {
-                        sourceResource ??= localSrcProvider.CreateResource();
-                        destinationResource ??= localDstProvider.CreateResource();
-                    }
-                    return (sourceResource, destinationResource);
-                }
-                List<DataTransfer> resumedTransfers = new();
-                await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
-                {
-                    (StorageResource resumeSource, StorageResource resumeDestination) = await MakeResourcesAsync(transferProperties);
-                    resumedTransfers.Add(await transferManager.ResumeTransferAsync(transferProperties.TransferId, resumeSource, resumeDestination));
-                }
-
-                // Wait for download to finish
-                await Task.WhenAll(resumedTransfers.Select(t => t.WaitForCompletionAsync()));
-
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
-                    transferId: transferId,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource);
+                    transferId: transferId);
 
                 // Wait for download to finish
                 await resumedTransfer.WaitForCompletionAsync();
@@ -945,9 +855,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await dataTransfer.PauseAsync();
 
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
-                    transferId: dataTransfer.Id,
-                    sourceResource: sourceResource,
-                    destinationResource: destinationResource);
+                    transferId: dataTransfer.Id);
 
                 // Wait for download to finish
                 await resumedTransfer.WaitForCompletionAsync();
