@@ -116,6 +116,12 @@ namespace Azure.Core.Tests.PatchModels
                 _variables.SerializePatch(writer);
             }
 
+            if (_children != null && _children.HasChanges)
+            {
+                writer.WritePropertyName("children");
+                _children.SerializePatch(writer);
+            }
+
             writer.WriteEndObject();
         }
 

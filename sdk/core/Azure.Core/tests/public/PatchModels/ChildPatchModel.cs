@@ -8,7 +8,7 @@ namespace Azure.Core.Tests.PatchModels
     /// <summary>
     /// This model illustrates a nested child model in a parent model.
     /// </summary>
-    public partial class ChildPatchModel
+    public partial class ChildPatchModel: IPatchModel
     {
         /// <summary>
         /// Serialization constructor.
@@ -24,7 +24,6 @@ namespace Azure.Core.Tests.PatchModels
             _b = new MergePatchValue<string>(b);
         }
 
-        // TODO: Should this be an interface, or no?
         public bool HasChanges => _a.HasChanged || _b.HasChanged;
 
         private MergePatchValue<string> _a;

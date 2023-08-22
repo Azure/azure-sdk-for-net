@@ -14,11 +14,6 @@ namespace Azure.Core.Serialization
             _value = value;
         }
 
-        //public static implicit operator Changed<T>(T value)
-        //{
-        //    return new(value);
-        //}
-
         public static implicit operator T(MergePatchValue<T> value)
         {
             return value.Value;

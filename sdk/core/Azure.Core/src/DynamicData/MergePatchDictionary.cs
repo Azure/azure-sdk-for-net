@@ -11,13 +11,53 @@ namespace Azure.Core.Serialization
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable AZC0014 // STJ
-    public class MergePatchDictionary<T> : IDictionary<string, T>
+    public class MergePatchDictionary<T> : IDictionary<string, T>, IPatchModel, IModelJsonSerializable<MergePatchDictionary<T>>
     {
-        // TODO: Test cases
-        // - Dictionary of IModelSerializable
-        // - Dictionary of int
+        private bool _checkChanges;
+        private bool _checkAllChanges;
+        private bool _hasChanges;
+        public bool HasChanges => _hasChanges || CheckChanges() || CheckAllChanges();
 
-        public bool HasChanges { get; private set; }
+        private bool CheckChanges()
+        {
+            if (_checkChanges)
+            {
+                foreach (KeyValuePair<string, bool> item in _changed)
+                {
+                    if (item.Value)
+                    {
+                        if (_dictionary.TryGetValue(item.Key, out T? value) &&
+                            value is IPatchModel model &&
+                            model.HasChanges)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool CheckAllChanges()
+        {
+            if (_checkAllChanges)
+            {
+                // TODO handle delete case - changed has diff set from _dictionary.
+
+                foreach (KeyValuePair<string, T> item in _dictionary)
+                {
+                    if (_dictionary.TryGetValue(item.Key, out T? value) &&
+                        value is IPatchModel model &&
+                        model.HasChanges)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         private readonly Dictionary<string, bool> _changed;
         private readonly Dictionary<string, T> _dictionary;
@@ -53,15 +93,18 @@ namespace Azure.Core.Serialization
                 {
                     if (kvp.Value)
                     {
-                        writer.WritePropertyName(kvp.Key);
-
                         if (!_dictionary.TryGetValue(kvp.Key, out T? value) || value == null)
                         {
+                            writer.WritePropertyName(kvp.Key);
                             writer.WriteNullValue();
                         }
                         else
                         {
-                            _writeValue(writer, _dictionary[kvp.Key]);
+                            if (value is not IPatchModel model || model.HasChanges)
+                            {
+                                writer.WritePropertyName(kvp.Key);
+                                _writeValue(writer, value);
+                            }
                         }
                     }
                 }
@@ -75,13 +118,14 @@ namespace Azure.Core.Serialization
             get
             {
                 // If the value is read and a reference value, it might get changed
-                _changed[key] = _dictionary[key] is IModelSerializable<object>;
+                _checkChanges |= _dictionary[key] is IPatchModel;
+                _changed[key] = _dictionary[key] is IPatchModel;
                 return _dictionary[key];
             }
 
             set
             {
-                HasChanges = true;
+                _hasChanges = true;
                 _changed[key] = true;
                 _dictionary[key] = value;
             }
@@ -97,21 +141,21 @@ namespace Azure.Core.Serialization
 
         public void Add(string key, T value)
         {
-            HasChanges = true;
+            _hasChanges = true;
             _changed[key] = true;
             _dictionary.Add(key, value);
         }
 
         void ICollection<KeyValuePair<string, T>>.Add(KeyValuePair<string, T> item)
         {
-            HasChanges = true;
+            _hasChanges = true;
             _changed[item.Key] = true;
             (_dictionary as ICollection<KeyValuePair<string, T>>).Add(item);
         }
 
         void ICollection<KeyValuePair<string, T>>.Clear()
         {
-            HasChanges = true;
+            _hasChanges = true;
             foreach (string key in _dictionary.Keys)
             {
                 _changed[key] = true;
@@ -130,21 +174,29 @@ namespace Azure.Core.Serialization
             => (_dictionary as ICollection<KeyValuePair<string, T>>).CopyTo(array, arrayIndex);
 
         IEnumerator<KeyValuePair<string, T>> IEnumerable<KeyValuePair<string, T>>.GetEnumerator()
-            => _dictionary.GetEnumerator();
+        {
+            _checkChanges = true; // IPatchModel
+            _checkAllChanges = true;
+            return _dictionary.GetEnumerator();
+        }
 
-        // TODO: Could enumerators introduce changes to children?
-        IEnumerator IEnumerable.GetEnumerator() => (_dictionary as IEnumerable).GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            _checkChanges = true; // IPatchModel
+            _checkAllChanges = true;
+            return (_dictionary as IEnumerable).GetEnumerator();
+        }
 
         bool IDictionary<string, T>.Remove(string key)
         {
-            HasChanges = true;
+            _hasChanges = true;
             _changed[key] = true;
             return _dictionary.Remove(key);
         }
 
         bool ICollection<KeyValuePair<string, T>>.Remove(KeyValuePair<string, T> item)
         {
-            HasChanges = true;
+            _hasChanges = true;
             _changed[item.Key] = true;
             return (_dictionary as ICollection<KeyValuePair<string, T>>).Remove(item);
         }
@@ -157,7 +209,8 @@ namespace Azure.Core.Serialization
         {
             if (_dictionary.TryGetValue(key, out value))
             {
-                _changed[key] = value is IModelSerializable<object>;
+                _checkChanges |= value is IPatchModel;
+                _changed[key] = value is IPatchModel;
                 return true;
             }
 
