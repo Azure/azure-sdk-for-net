@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <param name="citusVersion"> The Citus extension version on all cluster servers. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a cluster. </param>
         /// <param name="preferredPrimaryZone"> Preferred primary availability zone (AZ) for all cluster servers. </param>
-        /// <param name="isShardsOnCoordinatorEnabled"> If shards on coordinator is enabled or not for the cluster. </param>
+        /// <param name="isShardsOnCoordinatorEnabled"> If distributed tables are placed on coordinator or not. Should be set to 'true' on single node clusters. Requires shard rebalancing after value is changed. </param>
         /// <param name="isHAEnabled"> If high availability (HA) is enabled or not for the cluster. </param>
         /// <param name="coordinatorServerEdition"> The edition of a coordinator server (default: GeneralPurpose). Required for creation. </param>
         /// <param name="coordinatorStorageQuotaInMb"> The storage of a server in MB. Required for creation. See https://learn.microsoft.com/azure/cosmos-db/postgresql/resources-compute for more information. </param>
