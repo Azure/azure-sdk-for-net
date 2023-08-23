@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
@@ -11,11 +10,16 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class SimplePatchModel
     {
+        private bool[] _changed;
+        private bool Changed(int index) => _changed[index];
+
         /// <summary>
         /// Public constructor.
         /// </summary>
         public SimplePatchModel()
         {
+            // Size = the number of properties to track
+            _changed = new bool[3];
         }
 
         /// <summary>
@@ -24,39 +28,56 @@ namespace Azure.Core.Tests.PatchModels
         /// <param name="element"></param>
         internal SimplePatchModel(string name, int count, DateTimeOffset updatedOn)
         {
-            _name = new MergePatchValue<string>(name);
-            _count = new MergePatchValue<int>(count);
-            _updatedOn = new MergePatchValue<DateTimeOffset>(updatedOn);
+            _changed = new bool[3];
+
+            _name = name;
+            _count = count;
+            _updatedOn = updatedOn;
         }
 
-        private MergePatchValue<string> _name;
+        private string _name;
+        private static int NameProperty => 0;
         /// <summary>
         /// Optional string property corresponding to JSON """{"name": "abc"}""".
         /// </summary>
         public string Name
         {
             get => _name;
-            set => _name.Value = value;
+            set
+            {
+                _changed[NameProperty] = true;
+                _name = value;
+            }
         }
 
-        private MergePatchValue<int> _count;
+        private int _count;
+        private static int CountProperty => 1;
         /// <summary>
         /// Optional int property corresponding to JSON """{"count": 1}""".
         /// </summary>
         public int Count
         {
             get => _count;
-            set => _count.Value = value;
+            set
+            {
+                _changed[CountProperty] = true;
+                _count = value;
+            }
         }
 
-        private MergePatchValue<DateTimeOffset> _updatedOn;
+        private DateTimeOffset _updatedOn;
+        private static int UpdatedOnProperty => 2;
         /// <summary>
         /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
         /// </summary>
         public DateTimeOffset UpdatedOn
         {
             get => _updatedOn;
-            set => _updatedOn.Value = value;
+            set
+            {
+                _changed[UpdatedOnProperty] = true;
+                _updatedOn = value;
+            }
         }
     }
 }
