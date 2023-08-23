@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -25,31 +26,28 @@ namespace Azure.Communication.JobRouter
         public virtual async Task<Response<RouterJob>> UpsertJobAsync(RouterJob job, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            if (job is not IModelJsonSerializable<RouterJob> serializable)
+            if (job is not IModelJsonSerializable<RouterJob> model)
             {
-                throw new InvalidCastException("model is not serializable");
+                throw new InvalidCastException("Model is not serializable.");
             }
 
-            using Stream stream = new MemoryStream();
-            using (Utf8JsonWriter writer = new(stream))
-            {
-                serializable.Serialize(writer, new ModelSerializerOptions("P"));
-            }
-
-            stream.Position = 0;
-            RequestContent content = RequestContent.Create(stream);
-
-            // TODO: was there a good way to get RequestContext without creating it new?
-            RequestContext context = new() { CancellationToken = cancellationToken };
-
-            Response response = await UpsertJobAsync(job.Id, content, context).ConfigureAwait(false);
+            RequestContent content = RequestContent.Create(model, new ModelSerializerOptions("P"));
+            Response response = await UpsertJobAsync(job.Id, content, new() { CancellationToken = cancellationToken }).ConfigureAwait(false);
 
             return Response.FromValue((RouterJob)response, response);
         }
 
         public virtual Response<RouterJob> UpsertJob(RouterJob job, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            if (job is not IModelJsonSerializable<RouterJob> model)
+            {
+                throw new InvalidCastException("Model is not serializable.");
+            }
+
+            RequestContent content = RequestContent.Create(model, new ModelSerializerOptions("P"));
+            Response response = UpsertJob(job.Id, content, new() { CancellationToken = cancellationToken });
+
+            return Response.FromValue((RouterJob)response, response);
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
@@ -57,12 +55,16 @@ namespace Azure.Communication.JobRouter
         public virtual async Task<Response<RouterJob>> GetJobAsync(string id, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            throw new NotImplementedException();
+            Response response = await GetJobAsync(id, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+
+            return Response.FromValue((RouterJob)response, response);
         }
 
         public virtual Response<RouterJob> GetJob(string id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Response response = GetJob(id, new RequestContext() { CancellationToken = cancellationToken });
+
+            return Response.FromValue((RouterJob)response, response);
         }
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
