@@ -339,10 +339,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
 
             var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { (ReadOnlyMemory<byte>)Array.Empty<byte>() }));
-            message.PopulateFromEventProperties(properties, sequenceNumber, offset, enqueueTime, partitionKey, lastSequence, lastOffset, lastEnqueue, lastRetrieve);
+            message.PopulateFromEventProperties(properties, sequenceNumber, offset, "", enqueueTime, partitionKey, lastSequence, lastOffset, lastEnqueue, lastRetrieve);
 
             Assert.That(message.ApplicationProperties, Is.EquivalentTo(properties), "The application properties should match.");
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
+            Assert.That(message.GetReplicationGroupEpoch(), Is.EqualTo(""), "The replication group epoch should match.");
             Assert.That(message.GetOffset(), Is.EqualTo(offset), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");

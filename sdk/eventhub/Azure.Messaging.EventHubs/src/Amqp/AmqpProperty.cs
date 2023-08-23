@@ -86,6 +86,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol Offset { get; } = "x-opt-offset";
 
         /// <summary>
+        ///   The replication group epoch of a message.
+        /// </summary>
+        ///
+        public static AmqpSymbol ReplicationGroupEpoch { get; } = "x-opt-replicationgroupepoch";
+
+        /// <summary>
         ///   The partition hashing key used for grouping a batch of events together with the intent of routing to a single partition.
         /// </summary>
         ///

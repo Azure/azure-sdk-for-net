@@ -294,6 +294,17 @@ namespace Azure.Messaging.EventHubs
         public long Offset => _amqpMessage.GetOffset(long.MinValue);
 
         /// <summary>
+        ///   The replication group epoch of the event when it was received from the associated Event Hub partition.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is read-only and will only be populated for events that have been read from geo replication enabled Event Hubs. The default value
+        ///   when not populated is an empty string.
+        /// </value>
+        ///
+        internal string ReplicationGroupEpoch => _amqpMessage.GetReplicationGroupEpoch("");
+
+        /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
@@ -537,6 +548,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="replicationGroupEpoch">TODO</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>
@@ -553,6 +565,7 @@ namespace Azure.Messaging.EventHubs
                            IReadOnlyDictionary<string, object> systemProperties = null,
                            long? sequenceNumber = null,
                            long? offset = null,
+                           string replicationGroupEpoch = null,
                            DateTimeOffset? enqueuedTime = null,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
@@ -571,6 +584,7 @@ namespace Azure.Messaging.EventHubs
                 properties,
                 sequenceNumber,
                 offset,
+                replicationGroupEpoch,
                 enqueuedTime,
                 partitionKey,
                 lastPartitionSequenceNumber,
@@ -622,7 +636,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, "", enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 
@@ -654,7 +668,7 @@ namespace Azure.Messaging.EventHubs
                             long sequenceNumber = long.MinValue,
                             long offset = long.MinValue,
                             DateTimeOffset enqueuedTime = default,
-                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
+                            string partitionKey = null) : this(new BinaryData(eventBody), properties, systemProperties, sequenceNumber, offset, "", enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }
 

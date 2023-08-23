@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs
                                           long sequenceNumber = long.MinValue,
                                           long offset = long.MinValue,
                                           DateTimeOffset enqueuedTime = default) =>
-             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey);
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, "", enqueuedTime, partitionKey);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch" /> class.
