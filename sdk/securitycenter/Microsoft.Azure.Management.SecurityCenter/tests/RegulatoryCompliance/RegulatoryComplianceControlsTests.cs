@@ -48,7 +48,7 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var regulatoryComplianceControls = await securityCenterClient.RegulatoryComplianceControls.ListAsync(regulatoryComplianceStandardName, $"state ne 'Passed'");
+                var regulatoryComplianceControls = await securityCenterClient.RegulatoryComplianceControls.ListAsync(regulatoryComplianceStandardName, $"properties/state ne 'Passed'");
                 ValidateRegulatoryComplianceControls(regulatoryComplianceControls);
             }
         }

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the SecurityContactList class.
         /// </summary>
         /// <param name="value">List of security contacts</param>
-        public SecurityContactList(IList<SecurityContact> value = default(IList<SecurityContact>))
+        public SecurityContactList(IList<SecurityContact> value)
         {
             Value = value;
             CustomInit();
@@ -49,5 +49,14 @@ namespace Microsoft.Azure.Management.Security.Models
         [JsonProperty(PropertyName = "value")]
         public IList<SecurityContact> Value { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

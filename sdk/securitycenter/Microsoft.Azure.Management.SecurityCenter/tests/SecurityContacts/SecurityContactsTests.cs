@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -17,6 +18,9 @@ namespace SecurityCenter.Tests
     public class SecurityContactsTests : TestBase
     {
         #region Test setup
+
+        private static string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private const string SecurityContactName = "default"; // The only valid name
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
@@ -34,6 +38,7 @@ namespace SecurityCenter.Tests
                 : context.GetServiceClient<SecurityCenterClient>(handlers: handler);
 
             securityCenterClient.AscLocation = "centralus";
+            securityCenterClient.SubscriptionId = SubscriptionId;
 
             return securityCenterClient;
         }
@@ -43,49 +48,45 @@ namespace SecurityCenter.Tests
         #region Security Contacts Tests
 
         [Fact]
-        public void SecurityContacts_List()
+        public async Task SecurityContacts_Get()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var securityContactsList = securityCenterClient.SecurityContacts.List();
-                ValidateSecurityContacts(securityContactsList);
-            }
-        }
-
-        [Fact]
-        public void SecurityContacts_Get()
-        {
-            using (var context = MockContext.Start(this.GetType()))
-            {
-                var securityCenterClient = GetSecurityCenterClient(context);
-                var securityContact = securityCenterClient.SecurityContacts.Get("default");
+                var securityContact = await securityCenterClient.SecurityContacts.GetAsync(SecurityContactName);
                 ValidateSecurityContact(securityContact);
             }
         }
 
         [Fact]
-        public void SecurityContacts_Create()
+        public async Task SecurityContacts_Create()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-
-                // SecurityContact(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string emails = default(string), string phone = default(string), SecurityContactPropertiesAlertNotifications alertNotifications = default(SecurityContactPropertiesAlertNotifications), SecurityContactPropertiesNotificationsByRole notificationsByRole = default(SecurityContactPropertiesNotificationsByRole)
-                var contact = new SecurityContact(
-                    id: "/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/providers/Microsoft.Security/securityContacts/default1",
-                    name: "default1",
-                    type: "Microsoft.Security/securityContacts",
-                    systemData: null,
-                    emails: "john@contoso.com;jane@contoso.com",
-                    phone: "(214)275-4038",
-                    new SecurityContactPropertiesAlertNotifications()
+                var contact = new SecurityContact(name: SecurityContactName)
+                {
+                    Phone = "+214-2754038",
+                    Emails = "john@contoso.com;jane@contoso.com",
+                    AlertNotifications = new SecurityContactPropertiesAlertNotifications()
                     {
                         State = "On",
                         MinimalSeverity = "Low",
-                    });
+                    },
+                    NotificationsByRole = new SecurityContactPropertiesNotificationsByRole()
+                    {
+                        Roles = new List<string>()
+                        {
+                            "AccountAdmin",
+                            "ServiceAdmin",
+                            "Owner",
+                            "Contributor",
+                        },
+                        State =  "Off"
+                    }
+                };
 
-                var securityContact = securityCenterClient.SecurityContacts.Create("default", contact);
+                var securityContact = await securityCenterClient.SecurityContacts.CreateAsync(SecurityContactName, contact);
                 ValidateSecurityContact(securityContact);
             }
         }
@@ -96,20 +97,13 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.SecurityContacts.Delete("default");
+                securityCenterClient.SecurityContacts.Delete(SecurityContactName);
             }
         }
 
         #endregion
 
         #region Validations
-
-        private void ValidateSecurityContacts(SecurityContactList securityContactsList)
-        {
-            Assert.NotNull(securityContactsList.Value);
-
-            securityContactsList.Value.ForEach(ValidateSecurityContact);
-        }
 
         private void ValidateSecurityContact(SecurityContact securityContact)
         {

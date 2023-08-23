@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using SecurityCenter.Tests.Helpers;
 using System.Net;
@@ -45,8 +46,8 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = await securityCenterClient.RegulatoryComplianceStandards.GetAsync(regulatoryComplianceStandardName);
-                Assert.NotNull(ret);
+                var regulatoryComplianceStandard = await securityCenterClient.RegulatoryComplianceStandards.GetAsync(regulatoryComplianceStandardName);
+                ValidateRegulatoryComplianceStandard(regulatoryComplianceStandard);
             }
         }
 
@@ -56,14 +57,26 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var ret = await securityCenterClient.RegulatoryComplianceStandards.ListAsync();
-                Assert.True(ret.IsAny(), "Got empty list");
-                foreach (var item in ret)
-                {
-                    Assert.NotNull(item);
-                }
+                var regulatoryComplianceStandards = await securityCenterClient.RegulatoryComplianceStandards.ListAsync();
+                ValidateRegulatoryComplianceStandards(regulatoryComplianceStandards);
             }
         }
+        #endregion
+
+        #region Validations
+
+        private void ValidateRegulatoryComplianceStandards(IPage<RegulatoryComplianceStandard> regulatoryComplianceStandards)
+        {
+            Assert.True(regulatoryComplianceStandards.IsAny(), "regulatoryComplianceStandards should not be empty");
+
+            regulatoryComplianceStandards.ForEach(ValidateRegulatoryComplianceStandard);
+        }
+
+        private void ValidateRegulatoryComplianceStandard(RegulatoryComplianceStandard regulatoryComplianceStandard)
+        {
+            Assert.NotNull(regulatoryComplianceStandard);
+        }
+
         #endregion
     }
 }

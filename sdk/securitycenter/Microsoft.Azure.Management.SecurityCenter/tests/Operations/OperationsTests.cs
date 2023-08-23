@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -42,12 +43,12 @@ namespace SecurityCenter.Tests
         #region Operations Tests
 
         [Fact]
-        public void SecurityOperations_List()
+        public async Task SecurityOperations_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var operations = securityCenterClient.Operations.List();
+                var operations = await securityCenterClient.Operations.ListAsync();
                 ValidateOperations(operations);
             }
         }

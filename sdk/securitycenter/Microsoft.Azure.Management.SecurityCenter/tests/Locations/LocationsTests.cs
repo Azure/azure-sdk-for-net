@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -42,23 +43,23 @@ namespace SecurityCenter.Tests
         #region Locations Tests
 
         [Fact]
-        public void SecurityLocations_List()
+        public async Task SecurityLocations_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var locations = securityCenterClient.Locations.List();
+                var locations = await securityCenterClient.Locations.ListAsync();
                 ValidateLocations(locations);
             }
         }
 
         [Fact]
-        public void SecurityLocations_Get()
+        public async Task SecurityLocations_Get()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var location = securityCenterClient.Locations.Get();
+                var location = await securityCenterClient.Locations.GetAsync();
                 ValidateLocation(location);
             }
         }

@@ -95,7 +95,7 @@ namespace SecurityCenter.Tests
                 var automation = await securityCenterClient.Automations.CreateOrUpdateAsync(ResourceGroupName, AutomationName, new Automation()
                 {
                     Location = "Central US",
-                    Etag = "etag value (must be supplied for update)",
+                    // Etag = "etag value (must be supplied for update)",
                     Tags = new Dictionary<string, string>(),
                     IsEnabled = true,
                     Scopes = new List<AutomationScope>()
