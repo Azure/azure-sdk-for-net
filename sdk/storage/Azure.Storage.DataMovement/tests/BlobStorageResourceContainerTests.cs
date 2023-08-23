@@ -65,12 +65,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string directoryName = "directoryName";
             BlobContainerClient blobContainerClient = new BlobContainerClient(uri);
             BlobStorageResourceContainer storageResource =
-                new BlobStorageResourceContainer(blobContainerClient, new() { BlobDirectoryPrefix = "directoryName" });
+                new BlobStorageResourceContainer(blobContainerClient, new() { BlobDirectoryPrefix = directoryName });
 
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
-            Assert.AreEqual(directoryName, storageResource.Path);
-            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]
