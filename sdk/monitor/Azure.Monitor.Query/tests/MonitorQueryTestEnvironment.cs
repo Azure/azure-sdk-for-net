@@ -31,7 +31,7 @@ namespace Azure.Monitor.Query.Tests
             { "AzureGovernmentCloud", "https://api.loganalytics.us/v1" }
         };
 
-        private string ENV_MONITOR_ENVIRONMENT = "MONITORENVIRONMENT";
+        private string ENV_MONITOR_ENVIRONMENT = "MONITOR_ENVIRONMENT";
         private string GetEndpoint()
         {
             // if mode is Playback use DefaultEndpoint
