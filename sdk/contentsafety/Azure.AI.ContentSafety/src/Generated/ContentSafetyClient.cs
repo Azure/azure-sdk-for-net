@@ -469,7 +469,6 @@ namespace Azure.AI.ContentSafety
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Text Blocklist By blocklistName
         /// <list type="bullet">
@@ -505,7 +504,6 @@ namespace Azure.AI.ContentSafety
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Text Blocklist By blocklistName
         /// <list type="bullet">
