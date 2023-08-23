@@ -38,7 +38,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public JobRouterClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureCommunicationServicesClientOptions())
+        public JobRouterClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new JobRouterClientOptions())
         {
         }
 
@@ -47,11 +47,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public JobRouterClient(string endpoint, TokenCredential credential, AzureCommunicationServicesClientOptions options)
+        public JobRouterClient(string endpoint, TokenCredential credential, JobRouterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureCommunicationServicesClientOptions();
+            options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
