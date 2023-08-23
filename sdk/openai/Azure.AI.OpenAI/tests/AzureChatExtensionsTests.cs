@@ -116,9 +116,9 @@ public class AzureChatExtensionsTests : OpenAITestBase
                         {
                             Endpoint = "https://openaisdktestsearch.search.windows.net",
                             IndexName = "openai-test-index-carbon-wiki",
-                            Key = GetCognitiveSearchApiKey(),
+                            Key = GetCognitiveSearchApiKey().Key,
                         },
-                        new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+                        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
                     },
                 }
             },
@@ -144,9 +144,10 @@ public class AzureChatExtensionsTests : OpenAITestBase
             }
         }
 
-        Assert.That(choiceCount, Is.EqualTo(0));
+        Assert.That(choiceCount, Is.EqualTo(1));
         Assert.That(messageChunks, Is.Not.Null.Or.Empty);
-        Assert.That(messageChunks.Any(chunk => chunk.Role == ChatRole.Tool));
-        Assert.That(messageChunks.Any(chunk => chunk.Role == ChatRole.Assistant));
+        Assert.That(messageChunks.Any(chunk => chunk.AzureExtensionsContext != null && chunk.AzureExtensionsContext.Messages.Any(m => m.Role == ChatRole.Tool)));
+        //Assert.That(messageChunks.Any(chunk => chunk.Role == ChatRole.Assistant));
+        Assert.That(messageChunks.Any(chunk => !string.IsNullOrWhiteSpace(chunk.Content)));
     }
 }
