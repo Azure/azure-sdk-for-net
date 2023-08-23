@@ -9,12 +9,41 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterJob : IUtf8JsonSerializable
+    public partial class RouterJob : IUtf8JsonSerializable, IModelJsonSerializable<RouterJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        #region Serialize
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouterJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
+
+        void IModelJsonSerializable<RouterJob>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+
+            switch (options.Format.ToString())
+            {
+                case "J":
+                case "W":
+                    Serialize(writer, options);
+                    break;
+                case "P":
+                    SerializePatch(writer);
+                    break;
+                default:
+                    // Exception was thrown by ValidateFormat.
+                    break;
+            }
+        }
+
+        BinaryData IModelSerializable<RouterJob>.Serialize(ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ChannelReference))
@@ -108,7 +137,19 @@ namespace Azure.Communication.JobRouter.Models
             writer.WriteEndObject();
         }
 
-        internal static RouterJob DeserializeRouterJob(JsonElement element)
+        private void SerializePatch(Utf8JsonWriter writer)
+        {
+            throw new NotImplementedException();
+        }
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static implicit operator RequestContent(RouterJob model)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+            => RequestContent.Create(model, ModelSerializerOptions.DefaultWireOptions);
+        #endregion
+
+        #region Deserialize
+        internal static RouterJob DeserializeRouterJob(JsonElement element, ModelSerializerOptions options = default)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -309,5 +350,29 @@ namespace Azure.Communication.JobRouter.Models
             }
             return new RouterJob(id.Value, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToDictionary(notes), Optional.ToNullable(scheduledAt), matchingMode.Value);
         }
+
+        RouterJob IModelJsonSerializable<RouterJob>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterJob(doc.RootElement, options);
+        }
+
+        RouterJob IModelSerializable<RouterJob>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            // TODO: PatchModelHelper.ValidateFormat(this, options.Format);
+            return DeserializeRouterJob(JsonDocument.Parse(data.ToString()).RootElement, options);
+        }
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static explicit operator RouterJob(Response response)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
+            return DeserializeRouterJob(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
+        #endregion
     }
 }

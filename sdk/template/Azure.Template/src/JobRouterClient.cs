@@ -6,12 +6,13 @@
 #nullable disable
 
 using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Communication.JobRouter.Models;
 using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
@@ -24,7 +25,26 @@ namespace Azure.Communication.JobRouter
         public virtual async Task<Response> UpsertJobAsync(RouterJob job, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            throw new NotImplementedException();
+            if (job is not IModelJsonSerializable<RouterJob> serializable)
+            {
+                throw new InvalidCastException("model is not serializable");
+            }
+
+            using Stream stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new(stream))
+            {
+                serializable.Serialize(writer, new ModelSerializerOptions("P"));
+            }
+
+            stream.Position = 0;
+            RequestContent content = RequestContent.Create(stream);
+
+            // TODO: was there a good way to get RequestContext without creating it new?
+            RequestContext context = new() { CancellationToken = cancellationToken };
+
+            Response response = await UpsertJobAsync(job.Id, content, context).ConfigureAwait(false);
+
+            return Response.FromValue((RouterJob)response, response);
         }
 
         public virtual Response UpsertJob(RouterJob job, CancellationToken cancellationToken = default)
