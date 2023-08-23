@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter.Models
     }
     public partial class RouterJob : Azure.Core.Serialization.IModelJsonSerializable<Azure.Communication.JobRouter.Models.RouterJob>, Azure.Core.Serialization.IModelSerializable<Azure.Communication.JobRouter.Models.RouterJob>
     {
-        public RouterJob() { }
+        public RouterJob(string id) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.JobRouter.Models.RouterJobAssignment> Assignments { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.JobRouter.Models.RouterWorkerSelector> AttachedWorkerSelectors { get { throw null; } }
         public string ChannelId { get { throw null; } set { } }

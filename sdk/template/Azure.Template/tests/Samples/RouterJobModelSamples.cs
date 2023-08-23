@@ -11,11 +11,158 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.Core.Serialization;
+using Azure.Communication.JobRouter.Models;
 
 namespace Azure.Communication.JobRouter.Samples
 {
     public class RouterJobModelSamples
     {
+        [Test]
+        public void RoundTripRouterJobSample_ProtocolMethods()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            Response response = client.GetJob("<id>", new RequestContext());
+
+            dynamic routerJob = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            Console.WriteLine($"Job ID: '{routerJob.Id}'.");
+            Console.WriteLine($"Channel ID: '{routerJob.ChannelId}'.");
+
+            var patch = new
+            {
+                labels = new {
+                    Some_Skill = 10
+                }
+            };
+
+            // Sends JSON """{{"labels": {"Some_Skill": 10}}}"""
+            client.UpsertJob(routerJob.Id, RequestContent.Create(patch));
+        }
+
+        [Test]
+        public void RoundTripRouterJobSample_ProtocolMethods_DeleteLabel()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            Response response = client.GetJob("<id>", new RequestContext());
+
+            dynamic routerJob = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            Console.WriteLine($"Job ID: '{routerJob.Id}'.");
+            Console.WriteLine($"Channel ID: '{routerJob.ChannelId}'.");
+
+            var patch = new
+            {
+                labels = new
+                {
+                    Some_Skill = (object)null
+                }
+            };
+
+            // Sends JSON """{{"labels": {"Some_Skill": null}}}"""
+            client.UpsertJob(routerJob.Id, RequestContent.Create(patch));
+        }
+
+        [Test]
+        public void RoundTripRouterJobSample_ConvenienceMethods()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            RouterJob routerJob = client.GetJob("<id>");
+
+            Console.WriteLine($"Job ID: '{routerJob.Id}'.");
+            Console.WriteLine($"Channel ID: '{routerJob.ChannelId}'.");
+
+            // Sends JSON """{{"labels": {"Some_Skill": 10}}}"""
+            routerJob.Labels["Some_Skill"] = 10;
+
+            client.UpsertJob(routerJob);
+        }
+
+        [Test]
+        public void RoundTripRouterJobSample_ConvenienceMethods_DeleteLabel()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            RouterJob routerJob = client.GetJob("<id>");
+
+            Console.WriteLine($"Job ID: '{routerJob.Id}'.");
+            Console.WriteLine($"Channel ID: '{routerJob.ChannelId}'.");
+
+            routerJob.Labels.Remove("Some_Skill");
+
+            // Sends JSON """{{"labels": {"Some_Skill": null}}}"""
+            client.UpsertJob(routerJob);
+        }
+        [Test]
+        public void PatchWithoutGetRouterJobSample_ProtocolMethods()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            var patch = new
+            {
+                labels = new
+                {
+                    Some_Skill = 10
+                }
+            };
+
+            // Sends JSON """{{"labels": {"Some_Skill": 10}}}"""
+            client.UpsertJob("<id>", RequestContent.Create(patch));
+        }
+
+        [Test]
+        public void PatchWithoutGetRouterJobSample_ProtocolMethods_DeleteLabel()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            var patch = new
+            {
+                labels = new
+                {
+                    Some_Skill = (object)null
+                }
+            };
+
+            // Sends JSON """{{"labels": {"Some_Skill": null}}}"""
+            client.UpsertJob("<id>", RequestContent.Create(patch));
+        }
+
+        [Test]
+        public void PatchWithoutGetRouterJobSample_ConvenienceMethods()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            RouterJob routerJob = new RouterJob("<id>");
+
+            // Sends JSON """{{"labels": {"Some_Skill": 10}}}"""
+            routerJob.Labels["Some_Skill"] = 10;
+
+            client.UpsertJob(routerJob);
+        }
+
+        [Test]
+        public void PatchWithoutGetRouterJobSample_ConvenienceMethods_DeleteLabel()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new JobRouterClient("<https://my-service.azure.com>", credential);
+
+            RouterJob routerJob = new RouterJob("<id>");
+
+            routerJob.Labels.Remove("Some_Skill");
+
+            // Sends JSON """{{"labels": {"Some_Skill": null}}}"""
+            client.UpsertJob(routerJob);
+        }
+
+
         [Test]
         public void Example_UpsertJob()
         {

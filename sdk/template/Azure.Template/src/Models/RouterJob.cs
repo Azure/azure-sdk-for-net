@@ -15,8 +15,10 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterJob
     {
         /// <summary> Initializes a new instance of RouterJob. </summary>
-        public RouterJob()
+        public RouterJob(string id)
         {
+            Id = id;
+
             RequestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
             AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
             Labels = new ChangeTrackingDictionary<string, object>();

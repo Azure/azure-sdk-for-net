@@ -50,14 +50,14 @@ namespace Azure.Communication.JobRouter.Samples
                 priority = 1234,
                 dispositionCode = "<dispositionCode>",
                 requestedWorkerSelectors = new[] {
-        new {
-            key = "<key>",
-            labelOperator = "equal",
-            value = new {},
-            expiresAfterSeconds = 123.45d,
-            expedite = true,
-        }
-    },
+                    new {
+                        key = "<key>",
+                        labelOperator = "equal",
+                        value = new {},
+                        expiresAfterSeconds = 123.45d,
+                        expedite = true,
+                    }
+                },
                 labels = new
                 {
                     key = new { },
