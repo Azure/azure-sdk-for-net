@@ -267,6 +267,7 @@ rename-mapping:
   CommunityGalleryImage.properties.identifier: ImageIdentifier
   GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
   FileFormat: DiskImageFileFormat
+  CreationData.elasticSanResourceId: -|arm-id
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

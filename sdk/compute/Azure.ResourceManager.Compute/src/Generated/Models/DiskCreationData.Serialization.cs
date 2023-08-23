@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> logicalSectorSize = default;
             Optional<Uri> securityDataUri = default;
             Optional<bool> performancePlus = default;
-            Optional<string> elasticSanResourceId = default;
+            Optional<ResourceIdentifier> elasticSanResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -184,7 +184,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("elasticSanResourceId"u8))
                 {
-                    elasticSanResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elasticSanResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
