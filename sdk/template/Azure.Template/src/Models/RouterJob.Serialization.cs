@@ -13,7 +13,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    public partial class RouterJob : IUtf8JsonSerializable, IModelJsonSerializable<RouterJob>
+    public partial class RouterJob : IModelJsonSerializable<RouterJob>, IUtf8JsonSerializable
     {
         #region Serialize
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<RouterJob>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);

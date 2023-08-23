@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
             return Response.FromValue((RouterJob)response, response);
         }
 
-        public virtual Response UpsertJob(RouterJob job, CancellationToken cancellationToken = default)
+        public virtual Response<RouterJob> UpsertJob(RouterJob job, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter
             throw new NotImplementedException();
         }
 
-        public virtual Response GetJob(string id, CancellationToken cancellationToken = default)
+        public virtual Response<RouterJob> GetJob(string id, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

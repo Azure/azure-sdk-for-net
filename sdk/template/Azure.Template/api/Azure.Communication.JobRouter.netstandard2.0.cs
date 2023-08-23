@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter
         public virtual Azure.Response GetInQueuePosition(string id, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetInQueuePositionAsync(string id, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetJob(string id, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetJob(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterJob> GetJob(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetJobAsync(string id, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterJob>> GetJobAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetJobs(string status, string queueId, string channelId, string classificationPolicyId, System.DateTimeOffset? scheduledBefore, System.DateTimeOffset? scheduledAfter, int? maxpagesize, Azure.RequestContext context) { throw null; }
@@ -85,7 +85,7 @@ namespace Azure.Communication.JobRouter
         public virtual System.Threading.Tasks.Task<Azure.Response> ReclassifyJobActionAsync(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UnassignJobAction(string id, string assignmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UnassignJobActionAsync(string id, string assignmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response UpsertJob(Azure.Communication.JobRouter.Models.RouterJob job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.JobRouter.Models.RouterJob> UpsertJob(Azure.Communication.JobRouter.Models.RouterJob job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpsertJob(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterJob>> UpsertJobAsync(Azure.Communication.JobRouter.Models.RouterJob job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertJobAsync(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
