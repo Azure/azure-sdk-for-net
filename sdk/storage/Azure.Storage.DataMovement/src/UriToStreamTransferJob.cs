@@ -175,9 +175,10 @@ namespace Azure.Storage.DataMovement
                 StorageResource current = enumerator.Current;
                 if (lastResource != default)
                 {
-                    string sourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
-                        ? lastResource.Path
-                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                    string sourceName = string.IsNullOrEmpty(containerUriPath)
+                        ? lastResource.Uri.GetPath()
+                        : lastResource.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
                     if (!existingSources.Contains(sourceName))
                     {
@@ -215,9 +216,10 @@ namespace Azure.Storage.DataMovement
                 {
                     // Return last part but enable the part to be the last job part of the entire job
                     // so we know that we've finished listing in the container
-                    string lastSourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
-                        ? lastResource.Path
-                        : lastResource.Path.Substring(_sourceResourceContainer.Path.Length + 1);
+                    string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                    string lastSourceName = string.IsNullOrEmpty(containerUriPath)
+                        ? lastResource.Uri.GetPath()
+                        : lastResource.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
                     lastPart = await UriToStreamJobPart.CreateJobPartAsync(
                             job: this,

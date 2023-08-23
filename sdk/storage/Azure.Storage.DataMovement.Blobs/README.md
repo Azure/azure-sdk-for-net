@@ -180,22 +180,7 @@ StorageResource leasedBlockBlobResource = new BlockBlobStorageResource(
     leasedResourceOptions);
 ```
 
-When resuming a transfer, a credential to Azure Storage is likely needed. Credentials are not persisted by the transfer manager. When using `BlobStorageResources.TryGetResourceProviders()` to recreate a `StorageResource` for resume, the returned provider can create the resource with a credential specified by the calling code. This allows for workflows like scoping generation of a Shared Access Signature to the given resource path. Your application should provide its own mechanism for getting the appropriate credential, represented by `GenerateMySasCredential()` in the sample below.
-
-```C# Snippet:RehydrateBlobResource
-StorageResource sourceResource = null;
-StorageResource destinationResource = null;
-if (BlobStorageResources.TryGetResourceProviders(
-    info,
-    out BlobStorageResourceProvider blobSrcProvider,
-    out BlobStorageResourceProvider blobDstProvider))
-{
-    sourceResource ??= await blobSrcProvider?.CreateResourceAsync(
-        GenerateMySasCredential(info.SourcePath));
-    destinationResource ??= await blobSrcProvider?.CreateResourceAsync(
-        GenerateMySasCredential(info.DestinationPath));
-}
-```
+***TODO (jaschrep-msft): Replace resume samples once resume refactor finished.***
 
 ### Upload
 

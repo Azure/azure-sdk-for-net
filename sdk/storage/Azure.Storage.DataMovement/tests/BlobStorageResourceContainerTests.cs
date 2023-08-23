@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
 using NUnit.Framework;
 
@@ -65,19 +66,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string directoryName = "directoryName";
             BlobContainerClient blobContainerClient = new BlobContainerClient(uri);
             BlobStorageResourceContainer storageResource =
-                new BlobStorageResourceContainer(blobContainerClient, new() { BlobDirectoryPrefix = "directoryName" });
+                new BlobStorageResourceContainer(blobContainerClient, new() { BlobDirectoryPrefix = directoryName });
 
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
-            Assert.AreEqual(directoryName, storageResource.Path);
-            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string folderName = "foo";
@@ -99,7 +98,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [RecordedTest]
         public async Task GetChildStorageResourceAsync()
         {
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
+            await using DisposingContainer test = await GetTestContainerAsync();
             await SetUpContainerForListing(test.Container);
 
             string prefix = "foo";

@@ -2,39 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Text.Json;
 
 namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
     {
-        private JsonElement? _serializedValue;
-        private readonly JsonSerializerOptions _serializerOptions;
-
         public MutableJsonChange(string path,
             int index,
             object? value,
-            JsonSerializerOptions options,
             MutableJsonChangeKind changeKind,
             string? addedPropertyName)
         {
             Path = path;
             Index = index;
             Value = value;
-            _serializerOptions = options;
             ChangeKind = changeKind;
             AddedPropertyName = addedPropertyName;
-
-            if (value is JsonElement element)
-            {
-                _serializedValue = element;
-            }
-
-            if (value is JsonDocument doc)
-            {
-                _serializedValue = doc.RootElement;
-            }
         }
 
         public string Path { get; }
@@ -47,18 +31,63 @@ namespace Azure.Core.Json
 
         public MutableJsonChangeKind ChangeKind { get; }
 
-        public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
-
-        internal JsonElement GetSerializedValue()
+        public readonly JsonValueKind ValueKind => Value switch
         {
-            if (_serializedValue != null)
+            null => JsonValueKind.Null,
+            bool b => b ? JsonValueKind.True : JsonValueKind.False,
+            string => JsonValueKind.String,
+            DateTime => JsonValueKind.String,
+            DateTimeOffset => JsonValueKind.String,
+            Guid => JsonValueKind.String,
+            byte => JsonValueKind.Number,
+            sbyte => JsonValueKind.Number,
+            short => JsonValueKind.Number,
+            ushort => JsonValueKind.Number,
+            int => JsonValueKind.Number,
+            uint => JsonValueKind.Number,
+            long => JsonValueKind.Number,
+            ulong => JsonValueKind.Number,
+            float => JsonValueKind.Number,
+            double => JsonValueKind.Number,
+            decimal => JsonValueKind.Number,
+            JsonElement e => e.ValueKind,
+            _ => throw new InvalidOperationException($"Unrecognized change type '{Value.GetType()}'.")
+        };
+
+        internal readonly void EnsureString()
+        {
+            if (ValueKind != JsonValueKind.String)
             {
-                return _serializedValue.Value;
+                throw new InvalidOperationException($"Expected a 'String' kind but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly void EnsureNumber()
+        {
+            if (ValueKind != JsonValueKind.Number)
+            {
+                throw new InvalidOperationException($"Expected a 'Number' kind but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly void EnsureArray()
+        {
+            if (ValueKind != JsonValueKind.Array)
+            {
+                throw new InvalidOperationException($"Expected an 'Array' kind but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly int GetArrayLength()
+        {
+            EnsureArray();
+
+            if (Value is JsonElement e)
+            {
+                return e.GetArrayLength();
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
-            _serializedValue = JsonDocument.Parse(bytes).RootElement;
-            return _serializedValue.Value;
+            throw new InvalidOperationException($"Expected an 'Array' kind but was '{ValueKind}'.");
         }
 
         internal bool IsDescendant(string path)
@@ -110,7 +139,12 @@ namespace Azure.Core.Json
 
         internal string AsString()
         {
-            return GetSerializedValue().ToString() ?? "null";
+            if (Value is null)
+            {
+                return "null";
+            }
+
+            return Value.ToString()!;
         }
 
         public override string ToString()

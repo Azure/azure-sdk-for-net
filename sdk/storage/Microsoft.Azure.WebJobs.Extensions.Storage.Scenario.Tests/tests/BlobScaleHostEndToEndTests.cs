@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
 
         private const string Function1Name = "Function1";
 
-        private string ContainerNameTemaplte1 = "container1%rnd%";
+        //private string ContainerNameTemaplte1 = "container1%rnd%";
 
         private const string BlobConnection1 = "BlobConnection1";
 
@@ -44,6 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             _blobServiceClient = _fixture.BlobServiceClient;
         }
 
+        /* TODO: https://github.com/Azure/azure-sdk-for-net/issues/38326 renable test after AddAzureStorageBlobsScaleForTrigger is added back.
         [Test]
         [TestCase(true, Ignore = "true", IgnoreReason = "The test can take long time.")]
         [TestCase(false)]
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             }";
 
             string triggers = $@"{{
-""triggers"": [
+    ""triggers"": [
     {{
         ""name"": ""myQueueItem"",
         ""type"": ""queueTrigger"",
@@ -75,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
         ""connection"": ""{BlobConnection1}"",
         ""functionName"": ""{Function1Name}""
     }}
- ]}}";
+    ]}}";
 
             IHost host = new HostBuilder().ConfigureServices(services => services.AddAzureClientsCore()).Build();
             AzureComponentFactory defaultAzureComponentFactory = host.Services.GetService<AzureComponentFactory>();
@@ -176,6 +177,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                 return scaleStatus.Vote == ScaleVote.None && scaleStatus.FunctionScaleStatuses[Function1Name].Vote == ScaleVote.None;
             }, timeout);
         }
+        */
 
         private void SetRecentWrite(IHost scaleHost, BlobContainerClient blobContainerClient, bool setValue)
         {
