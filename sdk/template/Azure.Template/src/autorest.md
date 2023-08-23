@@ -1,14 +1,9 @@
 # Azure SDK Code Generation for Data Plane
 
-Run `dotnet build /t:GenerateCode` to generate code.
-
-### AutoRest Configuration
-> see https://aka.ms/autorest
-
 ``` yaml
-input-file:
-- $(this-folder)/swagger/mini-secrets.json
-namespace: Azure.Template
+require:
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/29159d148372f5f61cb04b76fc87252b13c62515/specification/communication/data-plane/JobRouter/readme.md
+namespace: Azure.Communication.JobRouter
 security: AADToken
 security-scopes: https://vault.azure.net/.default
 ```

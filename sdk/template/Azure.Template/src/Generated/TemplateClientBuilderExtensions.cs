@@ -10,25 +10,42 @@ using Azure.Template;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="TemplateClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="JobRouterAdministrationClient"/>, <see cref="JobRouterClient"/> to client builder. </summary>
     public static partial class TemplateClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="TemplateClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        public static IAzureClientBuilder<TemplateClient, TemplateClientOptions> AddTemplateClient<TBuilder>(this TBuilder builder, string vaultBaseUrl)
+        /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
+        public static IAzureClientBuilder<JobRouterAdministrationClient, AzureCommunicationServicesClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, string endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<TemplateClient, TemplateClientOptions>((options, cred) => new TemplateClient(vaultBaseUrl, cred, options));
+            return builder.RegisterClientFactory<JobRouterAdministrationClient, AzureCommunicationServicesClientOptions>((options, cred) => new JobRouterAdministrationClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="TemplateClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
+        public static IAzureClientBuilder<JobRouterClient, AzureCommunicationServicesClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, string endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<JobRouterClient, AzureCommunicationServicesClientOptions>((options, cred) => new JobRouterClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<TemplateClient, TemplateClientOptions> AddTemplateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<JobRouterAdministrationClient, AzureCommunicationServicesClientOptions> AddJobRouterAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<TemplateClient, TemplateClientOptions>(configuration);
+            return builder.RegisterClientFactory<JobRouterAdministrationClient, AzureCommunicationServicesClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<JobRouterClient, AzureCommunicationServicesClientOptions> AddJobRouterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<JobRouterClient, AzureCommunicationServicesClientOptions>(configuration);
         }
     }
 }
