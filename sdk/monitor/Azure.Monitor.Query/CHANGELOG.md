@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Added testing for sovereign support for `LogsQueryClient` and `MetricsQueryClient`
 
 ## 1.2.0 (2023-05-22)
 

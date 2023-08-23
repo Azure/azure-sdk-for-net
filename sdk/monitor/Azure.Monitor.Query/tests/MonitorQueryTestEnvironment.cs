@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -40,6 +41,7 @@ namespace Azure.Monitor.Query.Tests
             }
             // else find endpoing of specific region from pipeline
             string endpoint = "";
+            TestContext.Progress.WriteLine("Current Region: " + Environment.GetEnvironmentVariable(ENV_MONITOR_ENVIRONMENT));
             if (regions.TryGetValue(Environment.GetEnvironmentVariable(ENV_MONITOR_ENVIRONMENT), out string region))
             {
                 endpoint = region;
