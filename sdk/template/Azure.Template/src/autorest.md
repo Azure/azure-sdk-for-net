@@ -6,4 +6,5 @@ require:
 namespace: Azure.Communication.JobRouter
 security: AADToken
 security-scopes: https://example.azure.net/.default
+generation1-convenience-client: true
 ```
