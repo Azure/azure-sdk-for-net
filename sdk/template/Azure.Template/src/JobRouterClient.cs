@@ -9,103 +9,41 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Communication.JobRouter
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     // Data plane generated client.
     /// <summary> The JobRouter service client. </summary>
     public partial class JobRouterClient
     {
-        /// <summary>
-        /// [Protocol Method] Creates or updates a router job.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Id of the job. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="cancellationToken"> </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public virtual async Task<Response> UpsertJobAsync(string id, RequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpsertJobAsync(RouterJob job, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// [Protocol Method] Creates or updates a router job.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Id of the job. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="cancellationToken"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response UpsertJob(string id, RequestContent content, CancellationToken cancellationToken = default)
+        public virtual Response UpsertJob(RouterJob job, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// [Protocol Method] Retrieves an existing job by Id
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Id of the job to retrieve. </param>
-        /// <param name="cancellationToken"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
         public virtual async Task<Response> GetJobAsync(string id, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// [Protocol Method] Retrieves an existing job by Id
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="id"> Id of the job to retrieve. </param>
-        /// <param name="cancellationToken"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response GetJob(string id, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
