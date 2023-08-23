@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
     /// <summary> The JobRouter service client. </summary>
     public partial class JobRouterClient
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://example.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly string _endpoint;
@@ -38,7 +38,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public JobRouterClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new JobRouterClientOptions())
+        public JobRouterClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureCommunicationServicesClientOptions())
         {
         }
 
@@ -47,11 +47,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public JobRouterClient(string endpoint, TokenCredential credential, JobRouterClientOptions options)
+        public JobRouterClient(string endpoint, TokenCredential credential, AzureCommunicationServicesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new JobRouterClientOptions();
+            options ??= new AzureCommunicationServicesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
