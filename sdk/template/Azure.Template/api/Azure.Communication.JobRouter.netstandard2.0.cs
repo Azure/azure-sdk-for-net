@@ -72,7 +72,7 @@ namespace Azure.Communication.JobRouter
         public virtual Azure.Response GetJob(string id, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetJob(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetJobAsync(string id, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetJobAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterJob>> GetJobAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetJobs(string status, string queueId, string channelId, string classificationPolicyId, System.DateTimeOffset? scheduledBefore, System.DateTimeOffset? scheduledAfter, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetJobsAsync(string status, string queueId, string channelId, string classificationPolicyId, System.DateTimeOffset? scheduledBefore, System.DateTimeOffset? scheduledAfter, int? maxpagesize, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetQueueStatistics(string id, Azure.RequestContext context) { throw null; }
@@ -87,7 +87,7 @@ namespace Azure.Communication.JobRouter
         public virtual System.Threading.Tasks.Task<Azure.Response> UnassignJobActionAsync(string id, string assignmentId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpsertJob(Azure.Communication.JobRouter.Models.RouterJob job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpsertJob(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UpsertJobAsync(Azure.Communication.JobRouter.Models.RouterJob job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.JobRouter.Models.RouterJob>> UpsertJobAsync(Azure.Communication.JobRouter.Models.RouterJob job, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertJobAsync(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpsertWorker(string workerId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpsertWorkerAsync(string workerId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -144,7 +144,7 @@ namespace Azure.Communication.JobRouter.Models
         public static bool operator !=(Azure.Communication.JobRouter.Models.LabelOperator left, Azure.Communication.JobRouter.Models.LabelOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RouterJob
+    public partial class RouterJob : Azure.Core.Serialization.IModelJsonSerializable<Azure.Communication.JobRouter.Models.RouterJob>, Azure.Core.Serialization.IModelSerializable<Azure.Communication.JobRouter.Models.RouterJob>
     {
         public RouterJob() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Communication.JobRouter.Models.RouterJobAssignment> Assignments { get { throw null; } }
@@ -164,6 +164,12 @@ namespace Azure.Communication.JobRouter.Models
         public System.DateTimeOffset? ScheduledAt { get { throw null; } }
         public Azure.Communication.JobRouter.Models.RouterJobStatus? Status { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> Tags { get { throw null; } }
+        Azure.Communication.JobRouter.Models.RouterJob Azure.Core.Serialization.IModelJsonSerializable<Azure.Communication.JobRouter.Models.RouterJob>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        void Azure.Core.Serialization.IModelJsonSerializable<Azure.Communication.JobRouter.Models.RouterJob>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        Azure.Communication.JobRouter.Models.RouterJob Azure.Core.Serialization.IModelSerializable<Azure.Communication.JobRouter.Models.RouterJob>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.Communication.JobRouter.Models.RouterJob>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        public static explicit operator Azure.Communication.JobRouter.Models.RouterJob (Azure.Response response) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Communication.JobRouter.Models.RouterJob model) { throw null; }
     }
     public partial class RouterJobAssignment
     {

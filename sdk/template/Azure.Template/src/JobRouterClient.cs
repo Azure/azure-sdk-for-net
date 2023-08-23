@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
     public partial class JobRouterClient
     {
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public virtual async Task<Response> UpsertJobAsync(RouterJob job, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouterJob>> UpsertJobAsync(RouterJob job, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (job is not IModelJsonSerializable<RouterJob> serializable)
@@ -54,7 +54,7 @@ namespace Azure.Communication.JobRouter
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 
-        public virtual async Task<Response> GetJobAsync(string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RouterJob>> GetJobAsync(string id, CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             throw new NotImplementedException();
