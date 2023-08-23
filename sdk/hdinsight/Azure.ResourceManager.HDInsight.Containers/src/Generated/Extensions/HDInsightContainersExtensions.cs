@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HDInsight.Containers
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.HDInsight.Containers. </summary>
-    public static partial class ContainersExtensions
+    public static partial class HDInsightContainersExtensions
     {
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
