@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query.Tests
         {
             { "AzureCloud", "https://api.loganalytics.io/v1" },
             { "AzureChinaCloud", "https://api.loganalytics.azure.cn/v1" },
-            { "AzureGovernmentCloud", "https://api.loganalytics.us/v1" }
+            { "AzureUSGovernment", "https://api.loganalytics.us/v1" }
         };
 
         private string ENV_MONITOR_ENVIRONMENT = "MONITOR_ENVIRONMENT";
