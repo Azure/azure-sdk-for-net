@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResourceItem childDestinationResource;
                 if (transferType == TransferDirection.Upload)
                 {
-                    string destinationChildName = childSourceResource.Path.Substring(sourceResource.Path.Length + 1);
+                    string destinationChildName = childSourceResource.Uri.LocalPath.Substring(sourceResource.Uri.LocalPath.Length + 1);
                     childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName);
                 }
                 else
@@ -70,7 +70,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 // Verify Upload by downloading the blob and comparing the values
                 BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationResource.Uri);
-                using (FileStream fileStream = File.OpenRead(sourceResource.Path))
+                using (FileStream fileStream = File.OpenRead(sourceResource.Uri.LocalPath))
                 {
                     await DownloadAndAssertAsync(fileStream, destinationContainer.GetBlockBlobClient(destinationBuilder.BlobName));
                 }
@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 // Verify Download
                 BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceResource.Uri);
-                using (FileStream fileStream = File.OpenRead(destinationResource.Path))
+                using (FileStream fileStream = File.OpenRead(destinationResource.Uri.LocalPath))
                 {
                     await DownloadAndAssertAsync(fileStream, sourceContainer.GetBlockBlobClient(sourceBuilder.BlobName));
                 }
@@ -397,7 +397,8 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ResumeProviders = new() { new BlobsStorageResourceProvider(), new LocalFilesStorageResourceProvider() },
             };
             DataTransferOptions transferOptions = new DataTransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -434,8 +435,6 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transferId: transfer.Id,
-                sourceResource: sourceResource,
-                destinationResource: destinationResource,
                 transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
@@ -471,7 +470,8 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ResumeProviders = new() { new BlobsStorageResourceProvider(), new LocalFilesStorageResourceProvider() },
             };
             DataTransferOptions transferOptions = new DataTransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -506,8 +506,6 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transfer.Id,
-                sResource,
-                dResource,
                 resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
@@ -821,6 +819,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ResumeProviders = new() { new BlobsStorageResourceProvider(), new LocalFilesStorageResourceProvider() },
             };
             TransferManager transferManager = new TransferManager(options);
             DataTransferOptions transferOptions = new DataTransferOptions();
@@ -860,8 +859,6 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transferId: transfer.Id,
-                sourceResource: sourceResource,
-                destinationResource: destinationResource,
                 transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
@@ -898,6 +895,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
                 ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ResumeProviders = new() { new BlobsStorageResourceProvider(), new LocalFilesStorageResourceProvider() },
             };
             TransferManager transferManager = new TransferManager(options);
             DataTransferOptions transferOptions = new DataTransferOptions();
@@ -937,8 +935,6 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transfer.Id,
-                sourceResource: sourceResource,
-                destinationResource: destinationResource,
                 transferOptions: resumeOptions);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));

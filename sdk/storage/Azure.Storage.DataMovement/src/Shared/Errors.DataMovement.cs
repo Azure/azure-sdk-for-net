@@ -118,5 +118,8 @@ namespace Azure.Storage
 
         public static InvalidOperationException InvalidTransferResourceTypes()
             => new InvalidOperationException("Invalid source and destination resource types.");
+
+        public static ArgumentException ResourceUriInvalid(string parameterResource)
+            => new ArgumentException($"Could not perform operation because {parameterResource} was expected to be not a Local Storage Resource.");
     }
 }
