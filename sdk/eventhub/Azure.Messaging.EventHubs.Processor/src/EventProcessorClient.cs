@@ -1015,6 +1015,7 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+            var operation = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var context = default(PartitionContext);
             var eventArgs = default(ProcessEventArgs);
             var caughtExceptions = default(List<Exception>);
@@ -1022,7 +1023,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                Logger.EventBatchProcessingStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.EventBatchProcessingStart(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
 
                 // Attempt to process each event in the batch, marking if the batch was non-empty.  Exceptions during
                 // processing should be logged and cached, as the batch must be processed completely to avoid losing events.
@@ -1043,6 +1044,8 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
+                        Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
+
                         context ??= new ProcessorPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId, () => ReadLastEnqueuedEventProperties(partition.PartitionId));
                         eventArgs = new ProcessEventArgs(context, eventData, updateToken => UpdateCheckpointAsync(partition.PartitionId, eventData.Offset, eventData.SequenceNumber, updateToken), cancellationToken);
 
@@ -1053,7 +1056,7 @@ namespace Azure.Messaging.EventHubs
                         // This exception is not surfaced to the error handler or bubbled, as the entire batch must be
                         // processed or events will be lost.  Preserve the exceptions, should any occur.
 
-                        Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                        Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
 
                         caughtExceptions ??= new List<Exception>();
                         caughtExceptions.Add(ex);
@@ -1065,6 +1068,8 @@ namespace Azure.Messaging.EventHubs
 
                 if (emptyBatch)
                 {
+                    Logger.EventBatchProcessingHandlerCall("<< No Event >>", partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
+
                     eventArgs = new ProcessEventArgs(new EmptyPartitionContext(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition.PartitionId), null, EmptyEventUpdateCheckpoint, cancellationToken);
                     await _processEventAsync(eventArgs).ConfigureAwait(false);
                 }
@@ -1074,12 +1079,12 @@ namespace Azure.Messaging.EventHubs
                 // This exception was either not related to processing events or was the result of sending an empty batch to be
                 // processed.  Since there would be no other caught exceptions, tread this like a single case.
 
-                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.EventBatchProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
                 throw;
             }
             finally
             {
-                Logger.EventBatchProcessingComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.EventBatchProcessingComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
             }
 
             // Deal with any exceptions that occurred while processing the batch.  If more than one was

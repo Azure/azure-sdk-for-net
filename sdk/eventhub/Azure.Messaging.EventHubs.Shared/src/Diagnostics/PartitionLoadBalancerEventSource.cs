@@ -136,14 +136,18 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   Indicates that stealable partitions were found, so randomly picking one of them to claim.
         /// </summary>
         ///
+        /// <param name="partitionId">The identifier of the partition that was selected to be stolen.</param>
+        /// <param name="stolenFrom">The identifier of the event processor that is being stolen from.</param>
         /// <param name="identifier">A unique name used to identify the associated event processor.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "No unclaimed partitions, stealing from another event processor. (Identifier: '{0}')")]
-        public virtual void StealPartition(string identifier)
+        [Event(7, Level = EventLevel.Informational, Message = "No unclaimed partitions, attempting to steal partition '{0}' from event processor '{1}'. (Identifier: '{2}')")]
+        public virtual void StealPartition(string partitionId,
+                                           string stolenFrom,
+                                           string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, identifier ?? string.Empty);
+                WriteEvent(7, partitionId ?? string.Empty, stolenFrom ?? string.Empty, identifier ?? string.Empty);
             }
         }
 
