@@ -1,6 +1,7 @@
 # Release History
 
 ## 5.2.0 (2023-08-10)
+- Updating ParameterBindingData  "Connection" value to the full connection name instead of the connection section key
 
 ### Features Added
 - Added support for `BlobsOptions.PoisonBlobThreshold`
