@@ -589,7 +589,6 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Multivariate Model
         /// <list type="bullet">
@@ -625,7 +624,6 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete Multivariate Model
         /// <list type="bullet">
