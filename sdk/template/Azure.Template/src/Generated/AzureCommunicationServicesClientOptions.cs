@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Template
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Client options for AzureCommunicationServices library clients. </summary>
     public partial class AzureCommunicationServicesClientOptions : ClientOptions

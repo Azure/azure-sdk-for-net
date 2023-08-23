@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Template.Tests
 {
-    public class TemplateClientTestEnvironment : TestEnvironment
+    public class JobRouterClientTestEnvironment : TestEnvironment
     {
         public string KeyVaultUri => GetRecordedVariable("KEYVAULT_URL");
 

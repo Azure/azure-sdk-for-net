@@ -9,7 +9,7 @@
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Template.csproj" />
+    <ProjectReference Include="..\src\Azure.Communication.JobRouter.csproj" />
   </ItemGroup>
   
   <ItemGroup>
@@ -21,5 +21,6 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\TemplateClientLiveTests\" />
   </ItemGroup>
 </Project>

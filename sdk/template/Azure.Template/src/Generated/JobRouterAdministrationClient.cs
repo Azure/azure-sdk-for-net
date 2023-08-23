@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Template
+namespace Azure.Communication.JobRouter
 {
     // Data plane generated client.
     /// <summary> The JobRouterAdministration service client. </summary>

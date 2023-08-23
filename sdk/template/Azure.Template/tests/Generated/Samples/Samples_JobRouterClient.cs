@@ -15,7 +15,7 @@ using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
-namespace Azure.Template.Samples
+namespace Azure.Communication.JobRouter.Samples
 {
     public class Samples_JobRouterClient
     {
