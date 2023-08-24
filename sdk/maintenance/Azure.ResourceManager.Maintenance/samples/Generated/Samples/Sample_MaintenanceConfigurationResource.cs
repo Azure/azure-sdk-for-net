@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MaintenanceConfigurationsGetForResource()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/MaintenanceConfigurations_GetForResource.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-09-01-preview/examples/MaintenanceConfigurations_GetForResource.json
             // this example is just showing the usage of "MaintenanceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MaintenanceConfigurationsGetForResourceGuestOSPatchLinux()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/MaintenanceConfigurations_GetForResource_GuestOSPatchLinux.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-09-01-preview/examples/MaintenanceConfigurations_GetForResource_GuestOSPatchLinux.json
             // this example is just showing the usage of "MaintenanceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_MaintenanceConfigurationsGetForResourceGuestOSPatchWindows()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/MaintenanceConfigurations_GetForResource_GuestOSPatchWindows.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-09-01-preview/examples/MaintenanceConfigurations_GetForResource_GuestOSPatchWindows.json
             // this example is just showing the usage of "MaintenanceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_MaintenanceConfigurationsDeleteForResource()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/MaintenanceConfigurations_DeleteForResource.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-09-01-preview/examples/MaintenanceConfigurations_DeleteForResource.json
             // this example is just showing the usage of "MaintenanceConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_MaintenanceConfigurationsUpdateForResource()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/MaintenanceConfigurations_UpdateForResource.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-09-01-preview/examples/MaintenanceConfigurations_UpdateForResource.json
             // this example is just showing the usage of "MaintenanceConfigurations_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMaintenanceConfigurations_MaintenanceConfigurationsList()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/MaintenanceConfigurations_List.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/preview/2023-09-01-preview/examples/MaintenanceConfigurations_List.json
             // this example is just showing the usage of "MaintenanceConfigurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
