@@ -42,8 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            InitializeDiagnostics(platform);
-
             _connectionVars = InitializeConnectionVars(options, platform);
 
             _transmissionStateManager = new TransmissionStateManager();
@@ -58,21 +56,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
-        }
-
-        internal static void InitializeDiagnostics(IPlatform platform)
-        {
-            // Only enable the internal EventListener if it's going to be used.
-            var eventSource = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AZUREMONITOREXPORTER_ENABLE_EVENTSOURCE);
-            bool.TryParse(eventSource, out var enableEventSourceListener);
-#if DEBUG
-            enableEventSourceListener = true;
-#endif
-
-            if (enableEventSourceListener)
-            {
-                AzureMonitorExporterEventListener.Initialize();
-            }
         }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
@@ -118,16 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
             }
 
-            var telemetry = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AZUREMONITOREXPORTER_ENABLE_TELEMETRY);
-            bool.TryParse(telemetry, out var enableTelemetryDebugWriter);
-#if DEBUG
-            enableTelemetryDebugWriter = true;
-#endif
-
-            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint)
-            {
-                ShouldWriteToDebugger = enableTelemetryDebugWriter
-            };
+            return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
         private static PersistentBlobProvider? InitializeOfflineStorage(IPlatform platform, ConnectionVars connectionVars, bool disableOfflineStorage, string? configuredStorageDirectory)
