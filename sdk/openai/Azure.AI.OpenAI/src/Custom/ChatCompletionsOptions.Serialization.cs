@@ -178,7 +178,7 @@ namespace Azure.AI.OpenAI
             {
                 // CUSTOM CODE NOTE: Extensions options currently deserialize directly into the payload (not as a
                 //                      property value therein)
-                (AzureExtensionsOptions as IUtf8JsonSerializable).Write(writer);
+                ((IUtf8JsonSerializable)AzureExtensionsOptions).Write(writer);
             }
             writer.WriteEndObject();
         }

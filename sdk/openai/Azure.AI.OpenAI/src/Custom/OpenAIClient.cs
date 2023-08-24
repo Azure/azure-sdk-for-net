@@ -350,9 +350,7 @@ namespace Azure.AI.OpenAI
             chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = null;
 
-            string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
-                ? "extensions/chat/completions"
-                : "chat/completions";
+            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -389,9 +387,7 @@ namespace Azure.AI.OpenAI
             chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = null;
 
-            string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
-                ? "extensions/chat/completions"
-                : "chat/completions";
+            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -448,9 +444,7 @@ namespace Azure.AI.OpenAI
             chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = true;
 
-            string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
-                ? "extensions/chat/completions"
-                : "chat/completions";
+            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -489,9 +483,7 @@ namespace Azure.AI.OpenAI
             chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = true;
 
-            string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
-                ? "extensions/chat/completions"
-                : "chat/completions";
+            string operationPath = GetOperationPath(chatCompletionsOptions);
 
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -766,5 +758,10 @@ namespace Azure.AI.OpenAI
                 MaxTokens = DefaultMaxCompletionsTokens,
             };
         }
+
+        private static string GetOperationPath(ChatCompletionsOptions chatCompletionsOptions)
+            => chatCompletionsOptions.AzureExtensionsOptions != null
+                ? "extensions/chat/completions"
+                : "chat/completions";
     }
 }
