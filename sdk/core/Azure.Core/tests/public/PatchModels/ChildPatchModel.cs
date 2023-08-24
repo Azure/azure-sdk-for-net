@@ -10,40 +10,55 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ChildPatchModel: IPatchModel
     {
+        private readonly MergePatchChanges _changes;
+
         /// <summary>
         /// Serialization constructor.
         /// </summary>
         internal ChildPatchModel()
         {
+            _changes = new MergePatchChanges(2);
         }
 
         /// <summary> Deserialization constructor. </summary>
         internal ChildPatchModel(string a, string b)
         {
-            _a = new MergePatchValue<string>(a);
-            _b = new MergePatchValue<string>(b);
+            _changes = new MergePatchChanges(2);
+
+            _a = a;
+            _b = b;
         }
 
-        public bool HasChanges => _a.HasChanged || _b.HasChanged;
+        public bool HasChanges => _changes.HasChanged(AProperty) || _changes.HasChanged(BProperty);
 
-        private MergePatchValue<string> _a;
+        private string _a;
+        private static int AProperty => 0;
         /// <summary>
         /// Optional string property corresponding to JSON """{"a": "aaa"}""".
         /// </summary>
         public string A
         {
             get => _a;
-            set => _a.Value = value;
+            set
+            {
+                _changes.SetChanged(AProperty);
+                _a = value;
+            }
         }
 
-        private MergePatchValue<string> _b;
+        private string _b;
+        private static int BProperty => 1;
         /// <summary>
         /// Optional string property corresponding to JSON """{"b": "bbb"}""".
         /// </summary>
         public string B
         {
             get => _b;
-            set => _b.Value = value;
+            set
+            {
+                _changes.SetChanged(BProperty);
+                _b = value;
+            }
         }
     }
 }

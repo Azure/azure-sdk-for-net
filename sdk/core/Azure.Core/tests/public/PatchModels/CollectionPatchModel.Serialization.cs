@@ -102,7 +102,7 @@ namespace Azure.Core.Tests.PatchModels
         {
             writer.WriteStartObject();
 
-            if (_id.HasChanged)
+            if (_changes.HasChanged(IdProperty))
             {
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);

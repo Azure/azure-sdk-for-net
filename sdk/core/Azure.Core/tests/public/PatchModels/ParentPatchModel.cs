@@ -10,11 +10,14 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ParentPatchModel
     {
+        private readonly MergePatchChanges _changes;
+
         /// <summary>
         /// Public constructor.
         /// </summary>
         public ParentPatchModel()
         {
+            _changes = new MergePatchChanges(2);
         }
 
         /// <summary>
@@ -22,21 +25,29 @@ namespace Azure.Core.Tests.PatchModels
         /// </summary>
         internal ParentPatchModel(string id, ChildPatchModel child)
         {
-            _id = new MergePatchValue<string>(id);
-            _child = new MergePatchValue<ChildPatchModel>(child);
+            _changes = new MergePatchChanges(2);
+
+            _id = id;
+            _child = child;
         }
 
-        private MergePatchValue<string> _id;
+        private string _id;
+        private static int IdProperty => 0;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
         public string Id
         {
             get => _id;
-            set => _id.Value = value;
+            set
+            {
+                _changes.SetChanged(IdProperty);
+                _id = value;
+            }
         }
 
-        private MergePatchValue<ChildPatchModel> _child;
+        private ChildPatchModel _child;
+        private static int ChildProperty => 1;
         /// <summary>
         /// Optional ChildPatchModel property corresponding to JSON """{"child": {"a":"aa", "b": "bb"}}""".
         /// </summary>
@@ -44,14 +55,18 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                if (_child.Value == null && !_child.HasChanged)
+                if (_child == null && !_changes.HasChanged(ChildProperty))
                 {
-                    _child = new MergePatchValue<ChildPatchModel>(new ChildPatchModel());
+                    _child = new ChildPatchModel();
                 }
 
                 return _child;
             }
-            set => _child.Value = value;
+            set
+            {
+                _changes.SetChanged(ChildProperty);
+                _child = value;
+            }
         }
     }
 }

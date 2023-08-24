@@ -66,8 +66,6 @@
     <Compile Include="Shared\IPatchModel.cs" />
     <Compile Include="Shared\MergePatchChanges.cs" />
     <Compile Include="Shared\MergePatchDictionary.cs" />
-    <Compile Include="Shared\MergePatchExtensions.cs" />
-    <Compile Include="Shared\MergePatchValue.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />

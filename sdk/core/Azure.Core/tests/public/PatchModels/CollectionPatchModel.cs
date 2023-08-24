@@ -11,11 +11,15 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class CollectionPatchModel
     {
+        private readonly MergePatchChanges _changes;
+
         /// <summary>
         /// Public constructor.
         /// </summary>
         public CollectionPatchModel()
         {
+            // Size is 1 b/c we don't need to track changes to read-only values.
+            _changes = new MergePatchChanges(1);
         }
 
         /// <summary>
@@ -23,19 +27,26 @@ namespace Azure.Core.Tests.PatchModels
         /// </summary>
         internal CollectionPatchModel(string id, MergePatchDictionary<string> variables, MergePatchDictionary<ChildPatchModel> children)
         {
-            _id = new MergePatchValue<string>(id);
+            _changes = new MergePatchChanges(1);
+
+            _id = id;
             _variables = variables;
             _children = children;
         }
 
-        private MergePatchValue<string> _id;
+        private string _id;
+        private static int IdProperty => 0;
         /// <summary>
         /// Optional string property corresponding to JSON """{"id": "abc"}""".
         /// </summary>
         public string Id
         {
             get => _id;
-            set => _id.Value = value;
+            set
+            {
+                _changes.SetChanged(IdProperty);
+                _id = value;
+            }
         }
 
         private MergePatchDictionary<string> _variables;
