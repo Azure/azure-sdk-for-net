@@ -1,4 +1,4 @@
-﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,7 +10,7 @@ using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
- namespace Azure.Communication.JobRouter
+namespace Azure.Communication.JobRouter
 {
     /// <summary>
     /// The Azure Communication Services Router client.
@@ -146,7 +146,7 @@ using Azure.Core.Pipeline;
                 }
 
                 return await RestClient.UpsertJobAsync(
-                        id:options.JobId,
+                        id: options.JobId,
                         patch: request,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -201,7 +201,7 @@ using Azure.Core.Pipeline;
                 }
 
                 return RestClient.UpsertJob(
-                    id:options.JobId,
+                    id: options.JobId,
                     patch: request,
                     cancellationToken: cancellationToken);
             }
@@ -217,7 +217,7 @@ using Azure.Core.Pipeline;
         #region Create job with direct queue assignment
 
         /// <summary> Creates a new job to be routed. </summary>
-        /// <param name="options"> Options for creating job with direct queue assignment. </param>
+        /// <param name="job"> Job to create with direct queue assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterJob>> CreateJobAsync(
@@ -228,38 +228,9 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new RouterJob
-                {
-                    ChannelId = options.ChannelId,
-                    ChannelReference = options.ChannelReference,
-                    QueueId = options.QueueId,
-                    Priority = options.Priority,
-                    MatchingMode = options.MatchingMode,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var workerSelector in options.RequestedWorkerSelectors)
-                {
-                    request.RequestedWorkerSelectors.Add(workerSelector);
-                }
-
-                foreach (var note in options.Notes)
-                {
-                    request.Notes.Add(note);
-                }
-
                 return await RestClient.UpsertJobAsync(
-                        id: options.JobId,
-                        patch: request,
+                        id: job.Id,
+                        patch: job,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -271,7 +242,7 @@ using Azure.Core.Pipeline;
         }
 
         /// <summary> Creates a new job to be routed. </summary>
-        /// <param name="options"> Options for creating job with direct queue assignment. </param>
+        /// <param name="job"> Job to create with direct queue assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterJob> CreateJob(
@@ -282,38 +253,9 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new RouterJob
-                {
-                    ChannelId = options.ChannelId,
-                    ChannelReference = options.ChannelReference,
-                    QueueId = options.QueueId,
-                    Priority = options.Priority,
-                    MatchingMode = options.MatchingMode,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var workerSelector in options.RequestedWorkerSelectors)
-                {
-                    request.RequestedWorkerSelectors.Add(workerSelector);
-                }
-
-                foreach (var note in options.Notes)
-                {
-                    request.Notes.Add(note);
-                }
-
                 return RestClient.UpsertJob(
-                    id: options.JobId,
-                    patch: request,
+                    id: job.Id,
+                    patch: job,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -326,7 +268,7 @@ using Azure.Core.Pipeline;
         #endregion Create job with direct queue assignment
 
         /// <summary> Update an existing job. </summary>
-        /// <param name="options"> Options for updating a job. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="job"> Job to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterJob>> UpdateJobAsync(
@@ -337,40 +279,9 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new RouterJob
-                {
-                    ChannelId = options.ChannelId,
-                    ClassificationPolicyId = options.ClassificationPolicyId,
-                    ChannelReference = options.ChannelReference,
-                    QueueId = options.QueueId,
-                    Priority = options.Priority,
-                    DispositionCode = options.DispositionCode,
-                    MatchingMode = options.MatchingMode,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var workerSelector in options.RequestedWorkerSelectors)
-                {
-                    request.RequestedWorkerSelectors.Add(workerSelector);
-                }
-
-                foreach (var note in options.Notes)
-                {
-                    request.Notes.Add(note);
-                }
-
                 return await RestClient.UpsertJobAsync(
-                        id: options.JobId,
-                        patch: request,
+                        id: job.Id,
+                        patch: job,
                         cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -382,7 +293,7 @@ using Azure.Core.Pipeline;
         }
 
         /// <summary> Update an existing job. </summary>
-        /// <param name="options"> Options for updating a job. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
+        /// <param name="job"> Job to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterJob> UpdateJob(
@@ -393,40 +304,9 @@ using Azure.Core.Pipeline;
             scope.Start();
             try
             {
-                var request = new RouterJob
-                {
-                    ChannelId = options.ChannelId,
-                    ClassificationPolicyId = options.ClassificationPolicyId,
-                    ChannelReference = options.ChannelReference,
-                    QueueId = options.QueueId,
-                    Priority = options.Priority,
-                    DispositionCode = options.DispositionCode,
-                    MatchingMode = options.MatchingMode,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags[tag.Key] = tag.Value;
-                }
-
-                foreach (var workerSelector in options.RequestedWorkerSelectors)
-                {
-                    request.RequestedWorkerSelectors.Add(workerSelector);
-                }
-
-                foreach (var note in options.Notes)
-                {
-                    request.Notes.Add(note);
-                }
-
                 return RestClient.UpsertJob(
-                    id: options.JobId,
-                    patch: request,
+                    id: job.Id,
+                    patch: job,
                     cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -1476,7 +1356,7 @@ using Azure.Core.Pipeline;
                         queueId: options?.QueueId,
                         hasCapacity: options?.HasCapacity,
                         maxpagesize: maxPageSize,
-                        cancellationToken:  cancellationToken)
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }

@@ -53,7 +53,8 @@ namespace Azure.Communication.JobRouter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            // TODO:
+            //content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             return message;
         }
