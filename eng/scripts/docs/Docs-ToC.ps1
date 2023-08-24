@@ -147,108 +147,82 @@ function GetPackageReadmeName($packageMetadata) {
     return $packageLevelReadmeName
 }
   
+# Defined in common.ps1
+# $GetDocsMsTocDataFn = "Get-${Language}-DocsMsTocData"
 function Get-dotnet-DocsMsTocData($packageMetadata, $docRepoLocation, $PackageSourceOverride) {
     $packageLevelReadmeName = GetPackageReadmeName -packageMetadata $packageMetadata
     $packageTocHeader = GetDocsTocDisplayName $packageMetadata
 
-    $children = @()
-    # Children here combine namespaces in both preview and GA.
-    # TODO: Refactor this
-    if ($packageMetadata.Support -eq 'deprecated') { 
-        if($packageMetadata.VersionPreview) {
-            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionPreview `
-                -docRepoLocation $docRepoLocation -folderName "legacy"
-        }
-        if($packageMetadata.VersionGA) {
-            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionGA `
-                -docRepoLocation $docRepoLocation -folderName "legacy"
-        }
-    } else { 
-        if($packageMetadata.VersionPreview) {
-            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionPreview `
-                -docRepoLocation $docRepoLocation -folderName "preview"
-        }
-        if($packageMetadata.VersionGA) {
-            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionGA `
-                -docRepoLocation $docRepoLocation -folderName "latest"
-        }
-    }
+    $children = Get-Toc-Children `
+        -package $packageMetadata.Package `
+        -docRepoLocation $docRepoLocation 
 
-
-
-
-    $children = @($children | Sort-Object -Unique)
     if (!$children) {
-        if ($packageMetadata.VersionPreview) {
-            LogDebug "Did not find the package namespaces for $($packageMetadata.Package):$($packageMetadata.VersionPreview)"
-        }
-        if ($packageMetadata.VersionGA) {
-            LogDebug "Did not find the package namespaces for $($packageMetadata.Package):$($packageMetadata.VersionGA)"
-        }
+        LogWarning "Did not find the package namespaces for $($packageMetadata.Package)"
     }
     $output = [PSCustomObject]@{
       PackageLevelReadmeHref = "~/api/overview/azure/{moniker}/$packageLevelReadmeName-readme.md"
       PackageTocHeader       = $packageTocHeader
-      TocChildren            = $children
+      TocChildren            = @($children)
     }
   
     return $output
 }
 
+function EnsureNamespaces($packageJsonPath) { 
+    $packageJson = Get-Content $packageJsonPath | ConvertFrom-Json
+    $namespacesExist = $packageJson.PSObject.Members.Name -contains "Namespaces"
+    if ($namespacesExist) {
+        return
+    }
 
-# This is a helper function to fetch the dotnet package namespaces.
-# Here is the major workflow:
-# 1. Read the ${package}.json under /metadata folder. If json file exists, Namespaces property exists and version match, return the array. 
-# 2. If the json file exist but version mismatch, fetch the namespaces from nuget and udpate the json namespaces property.
-# 3. If file not found, then fetch namespaces from nuget and create new package.json file with very basic info, like package name, version, namespaces. 
-function Get-Toc-Children($package, $version, $docRepoLocation, $folderName) {
-    # Looking for the txt
-    $packageJsonPath = "$docRepoLocation/metadata/$folderName/$package.json" 
-    $packageJsonObject = [PSCustomObject]@{
-        Name = $package
-        Version = $version
-        Namespaces = @()
-    }
-    # We will download package and parse out namespaces for the following cases.
-    # 1. Package json file doesn't exist. Create a new json file with $packageJsonObject
-    # 2. Package json file exists, but no Namespaces property. Add the Namespaces property with right values.
-    # 3. Both package json file and Namespaces property exist, but the version mismatch. Update the nameapace values.
-    $jsonExists = Test-Path $packageJsonPath
-    $namespacesExist = $false
-    $versionMismatch = $false
-    $packageJson = $null
-    # Add backup if no namespaces fetched out from new packages.
-    $originalNamespaces = @()
-    # Collect the information and return the booleans of updates or not.
-    if ($jsonExists) {
-        $packageJson = Get-Content $packageJsonPath | ConvertFrom-Json
-        $namespacesExist = $packageJson.PSObject.Members.Name -contains "Namespaces"
-        if ($namespacesExist) {
-            # Fallback to original ones if failed to fetch updated namespaces.
-            $originalNamespaces = $packageJson.Namespaces
-        }
-        $versionMismatch = $version -ne $packageJson.Version
-    }
-    if ($jsonExists -and $namespacesExist -and !$versionMismatch) {
-        return $originalNamespaces
-    }
-    $namespaces = Fetch-NamespacesFromNupkg -package $package -version $version
-    if (!$namespaces) {
-        $namespaces = $originalNamespaces
-    }
-    if (!$packageJson) {
-        $packageJsonObject.Namespaces = $namespaces
-        $packageJson = ($packageJsonObject | ConvertTo-Json | ConvertFrom-Json)
-    }
-    elseif(!$namespacesExist) {
-        $packageJson = $packageJson | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-    }
-    else{
-        $packageJson.Namespaces = $namespaces
-    }
-    # Keep the json file up to date.
+    Write-Host "Updating metadata JSON file with namespaces: $packageJsonPath"
+
+    $namespaces = Fetch-NamespacesFromNupkg `
+        -package $packageJson.Name `
+        -version $packageJson.Version
+    $packageJson = $packageJson | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
+
+    # Save the updated metadata JSON file with namespaces
     Set-Content $packageJsonPath -Value ($packageJson | ConvertTo-Json)
-    return $namespaces
+}
+
+$script:PackageMetadataJsonLookup = $null
+function GetPackageMetadataJsonLookup($docRepoLocation) { 
+    if ($script:PackageMetadataJsonLookup) {
+        return $script:PackageMetadataJsonLookup
+    }
+
+    $script:PackageMetadataJsonLookup = @{}
+    $packageJsonFiles = Get-ChildItem $docRepoLocation/metadata/ -Filter *.json -Recurse
+    foreach ($packageJsonFile in $packageJsonFiles) {
+        # TODO: EnsureNamespaces belongs in a separate script
+        EnsureNamespaces $packageJsonFile
+        $packageJson = Get-Content $packageJsonFile -Raw | ConvertFrom-Json -AsHashtable
+
+        if (!$script:PackageMetadataJsonLookup.ContainsKey($packageJson.Name)) { 
+            $script:PackageMetadataJsonLookup[$packageJson.Name] = @($packageJson)
+        } else { 
+            $script:PackageMetadataJsonLookup[$packageJson.Name] += $packageJson
+        }
+    }
+
+    return $script:PackageMetadataJsonLookup
+}
+
+function Get-Toc-Children($package, $docRepoLocation) {
+    $packageTable = GetPackageMetadataJsonLookup $docRepoLocation
+
+    $namespaces = @()
+    if ($packageTable.ContainsKey($package)) { 
+        foreach ($entry in $packageTable[$package]) {
+            if ($entry.ContainsKey('Namespaces')) {
+                $namespaces += $entry['Namespaces']
+            }
+        }
+    }
+
+    return $namespaces | Sort-Object -Unique
 }
 
 function Get-dotnet-PackageLevelReadme ($packageMetadata) {
