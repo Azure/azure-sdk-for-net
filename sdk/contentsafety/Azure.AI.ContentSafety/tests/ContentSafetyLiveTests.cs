@@ -61,7 +61,7 @@ namespace Azure.AI.ContentSafety.Tests
         {
             var client = CreateContentSafetyClient();
 
-            var image = new ImageData()
+            var image = new ContentSafetyImageData()
             {
                 Content = BinaryData.FromBytes(File.ReadAllBytes(TestData.TestImageLocation))
             };

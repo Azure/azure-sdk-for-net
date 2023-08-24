@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.DataMovement.JobPlan;
 using NUnit.Framework;
@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             var containerName = GetNewContainerName();
             var sourceBlobName = GetNewBlobName();
-            await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
 
             BlobBaseClient sourceBlob = await CreateBlockBlob(
                 containerClient: test.Container,
