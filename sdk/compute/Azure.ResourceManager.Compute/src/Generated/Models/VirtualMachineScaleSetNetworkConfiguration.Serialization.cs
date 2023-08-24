@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<VirtualMachineScaleSetIPConfiguration>> ipConfigurations = default;
             Optional<bool> enableIPForwarding = default;
             Optional<ComputeDeleteOption> deleteOption = default;
-            Optional<NetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
-            Optional<NetworkInterfaceAuxiliarySku> auxiliarySku = default;
+            Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
+            Optional<ComputeNetworkInterfaceAuxiliarySku> auxiliarySku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            auxiliaryMode = new NetworkInterfaceAuxiliaryMode(property0.Value.GetString());
+                            auxiliaryMode = new ComputeNetworkInterfaceAuxiliaryMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("auxiliarySku"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            auxiliarySku = new NetworkInterfaceAuxiliarySku(property0.Value.GetString());
+                            auxiliarySku = new ComputeNetworkInterfaceAuxiliarySku(property0.Value.GetString());
                             continue;
                         }
                     }

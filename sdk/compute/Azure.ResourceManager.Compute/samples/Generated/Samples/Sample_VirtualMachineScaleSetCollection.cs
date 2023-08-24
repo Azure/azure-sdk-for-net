@@ -1409,8 +1409,8 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 }
 },
 EnableIPForwarding = true,
-AuxiliaryMode = NetworkInterfaceAuxiliaryMode.AcceleratedConnections,
-AuxiliarySku = NetworkInterfaceAuxiliarySku.A1,
+AuxiliaryMode = ComputeNetworkInterfaceAuxiliaryMode.AcceleratedConnections,
+AuxiliarySku = ComputeNetworkInterfaceAuxiliarySku.A1,
 },new VirtualMachineScaleSetNetworkConfiguration("{nicConfig2-name}")
 {
 Primary = false,

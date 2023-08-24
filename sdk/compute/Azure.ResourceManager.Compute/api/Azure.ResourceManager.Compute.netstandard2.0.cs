@@ -2892,6 +2892,46 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeEncryptionType left, Azure.ResourceManager.Compute.Models.ComputeEncryptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComputeNetworkInterfaceAuxiliaryMode : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComputeNetworkInterfaceAuxiliaryMode(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode AcceleratedConnections { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode Floating { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode left, Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode left, Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComputeNetworkInterfaceAuxiliarySku : System.IEquatable<Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComputeNetworkInterfaceAuxiliarySku(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku A1 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku A2 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku A4 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku A8 { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku left, Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku left, Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ComputePlan
     {
         public ComputePlan() { }
@@ -4535,46 +4575,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.NetworkApiVersion left, Azure.ResourceManager.Compute.Models.NetworkApiVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkInterfaceAuxiliaryMode : System.IEquatable<Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkInterfaceAuxiliaryMode(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode AcceleratedConnections { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode Floating { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode left, Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode left, Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkInterfaceAuxiliarySku : System.IEquatable<Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkInterfaceAuxiliarySku(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku A1 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku A2 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku A4 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku A8 { get { throw null; } }
-        public static Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku left, Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku left, Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum OperatingSystemStateType
     {
         Generalized = 0,
@@ -5911,8 +5911,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineNetworkInterfaceConfiguration
     {
         public VirtualMachineNetworkInterfaceConfiguration(string name) { }
-        public Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku? AuxiliarySku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public Azure.Core.ResourceIdentifier DscpConfigurationId { get { throw null; } set { } }
@@ -6210,8 +6210,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetNetworkConfiguration : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
         public VirtualMachineScaleSetNetworkConfiguration(string name) { }
-        public Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku? AuxiliarySku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }
@@ -6374,8 +6374,8 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData
     {
         public VirtualMachineScaleSetUpdateNetworkConfiguration() { }
-        public Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.Models.NetworkInterfaceAuxiliarySku? AuxiliarySku { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeDeleteOption? DeleteOption { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
         public bool? EnableAcceleratedNetworking { get { throw null; } set { } }

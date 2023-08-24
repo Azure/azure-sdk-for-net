@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="dscpConfiguration"> Gets or sets the dscp configuration. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
-        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku)
+        internal VirtualMachineNetworkInterfaceConfiguration(string name, bool? primary, ComputeDeleteOption? deleteOption, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, bool? enableIPForwarding, WritableSubResource networkSecurityGroup, VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, WritableSubResource dscpConfiguration, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku)
         {
             Name = name;
             Primary = primary;
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+        public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
         /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
-        public NetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
+        public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }

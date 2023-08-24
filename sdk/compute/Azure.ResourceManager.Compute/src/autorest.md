@@ -268,6 +268,8 @@ rename-mapping:
   GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
   FileFormat: DiskImageFileFormat
   CreationData.elasticSanResourceId: -|arm-id
+  NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
+  NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
