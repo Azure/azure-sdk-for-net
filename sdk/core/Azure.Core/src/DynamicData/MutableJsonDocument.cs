@@ -20,18 +20,20 @@ namespace Azure.Core.Json
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
+        private static readonly JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions();
+
         private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
         private readonly JsonSerializerOptions _serializerOptions;
-        internal JsonSerializerOptions SerializerOptions { get => _serializerOptions; }
+        internal JsonSerializerOptions SerializerOptions => _serializerOptions;
 
         private ChangeTracker? _changeTracker;
         internal ChangeTracker Changes
         {
             get
             {
-                _changeTracker ??= new ChangeTracker(SerializerOptions);
+                _changeTracker ??= new();
                 return _changeTracker;
             }
         }
@@ -207,7 +209,7 @@ namespace Azure.Core.Json
         {
             _originalDocument = document;
             _original = utf8Json;
-            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
+            _serializerOptions = serializerOptions ?? DefaultSerializerOptions;
         }
 
 #if !NET5_0

@@ -10,12 +10,6 @@ namespace Azure.Core.Json
 {
     internal partial struct MutableJsonElement
     {
-        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-        internal void WriteTo(Utf8JsonWriter writer)
-        {
-            WriteElement(_path, _highWaterMark, _element, writer);
-        }
-
         internal void WriteTo(Utf8JsonWriter writer, string format)
         {
             switch (format)
@@ -31,39 +25,26 @@ namespace Azure.Core.Json
                     break;
             }
         }
+        internal void WriteTo(Utf8JsonWriter writer)
+        {
+            WriteElement(_path, _highWaterMark, _element, writer);
+        }
 
         [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             if (Changes.TryGetChange(path, highWaterMark, out MutableJsonChange change))
             {
-                switch (change.Value)
+                if (change.Value is JsonElement changeElement)
                 {
-                    case int i:
-                        writer.WriteNumberValue(i);
-                        return;
-                    case long l:
-                        writer.WriteNumberValue(l);
-                        return;
-                    case double d:
-                        writer.WriteNumberValue(d);
-                        return;
-                    case float f:
-                        writer.WriteNumberValue(f);
-                        return;
-                    case bool b:
-                        writer.WriteBooleanValue(b);
-                        return;
-                    case null:
-                        writer.WriteNullValue();
-                        return;
-                    default:
-                        break;
-
-                        // Note: string is not included to let JsonElement handle escaping.
+                    element = changeElement;
+                }
+                else
+                {
+                    WritePrimitiveChange(change, writer);
+                    return;
                 }
 
-                element = change.GetSerializedValue();
                 highWaterMark = change.Index;
             }
 
@@ -109,7 +90,14 @@ namespace Azure.Core.Json
                 string propertyPath = MutableJsonDocument.ChangeTracker.PushProperty(path, propertyName);
 
                 writer.WritePropertyName(propertyName);
-                WriteElement(propertyPath, highWaterMark, property.GetSerializedValue(), writer);
+                if (property.Value is JsonElement changeElement)
+                {
+                    WriteElement(propertyPath, highWaterMark, changeElement, writer);
+                }
+                else
+                {
+                    WritePrimitiveChange(property, writer);
+                }
             }
 
             writer.WriteEndObject();
@@ -128,6 +116,65 @@ namespace Azure.Core.Json
             }
 
             writer.WriteEndArray();
+        }
+        private void WritePrimitiveChange(MutableJsonChange change, Utf8JsonWriter writer)
+        {
+            switch (change.Value)
+            {
+                case bool b:
+                    writer.WriteBooleanValue(b);
+                    return;
+                case byte b:
+                    writer.WriteNumberValue(b);
+                    return;
+                case sbyte sb:
+                    writer.WriteNumberValue(sb);
+                    return;
+                case short sh:
+                    writer.WriteNumberValue(sh);
+                    return;
+                case ushort us:
+                    writer.WriteNumberValue(us);
+                    return;
+                case int i:
+                    writer.WriteNumberValue(i);
+                    return;
+                case uint u:
+                    writer.WriteNumberValue(u);
+                    return;
+                case long l:
+                    writer.WriteNumberValue(l);
+                    return;
+                case ulong ul:
+                    writer.WriteNumberValue(ul);
+                    return;
+                case float f:
+                    writer.WriteNumberValue(f);
+                    return;
+                case double d:
+                    writer.WriteNumberValue(d);
+                    return;
+                case decimal d:
+                    writer.WriteNumberValue(d);
+                    return;
+                case string s:
+                    writer.WriteStringValue(s);
+                    return;
+                case DateTime d:
+                    writer.WriteStringValue(d);
+                    return;
+                case DateTimeOffset d:
+                    writer.WriteStringValue(d);
+                    return;
+                case Guid g:
+                    writer.WriteStringValue(g);
+                    return;
+                case null:
+                    writer.WriteNullValue();
+                    return;
+                default:
+                    throw new InvalidOperationException($"Unrecognized change type '{change.Value.GetType()}'.");
+            }
         }
     }
 }
