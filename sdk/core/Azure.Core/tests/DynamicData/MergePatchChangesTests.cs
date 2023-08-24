@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
             {
                 Assert.IsFalse(changes.HasChanged(i), $"{i}");
 
-                changes.Change(i);
+                changes.SetChanged(i);
 
                 Assert.IsTrue(changes.HasChanged(i), $"{i}");
             }

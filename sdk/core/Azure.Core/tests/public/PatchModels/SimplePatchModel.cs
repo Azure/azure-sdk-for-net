@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _name;
             set
             {
-                _changes.Change(NameProperty);
+                _changes.SetChanged(NameProperty);
                 _name = value;
             }
         }
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _count;
             set
             {
-                _changes.Change(CountProperty);
+                _changes.SetChanged(CountProperty);
                 _count = value;
             }
         }
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _updatedOn;
             set
             {
-                _changes.Change(UpdatedOnProperty);
+                _changes.SetChanged(UpdatedOnProperty);
                 _updatedOn = value;
             }
         }

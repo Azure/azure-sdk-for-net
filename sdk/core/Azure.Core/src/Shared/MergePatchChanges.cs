@@ -16,7 +16,7 @@ namespace Azure.Core.Serialization
             _changed = new BitVector(propertyCount);
         }
 
-        public void Change(int index) => _changed[index] = true;
+        public void SetChanged(int index) => _changed[index] = true;
 
         public bool HasChanged(int index) => _changed[index];
 
