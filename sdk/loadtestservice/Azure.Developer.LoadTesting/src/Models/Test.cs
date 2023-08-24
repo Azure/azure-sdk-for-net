@@ -15,8 +15,10 @@ namespace Azure.Developer.LoadTesting.Models
     public partial class Test
     {
         /// <summary> Initializes a new instance of Test. </summary>
-        public Test()
+        public Test(string id)
         {
+            TestId = id;
+
             Secrets = new ChangeTrackingDictionary<string, Secret>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }

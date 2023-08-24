@@ -132,6 +132,18 @@ namespace Azure.Developer.LoadTesting
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
+        public virtual async Task<Response<Test>> GetTestAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Response response = await GetTestAsync(id, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+            return Response.FromValue((Test)response, response);
+        }
+
+        public virtual Response<Test> GetTest(string id, CancellationToken cancellationToken = default)
+        {
+            Response response = GetTest(id, new RequestContext() { CancellationToken = cancellationToken });
+            return Response.FromValue((Test)response, response);
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="test"></param>

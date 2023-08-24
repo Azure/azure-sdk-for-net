@@ -48,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [RecordedTest]
         public async Task CreateOrUpdateTestConveninence()
         {
-            Test test = new Test();
+            Test test = new Test("<id>");
             test.Description = "This test was created through loadtesting C# SDK";
             test.DisplayName = "Dotnet Testing Framework Loadtest";
             test.LoadTestConfiguration = new LoadTestConfiguration();
@@ -65,7 +65,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
         private Test GetTest()
         {
-            Test test = new Test();
+            Test test = new Test("<id>");
             test.Description = "This test was created through loadtesting C# SDK";
             test.DisplayName = "Dotnet Testing Framework Loadtest";
             test.LoadTestConfiguration = new LoadTestConfiguration();
@@ -151,7 +151,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public async Task GetLoadTest()
         {
-            Response response = await _loadTestAdministrationClient.GetTestAsync(_testId);
+            Response response = await _loadTestAdministrationClient.GetTestAsync(_testId, new RequestContext());
             JsonDocument jsonDocument = JsonDocument.Parse(response.Content.ToString());
             Assert.NotNull(response.Content);
             Assert.AreEqual(_testId, jsonDocument.RootElement.GetProperty("testId").ToString());

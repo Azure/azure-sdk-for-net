@@ -221,7 +221,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
@@ -256,7 +256,7 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTest(string,RequestContext)']/*" />
-        public virtual Response GetTest(string testId, RequestContext context = null)
+        public virtual Response GetTest(string testId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
