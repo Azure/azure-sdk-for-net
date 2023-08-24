@@ -70,18 +70,18 @@ namespace Azure.Communication.Messages
 
         #region private constructors
         private NotificationMessagesClient(ConnectionString connectionString, CommunicationMessagesClientOptions options)
-           : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+           : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         { }
 
         private NotificationMessagesClient(string endpoint, TokenCredential tokenCredential, CommunicationMessagesClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
         { }
 
         private NotificationMessagesClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         { }
 
-        private NotificationMessagesClient(string endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
+        private NotificationMessagesClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             _notificationMessagesRestClient = new NotificationMessagesRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);

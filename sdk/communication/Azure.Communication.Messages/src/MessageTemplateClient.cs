@@ -71,18 +71,18 @@ namespace Azure.Communication.Messages
 
         #region private constructors
         private MessageTemplateClient(ConnectionString connectionString, CommunicationMessagesClientOptions options)
-           : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
+           : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         { }
 
         private MessageTemplateClient(string endpoint, TokenCredential tokenCredential, CommunicationMessagesClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
         { }
 
         private MessageTemplateClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
-            : this(endpoint, options.BuildHttpPipeline(keyCredential), options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         { }
 
-        private MessageTemplateClient(string endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
+        private MessageTemplateClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             _templateV2RestClient = new TemplateV2RestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
