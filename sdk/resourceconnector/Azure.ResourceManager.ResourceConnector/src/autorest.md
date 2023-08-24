@@ -5,7 +5,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 csharp: true
-library-name: Azure.ResourceManager.ResourceConnector
+library-name: ResourceConnector
 namespace: Azure.ResourceManager.ResourceConnector
 require: https://github.com/Azure/azure-rest-api-specs/blob/616302e10e5ce0f80d2f0eaf8002f3e39d033696/specification/resourceconnector/resource-manager/readme.md
 output-folder: $(this-folder)/Generated

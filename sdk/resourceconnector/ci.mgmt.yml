@@ -2,7 +2,17 @@
 
 trigger: none
 
-
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/resourceconnector/ci.mgmt.yml
+    - sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/
 
 
   branches:
@@ -16,10 +26,11 @@ trigger: none
     - sdk/resourceconnector/ci.mgmt.yml
     - sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/
 
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: resourcemanager
+    ServiceDirectory: resourceconnector
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.ResourceConnector

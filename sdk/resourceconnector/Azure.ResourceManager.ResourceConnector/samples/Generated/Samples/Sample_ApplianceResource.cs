@@ -11,11 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Azure.ResourceManager.ResourceConnector;
-using Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Models;
+using Azure.ResourceManager.ResourceConnector;
+using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
+namespace Azure.ResourceManager.ResourceConnector.Samples
 {
     public partial class Sample_ApplianceResource
     {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            await foreach (ResourceConnector.Models.ApplianceOperation item in tenantResource.GetOperationsAppliancesAsync())
+            await foreach (ApplianceOperation item in tenantResource.GetOperationsAppliancesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ResourceConnector.ApplianceResource item in subscriptionResource.GetAppliancesAsync())
+            await foreach (ApplianceResource item in subscriptionResource.GetAppliancesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ResourceConnector.ApplianceData resourceData = item.Data;
+                ApplianceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            ResourceConnector.Models.ApplianceGetTelemetryConfigResult result = await subscriptionResource.GetTelemetryConfigApplianceAsync();
+            ApplianceGetTelemetryConfigResult result = await subscriptionResource.GetTelemetryConfigApplianceAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -120,15 +120,15 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ResourceConnector.ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ResourceConnector.ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
 
             // invoke the operation
-            ResourceConnector.ApplianceResource result = await appliance.GetAsync();
+            ApplianceResource result = await appliance.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ResourceConnector.ApplianceData resourceData = result.Data;
+            ApplianceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ResourceConnector.ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ResourceConnector.ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
 
             // invoke the operation
             await appliance.DeleteAsync(WaitUntil.Completed);
@@ -178,22 +178,22 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ResourceConnector.ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ResourceConnector.ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
 
             // invoke the operation
-            ResourceConnector.Models.AppliancePatch patch = new ResourceConnector.Models.AppliancePatch()
+            AppliancePatch patch = new AppliancePatch()
             {
                 Tags =
 {
 ["key"] = "value",
 },
             };
-            ResourceConnector.ApplianceResource result = await appliance.UpdateAsync(patch);
+            ApplianceResource result = await appliance.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ResourceConnector.ApplianceData resourceData = result.Data;
+            ApplianceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ResourceConnector.ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ResourceConnector.ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
 
             // invoke the operation
-            ResourceConnector.Models.ApplianceListCredentialResults result = await appliance.GetClusterUserCredentialAsync();
+            ApplianceListCredentialResults result = await appliance.GetClusterUserCredentialAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ResourceConnector.ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ResourceConnector.ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
 
             // invoke the operation
-            ResourceConnector.Models.ApplianceListKeysResults result = await appliance.GetKeysAsync();
+            ApplianceListKeysResults result = await appliance.GetKeysAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Azure.ResourceManager.ResourceConnector.Samples
             string subscriptionId = "11111111-2222-3333-4444-555555555555";
             string resourceGroupName = "testresourcegroup";
             string resourceName = "appliance01";
-            ResourceIdentifier applianceResourceId = ResourceConnector.ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ResourceConnector.ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
+            ResourceIdentifier applianceResourceId = ApplianceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplianceResource appliance = client.GetApplianceResource(applianceResourceId);
 
             // invoke the operation
             string upgradeGraph = "stable";
-            ResourceConnector.Models.UpgradeGraph result = await appliance.GetUpgradeGraphAsync(upgradeGraph);
+            UpgradeGraph result = await appliance.GetUpgradeGraphAsync(upgradeGraph);
 
             Console.WriteLine($"Succeeded: {result}");
         }
