@@ -169,24 +169,8 @@ function Get-dotnet-DocsMsTocData($packageMetadata, $docRepoLocation, $PackageSo
     return $output
 }
 
-function EnsureNamespaces($packageJsonPath) { 
-    $packageJson = Get-Content $packageJsonPath | ConvertFrom-Json
-    $namespacesExist = $packageJson.PSObject.Members.Name -contains "Namespaces"
-    if ($namespacesExist) {
-        return
-    }
 
-    Write-Host "Updating metadata JSON file with namespaces: $packageJsonPath"
-
-    $namespaces = Fetch-NamespacesFromNupkg `
-        -package $packageJson.Name `
-        -version $packageJson.Version
-    $packageJson = $packageJson | Add-Member -MemberType NoteProperty -Name Namespaces -Value $namespaces -PassThru
-
-    # Save the updated metadata JSON file with namespaces
-    Set-Content $packageJsonPath -Value ($packageJson | ConvertTo-Json)
-}
-
+# TODO: Refactor
 $script:PackageMetadataJsonLookup = $null
 function GetPackageMetadataJsonLookup($docRepoLocation) { 
     if ($script:PackageMetadataJsonLookup) {
@@ -196,8 +180,6 @@ function GetPackageMetadataJsonLookup($docRepoLocation) {
     $script:PackageMetadataJsonLookup = @{}
     $packageJsonFiles = Get-ChildItem $docRepoLocation/metadata/ -Filter *.json -Recurse
     foreach ($packageJsonFile in $packageJsonFiles) {
-        # TODO: EnsureNamespaces belongs in a separate script
-        EnsureNamespaces $packageJsonFile
         $packageJson = Get-Content $packageJsonFile -Raw | ConvertFrom-Json -AsHashtable
 
         if (!$script:PackageMetadataJsonLookup.ContainsKey($packageJson.Name)) { 
