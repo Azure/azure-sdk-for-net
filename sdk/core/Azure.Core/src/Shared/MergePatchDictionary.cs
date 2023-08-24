@@ -26,8 +26,6 @@ namespace Azure.Core.Serialization
         private readonly Action<Utf8JsonWriter, string, T> _writeProperty;
         private readonly Func<T, bool>? _itemHasChanges;
 
-        private bool _hasChanges;
-
         public MergePatchDictionary(Action<Utf8JsonWriter, string, T> writeProperty,
             Func<T, bool>? hasChanges)
         {
@@ -49,13 +47,40 @@ namespace Azure.Core.Serialization
             _dictionary = dictionary;
         }
 
-        public bool HasChanges => _hasChanges;
+        private bool _checkChanges;
+        private bool _hasChanges;
+        public bool HasChanges => _hasChanges || ItemsChanged();
+
+        private bool ItemsChanged()
+        {
+            if (!_checkChanges)
+            {
+                return false;
+            }
+
+            foreach (KeyValuePair<string, bool> item in _changed)
+            {
+                bool mightHaveChanged = item.Value;
+                if (mightHaveChanged)
+                {
+                    T value = _dictionary[item.Key];
+                    if (_itemHasChanges != null && _itemHasChanges(value))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         public T this[string key]
         {
             get
             {
                 // If the value is read and a reference value, it might get changed
+                _checkChanges = _itemHasChanges != null;
+                _changed[key] = _itemHasChanges != null;
                 return _dictionary[key];
             }
 
@@ -111,11 +136,13 @@ namespace Azure.Core.Serialization
 
         IEnumerator<KeyValuePair<string, T>> IEnumerable<KeyValuePair<string, T>>.GetEnumerator()
         {
+            // TODO: handle item changes
             return _dictionary.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
+            // TODO: handle item changes
             return (_dictionary as IEnumerable).GetEnumerator();
         }
 
@@ -141,7 +168,8 @@ namespace Azure.Core.Serialization
         {
             if (_dictionary.TryGetValue(key, out value))
             {
-                // TODO: handle item changes
+                _checkChanges = _itemHasChanges != null;
+                _changed[key] = _itemHasChanges != null;
                 return true;
             }
 
