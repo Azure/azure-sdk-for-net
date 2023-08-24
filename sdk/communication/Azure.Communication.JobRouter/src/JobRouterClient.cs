@@ -9,6 +9,7 @@ using Azure.Communication.JobRouter.Models;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
@@ -228,11 +229,14 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await RestClient.UpsertJobAsync(
-                        id: job.Id,
-                        patch: job,
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                if (job is not IModelJsonSerializable<RouterJob> model)
+                {
+                    throw new InvalidCastException("Model is not serializable.");
+                }
+
+                RequestContent content = RequestContent.Create(model, new ModelSerializerOptions("P"));
+                Response response = await UpdateJobAsync(job.Id, content, new() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -253,10 +257,15 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return RestClient.UpsertJob(
-                    id: job.Id,
-                    patch: job,
-                    cancellationToken: cancellationToken);
+                if (job is not IModelJsonSerializable<RouterJob> model)
+                {
+                    throw new InvalidCastException("Model is not serializable.");
+                }
+
+                RequestContent content = RequestContent.Create(model, new ModelSerializerOptions("P"));
+                Response response = UpdateJob(job.Id, content, new() { CancellationToken = cancellationToken });
+
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -265,7 +274,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        #endregion Create job with direct queue assignment
+        #endregion Update job with direct queue assignment
 
         /// <summary> Update an existing job. </summary>
         /// <param name="job"> Job to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7386. </param>
@@ -279,11 +288,14 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return await RestClient.UpsertJobAsync(
-                        id: job.Id,
-                        patch: job,
-                        cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
+                if (job is not IModelJsonSerializable<RouterJob> model)
+                {
+                    throw new InvalidCastException("Model is not serializable.");
+                }
+
+                RequestContent content = RequestContent.Create(model, new ModelSerializerOptions("P"));
+                Response response = await UpdateJobAsync(job.Id, content, new() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -304,10 +316,14 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                return RestClient.UpsertJob(
-                    id: job.Id,
-                    patch: job,
-                    cancellationToken: cancellationToken);
+                if (job is not IModelJsonSerializable<RouterJob> model)
+                {
+                    throw new InvalidCastException("Model is not serializable.");
+                }
+
+                RequestContent content = RequestContent.Create(model, new ModelSerializerOptions("P"));
+                Response response = UpdateJob(job.Id, content, new() { CancellationToken = cancellationToken });
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {

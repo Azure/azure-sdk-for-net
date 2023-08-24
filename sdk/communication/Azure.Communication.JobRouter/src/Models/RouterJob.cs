@@ -28,10 +28,10 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public Dictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
 
         /// <summary> A set of non-identifying attributes attached to this job. </summary>
-        public Dictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
 
         /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
         public List<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();

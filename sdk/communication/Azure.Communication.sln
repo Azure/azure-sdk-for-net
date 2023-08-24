@@ -68,6 +68,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallAut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.CallAutomation.Tests", "Azure.Communication.CallAutomation\tests\Azure.Communication.CallAutomation.Tests.csproj", "{8E628698-3ECB-4FA0-BDDF-62E018FDA0CA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{AA4EFA41-28D0-4605-97A1-615A0DC82562}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -190,6 +192,10 @@ Global
 		{8E628698-3ECB-4FA0-BDDF-62E018FDA0CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E628698-3ECB-4FA0-BDDF-62E018FDA0CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E628698-3ECB-4FA0-BDDF-62E018FDA0CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA4EFA41-28D0-4605-97A1-615A0DC82562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4EFA41-28D0-4605-97A1-615A0DC82562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4EFA41-28D0-4605-97A1-615A0DC82562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4EFA41-28D0-4605-97A1-615A0DC82562}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
