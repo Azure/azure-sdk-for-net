@@ -26,13 +26,16 @@ namespace Azure.Core.Tests.PatchModels
 
                 if (property.NameEquals("variables"))
                 {
-                    variables = MergePatchDictionary<string>.Deserialize(element, e => e.GetString()!, (w, n, s) => w.WriteString(n, s));
+                    variables = MergePatchDictionary<string>.Deserialize(
+                        property.Value,
+                        e => e.GetString()!,
+                        (w, n, s) => w.WriteString(n, s));
                 }
 
                 if (property.NameEquals("children"))
                 {
                     children = MergePatchDictionary<ChildPatchModel>.Deserialize(
-                        element,
+                        property.Value,
                         ChildPatchModel.Deserialize,
                         (w, n, m) => m.SerializePatchProperty(w, n),
                         c => c.HasChanges);
