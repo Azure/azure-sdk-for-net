@@ -29,7 +29,7 @@ namespace Azure.Core.Tests.PatchModels
             _b = b;
         }
 
-        public bool HasChanges => _changes.HasChanged(AProperty) || _changes.HasChanged(BProperty);
+        public bool HasChanges => _changes.HasChanges();
 
         private string _a;
         private static int AProperty => 0;

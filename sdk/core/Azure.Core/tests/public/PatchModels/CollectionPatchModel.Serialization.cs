@@ -46,10 +46,14 @@ namespace Azure.Core.Tests.PatchModels
 
             return new CollectionPatchModel(id,
                 MergePatchDictionary<string>.GetStringDictionary(variables),
-                new MergePatchDictionary<ChildPatchModel>(
-                    children,
-                    (w, n, m) => m.SerializePatchProperty(w, n),
-                    c => c.HasChanges));
+                // TODO: consider this pattern for optional properties.
+                children != null ?
+                    new MergePatchDictionary<ChildPatchModel>(
+                        children,
+                        (w, n, m) => m.SerializePatchProperty(w, n),
+                        c => c.HasChanges) :
+                        null
+                );
         }
 
         CollectionPatchModel IModelJsonSerializable<CollectionPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -92,14 +96,17 @@ namespace Azure.Core.Tests.PatchModels
             }
             writer.WriteEndObject();
 
-            writer.WritePropertyName("children");
-            writer.WriteStartObject();
-            foreach (KeyValuePair<string, ChildPatchModel> item in Children)
+            if (_children != null)
             {
-                writer.WritePropertyName(item.Key);
-                item.Value.SerializeFull(writer);
+                writer.WritePropertyName("children");
+                writer.WriteStartObject();
+                foreach (KeyValuePair<string, ChildPatchModel> item in Children)
+                {
+                    writer.WritePropertyName(item.Key);
+                    item.Value.SerializeFull(writer);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
 
             writer.WriteEndObject();
         }

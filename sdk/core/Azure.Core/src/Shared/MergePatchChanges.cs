@@ -20,6 +20,8 @@ namespace Azure.Core.Serialization
 
         public bool HasChanged(int index) => _changed[index];
 
+        public bool HasChanges() => _changed.IsNonzero();
+
         private readonly struct BitVector
         {
             private readonly ulong[] _bits;
@@ -46,6 +48,19 @@ namespace Azure.Core.Serialization
                     ulong mask = 1ul << mod;
                     _bits[index] |= mask;
                 }
+            }
+
+            public bool IsNonzero()
+            {
+                foreach (ulong value in _bits)
+                {
+                    if (value > 0)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
         }
     }
