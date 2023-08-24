@@ -91,6 +91,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
+                                           string processorAuthorIdentifier,
                                            Exception exception) =>
             Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, exception.Message);
 
@@ -106,7 +107,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         partial void UpdateCheckpointComplete(string partitionId,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
-                                              string consumerGroup) =>
+                                              string consumerGroup,
+                                              string processorAuthorIdentifier) =>
             Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
 
         /// <summary>
@@ -121,7 +123,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         partial void UpdateCheckpointStart(string partitionId,
                                            string fullyQualifiedNamespace,
                                            string eventHubName,
-                                           string consumerGroup) =>
+                                           string consumerGroup,
+                                           string processorAuthorIdentifier) =>
             Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
 
         /// <summary>

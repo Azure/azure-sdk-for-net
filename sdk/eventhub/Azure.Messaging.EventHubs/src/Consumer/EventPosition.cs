@@ -21,6 +21,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The token that represents the last event in the stream of a partition.</summary>
         private const string EndOfStreamOffset = "@latest";
 
+        /// <summary>The token that represents the default latest epoch.</summary>
+        private const string LatestEpoch = "";
+
         /// <summary>
         ///   Corresponds to the location of the first event present in the partition.  Use this
         ///   position to begin receiving from the first event that was enqueued in the partition
@@ -44,6 +47,14 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
         ///
         internal string Offset { get; set; }
+
+        /// <summary>
+        ///   The replication group epoch of the event identified by this position. Needs to be accompanied by a sequence number.
+        /// </summary>
+        ///
+        /// <value>Expected to be <c>null</c> if the Event Hub does not support geo replication.</value>
+        ///
+        internal string ReplicationGroupEpoch { get; set; }
 
         /// <summary>
         ///   Indicates if the specified offset is inclusive of the event which it identifies.  This

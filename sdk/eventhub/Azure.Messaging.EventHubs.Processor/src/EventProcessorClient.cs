@@ -896,7 +896,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-               return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+               return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, "", Identifier, cancellationToken);
             }
             catch (Exception ex)
             {

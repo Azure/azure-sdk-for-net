@@ -120,6 +120,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string fullyQualifiedNamespace,
                                    string eventHubName,
                                    string consumerGroup,
+                                   string processorAuthorIdentifier,
                                    string exception);
 
         /// <summary>
@@ -134,7 +135,8 @@ namespace Azure.Messaging.EventHubs.Tests
         void UpdateCheckpointComplete(string partitionId,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
-                                      string consumerGroup);
+                                      string consumerGroup,
+                                      string processorAuthorIdentifier);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -148,7 +150,8 @@ namespace Azure.Messaging.EventHubs.Tests
         void UpdateCheckpointStart(string partitionId,
                                    string fullyQualifiedNamespace,
                                    string eventHubName,
-                                   string consumerGroup);
+                                   string consumerGroup,
+                                   string processorAuthorIdentifier);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.

@@ -94,14 +94,16 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="processorAuthorIdentifier"></param>
         /// <param name="exception">The exception that occurred.</param>
         ///
         partial void UpdateCheckpointError(string partitionId,
                                            string fullyQualifiedNamespace,
                                            string eventHubName,
                                            string consumerGroup,
+                                           string processorAuthorIdentifier,
                                            Exception exception) =>
-            Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, exception.Message);
+            Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, processorAuthorIdentifier, exception.Message);
 
         /// <summary>
         ///   Indicates that an attempt to update a checkpoint has completed.
@@ -111,12 +113,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="processorAuthorIdentifier"></param>
         ///
         partial void UpdateCheckpointComplete(string partitionId,
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
-                                              string consumerGroup) =>
-            Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+                                              string consumerGroup,
+                                              string processorAuthorIdentifier) =>
+            Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, processorAuthorIdentifier);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -126,12 +130,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="processorAuthorIdentifier"></param>
         ///
         partial void UpdateCheckpointStart(string partitionId,
                                            string fullyQualifiedNamespace,
                                            string eventHubName,
-                                           string consumerGroup) =>
-            Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+                                           string consumerGroup,
+                                           string processorAuthorIdentifier) =>
+            Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, processorAuthorIdentifier);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.

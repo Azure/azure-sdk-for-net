@@ -250,16 +250,18 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="processorAuthorIdentifier"></param>
         ///
-        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.")]
+        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ProcessorAuthorIdentifier: `{4}`.")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,
-                                                  string consumerGroup)
+                                                  string consumerGroup,
+                                                  string processorAuthorIdentifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, processorAuthorIdentifier ?? string.Empty);
             }
         }
 
@@ -271,16 +273,18 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="processorAuthorIdentifier"></param>
         ///
-        [Event(33, Level = EventLevel.Verbose, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.")]
+        [Event(33, Level = EventLevel.Verbose, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ProcessorAuthorIdentifier: `{4}`.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
                                                      string fullyQualifiedNamespace,
                                                      string eventHubName,
-                                                     string consumerGroup)
+                                                     string consumerGroup,
+                                                     string processorAuthorIdentifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, processorAuthorIdentifier ?? string.Empty);
             }
         }
 
@@ -292,18 +296,20 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="processorAuthorIdentifier"></param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  ErrorMessage: '{4}'.")]
+        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ProcessorAuthorIdentifier: `{5}`.  ErrorMessage: '{4}'.")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
+                                                  string processorAuthorIdentifier,
                                                   string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, processorAuthorIdentifier ?? string.Empty);
             }
         }
 

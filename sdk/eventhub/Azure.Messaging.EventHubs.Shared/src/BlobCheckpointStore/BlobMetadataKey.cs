@@ -22,5 +22,11 @@ namespace Azure.Messaging.EventHubs.Primitives
 
         /// <summary>The key to the sequence number metadata.</summary>
         public const string SequenceNumber = "sequencenumber";
+
+        /// <summary>The key to the sequence number metadata.</summary>
+        public const string CheckpointAuthorIdentifier = "checkpointauthoridentifier";
+
+        /// <summary>The key to the sequence number metadata.</summary>
+        public const string ReplicationGroupEpoch = "replicationgroupepoch";
     }
 }

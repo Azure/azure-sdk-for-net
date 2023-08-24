@@ -28,6 +28,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string EventHubName { get; set; }
 
         /// <summary>
+        ///   The identifier of the specific Event Hub Processor that wrote this checkpoint.
+        /// </summary>
+        ///
+        public string CheckpointAuthorIdentifier { get; set; }
+
+        /// <summary>
         ///   The name of the consumer group this checkpoint is associated with.
         /// </summary>
         ///
