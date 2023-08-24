@@ -45,8 +45,11 @@ namespace Azure.Core.Tests.PatchModels
             }
 
             return new CollectionPatchModel(id,
-                new MergePatchDictionary<string>(variables, (w, s) => w.WriteStringValue(s)),
-                new MergePatchDictionary<ChildPatchModel>(children, (w, m) => m.SerializePatch(w)));
+                MergePatchDictionary<string>.GetStringDictionary(variables),
+                new MergePatchDictionary<ChildPatchModel>(
+                    children,
+                    (w, n, m) => m.SerializePatchProperty(w, n),
+                    c => c.HasChanges));
         }
 
         CollectionPatchModel IModelJsonSerializable<CollectionPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)

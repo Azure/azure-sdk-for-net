@@ -69,6 +69,15 @@ namespace Azure.Core.Tests.PatchModels
             writer.WriteEndObject();
         }
 
+        internal void SerializePatchProperty(Utf8JsonWriter writer, string propertyName)
+        {
+            if (HasChanges)
+            {
+                writer.WritePropertyName(propertyName);
+                SerializePatch(writer);
+            }
+        }
+
         internal void SerializePatch(Utf8JsonWriter writer)
         {
             if (HasChanges)

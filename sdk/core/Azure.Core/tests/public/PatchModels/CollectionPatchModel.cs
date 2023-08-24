@@ -55,7 +55,7 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                _variables ??= new MergePatchDictionary<string>((w, s) => w.WriteStringValue(s));
+                _variables ??= MergePatchDictionary<string>.GetStringDictionary();
                 return _variables;
             }
         }
@@ -66,7 +66,10 @@ namespace Azure.Core.Tests.PatchModels
         {
             get
             {
-                _children ??= new MergePatchDictionary<ChildPatchModel>((w, m) => m.SerializePatch(w));
+                _children ??=
+                    new MergePatchDictionary<ChildPatchModel>(
+                        (w, n, m) => m.SerializePatchProperty(w, n),
+                        c => c.HasChanges);
                 return _children;
             }
         }

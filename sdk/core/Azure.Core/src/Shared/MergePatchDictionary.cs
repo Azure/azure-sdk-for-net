@@ -11,120 +11,51 @@ using System.Text.Json;
 
 namespace Azure.Core.Serialization
 {
+    // TODO: implement IModel serializable?
     internal class MergePatchDictionary<T> : IDictionary<string, T>
     {
-        private bool _checkChanges;
-        private bool _checkAllChanges;
-        private bool _hasChanges;
-        public bool HasChanges => _hasChanges || CheckChanges() || CheckAllChanges();
+        public static MergePatchDictionary<string> GetStringDictionary()
+            => new((w, n, s) => w.WriteString(n, s), default);
 
-        private bool CheckChanges()
-        {
-            if (_checkChanges)
-            {
-                foreach (KeyValuePair<string, bool> item in _changed)
-                {
-                    if (item.Value)
-                    {
-                        if (_dictionary.TryGetValue(item.Key, out T? value))// &&
-                            // TODO: restore this functionality
-                            //value is IPatchModel model &&
-                            //model.HasChanges)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private bool CheckAllChanges()
-        {
-            if (_checkAllChanges)
-            {
-                // TODO handle delete case - changed has diff set from _dictionary.
-
-                foreach (KeyValuePair<string, T> item in _dictionary)
-                {
-                    if (_dictionary.TryGetValue(item.Key, out T? value))// &&
-                        // TODO: restore this functionality
-                        //value is IPatchModel model &&
-                        //model.HasChanges)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
+        public static MergePatchDictionary<string> GetStringDictionary(Dictionary<string, string> d)
+            => new(d, (w, n, s) => w.WriteString(n, s), default);
 
         private readonly Dictionary<string, bool> _changed;
         private readonly Dictionary<string, T> _dictionary;
 
-        private readonly Action<Utf8JsonWriter, T> _writeValue;
+        private readonly Action<Utf8JsonWriter, string, T> _writeProperty;
+        private readonly Func<T, bool>? _itemHasChanges;
 
-        public MergePatchDictionary(Action<Utf8JsonWriter, T> writeValue)
+        private bool _hasChanges;
+
+        public MergePatchDictionary(Action<Utf8JsonWriter, string, T> writeProperty,
+            Func<T, bool>? hasChanges)
         {
             _changed = new Dictionary<string, bool>();
             _dictionary = new Dictionary<string, T>();
-            _writeValue = writeValue;
+            _writeProperty = writeProperty;
+            _itemHasChanges = hasChanges;
         }
 
         /// <summary>
         /// Deserialization constructor.
         /// </summary>
-        /// <param name="dictionary"></param>
-        /// <param name="writeValue"></param>
-        public MergePatchDictionary(Dictionary<string, T> dictionary, Action<Utf8JsonWriter, T> writeValue) : this(writeValue)
+        public MergePatchDictionary(Dictionary<string, T> dictionary,
+            Action<Utf8JsonWriter, string, T> writeProperty,
+            Func<T, bool>? hasChanges)
+            : this(writeProperty, hasChanges)
         {
             _changed = new Dictionary<string, bool>(_dictionary.Count);
             _dictionary = dictionary;
         }
 
-        // TODO: implement IModel serializable?
-        public void SerializePatch(Utf8JsonWriter writer)
-        {
-            if (HasChanges)
-            {
-                writer.WriteStartObject();
-
-                foreach (KeyValuePair<string, bool> kvp in _changed)
-                {
-                    if (kvp.Value)
-                    {
-                        if (!_dictionary.TryGetValue(kvp.Key, out T? value) || value == null)
-                        {
-                            writer.WritePropertyName(kvp.Key);
-                            writer.WriteNullValue();
-                        }
-                        else
-                        {
-                            // TODO: restore
-                            //if (value is not IPatchModel model || model.HasChanges)
-                            //{
-                                writer.WritePropertyName(kvp.Key);
-                                _writeValue(writer, value);
-                            //}
-                        }
-                    }
-                }
-
-                writer.WriteEndObject();
-            }
-        }
+        public bool HasChanges => _hasChanges;
 
         public T this[string key]
         {
             get
             {
                 // If the value is read and a reference value, it might get changed
-                // TODO: restore
-                //_checkChanges |= _dictionary[key] is IPatchModel;
-                //_changed[key] = _dictionary[key] is IPatchModel;
-                //_changed[k]
                 return _dictionary[key];
             }
 
@@ -180,15 +111,11 @@ namespace Azure.Core.Serialization
 
         IEnumerator<KeyValuePair<string, T>> IEnumerable<KeyValuePair<string, T>>.GetEnumerator()
         {
-            _checkChanges = true; // IPatchModel
-            _checkAllChanges = true;
             return _dictionary.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            _checkChanges = true; // IPatchModel
-            _checkAllChanges = true;
             return (_dictionary as IEnumerable).GetEnumerator();
         }
 
@@ -214,13 +141,34 @@ namespace Azure.Core.Serialization
         {
             if (_dictionary.TryGetValue(key, out value))
             {
-                // TODO: restore
-                //_checkChanges |= value is IPatchModel;
-                //_changed[key] = value is IPatchModel;
+                // TODO: handle item changes
                 return true;
             }
 
             return false;
+        }
+
+        public void SerializePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            foreach (KeyValuePair<string, bool> kvp in _changed)
+            {
+                if (kvp.Value)
+                {
+                    if (!_dictionary.TryGetValue(kvp.Key, out T? value) || value == null)
+                    {
+                        writer.WritePropertyName(kvp.Key);
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        _writeProperty(writer, kvp.Key, value);
+                    }
+                }
+            }
+
+            writer.WriteEndObject();
         }
     }
 }
