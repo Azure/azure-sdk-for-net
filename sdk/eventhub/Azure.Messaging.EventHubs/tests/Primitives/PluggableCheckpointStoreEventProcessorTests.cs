@@ -93,6 +93,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     offset,
                     sequence,
+                    "",
+                    mockProcessor.Identifier,
                     cancellationSource.Token))
                 .ThrowsAsync(expectedException);
 
