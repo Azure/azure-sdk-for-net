@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
+         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
+
         protected ResourceConnectorManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -38,6 +40,22 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        {
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(DefaultLocation)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return rgOp.Value;
         }
     }
 }
