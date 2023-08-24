@@ -94,8 +94,8 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.Collections.Generic.IEnumerable<float> embedding = null, int index = 0) { throw null; }
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
-        public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.InternalImageLocation> data = null) { throw null; }
-        public static Azure.AI.OpenAI.InternalImageLocation InternalImageLocation(System.Uri url = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data = null) { throw null; }
+        public static Azure.AI.OpenAI.ImageLocation ImageLocation(System.Uri url = null) { throw null; }
         public static Azure.AI.OpenAI.PromptFilterResult PromptFilterResult(int promptIndex = 0, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingChatChoice StreamingChatChoice(Azure.AI.OpenAI.ChatChoice originalBaseChoice = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingChatCompletions StreamingChatCompletions(Azure.AI.OpenAI.ChatCompletions baseChatCompletions = null, System.Collections.Generic.List<Azure.AI.OpenAI.StreamingChatChoice> streamingChatChoices = null) { throw null; }
@@ -328,7 +328,12 @@ namespace Azure.AI.OpenAI
     {
         internal ImageGenerations() { }
         public System.DateTimeOffset Created { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.InternalImageLocation> Data { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ImageLocation> Data { get { throw null; } }
+    }
+    public partial class ImageLocation
+    {
+        internal ImageLocation() { }
+        public System.Uri Url { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImageSize : System.IEquatable<Azure.AI.OpenAI.ImageSize>
@@ -348,11 +353,6 @@ namespace Azure.AI.OpenAI
         public static implicit operator Azure.AI.OpenAI.ImageSize (string value) { throw null; }
         public static bool operator !=(Azure.AI.OpenAI.ImageSize left, Azure.AI.OpenAI.ImageSize right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class InternalImageLocation
-    {
-        internal InternalImageLocation() { }
-        public System.Uri Url { get { throw null; } }
     }
     public partial class OpenAIClient
     {

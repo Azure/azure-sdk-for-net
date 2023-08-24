@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class InternalImageLocation
+    public partial class ImageLocation
     {
-        internal static InternalImageLocation DeserializeInternalImageLocation(JsonElement element)
+        internal static ImageLocation DeserializeImageLocation(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -29,15 +29,15 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new InternalImageLocation(url);
+            return new ImageLocation(url);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static InternalImageLocation FromResponse(Response response)
+        internal static ImageLocation FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalImageLocation(document.RootElement);
+            return DeserializeImageLocation(document.RootElement);
         }
     }
 }

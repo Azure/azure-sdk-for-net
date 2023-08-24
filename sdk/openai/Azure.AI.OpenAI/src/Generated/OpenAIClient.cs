@@ -87,6 +87,7 @@ namespace Azure.AI.OpenAI
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
 
+        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Gets chat completions for the provided chat messages.
         /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
@@ -131,6 +132,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Gets chat completions for the provided chat messages.
         /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
