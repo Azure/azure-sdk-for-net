@@ -80,11 +80,11 @@ namespace Azure.Data.AppConfiguration
 
             if (IsFeatureFlag(root))
             {
-                setting = new FeatureFlagConfigurationSetting();
+                setting = new FeatureFlagConfigurationSetting(root.GetRawText());
             }
             else if (IsSecretReference(root))
             {
-                setting = new SecretReferenceConfigurationSetting();
+                setting = new SecretReferenceConfigurationSetting(root.GetRawText());
             }
             else
             {

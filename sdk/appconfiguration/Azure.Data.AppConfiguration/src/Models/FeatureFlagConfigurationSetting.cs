@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 
@@ -29,6 +27,7 @@ namespace Azure.Data.AppConfiguration
     /// NOTE: The Azure.Data.AppConfiguration doesn't evaluate feature flags on retrieval.
     /// It's the responsibility of the library consumer to interpret feature flags and determine whether a feature is enabled.
     /// </summary>
+    /// <seealso href="https://github.com/Azure/AppConfiguration/blob/main/docs/FeatureManagement/FeatureFlag.v1.1.0.schema.json">Feature Flag schema</seealso>
     public class FeatureFlagConfigurationSetting : ConfigurationSetting
     {
         internal const string FeatureFlagContentType = "application/vnd.microsoft.appconfig.ff+json;charset=utf-8";
@@ -46,6 +45,12 @@ namespace Azure.Data.AppConfiguration
         private bool _isEnabled;
         private IList<FeatureFlagFilter> _clientFilters;
 
+        internal FeatureFlagConfigurationSetting(string jsonValue) : this()
+        {
+            _originalValue = jsonValue;
+            _isValidValue = TryParseValue();
+        }
+
         internal FeatureFlagConfigurationSetting()
         {
             _clientFilters = new List<FeatureFlagFilter>();
@@ -58,14 +63,28 @@ namespace Azure.Data.AppConfiguration
         /// <param name="featureId">The identified of the feature flag.</param>
         /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this()
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this(featureId, isEnabled, label, default)
+        {
+        }
+
+         /// <summary>
+        /// Initializes an instance of the <see cref="FeatureFlagConfigurationSetting"/> using a provided feature id and
+        /// the enabled value.
+        /// </summary>
+        /// <param name="featureId">The identified of the feature flag.</param>
+        /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="etag">The ETag value for the configuration setting.</param>
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label, ETag etag) : this()
         {
             _isValidValue = true;
+
             Key = KeyPrefix + featureId;
             Label = label;
             IsEnabled = isEnabled;
             ContentType = FeatureFlagContentType;
             FeatureId = featureId;
+            ETag = etag;
         }
 
         /// <summary>
@@ -80,7 +99,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _featureId = value;
             }
         }
@@ -97,7 +116,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _description = value;
             }
         }
@@ -114,7 +133,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _displayName = value;
             }
         }
@@ -132,7 +151,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _isEnabled = value;
             }
         }
@@ -152,51 +171,186 @@ namespace Azure.Data.AppConfiguration
         internal override void SetValue(string value)
         {
             _originalValue = value;
-
             _isValidValue = TryParseValue();
         }
 
         internal override string GetValue()
         {
-            return _isValidValue ? FormatValue() : _originalValue;
-        }
+            // If the setting was created using the composite constructor, it
+            // will not have an original value and it will need to be formatted for
+            // the first time.
+            if (_originalValue == null && _isValidValue)
+            {
+                _originalValue = CreateInitialValue();
+                return _originalValue;
+            }
 
-        private string FormatValue()
-        {
+            // If the value wasn't valid, return it verbatim.
+            if (!_isValidValue)
+            {
+                return _originalValue;
+            }
+
+            // Form the value by coping the source JSON and replacing the setting property
+            // values.  This will ensure that any custom attributes are preserved.
             using var memoryStream = new MemoryStream();
             using var writer = new Utf8JsonWriter(memoryStream);
 
-            writer.WriteStartObject();
-            writer.WriteString("id", _featureId);
-            if (_description != null)
-            {
-                writer.WriteString("description", _description);
-            }
-            if (_displayName != null)
-            {
-                writer.WriteString("display_name", _displayName);
-            }
-            writer.WriteBoolean("enabled", _isEnabled);
-            writer.WriteStartObject("conditions");
+            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(_originalValue));
 
-            if (_clientFilters.Any())
-            {
-                writer.WriteStartArray("client_filters");
-                foreach (var featureFlagFilter in _clientFilters)
-                {
-                    writer.WriteStartObject();
-                    writer.WriteString("name", featureFlagFilter.Name);
-                    writer.WritePropertyName("parameters");
-                    WriteParameterValue(writer, featureFlagFilter.Parameters);
-                    writer.WriteEndObject();
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
+            WriteSettingValue(reader, writer);
+            writer.Flush();
+
+            _originalValue = Encoding.UTF8.GetString(memoryStream.ToArray());
+            return _originalValue;
+        }
+
+        private string CreateInitialValue()
+        {
+            using var memoryStream = new MemoryStream();
+            var writer = new Utf8JsonWriter(memoryStream);
+
+            writer.WriteStartObject();
+
+            TryWriteKnownProperty("id", writer);
+            TryWriteKnownProperty("enabled", writer);
+            TryWriteKnownProperty("conditions", writer);
+            TryWriteKnownProperty("description", writer);
+            TryWriteKnownProperty("display_name", writer);
+
             writer.WriteEndObject();
             writer.Flush();
 
             return Encoding.UTF8.GetString(memoryStream.ToArray());
+        }
+
+        private void WriteSettingValue(Utf8JsonReader settingValueReader, Utf8JsonWriter writer)
+        {
+            var writtenKnownProperties = new HashSet<string>();
+            writer.WriteStartObject();
+
+            while (settingValueReader.Read())
+            {
+                switch (settingValueReader.TokenType)
+                {
+                    case JsonTokenType.StartObject when settingValueReader.CurrentDepth > 0:
+                        writer.WriteStartObject();
+                        break;
+                    case JsonTokenType.EndObject when settingValueReader.CurrentDepth > 0:
+                        writer.WriteEndObject();
+                        break;
+                    case JsonTokenType.StartArray:
+                        writer.WriteStartArray();
+                        break;
+                    case JsonTokenType.EndArray:
+                        writer.WriteEndArray();
+                        break;
+                    case JsonTokenType.PropertyName:
+                        string propertyName = settingValueReader.GetString();
+
+                        // All the well-known property values are on the top-level of the object.  Anything
+                        // lower with the same parameter names belong to custom attributes and should be ignored.
+                        if ((settingValueReader.CurrentDepth <= 1) && (TryWriteKnownProperty(propertyName, writer, true)))
+                        {
+                            writtenKnownProperties.Add(propertyName);
+                            settingValueReader.Read();
+                            settingValueReader.Skip();
+                        }
+                        else
+                        {
+                            writer.WritePropertyName(propertyName);
+                        }
+                        break;
+                    case JsonTokenType.String:
+                        writer.WriteStringValue(settingValueReader.GetString());
+                        break;
+                    case JsonTokenType.Number:
+                        writer.WriteNumberValue(settingValueReader.GetDecimal());
+                        break;
+                    case JsonTokenType.True:
+                    case JsonTokenType.False:
+                        writer.WriteBooleanValue(settingValueReader.GetBoolean());
+                        break;
+                    case JsonTokenType.Null:
+                        writer.WriteNullValue();
+                        break;
+                }
+            }
+
+            // Write any well-known properties that were not already written.
+            if (!writtenKnownProperties.Contains("id"))
+            {
+                TryWriteKnownProperty("id", writer);
+            }
+
+            if (!writtenKnownProperties.Contains("description"))
+            {
+                TryWriteKnownProperty("description", writer);
+            }
+
+            if (!writtenKnownProperties.Contains("display_name"))
+            {
+                TryWriteKnownProperty("display_name", writer);
+            }
+
+            if (!writtenKnownProperties.Contains("enabled"))
+            {
+                TryWriteKnownProperty("enabled", writer);
+            }
+
+            if (!writtenKnownProperties.Contains("conditions"))
+            {
+                TryWriteKnownProperty("conditions", writer);
+            }
+
+            writer.WriteEndObject();
+        }
+
+        private bool TryWriteKnownProperty(string propertyName, Utf8JsonWriter writer, bool includeOptionalWhenNull = false)
+        {
+            switch (propertyName)
+            {
+                case "description" when includeOptionalWhenNull || _description != null:
+                    writer.WriteString(propertyName, _description);
+                    break;
+
+                case "display_name" when includeOptionalWhenNull || _displayName != null:
+                    writer.WriteString(propertyName, _displayName);
+                    break;
+
+                case "id":
+                    writer.WriteString(propertyName, _featureId);
+                    break;
+
+                case "enabled":
+                    writer.WriteBoolean(propertyName, _isEnabled);
+                    break;
+
+                case "conditions":
+                    writer.WriteStartObject(propertyName);
+
+                    if (_clientFilters.Count > 0)
+                    {
+                        writer.WriteStartArray("client_filters");
+                        foreach (var featureFlagFilter in _clientFilters)
+                        {
+                            writer.WriteStartObject();
+                            writer.WriteString("name", featureFlagFilter.Name);
+                            writer.WritePropertyName("parameters");
+                            WriteParameterValue(writer, featureFlagFilter.Parameters);
+                            writer.WriteEndObject();
+                        }
+                        writer.WriteEndArray();
+                    }
+
+                    writer.WriteEndObject();
+                    break;
+
+                default:
+                    return false;
+            }
+
+            return true;
         }
 
         private bool TryParseValue()
@@ -356,23 +510,12 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private void CheckValidWrite()
-        {
-            CheckValid();
-            _originalValue = null;
-        }
-
         private void CheckValid()
         {
             if (!_isValidValue)
             {
                 throw new InvalidOperationException($"The content of the {nameof(Value)} property do not represent a valid feature flag object.");
             }
-        }
-
-        private void OnFiltersCollectionChange(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            CheckValidWrite();
         }
     }
 }
