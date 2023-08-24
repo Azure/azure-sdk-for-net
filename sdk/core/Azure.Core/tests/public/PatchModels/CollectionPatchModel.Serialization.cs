@@ -13,8 +13,8 @@ namespace Azure.Core.Tests.PatchModels
         internal static CollectionPatchModel Deserialize(JsonElement element)
         {
             string id = default;
-            Dictionary<string, string> variables = default;
-            Dictionary<string, ChildPatchModel> children = default;
+            MergePatchDictionary<string> variables = default;
+            MergePatchDictionary<ChildPatchModel> children = default;
 
             foreach (JsonProperty property in element.EnumerateObject())
             {
@@ -26,34 +26,20 @@ namespace Azure.Core.Tests.PatchModels
 
                 if (property.NameEquals("variables"))
                 {
-                    variables = new();
-                    foreach (JsonProperty value in property.Value.EnumerateObject())
-                    {
-                        variables.Add(value.Name, value.Value.GetString());
-                    }
+                    variables = MergePatchDictionary<string>.Deserialize(element, e => e.GetString()!, (w, n, s) => w.WriteString(n, s));
                 }
 
                 if (property.NameEquals("children"))
                 {
-                    children = new();
-                    foreach (JsonProperty value in property.Value.EnumerateObject())
-                    {
-                        ChildPatchModel child = ChildPatchModel.Deserialize(value.Value);
-                        children.Add(value.Name, child);
-                    }
+                    children = MergePatchDictionary<ChildPatchModel>.Deserialize(
+                        element,
+                        ChildPatchModel.Deserialize,
+                        (w, n, m) => m.SerializePatchProperty(w, n),
+                        c => c.HasChanges);
                 }
             }
 
-            return new CollectionPatchModel(id,
-                MergePatchDictionary<string>.GetStringDictionary(variables),
-                // TODO: consider this pattern for optional properties.
-                children != null ?
-                    new MergePatchDictionary<ChildPatchModel>(
-                        children,
-                        (w, n, m) => m.SerializePatchProperty(w, n),
-                        c => c.HasChanges) :
-                        null
-                );
+            return new CollectionPatchModel(id, variables, children);
         }
 
         CollectionPatchModel IModelJsonSerializable<CollectionPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -64,8 +50,8 @@ namespace Azure.Core.Tests.PatchModels
 
         private static CollectionPatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            JsonElement element = JsonDocument.ParseValue(ref reader).RootElement;
-            return Deserialize(element);
+            using JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            return Deserialize(doc.RootElement);
         }
 
         CollectionPatchModel IModelSerializable<CollectionPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
@@ -76,8 +62,8 @@ namespace Azure.Core.Tests.PatchModels
 
         private static CollectionPatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            JsonElement element = JsonDocument.Parse(data).RootElement;
-            return Deserialize(element);
+            using JsonDocument doc = JsonDocument.Parse(data);
+            return Deserialize(doc.RootElement);
         }
 
         private void SerializeFull(Utf8JsonWriter writer)
@@ -124,13 +110,17 @@ namespace Azure.Core.Tests.PatchModels
             if (_variables != null && _variables.HasChanges)
             {
                 writer.WritePropertyName("variables");
-                _variables.SerializePatch(writer);
+
+                (_variables as IModelJsonSerializable<MergePatchDictionary<string>>)
+                    .Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.JsonMergePatch));
             }
 
             if (_children != null && _children.HasChanges)
             {
                 writer.WritePropertyName("children");
-                _children.SerializePatch(writer);
+
+                (_children as IModelJsonSerializable<MergePatchDictionary<ChildPatchModel>>)
+                    .Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.JsonMergePatch));
             }
 
             writer.WriteEndObject();

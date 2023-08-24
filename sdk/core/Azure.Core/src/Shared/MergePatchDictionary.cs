@@ -11,40 +11,33 @@ using System.Text.Json;
 
 namespace Azure.Core.Serialization
 {
-    // TODO: implement IModel serializable?
-    internal class MergePatchDictionary<T> : IDictionary<string, T>
+    internal partial class MergePatchDictionary<T> : IDictionary<string, T>
     {
-        public static MergePatchDictionary<string> GetStringDictionary()
-            => new((w, n, s) => w.WriteString(n, s), default);
-
-        public static MergePatchDictionary<string> GetStringDictionary(Dictionary<string, string> d)
-            => new(d, (w, n, s) => w.WriteString(n, s), default);
+        public static MergePatchDictionary<string> GetStringDictionary(Dictionary<string, string>? d = default)
+            => new(e => e.GetString()!, (w, n, s) => w.WriteString(n, s), default, d);
 
         private readonly Dictionary<string, bool> _changed;
         private readonly Dictionary<string, T> _dictionary;
 
-        private readonly Action<Utf8JsonWriter, string, T> _writeProperty;
+        private readonly Func<JsonElement, T> _deserializeItem;
+        private readonly Action<Utf8JsonWriter, string, T> _serializeItem;
         private readonly Func<T, bool>? _itemHasChanges;
-
-        public MergePatchDictionary(Action<Utf8JsonWriter, string, T> writeProperty,
-            Func<T, bool>? hasChanges)
-        {
-            _changed = new Dictionary<string, bool>();
-            _dictionary = new Dictionary<string, T>();
-            _writeProperty = writeProperty;
-            _itemHasChanges = hasChanges;
-        }
 
         /// <summary>
         /// Deserialization constructor.
         /// </summary>
-        public MergePatchDictionary(Dictionary<string, T> dictionary,
-            Action<Utf8JsonWriter, string, T> writeProperty,
-            Func<T, bool>? hasChanges)
-            : this(writeProperty, hasChanges)
+        public MergePatchDictionary(
+            Func<JsonElement, T> deserializeItem,
+            Action<Utf8JsonWriter, string, T> serializeItem,
+            Func<T, bool>? hasChanges = default,
+            Dictionary<string, T>? dictionary = default)
         {
-            _changed = new Dictionary<string, bool>(_dictionary.Count);
-            _dictionary = dictionary;
+            _changed = new Dictionary<string, bool>();
+            _dictionary = dictionary ?? new Dictionary<string, T>();
+
+            _deserializeItem = deserializeItem;
+            _serializeItem = serializeItem;
+            _itemHasChanges = hasChanges;
         }
 
         private bool _checkChanges;
@@ -174,29 +167,6 @@ namespace Azure.Core.Serialization
             }
 
             return false;
-        }
-
-        public void SerializePatch(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-
-            foreach (KeyValuePair<string, bool> kvp in _changed)
-            {
-                if (kvp.Value)
-                {
-                    if (!_dictionary.TryGetValue(kvp.Key, out T? value) || value == null)
-                    {
-                        writer.WritePropertyName(kvp.Key);
-                        writer.WriteNullValue();
-                    }
-                    else
-                    {
-                        _writeProperty(writer, kvp.Key, value);
-                    }
-                }
-            }
-
-            writer.WriteEndObject();
         }
     }
 }
