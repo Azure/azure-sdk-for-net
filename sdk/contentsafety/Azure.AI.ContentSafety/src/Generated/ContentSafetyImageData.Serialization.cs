@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class ImageData : IUtf8JsonSerializable
+    public partial class ContentSafetyImageData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
