@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -76,18 +77,40 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-        /// <param name="replicationGroupEpoch"></param>
-        /// <param name="processorAuthorIdentifier"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
-        public abstract Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
                                                    string eventHubName,
                                                    string consumerGroup,
                                                    string partitionId,
                                                    long offset,
                                                    long? sequenceNumber,
-                                                   string replicationGroupEpoch,
-                                                   string processorAuthorIdentifier,
-                                                   CancellationToken cancellationToken);
+                                                   CancellationToken cancellationToken) => UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, "", "", cancellationToken);
+
+        /// <summary>
+        ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
+        ///   that an event processor should begin reading from.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+        /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
+        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="replicationGroupEpoch"></param>
+        /// <param name="processorAuthorIdentifier"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
+                                                       string eventHubName,
+                                                       string consumerGroup,
+                                                       string partitionId,
+                                                       long offset,
+                                                       long? sequenceNumber,
+                                                       string replicationGroupEpoch,
+                                                       string processorAuthorIdentifier,
+                                                       CancellationToken cancellationToken) => throw new NotImplementedException();
     }
 }

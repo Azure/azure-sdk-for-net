@@ -406,17 +406,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, processorAuthorIdentifier, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, processorAuthorIdentifier, ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, processorAuthorIdentifier);
             }
         }
 

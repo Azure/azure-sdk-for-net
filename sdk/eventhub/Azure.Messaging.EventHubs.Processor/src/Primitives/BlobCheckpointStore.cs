@@ -103,6 +103,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="replicationGroupEpoch"></param>
+        /// <param name="processorAuthorIdentifier"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
@@ -111,6 +113,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                    string partitionId,
                                                    long offset,
                                                    long? sequenceNumber,
+                                                   string replicationGroupEpoch,
+                                                   string processorAuthorIdentifier,
                                                    CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
     }
 }
