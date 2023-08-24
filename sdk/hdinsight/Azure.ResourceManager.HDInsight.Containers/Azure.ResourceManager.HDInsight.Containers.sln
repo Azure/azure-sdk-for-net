@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HDIns
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{16B423A0-AF4D-4C2D-AC52-5370C4F049A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager", "..\..\resourcemanager\Azure.ResourceManager\src\Azure.ResourceManager.csproj", "{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HDInsight.Containers.Samples", "samples\Azure.ResourceManager.HDInsight.Containers.Samples.csproj", "{B39400C4-2035-4031-8749-DBA35C21C092}"
 EndProject
 Global
@@ -59,18 +57,6 @@ Global
 		{16B423A0-AF4D-4C2D-AC52-5370C4F049A3}.Release|x64.Build.0 = Release|Any CPU
 		{16B423A0-AF4D-4C2D-AC52-5370C4F049A3}.Release|x86.ActiveCfg = Release|Any CPU
 		{16B423A0-AF4D-4C2D-AC52-5370C4F049A3}.Release|x86.Build.0 = Release|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Debug|x64.Build.0 = Debug|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Debug|x86.Build.0 = Debug|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Release|x64.ActiveCfg = Release|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Release|x64.Build.0 = Release|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Release|x86.ActiveCfg = Release|Any CPU
-		{F4639ED5-DFDF-4CF6-9B5F-0949CF39D192}.Release|x86.Build.0 = Release|Any CPU
 		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B39400C4-2035-4031-8749-DBA35C21C092}.Debug|x64.ActiveCfg = Debug|Any CPU
