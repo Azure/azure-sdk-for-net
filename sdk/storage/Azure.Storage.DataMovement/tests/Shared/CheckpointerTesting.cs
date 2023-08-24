@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const DataTransferStatus DefaultPartStatus = DataTransferStatus.Queued;
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
-            string version = DataMovementConstants.PlanFile.SchemaVersion,
+            string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
             DateTimeOffset startTime = default,
             string transferId = DefaultTransferId,
             long partNumber = DefaultPartNumber,
@@ -167,7 +167,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         internal static async Task AssertJobPlanHeaderAsync(JobPartPlanHeader header, Stream stream)
         {
-            int headerSize = DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes;
+            int headerSize = DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes;
             using var originalHeaderStream = new MemoryStream(headerSize);
             header.Serialize(originalHeaderStream);
             originalHeaderStream.Seek(0, SeekOrigin.Begin);
