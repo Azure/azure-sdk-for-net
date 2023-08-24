@@ -17,7 +17,7 @@ namespace SecurityCenter.Tests
     {
         #region Test setup
 
-        private static string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
+        private static readonly string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 
