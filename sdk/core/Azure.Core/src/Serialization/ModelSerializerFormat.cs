@@ -13,6 +13,7 @@ namespace Azure.Core.Serialization
     {
         internal const string JsonValue = "J";
         internal const string WireValue = "W";
+        internal const string JsonMergePatchValue = "P";
 
         /// <summary>
         /// Default format which will serialize all properties including read-only and additional properties.
@@ -29,6 +30,16 @@ namespace Azure.Core.Serialization
         /// read-only and additional properties.
         /// </summary>
         public static readonly ModelSerializerFormat Wire = new ModelSerializerFormat(WireValue);
+
+        /// <summary>
+        /// Format used to serialize this model when sending as a request to an Azure service.
+        /// It may not serialize read-only properties or additional properties.
+        /// The content-type will vary between JSON, XML, etc., depending on the service.
+        ///
+        /// Most use cases should prefer a more complete format like <see cref="ModelSerializerFormat.Json"/> that includes
+        /// read-only and additional properties.
+        /// </summary>
+        public static readonly ModelSerializerFormat JsonMergePatch = new ModelSerializerFormat(JsonMergePatchValue);
 
         private readonly string _value;
 

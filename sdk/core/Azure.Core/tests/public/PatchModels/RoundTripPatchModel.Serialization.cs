@@ -104,18 +104,14 @@ namespace Azure.Core.Tests.PatchModels
         {
             ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
 
-            switch (options.Format.ToString())
+            if (options.Format.ToString() == ModelSerializerFormat.Json ||
+                options.Format.ToString() == ModelSerializerFormat.Wire)
             {
-                case "J":
-                case "W":
-                    SerializeFull(writer);
-                    break;
-                case "P":
-                    SerializePatch(writer);
-                    break;
-                default:
-                    // Exception was thrown by ValidateFormat.
-                    break;
+                SerializeFull(writer);
+            }
+            else if (options.Format.ToString() == ModelSerializerFormat.JsonMergePatch)
+            {
+                SerializePatch(writer);
             }
         }
 
