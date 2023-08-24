@@ -27,6 +27,7 @@
     <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)MergePatchValue.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)MergePatchDictionary.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)MergePatchChanges.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
 </Project>

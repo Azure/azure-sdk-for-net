@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
@@ -10,8 +11,7 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class SimplePatchModel
     {
-        private bool[] _changed;
-        private bool Changed(int index) => _changed[index];
+        private readonly MergePatchChanges _changes;
 
         /// <summary>
         /// Public constructor.
@@ -19,7 +19,7 @@ namespace Azure.Core.Tests.PatchModels
         public SimplePatchModel()
         {
             // Size = the number of properties to track
-            _changed = new bool[3];
+            _changes = new MergePatchChanges(3);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests.PatchModels
         /// <param name="element"></param>
         internal SimplePatchModel(string name, int count, DateTimeOffset updatedOn)
         {
-            _changed = new bool[3];
+            _changes = new MergePatchChanges(3);
 
             _name = name;
             _count = count;
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _name;
             set
             {
-                _changed[NameProperty] = true;
+                _changes.Change(NameProperty);
                 _name = value;
             }
         }
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _count;
             set
             {
-                _changed[CountProperty] = true;
+                _changes.Change(CountProperty);
                 _count = value;
             }
         }
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests.PatchModels
             get => _updatedOn;
             set
             {
-                _changed[UpdatedOnProperty] = true;
+                _changes.Change(UpdatedOnProperty);
                 _updatedOn = value;
             }
         }
