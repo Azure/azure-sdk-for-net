@@ -284,7 +284,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanRoundTripCollectionPatchModel_ChangeChildren()
         {
-            BinaryData json = BinaryData.FromString("""
+            string jsonString = """
                 {
                     "id": "abc",
                     "variables":
@@ -306,7 +306,8 @@ namespace Azure.Core.Tests.Public
                         }
                     }
                 }
-                """);
+                """;
+            BinaryData json = BinaryData.FromString(jsonString);
 
             CollectionPatchModel model = ModelSerializer.Deserialize<CollectionPatchModel>(json);
 
@@ -320,18 +321,18 @@ namespace Azure.Core.Tests.Public
             Assert.AreEqual("a2", model.Children["second"].A);
             Assert.AreEqual("b2", model.Children["second"].B);
 
-            //ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"}}""", model);
+            ValidateSerialize(jsonString, model);
             ValidatePatch("{}", model);
 
             model.Children["first"].A = "a11";
 
-            //ValidateSerialize("""{"id": "abc","variables":{"a": "a2","b": "bb"}}""", model);
+            ValidateSerialize("""{"id": "abc","variables":{"a": "aa","b": "bb"},"children":{"first": {"a":"a11","b":"b1"},"second": {"a":"a2","b":"b2"}}}""", model);
             ValidatePatch("""{"children": {"first":{"a":"a11"}}}""", model);
 
-            //model.Variables.Remove("b");
+            model.Variables.Remove("b");
 
-            //ValidateSerialize("""{"id": "abc","variables":{"a": "a2"}}""", model);
-            //ValidatePatch("""{"variables": {"a":"a2", "b": null}}""", model);
+            ValidateSerialize("""{"id": "abc","variables":{"a": "aa"},"children":{"first": {"a":"a11","b":"b1"},"second": {"a":"a2","b":"b2"}}}""", model);
+            ValidatePatch("""{"variables": {"b": null}, "children": {"first":{"a":"a11"}}}""", model);
         }
         #endregion
 

@@ -84,7 +84,6 @@ namespace Azure.Core.Tests.PatchModels
             writer.WriteStringValue(Id);
 
             writer.WritePropertyName("variables");
-
             writer.WriteStartObject();
             foreach (KeyValuePair<string, string> item in Variables)
             {
@@ -93,10 +92,14 @@ namespace Azure.Core.Tests.PatchModels
             }
             writer.WriteEndObject();
 
-            // TODO
-            // Child.SerializeFull(writer);
-            // The dictionary could know how to serialize itself and its patch
-            // as an IChangeWriteable.
+            writer.WritePropertyName("children");
+            writer.WriteStartObject();
+            foreach (KeyValuePair<string, ChildPatchModel> item in Children)
+            {
+                writer.WritePropertyName(item.Key);
+                item.Value.SerializeFull(writer);
+            }
+            writer.WriteEndObject();
 
             writer.WriteEndObject();
         }
