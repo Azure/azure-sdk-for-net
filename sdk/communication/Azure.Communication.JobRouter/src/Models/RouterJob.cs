@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter.Models
@@ -15,8 +14,10 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterJob
     {
         /// <summary> Initializes a new instance of RouterJob. </summary>
-        internal RouterJob()
+        public RouterJob(string id)
         {
+            Id = id;
+
             AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
             Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
             _requestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();

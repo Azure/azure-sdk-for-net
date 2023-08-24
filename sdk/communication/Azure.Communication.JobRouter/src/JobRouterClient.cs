@@ -116,7 +116,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                var request = new RouterJob
+                var request = new RouterJob(options.JobId)
                 {
                     ChannelId = options.ChannelId,
                     ClassificationPolicyId = options.ClassificationPolicyId,
@@ -171,7 +171,7 @@ namespace Azure.Communication.JobRouter
             scope.Start();
             try
             {
-                var request = new RouterJob
+                var request = new RouterJob(options.JobId)
                 {
                     ChannelId = options.ChannelId,
                     ClassificationPolicyId = options.ClassificationPolicyId,
