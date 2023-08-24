@@ -115,6 +115,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                    long? sequenceNumber,
                                                    string replicationGroupEpoch,
                                                    string processorAuthorIdentifier,
-                                                   CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+                                                   CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, replicationGroupEpoch, processorAuthorIdentifier, cancellationToken);
     }
 }

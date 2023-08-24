@@ -954,6 +954,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         capturedEventArgs[index].Partition.PartitionId,
                         capturedEventArgs[index].Data.Offset,
                         capturedEventArgs[index].Data.SequenceNumber,
+                        "",
+                        processorClient.Identifier,
                         It.IsAny<CancellationToken>()),
                     Times.Once,
                     $"Creating a checkpoint for index { index } should have invoked the storage manager correctly.");
@@ -1004,6 +1006,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<string>(),
                     It.IsAny<long>(),
                     It.IsAny<long?>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<CancellationToken>()),
                 Times.Never);
 

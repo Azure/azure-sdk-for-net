@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                    string partitionId,
                                                    long offset,
                                                    long? sequenceNumber,
-                                                   CancellationToken cancellationToken) => UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, "", "", cancellationToken);
+                                                   CancellationToken cancellationToken) => throw new NotImplementedException();
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -111,6 +111,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                        long? sequenceNumber,
                                                        string replicationGroupEpoch,
                                                        string processorAuthorIdentifier,
-                                                       CancellationToken cancellationToken) => throw new NotImplementedException();
+                                                       CancellationToken cancellationToken) => UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
     }
 }
