@@ -8,7 +8,7 @@ namespace Azure.Core.Tests.PatchModels
     /// <summary>
     /// This model illustrates a nested child model in a parent model.
     /// </summary>
-    public partial class ChildPatchModel: IPatchModel
+    public partial class ChildPatchModel
     {
         private readonly MergePatchChanges _changes;
 

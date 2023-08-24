@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.PatchModels
 
         SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
             return Deserialize(ref reader, options);
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.PatchModels
 
         SimplePatchModel IModelSerializable<SimplePatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
             return Deserialize(data, options);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Core.Tests.PatchModels
 
         void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
 
             switch (options.Format.ToString())
             {
@@ -125,7 +125,7 @@ namespace Azure.Core.Tests.PatchModels
 
         BinaryData IModelSerializable<SimplePatchModel>.Serialize(ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
             return ModelSerializer.SerializeCore(this, options);
         }
 

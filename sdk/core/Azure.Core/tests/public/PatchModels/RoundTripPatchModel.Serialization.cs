@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.PatchModels
 
         RoundTripPatchModel IModelJsonSerializable<RoundTripPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
 
             return Deserialize(ref reader, options);
         }
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.PatchModels
 
         RoundTripPatchModel IModelSerializable<RoundTripPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
 
             return Deserialize(data, options);
         }
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests.PatchModels
 
         void IModelJsonSerializable<RoundTripPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
 
             switch (options.Format.ToString())
             {
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests.PatchModels
 
         BinaryData IModelSerializable<RoundTripPatchModel>.Serialize(ModelSerializerOptions options)
         {
-            PatchModelHelper.ValidateFormat(this, options.Format);
+            ModelSerializerHelper.ValidatePatchFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }

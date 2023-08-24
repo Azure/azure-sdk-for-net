@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Serialization
 {
-    internal class MergePatchDictionary<T> : IDictionary<string, T>, IPatchModel
+    internal class MergePatchDictionary<T> : IDictionary<string, T>
     {
         private bool _checkChanges;
         private bool _checkAllChanges;
@@ -26,9 +26,10 @@ namespace Azure.Core.Serialization
                 {
                     if (item.Value)
                     {
-                        if (_dictionary.TryGetValue(item.Key, out T? value) &&
-                            value is IPatchModel model &&
-                            model.HasChanges)
+                        if (_dictionary.TryGetValue(item.Key, out T? value))// &&
+                            // TODO: restore this functionality
+                            //value is IPatchModel model &&
+                            //model.HasChanges)
                         {
                             return true;
                         }
@@ -47,9 +48,10 @@ namespace Azure.Core.Serialization
 
                 foreach (KeyValuePair<string, T> item in _dictionary)
                 {
-                    if (_dictionary.TryGetValue(item.Key, out T? value) &&
-                        value is IPatchModel model &&
-                        model.HasChanges)
+                    if (_dictionary.TryGetValue(item.Key, out T? value))// &&
+                        // TODO: restore this functionality
+                        //value is IPatchModel model &&
+                        //model.HasChanges)
                     {
                         return true;
                     }
@@ -100,11 +102,12 @@ namespace Azure.Core.Serialization
                         }
                         else
                         {
-                            if (value is not IPatchModel model || model.HasChanges)
-                            {
+                            // TODO: restore
+                            //if (value is not IPatchModel model || model.HasChanges)
+                            //{
                                 writer.WritePropertyName(kvp.Key);
                                 _writeValue(writer, value);
-                            }
+                            //}
                         }
                     }
                 }
@@ -118,8 +121,10 @@ namespace Azure.Core.Serialization
             get
             {
                 // If the value is read and a reference value, it might get changed
-                _checkChanges |= _dictionary[key] is IPatchModel;
-                _changed[key] = _dictionary[key] is IPatchModel;
+                // TODO: restore
+                //_checkChanges |= _dictionary[key] is IPatchModel;
+                //_changed[key] = _dictionary[key] is IPatchModel;
+                //_changed[k]
                 return _dictionary[key];
             }
 
@@ -209,8 +214,9 @@ namespace Azure.Core.Serialization
         {
             if (_dictionary.TryGetValue(key, out value))
             {
-                _checkChanges |= value is IPatchModel;
-                _changed[key] = value is IPatchModel;
+                // TODO: restore
+                //_checkChanges |= value is IPatchModel;
+                //_changed[key] = value is IPatchModel;
                 return true;
             }
 

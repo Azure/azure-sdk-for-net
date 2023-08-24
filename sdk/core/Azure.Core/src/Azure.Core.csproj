@@ -63,9 +63,9 @@
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
-    <Compile Include="Shared\IPatchModel.cs" />
     <Compile Include="Shared\MergePatchChanges.cs" />
     <Compile Include="Shared\MergePatchDictionary.cs" />
+    <Compile Include="Shared\ModelSerializerHelper.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />

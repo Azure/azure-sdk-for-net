@@ -22,5 +22,15 @@ namespace Azure.Core
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ValidateFormat(IModelSerializable<object> model, ModelSerializerFormat format) => ValidateFormat<object>(model, format);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ValidatePatchFormat<T>(IModelSerializable<T> model, ModelSerializerFormat format)
+        {
+            bool isValidPatchFormat = model is IModelJsonSerializable<T> && format == "P";
+            if (!isValidPatchFormat)
+            {
+                ValidateFormat(model, format);
+            }
+        }
     }
 }
