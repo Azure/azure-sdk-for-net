@@ -548,7 +548,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="systemProperties">The set of system properties received from the Event Hubs service.</param>
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
-        /// <param name="replicationGroupEpoch">TODO</param>
+        /// <param name="replicationGroupEpoch">The replication group epoch associated with this event. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was sent with.</param>
         /// <param name="lastPartitionSequenceNumber">The sequence number that was last enqueued into the Event Hub partition.</param>

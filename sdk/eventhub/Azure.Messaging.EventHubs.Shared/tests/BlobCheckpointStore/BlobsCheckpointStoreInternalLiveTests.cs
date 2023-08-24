@@ -727,7 +727,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     FullyQualifiedNamespace = "namespace",
                     EventHubName = "eventHubName",
                     ConsumerGroup = "consumerGroup",
-                    PartitionId = "partitionId"
+                    PartitionId = "partitionId",
+                    CheckpointAuthorIdentifier = "Id"
                 };
 
                 var mockEvent = new MockEventData(
@@ -751,11 +752,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Calling update should create the checkpoint.
 
-                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, mockEvent.Offset, mockEvent.SequenceNumber, default);
+                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, mockEvent.Offset, mockEvent.SequenceNumber, "", "Id", default);
                 storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
 
                 Assert.That(storedCheckpoint, Is.Not.Null);
                 Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
+                Assert.That(storedCheckpoint.CheckpointAuthorIdentifier, Is.EqualTo("Id"));
 
                 // There should be a single blob in the container.
 
@@ -794,7 +796,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     FullyQualifiedNamespace = "namespace",
                     EventHubName = "eventHubName",
                     ConsumerGroup = "consumerGroup",
-                    PartitionId = "partitionId"
+                    PartitionId = "partitionId",
+                    CheckpointAuthorIdentifier = "Id"
                 };
 
                 var mockEvent = new MockEventData(
@@ -804,7 +807,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Calling update should create the checkpoint.
 
-                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, mockEvent.Offset, mockEvent.SequenceNumber, default);
+                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, mockEvent.Offset, mockEvent.SequenceNumber, "", "Id", default);
 
                 var blobCount = 0;
                 var storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
@@ -822,6 +825,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(blobCount, Is.EqualTo(1));
                 Assert.That(storedCheckpoint, Is.Not.Null);
                 Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
+                Assert.That(storedCheckpoint.CheckpointAuthorIdentifier, Is.EqualTo("Id"));
 
                 // Calling update again should update the existing checkpoint.
 
@@ -830,7 +834,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     offset: 50,
                     sequenceNumber: 60);
 
-                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, mockEvent.Offset, mockEvent.SequenceNumber, default);
+                await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, mockEvent.Offset, mockEvent.SequenceNumber, "", "Id", default);
 
                 blobCount = 0;
                 storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
@@ -848,6 +852,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(blobCount, Is.EqualTo(1));
                 Assert.That(storedCheckpoint, Is.Not.Null);
                 Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
+                Assert.That(storedCheckpoint.CheckpointAuthorIdentifier, Is.EqualTo("Id"));
             }
         }
 

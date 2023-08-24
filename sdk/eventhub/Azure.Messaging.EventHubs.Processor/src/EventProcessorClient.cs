@@ -1277,7 +1277,8 @@ namespace Azure.Messaging.EventHubs
                 EventHubName = EventHubName,
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = partitionId,
-                StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partitionId, out EventPosition position) ? position : DefaultStartingPosition
+                StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partitionId, out EventPosition position) ? position : DefaultStartingPosition,
+                CheckpointAuthorIdentifier = Identifier
             };
         }
 

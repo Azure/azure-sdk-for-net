@@ -360,8 +360,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-        /// <param name="replicationGroupEpoch"></param>
-        /// <param name="processorAuthorIdentifier"></param>
+        /// <param name="replicationGroupEpoch">The replication group epoch associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
+        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         public override async Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
@@ -443,6 +443,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             var startingPosition = default(EventPosition?);
             var offset = default(long?);
             var sequenceNumber = default(long?);
+            var authorIdentifier = default(string);
 
             if (metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
             {
@@ -453,6 +454,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 sequenceNumber = result;
                 startingPosition ??= EventPosition.FromSequenceNumber(result, false);
+            }
+            if (metadata.TryGetValue(BlobMetadataKey.CheckpointAuthorIdentifier, out str))
+            {
+                authorIdentifier = str;
             }
 
             // If either the offset or the sequence number was not populated,
@@ -473,7 +478,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                 StartingPosition = startingPosition.Value,
                 Offset = offset,
                 SequenceNumber = sequenceNumber,
-                LastModified = modifiedDate
+                LastModified = modifiedDate,
+                CheckpointAuthorIdentifier = authorIdentifier,
             };
         }
 
@@ -732,7 +738,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="processorAuthorIdentifier"></param>
+        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
         partial void UpdateCheckpointError(string partitionId,
@@ -750,7 +756,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="processorAuthorIdentifier"></param>
+        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
         ///
         partial void UpdateCheckpointComplete(string partitionId,
                                               string fullyQualifiedNamespace,
@@ -766,7 +772,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="processorAuthorIdentifier"></param>
+        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
         ///
         partial void UpdateCheckpointStart(string partitionId,
                                            string fullyQualifiedNamespace,

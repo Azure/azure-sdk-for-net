@@ -49,7 +49,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal string Offset { get; set; }
 
         /// <summary>
-        ///   The replication group epoch of the event identified by this position. Needs to be accompanied by a sequence number.
+        ///   The replication group epoch of the event identified by this position. Needs to be accompanied by a sequence number when
+        ///   using a geo replication enabled Event Hubs namespace.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the Event Hub does not support geo replication.</value>
