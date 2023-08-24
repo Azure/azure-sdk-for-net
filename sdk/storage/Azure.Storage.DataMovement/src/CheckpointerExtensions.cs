@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
         {
             DataTransferStatus jobStatus = (DataTransferStatus)await checkpointer.GetByteValue(
                 transferId,
-                DataMovementConstants.PlanFile.AtomicJobStatusIndex,
+                DataMovementConstants.JobPartPlanFile.AtomicJobStatusIndex,
                 cancellationToken).ConfigureAwait(false);
 
             // Transfers marked as fully completed are not resumable

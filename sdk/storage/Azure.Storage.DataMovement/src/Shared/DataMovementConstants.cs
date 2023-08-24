@@ -53,10 +53,25 @@ namespace Azure.Storage.DataMovement
             internal const string Closing = "Closing log ";
         }
 
+        internal const int OneByte = 1;
+        internal const int LongSizeInBytes = 8;
+        internal const int UShortSizeInBytes = 2;
+
         /// <summary>
-        /// Constants used for plan job transfer files
+        /// Constants used for job plan files.
         /// </summary>
-        internal static class PlanFile
+        internal static class JobPlanFile
+        {
+            internal const string SchemaVersion_b1 = "b1";
+            internal const string SchemaVersion = SchemaVersion_b1;
+
+            internal const string FileExtension = ".ndm";
+        }
+
+        /// <summary>
+        /// Constants used for job part plan files.
+        /// </summary>
+        internal static class JobPartPlanFile
         {
             internal const string SchemaVersion_b1 = "b1";
             internal const string SchemaVersion_b2 = "b2";
@@ -68,11 +83,6 @@ namespace Azure.Storage.DataMovement
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
             internal const int CustomHeaderMaxBytes = 256;
-            internal const int Padding = 8;
-
-            internal const int OneByte = 1;
-            internal const int LongSizeInBytes = 8;
-            internal const int UShortSizeInBytes = 2;
 
             // UTF-8 encoding, so 2 bytes per char
             internal const int VersionStrLength = 2;
