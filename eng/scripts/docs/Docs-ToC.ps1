@@ -153,14 +153,30 @@ function Get-dotnet-DocsMsTocData($packageMetadata, $docRepoLocation, $PackageSo
 
     $children = @()
     # Children here combine namespaces in both preview and GA.
-    if($packageMetadata.VersionPreview) {
-        $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionPreview `
-            -docRepoLocation $docRepoLocation -folderName "preview"
+    # TODO: Refactor this
+    if ($packageMetadata.Support -eq 'deprecated') { 
+        if($packageMetadata.VersionPreview) {
+            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionPreview `
+                -docRepoLocation $docRepoLocation -folderName "legacy"
+        }
+        if($packageMetadata.VersionGA) {
+            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionGA `
+                -docRepoLocation $docRepoLocation -folderName "legacy"
+        }
+    } else { 
+        if($packageMetadata.VersionPreview) {
+            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionPreview `
+                -docRepoLocation $docRepoLocation -folderName "preview"
+        }
+        if($packageMetadata.VersionGA) {
+            $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionGA `
+                -docRepoLocation $docRepoLocation -folderName "latest"
+        }
     }
-    if($packageMetadata.VersionGA) {
-        $children += Get-Toc-Children -package $packageMetadata.Package -version $packageMetadata.VersionGA `
-            -docRepoLocation $docRepoLocation -folderName "latest"
-    }
+
+
+
+
     $children = @($children | Sort-Object -Unique)
     if (!$children) {
         if ($packageMetadata.VersionPreview) {
