@@ -298,6 +298,8 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     DocsMsReadMeName = $readmeName
     LatestReadMeLocation = 'api/overview/azure/latest'
     PreviewReadMeLocation = 'api/overview/azure/preview'
+    # TODO: is this right?
+    LegacyReadMeLocation = 'api/overview/azure/legacy'
     Suffix = ''
   }
 }
