@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("storageUri"u8);
-            writer.WriteStringValue(StorageUri);
+            writer.WriteStringValue(StorageUri.AbsoluteUri);
             if (Optional.IsDefined(Storagekey))
             {
                 writer.WritePropertyName("storagekey"u8);
@@ -31,13 +32,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            string storageUri = default;
+            Uri storageUri = default;
             Optional<string> storagekey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageUri"u8))
                 {
-                    storageUri = property.Value.GetString();
+                    storageUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storagekey"u8))

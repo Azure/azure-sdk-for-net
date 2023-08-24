@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestClusterPoolOperations()
         {
             Location = "west us 2";

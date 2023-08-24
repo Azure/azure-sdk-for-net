@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="defaultStorageUri"> The default storage URL. </param>
         /// <param name="metastoreSpec"> The metastore specification for Spark cluster. </param>
         /// <param name="userPluginsSpec"> Spark user plugins spec. </param>
-        internal SparkProfile(string defaultStorageUri, SparkMetastoreSpec metastoreSpec, SparkUserPlugins userPluginsSpec)
+        internal SparkProfile(Uri defaultStorageUri, SparkMetastoreSpec metastoreSpec, SparkUserPlugins userPluginsSpec)
         {
             DefaultStorageUri = defaultStorageUri;
             MetastoreSpec = metastoreSpec;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> The default storage URL. </summary>
-        public string DefaultStorageUri { get; set; }
+        public Uri DefaultStorageUri { get; set; }
         /// <summary> The metastore specification for Spark cluster. </summary>
         public SparkMetastoreSpec MetastoreSpec { get; set; }
         /// <summary> Spark user plugins spec. </summary>

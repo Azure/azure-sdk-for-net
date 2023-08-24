@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> entryClass = default;
             Optional<string> args = default;
             Optional<string> savePointName = default;
-            Optional<Action> action = default;
+            Optional<FlinkJobAction> action = default;
             Optional<IDictionary<string, string>> flinkConfiguration = default;
             Optional<string> jobId = default;
             Optional<string> status = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    action = new Action(property.Value.GetString());
+                    action = new FlinkJobAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("flinkConfiguration"u8))

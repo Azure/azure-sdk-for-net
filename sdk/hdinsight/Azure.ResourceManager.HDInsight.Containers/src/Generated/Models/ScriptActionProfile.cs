@@ -18,35 +18,35 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of ScriptActionProfile. </summary>
         /// <param name="scriptActionProfileType"> Type of the script action. Supported type is bash scripts. </param>
         /// <param name="name"> Script name. </param>
-        /// <param name="url"> Url of the script file. </param>
+        /// <param name="uri"> Url of the script file. </param>
         /// <param name="services"> List of services to apply the script action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptActionProfileType"/>, <paramref name="name"/>, <paramref name="url"/> or <paramref name="services"/> is null. </exception>
-        public ScriptActionProfile(string scriptActionProfileType, string name, string url, IEnumerable<string> services)
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptActionProfileType"/>, <paramref name="name"/>, <paramref name="uri"/> or <paramref name="services"/> is null. </exception>
+        public ScriptActionProfile(string scriptActionProfileType, string name, Uri uri, IEnumerable<string> services)
         {
             Argument.AssertNotNull(scriptActionProfileType, nameof(scriptActionProfileType));
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(services, nameof(services));
 
             ScriptActionProfileType = scriptActionProfileType;
             Name = name;
-            Url = url;
+            Uri = uri;
             Services = services.ToList();
         }
 
         /// <summary> Initializes a new instance of ScriptActionProfile. </summary>
         /// <param name="scriptActionProfileType"> Type of the script action. Supported type is bash scripts. </param>
         /// <param name="name"> Script name. </param>
-        /// <param name="url"> Url of the script file. </param>
+        /// <param name="uri"> Url of the script file. </param>
         /// <param name="parameters"> Additional parameters for the script action. It should be space-separated list of arguments required for script execution. </param>
         /// <param name="services"> List of services to apply the script action. </param>
         /// <param name="timeoutInMinutes"> Timeout duration for the script action in minutes. </param>
         /// <param name="shouldPersist"> Specify if the script should persist on the cluster. </param>
-        internal ScriptActionProfile(string scriptActionProfileType, string name, string url, string parameters, IList<string> services, int? timeoutInMinutes, bool? shouldPersist)
+        internal ScriptActionProfile(string scriptActionProfileType, string name, Uri uri, string parameters, IList<string> services, int? timeoutInMinutes, bool? shouldPersist)
         {
             ScriptActionProfileType = scriptActionProfileType;
             Name = name;
-            Url = url;
+            Uri = uri;
             Parameters = parameters;
             Services = services;
             TimeoutInMinutes = timeoutInMinutes;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Script name. </summary>
         public string Name { get; set; }
         /// <summary> Url of the script file. </summary>
-        public string Url { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Additional parameters for the script action. It should be space-separated list of arguments required for script execution. </summary>
         public string Parameters { get; set; }
         /// <summary> List of services to apply the script action. </summary>

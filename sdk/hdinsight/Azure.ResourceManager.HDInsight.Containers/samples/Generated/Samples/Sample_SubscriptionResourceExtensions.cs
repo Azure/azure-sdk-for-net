@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            string location = "southeastasia";
+            AzureLocation location = new AzureLocation("southeastasia");
             NameAvailabilityContent content = new NameAvailabilityContent()
             {
                 Name = "contosemember1",
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            string location = "westus2";
+            AzureLocation location = new AzureLocation("westus2");
             await foreach (ClusterPoolVersion item in subscriptionResource.GetAvailableClusterPoolVersionsByLocationAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            string location = "westus2";
+            AzureLocation location = new AzureLocation("westus2");
             await foreach (ClusterVersion item in subscriptionResource.GetAvailableClusterVersionsByLocationAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");

@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="actionResult"> Action result of job. </param>
         /// <param name="lastSavePoint"> The last savepoint. </param>
         /// <returns> A new <see cref="Models.FlinkJobProperties"/> instance for mocking. </returns>
-        public static FlinkJobProperties FlinkJobProperties(string jobName = null, string jobJarDirectory = null, string jarName = null, string entryClass = null, string args = null, string savePointName = null, Action? action = null, IDictionary<string, string> flinkConfiguration = null, string jobId = null, string status = null, string jobOutput = null, string actionResult = null, string lastSavePoint = null)
+        public static FlinkJobProperties FlinkJobProperties(string jobName = null, string jobJarDirectory = null, string jarName = null, string entryClass = null, string args = null, string savePointName = null, FlinkJobAction? action = null, IDictionary<string, string> flinkConfiguration = null, string jobId = null, string status = null, string jobOutput = null, string actionResult = null, string lastSavePoint = null)
         {
             flinkConfiguration ??= new Dictionary<string, string>();
 

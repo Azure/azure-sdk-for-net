@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(DefaultStorageUri))
             {
                 writer.WritePropertyName("defaultStorageUrl"u8);
-                writer.WriteStringValue(DefaultStorageUri);
+                writer.WriteStringValue(DefaultStorageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MetastoreSpec))
             {
@@ -39,14 +40,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<string> defaultStorageUrl = default;
+            Optional<Uri> defaultStorageUrl = default;
             Optional<SparkMetastoreSpec> metastoreSpec = default;
             Optional<SparkUserPlugins> userPluginsSpec = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultStorageUrl"u8))
                 {
-                    defaultStorageUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultStorageUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metastoreSpec"u8))

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string type = default;
             string name = default;
-            string url = default;
+            Uri url = default;
             Optional<string> parameters = default;
             IList<string> services = default;
             Optional<int> timeoutInMinutes = default;
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = property.Value.GetString();
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

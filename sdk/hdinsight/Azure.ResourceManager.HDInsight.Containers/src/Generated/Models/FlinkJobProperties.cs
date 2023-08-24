@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="jobOutput"> Output of job. </param>
         /// <param name="actionResult"> Action result of job. </param>
         /// <param name="lastSavePoint"> The last savepoint. </param>
-        internal FlinkJobProperties(JobType jobType, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, Action? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType)
+        internal FlinkJobProperties(JobType jobType, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, FlinkJobAction? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType)
         {
             JobName = jobName;
             JobJarDirectory = jobJarDirectory;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> A string property that represents the name of the savepoint for the Flink job. </summary>
         public string SavePointName { get; set; }
         /// <summary> A string property that indicates the action to be performed on the Flink job. It can have one of the following enum values =&gt; NEW, UPDATE, STATELESS_UPDATE, STOP, START, CANCEL, SAVEPOINT, LIST_SAVEPOINT, or DELETE. </summary>
-        public Action? Action { get; set; }
+        public FlinkJobAction? Action { get; set; }
         /// <summary> Additional properties used to configure Flink jobs. It allows users to set properties such as parallelism and jobSavePointDirectory. It accepts additional key-value pairs as properties, where the keys are strings and the values are strings as well. </summary>
         public IDictionary<string, string> FlinkConfiguration { get; }
         /// <summary> Unique id for identifying a job. </summary>

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailabilityResult> CheckNameAvailabilityLocation(string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<NameAvailabilityResult> CheckNameAvailabilityLocation(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = LocationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityLocation");
             scope.Start();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterVersion> GetAvailableClusterVersionsByLocationAsync(string location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ClusterVersion> GetAvailableClusterVersionsByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterVersion> GetAvailableClusterVersionsByLocation(string location, CancellationToken cancellationToken = default)
+        public virtual Pageable<ClusterVersion> GetAvailableClusterVersionsByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);

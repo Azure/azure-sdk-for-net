@@ -203,11 +203,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocationAsync(location, content, cancellationToken).ConfigureAwait(false);
@@ -230,11 +228,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> The name and type of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailabilityResult> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, string location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<NameAvailabilityResult> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNull(content, nameof(content));
 
             return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityLocation(location, content, cancellationToken);
@@ -256,13 +252,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableClusterPoolVersionsByLocationAsync(location, cancellationToken);
         }
 
@@ -282,13 +274,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="ClusterPoolVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableClusterPoolVersionsByLocation(location, cancellationToken);
         }
 
@@ -308,13 +296,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> An async collection of <see cref="ClusterVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterVersion> GetAvailableClusterVersionsByLocationAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ClusterVersion> GetAvailableClusterVersionsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableClusterVersionsByLocationAsync(location, cancellationToken);
         }
 
@@ -334,13 +318,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <returns> A collection of <see cref="ClusterVersion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterVersion> GetAvailableClusterVersionsByLocation(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        public static Pageable<ClusterVersion> GetAvailableClusterVersionsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
             return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableClusterVersionsByLocation(location, cancellationToken);
         }
     }

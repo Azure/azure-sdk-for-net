@@ -13,7 +13,6 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.HDInsight.Containers.Models;
-using Action = Azure.ResourceManager.HDInsight.Containers.Models.Action;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Samples
 {
@@ -355,7 +354,7 @@ ScheduleDay.Sunday
                 JobJarDirectory = "abfs://flinkjob@hilosa.dfs.core.windows.net/jars",
                 JarName = "flink-sleep-job-0.0.1-SNAPSHOT.jar",
                 EntryClass = "com.microsoft.hilo.flink.job.streaming.SleepJob",
-                Action = Action.Start,
+                Action = FlinkJobAction.Start,
                 FlinkConfiguration =
 {
 ["parallelism"] = "1",

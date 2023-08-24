@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
     }
     public static partial class HDInsightContainersExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult> CheckNameAvailabilityLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersion> GetAvailableClusterVersionsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersion> GetAvailableClusterVersionsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult> CheckNameAvailabilityLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersion> GetAvailableClusterVersionsByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterVersion> GetAvailableClusterVersionsByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HDInsight.Containers.ClusterPoolResource> GetClusterPool(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.ClusterPoolResource>> GetClusterPoolAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.ClusterPoolResource GetClusterPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class FlinkStorageProfile
     {
-        public FlinkStorageProfile(string storageUri) { }
+        public FlinkStorageProfile(System.Uri storageUri) { }
         public string Storagekey { get { throw null; } set { } }
-        public string StorageUri { get { throw null; } set { } }
+        public System.Uri StorageUri { get { throw null; } set { } }
     }
     public partial class HiveCatalogOption
     {
@@ -616,14 +616,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class ScriptActionProfile
     {
-        public ScriptActionProfile(string scriptActionProfileType, string name, string url, System.Collections.Generic.IEnumerable<string> services) { }
+        public ScriptActionProfile(string scriptActionProfileType, string name, System.Uri uri, System.Collections.Generic.IEnumerable<string> services) { }
         public string Name { get { throw null; } set { } }
         public string Parameters { get { throw null; } set { } }
         public string ScriptActionProfileType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Services { get { throw null; } }
         public bool? ShouldPersist { get { throw null; } set { } }
         public int? TimeoutInMinutes { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class SecretReference
     {
@@ -672,12 +672,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string DbServerHost { get { throw null; } set { } }
         public string DbUserName { get { throw null; } set { } }
         public string KeyVaultId { get { throw null; } set { } }
-        public string ThriftUri { get { throw null; } set { } }
+        public System.Uri ThriftUri { get { throw null; } set { } }
     }
     public partial class SparkProfile
     {
         public SparkProfile() { }
-        public string DefaultStorageUri { get { throw null; } set { } }
+        public System.Uri DefaultStorageUri { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.SparkMetastoreSpec MetastoreSpec { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.SparkUserPlugin> Plugins { get { throw null; } }
     }

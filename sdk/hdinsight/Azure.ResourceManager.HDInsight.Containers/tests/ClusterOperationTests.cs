@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestTrinoCluster()
         {
             Location = "west us 2";
