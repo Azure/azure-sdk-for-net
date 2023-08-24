@@ -302,7 +302,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the a correlation identifier.</summary>
+        /// <summary>Gets or sets the correlation identifier.</summary>
         /// <value>Correlation identifier.</value>
         /// <remarks>
         /// Allows an application to specify a context for the message for the purposes of correlation,

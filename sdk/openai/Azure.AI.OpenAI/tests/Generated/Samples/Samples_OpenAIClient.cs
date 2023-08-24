@@ -63,52 +63,5 @@ namespace Azure.AI.OpenAI.Samples
             };
             var result = await client.GetCompletionsAsync("<deploymentId>", completionsOptions);
         }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetChatCompletions_Convenience_Async()
-        {
-            var client = new OpenAIClient("<openAIApiKey>");
-
-            var chatCompletionsOptions = new ChatCompletionsOptions(new ChatMessage[]
-            {
-    new ChatMessage(ChatRole.System, "<content>")
-{
-        Name = "<Name>",
-        FunctionCall = new FunctionCall("<name>", "<arguments>"),
-        AzureExtensionsContext = new AzureChatExtensionsMessageContext()
-{
-            Messages = {},
-        },
-    }
-            })
-            {
-                Functions =
-{
-        new FunctionDefinition("<name>")
-{
-            Description = "<Description>",
-            Parameters = BinaryData.FromString("<your binary data content>"),
-        }
-    },
-                FunctionCall = new FunctionDefinition("<name>")
-                {
-                    Description = "<Description>",
-                    Parameters = BinaryData.FromString("<your binary data content>"),
-                },
-                MaxTokens = 1234,
-                Temperature = 3.14f,
-                NucleusSamplingFactor = 3.14f,
-                User = "<User>",
-                ChoiceCount = 1234,
-                StopSequences =
-{
-        "<null>"
-    },
-                PresencePenalty = 3.14f,
-                FrequencyPenalty = 3.14f,
-            };
-            var result = await client.GetChatCompletionsAsync("<deploymentId>", chatCompletionsOptions);
-        }
     }
 }

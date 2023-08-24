@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
         private readonly string _pool1Name = "pool1";
         //public static new AzureLocation DefaultLocation = AzureLocation.WestUS2;
-        public static new AzureLocation DefaultLocation = AzureLocation.EastUS;
+        public static new AzureLocation DefaultLocation = AzureLocation.EastUS2;
         public static new AzureLocation DefaultLocationString = DefaultLocation;
         internal NetAppAccountBackupCollection _accountBackupCollection;
         internal NetAppVolumeBackupCollection _volumeBackupCollection;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        //[Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateDeleteBackup()
         {
@@ -201,6 +201,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task UpdateBackup()
         {
@@ -255,6 +256,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Assert.AreEqual(backupPatch.Label, backupResource4.Data.Label);
         }
 
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListBackups()
         {
@@ -318,6 +320,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             backup2Resource3.Should().BeEquivalentTo(backup2Resource2);
         }
 
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task ListAccountBackups()
         {
@@ -386,7 +389,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             accountBackup2Resource3.Should().BeEquivalentTo(accountBackup2Resource2);
         }
 
-        //[Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task GetBackupStatus()
         {
@@ -437,7 +440,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(NetAppMirrorState.Mirrored, backupStatus.MirrorState);
         }
 
-        //[Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateVolumeFromBackupCheckRestoreStatus()
         {

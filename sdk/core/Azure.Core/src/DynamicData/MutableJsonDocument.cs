@@ -16,18 +16,20 @@ namespace Azure.Core.Json
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
+        private static readonly JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions();
+
         private readonly ReadOnlyMemory<byte> _original;
         private readonly JsonDocument _originalDocument;
 
         private readonly JsonSerializerOptions _serializerOptions;
-        internal JsonSerializerOptions SerializerOptions { get => _serializerOptions; }
+        internal JsonSerializerOptions SerializerOptions => _serializerOptions;
 
         private ChangeTracker? _changeTracker;
         internal ChangeTracker Changes
         {
             get
             {
-                _changeTracker ??= new ChangeTracker(SerializerOptions);
+                _changeTracker ??= new();
                 return _changeTracker;
             }
         }
@@ -76,12 +78,24 @@ namespace Azure.Core.Json
         {
             if (!Changes.HasChanges)
             {
-                Write(stream, _original.Span);
+                WriteOriginal(stream);
                 return;
             }
 
             using Utf8JsonWriter writer = new(stream);
             RootElement.WriteTo(writer);
+        }
+
+        private void WriteOriginal(Stream stream)
+        {
+            if (_original.Length == 0)
+            {
+                using Utf8JsonWriter writer = new(stream);
+                _originalDocument.WriteTo(writer);
+                return;
+            }
+
+            Write(stream, _original.Span);
         }
 
         private void WritePatch(Stream stream)
@@ -143,6 +157,18 @@ namespace Azure.Core.Json
         }
 
         /// <summary>
+        /// Parses JSON into a <see cref="MutableJsonDocument"/>.
+        /// </summary>
+        /// <param name="reader">Reader holding the JSON value.</param>
+        /// <param name="serializerOptions">Serializer options used to serialize and deserialize any changes to the JSON.</param>
+        /// <returns>A <see cref="MutableJsonDocument"/> representation of the value.</returns>
+        public static MutableJsonDocument Parse(ref Utf8JsonReader reader, JsonSerializerOptions? serializerOptions = default)
+        {
+            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            return new MutableJsonDocument(doc, default, serializerOptions);
+        }
+
+        /// <summary>
         /// Parses a UTF-8 encoded string representing a single JSON value into a <see cref="MutableJsonDocument"/>.
         /// </summary>
         /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value.</param>
@@ -175,34 +201,18 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        internal MutableJsonDocument(JsonDocument document, JsonSerializerOptions? serializerOptions) : this(document, GetBytesFromDocument(document), serializerOptions)
+        private MutableJsonDocument(JsonDocument document, ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions)
         {
-        }
-
-        internal MutableJsonDocument(JsonDocument document, ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions)
-        {
-            _original = utf8Json;
             _originalDocument = document;
-            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
-        }
-
-        private static ReadOnlyMemory<byte> GetBytesFromDocument(JsonDocument document)
-        {
-            using MemoryStream stream = new();
-            using (Utf8JsonWriter writer = new(stream))
-            {
-                document.WriteTo(writer);
-            }
-
-            return new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Position);
+            _original = utf8Json;
+            _serializerOptions = serializerOptions ?? DefaultSerializerOptions;
         }
 
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
         {
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new MutableJsonDocument(document, options);
+                return Parse(ref reader);
             }
 
             public override void Write(Utf8JsonWriter writer, MutableJsonDocument value, JsonSerializerOptions options)
