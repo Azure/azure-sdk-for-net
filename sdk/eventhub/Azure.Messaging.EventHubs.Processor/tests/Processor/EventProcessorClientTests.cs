@@ -954,7 +954,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         capturedEventArgs[index].Partition.PartitionId,
                         capturedEventArgs[index].Data.Offset,
                         capturedEventArgs[index].Data.SequenceNumber,
-                        "",
+                        null,
                         processorClient.Identifier,
                         It.IsAny<CancellationToken>()),
                     Times.Once,
@@ -1459,7 +1459,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     partitionId,
                     offset,
                     sequenceNumber,
-                    "",
+                    null,
                     processorClient.Identifier,
                     It.IsAny<CancellationToken>()),
                 Times.Once);
