@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Runtime.Loader</name>
+  </assembly>
+  <members>
+    <member name="T:System.Runtime.Loader.AssemblyLoadContext"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.#ctor"></member>
+    <member name="P:System.Runtime.Loader.AssemblyLoadContext.Default"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.GetAssemblyName(System.String)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(System.Reflection.Assembly)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.InitializeDefaultContext(System.Runtime.Loader.AssemblyLoadContext)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.Load(System.Reflection.AssemblyName)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyName(System.Reflection.AssemblyName)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromAssemblyPath(System.String)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromNativeImagePath(System.String,System.String)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromStream(System.IO.Stream)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.LoadFromStream(System.IO.Stream,System.IO.Stream)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll(System.String)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.SetProfileOptimizationRoot(System.String)"></member>
+    <member name="M:System.Runtime.Loader.AssemblyLoadContext.StartProfileOptimization(System.String)"></member>
+  </members>
+</doc>

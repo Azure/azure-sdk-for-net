@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.IO.FileSystem.AccessControl</name>
+  </assembly>
+  <members>
+    <member name="T:System.IO.FileSystemAclExtensions"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileStream)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileInfo,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileStream,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="T:System.Security.AccessControl.DirectoryObjectSecurity">
+      <summary>[安全性關鍵] 提供無需直接管理存取控制清單 (ACL)，即可控制對目錄物件之存取的功能。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor">
+      <summary>[安全性關鍵] 初始化 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 類別的新執行個體。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor(System.Security.AccessControl.CommonSecurityDescriptor)">
+      <summary>[安全性關鍵] 使用指定的安全性描述元 (Security Descriptor)，初始化 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 類別的新執行個體。</summary>
+      <param name="securityDescriptor">與新 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的安全性描述元。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType,System.Guid,System.Guid)">
+      <summary>[安全性關鍵] 使用指定的值，初始化 <see cref="T:System.Security.AccessControl.AccessRule" /> 類別的新執行個體。</summary>
+      <returns>這個方法建立的 <see cref="T:System.Security.AccessControl.AccessRule" /> 物件。</returns>
+      <param name="identityReference">要套用存取規則的識別 (Identity)。它必須是可以轉型為 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的物件。</param>
+      <param name="accessMask">這個規則的存取遮罩。存取遮罩為 32 位元的匿名位元集合，其意義由個別的整合子定義。</param>
+      <param name="isInherited">如果這個規則是從父容器繼承，則為 true。</param>
+      <param name="inheritanceFlags">指定存取規則的繼承 (Inheritance) 屬性。</param>
+      <param name="propagationFlags">指定是否要自動傳用繼承的存取規則。如果 <paramref name="inheritanceFlags" /> 設為 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，將略過傳用旗標。</param>
+      <param name="type">指定有效的存取控制型別。</param>
+      <param name="objectType">要套用新存取規則之物件類別的識別。</param>
+      <param name="inheritedObjectType">可繼承新存取規則之子物件類別的識別。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[安全性關鍵] 將指定的存取規則加入與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的 Discretionary 存取控制清單 (DACL)。</summary>
+      <param name="rule">要加入的存取規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[安全性關鍵] 將指定的稽核規則加入與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的系統存取控制清單 (SACL)。</summary>
+      <param name="rule">要加入的稽核規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags,System.Guid,System.Guid)">
+      <summary>[安全性關鍵] 使用指定的值，初始化 <see cref="T:System.Security.AccessControl.AuditRule" /> 類別的新執行個體。</summary>
+      <returns>這個方法建立的 <see cref="T:System.Security.AccessControl.AuditRule" /> 物件。</returns>
+      <param name="identityReference">要套用稽核規則的識別。它必須是可以轉型為 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的物件。</param>
+      <param name="accessMask">這個規則的存取遮罩。存取遮罩為 32 位元的匿名位元集合，其意義由個別的整合子定義。</param>
+      <param name="isInherited">如果這個規則是從父容器繼承，則為 true。</param>
+      <param name="inheritanceFlags">指定稽核規則的繼承屬性。</param>
+      <param name="propagationFlags">指定是否要自動傳用繼承的稽核規則。如果 <paramref name="inheritanceFlags" /> 設為 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，將略過傳用旗標。</param>
+      <param name="flags">指定稽核規則的條件。</param>
+      <param name="objectType">要套用新稽核規則之物件類別的識別。</param>
+      <param name="inheritedObjectType">可繼承新稽核規則之子物件類別的識別。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAccessRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[安全性關鍵] 取得與指定之安全識別項相關聯的存取規則集合。</summary>
+      <returns>與指定之 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件相關聯的存取規則集合。</returns>
+      <param name="includeExplicit">true 表示包括為物件明確設定的存取規則。</param>
+      <param name="includeInherited">true 表示包括繼承的存取規則。</param>
+      <param name="targetType">要擷取存取規則的安全識別項。這必須是可轉型為 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件的物件。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAuditRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[安全性關鍵] 取得與指定之安全識別項相關聯的稽核規則集合。</summary>
+      <returns>與指定之 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件相關聯的稽核規則集合。</returns>
+      <param name="includeExplicit">true 表示包括為物件明確設定的稽核規則。</param>
+      <param name="includeInherited">true 表示包括繼承的稽核規則。</param>
+      <param name="targetType">要擷取稽核規則的安全識別項。這必須是可轉型為 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件的物件。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>[安全性關鍵] 將指定的修改套用至與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的 Discretionary 存取控制清單 (DACL)。</summary>
+      <returns>如果 DACL 修改成功，則為 true，否則為 false。</returns>
+      <param name="modification">要套用至 DACL 的修改。</param>
+      <param name="rule">要修改的存取規則。</param>
+      <param name="modified">如果 DACL 修改成功，則為 true，否則為 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>[安全性關鍵] 將指定的修改套用至與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的系統存取控制清單 (SACL)。</summary>
+      <returns>如果 SACL 修改成功，則為 true，否則為 false。</returns>
+      <param name="modification">要套用至 SACL 的修改。</param>
+      <param name="rule">要修改的稽核規則。</param>
+      <param name="modified">如果 SACL 修改成功，則為 true，否則為 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的 Discretionary 存取控制清單 (DACL)，移除與指定的存取規則包含相同安全識別項和存取遮罩的存取規則。</summary>
+      <returns>如果成功移除存取規則，則為 true，否則為 false。</returns>
+      <param name="rule">要移除的存取規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleAll(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的 Discretionary 存取控制清單 (DACL)，移除包含與指定存取規則相同安全識別項的所有存取規則。</summary>
+      <param name="rule">要移除的存取規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的 Discretionary 存取控制清單 (DACL)，移除與指定存取規則完全相符的所有存取規則。</summary>
+      <param name="rule">要移除的存取規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 物件相關聯的系統存取控制清單 (SACL)，移除與指定的稽核規則包含相同安全識別項和存取遮罩的稽核規則。</summary>
+      <returns>如果成功移除稽核規則，則為 true，否則為 false。</returns>
+      <param name="rule">要移除的稽核規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleAll(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的系統存取控制清單 (SACL)，移除包含與指定稽核規則相同安全識別項的所有稽核規則。</summary>
+      <param name="rule">要移除的稽核規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯的系統存取控制清單 (SACL)，移除與指定稽核規則完全相符的所有稽核規則。</summary>
+      <param name="rule">要移除的稽核規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ResetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[安全性關鍵] 移除與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯之 Discretionary 存取控制清單 (DACL) 中的所有存取規則，然後加入指定的存取規則。</summary>
+      <param name="rule">要重設的存取規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯之 Discretionary 存取控制清單 (DACL)，移除包含與指定存取規則相同安全識別項和限定詞的所有存取規則，然後加入指定的存取規則。</summary>
+      <param name="rule">要設定的存取規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[安全性關鍵] 從與這個 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 物件相關聯之系統存取控制清單 (SACL)，移除與指定的稽核規則包含相同安全識別項和限定詞的所有稽核規則，然後加入指定的稽核規則。</summary>
+      <param name="rule">要設定的稽核規則。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.DirectorySecurity">
+      <summary>[安全性關鍵] 表示目錄的存取控制和稽核安全性。此類別無法被繼承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor">
+      <summary>[安全性關鍵] 初始化 <see cref="T:System.Security.AccessControl.DirectorySecurity" /> 類別的新執行個體。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[安全性關鍵] 使用 <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列舉型別 (Enumeration) 之指定的值，從指定的目錄初始化 <see cref="T:System.Security.AccessControl.DirectorySecurity" /> 類別的新執行個體。</summary>
+      <param name="name">從其中建立 <see cref="T:System.Security.AccessControl.DirectorySecurity" /> 物件之目錄的位置。</param>
+      <param name="includeSections">其中一個 <see cref="T:System.Security.AccessControl.AccessControlSections" /> 值，指定要擷取之存取控制清單 (ACL) 資訊的類型。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSecurity">
+      <summary>[安全性關鍵] 表示檔案的存取控制和稽核安全性。此類別無法被繼承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor">
+      <summary>[安全性關鍵] 初始化 <see cref="T:System.Security.AccessControl.FileSecurity" /> 類別的新執行個體。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[安全性關鍵] 使用 <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列舉型別 (Enumeration) 之指定的值，從指定的檔案初始化 <see cref="T:System.Security.AccessControl.FileSecurity" /> 類別的新執行個體。</summary>
+      <param name="fileName">從其中建立 <see cref="T:System.Security.AccessControl.FileSecurity" /> 物件之檔案的位置。</param>
+      <param name="includeSections">其中一個 <see cref="T:System.Security.AccessControl.AccessControlSections" /> 值，指定要擷取之存取控制清單 (ACL) 資訊的類型。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAccessRule">
+      <summary>[安全性關鍵] 表示為檔案或目錄定義存取規則之存取控制項目 (ACE) 的抽象。此類別無法被繼承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[安全性關鍵] 使用對使用者帳戶的參考、指定與存取規則關聯之作業類型的值，以及指定允許還是拒絕作業的值，初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 類別的新執行個體。</summary>
+      <param name="identity">
+        <see cref="T:System.Security.Principal.IdentityReference" /> 物件，封裝使用者帳戶的參考。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與存取規則有關聯的作業類型。</param>
+      <param name="type">其中一個 <see cref="T:System.Security.AccessControl.AccessControlType" /> 值，可指定是要允許還是拒絕此作業。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[安全性關鍵] 使用對使用者帳戶的參考、指定與存取規則關聯之作業類型的值、判斷如何繼承權限的值、判斷如何散佈權限的值，以及指定允許還是拒絕作業的值，初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 類別的新執行個體。</summary>
+      <param name="identity">
+        <see cref="T:System.Security.Principal.IdentityReference" /> 物件，封裝使用者帳戶的參考。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與存取規則有關聯的作業類型。</param>
+      <param name="inheritanceFlags">其中一個 <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值，可指定存取遮罩要如何散佈到子物件。</param>
+      <param name="propagationFlags">其中一個 <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值，可指定存取控制項目 (ACE) 要如何散佈到子物件。</param>
+      <param name="type">其中一個 <see cref="T:System.Security.AccessControl.AccessControlType" /> 值，可指定是要允許還是拒絕此作業。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[安全性關鍵] 利用使用者帳戶的名稱、指定與存取規則關聯之作業類型的值，以及描述允許還是拒絕作業的值，初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 類別的新執行個體。</summary>
+      <param name="identity">使用者帳戶的名稱。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與存取規則有關聯的作業類型。</param>
+      <param name="type">其中一個 <see cref="T:System.Security.AccessControl.AccessControlType" /> 值，可指定是要允許還是拒絕此作業。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[安全性關鍵] 利用使用者帳戶的名稱、指定與存取規則關聯之作業類型的值、判斷如何繼承權限的值、判斷如何散佈權限的值，以及指定允許還是拒絕作業的值，初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 類別的新執行個體。</summary>
+      <param name="identity">使用者帳戶的名稱。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與存取規則有關聯的作業類型。</param>
+      <param name="inheritanceFlags">其中一個 <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值，可指定存取遮罩要如何散佈到子物件。</param>
+      <param name="propagationFlags">其中一個 <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值，可指定存取控制項目 (ACE) 要如何散佈到子物件。</param>
+      <param name="type">其中一個 <see cref="T:System.Security.AccessControl.AccessControlType" /> 值，可指定是要允許還是拒絕此作業。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAccessRule.FileSystemRights">
+      <summary>[安全性關鍵] 取得與目前 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件關聯的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 旗標。</summary>
+      <returns>與目前 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件關聯的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 旗標。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAuditRule">
+      <summary>[安全性關鍵] 表示存取控制項目 (ACE) 的抽象，其定義檔案或目錄的稽核規則。此類別無法被繼承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[安全性關鍵] 利用使用者帳戶的參考、指定與稽核規則關聯之作業類型的值以及指定何時執行稽核的值，來初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 類別的新執行個體。</summary>
+      <param name="identity">
+        <see cref="T:System.Security.Principal.IdentityReference" /> 物件，封裝使用者帳戶的參考。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與稽核規則有關聯的作業類型。</param>
+      <param name="flags">其中一個 <see cref="T:System.Security.AccessControl.AuditFlags" /> 值，可指定何時要執行稽核。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[安全性關鍵] 利用使用者帳戶的參考名稱、指定與稽核規則關聯之作業類型的值、決定如何繼承權限的值、決定如何散佈權限的值以及指定何時執行稽核的值，來初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 類別的新執行個體。</summary>
+      <param name="identity">
+        <see cref="T:System.Security.Principal.IdentityReference" /> 物件，封裝使用者帳戶的參考。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與稽核規則有關聯的作業類型。</param>
+      <param name="inheritanceFlags">其中一個 <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值，可指定存取遮罩要如何散佈到子物件。</param>
+      <param name="propagationFlags">其中一個 <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值，可指定存取控制項目 (ACE) 要如何散佈到子物件。</param>
+      <param name="flags">其中一個 <see cref="T:System.Security.AccessControl.AuditFlags" /> 值，可指定何時要執行稽核。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[安全性關鍵] 利用使用者帳戶名稱、指定與稽核規則關聯之作業類型的值以及指定何時執行稽核的值，來初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 類別的新執行個體。</summary>
+      <param name="identity">使用者帳戶的名稱。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與稽核規則有關聯的作業類型。</param>
+      <param name="flags">其中一個 <see cref="T:System.Security.AccessControl.AuditFlags" /> 值，可指定何時要執行稽核。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[安全性關鍵] 利用使用者帳戶名稱、指定與稽核規則關聯之作業類型的值、決定如何繼承權限的值、決定如何散佈權限的值，以及指定何時執行稽核的值，來初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 類別的新執行個體。</summary>
+      <param name="identity">使用者帳戶的名稱。</param>
+      <param name="fileSystemRights">其中一個 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值，可指定與稽核規則有關聯的作業類型。</param>
+      <param name="inheritanceFlags">其中一個 <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值，可指定存取遮罩要如何散佈到子物件。</param>
+      <param name="propagationFlags">其中一個 <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值，可指定存取控制項目 (ACE) 要如何散佈到子物件。</param>
+      <param name="flags">其中一個 <see cref="T:System.Security.AccessControl.AuditFlags" /> 值，可指定何時要執行稽核。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAuditRule.FileSystemRights">
+      <summary>[安全性關鍵] 取得與目前 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件關聯的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 旗標。</summary>
+      <returns>與目前 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件關聯的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 旗標。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemRights">
+      <summary>[安全性關鍵] 定義建立存取規則和稽核規則時要使用的存取權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.AppendData">
+      <summary>指定將資料附加至檔案結尾的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ChangePermissions">
+      <summary>指定變更與檔案或資料夾關聯之安全性規則和稽核規則的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateDirectories">
+      <summary>指定建立資料夾的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateFiles">
+      <summary>指定建立檔案的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Delete">
+      <summary>指定刪除資料夾或檔案的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.DeleteSubdirectoriesAndFiles">
+      <summary>指定刪除資料夾和該資料夾內包含之任何檔案的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ExecuteFile">
+      <summary>指定執行應用程式檔案的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.FullControl">
+      <summary>指定對資料夾或檔案執行完全控制，並修改存取控制 (Access control) 和稽核規則的權限。這個值表示對檔案執行任何作業的權限，其為這個列舉型別中所有權限的組合。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ListDirectory">
+      <summary>指定讀取目錄內容的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Modify">
+      <summary>指定讀取、寫入、列出資料夾內容，刪除資料夾及檔案並執行應用程式檔案的權限。這個權限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute" /> 權限、<see cref="F:System.Security.AccessControl.FileSystemRights.Write" /> 權限及 <see cref="F:System.Security.AccessControl.FileSystemRights.Delete" /> 權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Read">
+      <summary>指定以唯讀方式開啟和複製資料夾或檔案的權限。這個權限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.ReadData" /> 權限、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes" /> 權限、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadAttributes" /> 權限及 <see cref="F:System.Security.AccessControl.FileSystemRights.ReadPermissions" /> 權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute">
+      <summary>指定以唯讀方式開啟和複製資料夾或檔案，以及執行應用程式檔案的權限。這個權限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.Read" /> 權限和 <see cref="F:System.Security.AccessControl.FileSystemRights.ExecuteFile" /> 權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAttributes">
+      <summary>指定從資料夾或檔案開啟和複製檔案系統屬性的權限。例如，這個值指定檢視檔案建立或修改日期的權限。這不包括讀取資料、擴充之檔案系統屬性、存取規則和稽核規則的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadData">
+      <summary>指定開啟和複製檔案或資料夾的權限。這不包括讀取檔案系統屬性、擴充之檔案系統屬性、存取規則和稽核規則的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes">
+      <summary>指定從資料夾或檔案開啟和複製擴充之檔案系統屬性的權限。例如，這個值指定檢視作者和內容資訊的權限。這不包括讀取資料、檔案系統屬性、存取規則和稽核規則的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadPermissions">
+      <summary>指定從資料夾或檔案開啟和複製存取規則和稽核規則的權限。這不包括讀取資料、檔案系統屬性及擴充之檔案系統屬性的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Synchronize">
+      <summary>指定應用程式是否可以等待檔案控制代碼 (File Handle) 與 I/O 作業的完成同步。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.TakeOwnership">
+      <summary>指定變更資料夾或檔案擁有人的權限。請注意，資源的擁有人對該資源具有完全存取權。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Traverse">
+      <summary>指定列出資料夾內容並執行該資料夾內包含之應用程式的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Write">
+      <summary>指定建立資料夾和檔案，以及將資料新增至檔案或從檔案中移除資料的權限。這個權限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.WriteData" /> 權限、<see cref="F:System.Security.AccessControl.FileSystemRights.AppendData" /> 權限、<see cref="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes" /> 權限及 <see cref="F:System.Security.AccessControl.FileSystemRights.WriteAttributes" /> 權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteAttributes">
+      <summary>指定開啟檔案系統屬性並將其寫入資料夾或檔案的權限。這不包括寫入資料、擴充之屬性、存取規則和稽核規則的能力。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteData">
+      <summary>指定開啟和寫入檔案或資料夾的權限。這不包括開啟和寫入檔案系統屬性、擴充之檔案系統屬性、存取規則和稽核規則的權限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes">
+      <summary>指定開啟擴充之檔案系統屬性並將其寫入資料夾或檔案的權限。這不包括寫入資料、屬性、存取規則和稽核規則的能力。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemSecurity">
+      <summary>[安全性關鍵] 表示檔案或目錄的存取控制 (Access Control) 和稽核安全性。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRightType">
+      <summary>[安全性關鍵] 取得 <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> 類別用來表示存取權限的列舉型別 (Enumeration)。</summary>
+      <returns>
+        <see cref="T:System.Type" /> 物件，表示 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 列舉型別。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[安全性關鍵] 以指定的存取權限、存取控制和旗標，初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 類別 (用於表示指定使用者的新存取控制規則) 的新執行個體。</summary>
+      <returns>新的 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件，以指定的存取權限、存取控制和旗標表示指定之使用者的新存取控制規則。</returns>
+      <param name="identityReference">
+        <see cref="T:System.Security.Principal.IdentityReference" /> 物件，表示使用者帳戶。</param>
+      <param name="accessMask">整數，指定存取類型。</param>
+      <param name="isInherited">如果繼承存取規則，則為 true，否則為 false。</param>
+      <param name="inheritanceFlags">其中一個 <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值，指定存取遮罩要如何散佈到子物件。</param>
+      <param name="propagationFlags">其中一個 <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值，指定存取控制項目 (ACE) 要如何散佈到子物件。</param>
+      <param name="type">其中一個 <see cref="T:System.Security.AccessControl.AccessControlType" /> 值，指定允許還是拒絕存取。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRuleType">
+      <summary>[安全性關鍵] 取得 <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> 類別用來表示存取規則的列舉型別。</summary>
+      <returns>
+        <see cref="T:System.Type" /> 物件，表示 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 類別。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[安全性關鍵] 將指定的存取控制清單 (ACL) 使用權限加入至目前的檔案或目錄。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件，表示要加入至檔案或目錄的存取控制清單 (ACL) 使用權限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[安全性關鍵] 將指定的稽核規則加入至目前的檔案或目錄。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件，表示要加入至檔案或目錄的稽核規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[安全性關鍵] 初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 類別 (表示指定之使用者的指定稽核規則) 的新執行個體。</summary>
+      <returns>新的 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件，表示指定之使用者的指定稽核規則。</returns>
+      <param name="identityReference">
+        <see cref="T:System.Security.Principal.IdentityReference" /> 物件，表示使用者帳戶。</param>
+      <param name="accessMask">整數，指定存取類型。</param>
+      <param name="isInherited">如果繼承存取規則，則為 true，否則為 false。</param>
+      <param name="inheritanceFlags">其中一個 <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值，指定存取遮罩要如何散佈到子物件。</param>
+      <param name="propagationFlags">其中一個 <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值，指定存取控制項目 (ACE) 要如何散佈到子物件。</param>
+      <param name="flags">其中一個 <see cref="T:System.Security.AccessControl.AuditFlags" /> 值，指定要執行之稽核的類型。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AuditRuleType">
+      <summary>[安全性關鍵] 取得 <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> 類別用來表示稽核規則的類型。</summary>
+      <returns>
+        <see cref="T:System.Type" /> 物件，表示 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 類別。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[安全性關鍵] 從目前的檔案或目錄中，移除所有相符的允許或拒絕存取控制清單 (ACL) 使用權限。</summary>
+      <returns>如果移除了存取規則，則為 true，否則為 false。</returns>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件，表示要從檔案或目錄中移除的存取控制清單 (ACL) 使用權限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleAll(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[安全性關鍵] 從目前的檔案或目錄中，移除指定之使用者的所有存取控制清單 (ACL) 使用權限。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件，指定應該從檔案或目錄中移除其存取控制清單 (ACL) 使用權限的使用者。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[安全性關鍵] 從目前的檔案或目錄中，移除相符的單一允許或拒絕存取控制清單 (ACL) 使用權限。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件，指定應該從檔案或目錄中移除其存取控制清單 (ACL) 使用權限的使用者。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[安全性關鍵] 從目前的檔案或目錄中，移除所有相符的允許或拒絕稽核規則。</summary>
+      <returns>若已移除稽核規則則為 true，否則為 false</returns>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件，表示要從檔案或目錄中移除的稽核規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleAll(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[安全性關鍵] 從目前的檔案或目錄中，移除指定之使用者的所有稽核規則。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件，指定應該從檔案或目錄中移除其稽核規則的使用者。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[安全性關鍵] 從目前的檔案或目錄中，移除相符的單一允許或拒絕稽核規則。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件，表示要從檔案或目錄中移除的稽核規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.ResetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[安全性關鍵] 將指定的存取控制清單 (ACL) 使用權限加入至目前的檔案或目錄，並移除所有相符的 ACL 使用權限。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件，表示要加入至檔案或目錄的存取控制清單 (ACL) 使用權限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[安全性關鍵] 設定目前檔案或目錄之指定的存取控制清單 (ACL) 使用權限。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 物件，表示要為檔案或目錄設定的存取控制清單 (ACL) 使用權限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[安全性關鍵] 設定目前檔案或目錄的指定稽核規則。</summary>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 物件，表示要為檔案或目錄設定的稽核規則。</param>
+    </member>
+  </members>
+</doc>

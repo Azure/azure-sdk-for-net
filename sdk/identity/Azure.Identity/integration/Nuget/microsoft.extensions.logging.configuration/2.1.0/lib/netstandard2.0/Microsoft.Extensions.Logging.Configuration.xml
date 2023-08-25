@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.Logging.Configuration</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Logging.Configuration.ILoggerProviderConfiguration`1">
+            <summary>
+            Allows access to configuration section associated with logger provider
+            </summary>
+            <typeparam name="T">Type of logger provider to get configuration for</typeparam>
+        </member>
+        <member name="P:Microsoft.Extensions.Logging.Configuration.ILoggerProviderConfiguration`1.Configuration">
+            <summary>
+            Configuration section for requested logger provider
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.Configuration.ILoggerProviderConfigurationFactory">
+            <summary>
+            Allows access to configuration section associated with logger provider
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.Configuration.ILoggerProviderConfigurationFactory.GetConfiguration(System.Type)">
+            <summary>
+            Return configuration section associated with logger provider
+            </summary>
+            <param name="providerType">The logger provider type</param>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.Configuration.LoggerProviderOptionsChangeTokenSource`2">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.Configuration.LoggerProviderOptionsChangeTokenSource`2.#ctor(Microsoft.Extensions.Logging.Configuration.ILoggerProviderConfiguration{`1})">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.Configuration.LoggingBuilderConfigurationExtensions">
+            <summary>
+            Extension methods for setting up logging services in an <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.Configuration.LoggingBuilderConfigurationExtensions.AddConfiguration(Microsoft.Extensions.Logging.ILoggingBuilder)">
+            <summary>
+            Adds services required to consume <see cref="T:Microsoft.Extensions.Logging.Configuration.ILoggerProviderConfigurationFactory"/> or <see cref="T:Microsoft.Extensions.Logging.Configuration.ILoggerProviderConfiguration`1"/>
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Logging.LoggingBuilderExtensions">
+            <summary>
+            Extension methods for setting up logging services in an <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Logging.LoggingBuilderExtensions.AddConfiguration(Microsoft.Extensions.Logging.ILoggingBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Configures <see cref="T:Microsoft.Extensions.Logging.LoggerFilterOptions" /> from an instance of <see cref="T:Microsoft.Extensions.Configuration.IConfiguration" />.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/> to use.</param>
+            <param name="configuration">The <see cref="T:Microsoft.Extensions.Configuration.IConfiguration" /> to add.</param>
+            <returns>The builder.</returns>
+        </member>
+    </members>
+</doc>

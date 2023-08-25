@@ -1,0 +1,801 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.JsonPatch</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Internal.ClosedGenericMatcher">
+            <summary>
+            Helper related to generic interface definitions and implementing classes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.ClosedGenericMatcher.ExtractGenericInterface(System.Type,System.Type)">
+            <summary>
+            Determine whether <paramref name="queryType"/> is or implements a closed generic <see cref="T:System.Type"/>
+            created from <paramref name="interfaceType"/>.
+            </summary>
+            <param name="queryType">The <see cref="T:System.Type"/> of interest.</param>
+            <param name="interfaceType">The open generic <see cref="T:System.Type"/> to match. Usually an interface.</param>
+            <returns>
+            The closed generic <see cref="T:System.Type"/> created from <paramref name="interfaceType"/> that
+            <paramref name="queryType"/> is or implements. <c>null</c> if the two <see cref="T:System.Type"/>s have no such
+            relationship.
+            </returns>
+            <remarks>
+            This method will return <paramref name="queryType"/> if <paramref name="interfaceType"/> is
+            <c>typeof(KeyValuePair{,})</c>, and <paramref name="queryType"/> is
+            <c>typeof(KeyValuePair{string, object})</c>.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter">
+            <summary>
+            Defines the operations that can be performed on a JSON patch document.
+            </summary>  
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter.Add(Microsoft.AspNetCore.JsonPatch.Operations.Operation,System.Object)">
+             <summary>
+             Using the "add" operation a new value is inserted into the root of the target
+             document, into the target array at the specified valid index, or to a target object at
+             the specified location.
+             
+             When adding to arrays, the specified index MUST NOT be greater than the number of elements in the array.  
+             To append the value to the array, the index of "-" character is used (see [RFC6901]).
+             
+             When adding to an object, if an object member does not already exist, a new member is added to the object at the 
+             specified location or if an object member does exist, that member's value is replaced.
+            
+             The operation object MUST contain a "value" member whose content
+             specifies the value to be added.
+            
+             For example:
+            
+             { "op": "add", "path": "/a/b/c", "value": [ "foo", "bar" ] }
+            
+             See RFC 6902 https://tools.ietf.org/html/rfc6902#page-4
+             </summary>
+             <param name="operation">The add operation.</param>
+             <param name="objectToApplyTo">Object to apply the operation to.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter.Copy(Microsoft.AspNetCore.JsonPatch.Operations.Operation,System.Object)">
+             <summary>
+              Using the "copy" operation, a value is copied from a specified location to the
+              target location.
+            
+              The operation object MUST contain a "from" member, which references the location in the
+              target document to copy the value from.
+            
+              The "from" location MUST exist for the operation to be successful.
+            
+              For example:
+            
+              { "op": "copy", "from": "/a/b/c", "path": "/a/b/e" }
+              
+             See RFC 6902 https://tools.ietf.org/html/rfc6902#page-7
+             </summary>
+             <param name="operation">The copy operation.</param>
+             <param name="objectToApplyTo">Object to apply the operation to.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter.Move(Microsoft.AspNetCore.JsonPatch.Operations.Operation,System.Object)">
+             <summary>
+             Using the "move" operation the value at a specified location is removed and
+             added to the target location.
+            
+             The operation object MUST contain a "from" member, which references the location in the
+             target document to move the value from.
+            
+             The "from" location MUST exist for the operation to be successful.
+            
+             For example:
+            
+             { "op": "move", "from": "/a/b/c", "path": "/a/b/d" }
+            
+             A location cannot be moved into one of its children.
+             
+             See RFC 6902 https://tools.ietf.org/html/rfc6902#page-6
+             </summary>
+             <param name="operation">The move operation.</param>
+             <param name="objectToApplyTo">Object to apply the operation to.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter.Remove(Microsoft.AspNetCore.JsonPatch.Operations.Operation,System.Object)">
+             <summary>
+             Using the "remove" operation the value at the target location is removed.
+            
+             The target location MUST exist for the operation to be successful.
+            
+             For example:
+            
+             { "op": "remove", "path": "/a/b/c" }
+            
+             If removing an element from an array, any elements above the
+             specified index are shifted one position to the left.
+             
+             See RFC 6902 https://tools.ietf.org/html/rfc6902#page-6
+             </summary>
+             <param name="operation">The remove operation.</param>
+             <param name="objectToApplyTo">Object to apply the operation to.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter.Replace(Microsoft.AspNetCore.JsonPatch.Operations.Operation,System.Object)">
+             <summary>
+             Using the "replace" operation he value at the target location is replaced
+             with a new value.  The operation object MUST contain a "value" member
+             which specifies the replacement value.
+            
+             The target location MUST exist for the operation to be successful.
+            
+             For example:
+            
+             { "op": "replace", "path": "/a/b/c", "value": 42 }
+             
+             See RFC 6902 https://tools.ietf.org/html/rfc6902#page-6
+             </summary>
+             <param name="operation">The replace operation.</param>
+             <param name="objectToApplyTo">Object to apply the operation to.</param>
+        </member>
+        <member name="T:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapterWithTest">
+            <summary>
+            Defines the operations that can be performed on a JSON patch document, including "test".
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapterWithTest.Test(Microsoft.AspNetCore.JsonPatch.Operations.Operation,System.Object)">
+            <summary>
+            Using the "test" operation a value at the target location is compared for
+            equality to a specified value.
+            
+            The operation object MUST contain a "value" member that specifies 
+            value to be compared to the target location's value.
+            
+            The target location MUST be equal to the "value" value for the 
+            operation to be considered successful.
+            
+            For example:
+            { "op": "test", "path": "/a/b/c", "value": "foo" }
+            
+            See RFC 6902 https://tools.ietf.org/html/rfc6902#page-7
+            </summary>
+            <param name="operation">The test operation.</param>
+            <param name="objectToApplyTo">Object to apply the operation to.</param>
+        </member>
+        <member name="T:Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter.#ctor(Newtonsoft.Json.Serialization.IContractResolver,System.Action{Microsoft.AspNetCore.JsonPatch.JsonPatchError})">
+            <summary>
+            Initializes a new instance of <see cref="T:Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter"/>.
+            </summary>
+            <param name="contractResolver">The <see cref="T:Newtonsoft.Json.Serialization.IContractResolver"/>.</param>
+            <param name="logErrorAction">The <see cref="T:System.Action"/> for logging <see cref="T:Microsoft.AspNetCore.JsonPatch.JsonPatchError"/>.</param>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter.ContractResolver">
+            <summary>
+            Gets or sets the <see cref="T:Newtonsoft.Json.Serialization.IContractResolver"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter.LogErrorAction">
+            <summary>
+            Action for logging <see cref="T:Microsoft.AspNetCore.JsonPatch.JsonPatchError"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter.Add(System.String,System.Object,System.Object,Microsoft.AspNetCore.JsonPatch.Operations.Operation)">
+            <summary>
+            Add is used by various operations (eg: add, copy, ...), yet through different operations;
+            This method allows code reuse yet reporting the correct operation on error
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Adapters.ObjectAdapter.Remove(System.String,System.Object,Microsoft.AspNetCore.JsonPatch.Operations.Operation)">
+            <summary>
+            Remove is used by various operations (eg: remove, move, ...), yet through different operations;
+            This method allows code reuse yet reporting the correct operation on error.  The return value
+            contains the type of the item that has been removed (and a bool possibly signifying an error)
+            This can be used by other methods, like replace, to ensure that we can pass in the correctly
+            typed value to whatever method follows.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.JsonPatch.Helpers.GetValueResult">
+            <summary>
+            Return value for the helper method used by Copy/Move.  Needed to ensure we can make a different
+            decision in the calling method when the value is null because it cannot be fetched (HasError = true) 
+            versus when it actually is null (much like why RemovedPropertyTypeResult is used for returning 
+            type in the Remove operation).
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Helpers.GetValueResult.PropertyValue">
+            <summary>
+            The value of the property we're trying to get
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Helpers.GetValueResult.HasError">
+            <summary>
+            HasError: true when an error occurred, the operation didn't complete succesfully
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.JsonPatch.JsonPatchProperty">
+            <summary>
+            Metadata for JsonProperty.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchProperty.#ctor(Newtonsoft.Json.Serialization.JsonProperty,System.Object)">
+            <summary>
+            Initializes a new instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.JsonPatchProperty.Property">
+            <summary>
+            Gets or sets JsonProperty.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.JsonPatchProperty.Parent">
+            <summary>
+            Gets or sets Parent.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.Add(System.String,System.Object)">
+            <summary>
+            Add operation.  Will result in, for example,
+            { "op": "add", "path": "/a/b/c", "value": [ "foo", "bar" ] }
+            </summary>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.Remove(System.String)">
+            <summary>
+            Remove value at target location.  Will result in, for example,
+            { "op": "remove", "path": "/a/b/c" }
+            </summary>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.Replace(System.String,System.Object)">
+            <summary>
+            Replace value.  Will result in, for example,
+            { "op": "replace", "path": "/a/b/c", "value": 42 }
+            </summary>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.Test(System.String,System.Object)">
+            <summary>
+            Test value.  Will result in, for example,
+            { "op": "test", "path": "/a/b/c", "value": 42 }
+            </summary>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.Move(System.String,System.String)">
+            <summary>
+            Removes value at specified location and add it to the target location.  Will result in, for example:
+            { "op": "move", "from": "/a/b/c", "path": "/a/b/d" }
+            </summary>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.Copy(System.String,System.String)">
+            <summary>
+            Copy the value at specified location to the target location.  Will result in, for example:
+            { "op": "copy", "from": "/a/b/c", "path": "/a/b/e" }
+            </summary>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.ApplyTo(System.Object)">
+            <summary>
+            Apply this JsonPatchDocument
+            </summary>
+            <param name="objectToApplyTo">Object to apply the JsonPatchDocument to</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.ApplyTo(System.Object,System.Action{Microsoft.AspNetCore.JsonPatch.JsonPatchError})">
+            <summary>
+            Apply this JsonPatchDocument
+            </summary>
+            <param name="objectToApplyTo">Object to apply the JsonPatchDocument to</param>
+            <param name="logErrorAction">Action to log errors</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument.ApplyTo(System.Object,Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter)">
+            <summary>
+            Apply this JsonPatchDocument
+            </summary>
+            <param name="objectToApplyTo">Object to apply the JsonPatchDocument to</param>
+            <param name="adapter">IObjectAdapter instance to use when applying</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Add``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Add operation.  Will result in, for example,
+            { "op": "add", "path": "/a/b/c", "value": [ "foo", "bar" ] }
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Add``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},``0,System.Int32)">
+            <summary>
+            Add value to list at given position
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <param name="position">position</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Add``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},``0)">
+            <summary>
+            Add value to the end of the list
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Remove``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Remove value at target location.  Will result in, for example,
+            { "op": "remove", "path": "/a/b/c" }
+            </summary>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Remove``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32)">
+            <summary>
+            Remove value from list at given position
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="position">position</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Remove``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}})">
+            <summary>
+            Remove value from end of list
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Replace``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Replace value.  Will result in, for example,
+            { "op": "replace", "path": "/a/b/c", "value": 42 }
+            </summary>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Replace``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},``0,System.Int32)">
+            <summary>
+            Replace value in a list at given position
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <param name="position">position</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Replace``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},``0)">
+            <summary>
+            Replace value at end of a list
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Test``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Test value.  Will result in, for example,
+            { "op": "test", "path": "/a/b/c", "value": 42 }
+            </summary>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Test``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},``0,System.Int32)">
+            <summary>
+            Test value in a list at given position
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <param name="position">position</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Test``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},``0)">
+            <summary>
+            Test value at end of a list
+            </summary>
+            <typeparam name="TProp">value type</typeparam>
+            <param name="path">target location</param>
+            <param name="value">value</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Move``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Removes value at specified location and add it to the target location.  Will result in, for example:
+            { "op": "move", "from": "/a/b/c", "path": "/a/b/d" }
+            </summary>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Move``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32,System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Move from a position in a list to a new location
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="positionFrom">position</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Move``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32)">
+            <summary>
+            Move from a property to a location in a list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <param name="positionTo">position</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Move``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32)">
+            <summary>
+            Move from a position in a list to another location in a list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="positionFrom">position (source)</param>
+            <param name="path">target location</param>
+            <param name="positionTo">position (target)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Move``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}})">
+            <summary>
+            Move from a position in a list to the end of another list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="positionFrom">position</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Move``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}})">
+            <summary>
+            Move to the end of a list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Copy``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Copy the value at specified location to the target location.  Willr esult in, for example:
+            { "op": "copy", "from": "/a/b/c", "path": "/a/b/e" }
+            </summary>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Copy``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32,System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Copy from a position in a list to a new location
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="positionFrom">position</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Copy``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32)">
+            <summary>
+            Copy from a property to a location in a list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <param name="positionTo">position</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Copy``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32)">
+            <summary>
+            Copy from a position in a list to a new location in a list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="positionFrom">position (source)</param>
+            <param name="path">target location</param>
+            <param name="positionTo">position (target)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Copy``1(System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}},System.Int32,System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}})">
+            <summary>
+            Copy from a position in a list to the end of another list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="positionFrom">position</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.Copy``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`0,System.Collections.Generic.IList{``0}}})">
+            <summary>
+            Copy to the end of a list
+            </summary>
+            <typeparam name="TProp"></typeparam>
+            <param name="from">source location</param>
+            <param name="path">target location</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.ApplyTo(`0)">
+            <summary>
+            Apply this JsonPatchDocument
+            </summary>
+            <param name="objectToApplyTo">Object to apply the JsonPatchDocument to</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.ApplyTo(`0,System.Action{Microsoft.AspNetCore.JsonPatch.JsonPatchError})">
+            <summary>
+            Apply this JsonPatchDocument
+            </summary>
+            <param name="objectToApplyTo">Object to apply the JsonPatchDocument to</param>
+            <param name="logErrorAction">Action to log errors</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchDocument`1.ApplyTo(`0,Microsoft.AspNetCore.JsonPatch.Adapters.IObjectAdapter)">
+            <summary>
+            Apply this JsonPatchDocument
+            </summary>
+            <param name="objectToApplyTo">Object to apply the JsonPatchDocument to</param>
+            <param name="adapter">IObjectAdapter instance to use when applying</param>
+        </member>
+        <member name="T:Microsoft.AspNetCore.JsonPatch.JsonPatchError">
+            <summary>
+            Captures error message and the related entity and the operation that caused it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.JsonPatchError.#ctor(System.Object,Microsoft.AspNetCore.JsonPatch.Operations.Operation,System.String)">
+            <summary>
+            Initializes a new instance of <see cref="T:Microsoft.AspNetCore.JsonPatch.JsonPatchError"/>.
+            </summary>
+            <param name="affectedObject">The object that is affected by the error.</param>
+            <param name="operation">The <see cref="P:Microsoft.AspNetCore.JsonPatch.JsonPatchError.Operation"/> that caused the error.</param>
+            <param name="errorMessage">The error message.</param>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.JsonPatchError.AffectedObject">
+            <summary>
+            Gets the object that is affected by the error.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.JsonPatchError.Operation">
+            <summary>
+            Gets the <see cref="P:Microsoft.AspNetCore.JsonPatch.JsonPatchError.Operation"/> that caused the error.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.JsonPatchError.ErrorMessage">
+            <summary>
+            Gets the error message.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.CannotCopyProperty">
+            <summary>
+            The property at '{0}' could not be copied.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatCannotCopyProperty(System.Object)">
+            <summary>
+            The property at '{0}' could not be copied.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.CannotDeterminePropertyType">
+            <summary>
+            The type of the property at path '{0}' could not be determined.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatCannotDeterminePropertyType(System.Object)">
+            <summary>
+            The type of the property at path '{0}' could not be determined.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.CannotPerformOperation">
+            <summary>
+            The '{0}' operation at path '{1}' could not be performed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatCannotPerformOperation(System.Object,System.Object)">
+            <summary>
+            The '{0}' operation at path '{1}' could not be performed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.CannotReadProperty">
+            <summary>
+            The property at '{0}' could not be read.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatCannotReadProperty(System.Object)">
+            <summary>
+            The property at '{0}' could not be read.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.CannotUpdateProperty">
+            <summary>
+            The property at path '{0}' could not be updated.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatCannotUpdateProperty(System.Object)">
+            <summary>
+            The property at path '{0}' could not be updated.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.ExpressionTypeNotSupported">
+            <summary>
+            The expression '{0}' is not supported. Supported expressions include member access and indexer expressions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatExpressionTypeNotSupported(System.Object)">
+            <summary>
+            The expression '{0}' is not supported. Supported expressions include member access and indexer expressions.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.IndexOutOfBounds">
+            <summary>
+            The index value provided by path segment '{0}' is out of bounds of the array size.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatIndexOutOfBounds(System.Object)">
+            <summary>
+            The index value provided by path segment '{0}' is out of bounds of the array size.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.InvalidIndexValue">
+            <summary>
+            The path segment '{0}' is invalid for an array index.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatInvalidIndexValue(System.Object)">
+            <summary>
+            The path segment '{0}' is invalid for an array index.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.InvalidJsonPatchDocument">
+            <summary>
+            The JSON patch document was malformed and could not be parsed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatInvalidJsonPatchDocument">
+            <summary>
+            The JSON patch document was malformed and could not be parsed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.InvalidJsonPatchOperation">
+            <summary>
+            Invalid JsonPatch operation '{0}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatInvalidJsonPatchOperation(System.Object)">
+            <summary>
+            Invalid JsonPatch operation '{0}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.InvalidPathSegment">
+            <summary>
+            The provided path segment '{0}' cannot be converted to the target type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatInvalidPathSegment(System.Object)">
+            <summary>
+            The provided path segment '{0}' cannot be converted to the target type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.InvalidValueForPath">
+            <summary>
+            The provided string '{0}' is an invalid path.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatInvalidValueForPath(System.Object)">
+            <summary>
+            The provided string '{0}' is an invalid path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.InvalidValueForProperty">
+            <summary>
+            The value '{0}' is invalid for target location.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatInvalidValueForProperty(System.Object)">
+            <summary>
+            The value '{0}' is invalid for target location.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.ParameterMustMatchType">
+            <summary>
+            '{0}' must be of type '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatParameterMustMatchType(System.Object,System.Object)">
+            <summary>
+            '{0}' must be of type '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.PatchNotSupportedForArrays">
+            <summary>
+            The type '{0}' which is an array is not supported for json patch operations as it has a fixed size.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatPatchNotSupportedForArrays(System.Object)">
+            <summary>
+            The type '{0}' which is an array is not supported for json patch operations as it has a fixed size.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.PatchNotSupportedForNonGenericLists">
+            <summary>
+            The type '{0}' which is a non generic list is not supported for json patch operations. Only generic list types are supported.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatPatchNotSupportedForNonGenericLists(System.Object)">
+            <summary>
+            The type '{0}' which is a non generic list is not supported for json patch operations. Only generic list types are supported.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.TargetLocationAtPathSegmentNotFound">
+            <summary>
+            The target location specified by path segment '{0}' was not found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatTargetLocationAtPathSegmentNotFound(System.Object)">
+            <summary>
+            The target location specified by path segment '{0}' was not found.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.TargetLocationNotFound">
+            <summary>
+            For operation '{0}', the target location specified by path '{1}' was not found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatTargetLocationNotFound(System.Object,System.Object)">
+            <summary>
+            For operation '{0}', the target location specified by path '{1}' was not found.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.TestOperationNotSupported">
+            <summary>
+            The test operation is not supported.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatTestOperationNotSupported">
+            <summary>
+            The test operation is not supported.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.ValueAtListPositionNotEqualToTestValue">
+            <summary>
+            The current value '{0}' at position '{2}' is not equal to the test value '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatValueAtListPositionNotEqualToTestValue(System.Object,System.Object,System.Object)">
+            <summary>
+            The current value '{0}' at position '{2}' is not equal to the test value '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.ValueForTargetSegmentCannotBeNullOrEmpty">
+            <summary>
+            The value at '{0}' cannot be null or empty to perform the test operation.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatValueForTargetSegmentCannotBeNullOrEmpty(System.Object)">
+            <summary>
+            The value at '{0}' cannot be null or empty to perform the test operation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.JsonPatch.Resources.ValueNotEqualToTestValue">
+            <summary>
+            The current value '{0}' at path '{2}' is not equal to the test value '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.JsonPatch.Resources.FormatValueNotEqualToTestValue(System.Object,System.Object,System.Object)">
+            <summary>
+            The current value '{0}' at path '{2}' is not equal to the test value '{1}'.
+            </summary>
+        </member>
+    </members>
+</doc>

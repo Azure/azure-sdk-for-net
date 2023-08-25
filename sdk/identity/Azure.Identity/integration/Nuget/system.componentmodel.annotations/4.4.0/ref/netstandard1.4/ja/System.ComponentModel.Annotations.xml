@@ -1,0 +1,1104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.ComponentModel.Annotations</name>
+  </assembly>
+  <members>
+    <member name="T:System.ComponentModel.DataAnnotations.AssociationAttribute">
+      <summary>エンティティ メンバーが外部キー リレーションシップなどのデータ リレーションシップを表すことを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.AssociationAttribute.#ctor(System.String,System.String,System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.AssociationAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="name">関連付けの名前。</param>
+      <param name="thisKey">アソシエーションの <paramref name="thisKey" /> 側にあるキー値のプロパティ名のコンマ区切りリスト。</param>
+      <param name="otherKey">アソシエーションの <paramref name="otherKey" /> 側にあるキー値のプロパティ名のコンマ区切りリスト。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.IsForeignKey">
+      <summary>アソシエーション メンバーが外部キーを表すかどうかを示す値を取得または設定します。</summary>
+      <returns>アソシエーションが外部キーを表す場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.Name">
+      <summary>アソシエーションの名前を取得します。</summary>
+      <returns>関連付けの名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey">
+      <summary>アソシエーションの OtherKey 側にあるキー値のプロパティ名を取得します。</summary>
+      <returns>アソシエーションの OtherKey 側にあるキー値を表すプロパティ名のコンマ区切りリスト。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKeyMembers">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" /> プロパティで指定された個々のキー メンバーのコレクションを取得します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" /> プロパティで指定された個々のキー メンバーのコレクション。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey">
+      <summary>アソシエーションの ThisKey 側にあるキー値のプロパティ名を取得します。</summary>
+      <returns>アソシエーションの ThisKey 側にあるキー値を表すプロパティ名のコンマ区切りリスト。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKeyMembers">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" /> プロパティで指定された個々のキー メンバーのコレクションを取得します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" /> プロパティで指定された個々のキー メンバーのコレクション。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CompareAttribute">
+      <summary>2 つのプロパティを比較する属性を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.CompareAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="otherProperty">現在のプロパティと比較するプロパティ。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.FormatErrorMessage(System.String)">
+      <summary>エラーが発生したデータ フィールドに基づいて、エラー メッセージに書式を適用します。</summary>
+      <returns>書式設定されたエラー メッセージ。</returns>
+      <param name="name">検証失敗の原因になったフィールドの名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>指定したオブジェクトが有効かどうかを判断します。</summary>
+      <returns>
+        <paramref name="value" /> が有効な場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象のオブジェクト。</param>
+      <param name="validationContext">検証要求に関する情報を含んでいるオブジェクト。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherProperty">
+      <summary>現在のプロパティと比較するプロパティを取得します。</summary>
+      <returns>他のプロパティ。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherPropertyDisplayName">
+      <summary>その他のプロパティの表示名を取得します。</summary>
+      <returns>その他のプロパティの表示名。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.RequiresValidationContext">
+      <summary>属性で検証コンテキストが必要かどうかを示す値を取得します。</summary>
+      <returns>属性に検証コンテキストが必要な場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute">
+      <summary>オプティミスティック同時実行チェックにプロパティを使用することを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CreditCardAttribute">
+      <summary>データ フィールドの値がクレジット カード番号であることを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.CreditCardAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.IsValid(System.Object)">
+      <summary>指定したクレジット カード番号が有効かどうかを判断します。</summary>
+      <returns>クレジット カード番号が有効な場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象の値。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute">
+      <summary>プロパティまたはクラス インスタンスを検証するためのカスタム検証メソッドを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.#ctor(System.Type,System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="validatorType">カスタム検証を実行するメソッドを持つ型。</param>
+      <param name="method">カスタム検証を実行するメソッド。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>検証エラー メッセージを書式設定します。</summary>
+      <returns>書式設定されたエラー メッセージのインスタンス。</returns>
+      <param name="name">書式設定されたメッセージに含める名前。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.Method">
+      <summary>検証メソッドを取得します。</summary>
+      <returns>検証メソッドの名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.ValidatorType">
+      <summary>カスタム検証を実行する型を取得します。</summary>
+      <returns>カスタム検証を実行する型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataType">
+      <summary>データ フィールドとパラメーターに関連付けられたデータ型の列挙体を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.CreditCard">
+      <summary>クレジット カード番号を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Currency">
+      <summary>通貨値を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Custom">
+      <summary>カスタム データ型を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Date">
+      <summary>日付値を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.DateTime">
+      <summary>日付と時刻で表現される時間の瞬間を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Duration">
+      <summary>オブジェクトが存続する連続時間を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.EmailAddress">
+      <summary>電子メール アドレスを表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Html">
+      <summary>HTML ファイルを表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.ImageUrl">
+      <summary>イメージの URL を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.MultilineText">
+      <summary>複数行テキストを表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Password">
+      <summary>パスワード値を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PhoneNumber">
+      <summary>電話番号値を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PostalCode">
+      <summary>郵便番号を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Text">
+      <summary>表示されるテキストを表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Time">
+      <summary>時刻値を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Upload">
+      <summary>ファイル アップロードのデータ型を表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Url">
+      <summary>URL 値を表します。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataTypeAttribute">
+      <summary>データ フィールドに関連付ける追加の型の名前を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.ComponentModel.DataAnnotations.DataType)">
+      <summary>指定した型名を使用して、<see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="dataType">データ フィールドに関連付ける型の名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.String)">
+      <summary>指定したフィールド テンプレート名を使用して、<see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="customDataType">データ フィールドに関連付けるカスタム フィールド テンプレートの名前。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="customDataType" /> が null か空の文字列 ("") です。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.CustomDataType">
+      <summary>データ フィールドに関連付けられたカスタム フィールド テンプレートの名前を取得します。</summary>
+      <returns>データ フィールドに関連付けられたカスタム フィールド テンプレートの名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DataType">
+      <summary>データ フィールドに関連付けられた型を取得します。</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.DataType" /> 値のいずれか。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DisplayFormat">
+      <summary>データ フィールドの表示形式を取得します。</summary>
+      <returns>データ フィールドの表示形式。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.GetDataTypeName">
+      <summary>データ フィールドに関連付けられた型の名前を返します。</summary>
+      <returns>データ フィールドに関連付けられた型の名前。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.IsValid(System.Object)">
+      <summary>データ フィールドの値が有効かどうかをチェックします。</summary>
+      <returns>常に true。</returns>
+      <param name="value">検証するデータ フィールド値。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayAttribute">
+      <summary>エンティティ部分クラスの型やメンバーに対してローカライズ可能な文字列を指定できる汎用属性を提供します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.DisplayAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField">
+      <summary>このフィールドを表示するための UI を自動的に生成するかどうかを示す値を取得または設定します。</summary>
+      <returns>このフィールドを表示する UI を自動的に生成する場合は true。それ以外の場合は false。</returns>
+      <exception cref="T:System.InvalidOperationException">プロパティ値を設定する前に取得しようとしました。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter">
+      <summary>このフィールドにフィルター処理の UI が自動的に表示されるかどうかを示す値を取得または設定します。</summary>
+      <returns>このフィールドにフィルターを表示する UI を自動的に生成する場合は true。それ以外の場合は false。</returns>
+      <exception cref="T:System.InvalidOperationException">プロパティ値を設定する前に取得しようとしました。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description">
+      <summary>UI に説明を表示するために使用される値を取得または設定します。</summary>
+      <returns>UI に説明を表示するために使用される値。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateField">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" /> プロパティの値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" /> プロパティが初期化されている場合はその値。それ以外の場合は null。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateFilter">
+      <summary>このフィールドにフィルターを表示するための UI を自動的に生成するかどうかを示す値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter" /> プロパティが初期化されている場合はその値。それ以外の場合は null。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetDescription">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> プロパティの値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> が指定されており、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> プロパティがリソース キーを表している場合は、ローカライズされた説明。それ以外の場合は、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> プロパティのローカライズされていない値。</returns>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティおよび <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> プロパティは初期化されますが、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティの <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 値と一致する名前を持つパブリックな静的プロパティが見つかりませんでした。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetGroupName">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> プロパティの値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> が初期化されている場合は、UI でのフィールドのグループ化に使用される値。それ以外の場合は null。<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティが指定されており、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> プロパティがリソース キーを表している場合は、ローカライズされた文字列が返されます。それ以外の場合は、ローカライズされていない文字列が返されます。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetName">
+      <summary>UI でのフィールドの表示に使用される値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティが指定されており、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> プロパティがリソース キーを表している場合は、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> プロパティのローカライズされた文字列。それ以外の場合は、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> プロパティのローカライズされていない値。</returns>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティおよび <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> プロパティは初期化されますが、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティの <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 値と一致する名前を持つパブリックな静的プロパティが見つかりませんでした。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetOrder">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" /> プロパティの値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" /> プロパティが設定されている場合はその値。それ以外の場合は null。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetPrompt">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> プロパティの値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティが指定されており、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> プロパティがリソース キーを表している場合は、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> プロパティのローカライズされた文字列。それ以外の場合は、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> プロパティのローカライズされていない値。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetShortName">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> プロパティの値を返します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> プロパティが指定されており、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> プロパティがリソース キーを表している場合は、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> プロパティのローカライズされた文字列。それ以外の場合は、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> プロパティのローカライズされていない値。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName">
+      <summary>UI でのフィールドのグループ化に使用される値を取得または設定します。</summary>
+      <returns>UI でのフィールドのグループ化に使用される値。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name">
+      <summary>UI での表示に使用される値を取得または設定します。</summary>
+      <returns>UI での表示に使用される値。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order">
+      <summary>列の順序の重みを取得または設定します。</summary>
+      <returns>列の順序の重み。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt">
+      <summary>UI にプロンプトのウォーターマークを設定するために使用される値を取得または設定します。</summary>
+      <returns>UI にウォーターマークを表示するために使用される値。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />、および <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> の各プロパティのリソースを含んでいる型を取得または設定します。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />、および <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> の各プロパティを格納しているリソースの型。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName">
+      <summary>グリッドの列ラベルに使用される値を取得または設定します。</summary>
+      <returns>グリッドの列ラベルに使用される値。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute">
+      <summary>参照先テーブルで外部キー列として表示される列を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String)">
+      <summary>指定された列を使用して、<see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="displayColumn">表示列として使用する列の名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String)">
+      <summary>指定された表示列と並べ替え列を使用して、<see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="displayColumn">表示列として使用する列の名前。</param>
+      <param name="sortColumn">並べ替えに使用する列の名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String,System.Boolean)">
+      <summary>指定された表示列と指定された並べ替え列および並べ替え順序を使用して、<see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="displayColumn">表示列として使用する列の名前。</param>
+      <param name="sortColumn">並べ替えに使用する列の名前。</param>
+      <param name="sortDescending">降順で並べ替える場合は true。それ以外の場合は false。既定値は、false です。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.DisplayColumn">
+      <summary>表示フィールドとして使用する列の名前を取得します。</summary>
+      <returns>表示列の名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortColumn">
+      <summary>並べ替えに使用する列の名前を取得します。</summary>
+      <returns>並べ替え列の名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortDescending">
+      <summary>降順と昇順のどちらで並べ替えるかを示す値を取得します。</summary>
+      <returns>列が降順で並べ替えられる場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute">
+      <summary>ASP.NET Dynamic Data によるデータ フィールドの表示方法と書式を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ApplyFormatInEditMode">
+      <summary>データ フィールドが編集モードである場合に <see cref="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString" /> プロパティで指定した書式指定文字列をフィールド値に適用するかどうかを示す値を取得または設定します。</summary>
+      <returns>編集モードで書式指定文字列をフィールド値に適用する場合は true。それ以外の場合は false。既定値は、false です。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ConvertEmptyStringToNull">
+      <summary>データ ソースのデータ フィールドを更新するときに、空の文字列値 ("") を null に自動的に変換するかどうかを示す値を取得または設定します。</summary>
+      <returns>空の文字列値を null に自動的に変換する場合は true。それ以外の場合は false。既定値は、true です。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString">
+      <summary>フィールド値の表示形式を取得または設定します。</summary>
+      <returns>データ フィールドの値の表示形式を指定する書式指定文字列。既定値は空の文字列です ("")。この値は、フィールド値に適用される特定の書式が設定されていないことを示します。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.HtmlEncode">
+      <summary>フィールドを HTML エンコードするかどうかを示す値を取得または設定します。</summary>
+      <returns>フィールドを HTML エンコードする場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.NullDisplayText">
+      <summary>フィールドの値が null の場合にフィールドに表示するテキストを取得または設定します。</summary>
+      <returns>フィールドの値が null の場合にフィールドに表示されるテキスト。既定値は空の文字列 ("") です。このプロパティが設定されていないことを示します。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EditableAttribute">
+      <summary>データ フィールドが編集可能かどうかを示します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EditableAttribute.#ctor(System.Boolean)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.EditableAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="allowEdit">フィールドを編集可能として指定する場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowEdit">
+      <summary>フィールドが編集可能かどうかを示す値を取得します。</summary>
+      <returns>フィールドが編集可能の場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowInitialValue">
+      <summary>初期値が有効かどうかを示す値を取得または設定します。</summary>
+      <returns>初期値が有効な場合は true 。それ以外の場合は false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute">
+      <summary>電子メール アドレスを検証します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid(System.Object)">
+      <summary>指定した値が有効な電子メール アドレスのパターンと一致するかどうかを判断します。</summary>
+      <returns>指定された値が有効であるか、null の場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象の値。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute">
+      <summary>.NET Framework の列挙型をデータ列に対応付けます。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.#ctor(System.Type)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="enumType">列挙体の型。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.EnumType">
+      <summary>列挙型を取得または設定します。</summary>
+      <returns>列挙型。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.IsValid(System.Object)">
+      <summary>データ フィールドの値が有効かどうかをチェックします。</summary>
+      <returns>データ フィールドの値が有効である場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証するデータ フィールド値。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute">
+      <summary>ファイル名の拡張子を検証します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.Extensions">
+      <summary>ファイル名の拡張子を取得または設定します。</summary>
+      <returns>ファイル名拡張子。プロパティが設定されていない場合は既定のファイル拡張子 (".gif"、".jpg"、".jpeg"、".gif")。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.FormatErrorMessage(System.String)">
+      <summary>エラーが発生したデータ フィールドに基づいて、エラー メッセージに書式を適用します。</summary>
+      <returns>書式設定されたエラー メッセージ。</returns>
+      <param name="name">検証失敗の原因になったフィールドの名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.IsValid(System.Object)">
+      <summary>指定したファイル名拡張子または拡張機能が有効であることを確認します。</summary>
+      <returns>ファイル名拡張子が有効である場合は true。それ以外の場合は false。</returns>
+      <param name="value">有効なファイル拡張子のコンマ区切りのリスト。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute">
+      <summary>列のフィルター処理動作を指定するための属性を表します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String)">
+      <summary>フィルター UI ヒントを使用して、<see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="filterUIHint">フィルター処理用のコントロールの名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String)">
+      <summary>フィルター UI ヒントとプレゼンテーション層の名前を使用して、<see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="filterUIHint">フィルター処理用のコントロールの名前。</param>
+      <param name="presentationLayer">このコントロールをサポートするプレゼンテーション層の名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>フィルター UI ヒント、プレゼンテーション層の名前、およびコントロールのパラメーターを使用して、<see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="filterUIHint">フィルター処理用のコントロールの名前。</param>
+      <param name="presentationLayer">このコントロールをサポートするプレゼンテーション層の名前。</param>
+      <param name="controlParameters">コントロールのパラメーターのリスト。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.ControlParameters">
+      <summary>コントロールのコンストラクターでパラメーターとして使用される名前と値のペアを取得します。</summary>
+      <returns>コントロールのコンストラクターでパラメーターとして使用される名前と値のペア。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.Equals(System.Object)">
+      <summary>この属性インスタンスが、指定したオブジェクトに等しいかどうかを示す値を返します。</summary>
+      <returns>渡されたオブジェクトがこの属性インスタンスに等しい場合は True。それ以外の場合は false。</returns>
+      <param name="obj">この属性インスタンスと比較するオブジェクト。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.FilterUIHint">
+      <summary>フィルター処理用のコントロールの名前を取得します。</summary>
+      <returns>フィルター処理用のコントロールの名前。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.GetHashCode">
+      <summary>この属性インスタンスのハッシュ コードを返します。</summary>
+      <returns>この属性インスタンスのハッシュ コード。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.PresentationLayer">
+      <summary>このコントロールをサポートするプレゼンテーション層の名前を取得します。</summary>
+      <returns>このコントロールをサポートするプレゼンテーション層の名前。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.IValidatableObject">
+      <summary>オブジェクトを無効にする方法を提供します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>指定されたオブジェクトが有効かどうかを判断します。</summary>
+      <returns>失敗した検証の情報を保持するコレクション。</returns>
+      <param name="validationContext">検証コンテキスト。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.KeyAttribute">
+      <summary>エンティティを一意に識別する 1 つ以上のプロパティを示します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.KeyAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.KeyAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute">
+      <summary>プロパティで許容される配列または文字列データの最大長を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor(System.Int32)">
+      <summary>
+        <paramref name="length" /> パラメーターに基づいて、<see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="length">配列または文字列データの許容される最大長。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>指定したエラー メッセージに書式を適用します。</summary>
+      <returns>許容される最大長を説明する、ローカライズされた文字列。</returns>
+      <param name="name">書式設定された文字列に含める名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.IsValid(System.Object)">
+      <summary>指定したオブジェクトが有効かどうかを判断します。</summary>
+      <returns>値が null の場合、または指定された最大長以下の場合は true、それ以外の場合は false。</returns>
+      <param name="value">検証対象のオブジェクト。</param>
+      <exception cref="Sytem.InvalidOperationException">長さが 0 または -1 未満です。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MaxLengthAttribute.Length">
+      <summary>配列または文字列データの許容される最大長を取得します。</summary>
+      <returns>配列または文字列データの許容される最大長。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MinLengthAttribute">
+      <summary>プロパティで許容される配列または文字列データの最小長を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.#ctor(System.Int32)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.MinLengthAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="length">配列または文字列データの長さ。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>指定したエラー メッセージに書式を適用します。</summary>
+      <returns>許容される最小長を説明する、ローカライズされた文字列。</returns>
+      <param name="name">書式設定された文字列に含める名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.IsValid(System.Object)">
+      <summary>指定したオブジェクトが有効かどうかを判断します。</summary>
+      <returns>指定したオブジェクトが有効である場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象のオブジェクト。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MinLengthAttribute.Length">
+      <summary>配列または文字列データに許容される最小長を取得または設定します。</summary>
+      <returns>配列または文字列データの許容される最小長。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.PhoneAttribute">
+      <summary>データ フィールドの値が電話番号の正規表現を使用した適切な電話番号であることを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.PhoneAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.IsValid(System.Object)">
+      <summary>指定した電話番号が有効な電話番号形式かどうかを判断します。</summary>
+      <returns>電話番号が有効である場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象の値。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RangeAttribute">
+      <summary>データ フィールドの値の数値範囲制約を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,System.Double)">
+      <summary>指定した最小値と最大値を使用して、<see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="minimum">データ フィールド値の最小許容値を指定します。</param>
+      <param name="maximum">データ フィールド値の最大許容値を指定します。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Int32,System.Int32)">
+      <summary>指定した最小値と最大値を使用して、<see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="minimum">データ フィールド値の最小許容値を指定します。</param>
+      <param name="maximum">データ フィールド値の最大許容値を指定します。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Type,System.String,System.String)">
+      <summary>指定した最小値と最大値および特定の型を使用して、<see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="type">テストするオブジェクトの型を指定します。</param>
+      <param name="minimum">データ フィールド値の最小許容値を指定します。</param>
+      <param name="maximum">データ フィールド値の最大許容値を指定します。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="type" /> は null なので、</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(System.String)">
+      <summary>範囲の検証が失敗したときに表示するエラー メッセージの書式を設定します。</summary>
+      <returns>書式設定されたエラー メッセージ。</returns>
+      <param name="name">検証失敗の原因になったフィールドの名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)">
+      <summary>データ フィールドの値が指定範囲に入っていることをチェックします。</summary>
+      <returns>指定した値が範囲に入っている場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証するデータ フィールド値。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">データ フィールド値が許容範囲外でした。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Maximum">
+      <summary>最大許容フィールド値を取得します。</summary>
+      <returns>データ フィールドの最大許容値。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Minimum">
+      <summary>最小許容フィールド値を取得します。</summary>
+      <returns>データ フィールドの最小許容値。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.OperandType">
+      <summary>値を検証する必要があるデータ フィールドの型を取得します。</summary>
+      <returns>値を検証する必要があるデータ フィールドの型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute">
+      <summary>ASP.NET Dynamic Data のデータ フィールド値が指定した正規表現に一致しなければならないことを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="pattern">データ フィールド値の検証に使用する正規表現。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="pattern" /> は null なので、</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.FormatErrorMessage(System.String)">
+      <summary>正規表現検証が失敗した場合に表示するエラー メッセージを書式設定します。</summary>
+      <returns>書式設定されたエラー メッセージ。</returns>
+      <param name="name">検証失敗の原因になったフィールドの名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.IsValid(System.Object)">
+      <summary>ユーザーが入力した値が正規表現パターンと一致するかどうかをチェックします。</summary>
+      <returns>検証が成功した場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証するデータ フィールド値。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">データ フィールド値が正規表現パターンと一致しませんでした。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.Pattern">
+      <summary>正規表現パターンを取得します。</summary>
+      <returns>一致しているか検証するパターン。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RequiredAttribute">
+      <summary>データ フィールド値が必須であることを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RequiredAttribute.AllowEmptyStrings">
+      <summary>空の文字列を使用できるかどうかを示す値を取得または設定します。</summary>
+      <returns>空の文字列を使用できる場合は true。それ以外の場合は false。既定値は false です。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.IsValid(System.Object)">
+      <summary>必須データ フィールドの値が空でないことをチェックします。</summary>
+      <returns>検証が成功した場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証するデータ フィールド値。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">データ フィールド値が null でした。</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute">
+      <summary>クラスまたはデータ列がスキャフォールディングを使用するかどうかを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.#ctor(System.Boolean)">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold" /> プロパティを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="scaffold">スキャフォールディングを有効にするかどうかを指定する値。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold">
+      <summary>スキャフォールディングが有効かどうかを指定する値を取得または設定します。</summary>
+      <returns>スキャフォールディングが有効な場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.StringLengthAttribute">
+      <summary>データ フィールドの最小と最大の文字長を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.#ctor(System.Int32)">
+      <summary>指定した最大長を使用して、<see cref="T:System.ComponentModel.DataAnnotations.StringLengthAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="maximumLength">文字列の最大長。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>指定したエラー メッセージに書式を適用します。</summary>
+      <returns>書式設定されたエラー メッセージ。</returns>
+      <param name="name">検証失敗の原因になったフィールドの名前。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="maximumLength" /> が負の値です。または<paramref name="maximumLength" /> が <paramref name="minimumLength" /> より小さい。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.IsValid(System.Object)">
+      <summary>指定したオブジェクトが有効かどうかを判断します。</summary>
+      <returns>指定したオブジェクトが有効である場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象のオブジェクト。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="maximumLength" /> が負の値です。または<paramref name="maximumLength" /> が <see cref="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength" /> より小さい。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MaximumLength">
+      <summary>文字列の最大長を取得または設定します。</summary>
+      <returns>文字列の最大長。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength">
+      <summary>文字列の最小長を取得または設定します。</summary>
+      <returns>文字列の最小長。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.TimestampAttribute">
+      <summary>列のデータ型を行バージョンとして指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.TimestampAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.TimestampAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UIHintAttribute">
+      <summary>動的データでデータ フィールドの表示に使用されるテンプレート コントロールまたはユーザー コントロールを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String)">
+      <summary>指定されたユーザー コントロールを使用して、<see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="uiHint">データ フィールドの表示に使用するユーザー コントロール。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String)">
+      <summary>ユーザー コントロールおよびプレゼンテーション層を指定して、<see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="uiHint">データ フィールドの表示に使用するユーザー コントロール (フィールド テンプレート)。</param>
+      <param name="presentationLayer">このクラスを使用するプレゼンテーション層。"HTML"、"Silverlight"、"WPF"、"WinForms" のいずれかに設定できます。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>ユーザー コントロール、プレゼンテーション層、およびコントロールのパラメーターを指定して、<see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="uiHint">データ フィールドの表示に使用するユーザー コントロール (フィールド テンプレート)。</param>
+      <param name="presentationLayer">このクラスを使用するプレゼンテーション層。"HTML"、"Silverlight"、"WPF"、"WinForms" のいずれかに設定できます。</param>
+      <param name="controlParameters">データ ソースからの値の取得に使用するオブジェクト。</param>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> は null であるか、または制約キーです。または<see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> の値が文字列ではありません。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters">
+      <summary>データ ソースからの値の取得に使用する <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> オブジェクトを取得または設定します。</summary>
+      <returns>キーと値のペアのコレクションです。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.Equals(System.Object)">
+      <summary>指定したオブジェクトとこのインスタンスが等しいかどうかを示す値を取得します。</summary>
+      <returns>指定したオブジェクトがこのインスタンスと等しい場合は true。それ以外の場合は false。</returns>
+      <param name="obj">このインスタンスと比較するオブジェクト、または null 参照。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.GetHashCode">
+      <summary>属性の現在のインスタンスのハッシュ コードを取得します。</summary>
+      <returns>属性インスタンスのハッシュ コード。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.PresentationLayer">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> クラスを使用するプレゼンテーション層を取得または設定します。</summary>
+      <returns>このクラスで使用されるプレゼンテーション層。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.UIHint">
+      <summary>データ フィールドの表示に使用するフィールド テンプレートの名前を取得または設定します。</summary>
+      <returns>データ フィールドを表示するフィールド テンプレートの名前。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UrlAttribute">
+      <summary>URL 検証規則を提供します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.UrlAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.IsValid(System.Object)">
+      <summary>指定した URL の形式を検証します。</summary>
+      <returns>URL 形式が有効であるか null の場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象の URL。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationAttribute">
+      <summary>すべての検証属性の基本クラスとして機能します。</summary>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">ローカライズされたエラー メッセージの <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> および <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName" /> プロパティが、ローカライズされていない <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage" /> プロパティ エラー メッセージが設定されるのと同時に設定されます。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.Func{System.String})">
+      <summary>検証リソースへのアクセスを可能にする関数を使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="errorMessageAccessor">検証リソースへのアクセスを可能にする関数。</param>
+      <exception cref="T:System:ArgumentNullException">
+        <paramref name="errorMessageAccessor" /> は null なので、</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.String)">
+      <summary>検証コントロールに関連付けるエラー メッセージを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="errorMessage">検証コントロールに関連付けるエラー メッセージ。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage">
+      <summary>検証が失敗した場合に検証コントロールに関連付けるエラー メッセージを取得または設定します。</summary>
+      <returns>検証コントロールに関連付けられるエラー メッセージ。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName">
+      <summary>検証が失敗した場合に <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> プロパティ値の検索に使用するエラー メッセージ リソース名を取得または設定します。</summary>
+      <returns>検証コントロールに関連付けられるエラー メッセージ リソース。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType">
+      <summary>検証が失敗した場合にエラー メッセージの検索に使用するリソースの種類を取得または設定します。</summary>
+      <returns>検証コントロールに関連付けられるエラー メッセージの型。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString">
+      <summary>ローカライズされた検証エラー メッセージを取得します。</summary>
+      <returns>ローカライズされた検証エラー メッセージ。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>エラーが発生したデータ フィールドに基づいて、エラー メッセージに書式を適用します。</summary>
+      <returns>書式設定されたエラー メッセージのインスタンス。</returns>
+      <param name="name">書式設定されたメッセージに含める名前。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.GetValidationResult(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>現在の検証属性に対して、指定した値が有効かどうかを確認します。</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> クラスのインスタンス。</returns>
+      <param name="value">検証対象の値。</param>
+      <param name="validationContext">検証操作に関するコンテキスト情報。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)">
+      <summary>指定したオブジェクトの値が有効かどうかを判断します。</summary>
+      <returns>指定された値が有効な場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証するオブジェクトの値。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>現在の検証属性に対して、指定した値を検証します。</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> クラスのインスタンス。</returns>
+      <param name="value">検証対象の値。</param>
+      <param name="validationContext">検証操作に関するコンテキスト情報。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.RequiresValidationContext">
+      <summary>属性で検証コンテキストが必要かどうかを示す値を取得します。</summary>
+      <returns>属性に検証コンテキストが必要な場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>指定されたオブジェクトを検証します。</summary>
+      <param name="value">検証対象のオブジェクト。</param>
+      <param name="validationContext">検証チェックの実行コンテキストを記述する <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> オブジェクト。このパラメーターには、null は指定できません。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">検証に失敗しました。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.String)">
+      <summary>指定されたオブジェクトを検証します。</summary>
+      <param name="value">検証するオブジェクトの値。</param>
+      <param name="name">エラー メッセージに含める名前。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> が無効です。</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationContext">
+      <summary>検証チェックの実行コンテキストを記述します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object)">
+      <summary>オブジェクト インスタンスを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> クラスの新しいインスタンスを初期化します</summary>
+      <param name="instance">検証するオブジェクト インスタンス。null にすることはできません。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>オブジェクト インスタンスを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> クラスの新しいインスタンスを初期化します</summary>
+      <param name="instance">検証するオブジェクト インスタンス。null にすることはできません</param>
+      <param name="items">コンシューマーに提供するオプションの一連のキーと値のペア。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.IServiceProvider,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>サービス プロバイダーとサービス コンシューマーのディクショナリを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="instance">検証対象のオブジェクト。このパラメーターは必須です。</param>
+      <param name="serviceProvider">
+        <see cref="T:System.IServiceProvider" /> インターフェイスを実装するオブジェクト。このパラメーターは省略できます。</param>
+      <param name="items">サービス コンシューマーに使用できるようにするキーと値のペアのディクショナリ。このパラメーターは省略できます。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.DisplayName">
+      <summary>検証するメンバーの名前を取得または設定します。</summary>
+      <returns>検証するメンバーの名前。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.GetService(System.Type)">
+      <summary>カスタム検証を提供するサービスを返します。</summary>
+      <returns>サービスのインスタンス。サービスを利用できない場合は null。</returns>
+      <param name="serviceType">検証に使用されるサービスの型。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.InitializeServiceProvider(System.Func{System.Type,System.Object})">
+      <summary>GetService が呼び出されたときに、型によってサービス インスタンスを返すことができるサービス プロバイダーを使用して <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> を初期化します。</summary>
+      <param name="serviceProvider">サービス プロバイダー。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.Items">
+      <summary>このコンテキストに関連付けられているキーと値のペアのディクショナリを取得します。</summary>
+      <returns>このコンテキストのキーと値のペアのディクショナリ。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.MemberName">
+      <summary>検証するメンバーの名前を取得または設定します。</summary>
+      <returns>検証するメンバーの名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance">
+      <summary>検証するオブジェクトを取得します。</summary>
+      <returns>検証対象のオブジェクト。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectType">
+      <summary>検証するオブジェクトの型を取得します。</summary>
+      <returns>検証するオブジェクトの型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationException">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> クラスの使用時にデータ フィールドの検証で発生する例外を表します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor">
+      <summary>システムによって生成されたエラー メッセージを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationResult,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>検証結果、検証属性、および現在の例外の値を使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="validationResult">検証結果のリスト。</param>
+      <param name="validatingAttribute">現在の例外を発生させた属性。</param>
+      <param name="value">属性で検証エラーが発生する原因となったオブジェクトの値。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String)">
+      <summary>指定したエラー メッセージを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="message">エラーを説明する指定メッセージ。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>指定したエラー メッセージ、検証属性、および現在の例外の値を使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="errorMessage">エラーを説明するメッセージ。</param>
+      <param name="validatingAttribute">現在の例外を発生させた属性。</param>
+      <param name="value">属性で検証エラーが発生する原因となったオブジェクトの値。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.Exception)">
+      <summary>指定したエラー メッセージと内部例外インスタンスのコレクションを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="message">エラー メッセージ。</param>
+      <param name="innerException">検証例外のコレクション。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationAttribute">
+      <summary>この例外を発生させた <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> クラスのインスタンスを取得します。</summary>
+      <returns>この例外を発生させた検証属性型のインスタンス。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult">
+      <summary>検証エラーを示す <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> インスタンスを取得します。</summary>
+      <returns>検証エラーを示す <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> インスタンス。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.Value">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> クラスでこの例外が発生する原因となるオブジェクトの値を取得します。</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> クラスで検証エラーが発生する原因となったオブジェクトの値。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationResult">
+      <summary>検証要求の結果のコンテナーを表します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.ComponentModel.DataAnnotations.ValidationResult)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> オブジェクトを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="validationResult">検証結果のオブジェクト。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String)">
+      <summary>エラー メッセージを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="errorMessage">エラー メッセージ。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>エラー メッセージと、検証エラーを含んでいるメンバーのリストを使用して、<see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="errorMessage">エラー メッセージ。</param>
+      <param name="memberNames">検証エラーを含んでいるメンバー名のリスト。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.ErrorMessage">
+      <summary>検証のエラー メッセージを取得します。</summary>
+      <returns>検証のエラー メッセージ。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.MemberNames">
+      <summary>検証エラーが存在するフィールドを示すメンバー名のコレクションを取得します。</summary>
+      <returns>検証エラーが存在するフィールドを示すメンバー名のコレクション。</returns>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.ValidationResult.Success">
+      <summary>検証の成否を表します (検証が成功した場合は true、それ以外の場合は false)。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.ToString">
+      <summary>現在の検証結果の文字列形式を返します。</summary>
+      <returns>現在の検証結果。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Validator">
+      <summary>オブジェクト、プロパティ、およびメソッドに関連付けられている <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> に含めることで、これらを検証するために使用できるヘルパー クラスを定義します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>検証コンテキストおよび検証結果のコレクションを使用して、指定されたオブジェクトが有効かどうかを判断します。</summary>
+      <returns>オブジェクトが有効な場合は true。それ以外の場合は false。</returns>
+      <param name="instance">検証対象のオブジェクト。</param>
+      <param name="validationContext">検証対象のオブジェクトを説明するコンテキスト。</param>
+      <param name="validationResults">失敗した各検証を保持するコレクション。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> は null なので、</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Boolean)">
+      <summary>検証コンテキスト、検証結果のコレクション、およびすべてのプロパティを検証するかどうかを指定する値を使用して、指定されたオブジェクトが有効かどうかを判断します。</summary>
+      <returns>オブジェクトが有効な場合は true。それ以外の場合は false。</returns>
+      <param name="instance">検証対象のオブジェクト。</param>
+      <param name="validationContext">検証対象のオブジェクトを説明するコンテキスト。</param>
+      <param name="validationResults">失敗した各検証を保持するコレクション。</param>
+      <param name="validateAllProperties">すべてのプロパティを検証するには true、必要な属性のみを検証するには false。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> は null なので、</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>プロパティを検証します。</summary>
+      <returns>プロパティが有効な場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象の値。</param>
+      <param name="validationContext">検証対象のプロパティを説明するコンテキスト。</param>
+      <param name="validationResults">失敗した各検証を保持するコレクション。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> は、このプロパティに代入できません。または<paramref name="value " />が null です。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>指定された属性を使用して、指定された値が有効かどうかを示す値を返します。</summary>
+      <returns>オブジェクトが有効な場合は true。それ以外の場合は false。</returns>
+      <param name="value">検証対象の値。</param>
+      <param name="validationContext">検証対象のオブジェクトを説明するコンテキスト。</param>
+      <param name="validationResults">失敗した検証を保持するコレクション。</param>
+      <param name="validationAttributes">検証属性。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>検証コンテキストを使用して、指定されたオブジェクトが有効かどうかを判断します。</summary>
+      <param name="instance">検証対象のオブジェクト。</param>
+      <param name="validationContext">検証対象のオブジェクトを説明するコンテキスト。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">オブジェクトが無効です。</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> は null なので、</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean)">
+      <summary>検証コンテキスト、およびすべてのプロパティを検証するかどうかを指定する値を使用して、指定されたオブジェクトが有効かどうかを判断します。</summary>
+      <param name="instance">検証対象のオブジェクト。</param>
+      <param name="validationContext">検証対象のオブジェクトを説明するコンテキスト。</param>
+      <param name="validateAllProperties">すべてのプロパティを検証する場合は true。それ以外の場合は false。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="instance" /> が無効です。</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> は null なので、</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>プロパティを検証します。</summary>
+      <param name="value">検証対象の値。</param>
+      <param name="validationContext">検証対象のプロパティを説明するコンテキスト。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> は、このプロパティに代入できません。</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> パラメーターが有効ではありません。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>指定された属性を検証します。</summary>
+      <param name="value">検証対象の値。</param>
+      <param name="validationContext">検証対象のオブジェクトを説明するコンテキスト。</param>
+      <param name="validationAttributes">検証属性。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="validationContext" /> パラメーターが null です。</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> パラメーターは、<paramref name="validationAttributes" /> パラメーターで検証しません。</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute">
+      <summary>プロパティに対応するデータベース列を表します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="name">プロパティのマップ先の列の名前。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Name">
+      <summary>プロパティに対応する列の名前を取得します。</summary>
+      <returns>プロパティのマップ先の列の名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Order">
+      <summary>取得または設定は、列のインデックス番号が 0 から始まる順序プロパティにマップされます。</summary>
+      <returns>列の順序。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.TypeName">
+      <summary>取得または設定は列のデータベース プロバイダー固有のデータ型プロパティにマップされます。</summary>
+      <returns>プロパティのマップ先の列が持つデータベース プロバイダー固有のデータ型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute">
+      <summary>クラスが複合型であることを示します。複合型はエンティティ型の非スカラー プロパティで、これによってスカラー プロパティをエンティティ内で整理できます。複合型にはキーがないため、Entity Framework で親オブジェクトから分離して管理することはできません。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute">
+      <summary>データベースでのプロパティの値の生成方法を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.#ctor(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="databaseGeneratedOption">データベースを生成するオプションです。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.DatabaseGeneratedOption">
+      <summary>パターンをデータベースのプロパティの値を生成するために使用される取得または設定します。</summary>
+      <returns>データベースを生成するオプションです。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption">
+      <summary>データベースのプロパティの値を生成するために使用するパターンを表します。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed">
+      <summary>行が挿入または更新されたときに、データベースで値が生成されます。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity">
+      <summary>行が挿入されたときに、データベースで値が生成されます。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None">
+      <summary>データベースで値が生成されません。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute">
+      <summary>リレーションシップで外部キーとして使用されるプロパティを示します。外部キー プロパティに注釈を配置して関連付けられたナビゲーション プロパティ名を指定したり、ナビゲーション プロパティに注釈を配置して関連付けられた外部キー名を指定したりすることもできます。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="name">外部キーのプロパティに ForeigKey 属性を追加する場合は、対応するナビゲーション プロパティの名前を指定する必要があります。ナビゲーション プロパティに ForeigKey 属性を追加する場合は、対応する外部キーの名前を指定する必要があります。1 つのナビゲーション プロパティに複数の外部キーが存在する場合は、コンマを使用して外部キー名の一覧を区切ります。詳細については、「Code First データの注釈」を参照してください。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.Name">
+      <summary>外部キーのプロパティに ForeigKey 属性を追加する場合は、対応するナビゲーション プロパティの名前を指定する必要があります。ナビゲーション プロパティに ForeigKey 属性を追加する場合は、対応する外部キーの名前を指定する必要があります。1 つのナビゲーション プロパティに複数の外部キーが存在する場合は、コンマを使用して外部キー名の一覧を区切ります。詳細については、「Code First データの注釈」を参照してください。</summary>
+      <returns>関連付けられたナビゲーション プロパティまたは関連付けられた外部キーのプロパティの名前。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute">
+      <summary>同じリレーションシップのもう一方の End を表すナビゲーション プロパティの逆を指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.#ctor(System.String)">
+      <summary>指定したプロパティを使用して、<see cref="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="property">同じリレーションシップのもう一方の End を表すナビゲーション プロパティ。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.Property">
+      <summary>同じリレーションシップの一方の端を表すナビゲーション プロパティを取得します。</summary>
+      <returns>属性のプロパティ。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute">
+      <summary>プロパティまたはクラスがデータベース マッピングから除外されることを示します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute">
+      <summary>クラスのマップ先のデータベース テーブルを指定します。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.TableAttribute.#ctor(System.String)">
+      <summary>指定したテーブルの名前名を使用して、<see cref="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="name">クラスのマップ先のテーブルの名前。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Name">
+      <summary>クラスのマップ先のテーブルの名前を取得します。</summary>
+      <returns>クラスのマップ先のテーブルの名前。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Schema">
+      <summary>クラスのマップ先のテーブルのスキーマを取得または設定します。</summary>
+      <returns>クラスのマップ先のテーブルのスキーマ。</returns>
+    </member>
+  </members>
+</doc>

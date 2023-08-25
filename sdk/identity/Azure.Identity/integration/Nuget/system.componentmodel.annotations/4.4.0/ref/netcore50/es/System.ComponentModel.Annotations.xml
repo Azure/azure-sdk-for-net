@@ -1,0 +1,1039 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.ComponentModel.Annotations</name>
+  </assembly>
+  <members>
+    <member name="T:System.ComponentModel.DataAnnotations.AssociationAttribute">
+      <summary>Especifica que un miembro de entidad representa una relación de datos, como una relación de clave externa.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.AssociationAttribute.#ctor(System.String,System.String,System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.AssociationAttribute" />.</summary>
+      <param name="name">Nombre de la asociación. </param>
+      <param name="thisKey">Una lista separada por comas de los nombres de propiedad de los valores de clave en el lado <paramref name="thisKey" /> de la asociación.</param>
+      <param name="otherKey">Una lista separada por comas de los nombres de propiedad de los valores de clave en el lado <paramref name="otherKey" /> de la asociación.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.IsForeignKey">
+      <summary>Obtiene o establece un valor que indica si el miembro de asociación representa una clave externa.</summary>
+      <returns>true si la asociación representa una clave externa; de lo contrario, false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.Name">
+      <summary>Obtiene el nombre de la asociación.</summary>
+      <returns>Nombre de la asociación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey">
+      <summary>Obtiene los nombres de propiedad de los valores de clave en el lado OtherKey de la asociación.</summary>
+      <returns>Una lista separada por comas de los nombres de propiedad que representan los valores de clave en el lado OtherKey de la asociación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKeyMembers">
+      <summary>Obtiene una colección de miembros de clave individuales que se especifican en la propiedad <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" />.</summary>
+      <returns>Una colección de miembros de clave individuales que se especifican en la propiedad <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey">
+      <summary>Obtiene los nombres de propiedad de los valores de clave en el lado ThisKey de la asociación.</summary>
+      <returns>Una lista separada por comas de los nombres de propiedad que representan los valores de clave en el lado ThisKey de la asociación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKeyMembers">
+      <summary>Obtiene una colección de miembros de clave individuales que se especifican en la propiedad <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" />.</summary>
+      <returns>Una colección de miembros de clave individuales que se especifican en la propiedad <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" />.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CompareAttribute">
+      <summary>Proporciona un atributo que compara dos propiedades.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.CompareAttribute" />.</summary>
+      <param name="otherProperty">Propiedad que se va a comparar con la propiedad actual.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.FormatErrorMessage(System.String)">
+      <summary>Aplica formato a un mensaje de error según el campo de datos donde se produjo el error.</summary>
+      <returns>Mensaje de error con formato.</returns>
+      <param name="name">Nombre del campo que produjo el error de validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Determina si un objeto especificado es válido.</summary>
+      <returns>true si <paramref name="value" /> es válido; en caso contrario, false.</returns>
+      <param name="value">Objeto que se va a validar.</param>
+      <param name="validationContext">Objeto que contiene información sobre la solicitud de validación.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherProperty">
+      <summary>Obtiene la propiedad que se va a comparar con la propiedad actual.</summary>
+      <returns>La otra propiedad.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherPropertyDisplayName">
+      <summary>Obtiene el nombre para mostrar de la otra propiedad.</summary>
+      <returns>Nombre para mostrar de la otra propiedad.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.RequiresValidationContext">
+      <summary>Obtiene un valor que indica si el atributo requiere contexto de validación.</summary>
+      <returns>true si el atributo necesita contexto de validación; si no, false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute">
+      <summary>Especifica que una propiedad participe en las comprobaciones de simultaneidad optimista.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CreditCardAttribute">
+      <summary>Especifica que un valor de campo de datos es un número de tarjeta de crédito.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.CreditCardAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.IsValid(System.Object)">
+      <summary>Determina si el número de tarjeta de crédito especificado es válido. </summary>
+      <returns>true si el número de tarjeta de crédito es válido; si no, false.</returns>
+      <param name="value">Valor que se va a validar.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute">
+      <summary>Especifica un método de validación personalizado que se usa validar una propiedad o instancia de clase.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.#ctor(System.Type,System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute" />.</summary>
+      <param name="validatorType">Tipo que contiene el método que realiza la validación personalizada.</param>
+      <param name="method">Método que realiza la validación personalizada.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>Da formato a un mensaje de error de validación.</summary>
+      <returns>Instancia del mensaje de error con formato.</returns>
+      <param name="name">Nombre que se va a incluir en el mensaje con formato.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.Method">
+      <summary>Obtiene el método de validación.</summary>
+      <returns>Nombre del método de validación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.ValidatorType">
+      <summary>Obtiene el tipo que realiza la validación personalizada.</summary>
+      <returns>Tipo que realiza la validación personalizada.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataType">
+      <summary>Representa una enumeración de los tipos de datos asociados a campos de datos y parámetros. </summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.CreditCard">
+      <summary>Representa un número de tarjeta de crédito.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Currency">
+      <summary>Representa un valor de divisa.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Custom">
+      <summary>Representa un tipo de datos personalizado.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Date">
+      <summary>Representa un valor de fecha.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.DateTime">
+      <summary>Representa un instante de tiempo, expresado en forma de fecha y hora del día.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Duration">
+      <summary>Representa una cantidad de tiempo continua durante la que existe un objeto.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.EmailAddress">
+      <summary>Representa una dirección de correo electrónico.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Html">
+      <summary>Representa un archivo HTML.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.ImageUrl">
+      <summary>Representa una URL en una imagen.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.MultilineText">
+      <summary>Representa texto multilínea.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Password">
+      <summary>Represente un valor de contraseña.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PhoneNumber">
+      <summary>Representa un valor de número de teléfono.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PostalCode">
+      <summary>Representa un código postal.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Text">
+      <summary>Representa texto que se muestra.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Time">
+      <summary>Representa un valor de hora.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Upload">
+      <summary>Representa el tipo de datos de carga de archivos.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Url">
+      <summary>Representa un valor de dirección URL.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataTypeAttribute">
+      <summary>Especifica el nombre de un tipo adicional que debe asociarse a un campo de datos.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.ComponentModel.DataAnnotations.DataType)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> con el nombre de tipo especificado.</summary>
+      <param name="dataType">Nombre del tipo que va a asociarse al campo de datos.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> con el nombre de plantilla de campo especificado.</summary>
+      <param name="customDataType">Nombre de la plantilla de campo personalizada que va a asociarse al campo de datos.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="customDataType" /> es null o una cadena vacía (""). </exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.CustomDataType">
+      <summary>Obtiene el nombre de la plantilla de campo personalizada asociada al campo de datos.</summary>
+      <returns>Nombre de la plantilla de campo personalizada asociada al campo de datos.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DataType">
+      <summary>Obtiene el tipo asociado al campo de datos.</summary>
+      <returns>Uno de los valores de <see cref="T:System.ComponentModel.DataAnnotations.DataType" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DisplayFormat">
+      <summary>Obtiene el formato de presentación de un campo de datos.</summary>
+      <returns>Formato de presentación del campo de datos.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.GetDataTypeName">
+      <summary>Devuelve el nombre del tipo asociado al campo de datos.</summary>
+      <returns>Nombre del tipo asociado al campo de datos.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.IsValid(System.Object)">
+      <summary>Comprueba si el valor del campo de datos es válido.</summary>
+      <returns>Es siempre true.</returns>
+      <param name="value">Valor del campo de datos que va a validarse.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayAttribute">
+      <summary>Proporciona un atributo de uso general que permite especificar las cadenas traducibles de los tipos y miembros de las clases parciales de entidad.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.DisplayAttribute" />.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField">
+      <summary>Obtiene o establece un valor que indica si la interfaz de usuario se debe generar automáticamente para mostrar este campo.</summary>
+      <returns>true si la interfaz de usuario se debe generar automáticamente para mostrar este campo; de lo contrario, false.</returns>
+      <exception cref="T:System.InvalidOperationException">Se intentó obtener el valor de propiedad antes de establecerse.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter">
+      <summary>Obtiene o establece un valor que indica si la UI de filtrado se muestra automáticamente para este campo. </summary>
+      <returns>true si la interfaz de usuario se debe generar automáticamente para mostrar el filtrado de este campo; de lo contrario, false.</returns>
+      <exception cref="T:System.InvalidOperationException">Se intentó obtener el valor de propiedad antes de establecerse.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description">
+      <summary>Obtiene o establece un valor que se usa para mostrar una descripción en la interfaz de usuario.</summary>
+      <returns>Valor que se usa para mostrar una descripción en la interfaz de usuario.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateField">
+      <summary>Devuelve el valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" />.</summary>
+      <returns>Valor de <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" /> si se ha inicializado la propiedad; de lo contrario, es null.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateFilter">
+      <summary>Devuelve un valor que indica si la interfaz de usuario se debe generar automáticamente para mostrar el filtrado de este campo. </summary>
+      <returns>Valor de <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter" /> si se ha inicializado la propiedad; de lo contrario, es null.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetDescription">
+      <summary>Devuelve el valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />.</summary>
+      <returns>Descripción traducida si se ha especificado <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> y la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> representa una clave de recurso; de lo contrario, el valor no traducido de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />.</returns>
+      <exception cref="T:System.InvalidOperationException">Se han inicializado las propiedades <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> y <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />, pero no se pudo encontrar una propiedad estática pública con un nombre que coincida con el valor <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetGroupName">
+      <summary>Devuelve el valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" />.</summary>
+      <returns>Un valor que se usará para agrupar los campos en la interfaz de usuario, si se ha inicializado <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" />; de lo contrario, null.Si se ha especificado la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> y la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> representa una clave de recurso, se devuelve una cadena traducida; de lo contrario, se devuelve una cadena no traducida.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetName">
+      <summary>Devuelve un valor que se usa para mostrar campos en la interfaz de usuario.</summary>
+      <returns>Cadena traducida para la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> si se ha especificado la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> y la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> representa una clave de recurso; de lo contrario, el valor no traducido de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />.</returns>
+      <exception cref="T:System.InvalidOperationException">Se han inicializado las propiedades <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> y <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, pero no se pudo encontrar una propiedad estática pública con un nombre que coincida con el valor <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetOrder">
+      <summary>Devuelve el valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" />.</summary>
+      <returns>Valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" /> si se ha establecido; de lo contrario, es null.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetPrompt">
+      <summary>Devuelve el valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />.</summary>
+      <returns>Obtiene la cadena traducida para la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> si se ha especificado la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> y la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> representa una clave de recurso; de lo contrario, el valor no traducido de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetShortName">
+      <summary>Devuelve el valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />.</summary>
+      <returns>Cadena traducida para la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> si se ha especificado la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> y la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> representa una clave de recurso; de lo contrario, el valor no traducido de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName">
+      <summary>Obtiene o establece un valor que se usa para agrupar campos en la interfaz de usuario.</summary>
+      <returns>Valor que se usa para agrupar campos en la interfaz de usuario.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name">
+      <summary>Obtiene o establece un valor que se usa para mostrarlo en la interfaz de usuario.</summary>
+      <returns>Un valor que se usa para mostrarlo en la interfaz de usuario.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order">
+      <summary>Obtiene o establece el peso del orden de la columna.</summary>
+      <returns>Peso del orden de la columna.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt">
+      <summary>Obtiene o establece un valor que se usará para establecer la marca de agua para los avisos en la interfaz de usuario.</summary>
+      <returns>Un valor que se usará para mostrar una marca de agua en la interfaz de usuario.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType">
+      <summary>Obtiene o establece el tipo que contiene los recursos para las propiedades <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> y <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />.</summary>
+      <returns>Tipo del recurso que contiene las propiedades <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> y <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName">
+      <summary>Obtiene o establece un valor que se usa para la etiqueta de columna de la cuadrícula.</summary>
+      <returns>Un valor para la etiqueta de columna de la cuadrícula.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute">
+      <summary>Especifica la columna que se muestra en la tabla a la que se hace referencia como una columna de clave externa.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> utilizando la columna especificada. </summary>
+      <param name="displayColumn">Nombre de la columna que va a utilizarse como columna de presentación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> utilizando las columnas de presentación y ordenación especificadas. </summary>
+      <param name="displayColumn">Nombre de la columna que va a utilizarse como columna de presentación.</param>
+      <param name="sortColumn">Nombre de la columna que va a utilizarse para la ordenación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String,System.Boolean)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> utilizando la columna de presentación y la columna de ordenación especificadas y el criterio de ordenación especificado. </summary>
+      <param name="displayColumn">Nombre de la columna que va a utilizarse como columna de presentación.</param>
+      <param name="sortColumn">Nombre de la columna que va a utilizarse para la ordenación.</param>
+      <param name="sortDescending">Es true para realizar la ordenación en sentido descendente; de lo contrario, es false.El valor predeterminado es false.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.DisplayColumn">
+      <summary>Obtiene el nombre de la columna que debe usarse como campo de presentación.</summary>
+      <returns>Nombre de la columna de presentación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortColumn">
+      <summary>Obtiene el nombre de la columna que va a utilizarse para la ordenación.</summary>
+      <returns>Nombre de la columna de ordenación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortDescending">
+      <summary>Obtiene un valor que indica si la ordenación debe realizarse en sentido ascendente o descendente.</summary>
+      <returns>Es true si la columna debe ordenarse en sentido descendente; de lo contrario, es false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute">
+      <summary>Especifica el modo en que los datos dinámicos de ASP.NET muestran y dan formato a los campos de datos.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute" />. </summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ApplyFormatInEditMode">
+      <summary>Obtiene o establece un valor que indica si la cadena de formato especificada por la propiedad <see cref="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString" /> se aplica al valor de campo cuando el campo de datos se encuentra en modo de edición.</summary>
+      <returns>Es true si la cadena de formato se aplica al valor de campo en modo de edición; de lo contrario, es false.El valor predeterminado es false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ConvertEmptyStringToNull">
+      <summary>Obtiene o establece un valor que indica si los valores de cadena vacía ("") se convierten automáticamente en valores null al actualizar el campo de datos en el origen de datos.</summary>
+      <returns>Es true si los valores de cadena vacía se convierten automáticamente en valores null; de lo contrario, es false.El valor predeterminado es true.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString">
+      <summary>Obtiene o establece el formato de presentación del valor de campo.</summary>
+      <returns>Cadena de formato que especifica el formato de presentación del valor del campo de datos.El valor predeterminado es una cadena vacía (""), lo que indica que no se aplica un formato especial al valor del campo.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.HtmlEncode">
+      <summary>Obtiene o establece un valor que indica si el campo debe estar codificado en HTML.</summary>
+      <returns>Es true si el campo debe estar codificado en HTML; de lo contrario, es false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.NullDisplayText">
+      <summary>Obtiene o establece el texto que se muestra en un campo cuando el valor del campo es null.</summary>
+      <returns>Texto que se muestra en un campo cuando el valor del campo es null.El valor predeterminado es una cadena vacía (""), lo que indica que no se ha establecido esta propiedad.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EditableAttribute">
+      <summary>Indica si un campo de datos es modificable.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EditableAttribute.#ctor(System.Boolean)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.EditableAttribute" />.</summary>
+      <param name="allowEdit">Es true para especificar que el campo es modificable; de lo contrario, es false.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowEdit">
+      <summary>Obtiene un valor que indica si un campo es modificable.</summary>
+      <returns>Es true si el campo es modificable; de lo contrario, es false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowInitialValue">
+      <summary>Obtiene o establece un valor que indica si está habilitado un valor inicial.</summary>
+      <returns>Es true si está habilitado un valor inicial; de lo contrario, es false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute">
+      <summary>Valida una dirección de correo electrónico.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid(System.Object)">
+      <summary>Determina si el valor especificado coincide con el modelo de una dirección de correo electrónico válida.</summary>
+      <returns>Es true si el valor especificado es válido o null; en caso contrario, es false.</returns>
+      <param name="value">Valor que se va a validar.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute">
+      <summary>Permite asignar una enumeración de .NET Framework a una columna de datos.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.#ctor(System.Type)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute" />.</summary>
+      <param name="enumType">Tipo de la enumeración.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.EnumType">
+      <summary>Obtiene o establece el tipo de enumeración.</summary>
+      <returns>Tipo de enumeración.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.IsValid(System.Object)">
+      <summary>Comprueba si el valor del campo de datos es válido.</summary>
+      <returns>true si el valor del campo de datos es válido; de lo contrario, false.</returns>
+      <param name="value">Valor del campo de datos que va a validarse.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute">
+      <summary>Valida las extensiones del nombre de archivo.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute" />.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.Extensions">
+      <summary>Obtiene o establece las extensiones de nombre de archivo.</summary>
+      <returns>Extensiones de nombre de archivo, o extensiones de archivo predeterminadas (“.png”, “.jpg”, “.jpeg” y “.gif”) si no se establece la propiedad.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.FormatErrorMessage(System.String)">
+      <summary>Aplica formato a un mensaje de error según el campo de datos donde se produjo el error.</summary>
+      <returns>Mensaje de error con formato.</returns>
+      <param name="name">Nombre del campo que produjo el error de validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.IsValid(System.Object)">
+      <summary>Comprueba que la extensión de nombre de archivo o extensiones especificada es válida.</summary>
+      <returns>Es true si la extensión del nombre del archivo es válida; de lo contrario, es false.</returns>
+      <param name="value">Lista delimitada por comas de extensiones de archivo válidas.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute">
+      <summary>Representa un atributo que se usa para especificar el comportamiento de filtrado de una columna.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> utilizando la sugerencia de filtro de la interfaz de usuario.</summary>
+      <param name="filterUIHint">Nombre del control que va a utilizarse para el filtrado.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> utilizando la sugerencia de filtro de la interfaz de usuario y el nombre de nivel de presentación.</summary>
+      <param name="filterUIHint">Nombre del control que va a utilizarse para el filtrado.</param>
+      <param name="presentationLayer">Nombre de la capa de presentación que admite este control.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> utilizando la sugerencia de filtro de la interfaz de usuario, el nombre de nivel de presentación y los parámetros del control.</summary>
+      <param name="filterUIHint">Nombre del control que va a utilizarse para el filtrado.</param>
+      <param name="presentationLayer">Nombre de la capa de presentación que admite este control.</param>
+      <param name="controlParameters">Lista de parámetros del control.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.ControlParameters">
+      <summary>Obtiene los pares nombre-valor que se usan como parámetros en el constructor del control.</summary>
+      <returns>Pares nombre-valor que se usan como parámetros en el constructor del control.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.Equals(System.Object)">
+      <summary>Devuelve un valor que indica si esta instancia de atributo es igual que el objeto especificado.</summary>
+      <returns>Es True si el objeto que se ha pasado es igual que esta instancia de atributo; de lo contrario, es false.</returns>
+      <param name="obj">Objeto que se va a comparar con esta instancia de atributo.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.FilterUIHint">
+      <summary>Obtiene el nombre del control que va a utilizarse para el filtrado.</summary>
+      <returns>Nombre del control que va a utilizarse para el filtrado.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.GetHashCode">
+      <summary>Devuelve el código hash de esta instancia de atributo.</summary>
+      <returns>Código hash de esta instancia de atributo.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.PresentationLayer">
+      <summary>Obtiene el nombre del nivel de presentación compatible con este control.</summary>
+      <returns>Nombre de la capa de presentación que admite este control.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.IValidatableObject">
+      <summary>Permite invalidar un objeto.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Determina si el objeto especificado es válido.</summary>
+      <returns>Colección que contiene información de validaciones con error.</returns>
+      <param name="validationContext">Contexto de validación.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.KeyAttribute">
+      <summary>Denota una o varias propiedades que identifican exclusivamente una entidad.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.KeyAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.KeyAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute">
+      <summary>Especifica la longitud máxima de los datos de matriz o de cadena permitida en una propiedad.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor(System.Int32)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" /> basándose en el parámetro <paramref name="length" />.</summary>
+      <param name="length">Longitud máxima permitida de los datos de matriz o de cadena.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>Aplica formato a un mensaje de error especificado.</summary>
+      <returns>Una cadena localizada que describe la longitud máxima aceptable.</returns>
+      <param name="name">Nombre que se va a incluir en la cadena con formato.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.IsValid(System.Object)">
+      <summary>Determina si un objeto especificado es válido.</summary>
+      <returns>true si el valor es NULL o menor o igual que la longitud máxima especificada; de lo contrario, false.</returns>
+      <param name="value">Objeto que se va a validar.</param>
+      <exception cref="Sytem.InvalidOperationException">La longitud es cero o menor que uno negativo.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MaxLengthAttribute.Length">
+      <summary>Obtiene la longitud máxima permitida de los datos de matriz o de cadena.</summary>
+      <returns>Longitud máxima permitida de los datos de matriz o de cadena.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MinLengthAttribute">
+      <summary>Especifica la longitud mínima de los datos de matriz o de cadena permitida en una propiedad.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.#ctor(System.Int32)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.MinLengthAttribute" />.</summary>
+      <param name="length">Longitud de los datos de la matriz o de la cadena.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>Aplica formato a un mensaje de error especificado.</summary>
+      <returns>Una cadena localizada que describe la longitud mínima aceptable.</returns>
+      <param name="name">Nombre que se va a incluir en la cadena con formato.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.IsValid(System.Object)">
+      <summary>Determina si un objeto especificado es válido.</summary>
+      <returns>Es true si el objeto especificado es válido; en caso contrario, es false.</returns>
+      <param name="value">Objeto que se va a validar.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MinLengthAttribute.Length">
+      <summary>Obtiene o establece la longitud mínima permitida de los datos de matriz o de cadena.</summary>
+      <returns>Longitud mínima permitida de los datos de matriz o de cadena.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.PhoneAttribute">
+      <summary>Especifica que un valor de campo de datos es un número de teléfono correcto utilizando una expresión regular para los números de teléfono.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.PhoneAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.IsValid(System.Object)">
+      <summary>Determina si el número de teléfono especificado está en un formato de número de teléfono válido. </summary>
+      <returns>true si el número de teléfono es válido; si no, false.</returns>
+      <param name="value">Valor que se va a validar.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RangeAttribute">
+      <summary>Especifica las restricciones de intervalo numérico para el valor de un campo de datos. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,System.Double)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> usando los valores mínimo y máximo especificados. </summary>
+      <param name="minimum">Especifica el valor mínimo permitido para el valor de campo de datos.</param>
+      <param name="maximum">Especifica el valor máximo permitido para el valor de campo de datos.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Int32,System.Int32)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> usando los valores mínimo y máximo especificados.</summary>
+      <param name="minimum">Especifica el valor mínimo permitido para el valor de campo de datos.</param>
+      <param name="maximum">Especifica el valor máximo permitido para el valor de campo de datos.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Type,System.String,System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> usando los valores mínimo y máximo especificados y el tipo especificado.</summary>
+      <param name="type">Especifica el tipo del objeto que va a probarse.</param>
+      <param name="minimum">Especifica el valor mínimo permitido para el valor de campo de datos.</param>
+      <param name="maximum">Especifica el valor máximo permitido para el valor de campo de datos.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="type" /> es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(System.String)">
+      <summary>Da formato al mensaje de error que se muestra cuando se produce un error de validación de intervalo.</summary>
+      <returns>Mensaje de error con formato.</returns>
+      <param name="name">Nombre del campo que produjo el error de validación. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)">
+      <summary>Comprueba si el valor del campo de datos se encuentra dentro del intervalo especificado.</summary>
+      <returns>Es true si el valor especificado se encuentra dentro del intervalo; en caso contrario, es false.</returns>
+      <param name="value">Valor del campo de datos que va a validarse.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">El valor del campo de datos se encontraba fuera del intervalo permitido.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Maximum">
+      <summary>Obtiene valor máximo permitido para el campo.</summary>
+      <returns>Valor máximo permitido para el campo de datos.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Minimum">
+      <summary>Obtiene el valor mínimo permitido para el campo.</summary>
+      <returns>Valor mínimo permitido para el campo de datos.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.OperandType">
+      <summary>Obtiene el tipo del campo de datos cuyo valor debe validarse.</summary>
+      <returns>Tipo del campo de datos cuyo valor debe validarse.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute">
+      <summary>Especifica que un valor de campo de datos en los datos dinámicos de ASP.NET debe coincidir con la expresión regular especificada.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute" />.</summary>
+      <param name="pattern">Expresión regular que se usa para validar el valor de campo de datos. </param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="pattern" /> es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.FormatErrorMessage(System.String)">
+      <summary>Da formato al mensaje de error que debe mostrarse si se produce un error de validación de la expresión regular.</summary>
+      <returns>Mensaje de error con formato.</returns>
+      <param name="name">Nombre del campo que produjo el error de validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.IsValid(System.Object)">
+      <summary>Comprueba si el valor escrito por el usuario coincide con el modelo de expresión regular. </summary>
+      <returns>true si la validación es correcta; en caso contrario, false.</returns>
+      <param name="value">Valor del campo de datos que va a validarse.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">El valor del campo de datos no coincidía con el modelo de expresión regular.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.Pattern">
+      <summary>Obtiene el modelo de expresión regular.</summary>
+      <returns>Modelo del que deben buscarse coincidencias.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RequiredAttribute">
+      <summary>Especifica que un campo de datos necesita un valor.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" />.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RequiredAttribute.AllowEmptyStrings">
+      <summary>Obtiene o establece un valor que indica si se permite una cadena vacía.</summary>
+      <returns>Es true si se permite una cadena vacía; de lo contrario, es false.El valor predeterminado es false.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.IsValid(System.Object)">
+      <summary>Comprueba si el valor del campo de datos necesario no está vacío.</summary>
+      <returns>true si la validación es correcta; en caso contrario, false.</returns>
+      <param name="value">Valor del campo de datos que va a validarse.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">El valor del campo de datos es null.</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute">
+      <summary>Especifica si una clase o columna de datos usa la técnica scaffolding.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.#ctor(System.Boolean)">
+      <summary>Inicializa una nueva instancia de <see cref="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute" /> mediante la propiedad <see cref="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold" />.</summary>
+      <param name="scaffold">Valor que especifica si está habilitada la técnica scaffolding.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold">
+      <summary>Obtiene o establece el valor que especifica si está habilitada la técnica scaffolding.</summary>
+      <returns>Es true si está habilitada la técnica scaffolding; en caso contrario, es false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.StringLengthAttribute">
+      <summary>Especifica la longitud mínima y máxima de caracteres que se permiten en un campo de datos.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.#ctor(System.Int32)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.StringLengthAttribute" /> usando una longitud máxima especificada.</summary>
+      <param name="maximumLength">Longitud máxima de una cadena. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>Aplica formato a un mensaje de error especificado.</summary>
+      <returns>Mensaje de error con formato.</returns>
+      <param name="name">Nombre del campo que produjo el error de validación.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">El valor de <paramref name="maximumLength" /> es negativo. O bien<paramref name="maximumLength" /> es menor que <paramref name="minimumLength" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.IsValid(System.Object)">
+      <summary>Determina si un objeto especificado es válido.</summary>
+      <returns>Es true si el objeto especificado es válido; en caso contrario, es false.</returns>
+      <param name="value">Objeto que se va a validar.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">El valor de <paramref name="maximumLength" /> es negativo.O bien<paramref name="maximumLength" /> es menor que <see cref="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength" />.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MaximumLength">
+      <summary>Obtiene o establece la longitud máxima de una cadena.</summary>
+      <returns>Longitud máxima de una cadena. </returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength">
+      <summary>Obtiene o establece la longitud mínima de una cadena.</summary>
+      <returns>Longitud mínima de una cadena.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.TimestampAttribute">
+      <summary>Indica el tipo de datos de la columna como una versión de fila.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.TimestampAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.TimestampAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UIHintAttribute">
+      <summary>Especifica la plantilla o el control de usuario que los datos dinámicos usan para mostrar un campo de datos. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> usando un control de usuario especificado. </summary>
+      <param name="uiHint">Control de usuario que debe usarse para mostrar el campo de datos. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String)">
+      <summary>Inicializa una instancia nueva de la clase <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> usando el control de usuario y la capa de presentación especificados. </summary>
+      <param name="uiHint">Control de usuario (plantilla de campo) que se va a usar para mostrar el campo de datos.</param>
+      <param name="presentationLayer">Capa de presentación que usa la clase.Puede establecerse en "HTML", "Silverlight", "WPF" o "WinForms".</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> usando el control de usuario, la capa de presentación y los parámetros del control especificados.</summary>
+      <param name="uiHint">Control de usuario (plantilla de campo) que se va a usar para mostrar el campo de datos.</param>
+      <param name="presentationLayer">Capa de presentación que usa la clase.Puede establecerse en "HTML", "Silverlight", "WPF" o "WinForms".</param>
+      <param name="controlParameters">Objeto que debe usarse para recuperar valores de cualquier origen de datos. </param>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> es null o es una clave de restricción.O bienEl valor de <see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> no es una cadena. </exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters">
+      <summary>Obtiene o establece el objeto <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> que debe usarse para recuperar valores de cualquier origen de datos.</summary>
+      <returns>Colección de pares clave-valor. </returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.Equals(System.Object)">
+      <summary>Obtiene un valor que indica si esta instancia es igual que el objeto especificado.</summary>
+      <returns>Es true si el objeto especificado es igual que esta instancia; de lo contrario, es false.</returns>
+      <param name="obj">Objeto que se va a comparar con esta instancia o una referencia null.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.GetHashCode">
+      <summary>Obtiene el código hash de la instancia actual del atributo.</summary>
+      <returns>Código hash de la instancia del atributo.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.PresentationLayer">
+      <summary>Obtiene o establece la capa de presentación que usa la clase <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" />. </summary>
+      <returns>Nivel de presentación que usa esta clase.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.UIHint">
+      <summary>Obtiene o establece el nombre de la plantilla de campo que debe usarse para mostrar el campo de datos.</summary>
+      <returns>Nombre de la plantilla de campo en la que se muestra el campo de datos.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UrlAttribute">
+      <summary>Proporciona la validación de URL.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.UrlAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.IsValid(System.Object)">
+      <summary>Valida el formato de la dirección URL especificada.</summary>
+      <returns>true si el formato de la dirección URL es válido o null; si no, false.</returns>
+      <param name="value">URL que se va a validar.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationAttribute">
+      <summary>Actúa como clase base para todos los atributos de validación.</summary>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Las propiedades <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName" /> y <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> del mensaje del error localizado se establecen al mismo tiempo que se establece el mensaje de error no localizado de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.Func{System.String})">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> utilizando la función que permite el acceso a los recursos de validación.</summary>
+      <param name="errorMessageAccessor">Función que habilita el acceso a los recursos de validación.</param>
+      <exception cref="T:System:ArgumentNullException">
+        <paramref name="errorMessageAccessor" /> es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> utilizando el mensaje de error que se va a asociar a un control de validación.</summary>
+      <param name="errorMessage">Mensaje de error que se va a asociar al control de validación.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage">
+      <summary>Obtiene o establece un mensaje de error que se va a asociar a un control de validación si se produce un error de validación.</summary>
+      <returns>Mensaje de error asociado al control de validación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName">
+      <summary>Obtiene o establece el nombre de recurso del mensaje de error que se va a usar para buscar el valor de la propiedad <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> si se produce un error en la validación.</summary>
+      <returns>Recurso de mensaje de error asociado a un control de validación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType">
+      <summary>Obtiene o establece el tipo de recurso que se va a usar para buscar el mensaje de error si se produce un error de validación.</summary>
+      <returns>Tipo de mensaje de error asociado a un control de validación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString">
+      <summary>Obtiene el mensaje de error de validación traducido.</summary>
+      <returns>Mensaje de error de validación traducido.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>Aplica formato a un mensaje de error según el campo de datos donde se produjo el error. </summary>
+      <returns>Instancia del mensaje de error con formato.</returns>
+      <param name="name">Nombre que se va a incluir en el mensaje con formato.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.GetValidationResult(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Comprueba si el valor especificado es válido con respecto al atributo de validación actual.</summary>
+      <returns>Instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />. </returns>
+      <param name="value">Valor que se va a validar.</param>
+      <param name="validationContext">Información de contexto sobre la operación de validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)">
+      <summary>Determina si el valor especificado del objeto es válido. </summary>
+      <returns>Es true si el valor especificado es válido; en caso contrario, es false.</returns>
+      <param name="value">Valor del objeto que se va a validar. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Valida el valor especificado con respecto al atributo de validación actual.</summary>
+      <returns>Instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />. </returns>
+      <param name="value">Valor que se va a validar.</param>
+      <param name="validationContext">Información de contexto sobre la operación de validación.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.RequiresValidationContext">
+      <summary>Obtiene un valor que indica si el atributo requiere contexto de validación.</summary>
+      <returns>true si el atributo necesita contexto de validación; si no, false.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Valida el objeto especificado.</summary>
+      <param name="value">Objeto que se va a validar.</param>
+      <param name="validationContext">Objeto <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> que describe el contexto en el que se realizan las comprobaciones de validación.Este parámetro no puede ser null.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Error de validación.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.String)">
+      <summary>Valida el objeto especificado.</summary>
+      <param name="value">Valor del objeto que se va a validar.</param>
+      <param name="name">Nombre que se va a incluir en el mensaje de error.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> no es válido.</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationContext">
+      <summary>Describe el contexto en el que se realiza una comprobación de validación.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> mediante la instancia del objeto especificada.</summary>
+      <param name="instance">Instancia del objeto que se va a validar.No puede ser null.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> con el objeto y contenedor de propiedades opcional especificados.</summary>
+      <param name="instance">Instancia del objeto que se va a validar.No puede ser null.</param>
+      <param name="items">Conjunto opcional de pares clave-valor que se van a poner a disposición de los consumidores.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.IServiceProvider,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> mediante el proveedor de servicios y el diccionario de consumidores del servicio. </summary>
+      <param name="instance">Objeto que se va a validar.Este parámetro es necesario.</param>
+      <param name="serviceProvider">Objeto que implementa la interfaz <see cref="T:System.IServiceProvider" />.Este parámetro es opcional.</param>
+      <param name="items">Diccionario de pares clave-valor que se va a poner a disposición de los consumidores del servicio.Este parámetro es opcional.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.DisplayName">
+      <summary>Obtiene o establece el nombre del miembro que se va a validar. </summary>
+      <returns>Nombre del miembro que se va a validar. </returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.GetService(System.Type)">
+      <summary>Devuelve el servicio que proporciona validación personalizada.</summary>
+      <returns>Instancia del servicio o null si el servicio no está disponible.</returns>
+      <param name="serviceType">Tipo del servicio que se va a usar para la validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.InitializeServiceProvider(System.Func{System.Type,System.Object})">
+      <summary>Inicializa el objeto <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> mediante un proveedor de servicios que puede devolver instancias de servicio por tipo cuando se llama a GetService.</summary>
+      <param name="serviceProvider">Proveedor de servicios.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.Items">
+      <summary>Obtiene el diccionario de pares clave-valor asociado a este contexto.</summary>
+      <returns>Diccionario de pares clave-valor para este contexto.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.MemberName">
+      <summary>Obtiene o establece el nombre del miembro que se va a validar. </summary>
+      <returns>Nombre del miembro que se va a validar. </returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance">
+      <summary>Obtiene el objeto que se va a validar.</summary>
+      <returns>Objeto que se va a validar.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectType">
+      <summary>Obtiene el tipo del objeto que se va a validar.</summary>
+      <returns>Tipo del objeto que se va a validar.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationException">
+      <summary>Representa la excepción que se produce durante la validación de un campo de datos cuando se usa la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> usando un mensaje de error generado por el sistema.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationResult,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> usando un resultado de validación, un atributo de validación y el valor de la excepción actual.</summary>
+      <param name="validationResult">Lista de resultados de la validación.</param>
+      <param name="validatingAttribute">Atributo que produjo la excepción actual.</param>
+      <param name="value">Valor del objeto que hizo que el atributo activara el error de validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> usando el mensaje de error especificado.</summary>
+      <param name="message">Mensaje especificado que expone el error.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> usando un mensaje de error especificado, un atributo de validación y el valor de la excepción actual.</summary>
+      <param name="errorMessage">Mensaje que expone el error.</param>
+      <param name="validatingAttribute">Atributo que produjo la excepción actual.</param>
+      <param name="value">Valor del objeto que hizo que el atributo activara el error de validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.Exception)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> usando un mensaje de error especificado y una colección de instancias de excepción interna.</summary>
+      <param name="message">Mensaje de error. </param>
+      <param name="innerException">Colección de excepciones de validación.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationAttribute">
+      <summary>Obtiene la instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> que activó esta excepción.</summary>
+      <returns>Instancia del tipo de atributo de validación que activó esta excepción.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult">
+      <summary>Obtiene la instancia de <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> que describe el error de validación.</summary>
+      <returns>Instancia de <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> que describe el error de validación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.Value">
+      <summary>Obtiene el valor del objeto que hace que la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> active esta excepción.</summary>
+      <returns>Valor del objeto que hizo que la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> activara el error de validación.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationResult">
+      <summary>Representa un contenedor para los resultados de una solicitud de validación.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.ComponentModel.DataAnnotations.ValidationResult)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> usando un objeto <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</summary>
+      <param name="validationResult">Objeto resultado de la validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> usando un mensaje de error.</summary>
+      <param name="errorMessage">Mensaje de error.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> usando un mensaje de error y una lista de miembros que tienen errores de validación.</summary>
+      <param name="errorMessage">Mensaje de error.</param>
+      <param name="memberNames">Lista de nombres de miembro que tienen errores de validación.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.ErrorMessage">
+      <summary>Obtiene el mensaje de error para la validación.</summary>
+      <returns>Mensaje de error para la validación.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.MemberNames">
+      <summary>Obtiene la colección de nombres de miembro que indican qué campos contienen errores de validación.</summary>
+      <returns>Colección de nombres de miembro que indican qué campos contienen errores de validación.</returns>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.ValidationResult.Success">
+      <summary>Representa el éxito de la validación (true si esta se realizó correctamente; en caso contrario, false).</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.ToString">
+      <summary>Devuelve un valor de cadena que representa el resultado de la validación actual.</summary>
+      <returns>Resultado de la validación actual.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Validator">
+      <summary>Define una clase auxiliar que se puede usar para validar objetos, propiedades y métodos cuando está incluida en sus atributos <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> asociados.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>Determina si el objeto especificado es válido usando el contexto de validación y la colección de resultados de validación.</summary>
+      <returns>Es true si el objeto es válido; de lo contrario, es false.</returns>
+      <param name="instance">Objeto que se va a validar.</param>
+      <param name="validationContext">Contexto que describe el objeto que se va a validar.</param>
+      <param name="validationResults">Colección que va a contener todas las validaciones con error.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Boolean)">
+      <summary>Determina si el objeto especificado es válido usando el contexto de validación, la colección de resultados de validación y un valor que indica si se van a validar o no todas las propiedades.</summary>
+      <returns>Es true si el objeto es válido; de lo contrario, es false.</returns>
+      <param name="instance">Objeto que se va a validar.</param>
+      <param name="validationContext">Contexto que describe el objeto que se va a validar.</param>
+      <param name="validationResults">Colección que va a contener todas las validaciones con error.</param>
+      <param name="validateAllProperties">truepara validar todas las propiedades; Si false, sólo se requiere que los atributos se validen.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>Valida la propiedad.</summary>
+      <returns>Es true si la propiedad es válida; de lo contrario, es false.</returns>
+      <param name="value">Valor que se va a validar.</param>
+      <param name="validationContext">Contexto que describe la propiedad que se va a validar.</param>
+      <param name="validationResults">Colección que va a contener todas las validaciones con error. </param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> no se puede asignar a la propiedad.O bienEl valor de <paramref name="value " />es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>Devuelve un valor que indica si el valor especificado es válido con los atributos indicados.</summary>
+      <returns>Es true si el objeto es válido; de lo contrario, es false.</returns>
+      <param name="value">Valor que se va a validar.</param>
+      <param name="validationContext">Contexto que describe el objeto que se va a validar.</param>
+      <param name="validationResults">Colección que va a contener las validaciones con error. </param>
+      <param name="validationAttributes">Atributos de validación.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Determina si el objeto especificado es válido usando el contexto de validación.</summary>
+      <param name="instance">Objeto que se va a validar.</param>
+      <param name="validationContext">Contexto que describe el objeto que se va a validar.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">El objeto no es válido.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean)">
+      <summary>Determina si el objeto especificado es válido usando el contexto de validación y un valor que indica si se van a validar o no todas las propiedades.</summary>
+      <param name="instance">Objeto que se va a validar.</param>
+      <param name="validationContext">Contexto que describe el objeto que se va a validar.</param>
+      <param name="validateAllProperties">Es true para validar todas las propiedades; de lo contrario, es false.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="instance" /> no es válido.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> es null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Valida la propiedad.</summary>
+      <param name="value">Valor que se va a validar.</param>
+      <param name="validationContext">Contexto que describe la propiedad que se va a validar.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> no se puede asignar a la propiedad.</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">El parámetro <paramref name="value" /> no es válido.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>Valida los atributos especificados.</summary>
+      <param name="value">Valor que se va a validar.</param>
+      <param name="validationContext">Contexto que describe el objeto que se va a validar.</param>
+      <param name="validationAttributes">Atributos de validación.</param>
+      <exception cref="T:System.ArgumentNullException">El valor del parámetro <paramref name="validationContext" /> es null.</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">El parámetro <paramref name="value" /> no se valida con el parámetro <paramref name="validationAttributes" />.</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute">
+      <summary>Representa la columna de base de datos que una propiedad está asignada.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" />.</summary>
+      <param name="name">Nombre de la columna a la que se asigna la propiedad.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Name">
+      <summary>Obtiene el nombre de la columna que la propiedad se asigna.</summary>
+      <returns>Nombre de la columna a la que se asigna la propiedad.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Order">
+      <summary>Obtiene o asignan conjuntos el orden cero- basada de la columna la propiedad en.</summary>
+      <returns>El orden de la columna.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.TypeName">
+      <summary>Obtiene o asignan establece el tipo de datos específico del proveedor de base de datos de la columna la propiedad en.</summary>
+      <returns>El tipo de datos específico del proveedor de bases de datos de la columna a la que se asigna la propiedad.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute">
+      <summary>Denota que la clase es un tipo complejo.Los tipos complejos son propiedades no escalares de tipos de entidad que permiten organizar las propiedades escalares dentro de las entidades.Los tipos complejos no tienen claves y no pueden ser administrados por Entity Framework excepto el objeto primario.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute">
+      <summary>Especifica el modo en que la base de datos genera los valores de una propiedad.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.#ctor(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute" />.</summary>
+      <param name="databaseGeneratedOption">Opción generada por la base de datos</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.DatabaseGeneratedOption">
+      <summary>Obtiene o establece el formato usado para generar la configuración de la propiedad en la base de datos.</summary>
+      <returns>Opción generada por la base de datos</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption">
+      <summary>Representa el formato usado para generar la configuración de una propiedad en la base de datos.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed">
+      <summary>La base de datos genera un valor cuando una fila se inserta o actualiza.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity">
+      <summary>La base de datos genera un valor cuando se inserta una fila.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None">
+      <summary>La base de datos no genera valores.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute">
+      <summary>Denota una propiedad utilizada como clave externa en una relación.La anotación puede colocarse en la propiedad de clave externa y especificar el nombre de la propiedad de navegación asociada, o colocarse en una propiedad de navegación y especificar el nombre de la clave externa asociada.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute" />.</summary>
+      <param name="name">Si se agrega el atributo ForeigKey a una propiedad de clave externa, debe especificar el nombre de la propiedad de navegación asociada.Si se agrega el atributo ForeigKey a una propiedad de navegación, se debe especificar el nombre de las claves externas asociadas.Si una propiedad de navegación tiene varias claves externas, utilice comas para separar la lista de nombres de clave externa.Para obtener más información, vea Anotaciones de datos de Code First.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.Name">
+      <summary>Si se agrega el atributo ForeigKey a una propiedad de clave externa, debe especificar el nombre de la propiedad de navegación asociada.Si se agrega el atributo ForeigKey a una propiedad de navegación, se debe especificar el nombre de las claves externas asociadas.Si una propiedad de navegación tiene varias claves externas, utilice comas para separar la lista de nombres de clave externa.Para obtener más información, vea Anotaciones de datos de Code First.</summary>
+      <returns>El nombre de la propiedad de navegación asociada o la propiedad de clave externa asociada.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute">
+      <summary>Especifica la inversa de una propiedad de navegación que representa el otro extremo de la misma relación.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute" /> usando la propiedad especificada.</summary>
+      <param name="property">Propiedad de navegación que representa el otro extremo de la misma relación.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.Property">
+      <summary>Obtiene la propiedad de navegación que representa el otro extremo de la misma relación.</summary>
+      <returns>Propiedad del atributo.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute">
+      <summary>Denota que una propiedad o clase se debe excluir de la asignación de bases de datos.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute.#ctor">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute">
+      <summary>Especifica la tabla de base de datos a la que está asignada una clase.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.TableAttribute.#ctor(System.String)">
+      <summary>Inicializa una nueva instancia de la clase <see cref="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute" /> usando el nombre especificado de la tabla.</summary>
+      <param name="name">Nombre de la tabla a la que está asignada la clase.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Name">
+      <summary>Obtiene el nombre de la tabla a la que está asignada la clase.</summary>
+      <returns>Nombre de la tabla a la que está asignada la clase.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Schema">
+      <summary>Obtiene o establece el esquema de la tabla a la que está asignada la clase.</summary>
+      <returns>Esquema de la tabla a la que está asignada la clase.</returns>
+    </member>
+  </members>
+</doc>

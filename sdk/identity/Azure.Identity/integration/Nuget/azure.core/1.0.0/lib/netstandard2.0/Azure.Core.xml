@@ -1,0 +1,2077 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Azure.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Azure.Core.AccessToken">
+            <summary>
+            Represents an Azure service bearer access token with expiry information.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.AccessToken.#ctor(System.String,System.DateTimeOffset)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.AccessToken"/> using the provided <paramref name="accessToken"/> and <paramref name="expiresOn"/>.
+            </summary>
+            <param name="accessToken">The bearer access token value.</param>
+            <param name="expiresOn">The bearer access token expiry date.</param>
+        </member>
+        <member name="P:Azure.Core.AccessToken.Token">
+            <summary>
+            Get the access token value.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.AccessToken.ExpiresOn">
+            <summary>
+            Gets the time when the provided token expires.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.AccessToken.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.AccessToken.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:Azure.Core.ClientOptions">
+            <summary>
+            Base type for all client option types, exposes various common client options like <see cref="P:Azure.Core.ClientOptions.Diagnostics"/>, <see cref="P:Azure.Core.ClientOptions.Retry"/>, <see cref="P:Azure.Core.ClientOptions.Transport"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ClientOptions.#ctor">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.ClientOptions"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ClientOptions.Transport">
+            <summary>
+            The <see cref="T:Azure.Core.Pipeline.HttpPipelineTransport"/> to be used for this client. Defaults to an instance of <see cref="T:Azure.Core.Pipeline.HttpClientTransport"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ClientOptions.Diagnostics">
+            <summary>
+            Gets the client diagnostic options.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ClientOptions.Retry">
+            <summary>
+            Gets the client retry options.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ClientOptions.AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy,Azure.Core.HttpPipelinePosition)">
+            <summary>
+            Adds an <see cref="T:Azure.Core.Pipeline.HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
+            If you want the policy to execute once per client request use <see cref="F:Azure.Core.HttpPipelinePosition.PerCall"/> otherwise use <see cref="F:Azure.Core.HttpPipelinePosition.PerRetry"/>
+            to run the policy for every retry. Note that the same instance of <paramref name="policy"/> would be added to all pipelines of client constructed using this <see cref="T:Azure.Core.ClientOptions"/> object.
+            </summary>
+            <param name="policy">The <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> instance to be added to the pipeline.</param>
+            <param name="position">The position of policy in the pipeline.</param>
+        </member>
+        <member name="M:Azure.Core.ClientOptions.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.ClientOptions.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.ClientOptions.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Azure.Core.Cryptography.IKeyEncryptionKey">
+            <summary>
+            A key which is used to encrypt, or wrap, another key.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.Cryptography.IKeyEncryptionKey.KeyId">
+            <summary>
+            The Id of the key used to perform cryptographic operations for the client.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Cryptography.IKeyEncryptionKey.WrapKey(System.String,System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)">
+            <summary>
+            Encrypts the specified key using the specified algorithm.
+            </summary>
+            <param name="algorithm">The key wrap algorithm used to encrypt the specified key.</param>
+            <param name="key">The key to be encrypted.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> controlling the request lifetime.</param>
+            <returns>The encrypted key bytes.</returns>
+        </member>
+        <member name="M:Azure.Core.Cryptography.IKeyEncryptionKey.WrapKeyAsync(System.String,System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)">
+            <summary>
+            Encrypts the specified key using the specified algorithm.
+            </summary>
+            <param name="algorithm">The key wrap algorithm used to encrypt the specified key.</param>
+            <param name="key">The key to be encrypted.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> controlling the request lifetime.</param>
+            <returns>The encrypted key bytes.</returns>
+        </member>
+        <member name="M:Azure.Core.Cryptography.IKeyEncryptionKey.UnwrapKey(System.String,System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)">
+            <summary>
+            Decrypts the specified encrypted key using the specified algorithm.
+            </summary>
+            <param name="algorithm">The key wrap algorithm which was used to encrypt the specified encrypted key.</param>
+            <param name="encryptedKey">The encrypted key to be decrypted.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> controlling the request lifetime.</param>
+            <returns>The decrypted key bytes.</returns>
+        </member>
+        <member name="M:Azure.Core.Cryptography.IKeyEncryptionKey.UnwrapKeyAsync(System.String,System.ReadOnlyMemory{System.Byte},System.Threading.CancellationToken)">
+            <summary>
+            Decrypts the specified encrypted key using the specified algorithm.
+            </summary>
+            <param name="algorithm">The key wrap algorithm which was used to encrypt the specified encrypted key.</param>
+            <param name="encryptedKey">The encrypted key to be decrypted.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> controlling the request lifetime.</param>
+            <returns>The decrypted key bytes.</returns>
+        </member>
+        <member name="T:Azure.Core.Cryptography.IKeyEncryptionKeyResolver">
+            <summary>
+            An object capable of retrieving key encryption keys from a provided key identifier.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Cryptography.IKeyEncryptionKeyResolver.Resolve(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves the key encryption key corresponding to the specified keyId.
+            </summary>
+            <param name="keyId">The key identifier of the key encryption key to retrieve.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> controlling the request lifetime.</param>
+            <returns>The key encryption key corresponding to the specified keyId.</returns>
+        </member>
+        <member name="M:Azure.Core.Cryptography.IKeyEncryptionKeyResolver.ResolveAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retrieves the key encryption key corresponding to the specified keyId.
+            </summary>
+            <param name="keyId">The key identifier of the key encryption key to retrieve.</param>
+            <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken"/> controlling the request lifetime.</param>
+            <returns>The key encryption key corresponding to the specified keyId.</returns>
+        </member>
+        <member name="T:Azure.Core.DiagnosticsOptions">
+            <summary>
+            Exposes client options related to logging, telemetry and distributed tracing.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.IsLoggingEnabled">
+            <summary>
+            Get or sets value indicating whether HTTP pipeline logging is enabled.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.IsDistributedTracingEnabled">
+            <summary>
+            Gets or sets value indicating whether distributed tracing spans are going to be created for this clients methods calls and HTTP calls.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.IsTelemetryEnabled">
+            <summary>
+            Gets or sets value indicating whether the "User-Agent" header containing <see cref="P:Azure.Core.DiagnosticsOptions.ApplicationId"/>, client library package name and version, <see cref="P:System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription"/>
+            and <see cref="P:System.Runtime.InteropServices.RuntimeInformation.OSDescription"/> should be sent.
+            The default value can be controlled process wide by setting <c>AZURE_TELEMETRY_DISABLED</c> to <c>true</c>, <c>false</c>, <c>1</c> or <c>0</c>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.IsLoggingContentEnabled">
+            <summary>
+            Gets or sets value indicating if request or response content should be logged.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.LoggedContentSizeLimit">
+            <summary>
+            Gets or sets value indicating maximum size of content to log in bytes. Defaults to 4096.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.LoggedHeaderNames">
+            <summary>
+            Gets a list of headers names that are not redacted during logging.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.LoggedQueryParameters">
+            <summary>
+            Gets a list of query parameter names that are not redacted during logging.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.ApplicationId">
+            <summary>
+            Gets or sets the value sent a the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="P:Azure.Core.DiagnosticsOptions.DefaultApplicationId"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.DiagnosticsOptions.DefaultApplicationId">
+            <summary>
+            Gets or sets the default application id. Default application id would be set on all instances.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.Diagnostics.AzureEventSourceListener">
+            <summary>
+            Implementation of <see cref="T:System.Diagnostics.Tracing.EventListener"/> that listens to events produces by Azure SDK Client libraries.
+            </summary>
+        </member>
+        <member name="F:Azure.Core.Diagnostics.AzureEventSourceListener.TraitName">
+            <summary>
+            The trait name that has to be present on all event sources collected by this listener.
+            </summary>
+        </member>
+        <member name="F:Azure.Core.Diagnostics.AzureEventSourceListener.TraitValue">
+            <summary>
+            The trait value that has to be present on all event sources collected by this listener.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Diagnostics.AzureEventSourceListener.#ctor(System.Action{System.Diagnostics.Tracing.EventWrittenEventArgs,System.String},System.Diagnostics.Tracing.EventLevel)">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.Diagnostics.AzureEventSourceListener"/> that executes a <paramref name="log"/> callback every time event is written.
+            </summary>
+            <param name="log">The <see cref="T:System.Action`2"/> to call when event is written. The second parameter is formatted message.</param>
+            <param name="level">The level of events to enable.</param>
+        </member>
+        <member name="M:Azure.Core.Diagnostics.AzureEventSourceListener.OnEventSourceCreated(System.Diagnostics.Tracing.EventSource)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Diagnostics.AzureEventSourceListener.OnEventWritten(System.Diagnostics.Tracing.EventWrittenEventArgs)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Diagnostics.AzureEventSourceListener.CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.Diagnostics.AzureEventSourceListener"/> that forwards events to <see cref="M:System.Console.WriteLine(System.String)"/>.
+            </summary>
+            <param name="level">The level of events to enable.</param>
+        </member>
+        <member name="M:Azure.Core.Diagnostics.AzureEventSourceListener.CreateTraceLogger(System.Diagnostics.Tracing.EventLevel)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.Diagnostics.AzureEventSourceListener"/> that forwards events to <see cref="M:System.Diagnostics.Trace.WriteLine(System.Object)"/>.
+            </summary>
+            <param name="level">The level of events to enable.</param>
+        </member>
+        <member name="T:Azure.Core.Extensions.IAzureClientBuilder`2">
+            <summary>
+            Marks the type exposing client registration options for clients registered with <see cref="T:Azure.Core.Extensions.IAzureClientFactoryBuilder"/>.
+            </summary>
+            <typeparam name="TClient">The type of the client.</typeparam>
+            <typeparam name="TOptions">The options type used by the client.</typeparam>
+        </member>
+        <member name="T:Azure.Core.Extensions.IAzureClientFactoryBuilder">
+            <summary>
+            Abstraction for registering Azure clients in dependency injection containers.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Extensions.IAzureClientFactoryBuilder.RegisterClientFactory``2(System.Func{``1,``0})">
+            <summary>
+            Registers a client in the dependency injection container using the factory to create a client instance.
+            </summary>
+            <typeparam name="TClient">The type of the client.</typeparam>
+            <typeparam name="TOptions">The client options type used the client.</typeparam>
+            <param name="clientFactory">The factory, that given the instance of options, returns a client instance.</param>
+            <returns><see cref="T:Azure.Core.Extensions.IAzureClientBuilder`2"/> that allows customizing the client registration.</returns>
+        </member>
+        <member name="T:Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration`1">
+            <summary>
+            Abstraction for registering Azure clients in dependency injection containers and initializing them using <c>IConfiguration</c> objects.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration`1.RegisterClientFactory``2(`0)">
+            <summary>
+            Registers a client in the dependency injection container using the configuration to create a client instance.
+            </summary>
+            <typeparam name="TClient">The type of the client.</typeparam>
+            <typeparam name="TOptions">The client options type used the client.</typeparam>
+            <param name="configuration">Instance of <typeparamref name="TConfiguration"/> to use.</param>
+            <returns><see cref="T:Azure.Core.Extensions.IAzureClientBuilder`2"/> that allows customizing the client registration.</returns>
+        </member>
+        <member name="T:Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential">
+            <summary>
+            Abstraction for registering Azure clients that require <see cref="T:Azure.Core.TokenCredential"/> in dependency injection containers.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential.RegisterClientFactory``2(System.Func{``1,Azure.Core.TokenCredential,``0},System.Boolean)">
+            <summary>
+            Registers a client in dependency injection container the using the factory to create a client instance.
+            </summary>
+            <typeparam name="TClient">The type of the client.</typeparam>
+            <typeparam name="TOptions">The client options type used the client.</typeparam>
+            <param name="clientFactory">The factory, that given the instance of options and credential, returns a client instance.</param>
+            <param name="requiresCredential">Specifies whether the credential is optional (client supports anonymous authentication).</param>
+            <returns><see cref="T:Azure.Core.Extensions.IAzureClientBuilder`2"/> that allows customizing the client registration.</returns>
+        </member>
+        <member name="T:Azure.Core.HttpHeader">
+            <summary>
+            Represents an HTTP header.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.HttpHeader.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.HttpHeader"/> with provided name and value.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The header value.</param>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Name">
+            <summary>
+            Gets header name.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Value">
+            <summary>
+            Gets header value. If the header has multiple values they would be joined with a comma. To get separate values use <see cref="M:Azure.Core.RequestHeaders.TryGetValues(System.String,System.Collections.Generic.IEnumerable{System.String}@)"/> or <see cref="M:Azure.Core.ResponseHeaders.TryGetValues(System.String,System.Collections.Generic.IEnumerable{System.String}@)"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.HttpHeader.GetHashCode">
+            <inheritdoc/>
+        </member>
+        <member name="M:Azure.Core.HttpHeader.Equals(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Azure.Core.HttpHeader.ToString">
+            <inheritdoc/>
+        </member>
+        <member name="M:Azure.Core.HttpHeader.Equals(Azure.Core.HttpHeader)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Azure.Core.HttpHeader.Names">
+            <summary>
+            Contains names of commonly used headers.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.Date">
+            <summary>
+            Returns. <code>"Date"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.XMsDate">
+            <summary>
+            Returns. <code>"x-ms-date"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.ContentType">
+            <summary>
+            Returns. <code>"Content-Type"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.ContentLength">
+            <summary>
+            Returns. <code>"Content-Length"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.ETag">
+            <summary>
+            Returns. <code>"ETag"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.XMsRequestId">
+            <summary>
+            Returns. <code>"x-ms-request-id"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.UserAgent">
+            <summary>
+            Returns. <code>"User-Agent"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.Accept">
+            <summary>
+            Returns. <code>"Accept"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.Authorization">
+            <summary>
+            Returns. <code>"Authorization"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.Range">
+            <summary>
+            Returns. <code>"Range"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.XMsRange">
+            <summary>
+            Returns. <code>"x-ms-range"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.IfMatch">
+            <summary>
+            Returns. <code>"If-Match"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.IfNoneMatch">
+            <summary>
+            Returns. <code>"If-None-Match"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.IfModifiedSince">
+            <summary>
+            Returns. <code>"If-Modified-Since"</code>
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpHeader.Names.IfUnmodifiedSince">
+            <summary>
+            Returns. <code>"If-Unmodified-Since"</code>
+            </summary>
+        </member>
+        <member name="T:Azure.Core.HttpHeader.Common">
+            <summary>
+            Commonly defined header values.
+            </summary>
+        </member>
+        <member name="F:Azure.Core.HttpHeader.Common.JsonContentType">
+            <summary>
+            Returns header with name "ContentType" and value "application/json".
+            </summary>
+        </member>
+        <member name="F:Azure.Core.HttpHeader.Common.JsonAccept">
+            <summary>
+            Returns header with name "Accept" and value "application/json".
+            </summary>
+        </member>
+        <member name="F:Azure.Core.HttpHeader.Common.OctetStreamContentType">
+            <summary>
+            Returns header with name "ContentType" and value "application/octet-stream".
+            </summary>
+        </member>
+        <member name="F:Azure.Core.HttpHeader.Common.FormUrlEncodedContentType">
+            <summary>
+            Returns header with name "ContentType" and value "application/x-www-form-urlencoded".
+            </summary>
+        </member>
+        <member name="T:Azure.Core.HttpMessage">
+            <summary>
+            Represents a context flowing through the <see cref="T:Azure.Core.Pipeline.HttpPipeline"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.HttpMessage.#ctor(Azure.Core.Request,Azure.Core.ResponseClassifier)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.HttpMessage"/>.
+            </summary>
+            <param name="request">The request.</param>
+            <param name="responseClassifier">The response classifier.</param>
+        </member>
+        <member name="P:Azure.Core.HttpMessage.Request">
+            <summary>
+            Gets the <see cref="P:Azure.Core.HttpMessage.Request"/> associated with this message.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpMessage.Response">
+            <summary>
+            Gets the <see cref="P:Azure.Core.HttpMessage.Response"/> associated with this message. Throws an exception if it wasn't set yet.
+            To avoid the exception use <see cref="P:Azure.Core.HttpMessage.HasResponse"/> property to check.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpMessage.HasResponse">
+            <summary>
+            Gets the value indicating if the response is set on this message.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpMessage.CancellationToken">
+            <summary>
+            The <see cref="P:Azure.Core.HttpMessage.ResponseClassifier"/> instance to use for response classification during pipeline invocation.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpMessage.ResponseClassifier">
+            <summary>
+            The <see cref="P:Azure.Core.HttpMessage.ResponseClassifier"/> instance to use for response classification during pipeline invocation.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.HttpMessage.BufferResponse">
+            <summary>
+            Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.HttpMessage.TryGetProperty(System.String,System.Object@)">
+            <summary>
+            Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
+            </summary>
+            <param name="name">The property name.</param>
+            <param name="value">The property value.</param>
+            <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.HttpMessage.SetProperty(System.String,System.Object)">
+            <summary>
+            Sets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
+            </summary>
+            <param name="name">The property name.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Azure.Core.HttpMessage.ExtractResponseContent">
+            <summary>
+            Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="P:Azure.Response.ContentStream"/> would result in exception.
+            </summary>
+            <returns>The content stream or null if response didn't have any.</returns>
+        </member>
+        <member name="M:Azure.Core.HttpMessage.Dispose">
+            <summary>
+            Disposes the request and response.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.HttpPipelinePosition">
+            <summary>
+            Represents a position of the policy in the pipeline.
+            </summary>
+        </member>
+        <member name="F:Azure.Core.HttpPipelinePosition.PerCall">
+            <summary>
+            The policy would be invoked once per pipeline invocation (service call).
+            </summary>
+        </member>
+        <member name="F:Azure.Core.HttpPipelinePosition.PerRetry">
+            <summary>
+            The policy would be invoked every time request is retried.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy">
+            <summary>
+            A policy that sends an <see cref="T:Azure.Core.AccessToken"/> provided by a <see cref="T:Azure.Core.TokenCredential"/> as an Authentication header.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.#ctor(Azure.Core.TokenCredential,System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
+            </summary>
+            <param name="credential">The token credential to use for authentication.</param>
+            <param name="scope">The scope to authenticate for.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.#ctor(Azure.Core.TokenCredential,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/> using provided token credential and scopes to authenticate for.
+            </summary>
+            <param name="credential">The token credential to use for authentication.</param>
+            <param name="scopes">Scopes to authenticate for.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.ProcessAsync(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.Process(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.ProcessAsync(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy},System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="T:Azure.Core.Pipeline.HttpClientTransport">
+            <summary>
+            An <see cref="T:Azure.Core.Pipeline.HttpPipelineTransport"/> implementation that uses <see cref="T:System.Net.Http.HttpClient"/> as the transport.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpClientTransport.#ctor">
+            <summary>
+            Creates a new <see cref="T:Azure.Core.Pipeline.HttpClientTransport"/> instance using default configuration.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpClientTransport.#ctor(System.Net.Http.HttpClient)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.Pipeline.HttpClientTransport"/> using the provided client instance.
+            </summary>
+            <param name="client">The instance of <see cref="T:System.Net.Http.HttpClient"/> to use.</param>
+        </member>
+        <member name="F:Azure.Core.Pipeline.HttpClientTransport.Shared">
+            <summary>
+            A shared instance of <see cref="T:Azure.Core.Pipeline.HttpClientTransport"/> with default parameters.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpClientTransport.CreateRequest">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpClientTransport.Process(Azure.Core.HttpMessage)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpClientTransport.ProcessAsync(Azure.Core.HttpMessage)">
+            <inheritdoc />
+        </member>
+        <member name="T:Azure.Core.Pipeline.HttpPipeline">
+            <summary>
+            Represents a primitive for sending HTTP requests and receiving responses extensible by adding <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> processing steps.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipeline.#ctor(Azure.Core.Pipeline.HttpPipelineTransport,Azure.Core.Pipeline.HttpPipelinePolicy[],Azure.Core.ResponseClassifier)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Core.Pipeline.HttpPipeline"/> with the provided transport, policies and response classifier.
+            </summary>
+            <param name="transport">The <see cref="T:Azure.Core.Pipeline.HttpPipelineTransport"/> to use for sending the requests.</param>
+            <param name="policies">Policies to be invoked as part of the pipeline in order.</param>
+            <param name="responseClassifier">The response classifier to be used in invocations.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipeline.CreateRequest">
+            <summary>
+            Creates a new <see cref="T:Azure.Core.Request"/> instance.
+            </summary>
+            <returns>The request.</returns>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipeline.CreateMessage">
+            <summary>
+            Creates a new <see cref="T:Azure.Core.HttpMessage"/> instance.
+            </summary>
+            <returns>The message.</returns>
+        </member>
+        <member name="P:Azure.Core.Pipeline.HttpPipeline.ResponseClassifier">
+            <summary>
+            The <see cref="P:Azure.Core.Pipeline.HttpPipeline.ResponseClassifier"/> instance used in this pipeline invocations.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipeline.SendAsync(Azure.Core.HttpMessage,System.Threading.CancellationToken)">
+            <summary>
+            Invokes the pipeline asynchronously. After the task completes response would be set to the <see cref="P:Azure.Core.HttpMessage.Response"/> property.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> to send.</param>
+            <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken"/> to use.</param>
+            <returns>The <see cref="T:System.Threading.Tasks.ValueTask"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipeline.Send(Azure.Core.HttpMessage,System.Threading.CancellationToken)">
+            <summary>
+            Invokes the pipeline synchronously. After the task completes response would be set to the <see cref="P:Azure.Core.HttpMessage.Response"/> property.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> to send.</param>
+            <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken"/> to use.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipeline.SendRequestAsync(Azure.Core.Request,System.Threading.CancellationToken)">
+            <summary>
+            Invokes the pipeline asynchronously with the provided request.
+            </summary>
+            <param name="request">The <see cref="T:Azure.Core.Request"/> to send.</param>
+            <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken"/> to use.</param>
+            <returns>The <see cref="T:System.Threading.Tasks.ValueTask`1"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipeline.SendRequest(Azure.Core.Request,System.Threading.CancellationToken)">
+            <summary>
+            Invokes the pipeline synchronously with the provided request.
+            </summary>
+            <param name="request">The <see cref="T:Azure.Core.Request"/> to send.</param>
+            <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken"/> to use.</param>
+            <returns>The <see cref="T:Azure.Response"/> from the server.</returns>
+        </member>
+        <member name="T:Azure.Core.Pipeline.HttpPipelineBuilder">
+            <summary>
+            Factory for creating instances of <see cref="T:Azure.Core.Pipeline.HttpPipeline"/> populated with default policies.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineBuilder.Build(Azure.Core.ClientOptions,Azure.Core.Pipeline.HttpPipelinePolicy[])">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.Pipeline.HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+            </summary>
+            <param name="options">The customer provided client options object.</param>
+            <param name="perRetryPolicies">Client provided per-call policies.</param>
+            <returns>A new instance of <see cref="T:Azure.Core.Pipeline.HttpPipeline"/></returns>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineBuilder.Build(Azure.Core.ClientOptions,Azure.Core.Pipeline.HttpPipelinePolicy[],Azure.Core.Pipeline.HttpPipelinePolicy[],Azure.Core.ResponseClassifier)">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.Pipeline.HttpPipeline"/> populated with default policies, customer provided policies from <paramref name="options"/> and client provided per call policies.
+            </summary>
+            <param name="options">The customer provided client options object.</param>
+            <param name="perCallPolicies">Client provided per-call policies.</param>
+            <param name="perRetryPolicies">Client provided per-retry policies.</param>
+            <param name="responseClassifier">The client provided response classifier.</param>
+            <returns>A new instance of <see cref="T:Azure.Core.Pipeline.HttpPipeline"/></returns>
+        </member>
+        <member name="T:Azure.Core.Pipeline.HttpPipelinePolicy">
+            <summary>
+            Represent an extension point for the <see cref="T:Azure.Core.Pipeline.HttpPipeline"/> that can mutate the <see cref="T:Azure.Core.Request"/> and react to received <see cref="T:Azure.Response"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelinePolicy.ProcessAsync(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <summary>
+            Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="P:Azure.Core.HttpMessage.Request"/> before calling <see cref="M:Azure.Core.Pipeline.HttpPipelinePolicy.ProcessNextAsync(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})"/> and observe the <see cref="P:Azure.Core.HttpMessage.Response"/> changes after.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> this policy would be applied to.</param>
+            <param name="pipeline">The set of <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> to execute after current one.</param>
+            <returns>The <see cref="T:System.Threading.Tasks.ValueTask"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelinePolicy.Process(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <summary>
+            Applies the policy to the <paramref name="message"/>. Implementers are expected to mutate <see cref="P:Azure.Core.HttpMessage.Request"/> before calling <see cref="M:Azure.Core.Pipeline.HttpPipelinePolicy.ProcessNextAsync(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})"/> and observe the <see cref="P:Azure.Core.HttpMessage.Response"/> changes after.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> this policy would be applied to.</param>
+            <param name="pipeline">The set of <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> to execute after current one.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelinePolicy.ProcessNextAsync(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <summary>
+            Invokes the next <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> in the <paramref name="pipeline"/>.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> next policy would be applied to.</param>
+            <param name="pipeline">The set of <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> to execute after next one.</param>
+            <returns>The <see cref="T:System.Threading.Tasks.ValueTask"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelinePolicy.ProcessNext(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <summary>
+            Invokes the next <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> in the <paramref name="pipeline"/>.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> next policy would be applied to.</param>
+            <param name="pipeline">The set of <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> to execute after next one.</param>
+        </member>
+        <member name="T:Azure.Core.Pipeline.HttpPipelineSynchronousPolicy">
+            <summary>
+            Represents a <see cref="T:Azure.Core.Pipeline.HttpPipelinePolicy"/> that doesn't do any asynchronous or synchronously blocking operations.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineSynchronousPolicy.Process(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineSynchronousPolicy.ProcessAsync(Azure.Core.HttpMessage,System.ReadOnlyMemory{Azure.Core.Pipeline.HttpPipelinePolicy})">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineSynchronousPolicy.OnSendingRequest(Azure.Core.HttpMessage)">
+            <summary>
+            Method is invoked before the request is sent.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage" /> containing the request.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineSynchronousPolicy.OnReceivedResponse(Azure.Core.HttpMessage)">
+            <summary>
+            Method is invoked after the response is received.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage" /> containing the response.</param>
+        </member>
+        <member name="T:Azure.Core.Pipeline.HttpPipelineTransport">
+            <summary>
+            Represents an HTTP pipeline transport used to send HTTP requests and receive responses.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineTransport.Process(Azure.Core.HttpMessage)">
+            <summary>
+            Sends the request contained by the <paramref name="message"/> and sets the <see cref="P:Azure.Core.HttpMessage.Response"/> property to received response synchronously.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> containing request and response.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineTransport.ProcessAsync(Azure.Core.HttpMessage)">
+            <summary>
+            Sends the request contained by the <paramref name="message"/> and sets the <see cref="P:Azure.Core.HttpMessage.Response"/> property to received response asynchronously.
+            </summary>
+            <param name="message">The <see cref="T:Azure.Core.HttpMessage"/> containing request and response.</param>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpPipelineTransport.CreateRequest">
+            <summary>
+            Creates a new transport specific instance of <see cref="T:Azure.Core.Request"/>. This should not be called directly, <see cref="M:Azure.Core.Pipeline.HttpPipeline.CreateRequest"/> or
+            <see cref="M:Azure.Core.Pipeline.HttpPipeline.CreateMessage"/> should be used instead.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpEnvironmentProxy.GetUriFromString(System.String)">
+            <summary>
+            This function will evaluate given string and it will try to convert
+            it to Uri object. The string could contain URI fragment, IP address and  port
+            tuple or just IP address or name. It will return null if parsing fails.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpEnvironmentProxy.IsMatchInBypassList(System.Uri)">
+            <summary>
+            This function returns true if given Host match bypass list.
+            Note, that the list is common for http and https.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpEnvironmentProxy.GetProxy(System.Uri)">
+            <summary>
+            Gets the proxy URI. (iWebProxy interface).
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpEnvironmentProxy.IsBypassed(System.Uri)">
+            <summary>
+            Checks if URI is subject to proxy or not.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Pipeline.HttpEnvironmentProxyCredentials.GetCredentialsFromString(System.String)">
+            <summary>
+            Converts string containing user:password to NetworkCredential object.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.Pipeline.ActivityExtensions">
+            <summary>
+            HACK HACK HACK. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
+            This type is a temporary workaround to avoid the issue.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.Request">
+            <summary>
+            Represents an HTTP request. Use <see cref="M:Azure.Core.Pipeline.HttpPipeline.CreateMessage"/> or <see cref="M:Azure.Core.Pipeline.HttpPipeline.CreateRequest"/> to create an instance.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.Request.Uri">
+            <summary>
+            Gets or sets and instance of <see cref="T:Azure.Core.RequestUriBuilder"/> used to create the Uri.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.Request.Method">
+            <summary>
+            Gets or sets the request HTTP method.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.Request.Content">
+            <summary>
+            Gets or sets the request content.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Request.AddHeader(System.String,System.String)">
+            <summary>
+            Adds a header value to the header collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The header value.</param>
+        </member>
+        <member name="M:Azure.Core.Request.TryGetHeader(System.String,System.String@)">
+            <summary>
+            Returns header value if the header is stored in the collection. If the header has multiple values they are going to be joined with a comma.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The reference to populate with value.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.Request.TryGetHeaderValues(System.String,System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            Returns header values if the header is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="values">The reference to populate with values.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.Request.ContainsHeader(System.String)">
+            <summary>
+            Returns <c>true</c> if the header is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.Request.SetHeader(System.String,System.String)">
+            <summary>
+            Sets a header value the header collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The header value.</param>
+        </member>
+        <member name="M:Azure.Core.Request.RemoveHeader(System.String)">
+            <summary>
+            Removes the header from the collection.
+            </summary>
+            <param name="name">The header name.</param>
+        </member>
+        <member name="M:Azure.Core.Request.EnumerateHeaders">
+            <summary>
+            Returns an iterator enumerating <see cref="T:Azure.Core.HttpHeader"/> in the request.
+            </summary>
+            <returns>The <see cref="T:System.Collections.Generic.IEnumerable`1"/> enumerating <see cref="T:Azure.Core.HttpHeader"/> in the response.</returns>
+        </member>
+        <member name="P:Azure.Core.Request.ClientRequestId">
+            <summary>
+            Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.Request.Headers">
+            <summary>
+            Gets the response HTTP headers.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.Request.Dispose">
+            <summary>
+            Frees resources held by this <see cref="T:Azure.Response"/> instance.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.RequestContent">
+            <summary>
+            Represents the content sent as part of the <see cref="T:Azure.Core.Request"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.RequestContent.Create(System.IO.Stream)">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.RequestContent"/> that wraps a <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="stream">The <see cref="T:System.IO.Stream"/> to use.</param>
+            <returns>An instance of <see cref="T:Azure.Core.RequestContent"/> that wraps a <see cref="T:System.IO.Stream"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestContent.Create(System.Byte[])">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.RequestContent"/> that wraps an <see cref="T:System.Array"/>of <see cref="T:System.Byte"/>.
+            </summary>
+            <param name="bytes">The <see cref="T:System.Array"/>of <see cref="T:System.Byte"/> to use.</param>
+            <returns>An instance of <see cref="T:Azure.Core.RequestContent"/> that wraps provided <see cref="T:System.Array"/>of <see cref="T:System.Byte"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestContent.Create(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.RequestContent"/> that wraps an <see cref="T:System.Array"/>of <see cref="T:System.Byte"/>.
+            </summary>
+            <param name="bytes">The <see cref="T:System.Array"/>of <see cref="T:System.Byte"/> to use.</param>
+            <param name="index">The offset in <paramref name="bytes"/> to start from.</param>
+            <param name="length">The length of the segment to use.</param>
+            <returns>An instance of <see cref="T:Azure.Core.RequestContent"/> that wraps provided <see cref="T:System.Array"/>of <see cref="T:System.Byte"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestContent.Create(System.ReadOnlyMemory{System.Byte})">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.RequestContent"/> that wraps a <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="bytes">The <see cref="T:System.ReadOnlyMemory`1"/> to use.</param>
+            <returns>An instance of <see cref="T:Azure.Core.RequestContent"/> that wraps a <see cref="T:System.ReadOnlyMemory`1"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestContent.Create(System.Buffers.ReadOnlySequence{System.Byte})">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.RequestContent"/> that wraps a <see cref="T:System.Buffers.ReadOnlySequence`1"/>.
+            </summary>
+            <param name="bytes">The <see cref="T:System.Buffers.ReadOnlySequence`1"/> to use.</param>
+            <returns>An instance of <see cref="T:Azure.Core.RequestContent"/> that wraps a <see cref="T:System.Buffers.ReadOnlySequence`1"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestContent.WriteToAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Writes contents of this object to an instance of <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="stream">The stream to write to.</param>
+            <param name="cancellation">To cancellation token to use.</param>
+        </member>
+        <member name="M:Azure.Core.RequestContent.WriteTo(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Writes contents of this object to an instance of <see cref="T:System.IO.Stream"/>.
+            </summary>
+            <param name="stream">The stream to write to.</param>
+            <param name="cancellation">To cancellation token to use.</param>
+        </member>
+        <member name="M:Azure.Core.RequestContent.TryComputeLength(System.Int64@)">
+            <summary>
+            Attempts to compute the length of the underlying content, if available.
+            </summary>
+            <param name="length">The length of the underlying data.</param>
+        </member>
+        <member name="M:Azure.Core.RequestContent.Dispose">
+            <summary>
+            Frees resources held by the <see cref="T:Azure.Core.RequestContent"/> object.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.RequestHeaders">
+            <summary>
+            Headers to be sent as part of the <see cref="T:Azure.Core.Request"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the <see cref="T:Azure.Core.RequestHeaders"/>.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1"/> for the <see cref="T:Azure.Core.RequestHeaders"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the <see cref="T:Azure.Core.RequestHeaders"/>.
+            </summary>
+            <returns>A <see cref="T:System.Collections.IEnumerator"/> for the <see cref="T:Azure.Core.RequestHeaders"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.Add(Azure.Core.HttpHeader)">
+            <summary>
+            Adds the <see cref="T:Azure.Core.HttpHeader"/> instance to the collection.
+            </summary>
+            <param name="header">The header to add.</param>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.Add(System.String,System.String)">
+            <summary>
+            Adds the header to the collection. If a header with this name already exist adds an additional value to the header values.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The header value.</param>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.TryGetValue(System.String,System.String@)">
+            <summary>
+            Returns header value if the headers is stored in the collection. If the header has multiple values they are going to be joined with a comma.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The reference to populate with value.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.TryGetValues(System.String,System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            Returns header values if the header is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="values">The reference to populate with values.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.Contains(System.String)">
+            <summary>
+            Returns <c>true</c> if the headers is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.SetValue(System.String,System.String)">
+            <summary>
+            Sets the header value name. If a header with this name already exist replaces it's value.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The header value.</param>
+        </member>
+        <member name="M:Azure.Core.RequestHeaders.Remove(System.String)">
+            <summary>
+            Removes the header from the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <returns><c>true</c> if the header existed, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="T:Azure.Core.RequestMethod">
+            <summary>
+            Represents HTTP methods sent as part of a <see cref="T:Azure.Core.Request"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestMethod.Method">
+            <summary>
+            Gets the HTTP method.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestMethod.Get">
+            <summary>
+            Gets <see cref="T:Azure.Core.RequestMethod"/> instance for GET method.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestMethod.Post">
+            <summary>
+            Gets <see cref="T:Azure.Core.RequestMethod"/> instance for POST method.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestMethod.Put">
+            <summary>
+            Gets <see cref="T:Azure.Core.RequestMethod"/> instance for PUT method.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestMethod.Patch">
+            <summary>
+            Gets <see cref="T:Azure.Core.RequestMethod"/> instance for PATCH method.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestMethod.Delete">
+            <summary>
+            Gets <see cref="T:Azure.Core.RequestMethod"/> instance for DELETE method.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestMethod.Head">
+            <summary>
+            Gets <see cref="T:Azure.Core.RequestMethod"/> instance for HEAD method.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.RequestMethod.#ctor(System.String)">
+            <summary>
+            Creates an instance of <see cref="T:Azure.Core.RequestMethod"/> with provided method. Method must be all uppercase.
+            Prefer <see cref="M:Azure.Core.RequestMethod.Parse(System.String)"/> if <paramref name="method"/> can be one of predefined method names.
+            </summary>
+            <param name="method">The method to use.</param>
+        </member>
+        <member name="M:Azure.Core.RequestMethod.Parse(System.String)">
+            <summary>
+            Parses string to it's <see cref="T:Azure.Core.RequestMethod"/> representation.
+            </summary>
+            <param name="method">The method string to parse.</param>
+        </member>
+        <member name="M:Azure.Core.RequestMethod.Equals(Azure.Core.RequestMethod)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.RequestMethod.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.RequestMethod.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Core.RequestMethod.op_Equality(Azure.Core.RequestMethod,Azure.Core.RequestMethod)">
+            <summary>
+            Compares equality of two <see cref="T:Azure.Core.RequestMethod"/> instances.
+            </summary>
+            <param name="left">The method to compare.</param>
+            <param name="right">The method to compare against.</param>
+            <returns><c>true</c> if <see cref="P:Azure.Core.RequestMethod.Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestMethod.op_Inequality(Azure.Core.RequestMethod,Azure.Core.RequestMethod)">
+            <summary>
+            Compares inequality of two <see cref="T:Azure.Core.RequestMethod"/> instances.
+            </summary>
+            <param name="left">The method to compare.</param>
+            <param name="right">The method to compare against.</param>
+            <returns><c>true</c> if <see cref="P:Azure.Core.RequestMethod.Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.RequestMethod.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Azure.Core.RequestUriBuilder">
+            <summary>
+            Provides a custom constructor for uniform resource identifiers (URIs) and modifies URIs for the <see cref="T:System.Uri" /> class.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestUriBuilder.Scheme">
+            <summary>
+            Gets or sets the scheme name of the URI.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestUriBuilder.Host">
+            <summary>
+            Gets or sets the Domain Name System (DNS) host name or IP address of a server.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestUriBuilder.Port">
+            <summary>
+            Gets or sets the port number of the URI.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestUriBuilder.Query">
+            <summary>
+            Gets or sets any query information included in the URI.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestUriBuilder.Path">
+            <summary>
+            Gets or sets the password associated with the user that accesses the URI and the query information.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RequestUriBuilder.PathAndQuery">
+            <summary>
+            Gets the path to the resource referenced by the URI.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.RequestUriBuilder.Reset(System.Uri)">
+            <summary>
+            Replaces values inside this instance with values provided in <paramref name="value"/> parameter.
+            </summary>
+            <param name="value">The <see cref="T:System.Uri"/> instance to get values from.</param>
+        </member>
+        <member name="M:Azure.Core.RequestUriBuilder.ToUri">
+            <summary>
+            Gets the <see cref="T:System.Uri"></see> instance constructed by the specified <see cref="T:Azure.Core.RequestUriBuilder"/> instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.Uri"></see> that contains the URI constructed by the <see cref="T:Azure.Core.RequestUriBuilder"/>.
+            </returns>
+        </member>
+        <member name="M:Azure.Core.RequestUriBuilder.AppendQuery(System.String,System.String)">
+            <summary>
+            Appends a query parameter adding separator if required. Escapes the value.
+            </summary>
+            <param name="name">The name of parameter.</param>
+            <param name="value">The value of parameter.</param>
+        </member>
+        <member name="M:Azure.Core.RequestUriBuilder.AppendQuery(System.String,System.String,System.Boolean)">
+            <summary>
+            Appends a query parameter adding separator if required.
+            </summary>
+            <param name="name">The name of parameter.</param>
+            <param name="value">The value of parameter.</param>
+            <param name="escapeValue">Whether value should be escaped.</param>
+        </member>
+        <member name="M:Azure.Core.RequestUriBuilder.AppendPath(System.String)">
+            <summary>
+            Appends escaped <paramref name="value"/> to <see cref="P:Azure.Core.RequestUriBuilder.Path"/> without adding path separator.
+            </summary>
+            <param name="value">The value to append.</param>
+        </member>
+        <member name="M:Azure.Core.RequestUriBuilder.AppendPath(System.String,System.Boolean)">
+            <summary>
+            Appends optionally escaped <paramref name="value"/> to <see cref="P:Azure.Core.RequestUriBuilder.Path"/> without adding path separator.
+            </summary>
+            <param name="value">The value to append.</param>
+            <param name="escape">Whether value should be escaped.</param>
+        </member>
+        <member name="M:Azure.Core.RequestUriBuilder.ToString">
+            <summary>
+            Returns a string representation of this <see cref="T:Azure.Core.RequestUriBuilder"/> i.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Azure.Core.ResponseClassifier">
+            <summary>
+            A type that analyzes HTTP responses and exceptions and determines if they should be retried.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ResponseClassifier.IsRetriableResponse(Azure.Core.HttpMessage)">
+            <summary>
+            Specifies if the request contained in the <paramref name="message"/> should be retried.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ResponseClassifier.IsRetriableException(System.Exception)">
+            <summary>
+            Specifies if the operation that caused the exception should be retried.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ResponseClassifier.IsErrorResponse(Azure.Core.HttpMessage)">
+            <summary>
+            Specifies if the response contained in the <paramref name="message"/> is not successful.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.ResponseHeaders">
+            <summary>
+            Headers received as part of the <see cref="T:Azure.Response"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ResponseHeaders.Date">
+            <summary>
+            Gets the parsed value of "Date" or "x-ms-date" header.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ResponseHeaders.ContentType">
+            <summary>
+            Gets the value of "Content-Type" header.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ResponseHeaders.ContentLength">
+            <summary>
+            Gets the parsed value of "Content-Length" header.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ResponseHeaders.ETag">
+            <summary>
+            Gets the parsed value of "ETag" header.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ResponseHeaders.RequestId">
+            <summary>
+            Gets the value of "x-ms-request-id" header.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ResponseHeaders.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the <see cref="T:Azure.Core.ResponseHeaders"/>.
+            </summary>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1"/> for the <see cref="T:Azure.Core.ResponseHeaders"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.ResponseHeaders.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the <see cref="T:Azure.Core.ResponseHeaders"/>.
+            </summary>
+            <returns>A <see cref="T:System.Collections.IEnumerator"/> for the <see cref="T:Azure.Core.ResponseHeaders"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.ResponseHeaders.TryGetValue(System.String,System.String@)">
+            <summary>
+            Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The reference to populate with value.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.ResponseHeaders.TryGetValues(System.String,System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            Returns header values if the header is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="values">The reference to populate with values.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Core.ResponseHeaders.Contains(System.String)">
+            <summary>
+            Returns <c>true</c> if the header is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="T:Azure.Core.RetryMode">
+            <summary>
+            The type of approach to apply when calculating the delay
+            between retry attempts.
+            </summary>
+        </member>
+        <member name="F:Azure.Core.RetryMode.Fixed">
+            <summary>
+            Retry attempts happen at fixed intervals; each delay is a consistent duration.
+            </summary>
+        </member>
+        <member name="F:Azure.Core.RetryMode.Exponential">
+            <summary>
+            Retry attempts will delay based on a backoff strategy, where each attempt will increase
+            the duration that it waits before retrying.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.RetryOptions">
+            <summary>
+             The set of options that can be specified to influence how
+             retry attempts are made, and a failure is eligible to be retried.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RetryOptions.MaxRetries">
+            <summary>
+            The maximum number of retry attempts before giving up.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RetryOptions.Delay">
+            <summary>
+            The delay between retry attempts for a fixed approach or the delay
+            on which to base calculations for a backoff-based approach.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RetryOptions.MaxDelay">
+            <summary>
+            The maximum permissible delay between retry attempts.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.RetryOptions.Mode">
+            <summary>
+            The approach to use for calculating retry delays.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.TokenCredential">
+            <summary>
+            Represents a credential capable of providing an OAuth token.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.TokenCredential.GetTokenAsync(Azure.Core.TokenRequestContext,System.Threading.CancellationToken)">
+            <summary>
+            Gets an <see cref="T:Azure.Core.AccessToken"/> for the specified set of scopes.
+            </summary>
+            <param name="requestContext">The <see cref="T:Azure.Core.TokenRequestContext"/> with authentication information.</param>
+            <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken"/> to use.</param>
+            <returns>A valid <see cref="T:Azure.Core.AccessToken"/>.</returns>
+        </member>
+        <member name="M:Azure.Core.TokenCredential.GetToken(Azure.Core.TokenRequestContext,System.Threading.CancellationToken)">
+            <summary>
+            Gets an <see cref="T:Azure.Core.AccessToken"/> for the specified set of scopes.
+            </summary>
+            <param name="requestContext">The <see cref="T:Azure.Core.TokenRequestContext"/> with authentication information.</param>
+            <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken"/> to use.</param>
+            <returns>A valid <see cref="T:Azure.Core.AccessToken"/>.</returns>
+        </member>
+        <member name="T:Azure.Core.TokenRequestContext">
+            <summary>
+            Contains the details of an authentication token request.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.TokenRequestContext.#ctor(System.String[],System.String)">
+            <summary>
+            Creates a new TokenRequest with the specified scopes.
+            </summary>
+            <param name="scopes">The scopes required for the token.</param>
+            <param name="parentRequestId">The <see cref="P:Azure.Core.Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.</param>
+        </member>
+        <member name="P:Azure.Core.TokenRequestContext.Scopes">
+            <summary>
+            The scopes required for the token.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.TokenRequestContext.ParentRequestId">
+            <summary>
+            The <see cref="P:Azure.Core.Request.ClientRequestId"/> of the request requiring a token for authentication, if applicable.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.Argument">
+            <summary>
+            Argument validation.
+            </summary>
+            <remarks>
+              <para>This class should be shared via source using Azure.Core.props and contain only common argument validation.
+                It is declared partial so that you can use the same familiar class name but extend it with project-specific validation.
+                To extend the functionality of this class, just declare your own partial <see cref="T:Azure.Core.Argument"/> class with project-specific methods.
+              </para>
+              <para>
+                Be sure to document exceptions thrown by these methods on your public methods.
+              </para>
+            </remarks>
+        </member>
+        <member name="M:Azure.Core.Argument.AssertNotNull``1(``0,System.String)">
+            <summary>
+            Throws if <paramref name="value"/> is null.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="name">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+        </member>
+        <member name="M:Azure.Core.Argument.AssertNotNull``1(System.Nullable{``0},System.String)">
+            <summary>
+            Throws if <paramref name="value"/> has not been initialized.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="name">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> has not been initialized.</exception>
+        </member>
+        <member name="M:Azure.Core.Argument.AssertNotNullOrEmpty``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Throws if <paramref name="value"/> is null or an empty collection.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="name">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="value"/> is an empty collection.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+        </member>
+        <member name="M:Azure.Core.Argument.AssertNotNullOrEmpty(System.String,System.String)">
+            <summary>
+            Throws if <paramref name="value"/> is null or an empty string.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="name">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="value"/> is an empty string.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+        </member>
+        <member name="M:Azure.Core.Argument.AssertNotNullOrWhiteSpace(System.String,System.String)">
+            <summary>
+            Throws if <paramref name="value"/> is null, an empty string, or consists only of white-space characters.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="name">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="value"/> is an empty string or consists only of white-space characters.</exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+        </member>
+        <member name="M:Azure.Core.Argument.AssertNotDefault``1(``0@,System.String)">
+            <summary>
+            Throws if <paramref name="value"/> is the default value for type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The type of structure to validate which implements <see cref="T:System.IEquatable`1"/>.</typeparam>
+            <param name="value">The value to validate.</param>
+            <param name="name">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentException"><paramref name="value"/> is the default value for type <typeparamref name="T"/>.</exception>
+        </member>
+        <member name="M:Azure.Core.Argument.AssertInRange``1(``0,``0,``0,System.String)">
+            <summary>
+            Throws if <paramref name="value"/> is less than the <paramref name="minimum"/> or greater than the <paramref name="maximum"/>.
+            </summary>
+            <typeparam name="T">The type of to validate which implements <see cref="T:System.IComparable`1"/>.</typeparam>
+            <param name="value">The value to validate.</param>
+            <param name="minimum">The minimum value to compare.</param>
+            <param name="maximum">The maximum value to compare.</param>
+            <param name="name">The name of the parameter.</param>
+        </member>
+        <member name="T:Azure.Core.HashCodeBuilder">
+            <summary>
+            Copied from https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/HashCode.cs.
+            </summary>
+        </member>
+        <member name="T:Azure.AsyncPageable`1">
+            <summary>
+            A collection of values that may take multiple service requests to
+            iterate over.
+            </summary>
+            <typeparam name="T">The type of the values.</typeparam>
+        </member>
+        <member name="P:Azure.AsyncPageable`1.CancellationToken">
+            <summary>
+            Gets a <see cref="P:Azure.AsyncPageable`1.CancellationToken"/> used for requests made while
+            enumerating asynchronously.
+            </summary>
+        </member>
+        <member name="M:Azure.AsyncPageable`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.AsyncPageable`1"/>
+            class for mocking.
+            </summary>
+        </member>
+        <member name="M:Azure.AsyncPageable`1.#ctor(System.Threading.CancellationToken)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.AsyncPageable`1"/>
+            class.
+            </summary>
+            <param name="cancellationToken">
+            The <see cref="P:Azure.AsyncPageable`1.CancellationToken"/> used for requests made while
+            enumerating asynchronously.
+            </param>
+        </member>
+        <member name="M:Azure.AsyncPageable`1.AsPages(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Enumerate the values a <see cref="T:Azure.Page`1"/> at a time.  This may
+            make multiple service requests.
+            </summary>
+            <param name="continuationToken">
+            A continuation token indicating where to resume paging or null to
+            begin paging from the beginning.
+            </param>
+            <param name="pageSizeHint">
+            The size of <see cref="T:Azure.Page`1"/>s that should be requested (from
+            service operations that support it).
+            </param>
+            <returns>
+            An async sequence of <see cref="T:Azure.Page`1"/>s.
+            </returns>
+        </member>
+        <member name="M:Azure.AsyncPageable`1.GetAsyncEnumerator(System.Threading.CancellationToken)">
+            <summary>
+            Enumerate the values in the collection asynchronously.  This may
+            make multiple service requests.
+            </summary>
+            <param name="cancellationToken">
+            The <see cref="P:Azure.AsyncPageable`1.CancellationToken"/> used for requests made while
+            enumerating asynchronously.
+            </param>
+            <returns>An async sequence of values.</returns>
+        </member>
+        <member name="M:Azure.AsyncPageable`1.ToString">
+            <summary>
+            Creates a string representation of an <see cref="T:Azure.AsyncPageable`1"/>.
+            </summary>
+            <returns>
+            A string representation of an <see cref="T:Azure.AsyncPageable`1"/>.
+            </returns>
+        </member>
+        <member name="M:Azure.AsyncPageable`1.Equals(System.Object)">
+            <summary>
+            Check if two <see cref="T:Azure.AsyncPageable`1"/> instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.AsyncPageable`1.GetHashCode">
+            <summary>
+            Get a hash code for the <see cref="T:Azure.AsyncPageable`1"/>.
+            </summary>
+            <returns>Hash code for the <see cref="T:Azure.Page`1"/>.</returns>
+        </member>
+        <member name="T:Azure.ETag">
+            <summary>
+            Represents an HTTP ETag.
+            </summary>
+        </member>
+        <member name="M:Azure.ETag.#ctor(System.String)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.ETag"/>.
+            </summary>
+            <param name="etag">The string value of the ETag.</param>
+        </member>
+        <member name="M:Azure.ETag.op_Equality(Azure.ETag,Azure.ETag)">
+            <summary>
+            Compares equality of two <see cref="T:Azure.ETag"/> instances.
+            </summary>
+            <param name="left">The <see cref="T:Azure.ETag"/> to compare.</param>
+            <param name="right">The <see cref="T:Azure.ETag"/> to compare to.</param>
+            <returns><c>true</c> if values of both ETags are equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.ETag.op_Inequality(Azure.ETag,Azure.ETag)">
+            <summary>
+            Compares inequality of two <see cref="T:Azure.ETag"/> instances.
+            </summary>
+            <param name="left">The <see cref="T:Azure.ETag"/> to compare.</param>
+            <param name="right">The <see cref="T:Azure.ETag"/> to compare to.</param>
+            <returns><c>true</c> if values of both ETags are not equal, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="F:Azure.ETag.All">
+            <summary>
+            Instance of <see cref="T:Azure.ETag"/> with the value. <code>*</code>
+            </summary>
+        </member>
+        <member name="M:Azure.ETag.Equals(Azure.ETag)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.ETag.Equals(System.String)">
+            <summary>
+            Indicates whether the value of current <see cref="T:Azure.ETag"/> is equal to the provided string.</summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>true if the current object is equal to the <paramref name="other">other</paramref> parameter; otherwise, false.</returns>
+        </member>
+        <member name="M:Azure.ETag.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.ETag.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.ETag.ToString">
+             <summary>
+            
+             </summary>
+             <returns>The string representation of this <see cref="T:Azure.ETag"/>.</returns>
+        </member>
+        <member name="T:Azure.HttpRange">
+            <summary>
+            Defines a range of bytes within an HTTP resource, starting at an offset and
+            ending at offset+count-1 inclusively.
+            </summary>
+        </member>
+        <member name="P:Azure.HttpRange.Offset">
+            <summary>
+            Gets the starting offset of the <see cref="T:Azure.HttpRange"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.HttpRange.Length">
+            <summary>
+            Gets the size of the <see cref="T:Azure.HttpRange"/>.  null means the range
+            extends all the way to the end.
+            </summary>
+        </member>
+        <member name="M:Azure.HttpRange.#ctor(System.Int64,System.Nullable{System.Int64})">
+            <summary>
+            Creates an instance of HttpRange.
+            </summary>
+            <param name="offset">The starting offset of the <see cref="T:Azure.HttpRange"/>. Defaults to 0.</param>
+            <param name="length">The length of the range. null means to the end.</param>
+        </member>
+        <member name="M:Azure.HttpRange.ToString">
+            <summary>
+            Converts the specified range to a string.
+            </summary>
+            <returns>String representation of the range.</returns>
+            <remarks>For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-the-range-header-for-file-service-operations. </remarks>
+        </member>
+        <member name="M:Azure.HttpRange.op_Equality(Azure.HttpRange,Azure.HttpRange)">
+            <summary>
+            Check if two <see cref="T:Azure.HttpRange"/> instances are equal.
+            </summary>
+            <param name="left">The first instance to compare.</param>
+            <param name="right">The second instance to compare.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.HttpRange.op_Inequality(Azure.HttpRange,Azure.HttpRange)">
+            <summary>
+            Check if two <see cref="T:Azure.HttpRange"/> instances are not equal.
+            </summary>
+            <param name="left">The first instance to compare.</param>
+            <param name="right">The second instance to compare.</param>
+            <returns>True if they're not equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.HttpRange.Equals(Azure.HttpRange)">
+            <summary>
+            Check if two <see cref="T:Azure.HttpRange"/> instances are equal.
+            </summary>
+            <param name="other">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.HttpRange.Equals(System.Object)">
+            <summary>
+            Check if two <see cref="T:Azure.HttpRange"/> instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.HttpRange.GetHashCode">
+            <summary>
+            Get a hash code for the <see cref="T:Azure.HttpRange"/>.
+            </summary>
+            <returns>Hash code for the <see cref="T:Azure.HttpRange"/>.</returns>
+        </member>
+        <member name="T:Azure.MatchConditions">
+            <summary>
+            Specifies HTTP options for conditional requests.
+            </summary>
+        </member>
+        <member name="P:Azure.MatchConditions.IfMatch">
+            <summary>
+            Optionally limit requests to resources that have a matching ETag.
+            </summary>
+        </member>
+        <member name="P:Azure.MatchConditions.IfNoneMatch">
+            <summary>
+            Optionally limit requests to resources that do not match the ETag.
+            </summary>
+        </member>
+        <member name="T:Azure.Operation`1">
+            <summary>
+            Represents a long running operation (LRO).
+            </summary>
+            <typeparam name="T">The final result of the LRO.</typeparam>
+        </member>
+        <member name="P:Azure.Operation`1.Id">
+            <summary>
+            Gets an ID representing the operation that can be used to poll for
+            the status of the LRO.
+            </summary>
+        </member>
+        <member name="P:Azure.Operation`1.Value">
+            <summary>
+            Final result of the LRO.
+            </summary>
+            <remarks>
+            This property can be accessed only after the operation completes successfully (HasValue is true).
+            </remarks>
+        </member>
+        <member name="M:Azure.Operation`1.GetRawResponse">
+            <summary>
+            The last HTTP response received from the server.
+            </summary>
+            <remarks>
+            The last response returned from the server during the lifecycle of this instance.
+            An instance of Operation<typeparamref name="T"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
+            Responses from these requests can be accessed using GetRawResponse.
+            </remarks>
+        </member>
+        <member name="P:Azure.Operation`1.HasCompleted">
+            <summary>
+            Returns true if the LRO completed.
+            </summary>
+        </member>
+        <member name="P:Azure.Operation`1.HasValue">
+            <summary>
+            Returns true if the LRO completed successfully and has produced final result (accessible by Value property).
+            </summary>
+        </member>
+        <member name="M:Azure.Operation`1.WaitForCompletionAsync(System.Threading.CancellationToken)">
+            <summary>
+            Periodically calls the server till the LRO completes.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <remarks>
+            This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+            </remarks>
+        </member>
+        <member name="M:Azure.Operation`1.WaitForCompletionAsync(System.TimeSpan,System.Threading.CancellationToken)">
+            <summary>
+            Periodically calls the server till the LRO completes.
+            </summary>
+            <param name="pollingInterval">
+            The interval between status requests to the server.
+            The interval can change based on information returned from the server.
+            For example, the server might communicate to the client that there is not reason to poll for status change sooner than some time.
+            </param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <remarks>
+            This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+            </remarks>
+        </member>
+        <member name="M:Azure.Operation`1.UpdateStatusAsync(System.Threading.CancellationToken)">
+            <summary>
+            Calls the server to get updated status of the LRO.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <remarks>
+            This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+            </remarks>
+        </member>
+        <member name="M:Azure.Operation`1.UpdateStatus(System.Threading.CancellationToken)">
+            <summary>
+            Calls the server to get updated status of the LRO.
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <remarks>
+            This operation will update the value returned from GetRawResponse and might update HasCompleted, HasValue, and Value.
+            </remarks>
+        </member>
+        <member name="M:Azure.Operation`1.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Operation`1.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Operation`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Azure.Page`1">
+            <summary>
+            A single <see cref="T:Azure.Page`1"/> of values from a request that may return
+            zero or more <see cref="T:Azure.Page`1"/>s of values.
+            </summary>
+            <typeparam name="T">The type of values.</typeparam>
+        </member>
+        <member name="P:Azure.Page`1.Values">
+            <summary>
+            Gets the values in this <see cref="T:Azure.Page`1"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Page`1.ContinuationToken">
+            <summary>
+            Gets the continuation token used to request the next
+            <see cref="T:Azure.Page`1"/>.  The continuation token may be null or
+            empty when there are no more pages.
+            </summary>
+        </member>
+        <member name="M:Azure.Page`1.GetRawResponse">
+            <summary>
+            Gets the <see cref="T:Azure.Response"/> that provided this
+            <see cref="T:Azure.Page`1"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Page`1.FromValues(System.Collections.Generic.IReadOnlyList{`0},System.String,Azure.Response)">
+            <summary>
+            Creates a new <see cref="T:Azure.Page`1"/>.
+            </summary>
+            <param name="values">
+            The values in this <see cref="T:Azure.Page`1"/>.
+            </param>
+            <param name="continuationToken">
+            The continuation token used to request the next <see cref="T:Azure.Page`1"/>.
+            </param>
+            <param name="response">
+            The <see cref="T:Azure.Response"/> that provided this <see cref="T:Azure.Page`1"/>.
+            </param>
+        </member>
+        <member name="M:Azure.Page`1.ToString">
+            <summary>
+            Creates a string representation of an <see cref="T:Azure.Page`1"/>.
+            </summary>
+            <returns>
+            A string representation of an <see cref="T:Azure.Page`1"/>.
+            </returns>
+        </member>
+        <member name="M:Azure.Page`1.Equals(System.Object)">
+            <summary>
+            Check if two <see cref="T:Azure.Page`1"/> instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Page`1.GetHashCode">
+            <summary>
+            Get a hash code for the <see cref="T:Azure.Page`1"/>.
+            </summary>
+            <returns>Hash code for the <see cref="T:Azure.Page`1"/>.</returns>
+        </member>
+        <member name="T:Azure.Pageable`1">
+            <summary>
+            A collection of values that may take multiple service requests to
+            iterate over.
+            </summary>
+            <typeparam name="T">The type of the values.</typeparam>
+        </member>
+        <member name="P:Azure.Pageable`1.CancellationToken">
+            <summary>
+            Gets a <see cref="P:Azure.Pageable`1.CancellationToken"/> used for requests made while
+            enumerating asynchronously.
+            </summary>
+        </member>
+        <member name="M:Azure.Pageable`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.Pageable`1"/>
+            class for mocking.
+            </summary>
+        </member>
+        <member name="M:Azure.Pageable`1.#ctor(System.Threading.CancellationToken)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.Pageable`1"/>
+            class.
+            </summary>
+            <param name="cancellationToken">
+            The <see cref="P:Azure.Pageable`1.CancellationToken"/> used for requests made while
+            enumerating asynchronously.
+            </param>
+        </member>
+        <member name="M:Azure.Pageable`1.AsPages(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Enumerate the values a <see cref="T:Azure.Page`1"/> at a time.  This may
+            make multiple service requests.
+            </summary>
+            <param name="continuationToken">
+            A continuation token indicating where to resume paging or null to
+            begin paging from the beginning.
+            </param>
+            <param name="pageSizeHint">
+            The size of <see cref="T:Azure.Page`1"/>s that should be requested (from
+            service operations that support it).
+            </param>
+            <returns>
+            An async sequence of <see cref="T:Azure.Page`1"/>s.
+            </returns>
+        </member>
+        <member name="M:Azure.Pageable`1.ToString">
+            <summary>
+            Creates a string representation of an <see cref="T:Azure.Pageable`1"/>.
+            </summary>
+            <returns>
+            A string representation of an <see cref="T:Azure.Pageable`1"/>.
+            </returns>
+        </member>
+        <member name="M:Azure.Pageable`1.GetEnumerator">
+            <summary>
+            Enumerate the values in the collection.  This may make multiple service requests.
+            </summary>
+        </member>
+        <member name="M:Azure.Pageable`1.Equals(System.Object)">
+            <summary>
+            Check if two <see cref="T:Azure.Pageable`1"/> instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Pageable`1.GetHashCode">
+            <summary>
+            Get a hash code for the <see cref="T:Azure.Pageable`1"/>.
+            </summary>
+            <returns>Hash code for the <see cref="T:Azure.Pageable`1"/>.</returns>
+        </member>
+        <member name="T:Azure.RequestConditions">
+            <summary>
+            Specifies HTTP options for conditional requests based on modification time.
+            </summary>
+        </member>
+        <member name="P:Azure.RequestConditions.IfModifiedSince">
+            <summary>
+            Optionally limit requests to resources that have only been
+            modified since this point in time.
+            </summary>
+        </member>
+        <member name="P:Azure.RequestConditions.IfUnmodifiedSince">
+            <summary>
+            Optionally limit requests to resources that have remained
+            unmodified.
+            </summary>
+        </member>
+        <member name="T:Azure.RequestFailedException">
+            <summary>
+            An exception thrown when service request fails.
+            </summary>
+        </member>
+        <member name="P:Azure.RequestFailedException.Status">
+            <summary>
+            Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
+            </summary>
+        </member>
+        <member name="P:Azure.RequestFailedException.ErrorCode">
+            <summary>
+            Gets the service specific error code if available. Please refer to the client documentation for the list of supported error codes.
+            </summary>
+        </member>
+        <member name="M:Azure.RequestFailedException.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:Azure.RequestFailedException"></see> class with a specified error message.</summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Azure.RequestFailedException.#ctor(System.String,System.Exception)">
+            <summary>Initializes a new instance of the <see cref="T:Azure.RequestFailedException"></see> class with a specified error message, HTTP status code and a reference to the inner exception that is the cause of this exception.</summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:Azure.RequestFailedException.#ctor(System.Int32,System.String)">
+            <summary>Initializes a new instance of the <see cref="T:Azure.RequestFailedException"></see> class with a specified error message and HTTP status code.</summary>
+            <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Azure.RequestFailedException.#ctor(System.Int32,System.String,System.Exception)">
+            <summary>Initializes a new instance of the <see cref="T:Azure.RequestFailedException"></see> class with a specified error message and a reference to the inner exception that is the cause of this exception.</summary>
+            <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:Azure.RequestFailedException.#ctor(System.Int32,System.String,System.String,System.Exception)">
+            <summary>Initializes a new instance of the <see cref="T:Azure.RequestFailedException"></see> class with a specified error message, HTTP status code, error code, and a reference to the inner exception that is the cause of this exception.</summary>
+            <param name="status">The HTTP status code, or <c>0</c> if not available.</param>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="errorCode">The service specific error code.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="T:Azure.Response">
+            <summary>
+            Represents the HTTP response from the service.
+            </summary>
+        </member>
+        <member name="P:Azure.Response.Status">
+            <summary>
+            Gets the HTTP status code.
+            </summary>
+        </member>
+        <member name="P:Azure.Response.ReasonPhrase">
+            <summary>
+            Gets the HTTP reason phrase.
+            </summary>
+        </member>
+        <member name="P:Azure.Response.ContentStream">
+            <summary>
+            Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
+            </summary>
+        </member>
+        <member name="P:Azure.Response.ClientRequestId">
+            <summary>
+            Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
+            </summary>
+        </member>
+        <member name="P:Azure.Response.Headers">
+            <summary>
+            Get the HTTP response headers.
+            </summary>
+        </member>
+        <member name="M:Azure.Response.Dispose">
+            <summary>
+            Frees resources held by this <see cref="T:Azure.Response"/> instance.
+            </summary>
+        </member>
+        <member name="M:Azure.Response.TryGetHeader(System.String,System.String@)">
+            <summary>
+            Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="value">The reference to populate with value.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Response.TryGetHeaderValues(System.String,System.Collections.Generic.IEnumerable{System.String}@)">
+            <summary>
+            Returns header values if the header is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <param name="values">The reference to populate with values.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Response.ContainsHeader(System.String)">
+            <summary>
+            Returns <c>true</c> if the header is stored in the collection.
+            </summary>
+            <param name="name">The header name.</param>
+            <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Response.EnumerateHeaders">
+            <summary>
+            Returns an iterator for enumerating <see cref="T:Azure.Core.HttpHeader"/> in the response.
+            </summary>
+            <returns>The <see cref="T:System.Collections.Generic.IEnumerable`1"/> enumerating <see cref="T:Azure.Core.HttpHeader"/> in the response.</returns>
+        </member>
+        <member name="M:Azure.Response.FromValue``1(``0,Azure.Response)">
+            <summary>
+            Creates a new instance of <see cref="T:Azure.Response`1"/> with the provided value and HTTP response.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="value">The value.</param>
+            <param name="response">The HTTP response.</param>
+            <returns>A new instance of <see cref="T:Azure.Response`1"/> with the provided value and HTTP response.</returns>
+        </member>
+        <member name="M:Azure.Response.ToString">
+            <summary>
+            Returns the string representation of this <see cref="T:Azure.Response"/>.
+            </summary>
+            <returns>The string representation of this <see cref="T:Azure.Response"/></returns>
+        </member>
+        <member name="T:Azure.Response`1">
+            <summary>
+            Represents a result of Azure operation.
+            </summary>
+            <typeparam name="T">The type of returned value.</typeparam>
+        </member>
+        <member name="M:Azure.Response`1.GetRawResponse">
+            <summary>
+            Returns the HTTP response returned by the service.
+            </summary>
+            <returns>The HTTP response returned by the service.</returns>
+        </member>
+        <member name="P:Azure.Response`1.Value">
+            <summary>
+            Gets the value returned by the service.
+            </summary>
+        </member>
+        <member name="M:Azure.Response`1.op_Implicit(Azure.Response{`0})~`0">
+            <summary>
+            Returns the value of this <see cref="T:Azure.Response`1"/> object.
+            </summary>
+            <param name="response">The <see cref="T:Azure.Response`1"/> instance.</param>
+        </member>
+        <member name="M:Azure.Response`1.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Response`1.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:Azure.Response`1.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.AllowNullAttribute">
+            <summary>Specifies that null is allowed as an input even if the corresponding type disallows it.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.DisallowNullAttribute">
+            <summary>Specifies that null is disallowed as an input even if the corresponding type allows it.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.MaybeNullAttribute">
+            <summary>Specifies that an output may be null even if the corresponding type disallows it.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.NotNullAttribute">
+            <summary>Specifies that an output will not be null even if the corresponding type allows it.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute">
+            <summary>Specifies that when a method returns <see cref="P:System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute.ReturnValue"/>, the parameter may be null even if the corresponding type disallows it.</summary>
+        </member>
+        <member name="M:System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute.#ctor(System.Boolean)">
+            <summary>Initializes the attribute with the specified return value condition.</summary>
+            <param name="returnValue">
+            The return value condition. If the method returns this value, the associated parameter may be null.
+            </param>
+        </member>
+        <member name="P:System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute.ReturnValue">
+            <summary>Gets the return value condition.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute">
+            <summary>Specifies that when a method returns <see cref="P:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.ReturnValue"/>, the parameter will not be null even if the corresponding type allows it.</summary>
+        </member>
+        <member name="M:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.#ctor(System.Boolean)">
+            <summary>Initializes the attribute with the specified return value condition.</summary>
+            <param name="returnValue">
+            The return value condition. If the method returns this value, the associated parameter will not be null.
+            </param>
+        </member>
+        <member name="P:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.ReturnValue">
+            <summary>Gets the return value condition.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute">
+            <summary>Specifies that the output will be non-null if the named parameter is non-null.</summary>
+        </member>
+        <member name="M:System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute.#ctor(System.String)">
+            <summary>Initializes the attribute with the associated parameter name.</summary>
+            <param name="parameterName">
+            The associated parameter name.  The output will be non-null if the argument to the parameter specified is non-null.
+            </param>
+        </member>
+        <member name="P:System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute.ParameterName">
+            <summary>Gets the associated parameter name.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute">
+            <summary>Applied to a method that will never return under any circumstance.</summary>
+        </member>
+        <member name="T:System.Diagnostics.CodeAnalysis.DoesNotReturnIfAttribute">
+            <summary>Specifies that the method will not return if the associated Boolean parameter is passed the specified value.</summary>
+        </member>
+        <member name="M:System.Diagnostics.CodeAnalysis.DoesNotReturnIfAttribute.#ctor(System.Boolean)">
+            <summary>Initializes the attribute with the specified parameter value.</summary>
+            <param name="parameterValue">
+            The condition parameter value. Code after the method will be considered unreachable by diagnostics if the argument to
+            the associated parameter matches this value.
+            </param>
+        </member>
+        <member name="P:System.Diagnostics.CodeAnalysis.DoesNotReturnIfAttribute.ParameterValue">
+            <summary>Gets the condition parameter value.</summary>
+        </member>
+    </members>
+</doc>

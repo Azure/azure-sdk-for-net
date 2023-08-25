@@ -1,0 +1,1102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.ComponentModel.Annotations</name>
+  </assembly>
+  <members>
+    <member name="T:System.ComponentModel.DataAnnotations.AssociationAttribute">
+      <summary>엔터티 멤버에서 외래 키 관계와 같은 데이터 관계를 나타내도록 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.AssociationAttribute.#ctor(System.String,System.String,System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.AssociationAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="name">연결의 이름입니다. </param>
+      <param name="thisKey">연결의 <paramref name="thisKey" /> 쪽에 있는 키 값의 속성 이름을 표시하는 쉼표로 구분된 목록입니다.</param>
+      <param name="otherKey">연결의 <paramref name="otherKey" /> 쪽에 있는 키 값의 속성 이름을 표시하는 쉼표로 구분된 목록입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.IsForeignKey">
+      <summary>연결 멤버가 외래 키를 나타내는지 여부를 표시하는 값을 가져오거나 설정합니다.</summary>
+      <returns>연결이 외래 키를 나타내면 true이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.Name">
+      <summary>연결의 이름을 가져옵니다.</summary>
+      <returns>연결의 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey">
+      <summary>연결의 OtherKey 쪽에 있는 키 값의 속성 이름을 가져옵니다.</summary>
+      <returns>연결의 OtherKey 쪽에 있는 키 값을 나타내는 속성 이름의 쉼표로 구분된 목록입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKeyMembers">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" /> 속성에 지정된 개별 키 멤버의 컬렉션을 가져옵니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" /> 속성에 지정된 개별 키 멤버의 컬렉션입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey">
+      <summary>연결의 ThisKey 쪽에 있는 키 값의 속성 이름을 가져옵니다.</summary>
+      <returns>연결의 ThisKey 쪽에 있는 키 값을 나타내는 속성 이름의 쉼표로 구분된 목록입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKeyMembers">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" /> 속성에 지정된 개별 키 멤버의 컬렉션을 가져옵니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" /> 속성에 지정된 개별 키 멤버의 컬렉션입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CompareAttribute">
+      <summary>두 속성을 비교하는 특성을 제공합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.CompareAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="otherProperty">현재 속성과 비교할 속성입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.FormatErrorMessage(System.String)">
+      <summary>오류가 발생한 데이터 필드를 기반으로 하여 오류 메시지에 서식을 적용합니다.</summary>
+      <returns>형식이 지정된 오류 메시지입니다.</returns>
+      <param name="name">유효성 검사 오류를 발생시킨 필드의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>지정된 개체가 유효한지 여부를 확인합니다.</summary>
+      <returns>
+        <paramref name="value" />가 올바르면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 개체입니다.</param>
+      <param name="validationContext">유효성 검사 요청에 대한 정보가 들어 있는 개체입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherProperty">
+      <summary>현재 속성과 비교할 속성을 가져옵니다.</summary>
+      <returns>다른 속성입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherPropertyDisplayName">
+      <summary>다른 속성의 표시 이름을 가져옵니다.</summary>
+      <returns>기타 속성의 표시 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.RequiresValidationContext">
+      <summary>특성에 유효성 검사 컨텍스트가 필요한지 여부를 나타내는 값을 가져옵니다.</summary>
+      <returns>특성에 유효성 검사 컨텍스트가 필요하면 true이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute">
+      <summary>낙관적 동시성 검사에 속성이 참여하도록 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CreditCardAttribute">
+      <summary>데이터 필드 값이 신용 카드 번호가 되도록 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.CreditCardAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.IsValid(System.Object)">
+      <summary>지정된 신용 카드 번호가 유효한지 여부를 확인합니다. </summary>
+      <returns>신용 카드 번호가 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 값입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute">
+      <summary>속성 또는 클래스 인스턴스의 유효성을 검사하는 데 사용하는 사용자 지정 유효성 검사 메서드를 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.#ctor(System.Type,System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="validatorType">사용자 지정 유효성 검사를 수행하는 메서드를 포함하는 형식입니다.</param>
+      <param name="method">사용자 지정 유효성 검사를 수행하는 메서드입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>유효성 검사 오류 메시지의 서식을 지정합니다.</summary>
+      <returns>서식 지정된 오류 메시지의 인스턴스입니다.</returns>
+      <param name="name">서식이 지정된 메시지에 포함할 이름입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.Method">
+      <summary>유효성 검사 메서드를 가져옵니다.</summary>
+      <returns>유효성 검사 메서드의 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.ValidatorType">
+      <summary>사용자 지정 유효성 검사를 수행하는 형식을 가져옵니다.</summary>
+      <returns>사용자 지정 유효성 검사를 수행하는 형식입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataType">
+      <summary>데이터 필드 및 매개 변수와 연결된 데이터 형식의 열거형을 나타냅니다. </summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.CreditCard">
+      <summary>신용 카드 번호를 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Currency">
+      <summary>통화 값을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Custom">
+      <summary>사용자 지정 데이터 형식을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Date">
+      <summary>날짜 값을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.DateTime">
+      <summary>날짜와 시간으로 표시된 시간을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Duration">
+      <summary>개체가 존재하고 있는 연속 시간을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.EmailAddress">
+      <summary>전자 메일 주소를 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Html">
+      <summary>HTML 파일을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.ImageUrl">
+      <summary>이미지의 URL을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.MultilineText">
+      <summary>여러 줄 텍스트를 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Password">
+      <summary>암호 값을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PhoneNumber">
+      <summary>전화 번호 값을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PostalCode">
+      <summary>우편 번호를 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Text">
+      <summary>표시되는 텍스트를 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Time">
+      <summary>시간 값을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Upload">
+      <summary>파일 업로드 데이터 형식을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Url">
+      <summary>URL 값을 나타냅니다.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataTypeAttribute">
+      <summary>데이터 필드에 연결할 추가 형식의 이름을 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.ComponentModel.DataAnnotations.DataType)">
+      <summary>지정된 형식 이름을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="dataType">데이터 필드에 연결할 형식의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.String)">
+      <summary>지정된 필드 템플릿 이름을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="customDataType">데이터 필드에 연결할 사용자 지정 필드 템플릿의 이름입니다.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="customDataType" />이 null이거나 빈 문자열("")인 경우 </exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.CustomDataType">
+      <summary>데이터 필드에 연결된 사용자 지정 필드 템플릿의 이름을 가져옵니다.</summary>
+      <returns>데이터 필드에 연결된 사용자 지정 필드 템플릿의 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DataType">
+      <summary>데이터 필드에 연결된 형식을 가져옵니다.</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.DataType" /> 값 중 하나입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DisplayFormat">
+      <summary>데이터 필드 표시 형식을 가져옵니다.</summary>
+      <returns>데이터 필드 표시 형식입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.GetDataTypeName">
+      <summary>데이터 필드에 연결된 형식의 이름을 반환합니다.</summary>
+      <returns>데이터 필드에 연결된 형식의 이름입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.IsValid(System.Object)">
+      <summary>데이터 필드 값이 유효한지 확인합니다.</summary>
+      <returns>항상 true입니다.</returns>
+      <param name="value">유효성을 검사할 데이터 필드 값입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayAttribute">
+      <summary>엔터티 partial 클래스의 형식과 멤버에 대해 지역화 가능한 문자열을 지정할 수 있도록 해주는 일반 용도의 특성을 제공합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.DisplayAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField">
+      <summary>이 필드를 표시하기 위해 UI를 자동으로 생성할지 여부를 나타내는 값을 가져오거나 설정합니다.</summary>
+      <returns>이 필드를 표시하기 위해 UI를 자동으로 생성해야 하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <exception cref="T:System.InvalidOperationException">속성 값이 설정되기 전에 가져오기를 시도했습니다.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter">
+      <summary>이 필드에 필터링 UI를 자동으로 표시할지 여부를 나타내는 값을 가져오거나 설정합니다. </summary>
+      <returns>이 필드에 대한 필터링을 표시하기 위해 UI를 자동으로 생성해야 하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <exception cref="T:System.InvalidOperationException">속성 값이 설정되기 전에 가져오기를 시도했습니다.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description">
+      <summary>UI에 설명을 표시하는 데 사용되는 값을 가져오거나 설정합니다.</summary>
+      <returns>UI에 설명을 표시하는 데 사용되는 값입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateField">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" /> 속성의 값을 반환합니다.</summary>
+      <returns>속성이 초기화되었으면 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" />의 값이고, 그렇지 않으면 null입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateFilter">
+      <summary>이 필드에 대한 필터링을 표시하기 위해 UI를 자동으로 생성할지 여부를 나타내는 값을 반환합니다. </summary>
+      <returns>속성이 초기화되었으면 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter" />의 값이고, 그렇지 않으면 null입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetDescription">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 속성의 값을 반환합니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />이 지정되었으며 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 속성이 리소스 키를 나타내면 지역화된 설명이고, 그렇지 않으면 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 속성의 지역화되지 않은 값입니다.</returns>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성 및 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 속성이 초기화되지만 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성에 대한 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 값과 일치하는 이름을 가진 공용 정적 속성을 찾을 수 없습니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetGroupName">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> 속성의 값을 반환합니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" />이 초기화되었으면 UI의 필드 그룹화에 사용할 값이고, 그렇지 않으면 null입니다.<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성이 지정되었으며 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> 속성이 리소스 키를 나타내면 지역화된 문자열이 반환되고, 그렇지 않으면 지역화되지 않은 문자열이 반환됩니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetName">
+      <summary>UI의 필드 표시에 사용되는 값을 반환합니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성이 지정되었으며 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 속성이 리소스 키를 나타내면 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 속성의 지역화된 문자열이고, 그렇지 않으면 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 속성의 지역화되지 않은 값입니다.</returns>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성 및 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 속성이 초기화되지만 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성에 대한 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 값과 일치하는 이름을 가진 공용 정적 속성을 찾을 수 없습니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetOrder">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" /> 속성의 값을 반환합니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" /> 속성이 설정되어 있으면 해당 값이고, 그렇지 않으면 null입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetPrompt">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 속성의 값을 반환합니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성이 지정된 경우와 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 속성이 리소스 키를 나타내는 경우 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 속성의 지역화된 문자열을 가져오고, 그렇지 않으면 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 속성의 지역화되지 않은 값을 가져옵니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetShortName">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 속성의 값을 반환합니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 속성이 지정된 경우와 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 속성이 리소스 키를 나타내는 경우 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 속성의 지역화된 문자열이고, 그렇지 않으면 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 속성의 지역화되지 않은 값입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName">
+      <summary>UI에서 필드를 그룹화하는 데 사용되는 값을 가져오거나 설정합니다.</summary>
+      <returns>UI에서 필드를 그룹화하는 데 사용되는 값입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name">
+      <summary>UI에 표시하는 데 사용되는 값을 가져오거나 설정합니다.</summary>
+      <returns>UI에 표시하는 데 사용되는 값입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order">
+      <summary>열의 순서 가중치를 가져오거나 설정합니다.</summary>
+      <returns>열의 순서 가중치입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt">
+      <summary>UI에서 프롬프트 워터마크를 설정하는 데 사용할 값을 가져오거나 설정합니다.</summary>
+      <returns>UI에 워터마크를 표시하는 데 사용할 값입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 및 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 속성에 대한 리소스를 포함하는 형식을 가져오거나 설정합니다.</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 및 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 속성을 포함하는 리소스의 형식입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName">
+      <summary>표 형태 창의 열 레이블에 사용되는 값을 가져오거나 설정합니다.</summary>
+      <returns>표 형태 창의 열 레이블에 사용되는 값입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute">
+      <summary>참조되는 테이블에서 외래 키 열로 표시되는 열을 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String)">
+      <summary>지정된 열을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+      <param name="displayColumn">표시 열로 사용할 열의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String)">
+      <summary>지정된 표시 및 정렬 열을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+      <param name="displayColumn">표시 열로 사용할 열의 이름입니다.</param>
+      <param name="sortColumn">정렬에 사용할 열의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String,System.Boolean)">
+      <summary>지정된 표시 열과 지정된 정렬 열 및 정렬 순서를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+      <param name="displayColumn">표시 열로 사용할 열의 이름입니다.</param>
+      <param name="sortColumn">정렬에 사용할 열의 이름입니다.</param>
+      <param name="sortDescending">내림차순으로 정렬하려면 true이고, 그렇지 않으면 false입니다.기본값은 false입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.DisplayColumn">
+      <summary>표시 필드로 사용할 열의 이름을 가져옵니다.</summary>
+      <returns>표시 열의 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortColumn">
+      <summary>정렬에 사용할 열의 이름을 가져옵니다.</summary>
+      <returns>정렬 열의 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortDescending">
+      <summary>내림차순으로 정렬할지 아니면 오름차순으로 정렬할지를 나타내는 값을 가져옵니다.</summary>
+      <returns>열이 내림차순으로 정렬되면 true이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute">
+      <summary>ASP.NET Dynamic Data가 데이터 필드를 표시하고 서식 지정하는 방법을 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ApplyFormatInEditMode">
+      <summary>데이터 필드가 편집 모드에 있는 경우 <see cref="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString" /> 속성에서 지정하는 서식 문자열이 필드 값에 적용되는지 여부를 나타내는 값을 가져오거나 설정합니다.</summary>
+      <returns>편집 모드에서 필드 값에 서식 문자열이 적용되면 true이고, 그렇지 않으면 false입니다.기본값은 false입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ConvertEmptyStringToNull">
+      <summary>데이터 소스에서 데이터 필드가 업데이트되는 경우 빈 문자열 값("")이 자동으로 null로 변환되는지 여부를 나타내는 값을 가져오거나 설정합니다.</summary>
+      <returns>빈 문자열 값이 자동으로 null로 변환되면 true이고, 그렇지 않으면 false입니다.기본값은 true입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString">
+      <summary>필드 값의 표시 형식을 가져오거나 설정합니다.</summary>
+      <returns>데이터 필드 값의 표시 형식을 지정하는 서식 문자열입니다.기본값은 빈 문자열("")로, 필드 값에 특정 형식이 적용되지 않음을 나타냅니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.HtmlEncode">
+      <summary>필드가 HTML 인코딩되는지 여부를 나타내는 값을 가져오거나 설정합니다.</summary>
+      <returns>필드가 HTML 인코딩되어야 하면 true이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.NullDisplayText">
+      <summary>필드 값이 null인 경우 해당 필드에 대해 표시되는 텍스트를 가져오거나 설정합니다.</summary>
+      <returns>필드 값이 null인 경우 해당 필드에 대해 표시되는 텍스트입니다.기본값은 빈 문자열("")로, 이 속성이 설정되어 있지 않음을 나타냅니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EditableAttribute">
+      <summary>데이터 필드를 편집할 수 있는지 여부를 나타냅니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EditableAttribute.#ctor(System.Boolean)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.EditableAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="allowEdit">필드를 편집할 수 있도록 지정하려면 true이고, 그렇지 않으면 false입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowEdit">
+      <summary>필드를 편집할 수 있는지 여부를 나타내는 값을 가져옵니다.</summary>
+      <returns>필드를 편집할 수 있으면 true이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowInitialValue">
+      <summary>초기 값의 사용 여부를 나타내는 값을 가져오거나 설정합니다.</summary>
+      <returns>초기 값을 사용할 수 있으면 true 이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute">
+      <summary>전자 메일 주소의 유효성을 검사합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid(System.Object)">
+      <summary>지정된 값이 유효한 전자 메일 주소의 패턴과 일치하는지 여부를 확인합니다.</summary>
+      <returns>지정된 값이 유효하거나 null이면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 값입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute">
+      <summary>.NET Framework 열거형을 데이터 열에 매핑할 수 있도록 합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.#ctor(System.Type)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="enumType">열거형의 유형입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.EnumType">
+      <summary>열거형 형식을 가져오거나 설정합니다.</summary>
+      <returns>열거형 형식입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.IsValid(System.Object)">
+      <summary>데이터 필드 값이 유효한지 확인합니다.</summary>
+      <returns>데이터 필드 값이 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 데이터 필드 값입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute">
+      <summary>파일 이름 파일 확장명의 유효성을 검사합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.Extensions">
+      <summary>파일 이름 확장명을 가져오거나 설정합니다.</summary>
+      <returns>파일 확장명이며, 속성이 설정되어 있지 않은 경우 기본 파일 확장명(".png", ".jpg", ".jpeg", and ".gif")입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.FormatErrorMessage(System.String)">
+      <summary>오류가 발생한 데이터 필드를 기반으로 하여 오류 메시지에 서식을 적용합니다.</summary>
+      <returns>형식이 지정된 오류 메시지입니다.</returns>
+      <param name="name">유효성 검사 오류를 발생시킨 필드의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.IsValid(System.Object)">
+      <summary>지정된 파일 이름 확장명이 올바른지 확인합니다.</summary>
+      <returns>파일 이름 확장이 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">올바른 파일 확장명의 쉼표로 구분된 목록입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute">
+      <summary>열의 필터링 동작을 지정하는 데 사용되는 특성을 나타냅니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String)">
+      <summary>필터 UI 힌트를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="filterUIHint">필터링에 사용할 컨트롤의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String)">
+      <summary>필터 UI 힌트 및 프레젠테이션 레이어 이름을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="filterUIHint">필터링에 사용할 컨트롤의 이름입니다.</param>
+      <param name="presentationLayer">이 컨트롤을 지원하는 표시 계층의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>필터 UI 힌트, 프레젠테이션 레이어 이름 및 컨트롤 매개 변수를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="filterUIHint">필터링에 사용할 컨트롤의 이름입니다.</param>
+      <param name="presentationLayer">이 컨트롤을 지원하는 표시 계층의 이름입니다.</param>
+      <param name="controlParameters">컨트롤의 매개 변수 목록입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.ControlParameters">
+      <summary>컨트롤의 생성자에 매개 변수로 사용되는 이름/값 쌍을 가져옵니다.</summary>
+      <returns>컨트롤의 생성자에 매개 변수로 사용되는 이름/값 쌍입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.Equals(System.Object)">
+      <summary>이 특성 인스턴스가 지정된 개체와 동일한지 여부를 나타내는 값을 반환합니다.</summary>
+      <returns>전달된 개체가 이 특성 인스턴스와 동일하면 True이고, 그렇지 않으면 false입니다.</returns>
+      <param name="obj">이 특성 인스턴스와 비교할 개체입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.FilterUIHint">
+      <summary>필터링에 사용할 컨트롤의 이름을 가져옵니다.</summary>
+      <returns>필터링에 사용할 컨트롤의 이름입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.GetHashCode">
+      <summary>이 특성 인스턴스의 해시 코드를 반환합니다.</summary>
+      <returns>이 특성 인스턴스의 해시 코드입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.PresentationLayer">
+      <summary>이 컨트롤을 지원하는 프레젠테이션 레이어의 이름을 가져옵니다.</summary>
+      <returns>이 컨트롤을 지원하는 표시 계층의 이름입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.IValidatableObject">
+      <summary>개체를 무효화하는 방법을 제공합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>지정된 개체가 올바른지 여부를 확인합니다.</summary>
+      <returns>실패한 유효성 검사 정보를 보관하는 컬렉션입니다.</returns>
+      <param name="validationContext">유효성 검사 컨텍스트입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.KeyAttribute">
+      <summary>엔터티를 고유하게 식별하는 속성을 하나 이상 나타냅니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.KeyAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.KeyAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute">
+      <summary>속성에서 허용되는 배열 또는 문자열 데이터의 최대 길이를 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor(System.Int32)">
+      <summary>
+        <paramref name="length" /> 매개 변수를 기반으로 <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="length">배열 또는 문자열 데이터의 허용 가능한 최대 길이입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>지정된 오류 메시지에 형식을 적용합니다.</summary>
+      <returns>허용 가능한 최대 길이를 설명하는 지역화된 문자열입니다.</returns>
+      <param name="name">서식이 지정된 문자열에 포함할 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.IsValid(System.Object)">
+      <summary>지정된 개체가 유효한지 여부를 확인합니다.</summary>
+      <returns>값이 null이거나 지정된 최대 길이보다 작거나 같으면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 개체입니다.</param>
+      <exception cref="Sytem.InvalidOperationException">길이가 0이거나 음수보다 작은 경우</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MaxLengthAttribute.Length">
+      <summary>배열 또는 문자열 데이터의 허용 가능한 최대 길이를 가져옵니다.</summary>
+      <returns>배열 또는 문자열 데이터의 허용 가능한 최대 길이입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MinLengthAttribute">
+      <summary>속성에서 허용되는 배열 또는 문자열 데이터의 최소 길이를 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.#ctor(System.Int32)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.MinLengthAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="length">배열 또는 문자열 데이터의 길이입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>지정된 오류 메시지에 형식을 적용합니다.</summary>
+      <returns>허용 가능한 최소 길이를 설명하는 지역화된 문자열입니다.</returns>
+      <param name="name">서식이 지정된 문자열에 포함할 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.IsValid(System.Object)">
+      <summary>지정된 개체가 유효한지 여부를 확인합니다.</summary>
+      <returns>지정된 개체가 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 개체입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MinLengthAttribute.Length">
+      <summary>배열 또는 문자열 데이터의 허용 가능한 최소 길이를 가져오거나 설정합니다.</summary>
+      <returns>배열 또는 문자열 데이터의 허용 가능한 최소 길이입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.PhoneAttribute">
+      <summary>데이터 필드 값이 전화 번호의 정규식을 사용하여 올바른 형식으로 구성된 전화 번호인지를 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.PhoneAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.IsValid(System.Object)">
+      <summary>지정된 전화 번호가 유효한 전화 번호 형식으로 되어 있는지 여부를 확인합니다. </summary>
+      <returns>전화 번호가 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 값입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RangeAttribute">
+      <summary>데이터 필드 값에 대한 숫자 범위 제약 조건을 지정합니다. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,System.Double)">
+      <summary>지정된 최소값 및 최대값을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+      <param name="minimum">데이터 필드 값에 대해 허용되는 최소값을 지정합니다.</param>
+      <param name="maximum">데이터 필드 값에 대해 허용되는 최대값을 지정합니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Int32,System.Int32)">
+      <summary>지정된 최소값 및 최대값을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="minimum">데이터 필드 값에 대해 허용되는 최소값을 지정합니다.</param>
+      <param name="maximum">데이터 필드 값에 대해 허용되는 최대값을 지정합니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Type,System.String,System.String)">
+      <summary>지정된 최소값 및 최대값과 특정 형식을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="type">테스트할 개체 형식을 지정합니다.</param>
+      <param name="minimum">데이터 필드 값에 대해 허용되는 최소값을 지정합니다.</param>
+      <param name="maximum">데이터 필드 값에 대해 허용되는 최대값을 지정합니다.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="type" />가 null입니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(System.String)">
+      <summary>범위 유효성 검사에 실패할 때 표시되는 오류 메시지의 형식을 지정합니다.</summary>
+      <returns>형식이 지정된 오류 메시지입니다.</returns>
+      <param name="name">유효성 검사 오류를 발생시킨 필드의 이름입니다. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)">
+      <summary>데이터 필드의 값이 지정된 범위에 있는지 확인합니다.</summary>
+      <returns>지정된 값이 범위에 있으면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 데이터 필드 값입니다.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">데이터 필드 값이 허용된 범위 밖에 있습니다.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Maximum">
+      <summary>허용되는 최대 필드 값을 가져옵니다.</summary>
+      <returns>데이터 필드에 대해 허용되는 최대값입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Minimum">
+      <summary>허용되는 최소 필드 값을 가져옵니다.</summary>
+      <returns>데이터 필드에 대해 허용되는 최소값입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.OperandType">
+      <summary>유효성을 검사해야 할 값이 포함된 데이터 필드의 형식을 가져옵니다.</summary>
+      <returns>유효성을 검사해야 할 값이 포함된 데이터 필드의 형식입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute">
+      <summary>ASP.NET Dynamic Data에 있는 데이터 필드 값이 지정된 정규식과 일치해야 한다고 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="pattern">데이터 필드 값의 유효성을 검사하는 데 사용되는 정규식입니다. </param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="pattern" />가 null입니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.FormatErrorMessage(System.String)">
+      <summary>정규식 유효성 검사에 실패할 경우 표시할 오류 메시지의 형식을 지정합니다.</summary>
+      <returns>형식이 지정된 오류 메시지입니다.</returns>
+      <param name="name">유효성 검사 오류를 발생시킨 필드의 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.IsValid(System.Object)">
+      <summary>사용자가 입력한 값이 정규식 패턴과 일치하는지 여부를 확인합니다. </summary>
+      <returns>유효성 검사가 성공하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 데이터 필드 값입니다.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">데이터 필드 값이 정규식 패턴과 일치하지 않는 경우</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.Pattern">
+      <summary>정규식 패턴을 가져옵니다.</summary>
+      <returns>일치시킬 패턴입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RequiredAttribute">
+      <summary>데이터 필드 값이 필요하다는 것을 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RequiredAttribute.AllowEmptyStrings">
+      <summary>빈 문자열이 허용되는지 여부를 나타내는 값을 가져오거나 설정합니다.</summary>
+      <returns>빈 문자열이 허용되면 true이고, 그렇지 않으면 false입니다.기본값은 false입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.IsValid(System.Object)">
+      <summary>필수 데이터 필드의 값이 비어 있지 않은지 확인합니다.</summary>
+      <returns>유효성 검사가 성공하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 데이터 필드 값입니다.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">데이터 필드 값이 null인 경우</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute">
+      <summary>클래스 또는 데이터 열이 스캐폴딩을 사용하는지 여부를 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.#ctor(System.Boolean)">
+      <summary>
+        <see cref="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold" /> 속성을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute" />의 새 인스턴스를 초기화합니다.</summary>
+      <param name="scaffold">스캐폴딩이 사용되는지 여부를 지정하는 값입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold">
+      <summary>스캐폴딩이 사용되는지 여부를 지정하는 값을 가져오거나 설정합니다.</summary>
+      <returns>스캐폴딩을 사용할 수 있으면 true이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.StringLengthAttribute">
+      <summary>데이터 필드에 허용되는 최소 및 최대 문자 길이를 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.#ctor(System.Int32)">
+      <summary>지정된 최대 길이를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.StringLengthAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="maximumLength">문자열의 최대 길이입니다. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>지정된 오류 메시지에 형식을 적용합니다.</summary>
+      <returns>형식이 지정된 오류 메시지입니다.</returns>
+      <param name="name">유효성 검사 오류를 발생시킨 필드의 이름입니다.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="maximumLength" />가 음수인 경우 또는<paramref name="maximumLength" />가 <paramref name="minimumLength" />보다 작은 경우</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.IsValid(System.Object)">
+      <summary>지정된 개체가 유효한지 여부를 확인합니다.</summary>
+      <returns>지정된 개체가 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 개체입니다.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="maximumLength" />가 음수인 경우또는<paramref name="maximumLength" />가 <see cref="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength" />보다 작은 경우</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MaximumLength">
+      <summary>문자열의 최대 길이를 가져오거나 설정합니다.</summary>
+      <returns>문자열의 최대 길이입니다. </returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength">
+      <summary>문자열의 최소 길이를 가져오거나 설정합니다.</summary>
+      <returns>문자열의 최소 길이입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.TimestampAttribute">
+      <summary>열의 데이터 형식을 행 버전으로 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.TimestampAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.TimestampAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UIHintAttribute">
+      <summary>동적 데이터에서 데이터 필드를 표시하기 위해 사용하는 템플릿 또는 사용자 정의 컨트롤을 지정합니다. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String)">
+      <summary>지정된 사용자 정의 컨트롤을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+      <param name="uiHint">데이터 필드를 표시하는 데 사용할 사용자 정의 컨트롤입니다. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String)">
+      <summary>지정된 사용자 컨트롤과 지정된 프레젠테이션 레이어를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+      <param name="uiHint">데이터 필드를 표시하는 데 사용할 사용자 정의 컨트롤(필드 템플릿)입니다.</param>
+      <param name="presentationLayer">클래스를 사용하는 프레젠테이션 계층입니다."HTML", "Silverlight", "WPF" 또는 "WinForms"으로 설정할 수 있습니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>지정된 사용자 컨트롤, 프레젠테이션 레이어 및 컨트롤 매개 변수를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="uiHint">데이터 필드를 표시하는 데 사용할 사용자 정의 컨트롤(필드 템플릿)입니다.</param>
+      <param name="presentationLayer">클래스를 사용하는 프레젠테이션 계층입니다."HTML", "Silverlight", "WPF" 또는 "WinForms"으로 설정할 수 있습니다.</param>
+      <param name="controlParameters">데이터 소스의 값을 검색하는 데 사용할 개체입니다. </param>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" />가 null이거나 제약 조건 키인 경우또는<see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" />의 값은 문자열이 아닙니다. </exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters">
+      <summary>데이터 소스의 값을 검색하는 데 사용할 <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> 개체를 가져오거나 설정합니다.</summary>
+      <returns>키/값 쌍의 컬렉션입니다. </returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.Equals(System.Object)">
+      <summary>이 인스턴스가 지정된 개체와 같은지 여부를 나타내는 값을 가져옵니다.</summary>
+      <returns>지정된 개체가 이 인스턴스와 같으면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="obj">이 인스턴스와 비교할 개체이거나 null 참조입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.GetHashCode">
+      <summary>특성의 현재 인스턴스에 대한 해시 코드를 가져옵니다.</summary>
+      <returns>특성 인스턴스의 해시 코드입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.PresentationLayer">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 클래스를 사용하는 프레젠테이션 계층을 가져오거나 설정합니다. </summary>
+      <returns>이 클래스에서 사용하는 프레젠테이션 레이어입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.UIHint">
+      <summary>데이터 필드를 표시하는 데 사용할 필드 템플릿의 이름을 가져오거나 설정합니다.</summary>
+      <returns>데이터 필드를 표시하는 필드 템플릿의 이름입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UrlAttribute">
+      <summary>URL 유효성 검사를 제공합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.UrlAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.IsValid(System.Object)">
+      <summary>지정된 URL 형식의 유효성을 검사합니다.</summary>
+      <returns>URL 형식이 유효하거나 null이면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 URL입니다.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationAttribute">
+      <summary>모든 유효성 검사 특성의 기본 클래스로 사용됩니다.</summary>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">지역화된 오류 메시지에 대한 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> 및 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName" /> 속성은 지역화되지 않은 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage" /> 속성 오류 메시지와 동시에 설정됩니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.Func{System.String})">
+      <summary>유효성 검사 리소스에 액세스할 수 있도록 하는 함수를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="errorMessageAccessor">유효성 검사 리소스에 액세스할 수 있도록 하는 함수입니다.</param>
+      <exception cref="T:System:ArgumentNullException">
+        <paramref name="errorMessageAccessor" />가 null입니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.String)">
+      <summary>유효성 검사 컨트롤과 연결할 오류 메시지를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="errorMessage">유효성 검사 컨트롤과 연결할 오류 메시지입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage">
+      <summary>유효성 검사에 실패하는 경우 유효성 검사 컨트롤과 연결할 오류 메시지를 가져오거나 설정합니다.</summary>
+      <returns>유효성 검사 컨트롤과 연결된 오류 메시지입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName">
+      <summary>유효성 검사에 실패할 경우 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> 속성 값을 조회하는 데 사용할 오류 메시지 리소스 이름을 가져오거나 설정합니다.</summary>
+      <returns>유효성 검사 컨트롤과 연결된 오류 메시지 리소스입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType">
+      <summary>유효성 검사에 실패할 경우 오류 메시지 조회에 사용할 리소스 형식을 가져오거나 설정합니다.</summary>
+      <returns>유효성 검사 컨트롤과 연결된 오류 메시지의 형식입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString">
+      <summary>지역화된 유효성 검사 오류 메시지를 가져옵니다.</summary>
+      <returns>지역화된 유효성 검사 오류 메시지입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>오류가 발생한 데이터 필드를 기반으로 하여 오류 메시지에 서식을 적용합니다. </summary>
+      <returns>서식 지정된 오류 메시지의 인스턴스입니다.</returns>
+      <param name="name">서식이 지정된 메시지에 포함할 이름입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.GetValidationResult(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>현재 유효성 검사 특성에 따라 지정된 값이 유효한지 확인합니다.</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 클래스의 인스턴스입니다. </returns>
+      <param name="value">유효성을 검사할 값입니다.</param>
+      <param name="validationContext">유효성 검사 작업에 대한 컨텍스트 정보입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)">
+      <summary>개체의 지정된 값이 유효한지 여부를 확인합니다. </summary>
+      <returns>지정된 값이 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 개체의 값입니다. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>현재 유효성 검사 특성에 따라 지정된 값이 유효한지 검사합니다.</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 클래스의 인스턴스입니다. </returns>
+      <param name="value">유효성을 검사할 값입니다.</param>
+      <param name="validationContext">유효성 검사 작업에 대한 컨텍스트 정보입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.RequiresValidationContext">
+      <summary>특성에 유효성 검사 컨텍스트가 필요한지 여부를 나타내는 값을 가져옵니다.</summary>
+      <returns>특성에 유효성 검사 컨텍스트가 필요하면 true이고, 그렇지 않으면 false입니다.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>지정된 개체의 유효성을 검사합니다.</summary>
+      <param name="value">유효성을 검사할 개체입니다.</param>
+      <param name="validationContext">유효성 검사가 수행되는 컨텍스트를 설명하는 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 개체입니다.이 매개 변수는 null일 수 없습니다.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">유효성 검사가 실패했습니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.String)">
+      <summary>지정된 개체의 유효성을 검사합니다.</summary>
+      <param name="value">유효성을 검사할 개체의 값입니다.</param>
+      <param name="name">오류 메시지에 포함할 이름입니다.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" />이 잘못된 경우</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationContext">
+      <summary>유효성 검사가 수행되는 컨텍스트를 설명합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object)">
+      <summary>지정된 개체 인스턴스를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="instance">유효성을 검사할 개체 인스턴스입니다.null일 수 없습니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>지정된 개체와 선택적 속성 모음을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="instance">유효성을 검사할 개체 인스턴스입니다.null일 수 없습니다.</param>
+      <param name="items">소비자가 사용할 수 있게 만들려는 선택적 키/값 쌍의 집합입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.IServiceProvider,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>서비스 공급자와 서비스 소비자의 사전을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 클래스의 새 인스턴스를 초기화합니다. </summary>
+      <param name="instance">유효성을 검사할 개체입니다.이 매개 변수는 필수적 요소입니다.</param>
+      <param name="serviceProvider">
+        <see cref="T:System.IServiceProvider" /> 인터페이스를 구현하는 개체입니다.이 매개 변수는 선택적 요소입니다.</param>
+      <param name="items">서비스 소비자가 사용할 수 있게 만들려는 키/값 쌍의 사전입니다.이 매개 변수는 선택적 요소입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.DisplayName">
+      <summary>유효성을 검사할 멤버의 이름을 가져오거나 설정합니다. </summary>
+      <returns>유효성을 검사할 멤버의 이름입니다. </returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.GetService(System.Type)">
+      <summary>사용자 지정 유효성 검사를 제공하는 서비스를 반환합니다.</summary>
+      <returns>서비스 인스턴스이거나 서비스를 사용할 수 없는 경우 null입니다.</returns>
+      <param name="serviceType">유효성 검사에 사용할 서비스의 형식입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.InitializeServiceProvider(System.Func{System.Type,System.Object})">
+      <summary>GetService가 호출될 때 유형별 서비스 인스턴스를 반환할 수 있는 서비스 공급자를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" />를 초기화합니다.</summary>
+      <param name="serviceProvider">서비스 공급자입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.Items">
+      <summary>이 컨텍스트와 연결된 키/값 쌍의 사전을 가져옵니다.</summary>
+      <returns>이 컨텍스트에 대한 키/값 쌍의 사전입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.MemberName">
+      <summary>유효성을 검사할 멤버의 이름을 가져오거나 설정합니다. </summary>
+      <returns>유효성을 검사할 멤버의 이름입니다. </returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance">
+      <summary>유효성을 검사할 개체를 가져옵니다.</summary>
+      <returns>유효성을 검사할 개체입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectType">
+      <summary>유효성을 검사할 개체의 형식을 가져옵니다.</summary>
+      <returns>유효성을 검사할 개체의 형식입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationException">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 클래스가 사용될 때 데이터 필드의 유효성을 검사하는 동안 발생하는 예외를 나타냅니다. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor">
+      <summary>시스템에서 생성된 오류 메시지를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationResult,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>유효성 검사 결과, 유효성 검사 특성 및 현재 예외의 값을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="validationResult">유효성 검사 결과 목록입니다.</param>
+      <param name="validatingAttribute">현재 예외를 발생시킨 특성입니다.</param>
+      <param name="value">특성이 유효성 검사 오류를 트리거하도록 만든 개체의 값입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String)">
+      <summary>지정된 오류 메시지를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="message">오류를 설명하는 지정된 메시지입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>지정된 오류 메시지, 유효성 검사 특성 및 현재 예외의 값을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="errorMessage">오류를 설명하는 메시지입니다.</param>
+      <param name="validatingAttribute">현재 예외를 발생시킨 특성입니다.</param>
+      <param name="value">특성이 유효성 검사 오류를 트리거하도록 만든 개체의 값입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.Exception)">
+      <summary>지정된 오류 메시지 및 내부 예외 인스턴스 컬렉션을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="message">오류 메시지입니다. </param>
+      <param name="innerException">유효성 검사 예외의 컬렉션입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationAttribute">
+      <summary>이 예외를 트리거한 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 클래스의 인스턴스를 가져옵니다.</summary>
+      <returns>이 예외를 트리거한 유효성 검사 특성 형식의 인스턴스입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult">
+      <summary>유효성 검사 오류를 설명하는 <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> 인스턴스를 가져옵니다.</summary>
+      <returns>유효성 검사 오류를 설명하는 <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> 인스턴스입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.Value">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 클래스가 이 예외를 트리거하도록 만든 개체의 값을 가져옵니다.</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 클래스가 유효성 검사 오류를 트리거하도록 만든 개체의 값입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationResult">
+      <summary>유효성 검사 요청 결과의 컨테이너를 나타냅니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.ComponentModel.DataAnnotations.ValidationResult)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 개체를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="validationResult">유효성 검사 결과 개체입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String)">
+      <summary>오류 메시지를 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="errorMessage">오류 메시지입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>오류 메시지와 유효성 검사 오류가 있는 멤버 목록을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="errorMessage">오류 메시지입니다.</param>
+      <param name="memberNames">유효성 검사 오류가 있는 멤버 이름의 목록입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.ErrorMessage">
+      <summary>유효성 검사에 대한 오류 메시지를 가져옵니다.</summary>
+      <returns>유효성 검사에 대한 오류 메시지입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.MemberNames">
+      <summary>유효성 검사 오류가 있는 필드를 나타내는 멤버 이름의 컬렉션을 가져옵니다.</summary>
+      <returns>유효성 검사 오류가 있는 필드를 나타내는 멤버 이름의 컬렉션입니다.</returns>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.ValidationResult.Success">
+      <summary>유효성 검사의 성공을 나타냅니다(유효성 검사가 성공한 경우 true이고 그렇지 않은 경우 false).</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.ToString">
+      <summary>현재 유효성 검사 결과의 문자열 표현을 반환합니다.</summary>
+      <returns>현재 유효성 검사 결과입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Validator">
+      <summary>개체, 속성 및 메서드가 연결된 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 특성에 포함될 때 유효성을 검사하는 데 사용할 수 있는 도우미 클래스를 정의합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>유효성 검사 컨텍스트와 유효성 검사 결과 컬렉션을 사용하여 지정된 개체가 유효한지 확인합니다.</summary>
+      <returns>개체가 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="instance">유효성을 검사할 개체입니다.</param>
+      <param name="validationContext">유효성을 검사할 개체를 설명하는 컨텍스트입니다.</param>
+      <param name="validationResults">실패한 각 유효성 검사를 보유할 컬렉션입니다.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" />가 null입니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Boolean)">
+      <summary>유효성 검사 컨텍스트, 유효성 검사 결과 컬렉션 및 모든 속성의 유효성을 검사할지 여부를 지정하는 값을 사용하여 지정된 개체가 유효한지 확인합니다.</summary>
+      <returns>개체가 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="instance">유효성을 검사할 개체입니다.</param>
+      <param name="validationContext">유효성을 검사할 개체를 설명하는 컨텍스트입니다.</param>
+      <param name="validationResults">실패한 각 유효성 검사를 보유할 컬렉션입니다.</param>
+      <param name="validateAllProperties">모든 속성의 유효성을 검사할 경우 true이고, false이면 필요한 속성만 유효성을 검사합니다.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" />가 null입니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>속성의 유효성을 검사합니다.</summary>
+      <returns>속성이 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 값입니다.</param>
+      <param name="validationContext">유효성을 검사할 속성을 설명하는 컨텍스트입니다.</param>
+      <param name="validationResults">실패한 각 유효성 검사를 보유할 컬렉션입니다. </param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" />를 속성에 할당할 수 없습니다.또는<paramref name="value " />가 null인 경우</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>지정된 값이 지정된 특성에 유효한지 여부를 나타내는 값을 반환합니다.</summary>
+      <returns>개체가 유효하면 true이고, 그렇지 않으면 false입니다.</returns>
+      <param name="value">유효성을 검사할 값입니다.</param>
+      <param name="validationContext">유효성을 검사할 개체를 설명하는 컨텍스트입니다.</param>
+      <param name="validationResults">실패한 유효성 검사를 보유할 컬렉션입니다. </param>
+      <param name="validationAttributes">유효성 검사 특성입니다.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>유효성 검사 컨텍스트를 사용하여 지정된 개체가 유효한지 확인합니다.</summary>
+      <param name="instance">유효성을 검사할 개체입니다.</param>
+      <param name="validationContext">유효성을 검사할 개체를 설명하는 컨텍스트입니다.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">개체가 잘못되었습니다.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" />가 null입니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean)">
+      <summary>유효성 검사 컨텍스트와 모든 속성의 유효성을 검사할지 여부를 지정하는 값을 사용하여 지정된 개체가 유효한지 확인합니다.</summary>
+      <param name="instance">유효성을 검사할 개체입니다.</param>
+      <param name="validationContext">유효성을 검사할 개체를 설명하는 컨텍스트입니다.</param>
+      <param name="validateAllProperties">모든 속성의 유효성을 검사하려면 true이고, 그렇지 않으면 false입니다.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="instance" />가 잘못된 경우</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" />가 null입니다.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>속성의 유효성을 검사합니다.</summary>
+      <param name="value">유효성을 검사할 값입니다.</param>
+      <param name="validationContext">유효성을 검사할 속성을 설명하는 컨텍스트입니다.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" />를 속성에 할당할 수 없습니다.</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> 매개 변수가 잘못된 경우</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>지정된 특성의 유효성을 검사합니다.</summary>
+      <param name="value">유효성을 검사할 값입니다.</param>
+      <param name="validationContext">유효성을 검사할 개체를 설명하는 컨텍스트입니다.</param>
+      <param name="validationAttributes">유효성 검사 특성입니다.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="validationContext" /> 매개 변수가 null입니다.</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> 매개 변수는 <paramref name="validationAttributes" /> 매개 변수로 유효성을 검사하지 않습니다.</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute">
+      <summary>속성이 매핑되는 데이터베이스 열을 나타냅니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="name">속성이 매핑되는 열의 이름입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Name">
+      <summary>속성이 매핑되는 열의 이름을 가져옵니다.</summary>
+      <returns>속성이 매핑되는 열의 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Order">
+      <summary>속성이 매핑되는 열의 순서 값(0부터 시작)을 가져오거나 설정합니다.</summary>
+      <returns>열의 순서 값입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.TypeName">
+      <summary>속성이 매핑되는 열의 데이터베이스 공급자별 데이터 형식을 가져오거나 설정합니다.</summary>
+      <returns>속성이 매핑되는 열의 데이터베이스 공급자별 데이터 형식입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute">
+      <summary>클래스가 복합 형식임을 나타냅니다.복합 형식은 스칼라 속성이 엔터티 내에 구성되도록 하는 엔터티 형식의 비스칼라 속성입니다.복합 형식은 키가 없으며 Entity Framework에서 부모 개체와 별개로 관리될 수 없습니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute">
+      <summary>데이터베이스에서 속성 값을 생성하는 방법을 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.#ctor(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="databaseGeneratedOption">데이터베이스에서 옵션을 생성합니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.DatabaseGeneratedOption">
+      <summary>데이터베이스에서 속성 값을 생성하는 데 사용되는 패턴을 가져오거나 설정합니다.</summary>
+      <returns>데이터베이스에서 옵션을 생성합니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption">
+      <summary>데이터베이스에서 속성 값을 생성하는 데 사용되는 패턴을 나타냅니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed">
+      <summary>데이터베이스에서 행이 삽입되거나 업데이트될 때 값을 생성합니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity">
+      <summary>데이터베이스에서 행이 삽입될 때 값을 생성합니다.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None">
+      <summary>데이터베이스에서 값을 생성하지 않습니다.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute">
+      <summary>관계의 외래 키로 사용되는 속성을 나타냅니다.주석은 외래 키 속성에 배치되어 연결된 탐색 속성 이름을 지정하거나, 탐색 속성에 배치되어 연결된 외래 키 이름을 지정할 수 있습니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.#ctor(System.String)">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="name">외래 키 속성에 ForeigKey 특성을 추가하는 경우 연결된 탐색 속성의 이름을 지정해야 합니다.탐색 속성에 ForeigKey 특성을 추가하는 경우 연결된 외래 키의 이름을 지정해야 합니다.탐색 속성에 여러 개의 외래 키가 있는 경우 쉼표를 사용하여 외래 키 이름의 목록을 구분합니다.자세한 내용은 Code First 데이터 주석을 참조하세요.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.Name">
+      <summary>외래 키 속성에 ForeigKey 특성을 추가하는 경우 연결된 탐색 속성의 이름을 지정해야 합니다.탐색 속성에 ForeigKey 특성을 추가하는 경우 연결된 외래 키의 이름을 지정해야 합니다.탐색 속성에 여러 개의 외래 키가 있는 경우 쉼표를 사용하여 외래 키 이름의 목록을 구분합니다.자세한 내용은 Code First 데이터 주석을 참조하세요.</summary>
+      <returns>연결된 탐색 속성 또는 연결된 외래 키 속성의 이름입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute">
+      <summary>동일한 관계의 다른 쪽 End를 나타내는 탐색 속성의 역을 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.#ctor(System.String)">
+      <summary>지정된 속성을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="property">동일한 관계의 다른 쪽 End를 나타내는 탐색 속성입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.Property">
+      <summary>동일한 관계의 다른 쪽 End를 나타내는 탐색 속성을 가져옵니다.</summary>
+      <returns>특성의 속성입니다.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute">
+      <summary>속성이나 클래스가 데이터베이스 매핑에서 제외되어야 함을 나타냅니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute.#ctor">
+      <summary>
+        <see cref="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute">
+      <summary>클래스가 매핑되는 데이터베이스 테이블을 지정합니다.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.TableAttribute.#ctor(System.String)">
+      <summary>지정된 테이블 이름을 사용하여 <see cref="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute" /> 클래스의 새 인스턴스를 초기화합니다.</summary>
+      <param name="name">클래스가 매핑되는 테이블의 이름입니다.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Name">
+      <summary>클래스가 매핑되는 테이블의 이름을 가져옵니다.</summary>
+      <returns>클래스가 매핑되는 테이블의 이름입니다.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Schema">
+      <summary>클래스가 매핑되는 테이블의 스키마를 가져오거나 설정합니다.</summary>
+      <returns>클래스가 매핑되는 테이블의 스키마입니다.</returns>
+    </member>
+  </members>
+</doc>

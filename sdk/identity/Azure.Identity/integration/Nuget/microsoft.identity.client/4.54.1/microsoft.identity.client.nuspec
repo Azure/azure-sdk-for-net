@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Identity.Client</id>
+    <version>4.54.1</version>
+    <title>Microsoft Authentication Library for .NET</title>
+    <authors>Microsoft</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://go.microsoft.com/fwlink/?linkid=844761</projectUrl>
+    <description>This package contains the binaries of the Microsoft Authentication Library for .NET (MSAL.NET).
+      MSAL.NET makes it easy to obtain tokens from the Microsoft identity platform for developers (formally Azure AD v2.0) signing-in users with work &amp; school accounts, Microsoft personal accounts, and social identities via Azure AD B2C. These tokens provide access to Microsoft Cloud API and any other API secured by the Microsoft identity platform. This version supports adding authentication functionality to your .NET based clients - .NET, .NET Framework, .NET MAUI, Xamarin iOS, Xamarin Android and UWP</description>
+    <releaseNotes>The release notes are available at https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/releases and the roadmap at https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki#roadmap. To provide feedback, fill-in the survey at https://ncv.microsoft.com/JrXkdySi0m.</releaseNotes>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>Microsoft Authentication Library MSA MSAL B2C Azure Active Directory AAD Identity Authentication .NET Windows Store Xamarin iOS Android MAUI</tags>
+    <repository type="git" url="https://github.com/AzureAD/microsoft-authentication-library-for-dotnet" commit="c99a10616f78e79501aaa7e389110ece8b210bbc" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.6.1">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="MonoAndroid9.0">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+        <dependency id="System.Security.SecureString" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.Android.Support.CustomTabs" version="28.0.0.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="MonoAndroid10.0">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+        <dependency id="System.Security.SecureString" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.AndroidX.Browser" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="Xamarin.iOS1.0">
+        <dependency id="Microsoft.CSharp" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+        <dependency id="System.ComponentModel.TypeConverter" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.Serialization.Formatters" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Security.SecureString" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Xml.XmlDocument" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETCoreApp2.1">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0-android31.0">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+        <dependency id="System.Security.SecureString" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0-ios15.4">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.InteropServices.NFloat.Internal" version="6.0.1" exclude="Build,Analyzers" />
+        <dependency id="System.Security.SecureString" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0-windows7.0">
+        <dependency id="Microsoft.Identity.Client.NativeInterop" version="0.13.8" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Web.WebView2" version="1.0.864.35" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="UAP10.0.17763">
+        <dependency id="Microsoft.CSharp" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.IdentityModel.Abstractions" version="6.22.0" exclude="Build,Analyzers" />
+        <dependency id="System.Net.NameResolution" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.Serialization.Formatters" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.Serialization.Json" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.Security.SecureString" version="4.3.0" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.Http" version="4.5.3" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.NetTcp" version="4.5.3" exclude="Build,Analyzers" />
+        <dependency id="System.ServiceModel.Security" version="4.5.3" exclude="Build,Analyzers" />
+        <dependency id="System.Xml.XDocument" version="4.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework=".NETCoreApp2.1" />
+      <group targetFramework="net6.0" />
+      <group targetFramework="net6.0-android31.0" />
+      <group targetFramework="net6.0-ios15.4" />
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WindowsForms" />
+      </group>
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETFramework4.6.1" />
+      <group targetFramework=".NETStandard2.0" />
+      <group targetFramework="MonoAndroid9.0" />
+      <group targetFramework="MonoAndroid10.0" />
+      <group targetFramework="UAP10.0.17763" />
+      <group targetFramework="Xamarin.iOS1.0" />
+    </frameworkReferences>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Java.Interop" targetFramework="MonoAndroid10.0, MonoAndroid9.0" />
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="MonoAndroid10.0, MonoAndroid9.0, .NETFramework4.5, .NETFramework4.6.1" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="MonoAndroid10.0, MonoAndroid9.0, .NETFramework4.5, .NETFramework4.6.1, Xamarin.iOS1.0" />
+      <frameworkAssembly assemblyName="System" targetFramework="MonoAndroid10.0, MonoAndroid9.0, .NETFramework4.5, .NETFramework4.6.1, Xamarin.iOS1.0" />
+      <frameworkAssembly assemblyName="System.IdentityModel" targetFramework="MonoAndroid10.0, MonoAndroid9.0, .NETFramework4.5, .NETFramework4.6.1, Xamarin.iOS1.0" />
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework="MonoAndroid10.0, MonoAndroid9.0, .NETFramework4.5, .NETFramework4.6.1, Xamarin.iOS1.0" />
+      <frameworkAssembly assemblyName="System.Runtime.Serialization" targetFramework="MonoAndroid10.0, MonoAndroid9.0, Xamarin.iOS1.0" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="MonoAndroid10.0, MonoAndroid9.0, .NETFramework4.5, .NETFramework4.6.1, Xamarin.iOS1.0" />
+      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="MonoAndroid10.0, MonoAndroid9.0, .NETFramework4.5, .NETFramework4.6.1, Xamarin.iOS1.0" />
+      <frameworkAssembly assemblyName="System.Data.DataSetExtensions" targetFramework=".NETFramework4.5, .NETFramework4.6.1" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.5, .NETFramework4.6.1" />
+      <frameworkAssembly assemblyName="System.Drawing" targetFramework=".NETFramework4.5, .NETFramework4.6.1" />
+      <frameworkAssembly assemblyName="System.Windows.Forms" targetFramework=".NETFramework4.5, .NETFramework4.6.1" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

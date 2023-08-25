@@ -1,0 +1,1245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Diagnostics.TraceSource</name>
+  </assembly>
+  <members>
+    <member name="T:System.Diagnostics.BooleanSwitch">
+      <summary>Предоставляет простой переключатель, управляющий выводом результатов отладки и трассировки.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.#ctor(System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.BooleanSwitch" /> указанными отображаемым именем и описанием.</summary>
+      <param name="displayName">Имя, отображаемое в пользовательском интерфейсе. </param>
+      <param name="description">Описание переключателя. </param>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.#ctor(System.String,System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.BooleanSwitch" /> указанными отображаемым именем, описанием и значением переключателя по умолчанию. </summary>
+      <param name="displayName">Имя, отображаемое в пользовательском интерфейсе. </param>
+      <param name="description">Описание переключателя. </param>
+      <param name="defaultSwitchValue">Значение переключателя по умолчанию.</param>
+    </member>
+    <member name="P:System.Diagnostics.BooleanSwitch.Enabled">
+      <summary>Получает или задает значение, указывающее, включен переключатель или выключен.</summary>
+      <returns>Значение true, если переключатель включен; в противном случае — значение false.Значение по умолчанию — false.</returns>
+      <exception cref="T:System.Security.SecurityException">У вызывающего оператора нет необходимого разрешения.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.OnValueChanged">
+      <summary>Определяет, можно ли проанализировать новое значение свойства <see cref="P:System.Diagnostics.Switch.Value" /> как логическое значение.</summary>
+    </member>
+    <member name="T:System.Diagnostics.DefaultTraceListener">
+      <summary>Предоставляет используемые по умолчанию методы вывода и поведение для трассировки.</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.DefaultTraceListener" /> со значением "Default" в качестве значения его свойства <see cref="P:System.Diagnostics.TraceListener.Name" />.</summary>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Fail(System.String)">
+      <summary>Выдает или отображает сообщение и запись изменений стека для утверждения, в котором всегда возникает ошибка.</summary>
+      <param name="message">Выдаваемое или отображаемое сообщение. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+        <IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Fail(System.String,System.String)">
+      <summary>Выдает или отображает подробные сообщения и запись изменений стека для утверждения, в котором возникает ошибка.</summary>
+      <param name="message">Выдаваемое или отображаемое сообщение. </param>
+      <param name="detailMessage">Выдаваемое или отображаемое подробное сообщение. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+        <IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Write(System.String)">
+      <summary>Записывает вывод в функцию OutputDebugString и метод <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" />.</summary>
+      <param name="message">Сообщение, записываемое в объект OutputDebugString и метод <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" />. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.WriteLine(System.String)">
+      <summary>Записывает вывод в функцию OutputDebugString и метод <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" />, затем происходит возврат каретки и перевод строки (\r\n).</summary>
+      <param name="message">Сообщение, записываемое в объект OutputDebugString и метод <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" />. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.EventTypeFilter">
+      <summary>Определяет по типу события, должен ли прослушиватель осуществлять трассировку.</summary>
+    </member>
+    <member name="M:System.Diagnostics.EventTypeFilter.#ctor(System.Diagnostics.SourceLevels)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.EventTypeFilter" />. </summary>
+      <param name="level">Поразрядная комбинация значений <see cref="T:System.Diagnostics.SourceLevels" />, определяющая тип события подлежащих трассировке сообщений. </param>
+    </member>
+    <member name="P:System.Diagnostics.EventTypeFilter.EventType">
+      <summary>Получает или задает тип события подлежащих трассировке сообщений.</summary>
+      <returns>Поразрядное сочетание значений <see cref="T:System.Diagnostics.SourceLevels" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.EventTypeFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>Определяет, должен ли прослушиватель трассировки осуществлять трассировку события. </summary>
+      <returns>Если трассировка должна быть осуществлена, значение true, если нет, значение false.</returns>
+      <param name="cache">Объект <see cref="T:System.Diagnostics.TraceEventCache" />, представляющий кэш данных для события трассировки.</param>
+      <param name="source">Имя источника.</param>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />. </param>
+      <param name="id">Номер идентификатора трассировки.</param>
+      <param name="formatOrMessage">Формат, используемый для записи массива аргументов, или сообщение, которое необходимо записать.</param>
+      <param name="args">Массив объектов аргумента.</param>
+      <param name="data1">Объект данных трассировки.</param>
+      <param name="data">Массив объектов данных трассировки.</param>
+    </member>
+    <member name="T:System.Diagnostics.SourceFilter">
+      <summary>Указывает, должны ли прослушиватели осуществлять трассировку сообщений на основе источника трассировки.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.SourceFilter.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.SourceFilter" />, задающего имя источника трассировки. </summary>
+      <param name="source">Имя источника трассировки.</param>
+    </member>
+    <member name="M:System.Diagnostics.SourceFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>Определяет, должен ли прослушиватель трассировки осуществлять трассировку события.</summary>
+      <returns>true если трассировка должна быть осуществлена; в противном случае — false. </returns>
+      <param name="cache">Объект, представляющий кэш данных для события трассировки.</param>
+      <param name="source">Имя источника.</param>
+      <param name="eventType">Одно из значений перечисления, которое задает тип события. </param>
+      <param name="id">Номер идентификатора трассировки.</param>
+      <param name="formatOrMessage">Формат, используемый для записи массива аргументов или записи сообщения.</param>
+      <param name="args">Массив объектов аргумента.</param>
+      <param name="data1">Объект данных трассировки.</param>
+      <param name="data">Массив объектов данных трассировки.</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="source" /> имеет значение null. </exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.SourceFilter.Source">
+      <summary>Возвращает или задает название источника трассировки.</summary>
+      <returns>Имя источника трассировки.</returns>
+      <exception cref="T:System.ArgumentNullException">Значение равно null. </exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.SourceLevels">
+      <summary>Задает уровни сообщений трассировки, фильтруемых переключателем источника и фильтром типов событий.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.All">
+      <summary>Разрешает передачу всех событий.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Critical">
+      <summary>Разрешает передачу только событий типа <see cref="F:System.Diagnostics.TraceEventType.Critical" />.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Error">
+      <summary>Разрешает передачу только событий типа <see cref="F:System.Diagnostics.TraceEventType.Critical" /> и <see cref="F:System.Diagnostics.TraceEventType.Error" />.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Information">
+      <summary>Разрешает передачу событий типа <see cref="F:System.Diagnostics.TraceEventType.Critical" />, <see cref="F:System.Diagnostics.TraceEventType.Error" />, <see cref="F:System.Diagnostics.TraceEventType.Warning" /> и <see cref="F:System.Diagnostics.TraceEventType.Information" />.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Off">
+      <summary>Запрещает передачу любых событий.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Verbose">
+      <summary>Разрешает передачу событий типа <see cref="F:System.Diagnostics.TraceEventType.Critical" />, <see cref="F:System.Diagnostics.TraceEventType.Error" />, <see cref="F:System.Diagnostics.TraceEventType.Warning" />, <see cref="F:System.Diagnostics.TraceEventType.Information" /> и <see cref="F:System.Diagnostics.TraceEventType.Verbose" />.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Warning">
+      <summary>Разрешает передачу событий типа <see cref="F:System.Diagnostics.TraceEventType.Critical" />, <see cref="F:System.Diagnostics.TraceEventType.Error" /> и <see cref="F:System.Diagnostics.TraceEventType.Warning" />.</summary>
+    </member>
+    <member name="T:System.Diagnostics.SourceSwitch">
+      <summary>Предоставляет многоуровневый переключатель для управления выводом трассировки и отладки без повторной компиляции кода.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.SourceSwitch" />, задающего имя источника.</summary>
+      <param name="name">Имя источника.</param>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.#ctor(System.String,System.String)">
+      <summary>Выполняет инициализацию нового класса <see cref="T:System.Diagnostics.SourceSwitch" />, задающего для переключателя источника отображаемое имя и значение по умолчанию.</summary>
+      <param name="displayName">Имя переключателя источника. </param>
+      <param name="defaultSwitchValue">Значение по умолчанию для переключателя. </param>
+    </member>
+    <member name="P:System.Diagnostics.SourceSwitch.Level">
+      <summary>Получает или задает уровень переключателя.</summary>
+      <returns>Одно из значений <see cref="T:System.Diagnostics.SourceLevels" />, представляющее уровень события переключателя.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.OnValueChanged">
+      <summary>Вызывается при изменении значения свойства <see cref="P:System.Diagnostics.Switch.Value" />.</summary>
+      <exception cref="T:System.ArgumentException">Новое значение свойства <see cref="P:System.Diagnostics.Switch.Value" /> не равно ни одному из значений <see cref="T:System.Diagnostics.SourceLevels" />.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.ShouldTrace(System.Diagnostics.TraceEventType)">
+      <summary>Позволяет определить на основе типа трассировки, нужно ли вызывать прослушивателей трассировки.</summary>
+      <returns>Если нужно вызвать прослушиватели трассировки, значение True, если нет, значение false.</returns>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />.</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.Switch">
+      <summary>Предоставляет абстрактный базовый класс для создания новых переключателей отладки и трассировки.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Switch.#ctor(System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.Switch" />.</summary>
+      <param name="displayName">Имя переключателя. </param>
+      <param name="description">Описание переключателя. </param>
+    </member>
+    <member name="M:System.Diagnostics.Switch.#ctor(System.String,System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.Switch" />, указывая отображаемое имя, описание и значение по умолчанию переключателя. </summary>
+      <param name="displayName">Имя переключателя. </param>
+      <param name="description">Описание переключателя. </param>
+      <param name="defaultSwitchValue">Значение по умолчанию для переключателя.</param>
+    </member>
+    <member name="P:System.Diagnostics.Switch.Description">
+      <summary>Получает описание переключателя.</summary>
+      <returns>Описание переключателя.Значением по умолчанию является пустая строка ("").</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.Switch.DisplayName">
+      <summary>Получает имя, идентифицирующее переключатель.</summary>
+      <returns>Имя, идентифицирующее переключатель.Значением по умолчанию является пустая строка ("").</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Switch.OnSwitchSettingChanged">
+      <summary>Вызывается при изменении свойства <see cref="P:System.Diagnostics.Switch.SwitchSetting" />.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Switch.OnValueChanged">
+      <summary>Вызывается при изменении свойства <see cref="P:System.Diagnostics.Switch.Value" />.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Switch.SwitchSetting">
+      <summary>Получает или задает текущее положение данного переключателя.</summary>
+      <returns>Текущее положение данного переключателя.Значение по умолчанию — 0.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Switch.Value">
+      <summary>Получает или задает значение переключателя.</summary>
+      <returns>Строка, представляющая значение переключателя.</returns>
+      <exception cref="T:System.Configuration.ConfigurationErrorsException">Значение равно null.-или-Значение содержит не только последовательность цифр в диапазоне от 0 до 9 и необязательный знак "минус" перед ним.-или-Значение представляет число, меньшее, чем <see cref="F:System.Int32.MinValue" /> или большее, чем <see cref="F:System.Int32.MaxValue" />.</exception>
+    </member>
+    <member name="T:System.Diagnostics.Trace">
+      <summary>Предоставляет набор методов и свойств, используемых при трассировке выполнения кода.Этот класс не наследуется.</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean)">
+      <summary>Проверяет условие; если условие имеет значение false, выводит сообщение, отображающее стек вызовов.</summary>
+      <param name="condition">Условное выражение, которое требуется оценить.Если условие имеет значение true, сообщение о сбое не отправляется и окно сообщения не отображается.</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean,System.String)">
+      <summary>Проверяет условие; если условие имеет значение false, выводит указанное сообщения и отображает окно сообщения со стеком вызовов.</summary>
+      <param name="condition">Условное выражение, которое требуется оценить.Если условие имеет значение true, указанное сообщение не отправляется и окно сообщения не отображается.</param>
+      <param name="message">Сообщение, которое следует отправить в коллекцию <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean,System.String,System.String)">
+      <summary>Проверяет условие; если условие имеет значение false, выводит два указанных сообщения и отображает окно сообщения со стеком вызовов.</summary>
+      <param name="condition">Условное выражение, которое требуется оценить.Если условие имеет значение true, указанные сообщения не отправляются и окно сообщения не отображается.</param>
+      <param name="message">Сообщение, которое следует отправить в коллекцию <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <param name="detailMessage">Подробное сообщение, которое следует отправить в коллекцию <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.AutoFlush">
+      <summary>Получает или задает значение, указывающее, следует ли вызывать метод <see cref="M:System.Diagnostics.Trace.Flush" /> для свойства <see cref="P:System.Diagnostics.Trace.Listeners" /> после каждой записи.</summary>
+      <returns>Значение true, если метод <see cref="M:System.Diagnostics.Trace.Flush" /> вызывается для свойства <see cref="P:System.Diagnostics.Trace.Listeners" />; в противном случае — false.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Close">
+      <summary>Очищает выходной буфер, а затем закрывает свойство <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Fail(System.String)">
+      <summary>Выдает указанное сообщение об ошибке.</summary>
+      <param name="message">Выдаваемое сообщение. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Fail(System.String,System.String)">
+      <summary>Выдает простое и подробное сообщение об ошибке.</summary>
+      <param name="message">Выдаваемое сообщение. </param>
+      <param name="detailMessage">Выдаваемое подробное сообщение. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Flush">
+      <summary>Очищает выходной буфер и вызывает запись данных буфера в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Indent">
+      <summary>Увеличивает текущее значение свойства <see cref="P:System.Diagnostics.Trace.IndentLevel" /> на единицу.</summary>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.IndentLevel">
+      <summary>Возвращает или задает уровень отступа.</summary>
+      <returns>Уровень отступа.Значение по умолчанию — 0.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.IndentSize">
+      <summary>Возвращает или задает число пробелов в отступе.</summary>
+      <returns>Число пробелов в отступе.По умолчанию используется значение 4.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.Listeners">
+      <summary>Получает коллекцию прослушивателей, отслеживающих данные трассировки.</summary>
+      <returns>Объект <see cref="T:System.Diagnostics.TraceListenerCollection" />, представляющий коллекцию типа <see cref="T:System.Diagnostics.TraceListener" />, которая позволяет отслеживать данные отладки.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Refresh">
+      <summary>Обновляет данные конфигурации трассировки.</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceError(System.String)">
+      <summary>Записывает сообщение об ошибке в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" /> с помощью указанного сообщения.</summary>
+      <param name="message">Информационное сообщение для записи.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceError(System.String,System.Object[])">
+      <summary>Записывает сообщение об ошибке в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" /> с помощью указанного массива объектов и сведений о форматировании.</summary>
+      <param name="format">Строка формата, не содержащая элементов формата или содержащая один либо несколько элементов формата, связанных с объектами в массиве <paramref name="args" />.</param>
+      <param name="args">Массив object, содержащий 0 или несколько объектов, которые необходимо форматировать.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceInformation(System.String)">
+      <summary>Записывает информационное сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" /> с помощью указанного сообщения.</summary>
+      <param name="message">Информационное сообщение для записи.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceInformation(System.String,System.Object[])">
+      <summary>Записывает информационное сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" /> с помощью указанного массива объектов и сведений о форматировании.</summary>
+      <param name="format">Строка формата, не содержащая элементов формата или содержащая один либо несколько элементов формата, связанных с объектами в массиве <paramref name="args" />.</param>
+      <param name="args">Массив object, содержащий 0 или несколько объектов, которые необходимо форматировать.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceWarning(System.String)">
+      <summary>Записывает предупреждающее сообщение е в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" /> с помощью указанного сообщения.</summary>
+      <param name="message">Информационное сообщение для записи.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceWarning(System.String,System.Object[])">
+      <summary>Записывает предупреждающее сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" /> с помощью указанного массива объектов и сведений о форматировании.</summary>
+      <param name="format">Строка формата, не содержащая элементов формата или содержащая один либо несколько элементов формата, связанных с объектами в массиве <paramref name="args" />.</param>
+      <param name="args">Массив object, содержащий 0 или несколько объектов, которые необходимо форматировать.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Unindent">
+      <summary>Уменьшает текущее значение свойства <see cref="P:System.Diagnostics.Trace.IndentLevel" /> на единицу.</summary>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.UseGlobalLock">
+      <summary>Получает или задает значение, показывающее, нужно ли использовать глобальную блокировку.  </summary>
+      <returns>Значение true если нужно использовать глобальную блокировку; в противном случае — значение false.Значение по умолчанию — true.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.Object)">
+      <summary>Записывает значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="value">Объект <see cref="T:System.Object" />, имя которого отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.Object,System.String)">
+      <summary>Записывает имя категории и значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="value">Имя <see cref="T:System.Object" /> отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.String)">
+      <summary>Записывает сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.String,System.String)">
+      <summary>Записывает имя категории и сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.Object)">
+      <summary>Записывает значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="value">Объект <see cref="T:System.Object" />, имя которого отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.Object,System.String)">
+      <summary>Записывает имя категории и значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="value">Объект <see cref="T:System.Object" />, имя которого отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.String)">
+      <summary>Записывает сообщение в слушатели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="message">Записываемое сообщение. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.String,System.String)">
+      <summary>Записывает имя категории и сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="message">Записываемое сообщение. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.Object)">
+      <summary>Записывает значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="value">Объект <see cref="T:System.Object" />, имя которого отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.Object,System.String)">
+      <summary>Записывает имя категории и значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="value">Объект <see cref="T:System.Object" />, имя которого отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.String)">
+      <summary>Записывает сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.String,System.String)">
+      <summary>Записывает имя категории и сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.Object)">
+      <summary>Записывает значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="value">Объект <see cref="T:System.Object" />, имя которого отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.Object,System.String)">
+      <summary>Записывает имя категории и значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="value">Объект <see cref="T:System.Object" />, имя которого отправляется в свойство <see cref="P:System.Diagnostics.Trace.Listeners" />. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.String)">
+      <summary>Записывает сообщение в слушатели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="message">Записываемое сообщение. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.String,System.String)">
+      <summary>Записывает имя категории и сообщение в прослушиватели трассировки в коллекции <see cref="P:System.Diagnostics.Trace.Listeners" />, если условие имеет значение true.</summary>
+      <param name="condition">Значение true — запись сообщения; в противном случае — false. </param>
+      <param name="message">Записываемое сообщение. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.TraceEventCache">
+      <summary>Предоставляет данные событий трассировки специфичные для потока и процесса.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceEventCache.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceEventCache" />. </summary>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.DateTime">
+      <summary>Возвращает дату и время, когда произошла трассировка событий.</summary>
+      <returns>Структура <see cref="T:System.DateTime" />, значением которой является дата и время, выраженные в формате (UTC).</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.ProcessId">
+      <summary>Возвращает уникальный идентификатор текущего процесса.</summary>
+      <returns>Созданный системой уникальный идентификатор текущего процесса.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.ThreadId">
+      <summary>Возвращает уникальный идентификатор текущего управляемого потока.  </summary>
+      <returns>Строка, представляющая уникальный целочисленный идентификатор для этого управляемого потока.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.Timestamp">
+      <summary>Получает текущее число тактов временного механизма.</summary>
+      <returns>Значение счетчика тактов базового временного механизма.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceEventType">
+      <summary>Идентифицирует тип события, ставшего причиной трассировки.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Critical">
+      <summary>Неустранимая ошибка или сбой в работе приложения.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Error">
+      <summary>Устранимая ошибка.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Information">
+      <summary>Информационное сообщение.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Verbose">
+      <summary>Трассировка отладки.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Warning">
+      <summary>Несущественная проблема.</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceFilter">
+      <summary>Представляет базовый класс для реализаций фильтров трассировки.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceFilter.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceFilter" />. </summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>При переопределении в производном классе определяет необходимость трассирования события прослушивателем трассировки.</summary>
+      <returns>Значение true для трассировки указанного события; в противном случае — значение false. </returns>
+      <param name="cache">Объект <see cref="T:System.Diagnostics.TraceEventCache" />, содержащий сведения о событии трассировки.</param>
+      <param name="source">Имя источника.</param>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />, с помощью которого можно определить тип события, ставшего причиной трассировки.</param>
+      <param name="id">Номер идентификатора трассировки.</param>
+      <param name="formatOrMessage">Формат, используемый для записи массива аргументов, заданных параметром <paramref name="args" />, или записываемое сообщение.</param>
+      <param name="args">Массив объектов аргумента.</param>
+      <param name="data1">Объект данных трассировки.</param>
+      <param name="data">Массив объектов данных трассировки.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceLevel">
+      <summary>Указывает, какие сообщения должны выводиться для классов <see cref="T:System.Diagnostics.Debug" />, <see cref="T:System.Diagnostics.Trace" /> и <see cref="T:System.Diagnostics.TraceSwitch" />.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Error">
+      <summary>Выводить сообщения обработки ошибок.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Info">
+      <summary>Выводить информационные сообщения, предупреждения и сообщения обработки ошибок.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Off">
+      <summary>Не выводить сообщения трассировки и отладки.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Verbose">
+      <summary>Выводить все сообщения отладки и трассировки.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Warning">
+      <summary>Выводить предупреждения и сообщения обработки ошибок.</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceListener">
+      <summary>Предоставляет abstract базовый класс для прослушивателей, осуществляющих мониторинг вывода трассировочной и отладочной информации.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceListener" /> с использованием заданного имени в качестве прослушивателя.</summary>
+      <param name="name">Имя <see cref="T:System.Diagnostics.TraceListener" />. </param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Dispose">
+      <summary>Освобождает все ресурсы, занятые модулем <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Dispose(System.Boolean)">
+      <summary>Освобождает неуправляемые ресурсы, используемые объектом <see cref="T:System.Diagnostics.TraceListener" />, а при необходимости освобождает также управляемые ресурсы.</summary>
+      <param name="disposing">Значение true позволяет освободить как управляемые, так и неуправляемые ресурсы; значение false освобождает только неуправляемые ресурсы. </param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Fail(System.String)">
+      <summary>Посылает сообщение об ошибке в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="message">Выдаваемое сообщение. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Fail(System.String,System.String)">
+      <summary>Выдает простое и подробное сообщение об ошибке в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="message">Выдаваемое сообщение. </param>
+      <param name="detailMessage">Выдаваемое подробное сообщение. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.Filter">
+      <summary>Возвращает или задает фильтр трассировки для прослушивателя трассировки.</summary>
+      <returns>Объект производится из базового класса <see cref="T:System.Diagnostics.TraceFilter" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Flush">
+      <summary>Если переопределено в производном классе, очищает выходной буфер.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IndentLevel">
+      <summary>Возвращает или задает уровень отступа.</summary>
+      <returns>Уровень отступа.По умолчанию используется значение ноль.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IndentSize">
+      <summary>Возвращает или задает число пробелов в отступе.</summary>
+      <returns>Число пробелов в отступе.По умолчанию — четыре пробела.</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">Происходит сбой операции Set, т.к. значение меньше 0.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IsThreadSafe">
+      <summary>Возвращает значение, указывающее, является ли прослушиватель трассировки потокобезопасным. </summary>
+      <returns>Значение true, если прослушиватель трассировки потокобезопасен; в противном случае — значение false.Значение по умолчанию — false.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.Name">
+      <summary>Возвращает или задает имя для данного <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <returns>Имя для данного <see cref="T:System.Diagnostics.TraceListener" />.Значение по умолчанию — пустая строка ("").</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.NeedIndent">
+      <summary>Возвращает или задает значение, указывающее, нужен ли отступ в выходных данных.</summary>
+      <returns>Значение true, если требуется отступ; в противном случае — значение false.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+      <summary>Записывает сведения трассировки, объект данных и сведения о событиях в специальные выходные данные прослушивателя.</summary>
+      <param name="eventCache">Объект <see cref="T:System.Diagnostics.TraceEventCache" />, содержащий текущие идентификатор процесса, идентификатор потока и сведения о трассировке стека.</param>
+      <param name="source">Имя, используемое для идентификации выходных данных, обычно имя приложения, создавшего событие трассировки.</param>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />, задающее тип события, ставшего причиной трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="data">Выдаваемые данные трассировки.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object[])">
+      <summary>Записывает сведения трассировки, массив объектов данных и сведения о событии в специальные выходные данные прослушивателя.</summary>
+      <param name="eventCache">Объект <see cref="T:System.Diagnostics.TraceEventCache" />, содержащий текущие идентификатор процесса, идентификатор потока и сведения о трассировке стека.</param>
+      <param name="source">Имя, используемое для идентификации выходных данных, обычно имя приложения, создавшего событие трассировки.</param>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />, задающее тип события, ставшего причиной трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="data">Выдаваемые данные массива объектов.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32)">
+      <summary>Записывает сведения трассировки и сведения о событиях в специальные выходные данные прослушивателя.</summary>
+      <param name="eventCache">Объект <see cref="T:System.Diagnostics.TraceEventCache" />, содержащий текущие идентификатор процесса, идентификатор потока и сведения о трассировке стека.</param>
+      <param name="source">Имя, используемое для идентификации выходных данных, обычно имя приложения, создавшего событие трассировки.</param>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />, задающее тип события, ставшего причиной трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)">
+      <summary>Записывает сведения трассировки, сообщение и сведения о событиях в специальные выходные данные прослушивателя.</summary>
+      <param name="eventCache">Объект <see cref="T:System.Diagnostics.TraceEventCache" />, содержащий текущие идентификатор процесса, идентификатор потока и сведения о трассировке стека.</param>
+      <param name="source">Имя, используемое для идентификации выходных данных, обычно имя приложения, создавшего событие трассировки.</param>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />, задающее тип события, ставшего причиной трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="message">Записываемое сообщение.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+      <summary>Записывает сведения трассировки, форматированный массив объектов данных и сведения о событиях в специальные выходные данные прослушивателя.</summary>
+      <param name="eventCache">Объект <see cref="T:System.Diagnostics.TraceEventCache" />, содержащий текущие идентификатор процесса, идентификатор потока и сведения о трассировке стека.</param>
+      <param name="source">Имя, используемое для идентификации выходных данных, обычно имя приложения, создавшего событие трассировки.</param>
+      <param name="eventType">Одно из значений <see cref="T:System.Diagnostics.TraceEventType" />, задающее тип события, ставшего причиной трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="format">Строка формата, не содержащая элементов формата или содержащая один либо несколько элементов формата, связанных с объектами в массиве <paramref name="args" />.</param>
+      <param name="args">Массив object, содержащий несколько объектов (или ни одного), которые необходимо отформатировать.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.TraceOutputOptions">
+      <summary>Возвращает или задает параметры выходных данных трассировки.</summary>
+      <returns>Побитовое сочетание значений перечисления.Значение по умолчанию — <see cref="F:System.Diagnostics.TraceOptions.None" />.</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">Происходит сбой операции Set, т.к. значение недопустимо.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.Object)">
+      <summary>Записывает значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="o">Объект <see cref="T:System.Object" />, для которого нужно записать полное имя класса. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.Object,System.String)">
+      <summary>Записывает имя категории и значение метода <see cref="M:System.Object.ToString" /> объекта в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="o">Объект <see cref="T:System.Object" />, для которого нужно записать полное имя класса. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.String)">
+      <summary>Если переопределено в производном классе, записывает заданное сообщение в прослушиватель, создаваемый в производном классе.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.String,System.String)">
+      <summary>Записывает имя категории и сообщение в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteIndent">
+      <summary>Записывает отступ в прослушиватель, создаваемый при реализации этого класса, и восстанавливает для свойства <see cref="P:System.Diagnostics.TraceListener.NeedIndent" /> значение false.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.Object)">
+      <summary>Записывает значение метода <see cref="M:System.Object.ToString" /> объекта, заканчивающееся знаком завершения строки, в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="o">Объект <see cref="T:System.Object" />, для которого нужно записать полное имя класса. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.Object,System.String)">
+      <summary>Записывает имя категории и значение метода <see cref="M:System.Object.ToString" /> объекта, заканчивающееся знаком завершения строки, в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="o">Объект <see cref="T:System.Object" />, для которого нужно записать полное имя класса. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.String)">
+      <summary>Если переопределено в производном классе, записывает сообщение, заканчивающееся знаком завершения строки, в прослушиватель, создаваемый в производном классе.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.String,System.String)">
+      <summary>Записывает имя категории и сообщение, заканчивающееся знаком завершения строки, в прослушиватель, создаваемый при реализации класса <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="message">Записываемое сообщение. </param>
+      <param name="category">Имя категории, используемое для систематизации выходных данных. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceListenerCollection">
+      <summary>Предоставляет потокобезопасный список объектов <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Add(System.Diagnostics.TraceListener)">
+      <summary>Добавляет в список объект <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <returns>Позиция, в которую был вставлен новый прослушиватель.</returns>
+      <param name="listener">Объект <see cref="T:System.Diagnostics.TraceListener" />, который необходимо добавить в список. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.AddRange(System.Diagnostics.TraceListener[])">
+      <summary>Добавляет в список массив объектов <see cref="T:System.Diagnostics.TraceListener" />.</summary>
+      <param name="value">Массив объектов <see cref="T:System.Diagnostics.TraceListener" />, добавляемый в список. </param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="value" /> имеет значение null.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.AddRange(System.Diagnostics.TraceListenerCollection)">
+      <summary>Добавляет в список содержимое другой коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <param name="value">Другая коллекция <see cref="T:System.Diagnostics.TraceListenerCollection" />, содержимое которой добавляется в список. </param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="value" /> имеет значение null.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Clear">
+      <summary>Удаляет все прослушиватели в списке.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Contains(System.Diagnostics.TraceListener)">
+      <summary>Проверяет наличие в списке указанного прослушивателя.</summary>
+      <returns>Значение true, если прослушиватель есть в списке, в противном случае — значение false.</returns>
+      <param name="listener">Объект <see cref="T:System.Diagnostics.TraceListener" />, который требуется найти в списке. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.CopyTo(System.Diagnostics.TraceListener[],System.Int32)">
+      <summary>Копирует часть текущего списка <see cref="T:System.Diagnostics.TraceListenerCollection" /> в позицию указанного массива с заданным индексом.</summary>
+      <param name="listeners">Массив типа <see cref="T:System.Array" />, в который копируются элементы. </param>
+      <param name="index">Числовой индекс, с которого начинается копирование. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Count">
+      <summary>Возвращает число прослушивателей в списке.</summary>
+      <returns>Число прослушивателей в списке.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.GetEnumerator">
+      <summary>Возвращает перечислитель для данного списка.</summary>
+      <returns>Перечислитель типа <see cref="T:System.Collections.IEnumerator" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.IndexOf(System.Diagnostics.TraceListener)">
+      <summary>Возвращает индекс заданного прослушивателя.</summary>
+      <returns>Индекс прослушивателя (если его можно найти в списке), в противном случае значение -1.</returns>
+      <param name="listener">Объект <see cref="T:System.Diagnostics.TraceListener" />, который требуется найти в списке. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Insert(System.Int32,System.Diagnostics.TraceListener)">
+      <summary>Вставляет прослушиватель по указанному индексу.</summary>
+      <param name="index">Позиция в списке для вставки нового объекта <see cref="T:System.Diagnostics.TraceListener" />. </param>
+      <param name="listener">Объект <see cref="T:System.Diagnostics.TraceListener" />, который требуется вставить в список. </param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Значение параметра <paramref name="index" /> не является допустимым индексом в списке. </exception>
+      <exception cref="T:System.ArgumentException">Параметр <paramref name="listener" /> имеет значение null.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Item(System.Int32)">
+      <summary>Получает или задает объект <see cref="T:System.Diagnostics.TraceListener" /> с указанным индексом.</summary>
+      <returns>Объект <see cref="T:System.Diagnostics.TraceListener" /> с заданным индексом.</returns>
+      <param name="i">Индекс извлекаемого из списка объекта <see cref="T:System.Diagnostics.TraceListener" /> (начиная с нуля). </param>
+      <exception cref="T:System.ArgumentNullException">Значение равно null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Item(System.String)">
+      <summary>Возвращает первый объект <see cref="T:System.Diagnostics.TraceListener" /> в списке с указанным именем.</summary>
+      <returns>Первый объект <see cref="T:System.Diagnostics.TraceListener" /> в списке с заданным значением свойства <see cref="P:System.Diagnostics.TraceListener.Name" />.Этот элемент возвращает значение null, если не найден ни один объект <see cref="T:System.Diagnostics.TraceListener" /> с данным именем.</returns>
+      <param name="name">Имя объекта <see cref="T:System.Diagnostics.TraceListener" />, который требуется извлечь из списка. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Remove(System.Diagnostics.TraceListener)">
+      <summary>Удаляет указанный объект <see cref="T:System.Diagnostics.TraceListener" /> из коллекции.</summary>
+      <param name="listener">Объект <see cref="T:System.Diagnostics.TraceListener" />, который нужно удалить из списка. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Remove(System.String)">
+      <summary>Удаляет из коллекции первый объект <see cref="T:System.Diagnostics.TraceListener" /> с указанным именем.</summary>
+      <param name="name">Имя объекта <see cref="T:System.Diagnostics.TraceListener" />, который требуется удалить из списка. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.RemoveAt(System.Int32)">
+      <summary>Удаляет из коллекции параметр <see cref="T:System.Diagnostics.TraceListener" /> с заданным индексом.</summary>
+      <param name="index">Индекс объекта <see cref="T:System.Diagnostics.TraceListener" /> (начиная с нуля), который требуется удалить из списка. </param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Значение параметра <paramref name="index" /> не является допустимым индексом в списке. </exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+      <summary>Копирует раздел текущей коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" /> в указанный массив объектов <see cref="T:System.Diagnostics.TraceListener" />. </summary>
+      <param name="array">Одномерный массив объектов <see cref="T:System.Diagnostics.TraceListener" />, в который копируются элементы коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.Индексация в массиве должна вестись с нуля.</param>
+      <param name="index">Индекс (с нуля) в массиве <paramref name="array" />, с которого начинается копирование.</param>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#IsSynchronized">
+      <summary>Получает значение, показывающее, является ли доступ к коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" /> синхронизированным (потокобезопасным).</summary>
+      <returns>Всегда имеет значение true.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#SyncRoot">
+      <summary>Получает объект, с помощью которого можно синхронизировать доступ к коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <returns>Текущий объект <see cref="T:System.Diagnostics.TraceListenerCollection" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Add(System.Object)">
+      <summary>Добавляет прослушиватель трассировки в коллекцию <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <returns>Позиция, в которую вставляется новый прослушиватель трассировки.</returns>
+      <param name="value">Объект, добавляемый в коллекцию <see cref="T:System.Diagnostics.TraceListenerCollection" />.</param>
+      <exception cref="T:System.ArgumentException">Параметр <paramref name="value" /> имеет значение null. – или –<paramref name="value" /> не является объектом типа <see cref="T:System.Diagnostics.TraceListener" />.</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Contains(System.Object)">
+      <summary>Определяет наличие указанного объекта в коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <returns>Значение true, если объект <see cref="T:System.Object" /> найден в списке <see cref="T:System.Diagnostics.TraceListenerCollection" />; в противном случае — значение false.</returns>
+      <param name="value">Объект, который требуется найти в <see cref="T:System.Diagnostics.TraceListenerCollection" />.</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IndexOf(System.Object)">
+      <summary>Определяет индекс заданного объекта в коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <returns>Индекс параметра <paramref name="value" />, если он найден в коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />; в противном случае — значение -1.</returns>
+      <param name="value">Объект, который требуется найти в <see cref="T:System.Diagnostics.TraceListenerCollection" />.</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Insert(System.Int32,System.Object)">
+      <summary>Вставляет объект <see cref="T:System.Diagnostics.TraceListener" /> в указанное положение в коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <param name="index">Отсчитываемый от нуля индекс, по которому следует вставить параметр <paramref name="value" />.</param>
+      <param name="value">Объект <see cref="T:System.Diagnostics.TraceListener" />, вставляемый в коллекцию <see cref="T:System.Diagnostics.TraceListenerCollection" />.</param>
+      <exception cref="T:System.ArgumentException">Параметр <paramref name="value" /> не является объектом <see cref="T:System.Diagnostics.TraceListener" />.</exception>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IsFixedSize">
+      <summary>Получает значение, показывающее, имеет ли список <see cref="T:System.Diagnostics.TraceListenerCollection" /> фиксированный размер.</summary>
+      <returns>Всегда имеет значение false.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IsReadOnly">
+      <summary>Возвращает значение, позволяющее определить, доступна ли коллекция <see cref="T:System.Diagnostics.TraceListenerCollection" /> только для чтения.</summary>
+      <returns>Всегда имеет значение false.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Item(System.Int32)">
+      <summary>Получает или задает объект <see cref="T:System.Diagnostics.TraceListener" /> по указанному индексу в коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <returns>Объект <see cref="T:System.Diagnostics.TraceListener" /> с указанным индексом.</returns>
+      <param name="index">Отсчитываемый с нуля индекс искомого объекта <paramref name="value" />.</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Remove(System.Object)">
+      <summary>Удаляет объект из коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <param name="value">Объект, который необходимо удалить из коллекции <see cref="T:System.Diagnostics.TraceListenerCollection" />.</param>
+    </member>
+    <member name="T:System.Diagnostics.TraceOptions">
+      <summary>Задает параметры данных трассировки, записываемые в выходные данные трассировки.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.DateTime">
+      <summary>Записывает дату и время. </summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.None">
+      <summary>Не записывает элементы.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.ProcessId">
+      <summary>Записывает стек идентификации процесса, представленный возвращаемым значением свойства <see cref="P:System.Diagnostics.Process.Id" />.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.ThreadId">
+      <summary>Записывает стек удостоверений процесса, представленный возвращаемым значением свойства <see cref="P:System.Threading.Thread.ManagedThreadId" /> для текущего потока.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.Timestamp">
+      <summary>Записывает отметку времени, представленную возвращаемым значением метода <see cref="M:System.Diagnostics.Stopwatch.GetTimestamp" />.</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceSource">
+      <summary>Предоставляет набор методов и свойств, которые позволяют приложениям отслеживать выполнение кода и связывать сообщения трассировки с их источником. </summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceSource" />, используя указанное имя источника. </summary>
+      <param name="name">Имя источника (обычно — имя приложения).</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="name" /> имеет значение null.</exception>
+      <exception cref="T:System.ArgumentException">Параметр <paramref name="name" /> является пустой строкой ("").</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.#ctor(System.String,System.Diagnostics.SourceLevels)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceSource" />, используя заданное для источника имя и уровень источника По умолчанию при котором происходит трассировка.  </summary>
+      <param name="name">Имя источника, обычно — имя приложения.</param>
+      <param name="defaultLevel">Поразрядное сочетание значений перечисления, которое задает уровень источника по умолчанию, при котором должна выполняться трассировка.</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="name" /> имеет значение null.</exception>
+      <exception cref="T:System.ArgumentException">Параметр <paramref name="name" /> является пустой строкой ("").</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.Close">
+      <summary>Закрывает все прослушиватели трассировки в коллекции таких прослушивателей.</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.Flush">
+      <summary>Очищает все прослушиватели трассировки в коллекции таких прослушивателей.</summary>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Listeners">
+      <summary>Возвращает коллекцию прослушивателей трассировки для ее источника.</summary>
+      <returns>Коллекция <see cref="T:System.Diagnostics.TraceListenerCollection" />, в которой содержатся связанные с источником прослушиватели трассировки. </returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Name">
+      <summary>Возвращает имя источника трассировки.</summary>
+      <returns>Имя источника трассировки.</returns>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Switch">
+      <summary>Возвращает или задает значение переключателя источника.</summary>
+      <returns>Объект <see cref="T:System.Diagnostics.SourceSwitch" />, представляющий значение переключателя источника.</returns>
+      <exception cref="T:System.ArgumentNullException">Свойству <see cref="P:System.Diagnostics.TraceSource.Switch" /> присвоено значение null.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+      <summary>Записывает данные трассировки в прослушиватели трассировки коллекции <see cref="P:System.Diagnostics.TraceSource.Listeners" />, используя для этого указанный тип и идентификатор события, а также данные трассировки.</summary>
+      <param name="eventType">Одно из значений перечисления, с помощью которого можно определить тип события для данных трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="data">Данные трассировки.</param>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])">
+      <summary>Записывает данные трассировки в прослушиватели трассировки коллекции <see cref="P:System.Diagnostics.TraceSource.Listeners" />, используя для этого указанный тип и идентификатор события, а также массив данных трассировки.</summary>
+      <param name="eventType">Одно из значений перечисления, с помощью которого можно определить тип события для данных трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="data">Массив объектного типа, содержащий данные трассировки.</param>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32)">
+      <summary>Записывает сообщение о событии трассировки в прослушиватели трассировки коллекции <see cref="P:System.Diagnostics.TraceSource.Listeners" />, используя для этого указанный тип и идентификатор события.</summary>
+      <param name="eventType">Одно из значений перечисления, с помощью которого можно определить тип события для данных трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)">
+      <summary>Записывает сообщение о событии трассировки в прослушиватели трассировки коллекции <see cref="P:System.Diagnostics.TraceSource.Listeners" />, используя для этого указанный тип и идентификатор события, а также сообщение.</summary>
+      <param name="eventType">Одно из значений перечисления, с помощью которого можно определить тип события для данных трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="message">Записываемое сообщение трассировки.</param>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+      <summary>Записывает сообщение о событии трассировки в прослушиватели трассировки коллекции <see cref="P:System.Diagnostics.TraceSource.Listeners" />, используя для этого указанный тип и идентификатор события, а также массив аргументов и формат.</summary>
+      <param name="eventType">Одно из значений перечисления, с помощью которого можно определить тип события для данных трассировки.</param>
+      <param name="id">Числовой идентификатор события.</param>
+      <param name="format">Строка составного формата (см. примечания), содержащая текст, перемежаемый нулем или несколькими элементами форматирования, которые соответствуют объектам массива <paramref name="args" />.</param>
+      <param name="args">Массив object, содержащий 0 или несколько объектов, которые необходимо форматировать.</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="format" /> имеет значение null. </exception>
+      <exception cref="T:System.FormatException">
+        <paramref name="format" /> не является допустимым.– или – Число, указывающее аргумент для форматирования, меньше нуля или больше или равно числу указанных объектов для форматирования. </exception>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceInformation(System.String)">
+      <summary>Записывает информационное сообщение в прослушиватели трассировки коллекции <see cref="P:System.Diagnostics.TraceSource.Listeners" />, используя для этого указанное сообщение.</summary>
+      <param name="message">Информационное сообщение для записи.</param>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceInformation(System.String,System.Object[])">
+      <summary>Записывает информационное сообщение в прослушиватели трассировки коллекции <see cref="P:System.Diagnostics.TraceSource.Listeners" />, используя для этого указанный массив объектов и сведения о форматировании.</summary>
+      <param name="format">Строка составного формата (см. примечания), содержащая текст, перемежаемый нулем или несколькими элементами форматирования, которые соответствуют объектам массива <paramref name="args" />.</param>
+      <param name="args">Массив, содержащий несколько (или ни одного) объектов, которые необходимо отформатировать.</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="format" /> имеет значение null. </exception>
+      <exception cref="T:System.FormatException">
+        <paramref name="format" /> не является допустимым.– или – Число, указывающее аргумент для форматирования, меньше нуля или больше или равно числу указанных объектов для форматирования. </exception>
+      <exception cref="T:System.ObjectDisposedException">Предпринята попытка трассировки события в процессе завершения.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.TraceSwitch">
+      <summary>Предоставляет многоуровневый переключатель для управления выводом трассировки и отладки без повторной компиляции кода.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceSwitch" />, используя указанные отображаемое имя и описание.</summary>
+      <param name="displayName">Имя, отображаемое в пользовательском интерфейсе. </param>
+      <param name="description">Описание переключателя. </param>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.Diagnostics.TraceSwitch" />, используя указанные отображаемое имя, описание и значение по умолчанию переключателя. </summary>
+      <param name="displayName">Имя, отображаемое в пользовательском интерфейсе. </param>
+      <param name="description">Описание переключателя. </param>
+      <param name="defaultSwitchValue">Значение переключателя по умолчанию.</param>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.Level">
+      <summary>Получает или задает уровень трассировки, которым определяются сообщения, активируемые переключателем.</summary>
+      <returns>Одно из значений <see cref="T:System.Diagnostics.TraceLevel" />, задающее уровень сообщений, активируемых переключателем.</returns>
+      <exception cref="T:System.ArgumentException">Для свойства <see cref="P:System.Diagnostics.TraceSwitch.Level" /> установлено значение, которое не является одним из значений <see cref="T:System.Diagnostics.TraceLevel" />. </exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.OnSwitchSettingChanged">
+      <summary>Обновляет и исправляет уровень для данного переключателя.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.OnValueChanged">
+      <summary>Присваивает свойству <see cref="P:System.Diagnostics.Switch.SwitchSetting" /> целочисленный эквивалент свойства <see cref="P:System.Diagnostics.Switch.Value" />.</summary>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceError">
+      <summary>Получает значение, указывающее, активирует ли переключатель сообщения обработки ошибок.</summary>
+      <returns>Значение true, если для свойства <see cref="P:System.Diagnostics.TraceSwitch.Level" /> задано значение <see cref="F:System.Diagnostics.TraceLevel.Error" />, <see cref="F:System.Diagnostics.TraceLevel.Warning" />, <see cref="F:System.Diagnostics.TraceLevel.Info" /> или <see cref="F:System.Diagnostics.TraceLevel.Verbose" />; в противном случае — значение false.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceInfo">
+      <summary>Получает значение, указывающее, активирует ли переключатель информационные сообщения.</summary>
+      <returns>Значение true, если для свойства <see cref="P:System.Diagnostics.TraceSwitch.Level" /> задано значение <see cref="F:System.Diagnostics.TraceLevel.Info" /> или <see cref="F:System.Diagnostics.TraceLevel.Verbose" />; в противном случае — значение false.  </returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceVerbose">
+      <summary>Получает значение, указывающее, активирует ли переключатель все сообщения.</summary>
+      <returns>Значение true, если для свойства <see cref="P:System.Diagnostics.TraceSwitch.Level" /> задано значение <see cref="F:System.Diagnostics.TraceLevel.Verbose" />; в противном случае — значение false.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceWarning">
+      <summary>Получает значение, указывающее, активирует ли переключатель предупреждающие сообщения.</summary>
+      <returns>Значение true, если для свойства <see cref="P:System.Diagnostics.TraceSwitch.Level" /> задано значение <see cref="F:System.Diagnostics.TraceLevel.Warning" />, <see cref="F:System.Diagnostics.TraceLevel.Info" /> или <see cref="F:System.Diagnostics.TraceLevel.Verbose" />; в противном случае — значение false.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+  </members>
+</doc>

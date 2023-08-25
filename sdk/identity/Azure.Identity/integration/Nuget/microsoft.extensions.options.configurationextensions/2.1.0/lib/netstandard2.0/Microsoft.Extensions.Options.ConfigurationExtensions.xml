@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.Options.ConfigurationExtensions</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Options.ConfigurationChangeTokenSource`1">
+            <summary>
+            Creates IChangeTokens so that IOptionsMonitor gets notified when IConfiguration changes.
+            </summary>
+            <typeparam name="TOptions"></typeparam>
+        </member>
+        <member name="M:Microsoft.Extensions.Options.ConfigurationChangeTokenSource`1.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor taking the IConfiguration instance to watch.
+            </summary>
+            <param name="config">The configuration instance.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Options.ConfigurationChangeTokenSource`1.#ctor(System.String,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor taking the IConfiguration instance to watch.
+            </summary>
+            <param name="name">The name of the options instance being watche.</param>
+            <param name="config">The configuration instance.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Options.ConfigurationChangeTokenSource`1.GetChangeToken">
+            <summary>
+            Returns the reloadToken from IConfiguration.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Options.ConfigureFromConfigurationOptions`1">
+            <summary>
+            Configures an option instance by using ConfigurationBinder.Bind against an IConfiguration.
+            </summary>
+            <typeparam name="TOptions">The type of options to bind.</typeparam>
+        </member>
+        <member name="M:Microsoft.Extensions.Options.ConfigureFromConfigurationOptions`1.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor that takes the IConfiguration instance to bind against.
+            </summary>
+            <param name="config">The IConfiguration instance.</param>
+        </member>
+        <member name="T:Microsoft.Extensions.Options.NamedConfigureFromConfigurationOptions`1">
+            <summary>
+            Configures an option instance by using ConfigurationBinder.Bind against an IConfiguration.
+            </summary>
+            <typeparam name="TOptions">The type of options to bind.</typeparam>
+        </member>
+        <member name="M:Microsoft.Extensions.Options.NamedConfigureFromConfigurationOptions`1.#ctor(System.String,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor that takes the IConfiguration instance to bind against.
+            </summary>
+            <param name="name">The name of the options instance.</param>
+            <param name="config">The IConfiguration instance.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Options.NamedConfigureFromConfigurationOptions`1.#ctor(System.String,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})">
+            <summary>
+            Constructor that takes the IConfiguration instance to bind against.
+            </summary>
+            <param name="name">The name of the options instance.</param>
+            <param name="config">The IConfiguration instance.</param>
+            <param name="configureBinder">Used to configure the <see cref="T:Microsoft.Extensions.Configuration.BinderOptions"/>.</param>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.OptionsBuilderConfigurationExtensions">
+            <summary>
+            Extension methods for adding configuration related options services to the DI container via <see cref="T:Microsoft.Extensions.Options.OptionsBuilder`1"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.OptionsBuilderConfigurationExtensions.Bind``1(Microsoft.Extensions.Options.OptionsBuilder{``0},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Registers a configuration instance which TOptions will bind against.
+            </summary>
+            <typeparam name="TOptions">The options type to be configured.</typeparam>
+            <param name="optionsBuilder">The options builder to add the services to.</param>
+            <param name="config">The configuration being bound.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Options.OptionsBuilder`1"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.OptionsBuilderConfigurationExtensions.Bind``1(Microsoft.Extensions.Options.OptionsBuilder{``0},Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})">
+            <summary>
+            Registers a configuration instance which TOptions will bind against.
+            </summary>
+            <typeparam name="TOptions">The options type to be configured.</typeparam>
+            <param name="optionsBuilder">The options builder to add the services to.</param>
+            <param name="config">The configuration being bound.</param>
+            <param name="configureBinder">Used to configure the <see cref="T:Microsoft.Extensions.Configuration.BinderOptions"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Options.OptionsBuilder`1"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions">
+            <summary>
+            Extension methods for adding configuration related options services to the DI container.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Registers a configuration instance which TOptions will bind against.
+            </summary>
+            <typeparam name="TOptions">The type of options being configured.</typeparam>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the services to.</param>
+            <param name="config">The configuration being bound.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Registers a configuration instance which TOptions will bind against.
+            </summary>
+            <typeparam name="TOptions">The type of options being configured.</typeparam>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the services to.</param>
+            <param name="name">The name of the options instance.</param>
+            <param name="config">The configuration being bound.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})">
+            <summary>
+            Registers a configuration instance which TOptions will bind against.
+            </summary>
+            <typeparam name="TOptions">The type of options being configured.</typeparam>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the services to.</param>
+            <param name="config">The configuration being bound.</param>
+            <param name="configureBinder">Used to configure the <see cref="T:Microsoft.Extensions.Configuration.BinderOptions"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions.Configure``1(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String,Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})">
+            <summary>
+            Registers a configuration instance which TOptions will bind against.
+            </summary>
+            <typeparam name="TOptions">The type of options being configured.</typeparam>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add the services to.</param>
+            <param name="name">The name of the options instance.</param>
+            <param name="config">The configuration being bound.</param>
+            <param name="configureBinder">Used to configure the <see cref="T:Microsoft.Extensions.Configuration.BinderOptions"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+    </members>
+</doc>

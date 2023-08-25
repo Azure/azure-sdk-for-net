@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.IO.FileSystem.AccessControl</name>
+  </assembly>
+  <members>
+    <member name="T:System.IO.FileSystemAclExtensions"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileStream)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileInfo,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileStream,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="T:System.Security.AccessControl.DirectoryObjectSecurity">
+      <summary>[SECURITY CRITICAL] Provides the ability to control access to directory objects without direct manipulation of Access Control Lists (ACLs).</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> class.</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor(System.Security.AccessControl.CommonSecurityDescriptor)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> class with the specified security descriptor.</summary>
+      <param name="securityDescriptor">The security descriptor to be associated with the new <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" />object.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType,System.Guid,System.Guid)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.AccessRule" /> class with the specified values.</summary>
+      <returns>The <see cref="T:System.Security.AccessControl.AccessRule" /> object that this method creates.</returns>
+      <param name="identityReference">The identity to which the access rule applies.  It must be an object that can be cast as a <see cref="T:System.Security.Principal.SecurityIdentifier" />.</param>
+      <param name="accessMask">The access mask of this rule. The access mask is a 32-bit collection of anonymous bits, the meaning of which is defined by the individual integrators.</param>
+      <param name="isInherited">true if this rule is inherited from a parent container.</param>
+      <param name="inheritanceFlags">Specifies the inheritance properties of the access rule.</param>
+      <param name="propagationFlags">Specifies whether inherited access rules are automatically propagated. The propagation flags are ignored if <paramref name="inheritanceFlags" /> is set to <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />.</param>
+      <param name="type">Specifies the valid access control type.</param>
+      <param name="objectType">The identity of the class of objects to which the new access rule applies.</param>
+      <param name="inheritedObjectType">The identity of the class of child objects which can inherit the new access rule.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] Adds the specified access rule to the Discretionary Access Control List (DACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <param name="rule">The access rule to add.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] Adds the specified audit rule to the System Access Control List (SACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <param name="rule">The audit rule to add.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags,System.Guid,System.Guid)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.AuditRule" /> class with the specified values.</summary>
+      <returns>The <see cref="T:System.Security.AccessControl.AuditRule" /> object that this method creates.</returns>
+      <param name="identityReference">The identity to which the audit rule applies.  It must be an object that can be cast as a <see cref="T:System.Security.Principal.SecurityIdentifier" />.</param>
+      <param name="accessMask">The access mask of this rule. The access mask is a 32-bit collection of anonymous bits, the meaning of which is defined by the individual integrators.</param>
+      <param name="isInherited">true if this rule is inherited from a parent container.</param>
+      <param name="inheritanceFlags">Specifies the inheritance properties of the audit rule.</param>
+      <param name="propagationFlags">Specifies whether inherited audit rules are automatically propagated. The propagation flags are ignored if <paramref name="inheritanceFlags" /> is set to <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />.</param>
+      <param name="flags">Specifies the conditions for which the rule is audited.</param>
+      <param name="objectType">The identity of the class of objects to which the new audit rule applies.</param>
+      <param name="inheritedObjectType">The identity of the class of child objects which can inherit the new audit rule.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAccessRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[SECURITY CRITICAL] Gets a collection of the access rules associated with the specified security identifier.</summary>
+      <returns>The collection of access rules associated with the specified <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</returns>
+      <param name="includeExplicit">true to include access rules explicitly set for the object.</param>
+      <param name="includeInherited">true to include inherited access rules.</param>
+      <param name="targetType">The security identifier for which to retrieve access rules. This must be an object that can be cast as a <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAuditRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[SECURITY CRITICAL] Gets a collection of the audit rules associated with the specified security identifier.</summary>
+      <returns>The collection of audit rules associated with the specified <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</returns>
+      <param name="includeExplicit">true to include audit rules explicitly set for the object.</param>
+      <param name="includeInherited">true to include inherited audit rules.</param>
+      <param name="targetType">The security identifier for which to retrieve audit rules. This must be an object that can be cast as a <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>[SECURITY CRITICAL] Applies the specified modification to the Discretionary Access Control List (DACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <returns>true if the DACL is successfully modified; otherwise, false.</returns>
+      <param name="modification">The modification to apply to the DACL.</param>
+      <param name="rule">The access rule to modify.</param>
+      <param name="modified">true if the DACL is successfully modified; otherwise, false.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>[SECURITY CRITICAL] Applies the specified modification to the System Access Control List (SACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <returns>true if the SACL is successfully modified; otherwise, false.</returns>
+      <param name="modification">The modification to apply to the SACL.</param>
+      <param name="rule">The audit rule to modify.</param>
+      <param name="modified">true if the SACL is successfully modified; otherwise, false.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes access rules that contain the same security identifier and access mask as the specified access rule from the Discretionary Access Control List (DACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <returns>true if the access rule was successfully removed; otherwise, false.</returns>
+      <param name="rule">The access rule to remove.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleAll(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes all access rules that have the same security identifier as the specified access rule from the Discretionary Access Control List (DACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <param name="rule">The access rule to remove.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes all access rules that exactly match the specified access rule from the Discretionary Access Control List (DACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <param name="rule">The access rule to remove.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] Removes audit rules that contain the same security identifier and access mask as the specified audit rule from the System Access Control List (SACL) associated with this <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> object.</summary>
+      <returns>true if the audit rule was successfully removed; otherwise, false.</returns>
+      <param name="rule">The audit rule to remove.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleAll(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] Removes all audit rules that have the same security identifier as the specified audit rule from the System Access Control List (SACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <param name="rule">The audit rule to remove.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] Removes all audit rules that exactly match the specified audit rule from the System Access Control List (SACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object.</summary>
+      <param name="rule">The audit rule to remove.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ResetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes all access rules in the Discretionary Access Control List (DACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object and then adds the specified access rule.</summary>
+      <param name="rule">The access rule to reset.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes all access rules that contain the same security identifier and qualifier as the specified access rule in the Discretionary Access Control List (DACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object and then adds the specified access rule.</summary>
+      <param name="rule">The access rule to set.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] Removes all audit rules that contain the same security identifier and qualifier as the specified audit rule in the System Access Control List (SACL) associated with this <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> object and then adds the specified audit rule.</summary>
+      <param name="rule">The audit rule to set.</param>
+    </member>
+    <member name="T:System.Security.AccessControl.DirectorySecurity">
+      <summary>[SECURITY CRITICAL] Represents the access control and audit security for a directory. This class cannot be inherited.</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.DirectorySecurity" /> class. </summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.DirectorySecurity" /> class from a specified directory using the specified values of the <see cref="T:System.Security.AccessControl.AccessControlSections" /> enumeration.</summary>
+      <param name="name">The location of a directory to create a <see cref="T:System.Security.AccessControl.DirectorySecurity" /> object from.</param>
+      <param name="includeSections">One of the <see cref="T:System.Security.AccessControl.AccessControlSections" /> values that specifies the type of access control list (ACL) information to retrieve. </param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSecurity">
+      <summary>[SECURITY CRITICAL] Represents the access control and audit security for a file. This class cannot be inherited.</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSecurity" /> class. </summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSecurity" /> class from a specified file using the specified values of the <see cref="T:System.Security.AccessControl.AccessControlSections" /> enumeration.</summary>
+      <param name="fileName">The location of a file to create a <see cref="T:System.Security.AccessControl.FileSecurity" /> object from.</param>
+      <param name="includeSections">One of the <see cref="T:System.Security.AccessControl.AccessControlSections" /> values that specifies the type of access control list (ACL) information to retrieve. </param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAccessRule">
+      <summary>[SECURITY CRITICAL] Represents an abstraction of an access control entry (ACE) that defines an access rule for a file or directory. This class cannot be inherited.</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> class using a reference to a user account, a value that specifies the type of operation associated with the access rule, and a value that specifies whether to allow or deny the operation. </summary>
+      <param name="identity">An <see cref="T:System.Security.Principal.IdentityReference" /> object that encapsulates a reference to a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the access rule. </param>
+      <param name="type">One of the <see cref="T:System.Security.AccessControl.AccessControlType" /> values that specifies whether to allow or deny the operation.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> class using a reference to a user account, a value that specifies the type of operation associated with the access rule, a value that determines how rights are inherited, a value that determines how rights are propagated, and a value that specifies whether to allow or deny the operation.</summary>
+      <param name="identity">An <see cref="T:System.Security.Principal.IdentityReference" /> object that encapsulates a reference to a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the access rule.</param>
+      <param name="inheritanceFlags">One of the <see cref="T:System.Security.AccessControl.InheritanceFlags" /> values that specifies how access masks are propagated to child objects.</param>
+      <param name="propagationFlags">One of the <see cref="T:System.Security.AccessControl.PropagationFlags" /> values that specifies how Access Control Entries (ACEs) are propagated to child objects.</param>
+      <param name="type">One of the <see cref="T:System.Security.AccessControl.AccessControlType" /> values that specifies whether to allow or deny the operation.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> class using the name of a user account, a value that specifies the type of operation associated with the access rule, and a value that describes whether to allow or deny the operation. </summary>
+      <param name="identity">The name of a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the access rule. </param>
+      <param name="type">One of the <see cref="T:System.Security.AccessControl.AccessControlType" /> values that specifies whether to allow or deny the operation.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> class using the name of a user account, a value that specifies the type of operation associated with the access rule, a value that determines how rights are inherited, a value that determines how rights are propagated, and a value that specifies whether to allow or deny the operation.</summary>
+      <param name="identity">The name of a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the access rule.</param>
+      <param name="inheritanceFlags">One of the <see cref="T:System.Security.AccessControl.InheritanceFlags" /> values that specifies how access masks are propagated to child objects.</param>
+      <param name="propagationFlags">One of the <see cref="T:System.Security.AccessControl.PropagationFlags" /> values that specifies how Access Control Entries (ACEs) are propagated to child objects.</param>
+      <param name="type">One of the <see cref="T:System.Security.AccessControl.AccessControlType" /> values that specifies whether to allow or deny the operation.</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAccessRule.FileSystemRights">
+      <summary>[SECURITY CRITICAL] Gets the <see cref="T:System.Security.AccessControl.FileSystemRights" /> flags associated with the current <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object.</summary>
+      <returns>The <see cref="T:System.Security.AccessControl.FileSystemRights" /> flags associated with the current <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object.</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAuditRule">
+      <summary>[SECURITY CRITICAL] Represents an abstraction of an access control entry (ACE) that defines an audit rule for a file or directory. This class cannot be inherited.</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> class using a reference to a user account, a value that specifies the type of operation associated with the audit rule, and a value that specifies when to perform auditing. </summary>
+      <param name="identity">An <see cref="T:System.Security.Principal.IdentityReference" /> object that encapsulates a reference to a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the audit rule. </param>
+      <param name="flags">One of the <see cref="T:System.Security.AccessControl.AuditFlags" /> values that specifies when to perform auditing.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> class using the name of a reference to a user account, a value that specifies the type of operation associated with the audit rule, a value that determines how rights are inherited, a value that determines how rights are propagated, and a value that specifies when to perform auditing.  </summary>
+      <param name="identity">An <see cref="T:System.Security.Principal.IdentityReference" /> object that encapsulates a reference to a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the audit rule.</param>
+      <param name="inheritanceFlags">One of the <see cref="T:System.Security.AccessControl.InheritanceFlags" /> values that specifies how access masks are propagated to child objects.</param>
+      <param name="propagationFlags">One of the <see cref="T:System.Security.AccessControl.PropagationFlags" /> values that specifies how Access Control Entries (ACEs) are propagated to child objects.</param>
+      <param name="flags">One of the <see cref="T:System.Security.AccessControl.AuditFlags" /> values that specifies when to perform auditing.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> class using a user account name, a value that specifies the type of operation associated with the audit rule, and a value that specifies when to perform auditing.</summary>
+      <param name="identity">The name of a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the audit rule. </param>
+      <param name="flags">One of the <see cref="T:System.Security.AccessControl.AuditFlags" /> values that specifies when to perform auditing.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> class using the name of a user account, a value that specifies the type of operation associated with the audit rule, a value that determines how rights are inherited, a value that determines how rights are propagated, and a value that specifies when to perform auditing. </summary>
+      <param name="identity">The name of a user account.</param>
+      <param name="fileSystemRights">One of the <see cref="T:System.Security.AccessControl.FileSystemRights" /> values that specifies the type of operation associated with the audit rule.</param>
+      <param name="inheritanceFlags">One of the <see cref="T:System.Security.AccessControl.InheritanceFlags" /> values that specifies how access masks are propagated to child objects.</param>
+      <param name="propagationFlags">One of the <see cref="T:System.Security.AccessControl.PropagationFlags" /> values that specifies how Access Control Entries (ACEs) are propagated to child objects.</param>
+      <param name="flags">One of the <see cref="T:System.Security.AccessControl.AuditFlags" /> values that specifies when to perform auditing.</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAuditRule.FileSystemRights">
+      <summary>[SECURITY CRITICAL] Gets the <see cref="T:System.Security.AccessControl.FileSystemRights" /> flags associated with the current <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> object.</summary>
+      <returns>The <see cref="T:System.Security.AccessControl.FileSystemRights" /> flags associated with the current <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> object.</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemRights">
+      <summary>[SECURITY CRITICAL] Defines the access rights to use when creating access and audit rules. </summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.AppendData">
+      <summary>Specifies the right to append data to the end of a file.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ChangePermissions">
+      <summary>Specifies the right to change the security and audit rules associated with a file or folder.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateDirectories">
+      <summary>Specifies the right to create a folder.  </summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateFiles">
+      <summary>Specifies the right to create a file.  </summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Delete">
+      <summary>Specifies the right to delete a folder or file. </summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.DeleteSubdirectoriesAndFiles">
+      <summary>Specifies the right to delete a folder and any files contained within that folder.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ExecuteFile">
+      <summary>Specifies the right to run an application file.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.FullControl">
+      <summary>Specifies the right to exert full control over a folder or file, and to modify access control and audit rules.  This value represents the right to do anything with a file and is the combination of all rights in this enumeration.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ListDirectory">
+      <summary>Specifies the right to read the contents of a directory.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Modify">
+      <summary>Specifies the right to read, write, list folder contents, delete folders and files, and run application files.  This right includes the <see cref="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute" /> right, the <see cref="F:System.Security.AccessControl.FileSystemRights.Write" /> right, and the <see cref="F:System.Security.AccessControl.FileSystemRights.Delete" /> right.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Read">
+      <summary>Specifies the right to open and copy folders or files as read-only.  This right includes the <see cref="F:System.Security.AccessControl.FileSystemRights.ReadData" /> right, <see cref="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes" /> right, <see cref="F:System.Security.AccessControl.FileSystemRights.ReadAttributes" /> right, and <see cref="F:System.Security.AccessControl.FileSystemRights.ReadPermissions" /> right.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute">
+      <summary>Specifies the right to open and copy folders or files as read-only, and to run application files.  This right includes the <see cref="F:System.Security.AccessControl.FileSystemRights.Read" /> right and the <see cref="F:System.Security.AccessControl.FileSystemRights.ExecuteFile" /> right.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAttributes">
+      <summary>Specifies the right to open and copy file system attributes from a folder or file.  For example, this value specifies the right to view the file creation or modified date.  This does not include the right to read data, extended file system attributes, or access and audit rules.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadData">
+      <summary>Specifies the right to open and copy a file or folder.  This does not include the right to read file system attributes, extended file system attributes, or access and audit rules.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes">
+      <summary>Specifies the right to open and copy extended file system attributes from a folder or file.  For example, this value specifies the right to view author and content information.  This does not include the right to read data, file system attributes, or access and audit rules.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadPermissions">
+      <summary>Specifies the right to open and copy access and audit rules from a folder or file.  This does not include the right to read data, file system attributes, and extended file system attributes. </summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Synchronize">
+      <summary>Specifies whether the application can wait for a file handle to synchronize with the completion of an I/O operation.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.TakeOwnership">
+      <summary>Specifies the right to change the owner of a folder or file.  Note that owners of a resource have full access to that resource.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Traverse">
+      <summary>Specifies the right to list the contents of a folder and to run applications contained within that folder.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Write">
+      <summary>Specifies the right to create folders and files, and to add or remove data from files.  This right includes the <see cref="F:System.Security.AccessControl.FileSystemRights.WriteData" /> right, <see cref="F:System.Security.AccessControl.FileSystemRights.AppendData" /> right, <see cref="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes" /> right, and <see cref="F:System.Security.AccessControl.FileSystemRights.WriteAttributes" /> right. </summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteAttributes">
+      <summary>Specifies the right to open and write file system attributes to a folder or file. This does not include the ability to write data, extended attributes, or access and audit rules.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteData">
+      <summary>Specifies the right to open and write to a file or folder.  This does not include the right to open and write file system attributes, extended file system attributes, or access and audit rules.</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes">
+      <summary>Specifies the right to open and write extended file system attributes to a folder or file.  This does not include the ability to write data, attributes, or access and audit rules.</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemSecurity">
+      <summary>[SECURITY CRITICAL] Represents the access control and audit security for a file or directory.</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRightType">
+      <summary>[SECURITY CRITICAL] Gets the enumeration that the <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> class uses to represent access rights.</summary>
+      <returns>A <see cref="T:System.Type" /> object representing the <see cref="T:System.Security.AccessControl.FileSystemRights" /> enumeration.</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> class that represents a new access control rule for the specified user, with the specified access rights, access control, and flags.</summary>
+      <returns>A new <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object that represents a new access control rule for the specified user, with the specified access rights, access control, and flags.</returns>
+      <param name="identityReference">An <see cref="T:System.Security.Principal.IdentityReference" /> object that represents a user account.</param>
+      <param name="accessMask">An integer that specifies an access type.</param>
+      <param name="isInherited">true if the access rule is inherited; otherwise, false.    </param>
+      <param name="inheritanceFlags">One of the <see cref="T:System.Security.AccessControl.InheritanceFlags" /> values that specifies how to propagate access masks to child objects.</param>
+      <param name="propagationFlags">One of the <see cref="T:System.Security.AccessControl.PropagationFlags" /> values that specifies how to propagate Access Control Entries (ACEs) to child objects.</param>
+      <param name="type">One of the <see cref="T:System.Security.AccessControl.AccessControlType" /> values that specifies whether access is allowed or denied.</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRuleType">
+      <summary>[SECURITY CRITICAL] Gets the enumeration that the <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> class uses to represent access rules.</summary>
+      <returns>A <see cref="T:System.Type" /> object representing the <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> class.</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] Adds the specified access control list (ACL) permission to the current file or directory.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object that represents an access control list (ACL) permission to add to a file or directory. </param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] Adds the specified audit rule to the current file or directory.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAuditRule" />  object that represents an audit rule to add to a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] Initializes a new instance of the <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> class representing the specified audit rule for the specified user.</summary>
+      <returns>A new <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> object representing the specified audit rule for the specified user.</returns>
+      <param name="identityReference">An <see cref="T:System.Security.Principal.IdentityReference" /> object that represents a user account.</param>
+      <param name="accessMask">An integer that specifies an access type.</param>
+      <param name="isInherited">true if the access rule is inherited; otherwise, false.    </param>
+      <param name="inheritanceFlags">One of the <see cref="T:System.Security.AccessControl.InheritanceFlags" /> values that specifies how to propagate access masks to child objects.</param>
+      <param name="propagationFlags">One of the <see cref="T:System.Security.AccessControl.PropagationFlags" /> values that specifies how to propagate Access Control Entries (ACEs) to child objects.</param>
+      <param name="flags">One of the <see cref="T:System.Security.AccessControl.AuditFlags" /> values that specifies the type of auditing to perform.</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AuditRuleType">
+      <summary>[SECURITY CRITICAL] Gets the type that the <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> class uses to represent audit rules.</summary>
+      <returns>A <see cref="T:System.Type" /> object representing the <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> class.</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes all matching allow or deny access control list (ACL) permissions from the current file or directory.</summary>
+      <returns>true if the access rule was removed; otherwise, false.</returns>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object that represents an access control list (ACL) permission to remove from a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleAll(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes all access control list (ACL) permissions for the specified user from the current file or directory.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object that specifies a user whose access control list (ACL) permissions should be removed from a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] Removes a single matching allow or deny access control list (ACL) permission from the current file or directory.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object that specifies a user whose access control list (ACL) permissions should be removed from a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] Removes all matching allow or deny audit rules from the current file or directory.</summary>
+      <returns>true if the audit rule was removed; otherwise, false</returns>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAuditRule" />  object that represents an audit rule to remove from a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleAll(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] Removes all audit rules for the specified user from the current file or directory.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> object that specifies a user whose audit rules should be removed from a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] Removes a single matching allow or deny audit rule from the current file or directory.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAuditRule" />  object that represents an audit rule to remove from a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.ResetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] Adds the specified access control list (ACL) permission to the current file or directory and removes all matching ACL permissions.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object that represents an access control list (ACL) permission to add to a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] Sets the specified access control list (ACL) permission for the current file or directory. </summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> object that represents an access control list (ACL) permission to set for a file or directory.</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] Sets the specified audit rule for the current file or directory.</summary>
+      <param name="rule">A <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> object that represents an audit rule to set for a file or directory.</param>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Security.Cryptography.ProtectedData</name>
+  </assembly>
+  <members>
+    <member name="T:System.Security.Cryptography.DataProtectionScope">
+      <summary>Specifies the scope of the data protection to be applied by the <see cref="M:System.Security.Cryptography.ProtectedData.Protect(System.Byte[],System.Byte[],System.Security.Cryptography.DataProtectionScope)" /> method.</summary>
+    </member>
+    <member name="F:System.Security.Cryptography.DataProtectionScope.CurrentUser">
+      <summary>The protected data is associated with the current user. Only threads running under the current user context can unprotect the data.</summary>
+    </member>
+    <member name="F:System.Security.Cryptography.DataProtectionScope.LocalMachine">
+      <summary>The protected data is associated with the machine context. Any process running on the computer can unprotect data. This enumeration value is usually used in server-specific applications that run on a server where untrusted users are not allowed access.</summary>
+    </member>
+    <member name="T:System.Security.Cryptography.ProtectedData">
+      <summary>Provides methods for encrypting and decrypting data. This class cannot be inherited.</summary>
+    </member>
+    <member name="M:System.Security.Cryptography.ProtectedData.Protect(System.Byte[],System.Byte[],System.Security.Cryptography.DataProtectionScope)">
+      <summary>Encrypts the data in a specified byte array and returns a byte array that contains the encrypted data.</summary>
+      <param name="userData">A byte array that contains data to encrypt.</param>
+      <param name="optionalEntropy">An optional additional byte array used to increase the complexity of the encryption, or <see langword="null" /> for no additional complexity.</param>
+      <param name="scope">One of the enumeration values that specifies the scope of encryption.</param>
+      <returns>A byte array representing the encrypted data.</returns>
+      <exception cref="T:System.ArgumentNullException">The <paramref name="userData" /> parameter is <see langword="null" />.</exception>
+      <exception cref="T:System.Security.Cryptography.CryptographicException">The encryption failed.</exception>
+      <exception cref="T:System.NotSupportedException">The operating system does not support this method.</exception>
+      <exception cref="T:System.OutOfMemoryException">The system ran out of memory while encrypting the data.</exception>
+      <exception cref="T:System.PlatformNotSupportedException">.NET Core only: Calls to the <c>Protect</c> method are supported on Windows operating systems only.</exception>
+    </member>
+    <member name="M:System.Security.Cryptography.ProtectedData.Unprotect(System.Byte[],System.Byte[],System.Security.Cryptography.DataProtectionScope)">
+      <summary>Decrypts the data in a specified byte array and returns a byte array that contains the decrypted data.</summary>
+      <param name="encryptedData">A byte array containing data encrypted using the <see cref="M:System.Security.Cryptography.ProtectedData.Protect(System.Byte[],System.Byte[],System.Security.Cryptography.DataProtectionScope)" /> method.</param>
+      <param name="optionalEntropy">An optional additional byte array that was used to encrypt the data, or <see langword="null" /> if the additional byte array was not used.</param>
+      <param name="scope">One of the enumeration values that specifies the scope of data protection that was used to encrypt the data.</param>
+      <returns>A byte array representing the decrypted data.</returns>
+      <exception cref="T:System.ArgumentNullException">The <paramref name="encryptedData" /> parameter is <see langword="null" />.</exception>
+      <exception cref="T:System.Security.Cryptography.CryptographicException">The decryption failed.</exception>
+      <exception cref="T:System.NotSupportedException">The operating system does not support this method.</exception>
+      <exception cref="T:System.OutOfMemoryException">Out of memory.</exception>
+      <exception cref="T:System.PlatformNotSupportedException">.NET Core only: Calls to the <c>Unprotect</c> method are supported on Windows operating systems only.</exception>
+    </member>
+  </members>
+</doc>

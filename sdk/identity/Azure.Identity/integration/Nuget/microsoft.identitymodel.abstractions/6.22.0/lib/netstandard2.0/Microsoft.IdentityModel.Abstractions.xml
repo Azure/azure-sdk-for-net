@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.IdentityModel.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.IdentityModel.Abstractions.EventLogLevel">
+            <summary>
+            Defines Event Log Levels.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.EventLogLevel.LogAlways">
+            <summary>
+            No level filtering is done on this log level. Log messages of all levels will be logged.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.EventLogLevel.Critical">
+            <summary>
+            Logs that describe an unrecoverable application or system crash, or a catastrophic failure that requires
+            immediate attention.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.EventLogLevel.Error">
+            <summary>
+            Logs that highlight when the current flow of execution is stopped due to a failure. These should indicate a
+            failure in the current activity, not an application-wide failure.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.EventLogLevel.Warning">
+            <summary>
+            Logs that highlight an abnormal or unexpected event in the application flow, but do not otherwise cause the
+            application execution to stop.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.EventLogLevel.Informational">
+            <summary>
+            Logs that track the general flow of the application. These logs should have long-term value.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.EventLogLevel.Verbose">
+            <summary>
+            Logs that are used for interactive investigation during development. These logs should primarily contain
+            information useful for debugging and have no long-term value.
+            </summary>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Abstractions.IIdentityLogger">
+            <summary>
+            Interface that needs to be implemented by classes providing logging in Microsoft identity libraries.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.IIdentityLogger.IsEnabled(Microsoft.IdentityModel.Abstractions.EventLogLevel)">
+            <summary>
+            Checks to see if logging is enabled at given <paramref name="eventLogLevel"/>.
+            </summary>
+            <param name="eventLogLevel">Log level of a message.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.IIdentityLogger.Log(Microsoft.IdentityModel.Abstractions.LogEntry)">
+            <summary>
+            Writes a log entry.
+            </summary>
+            <param name="entry">Defines a structured message to be logged at the provided <see cref="P:Microsoft.IdentityModel.Abstractions.LogEntry.EventLogLevel"/>.</param>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Abstractions.ITelemetryClient">
+            <summary>
+            Interface for Telemetry tracking.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.ITelemetryClient.ClientId">
+            <summary>
+            Gets or sets the application or client ID that telemetry is being sent for.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.ITelemetryClient.Initialize">
+            <summary>
+            Perform any necessary bootstrapping for the telemetry client.
+            </summary>
+            <remarks>
+            The expectation is that this should only be called once for the lifetime of the object however the
+            implementation should be idempotent.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.ITelemetryClient.IsEnabled">
+            <summary>
+            Checks to see if telemetry is enabled all up.
+            </summary>
+            <returns>
+            Returns <see langword="true"/> if telemetry should be sent; <see langword="false"/> otherwise.
+            </returns>
+            <remarks>
+            This check should be used to gate any resource intensive operations to generate telemetry as well.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.ITelemetryClient.IsEnabled(System.String)">
+            <summary>
+            Checks to see if telemetry is enabled for the named event.
+            </summary>
+            <param name="eventName">Name of the event to check.</param>
+            <returns>
+            Returns <see langword="true"/> if telemetry should be sent for <paramref name="eventName"/>;
+            <see langword="false"/> otherwise.
+            </returns>
+            <remarks>
+            This check should be used to gate any resource intensive operations to generate telemetry as well.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.ITelemetryClient.TrackEvent(Microsoft.IdentityModel.Abstractions.TelemetryEventDetails)">
+            <summary>
+            Tracks an instance of a named event.
+            </summary>
+            <param name="eventDetails">Details of the event to track.</param>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.ITelemetryClient.TrackEvent(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.Int64},System.Collections.Generic.IDictionary{System.String,System.Boolean},System.Collections.Generic.IDictionary{System.String,System.DateTime},System.Collections.Generic.IDictionary{System.String,System.Double},System.Collections.Generic.IDictionary{System.String,System.Guid})">
+            <summary>
+            Tracks an instance of a named event.
+            </summary>
+            <param name="eventName">Name of the event to track. Should be unique per scenario.</param>
+            <param name="stringProperties">Key value pair of strings to long with the event.</param>
+            <param name="longProperties">Key value pair of longs to long with the event.</param>
+            <param name="boolProperties">Key value pair of bools to long with the event.</param>
+            <param name="dateTimeProperties">Key value pair of DateTimes to long with the event.</param>
+            <param name="doubleProperties">Key value pair of doubles to long with the event.</param>
+            <param name="guidProperties">Key value pair of Guids to long with the event.</param>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Abstractions.LogEntry">
+            <summary>
+            Defines the structure of a log entry.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.LogEntry.EventLogLevel">
+            <summary>
+            Defines the <see cref="P:Microsoft.IdentityModel.Abstractions.LogEntry.EventLogLevel"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.LogEntry.Message">
+            <summary>
+            Message to be logged.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.LogEntry.CorrelationId">
+            <summary>
+            A unique identifier for a request that can help with diagnostics across components.
+            </summary>
+            <remarks>
+            Also referred to as ActivityId in Microsoft.IdentityModel.Tokens.CallContext.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Abstractions.NullIdentityModelLogger">
+            <summary>
+            A minimalistic <see cref="T:Microsoft.IdentityModel.Abstractions.IIdentityLogger"/> implementation that is disabled by default and doesn't log.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.NullIdentityModelLogger.Instance">
+            <summary>
+            Default instance of <see cref="T:Microsoft.IdentityModel.Abstractions.NullIdentityModelLogger"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullIdentityModelLogger.IsEnabled(Microsoft.IdentityModel.Abstractions.EventLogLevel)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullIdentityModelLogger.Log(Microsoft.IdentityModel.Abstractions.LogEntry)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Abstractions.NullTelemetryClient">
+            <summary>
+            The default implementation of the <see cref="T:Microsoft.IdentityModel.Abstractions.ITelemetryClient"/> interface which swallows all telemetry signals.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.ClientId">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.Instance">
+            <summary>
+            Singleton instance of <see cref="T:Microsoft.IdentityModel.Abstractions.NullTelemetryClient"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.#ctor">
+            <summary>
+            Initializes an instance of <see cref="T:Microsoft.IdentityModel.Abstractions.NullTelemetryClient"/>.
+            </summary>
+            <remarks>
+            Private constructor to prevent the default constructor being exposed.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.IsEnabled">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.IsEnabled(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.Initialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.TrackEvent(Microsoft.IdentityModel.Abstractions.TelemetryEventDetails)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.NullTelemetryClient.TrackEvent(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.Int64},System.Collections.Generic.IDictionary{System.String,System.Boolean},System.Collections.Generic.IDictionary{System.String,System.DateTime},System.Collections.Generic.IDictionary{System.String,System.Double},System.Collections.Generic.IDictionary{System.String,System.Guid})">
+            <inheritdoc/>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Abstractions.ObservabilityConstants">
+            <summary>
+            Common class containing observability constants to be used as well known metric keys.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.ObservabilityConstants.Succeeded">
+            <summary>
+            String used for the name of the property indicating if the call was successful.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.ObservabilityConstants.Duration">
+            <summary>
+            String used for the name of the property indicating the call in Duration (ms).
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.ObservabilityConstants.ActivityId">
+            <summary>
+            String used for the name of the property indicating the call's Activity Id/Correlation Id.
+            </summary>
+        </member>
+        <member name="F:Microsoft.IdentityModel.Abstractions.ObservabilityConstants.ClientId">
+            <summary>
+            String used for the name of the property indicating the caller's ClientId.
+            </summary>
+        </member>
+        <member name="T:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails">
+            <summary>
+            Details of the telemetry event.
+            </summary>
+            <remarks>
+            This implementation is not meant to be thread-safe. This implementation would either need to be overridden or
+            usage should not be concurrently operated on.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.PropertyValues">
+            <summary>
+            The underlying properties making up the <see cref="T:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.Name">
+            <summary>
+            Name of the telemetry event, should be unique between events.
+            </summary>
+        </member>
+        <member name="P:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.Properties">
+            <summary>
+            Properties which describe the event.
+            </summary>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.SetProperty(System.String,System.String)">
+            <summary>
+            Sets a property on the event details.
+            </summary>
+            <param name="key">Property key.</param>
+            <param name="value">Property value.</param>
+            <exception cref="T:System.ArgumentNullException">'key' is null.</exception>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.SetProperty(System.String,System.Int64)">
+            <summary>
+            Sets a property on the event details.
+            </summary>
+            <param name="key">Property key.</param>
+            <param name="value">Property value.</param>
+            <exception cref="T:System.ArgumentNullException">'key' is null.</exception>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.SetProperty(System.String,System.Boolean)">
+            <summary>
+            Sets a property on the event details.
+            </summary>
+            <param name="key">Property key.</param>
+            <param name="value">Property value.</param>
+            <exception cref="T:System.ArgumentNullException">'key' is null.</exception>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.SetProperty(System.String,System.DateTime)">
+            <summary>
+            Sets a property on the event details.
+            </summary>
+            <param name="key">Property key.</param>
+            <param name="value">Property value.</param>
+            <exception cref="T:System.ArgumentNullException">'key' is null.</exception>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.SetProperty(System.String,System.Double)">
+            <summary>
+            Sets a property on the event details.
+            </summary>
+            <param name="key">Property key.</param>
+            <param name="value">Property value.</param>
+            <exception cref="T:System.ArgumentNullException">'key' is null.</exception>
+        </member>
+        <member name="M:Microsoft.IdentityModel.Abstractions.TelemetryEventDetails.SetProperty(System.String,System.Guid)">
+            <summary>
+            Sets a property on the event details.
+            </summary>
+            <param name="key">Property key.</param>
+            <param name="value">Property value.</param>
+            <exception cref="T:System.ArgumentNullException">'key' is null.</exception>
+        </member>
+    </members>
+</doc>

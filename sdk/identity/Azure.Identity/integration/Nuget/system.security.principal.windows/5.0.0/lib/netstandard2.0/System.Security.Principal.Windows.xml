@@ -1,0 +1,1091 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Security.Principal.Windows</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle">
+      <summary>Provides a safe handle to a Windows thread or process access token. For more information, see Access Tokens.</summary>
+    </member>
+    <member name="M:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle.#ctor(System.IntPtr)">
+      <summary>Initializes a new instance of the <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" /> class.</summary>
+      <param name="handle">An <see cref="T:System.IntPtr" /> object that represents the pre-existing handle to use. Using <see cref="F:System.IntPtr.Zero" /> returns an invalid handle.</param>
+    </member>
+    <member name="P:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle.InvalidHandle">
+      <summary>Returns an invalid handle by instantiating a <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" /> object with <see cref="F:System.IntPtr.Zero" />.</summary>
+      <returns>Returns a <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" /> object.</returns>
+    </member>
+    <member name="P:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle.IsInvalid">
+      <summary>Gets a value that indicates whether the handle is invalid.</summary>
+      <returns>
+        <see langword="true" /> if the handle is not valid; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="T:System.Security.Principal.IdentityNotMappedException">
+      <summary>Represents an exception for a principal whose identity could not be mapped to a known identity.</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityNotMappedException.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.IdentityNotMappedException" /> class.</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityNotMappedException.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.IdentityNotMappedException" /> class by using the specified error message.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityNotMappedException.#ctor(System.String,System.Exception)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.IdentityNotMappedException" /> class by using the specified error message and inner exception.</summary>
+      <param name="message">The error message that explains the reason for the exception.</param>
+      <param name="inner">The exception that is the cause of the current exception. If <paramref name="inner" /> is not null, the current exception is raised in a <see langword="catch" /> block that handles the inner exception.</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityNotMappedException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Gets serialization information with the data needed to create an instance of this <see cref="T:System.Security.Principal.IdentityNotMappedException" /> object.</summary>
+      <param name="serializationInfo">The object that holds the serialized object data about the exception being thrown.</param>
+      <param name="streamingContext">The object that contains contextual information about the source or destination.</param>
+    </member>
+    <member name="P:System.Security.Principal.IdentityNotMappedException.UnmappedIdentities">
+      <summary>Represents the collection of unmapped identities for an <see cref="T:System.Security.Principal.IdentityNotMappedException" /> exception.</summary>
+      <returns>The collection of unmapped identities.</returns>
+    </member>
+    <member name="T:System.Security.Principal.IdentityReference">
+      <summary>Represents an identity and is the base class for the <see cref="T:System.Security.Principal.NTAccount" /> and <see cref="T:System.Security.Principal.SecurityIdentifier" /> classes. This class does not provide a public constructor, and therefore cannot be inherited.</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.Equals(System.Object)">
+      <summary>Returns a value that indicates whether the specified object equals this instance of the <see cref="T:System.Security.Principal.IdentityReference" /> class.</summary>
+      <param name="o">An object to compare with this <see cref="T:System.Security.Principal.IdentityReference" /> instance, or a null reference.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="o" /> is an object with the same underlying type and value as this <see cref="T:System.Security.Principal.IdentityReference" /> instance; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.GetHashCode">
+      <summary>Serves as a hash function for <see cref="T:System.Security.Principal.IdentityReference" />. <see cref="M:System.Security.Principal.IdentityReference.GetHashCode" /> is suitable for use in hashing algorithms and data structures like a hash table.</summary>
+      <returns>The hash code for this <see cref="T:System.Security.Principal.IdentityReference" /> object.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.IsValidTargetType(System.Type)">
+      <summary>Returns a value that indicates whether the specified type is a valid translation type for the <see cref="T:System.Security.Principal.IdentityReference" /> class.</summary>
+      <param name="targetType">The type being queried for validity to serve as a conversion from <see cref="T:System.Security.Principal.IdentityReference" />. The following target types are valid:  
+  
+ <see cref="T:System.Security.Principal.NTAccount" /><see cref="T:System.Security.Principal.SecurityIdentifier" /></param>
+      <returns>
+        <see langword="true" /> if <paramref name="targetType" /> is a valid translation type for the <see cref="T:System.Security.Principal.IdentityReference" /> class; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.op_Equality(System.Security.Principal.IdentityReference,System.Security.Principal.IdentityReference)">
+      <summary>Compares two <see cref="T:System.Security.Principal.IdentityReference" /> objects to determine whether they are equal. They are considered equal if they have the same canonical name representation as the one returned by the <see cref="P:System.Security.Principal.IdentityReference.Value" /> property or if they are both <see langword="null" />.</summary>
+      <param name="left">The left <see cref="T:System.Security.Principal.IdentityReference" /> operand to use for the equality comparison. This parameter can be <see langword="null" />.</param>
+      <param name="right">The right <see cref="T:System.Security.Principal.IdentityReference" /> operand to use for the equality comparison. This parameter can be <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.op_Inequality(System.Security.Principal.IdentityReference,System.Security.Principal.IdentityReference)">
+      <summary>Compares two <see cref="T:System.Security.Principal.IdentityReference" /> objects to determine whether they are not equal. They are considered not equal if they have different canonical name representations than the one returned by the <see cref="P:System.Security.Principal.IdentityReference.Value" /> property or if one of the objects is <see langword="null" /> and the other is not.</summary>
+      <param name="left">The left <see cref="T:System.Security.Principal.IdentityReference" /> operand to use for the inequality comparison. This parameter can be <see langword="null" />.</param>
+      <param name="right">The right <see cref="T:System.Security.Principal.IdentityReference" /> operand to use for the inequality comparison. This parameter can be <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are not equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.ToString">
+      <summary>Returns the string representation of the identity represented by the <see cref="T:System.Security.Principal.IdentityReference" /> object.</summary>
+      <returns>The identity in string format.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.Translate(System.Type)">
+      <summary>Translates the account name represented by the <see cref="T:System.Security.Principal.IdentityReference" /> object into another <see cref="T:System.Security.Principal.IdentityReference" />-derived type.</summary>
+      <param name="targetType">The target type for the conversion from <see cref="T:System.Security.Principal.IdentityReference" />.</param>
+      <returns>The converted identity.</returns>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReference.Value">
+      <summary>Gets the string value of the identity represented by the <see cref="T:System.Security.Principal.IdentityReference" /> object.</summary>
+      <returns>The string value of the identity represented by the <see cref="T:System.Security.Principal.IdentityReference" /> object.</returns>
+    </member>
+    <member name="T:System.Security.Principal.IdentityReferenceCollection">
+      <summary>Represents a collection of <see cref="T:System.Security.Principal.IdentityReference" /> objects and provides a means of converting sets of <see cref="T:System.Security.Principal.IdentityReference" />-derived objects to <see cref="T:System.Security.Principal.IdentityReference" />-derived types.</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> class with zero items in the collection.</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.#ctor(System.Int32)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> class by using the specified initial size.</summary>
+      <param name="capacity">The initial number of items in the collection. The value of <paramref name="capacity" /> is a hint only; it is not necessarily the maximum number of items created.</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Add(System.Security.Principal.IdentityReference)">
+      <summary>Adds an <see cref="T:System.Security.Principal.IdentityReference" /> object to the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</summary>
+      <param name="identity">The <see cref="T:System.Security.Principal.IdentityReference" /> object to add to the collection.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="identity" /> is <see langword="null" />.</exception>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Clear">
+      <summary>Clears all <see cref="T:System.Security.Principal.IdentityReference" /> objects from the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Contains(System.Security.Principal.IdentityReference)">
+      <summary>Indicates whether the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection contains the specified <see cref="T:System.Security.Principal.IdentityReference" /> object.</summary>
+      <param name="identity">The <see cref="T:System.Security.Principal.IdentityReference" /> object to check for.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="identity" /> is <see langword="null" />.</exception>
+      <returns>
+        <see langword="true" /> if the collection contains the specified object.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.CopyTo(System.Security.Principal.IdentityReference[],System.Int32)">
+      <summary>Copies the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection to an <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> array, starting at the specified index.</summary>
+      <param name="array">An <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> array object to which the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection is to be copied.</param>
+      <param name="offset">The zero-based index in <paramref name="array" /> where the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection is to be copied.</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.GetEnumerator">
+      <summary>Gets an enumerator that can be used to iterate through the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</summary>
+      <returns>An enumerator for the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Remove(System.Security.Principal.IdentityReference)">
+      <summary>Removes the specified <see cref="T:System.Security.Principal.IdentityReference" /> object from the collection.</summary>
+      <param name="identity">The <see cref="T:System.Security.Principal.IdentityReference" /> object to remove.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="identity" /> is <see langword="null" />.</exception>
+      <returns>
+        <see langword="true" /> if the specified object was removed from the collection.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.System#Collections#IEnumerable#GetEnumerator">
+      <summary>Gets an enumerator that can be used to iterate through the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</summary>
+      <returns>An enumerator for the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Translate(System.Type)">
+      <summary>Converts the objects in the collection to the specified type. Calling this method is the same as calling <see cref="M:System.Security.Principal.IdentityReferenceCollection.Translate(System.Type,System.Boolean)" /> with the second parameter set to <see langword="false" />, which means that exceptions will not be thrown for items that fail conversion.</summary>
+      <param name="targetType">The type to which items in the collection are being converted.</param>
+      <returns>A <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection that represents the converted contents of the original collection.</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Translate(System.Type,System.Boolean)">
+      <summary>Converts the objects in the collection to the specified type and uses the specified fault tolerance to handle or ignore errors associated with a type not having a conversion mapping.</summary>
+      <param name="targetType">The type to which items in the collection are being converted.</param>
+      <param name="forceSuccess">A Boolean value that determines how conversion errors are handled.  
+  
+ If <paramref name="forceSuccess" /> is <see langword="true" />, conversion errors due to a mapping not being found for the translation result in a failed conversion and exceptions being thrown.  
+  
+ If <paramref name="forceSuccess" /> is <see langword="false" />, types that failed to convert due to a mapping not being found for the translation are copied without being converted into the collection being returned.</param>
+      <returns>A <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection that represents the converted contents of the original collection.</returns>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReferenceCollection.Count">
+      <summary>Gets the number of items in the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</summary>
+      <returns>The number of <see cref="T:System.Security.Principal.IdentityReference" /> objects in the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</returns>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReferenceCollection.Item(System.Int32)">
+      <summary>Gets or sets the node at the specified index of the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</summary>
+      <param name="index">The zero-based index in the <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> collection.</param>
+      <returns>The <see cref="T:System.Security.Principal.IdentityReference" /> at the specified index in the collection. If <paramref name="index" /> is greater than or equal to the number of nodes in the collection, the return value is <see langword="null" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReferenceCollection.System#Collections#Generic#ICollection{System#Security#Principal#IdentityReference}#IsReadOnly">
+      <summary>Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only.</summary>
+      <returns>
+        <see langword="true" /> if the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="T:System.Security.Principal.NTAccount">
+      <summary>Represents a user or group account.</summary>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.NTAccount" /> class by using the specified name.</summary>
+      <param name="name">The name used to create the <see cref="T:System.Security.Principal.NTAccount" /> object. This parameter cannot be <see langword="null" /> or an empty string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="name" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="name" /> is an empty string.  
+  
+ -or-  
+  
+ <paramref name="name" /> is too long.</exception>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.NTAccount" /> class by using the specified domain name and account name.</summary>
+      <param name="domainName">The name of the domain. This parameter can be <see langword="null" /> or an empty string. Domain names that are null values are treated like an empty string.</param>
+      <param name="accountName">The name of the account. This parameter cannot be <see langword="null" /> or an empty string.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="accountName" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="accountName" /> is an empty string.  
+  
+ -or-  
+  
+ <paramref name="accountName" /> is too long.  
+  
+ -or-  
+  
+ <paramref name="domainName" /> is too long.</exception>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.Equals(System.Object)">
+      <summary>Returns a value that indicates whether this <see cref="T:System.Security.Principal.NTAccount" /> object is equal to a specified object.</summary>
+      <param name="o">An object to compare with this <see cref="T:System.Security.Principal.NTAccount" /> object, or <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="o" /> is an object with the same underlying type and value as this <see cref="T:System.Security.Principal.NTAccount" /> object; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.GetHashCode">
+      <summary>Serves as a hash function for the current <see cref="T:System.Security.Principal.NTAccount" /> object. The <see cref="M:System.Security.Principal.NTAccount.GetHashCode" /> method is suitable for hashing algorithms and data structures like a hash table.</summary>
+      <returns>A hash value for the current <see cref="T:System.Security.Principal.NTAccount" /> object.</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.IsValidTargetType(System.Type)">
+      <summary>Returns a value that indicates whether the specified type is a valid translation type for the <see cref="T:System.Security.Principal.NTAccount" /> class.</summary>
+      <param name="targetType">The type being queried for validity to serve as a conversion from <see cref="T:System.Security.Principal.NTAccount" />. The following target types are valid:  
+  
+ - <see cref="T:System.Security.Principal.NTAccount" />  
+  
+ - <see cref="T:System.Security.Principal.SecurityIdentifier" /></param>
+      <returns>
+        <see langword="true" /> if <paramref name="targetType" /> is a valid translation type for the <see cref="T:System.Security.Principal.NTAccount" /> class; otherwise <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.op_Equality(System.Security.Principal.NTAccount,System.Security.Principal.NTAccount)">
+      <summary>Compares two <see cref="T:System.Security.Principal.NTAccount" /> objects to determine whether they are equal. They are considered equal if they have the same canonical name representation as the one returned by the <see cref="P:System.Security.Principal.NTAccount.Value" /> property or if they are both <see langword="null" />.</summary>
+      <param name="left">The left operand to use for the equality comparison. This parameter can be <see langword="null" />.</param>
+      <param name="right">The right operand to use for the equality comparison. This parameter can be <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.op_Inequality(System.Security.Principal.NTAccount,System.Security.Principal.NTAccount)">
+      <summary>Compares two <see cref="T:System.Security.Principal.NTAccount" /> objects to determine whether they are not equal. They are considered not equal if they have different canonical name representations than the one returned by the <see cref="P:System.Security.Principal.NTAccount.Value" /> property or if one of the objects is <see langword="null" /> and the other is not.</summary>
+      <param name="left">The left operand to use for the inequality comparison. This parameter can be <see langword="null" />.</param>
+      <param name="right">The right operand to use for the inequality comparison. This parameter can be <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are not equal; otherwise <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.ToString">
+      <summary>Returns the account name, in Domain \ Account format, for the account represented by the <see cref="T:System.Security.Principal.NTAccount" /> object.</summary>
+      <returns>The account name, in Domain \ Account format.</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.Translate(System.Type)">
+      <summary>Translates the account name represented by the <see cref="T:System.Security.Principal.NTAccount" /> object into another <see cref="T:System.Security.Principal.IdentityReference" />-derived type.</summary>
+      <param name="targetType">The target type for the conversion from <see cref="T:System.Security.Principal.NTAccount" />. The target type must be a type that is considered valid by the <see cref="M:System.Security.Principal.NTAccount.IsValidTargetType(System.Type)" /> method.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="targetType" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="targetType" /> is not an <see cref="T:System.Security.Principal.IdentityReference" /> type.</exception>
+      <exception cref="T:System.Security.Principal.IdentityNotMappedException">Some or all identity references could not be translated.</exception>
+      <exception cref="T:System.SystemException">The source account name is too long.  
+  
+ -or-  
+  
+ A Win32 error code was returned.</exception>
+      <returns>The converted identity.</returns>
+    </member>
+    <member name="P:System.Security.Principal.NTAccount.Value">
+      <summary>Returns a string representation of this <see cref="T:System.Security.Principal.NTAccount" /> object.</summary>
+      <returns>The string representation of this <see cref="T:System.Security.Principal.NTAccount" /> object.</returns>
+    </member>
+    <member name="T:System.Security.Principal.SecurityIdentifier">
+      <summary>Represents a security identifier (SID) and provides marshaling and comparison operations for SIDs.</summary>
+    </member>
+    <member name="F:System.Security.Principal.SecurityIdentifier.MaxBinaryLength">
+      <summary>Returns the maximum size, in bytes, of the binary representation of the security identifier.</summary>
+    </member>
+    <member name="F:System.Security.Principal.SecurityIdentifier.MinBinaryLength">
+      <summary>Returns the minimum size, in bytes, of the binary representation of the security identifier.</summary>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.Byte[],System.Int32)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.SecurityIdentifier" /> class by using a specified binary representation of a security identifier (SID).</summary>
+      <param name="binaryForm">The byte array that represents the SID.</param>
+      <param name="offset">The byte offset to use as the starting index in <paramref name="binaryForm" />.</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.IntPtr)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.SecurityIdentifier" /> class by using an integer that represents the binary form of a security identifier (SID).</summary>
+      <param name="binaryForm">An integer that represents the binary form of a SID.</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.Security.Principal.WellKnownSidType,System.Security.Principal.SecurityIdentifier)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.SecurityIdentifier" /> class by using the specified well known security identifier (SID) type and domain SID.</summary>
+      <param name="sidType">One of the enumeration values. This value must not be <see cref="F:System.Security.Principal.WellKnownSidType.LogonIdsSid" />.</param>
+      <param name="domainSid">The domain SID. This value is required for the following <see cref="T:System.Security.Principal.WellKnownSidType" /> values. This parameter is ignored for any other <see cref="T:System.Security.Principal.WellKnownSidType" /> values.  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountAdministratorSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountGuestSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountKrbtgtSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountDomainAdminsSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountDomainUsersSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountDomainGuestsSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountComputersSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountControllersSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountCertAdminsSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountSchemaAdminsSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountEnterpriseAdminsSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountPolicyAdminsSid" />  
+  
+ - <see cref="F:System.Security.Principal.WellKnownSidType.AccountRasAndIasServersSid" /></param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.SecurityIdentifier" /> class by using the specified security identifier (SID) in Security Descriptor Definition Language (SDDL) format.</summary>
+      <param name="sddlForm">SDDL string for the SID used to create the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.CompareTo(System.Security.Principal.SecurityIdentifier)">
+      <summary>Compares the current <see cref="T:System.Security.Principal.SecurityIdentifier" /> object with the specified <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</summary>
+      <param name="sid">The object to compare with the current object.</param>
+      <returns>A signed number indicating the relative values of this instance and <paramref name="sid" />.  
+  
+ <list type="table"><listheader><term> Return Value</term><description> Description</description></listheader><item><term> Less than zero</term><description> This instance is less than <paramref name="sid" />.</description></item><item><term> Zero</term><description> This instance is equal to <paramref name="sid" />.</description></item><item><term> Greater than zero</term><description> This instance is greater than <paramref name="sid" />.</description></item></list></returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.Equals(System.Object)">
+      <summary>Returns a value that indicates whether this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object is equal to a specified object.</summary>
+      <param name="o">An object to compare with this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object, or <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="o" /> is an object with the same underlying type and value as this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.Equals(System.Security.Principal.SecurityIdentifier)">
+      <summary>Indicates whether the specified <see cref="T:System.Security.Principal.SecurityIdentifier" /> object is equal to the current <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</summary>
+      <param name="sid">The object to compare with the current object.</param>
+      <returns>
+        <see langword="true" /> if the value of <paramref name="sid" /> is equal to the value of the current <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>Copies the binary representation of the specified security identifier (SID) represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> class to a byte array.</summary>
+      <param name="binaryForm">The byte array to receive the copied SID.</param>
+      <param name="offset">The byte offset to use as the starting index in <paramref name="binaryForm" />.</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.GetHashCode">
+      <summary>Serves as a hash function for the current <see cref="T:System.Security.Principal.SecurityIdentifier" /> object. The <see cref="M:System.Security.Principal.SecurityIdentifier.GetHashCode" /> method is suitable for hashing algorithms and data structures like a hash table.</summary>
+      <returns>A hash value for the current <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsAccountSid">
+      <summary>Returns a value that indicates whether the security identifier (SID) represented by this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object is a valid Windows account SID.</summary>
+      <returns>
+        <see langword="true" /> if the SID represented by this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object is a valid Windows account SID; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsEqualDomainSid(System.Security.Principal.SecurityIdentifier)">
+      <summary>Returns a value that indicates whether the security identifier (SID) represented by this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object is from the same domain as the specified SID.</summary>
+      <param name="sid">The SID to compare with this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</param>
+      <returns>
+        <see langword="true" /> if the SID represented by this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object is in the same domain as the <paramref name="sid" /> SID; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsValidTargetType(System.Type)">
+      <summary>Returns a value that indicates whether the specified type is a valid translation type for the <see cref="T:System.Security.Principal.SecurityIdentifier" /> class.</summary>
+      <param name="targetType">The type being queried for validity to serve as a conversion from <see cref="T:System.Security.Principal.SecurityIdentifier" />. The following target types are valid:  
+  
+ - <see cref="T:System.Security.Principal.NTAccount" />  
+  
+ - <see cref="T:System.Security.Principal.SecurityIdentifier" /></param>
+      <returns>
+        <see langword="true" /> if <paramref name="targetType" /> is a valid translation type for the <see cref="T:System.Security.Principal.SecurityIdentifier" /> class; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsWellKnown(System.Security.Principal.WellKnownSidType)">
+      <summary>Returns a value that indicates whether the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object matches the specified well known security identifier (SID) type.</summary>
+      <param name="type">A value to compare with the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="type" /> is the SID type for the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.op_Equality(System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier)">
+      <summary>Compares two <see cref="T:System.Security.Principal.SecurityIdentifier" /> objects to determine whether they are equal. They are considered equal if they have the same canonical representation as the one returned by the <see cref="P:System.Security.Principal.SecurityIdentifier.Value" /> property or if they are both <see langword="null" />.</summary>
+      <param name="left">The left operand to use for the equality comparison. This parameter can be <see langword="null" />.</param>
+      <param name="right">The right operand to use for the equality comparison. This parameter can be <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.op_Inequality(System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier)">
+      <summary>Compares two <see cref="T:System.Security.Principal.SecurityIdentifier" /> objects to determine whether they are not equal. They are considered not equal if they have different canonical name representations than the one returned by the <see cref="P:System.Security.Principal.SecurityIdentifier.Value" /> property or if one of the objects is <see langword="null" /> and the other is not.</summary>
+      <param name="left">The left operand to use for the inequality comparison. This parameter can be <see langword="null" />.</param>
+      <param name="right">The right operand to use for the inequality comparison. This parameter can be <see langword="null" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are not equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.ToString">
+      <summary>Returns the security identifier (SID), in Security Descriptor Definition Language (SDDL) format, for the account represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object. An example of the SDDL format is S-1-5-9.</summary>
+      <returns>The SID, in SDDL format, for the account represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.Translate(System.Type)">
+      <summary>Translates the account name represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object into another <see cref="T:System.Security.Principal.IdentityReference" />-derived type.</summary>
+      <param name="targetType">The target type for the conversion from <see cref="T:System.Security.Principal.SecurityIdentifier" />. The target type must be a type that is considered valid by the <see cref="M:System.Security.Principal.SecurityIdentifier.IsValidTargetType(System.Type)" /> method.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="targetType" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="targetType" /> is not an <see cref="T:System.Security.Principal.IdentityReference" /> type.</exception>
+      <exception cref="T:System.Security.Principal.IdentityNotMappedException">Some or all identity references could not be translated.</exception>
+      <exception cref="T:System.SystemException">A Win32 error code was returned.</exception>
+      <returns>The converted identity.</returns>
+    </member>
+    <member name="P:System.Security.Principal.SecurityIdentifier.AccountDomainSid">
+      <summary>Returns the account domain security identifier (SID) portion from the SID represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object if the SID represents a Windows account SID. If the SID does not represent a Windows account SID, this property returns <see langword="null" />.</summary>
+      <returns>The account domain SID portion from the SID represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object if the SID represents a Windows account SID; otherwise, it returns <see langword="null" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.SecurityIdentifier.BinaryLength">
+      <summary>Returns the length, in bytes, of the security identifier (SID) represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</summary>
+      <returns>The length, in bytes, of the SID represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</returns>
+    </member>
+    <member name="P:System.Security.Principal.SecurityIdentifier.Value">
+      <summary>Returns an uppercase Security Descriptor Definition Language (SDDL) string for the security identifier (SID) represented by this <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</summary>
+      <returns>An uppercase SDDL string for the SID represented by the <see cref="T:System.Security.Principal.SecurityIdentifier" /> object.</returns>
+    </member>
+    <member name="T:System.Security.Principal.TokenAccessLevels">
+      <summary>Defines the privileges of the user account associated with the access token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustDefault">
+      <summary>The user can change the default owner, primary group, or discretionary access control list (DACL) of the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustGroups">
+      <summary>The user can change the attributes of the groups in the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustPrivileges">
+      <summary>The user can enable or disable privileges in the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustSessionId">
+      <summary>The user can adjust the session identifier of the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AllAccess">
+      <summary>The user has all possible access to the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AssignPrimary">
+      <summary>The user can attach a primary token to a process.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Duplicate">
+      <summary>The user can duplicate the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Impersonate">
+      <summary>The user can impersonate a client.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.MaximumAllowed">
+      <summary>The maximum value that can be assigned for the <see cref="T:System.Security.Principal.TokenAccessLevels" /> enumeration.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Query">
+      <summary>The user can query the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.QuerySource">
+      <summary>The user can query the source of the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Read">
+      <summary>The user has standard read rights and the <see cref="F:System.Security.Principal.TokenAccessLevels.Query" /> privilege for the token.</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Write">
+      <summary>The user has standard write rights and the <see cref="F:System.Security.Principal.TokenAccessLevels.AdjustPrivileges" />, <see cref="F:System.Security.Principal.TokenAccessLevels.AdjustGroups" /> and <see cref="F:System.Security.Principal.TokenAccessLevels.AdjustDefault" /> privileges for the token.</summary>
+    </member>
+    <member name="T:System.Security.Principal.WellKnownSidType">
+      <summary>Defines a set of commonly used security identifiers (SIDs).</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountAdministratorSid">
+      <summary>Indicates a SID that matches the account administrators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountCertAdminsSid">
+      <summary>Indicates a SID that matches the certificate administrators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountComputersSid">
+      <summary>Indicates a SID that matches the account computer group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountControllersSid">
+      <summary>Indicates a SID that matches the account controller group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountDomainAdminsSid">
+      <summary>Indicates a SID that matches the account domain administrator group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountDomainGuestsSid">
+      <summary>Indicates a SID that matches the account domain guests group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountDomainUsersSid">
+      <summary>Indicates a SID that matches the account domain users group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountEnterpriseAdminsSid">
+      <summary>Indicates a SID that matches the enterprise administrators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountGuestSid">
+      <summary>Indicates a SID that matches the account guest group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountKrbtgtSid">
+      <summary>Indicates a SID that matches the account Kerberos target group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountPolicyAdminsSid">
+      <summary>Indicates a SID that matches the policy administrators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountRasAndIasServersSid">
+      <summary>Indicates a SID that matches the RAS and IAS server account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountSchemaAdminsSid">
+      <summary>Indicates a SID that matches the schema administrators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AnonymousSid">
+      <summary>Indicates a SID for the anonymous account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AuthenticatedUserSid">
+      <summary>Indicates a SID for an authenticated user.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BatchSid">
+      <summary>Indicates a SID for a batch process. This SID is added to the process of a token when it logs on as a batch job.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinAccountOperatorsSid">
+      <summary>Indicates a SID that matches the account operators account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinAdministratorsSid">
+      <summary>Indicates a SID that matches the administrator account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinAuthorizationAccessSid">
+      <summary>Indicates a SID that matches the Windows Authorization Access group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinBackupOperatorsSid">
+      <summary>Indicates a SID that matches the backup operators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinDomainSid">
+      <summary>Indicates a SID that matches the domain account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinGuestsSid">
+      <summary>Indicates a SID that matches the guest account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinIncomingForestTrustBuildersSid">
+      <summary>Indicates a SID that allows a user to create incoming forest trusts. It is added to the token of users who are a member of the Incoming Forest Trust Builders built-in group in the root domain of the forest.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinNetworkConfigurationOperatorsSid">
+      <summary>Indicates a SID that matches the network operators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPerformanceLoggingUsersSid">
+      <summary>Indicates a SID that matches the group of users that have remote access to monitor the computer.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPerformanceMonitoringUsersSid">
+      <summary>Indicates a SID that matches the group of users that have remote access to schedule logging of performance counters on this computer.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPowerUsersSid">
+      <summary>Indicates a SID that matches the power users group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPreWindows2000CompatibleAccessSid">
+      <summary>Indicates a SID that matches pre-Windows 2000 compatible accounts.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPrintOperatorsSid">
+      <summary>Indicates a SID that matches the print operators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinRemoteDesktopUsersSid">
+      <summary>Indicates a SID that matches remote desktop users.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinReplicatorSid">
+      <summary>Indicates a SID that matches the replicator account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinSystemOperatorsSid">
+      <summary>Indicates a SID that matches the system operators group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinUsersSid">
+      <summary>Indicates a SID that matches built-in user accounts.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorGroupServerSid">
+      <summary>Indicates a creator group server SID.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorGroupSid">
+      <summary>Indicates a SID that matches the creator group of an object.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorOwnerServerSid">
+      <summary>Indicates a creator owner server SID.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorOwnerSid">
+      <summary>Indicates a SID that matches the owner or creator of an object.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.DialupSid">
+      <summary>Indicates a SID for a dial-up account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.DigestAuthenticationSid">
+      <summary>Indicates a SID present when the Microsoft Digest authentication package authenticated the client.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.EnterpriseControllersSid">
+      <summary>Indicates a SID for an enterprise controller.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.InteractiveSid">
+      <summary>Indicates a SID for an interactive account. This SID is added to the process of a token when it logs on interactively.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LocalServiceSid">
+      <summary>Indicates a SID that matches a local service.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LocalSid">
+      <summary>Indicates a local SID.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LocalSystemSid">
+      <summary>Indicates a SID that matches the local system.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LogonIdsSid">
+      <summary>Indicates a SID that matches logon IDs.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.MaxDefined">
+      <summary>Indicates the maximum defined SID in the <see cref="T:System.Security.Principal.WellKnownSidType" /> enumeration.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NetworkServiceSid">
+      <summary>Indicates a SID that matches a network service.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NetworkSid">
+      <summary>Indicates a SID for a network account. This SID is added to the process of a token when it logs on across a network.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NTAuthoritySid">
+      <summary>Indicates a SID for the Windows NT authority.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NtlmAuthenticationSid">
+      <summary>Indicates a SID present when the Microsoft NTLM authentication package authenticated the client.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NullSid">
+      <summary>Indicates a null SID.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.OtherOrganizationSid">
+      <summary>Indicates a SID present when the user authenticated across a forest with the selective authentication option enabled. If this SID is present, then <see cref="F:System.Security.Principal.WellKnownSidType.ThisOrganizationSid" /> cannot be present.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.ProxySid">
+      <summary>Indicates a proxy SID.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.RemoteLogonIdSid">
+      <summary>Indicates a SID that matches remote logons.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.RestrictedCodeSid">
+      <summary>Indicates a SID for restricted code.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.SChannelAuthenticationSid">
+      <summary>Indicates a SID present when the Secure Channel (SSL/TLS) authentication package authenticated the client.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.SelfSid">
+      <summary>Indicates a SID for self.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.ServiceSid">
+      <summary>Indicates a SID for a service. This SID is added to the process of a token when it logs on as a service.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.TerminalServerSid">
+      <summary>Indicates a SID that matches a terminal server account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.ThisOrganizationSid">
+      <summary>Indicates a SID present when the user authenticated from within the forest or across a trust that does not have the selective authentication option enabled. If this SID is present, then <see cref="F:System.Security.Principal.WellKnownSidType.OtherOrganizationSid" /> cannot be present.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinAccountReadonlyControllersSid">
+      <summary>Indicates a SID that matches an account read-only controllers group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinApplicationPackageAuthoritySid">
+      <summary>Indicates a SID that matches the application package authority.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinAnyPackageSid">
+      <summary>Indicates a SID that applies to all app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinCertSvcDComAccessGroup">
+      <summary>Indicates a SID that matches the built-in DCOM certification services access group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinCryptoOperatorsSid">
+      <summary>Indicates a SID that allows a user to use cryptographic operations. It is added to the token of users who are a member of the CryptoOperators built-in group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinDCOMUsersSid">
+      <summary>Indicates a SID that matches the distributed COM user group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinEventLogReadersGroup">
+      <summary>Indicates a SID that matches an event log readers group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinIUsersSid">
+      <summary>Indicates a SID that matches the Internet built-in user group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinTerminalServerLicenseServersSid">
+      <summary>Indicates a SID is present in a server that can issue Terminal Server licenses.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCacheablePrincipalsGroupSid">
+      <summary>Indicates a SID that matches a cacheable principals group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityDocumentsLibrarySid">
+      <summary>Indicates a SID for documents library capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityEnterpriseAuthenticationSid">
+      <summary>Indicates a SID for Windows credentials capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityInternetClientServerSid">
+      <summary>Indicates a SID of Internet client and server capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityInternetClientSid">
+      <summary>Indicates a SID of Internet client capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityMusicLibrarySid">
+      <summary>Indicates a SID for music library capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityPicturesLibrarySid">
+      <summary>Indicates a SID for pictures library capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityPrivateNetworkClientServerSid">
+      <summary>Indicates a SID of private network client and server capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityRemovableStorageSid">
+      <summary>Indicates a SID for removable storage capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilitySharedUserCertificatesSid">
+      <summary>Indicates a SID for shared user certificates capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCapabilityVideosLibrarySid">
+      <summary>Indicates a SID for videos library capability for app containers.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinConsoleLogonSid">
+      <summary>Indicates a SID that matches a console logon group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinCreatorOwnerRightsSid">
+      <summary>Indicates a SID that matches a creator and owner rights group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinEnterpriseReadonlyControllersSid">
+      <summary>Indicates a SID that matches an enterprise wide read-only controllers group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinHighLabelSid">
+      <summary>Indicates a SID that matches a high level of trust label.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinIUserSid">
+      <summary>Indicates a SID that matches the Internet user group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinLocalLogonSid">
+      <summary>Indicates a SID that matches a local logon group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinLowLabelSid">
+      <summary>Indicates a SID that matches an low level of trust label.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinMediumLabelSid">
+      <summary>Indicates a SID that matches an medium level of trust label.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinMediumPlusLabelSid">
+      <summary>Indicates a SID that matches the medium plus integrity label.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinNewEnterpriseReadonlyControllersSid">
+      <summary>Indicates a SID that matches a read-only enterprise domain controller.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinNonCacheablePrincipalsGroupSid">
+      <summary>Indicates a SID that matches a non-cacheable principals group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinSystemLabelSid">
+      <summary>Indicates a SID that matches a system label.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinThisOrganizationCertificateSid">
+      <summary>Indicates a SID that matches a certificate for the given organization.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinUntrustedLabelSid">
+      <summary>Indicates a SID that matches an untrusted label.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinWriteRestrictedCodeSid">
+      <summary>Indicates a SID that matches a write restricted code group.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WorldSid">
+      <summary>Indicates a SID that matches everyone.</summary>
+    </member>
+    <member name="T:System.Security.Principal.WindowsAccountType">
+      <summary>Specifies the type of Windows account used.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsAccountType.Anonymous">
+      <summary>An anonymous account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsAccountType.Guest">
+      <summary>A Windows guest account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsAccountType.Normal">
+      <summary>A standard user account.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsAccountType.System">
+      <summary>A Windows system account.</summary>
+    </member>
+    <member name="T:System.Security.Principal.WindowsBuiltInRole">
+      <summary>Specifies common roles to be used with <see cref="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.String)" />.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.AccountOperator">
+      <summary>Account operators manage the user accounts on a computer or domain.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.Administrator">
+      <summary>Administrators have complete and unrestricted access to the computer or domain.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.BackupOperator">
+      <summary>Backup operators can override security restrictions for the sole purpose of backing up or restoring files.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.Guest">
+      <summary>Guests are more restricted than users.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.PowerUser">
+      <summary>Power users possess most administrative permissions with some restrictions. Thus, power users can run legacy applications, in addition to certified applications.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.PrintOperator">
+      <summary>Print operators can take control of a printer.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.Replicator">
+      <summary>Replicators support file replication in a domain.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.SystemOperator">
+      <summary>System operators manage a particular computer.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.User">
+      <summary>Users are prevented from making accidental or intentional system-wide changes. Thus, users can run certified applications, but not most legacy applications.</summary>
+    </member>
+    <member name="T:System.Security.Principal.WindowsIdentity">
+      <summary>Represents a Windows user.</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsIdentity.DefaultIssuer">
+      <summary>Identifies the name of the default <see cref="T:System.Security.Claims.ClaimsIdentity" /> issuer.</summary>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.IntPtr)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsIdentity" /> class for the user represented by the specified Windows account token.</summary>
+      <param name="userToken">The account token for the user on whose behalf the code is running.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="userToken" /> is 0.  
+  
+ -or-  
+  
+ <paramref name="userToken" /> is duplicated and invalid for impersonation.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.  
+  
+ -or-  
+  
+ A Win32 error occurred.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.IntPtr,System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsIdentity" /> class for the user represented by the specified Windows account token and the specified authentication type.</summary>
+      <param name="userToken">The account token for the user on whose behalf the code is running.</param>
+      <param name="type">(Informational use only.) The type of authentication used to identify the user.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="userToken" /> is 0.  
+  
+ -or-  
+  
+ <paramref name="userToken" /> is duplicated and invalid for impersonation.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.  
+  
+ -or-  
+  
+ A Win32 error occurred.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.IntPtr,System.String,System.Security.Principal.WindowsAccountType)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsIdentity" /> class for the user represented by the specified Windows account token, the specified authentication type, and the specified Windows account type.</summary>
+      <param name="userToken">The account token for the user on whose behalf the code is running.</param>
+      <param name="type">(Informational use only.) The type of authentication used to identify the user.</param>
+      <param name="acctType">One of the enumeration values.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="userToken" /> is 0.  
+  
+ -or-  
+  
+ <paramref name="userToken" /> is duplicated and invalid for impersonation.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.  
+  
+ -or-  
+  
+ A Win32 error occurred.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.IntPtr,System.String,System.Security.Principal.WindowsAccountType,System.Boolean)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsIdentity" /> class for the user represented by the specified Windows account token, the specified authentication type, the specified Windows account type, and the specified authentication status.</summary>
+      <param name="userToken">The account token for the user on whose behalf the code is running.</param>
+      <param name="type">(Informational use only.) The type of authentication used to identify the user.</param>
+      <param name="acctType">One of the enumeration values.</param>
+      <param name="isAuthenticated">
+        <see langword="true" /> to indicate that the user is authenticated; otherwise, <see langword="false" />.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="userToken" /> is 0.  
+  
+ -or-  
+  
+ <paramref name="userToken" /> is duplicated and invalid for impersonation.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.  
+  
+ -or-  
+  
+ A Win32 error occurred.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsIdentity" /> class for the user represented by information in a <see cref="T:System.Runtime.Serialization.SerializationInfo" /> stream.</summary>
+      <param name="info">The object containing the account information for the user.</param>
+      <param name="context">An object that indicates the stream characteristics.</param>
+      <exception cref="T:System.NotSupportedException">A <see cref="T:System.Security.Principal.WindowsIdentity" /> cannot be serialized across processes.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.  
+  
+ -or-  
+  
+ A Win32 error occurred.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.Security.Principal.WindowsIdentity)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsIdentity" /> class by using the specified <see cref="T:System.Security.Principal.WindowsIdentity" /> object.</summary>
+      <param name="identity">The object from which to construct the new instance of <see cref="T:System.Security.Principal.WindowsIdentity" />.</param>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsIdentity" /> class for the user represented by the specified User Principal Name (UPN).</summary>
+      <param name="sUserPrincipalName">The UPN for the user on whose behalf the code is running.</param>
+      <exception cref="T:System.UnauthorizedAccessException">Windows returned the Windows NT status code STATUS_ACCESS_DENIED.</exception>
+      <exception cref="T:System.OutOfMemoryException">There is insufficient memory available.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.  
+  
+ -or-  
+  
+ The computer is not attached to a Windows 2003 or later domain.  
+  
+ -or-  
+  
+ The computer is not running Windows 2003 or later.  
+  
+ -or-  
+  
+ The user is not a member of the domain the computer is attached to.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.Clone">
+      <summary>Creates a new  object that is a copy of the current instance.</summary>
+      <returns>A copy of the current instance.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.Dispose">
+      <summary>Releases all resources used by the <see cref="T:System.Security.Principal.WindowsIdentity" />.</summary>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.Dispose(System.Boolean)">
+      <summary>Releases the unmanaged resources used by the <see cref="T:System.Security.Principal.WindowsIdentity" /> and optionally releases the managed resources.</summary>
+      <param name="disposing">
+        <see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetAnonymous">
+      <summary>Returns a <see cref="T:System.Security.Principal.WindowsIdentity" /> object that you can use as a sentinel value in your code to represent an anonymous user. The property value does not represent the built-in anonymous identity used by the Windows operating system.</summary>
+      <returns>An object that represents an anonymous user.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetCurrent">
+      <summary>Returns a <see cref="T:System.Security.Principal.WindowsIdentity" /> object that represents the current Windows user.</summary>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.</exception>
+      <returns>An object that represents the current user.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetCurrent(System.Boolean)">
+      <summary>Returns a <see cref="T:System.Security.Principal.WindowsIdentity" /> object that represents the Windows identity for either the thread or the process, depending on the value of the <paramref name="ifImpersonating" /> parameter.</summary>
+      <param name="ifImpersonating">
+        <see langword="true" /> to return the <see cref="T:System.Security.Principal.WindowsIdentity" /> only if the thread is currently impersonating; <see langword="false" /> to return the <see cref="T:System.Security.Principal.WindowsIdentity" /> of the thread if it is impersonating or the <see cref="T:System.Security.Principal.WindowsIdentity" /> of the process if the thread is not currently impersonating.</param>
+      <returns>An object that represents a Windows user.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetCurrent(System.Security.Principal.TokenAccessLevels)">
+      <summary>Returns a <see cref="T:System.Security.Principal.WindowsIdentity" /> object that represents the current Windows user, using the specified desired token access level.</summary>
+      <param name="desiredAccess">A bitwise combination of the enumeration values.</param>
+      <returns>An object that represents the current user.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)">
+      <summary>Runs the specified action as the impersonated Windows identity. Instead of using an impersonated method call and running your function in <see cref="T:System.Security.Principal.WindowsImpersonationContext" />, you can use <see cref="M:System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)" /> and provide your function directly as a parameter.</summary>
+      <param name="safeAccessTokenHandle">The SafeAccessTokenHandle of the impersonated Windows identity.</param>
+      <param name="action">The System.Action to run.</param>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.RunImpersonated``1(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Func{``0})">
+      <summary>Runs the specified function as the impersonated Windows identity. Instead of using an impersonated method call and running your function in <see cref="T:System.Security.Principal.WindowsImpersonationContext" />, you can use <see cref="M:System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)" /> and provide your function directly as a parameter.</summary>
+      <param name="safeAccessTokenHandle">The SafeAccessTokenHandle of the impersonated Windows identity.</param>
+      <param name="func">The System.Func to run.</param>
+      <typeparam name="T">The type of object used by and returned by the function.</typeparam>
+      <returns>The result of the function.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.RunImpersonatedAsync(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Func{System.Threading.Tasks.Task})">
+      <summary>Runs the specified asynchronous action as the impersonated Windows identity.</summary>
+      <param name="safeAccessTokenHandle">The handle of the impersonated Windows identity.</param>
+      <param name="func">The function to run.</param>
+      <returns>A task that represents the asynchronous operation of the provided <see cref="T:System.Func`1" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.RunImpersonatedAsync``1(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Func{System.Threading.Tasks.Task{``0}})">
+      <summary>Runs the specified asynchronous action as the impersonated Windows identity.</summary>
+      <param name="safeAccessTokenHandle">The handle of the impersonated Windows identity.</param>
+      <param name="func">The function to run.</param>
+      <typeparam name="T">The type of the object to return.</typeparam>
+      <returns>A task that represents the asynchronous operation of <paramref name="func" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.System#Runtime#Serialization#IDeserializationCallback#OnDeserialization(System.Object)">
+      <summary>Implements the <see cref="T:System.Runtime.Serialization.ISerializable" /> interface and is called back by the deserialization event when deserialization is complete.</summary>
+      <param name="sender">The source of the deserialization event.</param>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object with the logical context information needed to recreate an instance of this execution context.</summary>
+      <param name="info">An object containing the information required to serialize the <see cref="T:System.Collections.Hashtable" />.</param>
+      <param name="context">An object containing the source and destination of the serialized stream associated with the <see cref="T:System.Collections.Hashtable" />.</param>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.AccessToken">
+      <summary>Gets this <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" /> for this <see cref="T:System.Security.Principal.WindowsIdentity" /> instance.</summary>
+      <returns>Returns a <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.AuthenticationType">
+      <summary>Gets the type of authentication used to identify the user.</summary>
+      <exception cref="T:System.UnauthorizedAccessException">Windows returned the Windows NT status code STATUS_ACCESS_DENIED.</exception>
+      <exception cref="T:System.OutOfMemoryException">There is insufficient memory available.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions.  
+  
+ -or-  
+  
+ The computer is not attached to a Windows 2003 or later domain.  
+  
+ -or-  
+  
+ The computer is not running Windows 2003 or later.  
+  
+ -or-  
+  
+ The user is not a member of the domain the computer is attached to.</exception>
+      <returns>The type of authentication used to identify the user.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.Claims">
+      <summary>Gets all claims for the user represented by this Windows identity.</summary>
+      <returns>A collection of claims for this <see cref="T:System.Security.Principal.WindowsIdentity" /> object.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.DeviceClaims">
+      <summary>Gets claims that have the <see cref="F:System.Security.Claims.ClaimTypes.WindowsDeviceClaim" /> property key.</summary>
+      <returns>A collection of claims that have the <see cref="F:System.Security.Claims.ClaimTypes.WindowsDeviceClaim" /> property key.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.Groups">
+      <summary>Gets the groups the current Windows user belongs to.</summary>
+      <returns>An object representing the groups the current Windows user belongs to.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.ImpersonationLevel">
+      <summary>Gets the impersonation level for the user.</summary>
+      <returns>One of the enumeration values that specifies the impersonation level.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.IsAnonymous">
+      <summary>Gets a value that indicates whether the user account is identified as an anonymous account by the system.</summary>
+      <returns>
+        <see langword="true" /> if the user account is an anonymous account; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.IsAuthenticated">
+      <summary>Gets a value indicating whether the user has been authenticated by Windows.</summary>
+      <returns>
+        <see langword="true" /> if the user was authenticated; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.IsGuest">
+      <summary>Gets a value indicating whether the user account is identified as a <see cref="F:System.Security.Principal.WindowsAccountType.Guest" /> account by the system.</summary>
+      <returns>
+        <see langword="true" /> if the user account is a <see cref="F:System.Security.Principal.WindowsAccountType.Guest" /> account; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.IsSystem">
+      <summary>Gets a value indicating whether the user account is identified as a <see cref="F:System.Security.Principal.WindowsAccountType.System" /> account by the system.</summary>
+      <returns>
+        <see langword="true" /> if the user account is a <see cref="F:System.Security.Principal.WindowsAccountType.System" /> account; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.Name">
+      <summary>Gets the user's Windows logon name.</summary>
+      <returns>The Windows logon name of the user on whose behalf the code is being run.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.Owner">
+      <summary>Gets the security identifier (SID) for the token owner.</summary>
+      <returns>An object for the token owner.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.Token">
+      <summary>Gets the Windows account token for the user.</summary>
+      <returns>The handle of the access token associated with the current execution thread.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.User">
+      <summary>Gets the security identifier (SID) for the user.</summary>
+      <returns>An object for the user.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.UserClaims">
+      <summary>Gets claims that have the <see cref="F:System.Security.Claims.ClaimTypes.WindowsUserClaim" /> property key.</summary>
+      <returns>A collection of claims that have the <see cref="F:System.Security.Claims.ClaimTypes.WindowsUserClaim" /> property key.</returns>
+    </member>
+    <member name="T:System.Security.Principal.WindowsPrincipal">
+      <summary>Enables code to check the Windows group membership of a Windows user.</summary>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.#ctor(System.Security.Principal.WindowsIdentity)">
+      <summary>Initializes a new instance of the <see cref="T:System.Security.Principal.WindowsPrincipal" /> class by using the specified <see cref="T:System.Security.Principal.WindowsIdentity" /> object.</summary>
+      <param name="ntIdentity">The object from which to construct the new instance of <see cref="T:System.Security.Principal.WindowsPrincipal" />.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="ntIdentity" /> is <see langword="null" />.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.Int32)">
+      <summary>Determines whether the current principal belongs to the Windows user group with the specified relative identifier (RID).</summary>
+      <param name="rid">The RID of the Windows user group in which to check for the principal's membership status.</param>
+      <returns>
+        <see langword="true" /> if the current principal is a member of the specified Windows user group, that is, in a particular role; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.Security.Principal.SecurityIdentifier)">
+      <summary>Determines whether the current principal belongs to the Windows user group with the specified security identifier (SID).</summary>
+      <param name="sid">A <see cref="T:System.Security.Principal.SecurityIdentifier" /> that uniquely identifies a Windows user group.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="sid" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.Security.SecurityException">Windows returned a Win32 error.</exception>
+      <returns>
+        <see langword="true" /> if the current principal is a member of the specified Windows user group; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.Security.Principal.WindowsBuiltInRole)">
+      <summary>Determines whether the current principal belongs to the Windows user group with the specified <see cref="T:System.Security.Principal.WindowsBuiltInRole" />.</summary>
+      <param name="role">One of the <see cref="T:System.Security.Principal.WindowsBuiltInRole" /> values.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="role" /> is not a valid <see cref="T:System.Security.Principal.WindowsBuiltInRole" /> value.</exception>
+      <returns>
+        <see langword="true" /> if the current principal is a member of the specified Windows user group; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.String)">
+      <summary>Determines whether the current principal belongs to the Windows user group with the specified name.</summary>
+      <param name="role">The name of the Windows user group for which to check membership.</param>
+      <returns>
+        <see langword="true" /> if the current principal is a member of the specified Windows user group; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsPrincipal.DeviceClaims">
+      <summary>Gets all Windows device claims from this principal.</summary>
+      <returns>A collection of all Windows device claims from this principal.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsPrincipal.Identity">
+      <summary>Gets the identity of the current principal.</summary>
+      <returns>The <see cref="T:System.Security.Principal.WindowsIdentity" /> object of the current principal.</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsPrincipal.UserClaims">
+      <summary>Gets all Windows user claims from this principal.</summary>
+      <returns>A collection of all Windows user claims from this principal.</returns>
+    </member>
+  </members>
+</doc>

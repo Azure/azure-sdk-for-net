@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.Hosting</name>
+    </assembly>
+    <members>
+        <member name="P:Microsoft.Extensions.Hosting.ConsoleLifetimeOptions.SuppressStatusMessages">
+            <summary>
+            Indicates if host lifetime status messages should be supressed such as on startup.
+            The default is false.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Hosting.HostBuilder">
+            <summary>
+            A program initialization utility.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Hosting.HostBuilder.Properties">
+            <summary>
+            A central location for sharing state between components during the host building process.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostBuilder.ConfigureHostConfiguration(System.Action{Microsoft.Extensions.Configuration.IConfigurationBuilder})">
+            <summary>
+            Set up the configuration for the builder itself. This will be used to initialize the <see cref="T:Microsoft.Extensions.Hosting.IHostingEnvironment"/>
+            for use later in the build process. This can be called multiple times and the results will be additive.
+            </summary>
+            <param name="configureDelegate"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostBuilder.ConfigureAppConfiguration(System.Action{Microsoft.Extensions.Hosting.HostBuilderContext,Microsoft.Extensions.Configuration.IConfigurationBuilder})">
+            <summary>
+            Sets up the configuration for the remainder of the build process and application. This can be called multiple times and
+            the results will be additive. The results will be available at <see cref="P:Microsoft.Extensions.Hosting.HostBuilderContext.Configuration"/> for
+            subsequent operations, as well as in <see cref="P:Microsoft.Extensions.Hosting.IHost.Services"/>.
+            </summary>
+            <param name="configureDelegate"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostBuilder.ConfigureServices(System.Action{Microsoft.Extensions.Hosting.HostBuilderContext,Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            Adds services to the container. This can be called multiple times and the results will be additive.
+            </summary>
+            <param name="configureDelegate"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostBuilder.UseServiceProviderFactory``1(Microsoft.Extensions.DependencyInjection.IServiceProviderFactory{``0})">
+            <summary>
+            Overrides the factory used to create the service provider.
+            </summary>
+            <typeparam name="TContainerBuilder"></typeparam>
+            <param name="factory"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostBuilder.ConfigureContainer``1(System.Action{Microsoft.Extensions.Hosting.HostBuilderContext,``0})">
+            <summary>
+            Enables configuring the instantiated dependency container. This can be called multiple times and
+            the results will be additive.
+            </summary>
+            <typeparam name="TContainerBuilder"></typeparam>
+            <param name="configureDelegate"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostBuilder.Build">
+            <summary>
+            Run the given actions to initialize the host. This can only be called once.
+            </summary>
+            <returns>An initialized <see cref="T:Microsoft.Extensions.Hosting.IHost"/></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.UseEnvironment(Microsoft.Extensions.Hosting.IHostBuilder,System.String)">
+            <summary>
+            Specify the environment to be used by the host.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> to configure.</param>
+            <param name="environment">The environment to host the application in.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.UseContentRoot(Microsoft.Extensions.Hosting.IHostBuilder,System.String)">
+            <summary>
+            Specify the content root directory to be used by the host.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> to configure.</param>
+            <param name="contentRoot">Path to root directory of the application.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureLogging(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Hosting.HostBuilderContext,Microsoft.Extensions.Logging.ILoggingBuilder})">
+            <summary>
+            Adds a delegate for configuring the provided <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/>. This may be called multiple times.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+            <param name="configureLogging">The delegate that configures the <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/>.</param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureLogging(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Logging.ILoggingBuilder})">
+            <summary>
+            Adds a delegate for configuring the provided <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/>. This may be called multiple times.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+            <param name="configureLogging">The delegate that configures the <see cref="T:Microsoft.Extensions.Logging.ILoggingBuilder"/>.</param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureAppConfiguration(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.Configuration.IConfigurationBuilder})">
+            <summary>
+            Sets up the configuration for the remainder of the build process and application. This can be called multiple times and
+            the results will be additive. The results will be available at <see cref="P:Microsoft.Extensions.Hosting.HostBuilderContext.Configuration"/> for
+            subsequent operations, as well as in <see cref="P:Microsoft.Extensions.Hosting.IHost.Services"/>.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+            <param name="configureDelegate"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureServices(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{Microsoft.Extensions.DependencyInjection.IServiceCollection})">
+            <summary>
+            Adds services to the container. This can be called multiple times and the results will be additive.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+            <param name="configureDelegate"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.ConfigureContainer``1(Microsoft.Extensions.Hosting.IHostBuilder,System.Action{``0})">
+            <summary>
+            Enables configuring the instantiated dependency container. This can be called multiple times and
+            the results will be additive.
+            </summary>
+            <typeparam name="TContainerBuilder"></typeparam>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+            <param name="configureDelegate"></param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.UseConsoleLifetime(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Listens for Ctrl+C or SIGTERM and calls <see cref="M:Microsoft.Extensions.Hosting.IApplicationLifetime.StopApplication"/> to start the shutdown process.
+            This will unblock extensions like RunAsync and WaitForShutdownAsync.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+            <returns>The same instance of the <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/> for chaining.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.HostingHostBuilderExtensions.RunConsoleAsync(Microsoft.Extensions.Hosting.IHostBuilder,System.Threading.CancellationToken)">
+            <summary>
+            Enables console support, builds and starts the host, and waits for Ctrl+C or SIGTERM to shut down.
+            </summary>
+            <param name="hostBuilder">The <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder" /> to configure.</param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Hosting.HostOptions">
+            <summary>
+            Options for <see cref="T:Microsoft.Extensions.Hosting.IHost"/>
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Hosting.HostOptions.ShutdownTimeout">
+            <summary>
+            The default timeout for <see cref="M:Microsoft.Extensions.Hosting.IHost.StopAsync(System.Threading.CancellationToken)"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Hosting.Internal.ApplicationLifetime">
+            <summary>
+            Allows consumers to perform cleanup during a graceful shutdown.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Hosting.Internal.ApplicationLifetime.ApplicationStarted">
+            <summary>
+            Triggered when the application host has fully started and is about to wait
+            for a graceful shutdown.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Hosting.Internal.ApplicationLifetime.ApplicationStopping">
+            <summary>
+            Triggered when the application host is performing a graceful shutdown.
+            Request may still be in flight. Shutdown will block until this event completes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Hosting.Internal.ApplicationLifetime.ApplicationStopped">
+            <summary>
+            Triggered when the application host is performing a graceful shutdown.
+            All requests should be complete at this point. Shutdown will block
+            until this event completes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.Internal.ApplicationLifetime.StopApplication">
+            <summary>
+            Signals the ApplicationStopping event and blocks until it completes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.Internal.ApplicationLifetime.NotifyStarted">
+            <summary>
+            Signals the ApplicationStarted event and blocks until it completes.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Hosting.Internal.ApplicationLifetime.NotifyStopped">
+            <summary>
+            Signals the ApplicationStopped event and blocks until it completes.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Hosting.Internal.ConsoleLifetime">
+            <summary>
+            Listens for Ctrl+C or SIGTERM and initiates shutdown.
+            </summary>
+        </member>
+    </members>
+</doc>

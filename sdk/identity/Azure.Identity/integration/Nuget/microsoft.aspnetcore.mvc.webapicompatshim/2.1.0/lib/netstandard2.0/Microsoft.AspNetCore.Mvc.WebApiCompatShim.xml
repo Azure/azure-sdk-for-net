@@ -1,0 +1,1129 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.Mvc.WebApiCompatShim</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.#ctor(System.Reflection.PropertyInfo)">
+            <summary>
+            Initializes a fast <see cref="T:Microsoft.Extensions.Internal.PropertyHelper"/>.
+            This constructor does not cache the helper. For caching, use <see cref="M:Microsoft.Extensions.Internal.PropertyHelper.GetProperties(System.Type)"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Internal.PropertyHelper.Property">
+            <summary>
+            Gets the backing <see cref="T:System.Reflection.PropertyInfo"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Internal.PropertyHelper.Name">
+            <summary>
+            Gets (or sets in derived types) the property name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Internal.PropertyHelper.ValueGetter">
+            <summary>
+            Gets the property value getter.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Internal.PropertyHelper.ValueSetter">
+            <summary>
+            Gets the property value setter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.GetValue(System.Object)">
+            <summary>
+            Returns the property value for the specified <paramref name="instance"/>.
+            </summary>
+            <param name="instance">The object whose property value will be returned.</param>
+            <returns>The property value.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.SetValue(System.Object,System.Object)">
+            <summary>
+            Sets the property value for the specified <paramref name="instance" />.
+            </summary>
+            <param name="instance">The object whose property value will be set.</param>
+            <param name="value">The property value.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.GetProperties(System.Reflection.TypeInfo)">
+            <summary>
+            Creates and caches fast property helpers that expose getters for every public get property on the
+            underlying type.
+            </summary>
+            <param name="typeInfo">The type info to extract property accessors for.</param>
+            <returns>A cached array of all public properties of the specified type.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.GetProperties(System.Type)">
+            <summary>
+            Creates and caches fast property helpers that expose getters for every public get property on the
+            specified type.
+            </summary>
+            <param name="type">The type to extract property accessors for.</param>
+            <returns>A cached array of all public properties of the specified type.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.GetVisibleProperties(System.Reflection.TypeInfo)">
+            <summary>
+            <para>
+            Creates and caches fast property helpers that expose getters for every non-hidden get property
+            on the specified type.
+            </para>
+            <para>
+            <see cref="M:GetVisibleProperties"/> excludes properties defined on base types that have been
+            hidden by definitions using the <c>new</c> keyword.
+            </para>
+            </summary>
+            <param name="typeInfo">The type info to extract property accessors for.</param>
+            <returns>
+            A cached array of all public properties of the specified type.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.GetVisibleProperties(System.Type)">
+            <summary>
+            <para>
+            Creates and caches fast property helpers that expose getters for every non-hidden get property
+            on the specified type.
+            </para>
+            <para>
+            <see cref="M:GetVisibleProperties"/> excludes properties defined on base types that have been
+            hidden by definitions using the <c>new</c> keyword.
+            </para>
+            </summary>
+            <param name="type">The type to extract property accessors for.</param>
+            <returns>
+            A cached array of all public properties of the specified type.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.MakeFastPropertyGetter(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates a single fast property getter. The result is not cached.
+            </summary>
+            <param name="propertyInfo">propertyInfo to extract the getter for.</param>
+            <returns>a fast getter.</returns>
+            <remarks>
+            This method is more memory efficient than a dynamically compiled lambda, and about the
+            same speed.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.MakeNullSafeFastPropertyGetter(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates a single fast property getter which is safe for a null input object. The result is not cached.
+            </summary>
+            <param name="propertyInfo">propertyInfo to extract the getter for.</param>
+            <returns>a fast getter.</returns>
+            <remarks>
+            This method is more memory efficient than a dynamically compiled lambda, and about the
+            same speed.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.MakeFastPropertySetter(System.Reflection.PropertyInfo)">
+            <summary>
+            Creates a single fast property setter for reference types. The result is not cached.
+            </summary>
+            <param name="propertyInfo">propertyInfo to extract the setter for.</param>
+            <returns>a fast getter.</returns>
+            <remarks>
+            This method is more memory efficient than a dynamically compiled lambda, and about the
+            same speed. This only works for reference types.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.Internal.PropertyHelper.ObjectToDictionary(System.Object)">
+             <summary>
+             Given an object, adds each instance property with a public get method as a key and its
+             associated value to a dictionary.
+            
+             If the object is already an <see cref="T:System.Collections.Generic.IDictionary`2"/> instance, then a copy
+             is returned.
+             </summary>
+             <remarks>
+             The implementation of PropertyHelper will cache the property accessors per-type. This is
+             faster when the same type is used multiple times with ObjectToDictionary.
+             </remarks>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.IUseWebApiActionConventions">
+            <summary>
+            Indicates actions without attribute routes in a controller use ASP.NET Web API routing conventions.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.IUseWebApiOverloading">
+            <summary>
+            Indicates actions in a controller should be selected only if all non-optional parameters are satisfied. Applies
+            the <see cref="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.OverloadActionConstraint"/> to all actions in the controller.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.IUseWebApiParameterConventions">
+            <summary>
+            Indicates the model binding system should use ASP.NET Web API conventions for parameters of a controller's
+            actions. For example, bind simple types from the URI.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.IUseWebApiRoutes">
+            <summary>
+            Indicates the controller is in the "api" area.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.UseWebApiActionConventionsAttribute">
+            <summary>
+            Indicates actions without attribute routes in a controller use ASP.NET Web API routing conventions.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.UseWebApiOverloadingAttribute">
+            <summary>
+            Indicates actions in a controller should be selected only if all non-optional parameters are satisfied. Applies
+            the <see cref="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.OverloadActionConstraint"/> to all actions in the controller.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.UseWebApiParameterConventionsAttribute">
+            <summary>
+            Indicates the model binding system should use ASP.NET Web API conventions for parameters of a controller's
+            actions. For example, bind simple types from the URI.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.UseWebApiRoutesAttribute">
+            <summary>
+            Indicates the controller is in the "api" area.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpRequestMessageModelBinder">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder"/> implementation to bind models of type <see cref="T:System.Net.Http.HttpRequestMessage"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpRequestMessageModelBinder.BindModelAsync(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBindingContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpRequestMessageModelBinderProvider">
+            <summary>
+            <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderProvider"/> implementation to bind models of type <see cref="T:System.Net.Http.HttpRequestMessage"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpRequestMessageModelBinderProvider.GetBinder(Microsoft.AspNetCore.Mvc.ModelBinding.ModelBinderProviderContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpResponseExceptionActionFilter">
+            <summary>
+            An action filter that sets <see cref="P:Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext.Result"/> to an <see cref="T:Microsoft.AspNetCore.Mvc.ObjectResult"/>
+            if the exception type is <see cref="T:System.Web.Http.HttpResponseException"/>.
+            This filter runs immediately after the action.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpResponseExceptionActionFilter.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpResponseExceptionActionFilter.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.HttpResponseExceptionActionFilter.OnActionExecuted(Microsoft.AspNetCore.Mvc.Filters.ActionExecutedContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.WebApiCompatShim.OverloadActionConstraint">
+            <summary>
+            An <see cref="T:Microsoft.AspNetCore.Mvc.ActionConstraints.IActionConstraint"/> limiting candidate actions to those for which the request satisfies all
+            non-optional parameters.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.OverloadActionConstraint.Order">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.OverloadActionConstraint.Accept(Microsoft.AspNetCore.Mvc.ActionConstraints.ActionConstraintContext)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.HttpError_BadRequest">
+            <summary>
+            The request is invalid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatHttpError_BadRequest">
+            <summary>
+            The request is invalid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.HttpError_GenericError">
+            <summary>
+            An error has occurred.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatHttpError_GenericError">
+            <summary>
+            An error has occurred.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.HttpError_ValidModelState">
+            <summary>
+            The model state is valid.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatHttpError_ValidModelState">
+            <summary>
+            The model state is valid.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.HttpRequestMessage_CouldNotFindMatchingFormatter">
+            <summary>
+            Could not find a formatter matching the media type '{0}' that can write an instance of '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatHttpRequestMessage_CouldNotFindMatchingFormatter(System.Object,System.Object)">
+            <summary>
+            Could not find a formatter matching the media type '{0}' that can write an instance of '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.HttpRequestMessage_MustHaveHttpContext">
+            <summary>
+            The {0} instance is not properly initialized. Use {1} to create an {0} for the current request.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatHttpRequestMessage_MustHaveHttpContext(System.Object,System.Object)">
+            <summary>
+            The {0} instance is not properly initialized. Use {1} to create an {0} for the current request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.HttpResponseMessageFormatter_UnsupportedType">
+            <summary>
+            The {0} only supports writing objects of type {1}.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatHttpResponseMessageFormatter_UnsupportedType(System.Object,System.Object)">
+            <summary>
+            The {0} only supports writing objects of type {1}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.JQuerySyntaxMissingClosingBracket">
+            <summary>
+            The key is invalid JQuery syntax because it is missing a closing bracket.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatJQuerySyntaxMissingClosingBracket">
+            <summary>
+            The key is invalid JQuery syntax because it is missing a closing bracket.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.MaxHttpCollectionKeyLimitReached">
+            <summary>
+            The number of keys in a NameValueCollection has exceeded the limit of '{0}'. You can adjust it by modifying the MaxHttpCollectionKeys property on the '{1}' class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatMaxHttpCollectionKeyLimitReached(System.Object,System.Object)">
+            <summary>
+            The number of keys in a NameValueCollection has exceeded the limit of '{0}'. You can adjust it by modifying the MaxHttpCollectionKeys property on the '{1}' class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.HttpResponseExceptionMessage">
+            <summary>
+            Processing of the HTTP request resulted in an exception. Please see the HTTP response returned by the 'Response' property of this exception for details.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatHttpResponseExceptionMessage">
+            <summary>
+            Processing of the HTTP request resulted in an exception. Please see the HTTP response returned by the 'Response' property of this exception for details.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.CreatedAtRoute_RouteFailed">
+            <summary>
+            Failed to generate a URL using route '{0}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatCreatedAtRoute_RouteFailed(System.Object)">
+            <summary>
+            Failed to generate a URL using route '{0}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.BindingSource_URL">
+            <summary>
+            URL
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.WebApiCompatShim.Resources.FormatBindingSource_URL">
+            <summary>
+            URL
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Mvc.ModelBinding.IOptionalBinderMetadata">
+            <summary>
+            <para>
+            An type that designates an optional parameter for the purposes
+            of ASP.NET Web API action overloading. Optional parameters do not participate in overloading, and
+            do not have to have a value for the action to be selected.
+            </para>
+            <para>
+            This has no impact when used without ASP.NET Web API action overloading.
+            </para>
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.Mvc.ModelBinding.IOptionalBinderMetadata.IsOptional">
+            <summary>
+            Gets a value indicating whether the parameter participates in ASP.NET Web API action overloading. If
+            <c>true</c>, the parameter does not participate in overloading. Otherwise, it does.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.ApiController.ActionContext">
+            <summary>
+            Gets the <see cref="T:Microsoft.AspNetCore.Mvc.ActionContext"/>.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.ApiController.ControllerContext">
+            <summary>
+            Gets or sets the <see cref="P:System.Web.Http.ApiController.ControllerContext"/>.
+            </summary>
+            <remarks>The setter is intended for unit testing purposes only.</remarks>
+        </member>
+        <member name="P:System.Web.Http.ApiController.Context">
+            <summary>
+            Gets the http context.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.ApiController.MetadataProvider">
+            <summary>
+            Gets the <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.IModelMetadataProvider"/>.
+            </summary>
+            <remarks>The setter is intended for unit testing purposes only.</remarks>
+        </member>
+        <member name="P:System.Web.Http.ApiController.ObjectValidator">
+            <summary>
+            Gets or sets the <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.Validation.IObjectModelValidator"/>.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.ApiController.ModelState">
+            <summary>
+            Gets model state after the model binding process. This ModelState will be empty before model binding
+            happens.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.ApiController.Request">
+            <summary>
+            Gets or sets the HTTP request message.
+            </summary>
+            <remarks>The setter is intended for unit testing purposes only.</remarks>
+        </member>
+        <member name="P:System.Web.Http.ApiController.Url">
+            <summary>
+            Gets a factory used to generate URLs to other APIs.
+            </summary>
+            <remarks>The setter is intended for unit testing purposes only.</remarks>
+        </member>
+        <member name="P:System.Web.Http.ApiController.User">
+            <summary>
+            Gets or sets the current principal associated with this request.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.ApiController.BadRequest">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.BadRequestResult"/> (400 Bad Request).
+            </summary>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.BadRequestResult"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.BadRequest(System.String)">
+            <summary>
+            Creates a <see cref="T:System.Web.Http.BadRequestErrorMessageResult"/> (400 Bad Request) with the specified error message.
+            </summary>
+            <param name="message">The user-visible error message.</param>
+            <returns>A <see cref="T:System.Web.Http.BadRequestErrorMessageResult"/> with the specified error message.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.BadRequest(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary)">
+            <summary>
+            Creates an <see cref="T:System.Web.Http.InvalidModelStateResult"/> (400 Bad Request) with the specified model state.
+            </summary>
+            <param name="modelState">The model state to include in the error.</param>
+            <returns>An <see cref="T:System.Web.Http.InvalidModelStateResult"/> with the specified model state.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Conflict">
+            <summary>Creates a <see cref="T:System.Web.Http.ConflictResult"/> (409 Conflict).</summary>
+            <returns>A <see cref="T:System.Web.Http.ConflictResult"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Content``1(System.Net.HttpStatusCode,``0)">
+            <summary>
+            Creates a <see cref="T:System.Web.Http.NegotiatedContentResult`1"/> with the specified values.
+            </summary>
+            <typeparam name="T">The type of content in the entity body.</typeparam>
+            <param name="statusCode">The HTTP status code for the response message.</param>
+            <param name="value">The content value to negotiate and format in the entity body.</param>
+            <returns>A <see cref="T:System.Web.Http.NegotiatedContentResult`1"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Created(System.String,System.Object)">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.CreatedResult"/> (201 Created) with the specified values.
+            </summary>
+            <param name="location">
+            The location at which the content has been created. Must be a relative or absolute URL.
+            </param>
+            <param name="content">The content value to format in the entity body.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.CreatedResult"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Created(System.Uri,System.Object)">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.CreatedResult"/> (201 Created) with the specified values.
+            </summary>
+            <param name="uri">The location at which the content has been created.</param>
+            <param name="content">The content value to format in the entity body.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.CreatedResult"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.CreatedAtRoute(System.String,System.Object,System.Object)">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.CreatedAtRouteResult"/> (201 Created) with the specified values.
+            </summary>
+            <param name="routeName">The name of the route to use for generating the URL.</param>
+            <param name="routeValues">The route data to use for generating the URL.</param>
+            <param name="content">The content value to format in the entity body.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.CreatedAtRouteResult"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.InternalServerError">
+            <summary
+            >Creates an <see cref="T:System.Web.Http.InternalServerErrorResult"/> (500 Internal Server Error).
+            </summary>
+            <returns>A <see cref="T:System.Web.Http.InternalServerErrorResult"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.InternalServerError(System.Exception)">
+            <summary>
+            Creates an <see cref="T:System.Web.Http.ExceptionResult"/> (500 Internal Server Error) with the specified exception.
+            </summary>
+            <param name="exception">The exception to include in the error.</param>
+            <returns>An <see cref="T:System.Web.Http.ExceptionResult"/> with the specified exception.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Json``1(``0)">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> (200 OK) with the specified value.
+            </summary>
+            <typeparam name="T">The type of content in the entity body.</typeparam>
+            <param name="content">The content value to serialize in the entity body.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with the specified value.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Json``1(``0,Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> (200 OK) with the specified values.
+            </summary>
+            <typeparam name="T">The type of content in the entity body.</typeparam>
+            <param name="content">The content value to serialize in the entity body.</param>
+            <param name="serializerSettings">The serializer settings.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Json``1(``0,Newtonsoft.Json.JsonSerializerSettings,System.Text.Encoding)">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> (200 OK) with the specified values.
+            </summary>
+            <typeparam name="T">The type of content in the entity body.</typeparam>
+            <param name="content">The content value to serialize in the entity body.</param>
+            <param name="serializerSettings">The serializer settings.</param>
+            <param name="encoding">The content encoding.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.NotFound">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.NotFoundResult"/> (404 Not Found).
+            </summary>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.NotFoundResult"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Ok">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.OkResult"/> (200 OK).
+            </summary>
+            <returns>An <see cref="T:Microsoft.AspNetCore.Mvc.OkResult"/>.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Ok``1(``0)">
+            <summary>
+            Creates an <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> (200 OK) with the specified values.
+            </summary>
+            <typeparam name="T">The type of content in the entity body.</typeparam>
+            <param name="content">The content value to negotiate and format in the entity body.</param>
+            <returns>An <see cref="T:Microsoft.AspNetCore.Mvc.OkObjectResult"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Redirect(System.String)">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.RedirectResult"/> (302 Found) with the specified value.
+            </summary>
+            <param name="location">The location to which to redirect.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.RedirectResult"/> with the specified value.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Redirect(System.Uri)">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.RedirectResult"/> (302 Found) with the specified value.
+            </summary>
+            <param name="location">The location to which to redirect.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.RedirectResult"/> with the specified value.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.RedirectToRoute(System.String,System.Object)">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.RedirectToRouteResult"/> (302 Found) with the specified values.
+            </summary>
+            <param name="routeName">The name of the route to use for generating the URL.</param>
+            <param name="routeValues">The route data to use for generating the URL.</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.RedirectToRouteResult"/> with the specified values.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.ResponseMessage(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Creates a <see cref="T:System.Web.Http.ResponseMessageResult"/> with the specified response.
+            </summary>
+            <param name="response">The HTTP response message.</param>
+            <returns>A <see cref="T:System.Web.Http.ResponseMessageResult"/> for the specified response.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.StatusCode(System.Net.HttpStatusCode)">
+            <summary>
+            Creates a <see cref="T:Microsoft.AspNetCore.Mvc.StatusCodeResult"/> with the specified status code.
+            </summary>
+            <param name="status">The HTTP status code for the response message</param>
+            <returns>A <see cref="T:Microsoft.AspNetCore.Mvc.StatusCodeResult"/> with the specified status code.</returns>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:System.Web.Http.ApiController.Validate``1(``0)">
+            <summary>
+            Validates the given entity and adds the validation errors to the <see cref="P:System.Web.Http.ApiController.ModelState"/>
+            under an empty prefix.
+            </summary>
+            <typeparam name="TEntity">The type of the entity to be validated.</typeparam>
+            <param name="entity">The entity being validated.</param>
+        </member>
+        <member name="M:System.Web.Http.ApiController.Validate``1(``0,System.String)">
+            <summary>
+            Validates the given entity and adds the validation errors to the <see cref="P:System.Web.Http.ApiController.ModelState"/>.
+            </summary>
+            <typeparam name="TEntity">The type of the entity to be validated.</typeparam>
+            <param name="entity">The entity being validated.</param>
+            <param name="keyPrefix">
+            The key prefix under which the model state errors would be added in the
+            <see cref="P:System.Web.Http.ApiController.ModelState"/>.
+            </param>
+        </member>
+        <member name="T:System.Web.Http.BadRequestErrorMessageResult">
+            <summary>
+            An action result that returns a <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest"/> response and performs
+            content negotiation on an <see cref="T:System.Web.Http.HttpError"/> with a <see cref="P:System.Web.Http.HttpError.Message"/>.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.BadRequestErrorMessageResult.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:System.Web.Http.BadRequestErrorMessageResult"/> class.</summary>
+            <param name="message">The user-visible error message.</param>
+        </member>
+        <member name="P:System.Web.Http.BadRequestErrorMessageResult.Message">
+            <summary>
+            Gets the error message.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.BadRequestErrorMessageResult.ExecuteResultAsync(Microsoft.AspNetCore.Mvc.ActionContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.Web.Http.ConflictResult">
+            <summary>
+            An action result that returns an empty <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status409Conflict"/> response.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.ConflictResult.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.ConflictResult"/> class.
+            </summary>
+        </member>
+        <member name="T:System.Web.Http.ExceptionResult">
+            <summary>
+            An action result that returns a <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError"/> response and
+            performs content negotiation on an <see cref="T:System.Web.Http.HttpError"/> based on an <see cref="P:System.Web.Http.ExceptionResult.Exception"/>.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.ExceptionResult.#ctor(System.Exception,System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:System.Web.Http.ExceptionResult"/> class.</summary>
+            <param name="exception">The exception to include in the error.</param>
+            <param name="includeErrorDetail">
+            <see langword="true"/> if the error should include exception messages; otherwise, <see langword="false"/>.
+            </param>
+        </member>
+        <member name="P:System.Web.Http.ExceptionResult.Exception">
+            <summary>
+            Gets the exception to include in the error.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.ExceptionResult.IncludeErrorDetail">
+            <summary>
+            Gets a value indicating whether the error should include exception messages.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.ExceptionResult.ExecuteResultAsync(Microsoft.AspNetCore.Mvc.ActionContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.Web.Http.HttpError">
+            <summary>
+            Defines a serializable container for storing error information. This information is stored
+            as key/value pairs. The dictionary keys to look up standard error information are available
+            on the <see cref="T:System.Web.Http.HttpErrorKeys"/> type.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.HttpError.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.HttpError"/> class.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.HttpError.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.HttpError"/> class containing error message
+            <paramref name="message"/>.
+            </summary>
+            <param name="message">The error message to associate with this instance.</param>
+        </member>
+        <member name="M:System.Web.Http.HttpError.#ctor(System.Exception,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.HttpError"/> class for <paramref name="exception"/>.
+            </summary>
+            <param name="exception">The exception to use for error information.</param>
+            <param name="includeErrorDetail">
+            <c>true</c> to include the exception information in the error;<c>false</c> otherwise.
+            </param>
+        </member>
+        <member name="M:System.Web.Http.HttpError.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.HttpError"/> class for <paramref name="modelState"/>.
+            </summary>
+            <param name="modelState">The invalid model state to use for error information.</param>
+            <param name="includeErrorDetail">
+            <c>true</c> to include exception messages in the error; <c>false</c> otherwise.
+            </param>
+        </member>
+        <member name="P:System.Web.Http.HttpError.Message">
+            <summary>
+            The high-level, user-visible message explaining the cause of the error. Information carried in this field
+            should be considered public in that it will go over the wire regardless of the value of error detail
+            policy. As a result care should be taken not to disclose sensitive information about the server or the
+            application.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.HttpError.ModelState">
+            <summary>
+            The <see cref="P:System.Web.Http.HttpError.ModelState"/> containing information about the errors that occurred during model binding.
+            </summary>
+            <remarks>
+            The inclusion of <see cref="T:System.Exception"/> information carried in the <see cref="P:System.Web.Http.HttpError.ModelState"/> is
+            controlled by the error detail policy. All other information in the <see cref="P:System.Web.Http.HttpError.ModelState"/>
+            should be considered public in that it will go over the wire. As a result care should be taken not to
+            disclose sensitive information about the server or the application.
+            </remarks>
+        </member>
+        <member name="P:System.Web.Http.HttpError.MessageDetail">
+            <summary>
+            A detailed description of the error intended for the developer to understand exactly what failed.
+            </summary>
+            <remarks>
+            The inclusion of this field is controlled by the error detail policy. The
+            field is expected to contain information about the server or the application that should not
+            be disclosed broadly.
+            </remarks>
+        </member>
+        <member name="P:System.Web.Http.HttpError.ExceptionMessage">
+            <summary>
+            The message of the <see cref="T:System.Exception"/> if available.
+            </summary>
+            <remarks>
+            The inclusion of this field is controlled by the error detail policy. The
+            field is expected to contain information about the server or the application that should not
+            be disclosed broadly.
+            </remarks>
+        </member>
+        <member name="P:System.Web.Http.HttpError.ExceptionType">
+            <summary>
+            The type of the <see cref="T:System.Exception"/> if available.
+            </summary>
+            <remarks>
+            The inclusion of this field is controlled by the error detail policy. The
+            field is expected to contain information about the server or the application that should not
+            be disclosed broadly.
+            </remarks>
+        </member>
+        <member name="P:System.Web.Http.HttpError.StackTrace">
+            <summary>
+            The stack trace information associated with this instance if available.
+            </summary>
+            <remarks>
+            The inclusion of this field is controlled by the error detail policy. The
+            field is expected to contain information about the server or the application that should not
+            be disclosed broadly.
+            </remarks>
+        </member>
+        <member name="P:System.Web.Http.HttpError.InnerException">
+            <summary>
+            The inner <see cref="T:System.Exception"/> associated with this instance if available.
+            </summary>
+            <remarks>
+            The inclusion of this field is controlled by the error detail policy. The
+            field is expected to contain information about the server or the application that should not
+            be disclosed broadly.
+            </remarks>
+        </member>
+        <member name="M:System.Web.Http.HttpError.GetPropertyValue``1(System.String)">
+            <summary>
+            Gets a particular property value from this error instance.
+            </summary>
+            <typeparam name="TValue">The type of the property.</typeparam>
+            <param name="key">The name of the error property.</param>
+            <returns>The value of the error property.</returns>
+        </member>
+        <member name="T:System.Web.Http.HttpErrorKeys">
+            <summary>
+            Provides keys to look up error information stored in the <see cref="T:System.Web.Http.HttpError"/> dictionary.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.MessageKey">
+            <summary>
+            Provides a key for the Message.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.MessageDetailKey">
+            <summary>
+            Provides a key for the MessageDetail.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.ModelStateKey">
+            <summary>
+            Provides a key for the ModelState.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.ExceptionMessageKey">
+            <summary>
+            Provides a key for the ExceptionMessage.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.ExceptionTypeKey">
+            <summary>
+            Provides a key for the ExceptionType.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.StackTraceKey">
+            <summary>
+            Provides a key for the StackTrace.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.InnerExceptionKey">
+            <summary>
+            Provides a key for the InnerException.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.MessageLanguageKey">
+            <summary>
+            Provides a key for the MessageLanguage.
+            </summary>
+        </member>
+        <member name="F:System.Web.Http.HttpErrorKeys.ErrorCodeKey">
+            <summary>
+            Provides a key for the ErrorCode.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.HttpResponseException.#ctor(System.Net.HttpStatusCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.HttpResponseException"/> class.
+            </summary>
+            <param name="statusCode">The status code of the response.</param>
+        </member>
+        <member name="M:System.Web.Http.HttpResponseException.#ctor(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.HttpResponseException"/> class.
+            </summary>
+            <param name="response">The response message.</param>
+        </member>
+        <member name="P:System.Web.Http.HttpResponseException.Response">
+            <summary>
+            Gets the <see cref="T:System.Net.Http.HttpResponseMessage"/> to return to the client.
+            </summary>
+        </member>
+        <member name="T:System.Web.Http.InternalServerErrorResult">
+            <summary>
+            An action result that returns an empty <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError"/> response.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.InternalServerErrorResult.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.InternalServerErrorResult"/> class.
+            </summary>
+        </member>
+        <member name="T:System.Web.Http.InvalidModelStateResult">
+            <summary>
+            An action result that returns a <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest"/> response and performs
+            content negotiation on an <see cref="T:System.Web.Http.HttpError"/> based on a <see cref="T:Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary"/>.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.InvalidModelStateResult.#ctor(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary,System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:System.Web.Http.InvalidModelStateResult"/> class.</summary>
+            <param name="modelState">The model state to include in the error.</param>
+            <param name="includeErrorDetail">
+            <see langword="true"/> if the error should include exception messages; otherwise, <see langword="false"/>.
+            </param>
+        </member>
+        <member name="P:System.Web.Http.InvalidModelStateResult.ModelState">
+            <summary>
+            Gets the model state to include in the error.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.InvalidModelStateResult.IncludeErrorDetail">
+            <summary>
+            Gets a value indicating whether the error should include exception messages.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.InvalidModelStateResult.ExecuteResultAsync(Microsoft.AspNetCore.Mvc.ActionContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.Web.Http.NegotiatedContentResult`1">
+            <summary>
+            An action result that performs content negotiation.
+            </summary>
+            <typeparam name="T">The type of content in the entity body.</typeparam>
+        </member>
+        <member name="M:System.Web.Http.NegotiatedContentResult`1.#ctor(System.Net.HttpStatusCode,`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.NegotiatedContentResult`1"/> class with the values provided.
+            </summary>
+            <param name="statusCode">The HTTP status code for the response message.</param>
+            <param name="content">The content value to negotiate and format in the entity body.</param>
+        </member>
+        <member name="P:System.Web.Http.NegotiatedContentResult`1.Content">
+            <summary>
+            Gets the content value to negotiate and format in the entity body.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.NegotiatedContentResult`1.ExecuteResultAsync(Microsoft.AspNetCore.Mvc.ActionContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:System.Web.Http.FromUriAttribute">
+            <summary>
+            An attribute that specifies that the value can be bound from the query string or route data.
+            </summary>
+        </member>
+        <member name="P:System.Web.Http.FromUriAttribute.BindingSource">
+            <inheritdoc />
+        </member>
+        <member name="P:System.Web.Http.FromUriAttribute.IsOptional">
+            <inheritdoc />
+        </member>
+        <member name="P:System.Web.Http.FromUriAttribute.Name">
+            <inheritdoc />
+        </member>
+        <member name="T:System.Web.Http.ResponseMessageResult">
+            <summary>
+            An action result that returns a specified response message.
+            </summary>
+        </member>
+        <member name="M:System.Web.Http.ResponseMessageResult.#ctor(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Http.ResponseMessageResult"/> class.
+            </summary>
+            <param name="response">The response message.</param>
+        </member>
+        <member name="P:System.Web.Http.ResponseMessageResult.Response">
+            <summary>
+            Gets the response message.
+            </summary>
+        </member>
+        <member name="T:System.Net.Http.HttpRequestMessageExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:System.Net.Http.HttpRequestMessage"/> class.
+            </summary>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/>
+            representing an error with an instance of <see cref="T:System.Net.Http.ObjectContent`1"/> wrapping an
+            <see cref="T:System.Web.Http.HttpError"/> with message <paramref name="message"/>. If no formatter is found, this method
+            returns a response with status 406 NotAcceptable.
+            </summary>
+            <remarks>
+            This method requires that <paramref name="request"/> has been associated with an instance of
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.
+            </remarks>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="message">The error message.</param>
+            <returns>
+            An error response with error message <paramref name="message"/> and status code
+            <paramref name="statusCode"/>.
+            </returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.String,System.Exception)">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/>
+            representing an error with an instance of <see cref="T:System.Net.Http.ObjectContent`1"/> wrapping an
+            <see cref="T:System.Web.Http.HttpError"/> with error message <paramref name="message"/> for exception
+            <paramref name="exception"/>. If no formatter is found, this method returns a response with status 406
+            NotAcceptable.
+            </summary>
+            <remarks>
+            This method requires that <paramref name="request"/> has been associated with an instance of
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.
+            </remarks>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="message">The error message.</param>
+            <param name="exception">The exception.</param>
+            <returns>An error response for <paramref name="exception"/> with error message <paramref name="message"/>
+            and status code <paramref name="statusCode"/>.</returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.Exception)">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/>
+            representing an error with an instance of <see cref="T:System.Net.Http.ObjectContent`1"/> wrapping an
+            <see cref="T:System.Web.Http.HttpError"/> for exception <paramref name="exception"/>. If no formatter is found, this method
+            returns a response with status 406 NotAcceptable.
+            </summary>
+            <remarks>
+            This method requires that <paramref name="request"/> has been associated with an instance of
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.
+            </remarks>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="exception">The exception.</param>
+            <returns>
+            An error response for <paramref name="exception"/> with status code <paramref name="statusCode"/>.
+            </returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary)">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/>
+            representing an error with an instance of <see cref="T:System.Net.Http.ObjectContent`1"/> wrapping an
+            <see cref="T:System.Web.Http.HttpError"/> for model state <paramref name="modelState"/>. If no formatter is found, this
+            method returns a response with status 406 NotAcceptable.
+            </summary>
+            <remarks>
+            This method requires that <paramref name="request"/> has been associated with an instance of
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.
+            </remarks>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="modelState">The model state.</param>
+            <returns>
+            An error response for <paramref name="modelState"/> with status code <paramref name="statusCode"/>.
+            </returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateErrorResponse(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,System.Web.Http.HttpError)">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/>
+            representing an error with an instance of <see cref="T:System.Net.Http.ObjectContent`1"/> wrapping <paramref name="error"/>
+            as the content. If no formatter is found, this method returns a response with status 406 NotAcceptable.
+            </summary>
+            <remarks>
+            This method requires that <paramref name="request"/> has been associated with an instance of
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.
+            </remarks>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="error">The error to wrap.</param>
+            <returns>
+            An error response wrapping <paramref name="error"/> with status code <paramref name="statusCode"/>.
+            </returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,``0)">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an
+            instance of <see cref="T:System.Net.Http.ObjectContent`1"/> as the content and <see cref="F:System.Net.HttpStatusCode.OK"/>
+            as the status code if a formatter can be found. If no formatter is found, this method returns a response
+            with status 406 NotAcceptable.
+            </summary>
+            <remarks>
+            This method requires that <paramref name="request"/> has been associated with an instance of
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.
+            </remarks>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <returns>
+            A response wrapping <paramref name="value"/> with <see cref="F:System.Net.HttpStatusCode.OK"/> status code.
+            </returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,``0)">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an
+            instance of <see cref="T:System.Net.Http.ObjectContent`1"/> as the content if a formatter can be found. If no formatter is
+            found, this method returns a response with status 406 NotAcceptable.
+            configuration.
+            </summary>
+            <remarks>
+            This method requires that <paramref name="request"/> has been associated with an instance of
+            <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.
+            </remarks>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <returns>A response wrapping <paramref name="value"/> with <paramref name="statusCode"/>.</returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,``0,System.Collections.Generic.IEnumerable{System.Net.Http.Formatting.MediaTypeFormatter})">
+            <summary>
+            Helper method that performs content negotiation and creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an
+            instance of <see cref="T:System.Net.Http.ObjectContent`1"/> as the content if a formatter can be found. If no formatter is
+            found, this method returns a response with status 406 NotAcceptable.
+            </summary>
+            <remarks>
+            This method will get the <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/> instance associated with <paramref name="request"/>.
+            </remarks>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <param name="formatters">The set of <see cref="T:System.Net.Http.Formatting.MediaTypeFormatter"/> objects from which to choose.</param>
+            <returns>A response wrapping <paramref name="value"/> with <paramref name="statusCode"/>.</returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,``0,System.String)">
+            <summary>
+            Helper method that creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an <see cref="T:System.Net.Http.ObjectContent`1"/>
+            instance containing the provided <paramref name="value"/>. The given <paramref name="mediaType"/> is used
+            to find an instance of <see cref="T:System.Net.Http.Formatting.MediaTypeFormatter"/>.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <param name="mediaType">
+            The media type used to look up an instance of <see cref="T:System.Net.Http.Formatting.MediaTypeFormatter"/>.
+            </param>
+            <returns>A response wrapping <paramref name="value"/> with <paramref name="statusCode"/>.</returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,``0,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Helper method that creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an <see cref="T:System.Net.Http.ObjectContent`1"/>
+            instance containing the provided <paramref name="value"/>. The given <paramref name="mediaType"/> is used
+            to find an instance of <see cref="T:System.Net.Http.Formatting.MediaTypeFormatter"/>.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <param name="mediaType">
+            The media type used to look up an instance of <see cref="T:System.Net.Http.Formatting.MediaTypeFormatter"/>.
+            </param>
+            <returns>A response wrapping <paramref name="value"/> with <paramref name="statusCode"/>.</returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,``0,System.Net.Http.Formatting.MediaTypeFormatter)">
+            <summary>
+            Helper method that creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an <see cref="T:System.Net.Http.ObjectContent`1"/>
+            instance containing the provided <paramref name="value"/> and the given <paramref name="formatter"/>.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <param name="formatter">The formatter to use.</param>
+            <returns>A response wrapping <paramref name="value"/> with <paramref name="statusCode"/>.</returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,``0,System.Net.Http.Formatting.MediaTypeFormatter,System.String)">
+            <summary>
+            Helper method that creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an <see cref="T:System.Net.Http.ObjectContent`1"/>
+            instance containing the provided <paramref name="value"/> and the given <paramref name="formatter"/>.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <param name="formatter">The formatter to use.</param>
+            <param name="mediaType">
+            The media type override to set on the response's content. Can be <c>null</c>.
+            </param>
+            <returns>A response wrapping <paramref name="value"/> with <paramref name="statusCode"/>.</returns>
+        </member>
+        <member name="M:System.Net.Http.HttpRequestMessageExtensions.CreateResponse``1(System.Net.Http.HttpRequestMessage,System.Net.HttpStatusCode,``0,System.Net.Http.Formatting.MediaTypeFormatter,System.Net.Http.Headers.MediaTypeHeaderValue)">
+            <summary>
+            Helper method that creates a <see cref="T:System.Net.Http.HttpResponseMessage"/> with an <see cref="T:System.Net.Http.ObjectContent`1"/>
+            instance containing the provided <paramref name="value"/> and the given <paramref name="formatter"/>.
+            </summary>
+            <typeparam name="T">The type of the value.</typeparam>
+            <param name="request">The request.</param>
+            <param name="statusCode">The status code of the created response.</param>
+            <param name="value">The value to wrap. Can be <c>null</c>.</param>
+            <param name="formatter">The formatter to use.</param>
+            <param name="mediaType">
+            The media type override to set on the response's content. Can be <c>null</c>.
+            </param>
+            <returns>A response wrapping <paramref name="value"/> with <paramref name="statusCode"/>.</returns>
+        </member>
+    </members>
+</doc>

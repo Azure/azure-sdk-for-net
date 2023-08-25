@@ -1,0 +1,1873 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Azure.Storage.Common</name>
+    </assembly>
+    <members>
+        <member name="T:Azure.Storage.AggregatingProgressIncrementer">
+            <summary>
+            An accumulator for request and response data transfers.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.AggregatingProgressIncrementer.Report(System.Int64)">
+            <summary>
+            Increments the current value and reports it to the progress handler
+            </summary>
+            <param name="bytes"></param>
+        </member>
+        <member name="M:Azure.Storage.AggregatingProgressIncrementer.Reset">
+            <summary>
+            Zeroes out the current accumulation, and reports it to the progress handler
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.AggregatingProgressIncrementer.None">
+            <summary>
+            Returns an instance that no-ops accumulation.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.AggregatingProgressIncrementer.Current">
+            <summary>
+            Returns a long instance representing the current progress value.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.MaxIdleTimeMs">
+            <summary>
+            The maximum allowed time between read or write calls to the stream for IdleCancellingStream.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DefaultSasVersion">
+            <summary>
+            Gets the default service version to use when building shared access
+            signatures.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DefaultBufferSize">
+            <summary>
+            The default size of staged blocks when uploading small blobs.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.LargeBufferSize">
+            <summary>
+            The size of staged blocks when uploading large blobs.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.LargeUploadThreshold">
+            <summary>
+            The threshold where we switch from staging <see cref="F:Azure.Storage.Constants.DefaultBufferSize"/>
+            buffers to staging <see cref="F:Azure.Storage.Constants.LargeBufferSize"/> buffers.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DefaultStreamCopyBufferSize">
+            <summary>
+            Different .NET implementations have different default sizes for <see cref="M:System.IO.Stream.CopyTo(System.IO.Stream)"/>
+            and it's overloads. This is the default for .NET Core to be applied everywhere for test consistency.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DefaultDownloadCopyBufferSize">
+            <summary>
+            The size of the buffer to use when copying streams during a
+            download operation.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.BlockNameFormat">
+            <summary>
+            The default format we use for block names.  There are 50,000
+            maximum blocks so we pad the size with up to 4 leading zeros.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.ConnectionStrings">
+            <summary>
+            Storage Connection Strings
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.ConnectionStrings.BlobEndpointPortNumber">
+            <summary>
+            The default port numbers for development storage credentials
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.HeaderNames">
+            <summary>
+            Header Request Names
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.Blob">
+            <summary>
+            Blob constant values
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.AlreadyExists">
+            <summary>
+             Error code for blobs
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Block.UploadOperationName">
+            <summary>
+            The Azure Storage Operation Names for Block Blob Client.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Container.RootName">
+            <summary>
+            The Azure Storage name used to identify a storage account's root container.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Container.LogsName">
+            <summary>
+            The Azure Storage name used to identify a storage account's logs container.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Container.WebName">
+            <summary>
+            The Azure Storage name used to identify a storage account's web content container.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Container.AlreadyExists">
+            <summary>
+            The Azure Storage error codes for Blob Container Client.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Container.CreateOperationName">
+            <summary>
+            The Azure Storage Operation Names for Blob Container Client.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Lease.InfiniteLeaseDuration">
+            <summary>
+            Lease Duration is set as infinite when passed -1
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Lease.AcquireOperationName">
+            <summary>
+            The Azure Storage Operation Names for Blob Lease Client.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Blob.Service.GetAccountInfoOperationName">
+            <summary>
+            The Azure Storage Operation Names for Blob Service Client.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.File">
+            <summary>
+            File constant values
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.DataLake">
+            <summary>
+            Data Lake constant values;
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DataLake.BlobUriSuffix">
+            <summary>
+            The blob URI suffex.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DataLake.DfsUriSuffix">
+            <summary>
+            The DFS URI suffex.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DataLake.ErrorKey">
+            <summary>
+            The key of the object json object returned for errors.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DataLake.ErrorCodeKey">
+            <summary>
+            The key of the error code returned for errors.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.DataLake.ErrorMessageKey">
+            <summary>
+            The key of the error message returned for errors.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.Queue">
+            <summary>
+            Queue constant values
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Queue.MaxMessagesDequeue">
+            <summary>
+            QueueMaxMessagesDequeue indicates the maximum number of messages
+            you can retrieve with each call to Dequeue.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Constants.Queue.QueueMessageMaxBytes">
+            <summary>
+            QueueMessageMaxBytes indicates the maximum number of bytes allowed for a message's UTF-8 text.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.Sas">
+            <summary>
+            Sas constant values
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Constants.Xml">
+            <summary>
+            XML strings to parse for elements
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Errors">
+            <summary>
+            Create exceptions for common error cases.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.GeoRedundantReadPolicy">
+            <summary>
+            This policy is used if the SecondaryUri property is passed in on the clientOptions. It allows for storage
+            accounts configured with RA-GRS to retry GET or HEAD requests against the secondary storage Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.IdleCancellingStream._stream">
+            <summary>
+            The <see cref="T:System.IO.Stream"/> wrapped stream that is being read or written to.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.IdleCancellingStream.CancellationToken">
+            <summary>
+            A <see cref="T:System.Threading.CancellationToken"/> which fires if the stream has
+            not been read from or written to within the idle timeout.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.ProgressIncrementingStream">
+            <summary>
+            Wraps a stream, and reports position updates to a progress incrementer
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Sas.AccountSasBuilder">
+            <summary>
+            <see cref="T:Azure.Storage.Sas.AccountSasBuilder"/> is used to generate an account level
+            Shared Access Signature (SAS) for Azure Storage services.
+            For more information, see
+            <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas" />.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.Version">
+            <summary>
+            The storage service version to use to authenticate requests made
+            with this shared access signature, and the service version to use
+            when handling requests made with this shared access signature.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.Protocol">
+            <summary>
+            The optional signed protocol field specifies the protocol
+            permitted for a request made with the SAS.  Possible values are
+            <see cref="F:Azure.Storage.Sas.SasProtocol.HttpsAndHttp"/>,
+            <see cref="F:Azure.Storage.Sas.SasProtocol.Https"/>, and
+            <see cref="F:Azure.Storage.Sas.SasProtocol.None"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.StartsOn">
+            <summary>
+            Optionally specify the time at which the shared access signature
+            becomes valid.  If omitted when DateTimeOffset.MinValue is used,
+            start time for this call is assumed to be the time when the
+            storage service receives the request.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.ExpiresOn">
+            <summary>
+            The time at which the shared access signature becomes invalid.
+            This field must be omitted if it has been specified in an
+            associated stored access policy.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.Permissions">
+            <summary>
+            The permissions associated with the shared access signature. The
+            user is restricted to operations allowed by the permissions. The
+            <see cref="T:Azure.Storage.Sas.AccountSasPermissions"/> type can be used to create the
+            permissions string.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.IPRange">
+            <summary>
+            Specifies an IP address or a range of IP addresses from which to
+            accept requests. If the IP address from which the request
+            originates does not match the IP address or address range
+            specified on the SAS token, the request is not authenticated.
+            When specifying a range of IP addresses, note that the range is
+            inclusive.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.Services">
+            <summary>
+            The services associated with the shared access signature. The
+            user is restricted to operations with the specified services.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.AccountSasBuilder.ResourceTypes">
+            <summary>
+            The resource types associated with the shared access signature. The
+            user is restricted to operations on the specified resources.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.Sas.AccountSasBuilder.SetPermissions(Azure.Storage.Sas.AccountSasPermissions)">
+            <summary>
+            Sets the permissions for an account SAS.
+            </summary>
+            <param name="permissions">
+            <see cref="T:Azure.Storage.Sas.AccountSasPermissions"/> containing the allowed permissions.
+            </param>
+        </member>
+        <member name="M:Azure.Storage.Sas.AccountSasBuilder.SetPermissions(System.String)">
+            <summary>
+            Sets the permissions for the SAS using a raw permissions string.
+            </summary>
+            <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        </member>
+        <member name="M:Azure.Storage.Sas.AccountSasBuilder.ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential)">
+            <summary>
+            Use an account's <see cref="T:Azure.Storage.StorageSharedKeyCredential"/> to sign this
+            shared access signature values to produce the proper SAS query
+            parameters for authenticating requests.
+            </summary>
+            <param name="sharedKeyCredential">
+            The storage account's <see cref="T:Azure.Storage.StorageSharedKeyCredential"/>.
+            </param>
+            <returns>
+            The <see cref="T:Azure.Storage.Sas.SasQueryParameters"/> used for authenticating
+            requests.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.AccountSasBuilder.ToString">
+            <summary>
+            Returns a string that represents the current object.
+            </summary>
+            <returns>A string that represents the current object.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.AccountSasBuilder.Equals(System.Object)">
+            <summary>
+            Check if two <see cref="T:Azure.Storage.Sas.AccountSasBuilder"/> instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.AccountSasBuilder.GetHashCode">
+            <summary>
+            Get a hash code for the <see cref="T:Azure.Storage.Sas.AccountSasBuilder"/>.
+            </summary>
+            <returns>Hash code for the <see cref="T:Azure.Storage.Sas.AccountSasBuilder"/>.</returns>
+        </member>
+        <member name="T:Azure.Storage.Sas.AccountSasPermissions">
+            <summary>
+            <see cref="T:Azure.Storage.Sas.AccountSasPermissions"/> contains the list of
+            permissions that can be set for a blob's access policy.  Use
+            <see cref="M:Azure.Storage.Sas.AccountSasBuilder.SetPermissions(Azure.Storage.Sas.AccountSasPermissions)"/>
+            to set the permissions on the <see cref="T:Azure.Storage.Sas.AccountSasBuilder"/>.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.Read">
+            <summary>
+            Indicates that Read is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.Write">
+            <summary>
+            Indicates that Write is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.Delete">
+            <summary>
+            Indicates that Delete is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.List">
+            <summary>
+            Indicates that List is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.Add">
+            <summary>
+            Indicates that Add is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.Create">
+            <summary>
+            Indicates that Create is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.Update">
+            <summary>
+            Indicates that Update is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.Process">
+            <summary>
+            Indicates that Delete is permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasPermissions.All">
+            <summary>
+            Indicates that all permissions are set.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Sas.AccountSasResourceTypes">
+            <summary>
+            Specifies the resource types accessible from an account level shared
+            access signature.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasResourceTypes.Service">
+            <summary>
+            Indicates whether service-level APIs are accessible
+            from this shared access signature (e.g., Get/Set Service
+            Properties, Get Service Stats, List Containers/Queues/Tables/
+            Shares).
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasResourceTypes.Container">
+            <summary>
+            Indicates whether blob container-level APIs are accessible
+            from this shared access signature (e.g., Create/Delete Container,
+            Create/Delete Queue, Create/Delete Table, Create/Delete Share, List
+            Blobs/Files and Directories).
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasResourceTypes.Object">
+            <summary>
+            Indicates whether object-level APIs for blobs, queue
+            messages, and files are accessible from this shared access
+            signature (e.g. Put Blob, Query Entity, Get Messages, Create File,
+            etc.).
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasResourceTypes.All">
+            <summary>
+            Indicates all service-level APIs are accessible from this shared
+            access signature.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Sas.SasExtensions">
+            <summary>
+            Extension methods for AccountSasResourceTypes enum
+            </summary>
+            <summary>
+            Extension methods for AccountSasServices enum
+            </summary>
+            <summary>
+            Extension methods for AccountSasResourceTypes enum
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasExtensions.ToPermissionsString(Azure.Storage.Sas.AccountSasResourceTypes)">
+            <summary>
+            Creates a string representing which resource types are allowed
+            for <see cref="P:Azure.Storage.Sas.AccountSasBuilder.ResourceTypes"/>.
+            </summary>
+            <returns>
+            A string representing which resource types are allowed.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasExtensions.ParseResourceTypes(System.String)">
+            <summary>
+            Parse a string representing which resource types are accessible
+            from a shared access signature.
+            </summary>
+            <param name="s">
+            A string representing which resource types are accessible.
+            </param>
+            <returns>
+            An <see cref="T:Azure.Storage.Sas.AccountSasResourceTypes"/> instance.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasExtensions.ToPermissionsString(Azure.Storage.Sas.AccountSasServices)">
+            <summary>
+            Creates a string representing which services can be used for
+            <see cref="P:Azure.Storage.Sas.AccountSasBuilder.Services"/>.
+            </summary>
+            <returns>
+            A string representing which services are allowed.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasExtensions.ParseAccountServices(System.String)">
+            <summary>
+            Parse a string representing which services are accessible from a
+            shared access signature.
+            </summary>
+            <param name="s">
+            A string representing which services are accessible.
+            </param>
+            <returns>
+            An <see cref="T:Azure.Storage.Sas.AccountSasServices"/> instance.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasExtensions.ToProtocolString(Azure.Storage.Sas.SasProtocol)">
+            <summary>
+            Gets a string representation of the protocol.
+            </summary>
+            <returns>A string representation of the protocol.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasExtensions.ParseProtocol(System.String)">
+            <summary>
+            Parse a string representation of a protocol.
+            </summary>
+            <param name="s">A string representation of a protocol.</param>
+            <returns>A <see cref="T:Azure.Storage.Sas.SasProtocol"/>.</returns>
+        </member>
+        <member name="T:Azure.Storage.Sas.AccountSasServices">
+            <summary>
+            Specifies the services accessible from an account level shared access
+            signature.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasServices.Blobs">
+            <summary>
+            Indicates whether Azure Blob Storage resources are
+            accessible from the shared access signature.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasServices.Queues">
+            <summary>
+            Indicates whether Azure Queue Storage resources are
+            accessible from the shared access signature.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasServices.Files">
+            <summary>
+            Indicates whether Azure File Storage resources are
+            accessible from the shared access signature.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.AccountSasServices.All">
+            <summary>
+            Indicates all services are accessible from the shared
+            access signature.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Sas.SasIPRange">
+            <summary>
+            Represents a range of allowed IP addresses for constructing a Shared
+            Access Signature.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasIPRange.Start">
+            <summary>
+            Gets the start of the IP range.  Not specified if equal to null or
+            <see cref="F:System.Net.IPAddress.None"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasIPRange.End">
+            <summary>
+            Gets the optional end of the IP range.  Not specified if equal to
+            null or <see cref="F:System.Net.IPAddress.None"/>.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.#ctor(System.Net.IPAddress,System.Net.IPAddress)">
+            <summary>
+            Creates a new <see cref="T:Azure.Storage.Sas.SasIPRange"/>.
+            </summary>
+            <param name="start">
+            The range's start <see cref="T:System.Net.IPAddress"/>.
+            </param>
+            <param name="end">
+            The range's optional end <see cref="T:System.Net.IPAddress"/>.
+            </param>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.IsEmpty(System.Net.IPAddress)">
+            <summary>
+            Check if an <see cref="T:System.Net.IPAddress"/> was not provided.
+            </summary>
+            <param name="address">The address to check.</param>
+            <returns>True if it's empty, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.ToString">
+            <summary>
+            Creates a string representation of an <see cref="T:Azure.Storage.Sas.SasIPRange"/>.
+            </summary>
+            <returns>
+            A string representation of an <see cref="T:Azure.Storage.Sas.SasIPRange"/>.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.Parse(System.String)">
+            <summary>
+            Parse an IP range string into a new <see cref="T:Azure.Storage.Sas.SasIPRange"/>.
+            </summary>
+            <param name="s">IP range string to parse.</param>
+            <returns>The parsed <see cref="T:Azure.Storage.Sas.SasIPRange"/>.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.Equals(System.Object)">
+            <summary>
+            Check if two <see cref="T:Azure.Storage.Sas.SasIPRange"/> instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.GetHashCode">
+            <summary>
+            Get a hash code for the <see cref="T:Azure.Storage.Sas.SasIPRange"/>.
+            </summary>
+            <returns>Hash code for the <see cref="T:Azure.Storage.Sas.SasIPRange"/>.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.op_Equality(Azure.Storage.Sas.SasIPRange,Azure.Storage.Sas.SasIPRange)">
+            <summary>
+            Check if two <see cref="T:Azure.Storage.Sas.SasIPRange"/> instances are equal.
+            </summary>
+            <param name="left">The first instance to compare.</param>
+            <param name="right">The second instance to compare.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.op_Inequality(Azure.Storage.Sas.SasIPRange,Azure.Storage.Sas.SasIPRange)">
+            <summary>
+            Check if two <see cref="T:Azure.Storage.Sas.SasIPRange"/> instances are not equal.
+            </summary>
+            <param name="left">The first instance to compare.</param>
+            <param name="right">The second instance to compare.</param>
+            <returns>True if they're not equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasIPRange.Equals(Azure.Storage.Sas.SasIPRange)">
+            <summary>
+            Check if two <see cref="T:Azure.Storage.Sas.SasIPRange"/> instances are equal.
+            </summary>
+            <param name="other">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="T:Azure.Storage.Sas.SasProtocol">
+            <summary>
+            Defines the protocols permitted for Storage requests made with a shared
+            access signature.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.SasProtocol.None">
+            <summary>
+            No protocol has been specified. If no value is specified,
+            the service will default to HttpsAndHttp.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.SasProtocol.HttpsAndHttp">
+            <summary>
+            Only requests issued over HTTPS or HTTP will be permitted.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.SasProtocol.Https">
+            <summary>
+            Only requests issued over HTTPS will be permitted.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.Sas.SasQueryParameters">
+            <summary>
+            A <see cref="T:Azure.Storage.Sas.SasQueryParameters"/> object represents the components
+            that make up an Azure Storage Shared Access Signature's query
+            parameters.  It includes components used by all Azure Storage resources
+            (Blob Containers, Blobs, Files, and Queues).  You can construct a new instance
+            using the service specific SAS builder types.
+            For more information, <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas"/>.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.Sas.SasQueryParameters.DefaultSasVersion">
+            <summary>
+            The default service version to use for Shared Access Signatures.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasQueryParameters.FormatTimesForSasSigning(System.DateTimeOffset)">
+            <summary>
+            FormatTimesForSASSigning converts a time.Time to a snapshotTimeFormat string suitable for a
+            SASField's StartTime or ExpiryTime fields. Returns "" if value.IsZero().
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Version">
+            <summary>
+            Gets the storage service version to use to authenticate requests
+            made with this shared access signature, and the service version to
+            use when handling requests made with this shared access signature.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Services">
+            <summary>
+            Gets the signed services accessible with an account level shared
+            access signature.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.ResourceTypes">
+            <summary>
+            Gets which resources are accessible via the shared access signature.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Protocol">
+            <summary>
+            Optional. Specifies the protocol permitted for a request made with
+            the shared access signature.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.StartsOn">
+            <summary>
+            Gets the optional time at which the shared access signature becomes
+            valid.  If omitted, start time for this call is assumed to be the
+            time when the storage service receives the request.
+            <see cref="F:System.DateTimeOffset.MinValue"/> means not set.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.ExpiresOn">
+            <summary>
+            Gets the time at which the shared access signature becomes invalid.
+            <see cref="F:System.DateTimeOffset.MinValue"/> means not set.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.IPRange">
+            <summary>
+            Gets the optional IP address or a range of IP addresses from which
+            to accept requests.  When specifying a range, note that the range
+            is inclusive.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Identifier">
+            <summary>
+            Gets the optional unique value up to 64 characters in length that
+            correlates to an access policy specified for the blob container, queue,
+            or share.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Resource">
+            <summary>
+            Gets the resources are accessible via the shared access signature.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Permissions">
+            <summary>
+            Gets the permissions associated with the shared access signature.
+            The user is restricted to operations allowed by the permissions.
+            This field must be omitted if it has been specified in an
+            associated stored access policy.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.CacheControl">
+            <summary>
+            Gets the Cache-Control response header, which allows for
+            specifying the client-side caching to be used for blob and file downloads.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.ContentDisposition">
+            <summary>
+            Gets the Content-Disposition response header, which allows for
+            specifying the way that the blob or file content can be displayed in the browser.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.ContentEncoding">
+            <summary>
+            Gets the Content-Encoding response header, which allows for specifying
+            the type of encoding used for blob and file downloads.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.ContentLanguage">
+            <summary>
+            Gets the Content-Language response header, which allows for specifying the
+            language of the downloaded blob or file content.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.ContentType">
+            <summary>
+            Gets the Content-Type response header, which allows for specifying the
+            type of the downloaded blob or file content.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Signature">
+            <summary>
+            Gets the string-to-sign, a unique string constructed from the
+            fields that must be verified in order to authenticate the request.
+            The signature is an HMAC computed over the string-to-sign and key
+            using the SHA256 algorithm, and then encoded using Base64 encoding.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.Sas.SasQueryParameters.Empty">
+            <summary>
+            Gets empty shared access signature query parameters.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasQueryParameters.#ctor(System.String,System.Nullable{Azure.Storage.Sas.AccountSasServices},System.Nullable{Azure.Storage.Sas.AccountSasResourceTypes},Azure.Storage.Sas.SasProtocol,System.DateTimeOffset,System.DateTimeOffset,Azure.Storage.Sas.SasIPRange,System.String,System.String,System.String,System.String,System.String,System.String,System.DateTimeOffset,System.DateTimeOffset,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+             <summary>
+             Creates a new instance of the <see cref="T:Azure.Storage.Sas.SasQueryParameters"/> type.
+            
+             Expects decoded values.
+             </summary>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasQueryParameters.#ctor(Azure.Storage.UriQueryParamsCollection,System.Boolean)">
+            <summary>
+            Creates a new instance of the <see cref="T:Azure.Storage.Sas.SasQueryParameters"/> type
+            based on the supplied query parameters <paramref name="values"/>.
+            All SAS-related query parameters will be removed from
+            <paramref name="values"/>.
+            </summary>
+            <param name="values">URI query parameters</param>
+            <param name="includeBlobParameters">
+            Optional flag indicating whether to process blob-specific query
+            parameters.  The default value is false.
+            </param>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasQueryParameters.ToString">
+            <summary>
+            Convert the SAS query parameters into a URL encoded query string.
+            </summary>
+            <returns>
+            A URL encoded query string representing the SAS.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.Sas.SasQueryParameters.Encode(System.Boolean)">
+            <summary>
+            Convert the SAS query parameters into a URL encoded query string.
+            </summary>
+            <param name="includeBlobParameters">
+            Optional flag indicating whether to encode blob-specific query
+            parameters.  The default value is false.
+            </param>
+            <returns>
+            A URL encoded query string representing the SAS.
+            </returns>
+        </member>
+        <member name="T:Azure.Storage.AccountExtensions">
+            <summary>
+            Blob enum extensions.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.AccountExtensions.ToPermissionsString(Azure.Storage.Sas.AccountSasPermissions)">
+            <summary>
+            Create a permissions string to provide
+            <see cref="P:Azure.Storage.Sas.AccountSasBuilder.Permissions"/>.
+            </summary>
+            <returns>A permissions string.</returns>
+        </member>
+        <member name="P:Azure.Storage.SharedAccessSignatureCredentials.SasToken">
+            <summary>
+            Gets the SAS token used to authenticate requests to the Storage
+            service.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.SharedAccessSignatureCredentials.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Azure.Storage.SharedAccessSignatureCredentials"/> class.
+            </summary>
+            <param name="sasToken">
+            The SAS token used to authenticate requests to the Storage service.
+            </param>
+        </member>
+        <member name="T:Azure.Storage.StorageClientOptions">
+            <summary>
+            Defines the client configuration options for connecting to Azure
+            Storage.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageClientOptions.StorageScope">
+            <summary>
+            The default scope used for token authentication with Storage.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageClientOptions.Initialize(Azure.Core.ClientOptions)">
+            <summary>
+            Set common ClientOptions defaults for Azure Storage.
+            </summary>
+            <param name="options">Storage ClientOptions.</param>
+        </member>
+        <member name="M:Azure.Storage.StorageClientOptions.AsPolicy(Azure.Storage.StorageSharedKeyCredential)">
+            <summary>
+            Get an authentication policy to sign Storage requests.
+            </summary>
+            <param name="credential">Credential to use.</param>
+            <returns>An authentication policy.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageClientOptions.AsPolicy(Azure.Core.TokenCredential)">
+            <summary>
+            Get an authentication policy to sign Storage requests.
+            </summary>
+            <param name="credential">Credential to use.</param>
+            <returns>An authentication policy.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageClientOptions.GetAuthenticationPolicy(System.Object)">
+            <summary>
+            Get an optional authentication policy to sign Storage requests.
+            </summary>
+            <param name="credentials">Optional credentials to use.</param>
+            <returns>An optional authentication policy.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageClientOptions.Build(Azure.Core.ClientOptions,Azure.Core.Pipeline.HttpPipelinePolicy,System.Uri)">
+            <summary>
+            Create an HttpPipeline from Storage ClientOptions.
+            </summary>
+            <param name="options">The Storage ClientOptions.</param>
+            <param name="authentication">Optional authentication policy.</param>
+            <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+            <returns>An HttpPipeline to use for Storage requests.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageClientOptions.Build(Azure.Core.ClientOptions,System.Object,System.Uri)">
+            <summary>
+            Create an HttpPipeline from Storage ClientOptions.
+            </summary>
+            <param name="options">The Storage ClientOptions.</param>
+            <param name="credentials">Optional authentication credentials.</param>
+            <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+            <returns>An HttpPipeline to use for Storage requests.</returns>
+        </member>
+        <member name="T:Azure.Storage.StorageCollectionEnumerator`1.StoragePageable">
+            <summary>
+            Abstract the Storage pattern for async iteration
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageCollectionEnumerator`1.StoragePageable.CanContinue(System.String)">
+            <summary>
+            Determine if the iteration can continue.
+            </summary>
+            <param name="continuationToken">
+            The next continuation token provided with the last
+            <see cref="T:Azure.Page`1"/>.
+            </param>
+            <returns>
+            True if the iteration can continue, false otherwise.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.StorageCollectionEnumerator`1.StoragePageable.AsPages(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Enumerate the values a <see cref="T:Azure.Page`1"/> at a time.  This may
+            make mutliple service requests.
+            </summary>
+            <param name="continuationToken">
+            A continuation token indicating where to resume paging or null to
+            begin paging from the beginning.
+            </param>
+            <param name="pageHintSize">
+            The size of <see cref="T:Azure.Page`1"/>s that should be requested (from
+            service operations that support it).
+            </param>
+            <returns>
+            An async sequence of <see cref="T:Azure.Page`1"/>s.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.StorageCollectionEnumerator`1.StoragePageable.GetEnumerator">
+            <summary>
+            Enumerate the values in the collection synchronously.  This may
+            make mutliple service requests.
+            </summary>
+            <returns>A sequence of values.</returns>
+        </member>
+        <member name="T:Azure.Storage.StorageCollectionEnumerator`1.StorageAsyncPageable">
+            <summary>
+            Abstract the Storage pattern for async iteration
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageCollectionEnumerator`1.StorageAsyncPageable.CanContinue(System.String)">
+            <summary>
+            Determine if the iteration can continue.
+            </summary>
+            <param name="continuationToken">
+            The next continuation token provided with the last
+            <see cref="T:Azure.Page`1"/>.
+            </param>
+            <returns>
+            True if the iteration can continue, false otherwise.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.StorageCollectionEnumerator`1.StorageAsyncPageable.AsPages(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Enumerate the values a <see cref="T:Azure.Page`1"/> at a time.  This may
+            make mutliple service requests.
+            </summary>
+            <param name="continuationToken">
+            A continuation token indicating where to resume paging or null to
+            begin paging from the beginning.
+            </param>
+            <param name="pageHintSize">
+            The size of <see cref="T:Azure.Page`1"/>s that should be requested (from
+            service operations that support it).
+            </param>
+            <returns>
+            An async sequence of <see cref="T:Azure.Page`1"/>s.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.StorageCollectionEnumerator`1.StorageAsyncPageable.GetAsyncEnumerator(System.Threading.CancellationToken)">
+            <summary>
+            Enumerate the values in the collection asynchronously.  This may
+            make mutliple service requests.
+            </summary>
+            <param name="cancellationToken">
+            The <see cref="T:System.Threading.CancellationToken"/> used for requests made while
+            enumerating asynchronously.
+            </param>
+            <returns>An async sequence of values.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageCollectionEnumerator`1.StorageAsyncPageable.GetEnumerator">
+            <summary>
+            Enumerate the values in the collection synchronously.  This may
+            make mutliple service requests.
+            </summary>
+            <returns>A sequence of values.</returns>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.UseV1MD5">
+            <summary>
+            Gets or sets a value indicating whether the FISMA MD5 setting will be used.
+            </summary>
+            <value><c>false</c> to use the FISMA MD5 setting; <c>true</c> to use the .NET default implementation.</value>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_useDevelopmentStorageSetting">
+            <summary>
+            Validator for the UseDevelopmentStorage setting. Must be "true".
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_developmentStorageProxyUriSetting">
+            <summary>
+            Validator for the DevelopmentStorageProxyUri setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_defaultEndpointsProtocolSetting">
+            <summary>
+            Validator for the DefaultEndpointsProtocol setting. Must be either "http" or "https".
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_accountNameSetting">
+            <summary>
+            Validator for the AccountName setting. No restrictions.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_accountKeyNameSetting">
+            <summary>
+            Validator for the AccountKey setting. No restrictions.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_accountKeySetting">
+            <summary>
+            Validator for the AccountKey setting. Must be a valid base64 string.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_blobEndpointSetting">
+            <summary>
+            Validator for the BlobEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_queueEndpointSetting">
+            <summary>
+            Validator for the QueueEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_tableEndpointSetting">
+            <summary>
+            Validator for the TableEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_fileEndpointSetting">
+            <summary>
+            Validator for the FileEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_blobSecondaryEndpointSetting">
+            <summary>
+            Validator for the BlobSecondaryEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_queueSecondaryEndpointSetting">
+            <summary>
+            Validator for the QueueSecondaryEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_tableSecondaryEndpointSetting">
+            <summary>
+            Validator for the TableSecondaryEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_fileSecondaryEndpointSetting">
+            <summary>
+            Validator for the FileSecondaryEndpoint setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_endpointSuffixSetting">
+            <summary>
+            Validator for the EndpointSuffix setting. Must be a valid Uri.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_sharedAccessSignatureSetting">
+            <summary>
+            Validator for the SharedAccessSignature setting. No restrictions.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_devStoreAccount">
+            <summary>
+            Singleton instance for the development storage account.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.#ctor(System.Object,System.Uri,System.Uri,System.Uri,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.Storage.StorageConnectionString"/> class using the specified
+            credentials and service endpoints.
+            </summary>
+            <param name="storageCredentials">A StorageCredentials object.</param>
+            <param name="blobEndpoint">A <see cref="T:System.Uri"/> specifying the primary Blob service endpoint.</param>
+            <param name="queueEndpoint">A <see cref="T:System.Uri"/> specifying the primary Queue service endpoint.</param>
+            <param name="tableEndpoint">A <see cref="T:System.Uri"/> specifying the primary Table service endpoint.</param>
+            <param name="fileEndpoint">A <see cref="T:System.Uri"/> specifying the primary File service endpoint.</param>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.#ctor(System.Object,System.ValueTuple{System.Uri,System.Uri},System.ValueTuple{System.Uri,System.Uri},System.ValueTuple{System.Uri,System.Uri},System.ValueTuple{System.Uri,System.Uri})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.Storage.StorageConnectionString"/> class using the specified
+            account credentials and service endpoints.
+            </summary>
+            <param name="storageCredentials">A StorageCredentials object.</param>
+            <param name="blobStorageUri">A <see cref="T:System.Uri"/> specifying the Blob service endpoint or endpoints.</param>
+            <param name="queueStorageUri">A <see cref="T:System.Uri"/> specifying the Queue service endpoint or endpoints.</param>
+            <param name="tableStorageUri">A <see cref="T:System.Uri"/> specifying the Table service endpoint or endpoints.</param>
+            <param name="fileStorageUri">A <see cref="T:System.Uri"/> specifying the File service endpoint or endpoints.</param>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.#ctor(System.Object,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.Storage.StorageConnectionString"/> class using the specified
+            credentials, and specifies whether to use HTTP or HTTPS to connect to the storage services.
+            </summary>
+            <param name="storageCredentials">A StorageCredentials object.</param>
+            <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
+            <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.#ctor(System.Object,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.Storage.StorageConnectionString"/> class using the specified
+            credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
+            </summary>
+            <param name="storageCredentials">A StorageCredentials object.</param>
+            <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
+            <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
+            <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.#ctor(System.Object,System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Azure.Storage.StorageConnectionString"/> class using the specified
+            credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
+            </summary>
+            <param name="storageCredentials">A StorageCredentials object.</param>
+            <param name="accountName">The name of the account.</param>
+            <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
+            <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
+            <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.DevelopmentStorageAccount">
+            <summary>
+            Gets a <see cref="T:Azure.Storage.StorageConnectionString"/> object that references the well-known development storage account.
+            </summary>
+            <value>A <see cref="T:Azure.Storage.StorageConnectionString"/> object representing the development storage account.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.IsDevStoreAccount">
+            <summary>
+            Indicates whether this account is a development storage account.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.EndpointSuffix">
+            <summary>
+            The storage service hostname suffix set by the user, if any.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.Settings">
+            <summary>
+            The connection string parsed into settings.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.DefaultEndpoints">
+            <summary>
+            True if the user used a constructor that auto-generates endpoints.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.BlobEndpoint">
+            <summary>
+            Gets the primary endpoint for the Blob service, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the primary Blob service endpoint.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.QueueEndpoint">
+            <summary>
+            Gets the primary endpoint for the Queue service, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the primary Queue service endpoint.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.TableEndpoint">
+            <summary>
+            Gets the primary endpoint for the Table service, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the primary Table service endpoint.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.FileEndpoint">
+            <summary>
+            Gets the primary endpoint for the File service, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the primary File service endpoint.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.BlobStorageUri">
+            <summary>
+            Gets the endpoints for the Blob service at the primary and secondary location, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the Blob service endpoints.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.QueueStorageUri">
+            <summary>
+            Gets the endpoints for the Queue service at the primary and secondary location, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the Queue service endpoints.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.TableStorageUri">
+            <summary>
+            Gets the endpoints for the Table service at the primary and secondary location, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the Table service endpoints.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.FileStorageUri">
+            <summary>
+            Gets the endpoints for the File service at the primary and secondary location, as configured for the storage account.
+            </summary>
+            <value>A <see cref="T:System.Uri"/> containing the File service endpoints.</value>
+        </member>
+        <member name="P:Azure.Storage.StorageConnectionString.Credentials">
+            <summary>
+            Gets the credentials used to create this <see cref="T:Azure.Storage.StorageConnectionString"/> object.
+            </summary>
+            <value>A StorageCredentials object.</value>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString._accountName">
+            <summary>
+            Private record of the account name for use in ToString(bool).
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.Parse(System.String)">
+            <summary>
+            Parses a connection string and returns a <see cref="T:Azure.Storage.StorageConnectionString"/> created
+            from the connection string.
+            </summary>
+            <param name="connectionString">A valid connection string.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="connectionString"/> is null or empty.</exception>
+            <exception cref="T:System.FormatException">Thrown if <paramref name="connectionString"/> is not a valid connection string.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="connectionString"/> cannot be parsed.</exception>
+            <returns>A <see cref="T:Azure.Storage.StorageConnectionString"/> object constructed from the values provided in the connection string.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.TryParse(System.String,Azure.Storage.StorageConnectionString@)">
+            <summary>
+            Indicates whether a connection string can be parsed to return a <see cref="T:Azure.Storage.StorageConnectionString"/> object.
+            </summary>
+            <param name="connectionString">The connection string to parse.</param>
+            <param name="account">A <see cref="T:Azure.Storage.StorageConnectionString"/> object to hold the instance returned if
+            the connection string can be parsed.</param>
+            <returns><b>true</b> if the connection string was successfully parsed; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ToString">
+            <summary>
+            Returns a connection string for this storage account, without sensitive data.
+            </summary>
+            <returns>A connection string.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ToString(System.Boolean)">
+            <summary>
+            Returns a connection string for the storage account, optionally with sensitive data.
+            </summary>
+            <param name="exportSecrets"><c>True</c> to include sensitive data in the string; otherwise, <c>false</c>.</param>
+            <returns>A connection string.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.GetDevelopmentStorageAccount(System.Uri)">
+            <summary>
+            Returns a <see cref="T:Azure.Storage.StorageConnectionString"/> with development storage credentials using the specified proxy Uri.
+            </summary>
+            <param name="proxyUri">The proxy endpoint to use.</param>
+            <returns>The new <see cref="T:Azure.Storage.StorageConnectionString"/>.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ParseCore(System.String,Azure.Storage.StorageConnectionString@,System.Action{System.String})">
+            <summary>
+            Internal implementation of Parse/TryParse.
+            </summary>
+            <param name="connectionString">The string to parse.</param>
+            <param name="accountInformation">The <see cref="T:Azure.Storage.StorageConnectionString"/> to return.</param>
+            <param name="error">A callback for reporting errors.</param>
+            <returns>If true, the parse was successful. Otherwise, false.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ParseStringIntoSettings(System.String,System.Action{System.String})">
+            <summary>
+            Tokenizes input and stores name value pairs.
+            </summary>
+            <param name="connectionString">The string to parse.</param>
+            <param name="error">Error reporting delegate.</param>
+            <returns>Tokenized collection.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.Setting(System.String,System.String[])">
+            <summary>
+            Encapsulates a validation rule for an enumeration based account setting.
+            </summary>
+            <param name="name">The name of the setting.</param>
+            <param name="validValues">A list of valid values for the setting.</param>
+            <returns>An <see cref="T:System.Collections.Generic.KeyValuePair`2"/> representing the enumeration constraint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.Setting(System.String,System.Func{System.String,System.Boolean})">
+            <summary>
+            Encapsulates a validation rule using a func.
+            </summary>
+            <param name="name">The name of the setting.</param>
+            <param name="isValid">A func that determines if the value is valid.</param>
+            <returns>An <see cref="T:System.Collections.Generic.KeyValuePair`2"/> representing the constraint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.IsValidBase64String(System.String)">
+            <summary>
+            Determines whether the specified setting value is a valid base64 string.
+            </summary>
+            <param name="settingValue">The setting value.</param>
+            <returns><c>true</c> if the specified setting value is a valid base64 string; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.IsValidUri(System.String)">
+            <summary>
+            Validation function that validates Uris.
+            </summary>
+            <param name="settingValue">Value to validate.</param>
+            <returns><c>true</c> if the specified setting value is a valid Uri; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.IsValidDomain(System.String)">
+            <summary>
+            Validation function that validates a domain name.
+            </summary>
+            <param name="settingValue">Value to validate.</param>
+            <returns><c>true</c> if the specified setting value is a valid domain; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.AllRequired(System.Collections.Generic.KeyValuePair{System.String,System.Func{System.String,System.Boolean}}[])">
+            <summary>
+            Settings filter that requires all specified settings be present and valid.
+            </summary>
+            <param name="requiredSettings">A list of settings that must be present.</param>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.Optional(System.Collections.Generic.KeyValuePair{System.String,System.Func{System.String,System.Boolean}}[])">
+            <summary>
+            Settings filter that removes optional values.
+            </summary>
+            <param name="optionalSettings">A list of settings that are optional.</param>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.AtLeastOne(System.Collections.Generic.KeyValuePair{System.String,System.Func{System.String,System.Boolean}}[])">
+            <summary>
+            Settings filter that ensures that at least one setting is present.
+            </summary>
+            <param name="atLeastOneSettings">A list of settings of which one must be present.</param>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.None(System.Collections.Generic.KeyValuePair{System.String,System.Func{System.String,System.Boolean}}[])">
+            <summary>
+            Settings filter that ensures that none of the specified settings are present.
+            </summary>
+            <param name="atLeastOneSettings">A list of settings of which one must not be present.</param>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.MatchesAll(System.Func{System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.String}}[])">
+            <summary>
+            Settings filter that ensures that all of the specified filters match.
+            </summary>
+            <param name="filters">A list of filters of which all must match.</param>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.MatchesOne(System.Func{System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.String}}[])">
+            <summary>
+            Settings filter that ensures that exactly one filter matches.
+            </summary>
+            <param name="filters">A list of filters of which exactly one must match.</param>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.MatchesExactly(System.Func{System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.String}})">
+            <summary>
+            Settings filter that ensures that the specified filter is an exact match.
+            </summary>
+            <param name="filter">A list of filters of which ensures that the specified filter is an exact match.</param>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="F:Azure.Storage.StorageConnectionString.s_validCredentials">
+            <summary>
+            Settings filter that ensures that a valid combination of credentials is present.
+            </summary>
+            <returns>The remaining settings or <c>null</c> if the filter's requirement is not satisfied.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.MatchesSpecification(System.Collections.Generic.IDictionary{System.String,System.String},System.Func{System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.String}}[])">
+            <summary>
+            Tests to see if a given list of settings matches a set of filters exactly.
+            </summary>
+            <param name="settings">The settings to check.</param>
+            <param name="constraints">A list of filters to check.</param>
+            <returns>
+            If any filter returns null, false.
+            If there are any settings left over after all filters are processed, false.
+            Otherwise true.
+            </returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.GetCredentials(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Gets a StorageCredentials object corresponding to whatever credentials are supplied in the given settings.
+            </summary>
+            <param name="settings">The settings to check.</param>
+            <returns>The StorageCredentials object specified in the settings.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructBlobEndpoint(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Gets the default blob endpoint using specified settings.
+            </summary>
+            <param name="settings">The settings to use.</param>
+            <returns>The default blob endpoint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructBlobEndpoint(System.String,System.String,System.String)">
+            <summary>
+            Gets the default blob endpoint using the specified protocol and account name.
+            </summary>
+            <param name="scheme">The protocol to use.</param>
+            <param name="accountName">The name of the storage account.</param>
+            <param name="endpointSuffix">The Endpoint DNS suffix; use <c>null</c> for default.</param>
+            <returns>The default blob endpoint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructFileEndpoint(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Gets the default file endpoint using specified settings.
+            </summary>
+            <param name="settings">The settings to use.</param>
+            <returns>The default file endpoint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructFileEndpoint(System.String,System.String,System.String)">
+            <summary>
+            Gets the default file endpoint using the specified protocol and account name.
+            </summary>
+            <param name="scheme">The protocol to use.</param>
+            <param name="accountName">The name of the storage account.</param>
+            <param name="endpointSuffix">The Endpoint DNS suffix; use <c>null</c> for default.</param>
+            <returns>The default file endpoint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructQueueEndpoint(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Gets the default queue endpoint using the specified settings.
+            </summary>
+            <param name="settings">The settings.</param>
+            <returns>The default queue endpoint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructQueueEndpoint(System.String,System.String,System.String)">
+            <summary>
+            Gets the default queue endpoint using the specified protocol and account name.
+            </summary>
+            <param name="scheme">The protocol to use.</param>
+            <param name="accountName">The name of the storage account.</param>
+            <param name="endpointSuffix">The Endpoint DNS suffix; use <c>null</c> for default.</param>
+            <returns>The default queue endpoint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructTableEndpoint(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Gets the default table endpoint using the specified settings.
+            </summary>
+            <param name="settings">The settings.</param>
+            <returns>The default table endpoint.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageConnectionString.ConstructTableEndpoint(System.String,System.String,System.String)">
+            <summary>
+            Gets the default table endpoint using the specified protocol and account name.
+            </summary>
+            <param name="scheme">The protocol to use.</param>
+            <param name="accountName">The name of the storage account.</param>
+            <param name="endpointSuffix">The Endpoint DNS suffix; use <c>null</c> for default.</param>
+            <returns>The default table endpoint.</returns>
+        </member>
+        <member name="T:Azure.Storage.StorageExceptionExtensions">
+            <summary>
+            Provide helpful information about errors calling Azure Storage endpoints.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageExceptionExtensions.CreateException(Azure.Response,System.String,System.Exception,System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Create a RequestFailedException with a proper error message.
+            </summary>
+            <param name="response">The failed response.</param>
+            <param name="message">The optional message.</param>
+            <param name="innerException">An optional inner Exception.</param>
+            <param name="errorCode">An optional error code.</param>
+            <param name="additionalInfo">Optional additional information.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Azure.Storage.StorageExceptionExtensions.GetErrorCode(Azure.Response,System.String)">
+            <summary>
+            Attempt to get the error code from a response if it's not provided.
+            </summary>
+            <param name="response">The response.</param>
+            <param name="errorCode">An optional error code.</param>
+            <returns>The response's error code.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageExceptionExtensions.CreateMessage(Azure.Response,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Create the exception's Message.
+            </summary>
+            <param name="message">The default message.</param>
+            <param name="response">The error response.</param>
+            <param name="errorCode">An optional error code.</param>
+            <param name="additionalInfo">Optional additional information.</param>
+            <returns>The exception's Message.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageExceptionExtensions.IsUnavailable``1(Azure.Response{``0})">
+            <summary>
+            Check if a Response will throw an exception if you try to access
+            its Value property.
+            </summary>
+            <typeparam name="T">Type of the Response Value.</typeparam>
+            <param name="response">The response to check.</param>
+            <returns>True if the response will throw.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageExceptionExtensions.AsNoBodyResponse``1(Azure.Response)">
+            <summary>
+            Create a response that will throw an exception if you try to access
+            its Value property.
+            </summary>
+            <typeparam name="T">Type of the Response Value.</typeparam>
+            <param name="rawResponse">The raw response.</param>
+            <returns>A response that will throw if accessed.</returns>
+        </member>
+        <member name="T:Azure.Storage.StorageMemoryPool">
+            <summary>
+            Private memory pool specific to Azure storage transfers, based on ArrayPool.
+            </summary>
+        </member>
+        <member name="T:Azure.Storage.StorageRequestValidationPipelinePolicy">
+            <summary>
+            Pipeline policy to verify x-ms-client-request-id and x-ms-client-return-request-id
+            headers that are echoed back from a request match.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageRequestValidationPipelinePolicy.#ctor">
+            <summary>
+            Create a new StorageRequestValidationPipelinePolicy
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageRequestValidationPipelinePolicy.Shared">
+            <summary>
+            Gets StorageRequestValidationPipelinePolicy object.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageRequestValidationPipelinePolicy.OnReceivedResponse(Azure.Core.HttpMessage)">
+            <summary>
+            Verify x-ms-client-request-id and x-ms-client-return-request-id headers matches as
+            x-ms-client-return-request-id is an echo of x-mis-client-request-id.
+            </summary>
+            <param name="message">The message that was sent</param>
+        </member>
+        <member name="M:Azure.Storage.StorageResponseClassifier.IsRetriableResponse(Azure.Core.HttpMessage)">
+            <summary>
+            Overridden version of IsRetriableResponse that allows for retrying 404 that occurs against the secondary host.
+            </summary>
+            <param name="message">The message containing both Response and Request</param>
+            <returns></returns>
+        </member>
+        <member name="T:Azure.Storage.StorageSharedKeyCredential">
+            <summary>
+            A <see cref="T:Azure.Storage.StorageSharedKeyCredential"/> is a credential backed by
+            a Storage Account's name and one of its access keys.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageSharedKeyCredential.AccountName">
+            <summary>
+            Gets the name of the Storage Account.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageSharedKeyCredential._accountKeyValue">
+            <summary>
+            The value of a Storage Account access key.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageSharedKeyCredential.AccountKeyValue">
+            <summary>
+            Gets the value of a Storage Account access key.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageSharedKeyCredential.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:Azure.Storage.StorageSharedKeyCredential"/> class.
+            </summary>
+            <param name="accountName">The name of the Storage Account.</param>
+            <param name="accountKey">A Storage Account access key.</param>
+        </member>
+        <member name="M:Azure.Storage.StorageSharedKeyCredential.SetAccountKey(System.String)">
+            <summary>
+            Update the Storage Account's access key.  This intended to be used
+            when you've regenerated your Storage Account's access keys and want
+            to update long lived clients.
+            </summary>
+            <param name="accountKey">A Storage Account access key.</param>
+        </member>
+        <member name="M:Azure.Storage.StorageSharedKeyCredential.ExportBase64EncodedKey">
+            <summary>
+            Exports the value of the account's key to a Base64-encoded string.
+            </summary>
+            <returns>The account's key.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageSharedKeyCredential.ComputeHMACSHA256(System.String)">
+            <summary>
+            Generates a base-64 hash signature string for an HTTP request or
+            for a SAS.
+            </summary>
+            <param name="message">The message to sign.</param>
+            <returns>The signed message.</returns>
+        </member>
+        <member name="T:Azure.Storage.StorageSharedKeyPipelinePolicy">
+            <summary>
+            HttpPipelinePolicy to sign requests using an Azure Storage shared key.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageSharedKeyPipelinePolicy.IncludeXMsDate">
+            <summary>
+            Whether to always add the x-ms-date header.
+            </summary>
+        </member>
+        <member name="F:Azure.Storage.StorageSharedKeyPipelinePolicy._credentials">
+            <summary>
+            Shared key credentials used to sign requests
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageSharedKeyPipelinePolicy.#ctor(Azure.Storage.StorageSharedKeyCredential)">
+            <summary>
+            Create a new SharedKeyPipelinePolicy
+            </summary>
+            <param name="credentials">SharedKeyCredentials to authenticate requests.</param>
+        </member>
+        <member name="M:Azure.Storage.StorageSharedKeyPipelinePolicy.OnSendingRequest(Azure.Core.HttpMessage)">
+            <summary>
+            Sign the request using the shared key credentials.
+            </summary>
+            <param name="message">The message with the request to sign.</param>
+        </member>
+        <member name="T:Azure.Storage.StorageTransferOptions">
+            <summary>
+            <see cref="T:Azure.Storage.StorageTransferOptions"/> is used to provide options for parallel transfers.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageTransferOptions.MaximumTransferLength">
+            <summary>
+            The maximum length of an transfer in bytes.
+            </summary>
+        </member>
+        <member name="P:Azure.Storage.StorageTransferOptions.MaximumConcurrency">
+            <summary>
+            The maximum number of workers that may be used in a parallel transfer.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.StorageTransferOptions.Equals(System.Object)">
+            <summary>
+            Check if two ParallelTransferOptions instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageTransferOptions.GetHashCode">
+            <summary>
+            Get a hash code for the ParallelTransferOptions.
+            </summary>
+            <returns>Hash code for the ParallelTransferOptions.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageTransferOptions.op_Equality(Azure.Storage.StorageTransferOptions,Azure.Storage.StorageTransferOptions)">
+            <summary>
+            Check if two ParallelTransferOptions instances are equal.
+            </summary>
+            <param name="left">The first instance to compare.</param>
+            <param name="right">The second instance to compare.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageTransferOptions.op_Inequality(Azure.Storage.StorageTransferOptions,Azure.Storage.StorageTransferOptions)">
+            <summary>
+            Check if two ParallelTransferOptions instances are equal.
+            </summary>
+            <param name="left">The first instance to compare.</param>
+            <param name="right">The second instance to compare.</param>
+            <returns>True if they're not equal, false otherwise.</returns>
+        </member>
+        <member name="M:Azure.Storage.StorageTransferOptions.Equals(Azure.Storage.StorageTransferOptions)">
+            <summary>
+            Check if two ParallelTransferOptions instances are equal.
+            </summary>
+            <param name="obj">The instance to compare to.</param>
+            <returns>True if they're equal, false otherwise.</returns>
+        </member>
+        <member name="T:Azure.Storage.TaskExtensions">
+            <summary>
+            Extensions to ensure async Tasks execute synchronously.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.TaskExtensions.EnsureCompleted``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            Ensure the Task has finished executing.
+            </summary>
+            <typeparam name="T">Task's return type.</typeparam>
+            <param name="task">The task.</param>
+            <returns>The result of executing the task.</returns>
+        </member>
+        <member name="M:Azure.Storage.TaskExtensions.EnsureCompleted(System.Threading.Tasks.Task)">
+            <summary>
+            Ensure the Task has finished executing.
+            </summary>
+            <param name="task">The task.</param>
+        </member>
+        <member name="M:Azure.Storage.TaskExtensions.EnsureCompleted``1(System.Threading.Tasks.ValueTask{``0})">
+            <summary>
+            Ensure the Task has finished executing.
+            </summary>
+            <typeparam name="T">Task's return type.</typeparam>
+            <param name="task">The task.</param>
+            <returns>The result of executing the task.</returns>
+        </member>
+        <member name="M:Azure.Storage.TaskExtensions.EnsureCompleted(System.Threading.Tasks.ValueTask)">
+            <summary>
+            Ensure the Task has finished executing.
+            </summary>
+            <param name="task">The task.</param>
+        </member>
+        <member name="M:Azure.Storage.TaskExtensions.VerifyTaskCompleted``1(System.Threading.Tasks.ValueTask{``0})">
+            <summary>
+            Verify if a task has completed and throw an
+            <see cref="T:System.InvalidOperationException"/> (only while debugging) if
+            it hasn't.
+            </summary>
+            <param name="task">The task to check for completion.</param>
+        </member>
+        <member name="M:Azure.Storage.TaskExtensions.VerifyTaskCompleted(System.Threading.Tasks.ValueTask)">
+            <summary>
+            Verify if a task has completed and throw an
+            <see cref="T:System.InvalidOperationException"/> (only while debugging) if
+            it hasn't.
+            </summary>
+            <param name="task">The task to check for completion.</param>
+        </member>
+        <member name="M:Azure.Storage.TaskExtensions.VerifyTaskCompleted(System.Threading.Tasks.Task)">
+            <summary>
+            Verify if a task has completed and throw an
+            <see cref="T:System.InvalidOperationException"/> (only while debugging) if
+            it hasn't.
+            </summary>
+            <param name="task">The task to check for completion.</param>
+        </member>
+        <member name="T:Azure.Storage.UriExtensions">
+            <summary>
+            Extension methods used to manipulate URIs.
+            </summary>
+        </member>
+        <member name="M:Azure.Storage.UriExtensions.AppendToPath(System.Uri,System.String)">
+            <summary>
+            Append a segment to a URIs path.
+            </summary>
+            <param name="uri">The URI.</param>
+            <param name="segment">The relative segment to append.</param>
+            <returns>The combined URI.</returns>
+        </member>
+        <member name="M:Azure.Storage.UriExtensions.GetQueryParameters(System.Uri)">
+            <summary>
+            Get the (already encoded) query parameters on a URI.
+            </summary>
+            <param name="uri">The URI.</param>
+            <returns>Dictionary mapping query parameters to values.</returns>
+        </member>
+        <member name="M:Azure.Storage.UriQueryParamsCollection.#ctor(System.String)">
+            <summary>
+            Takes encoded query params string, output decoded params map
+            </summary>
+            <param name="encodedQueryParamString"></param>
+        </member>
+        <member name="T:Azure.Core.ArrayBufferWriter`1">
+            <summary>
+            Represents a heap-based, array-backed output sink into which <typeparam name="T"/> data can be written.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.#ctor">
+            <summary>
+            Creates an instance of an <see cref="T:Azure.Core.ArrayBufferWriter`1"/>, in which data can be written to,
+            with the default initial capacity.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.#ctor(System.Int32)">
+            <summary>
+            Creates an instance of an <see cref="T:Azure.Core.ArrayBufferWriter`1"/>, in which data can be written to,
+            with an initial capacity specified.
+            </summary>
+            <param name="initialCapacity">The minimum capacity with which to initialize the underlying buffer.</param>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="initialCapacity"/> is not positive (i.e. less than or equal to 0).
+            </exception>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.WrittenMemory">
+            <summary>
+            Returns the data written to the underlying buffer so far, as a <see cref="T:System.ReadOnlyMemory`1"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.WrittenSpan">
+            <summary>
+            Returns the data written to the underlying buffer so far, as a <see cref="T:System.ReadOnlySpan`1"/>.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.WrittenCount">
+            <summary>
+            Returns the amount of data written to the underlying buffer so far.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.Capacity">
+            <summary>
+            Returns the total amount of space within the underlying buffer.
+            </summary>
+        </member>
+        <member name="P:Azure.Core.ArrayBufferWriter`1.FreeCapacity">
+            <summary>
+            Returns the amount of space available that can still be written into without forcing the underlying buffer to grow.
+            </summary>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.Clear">
+            <summary>
+            Clears the data written to the underlying buffer.
+            </summary>
+            <remarks>
+            You must clear the <see cref="T:Azure.Core.ArrayBufferWriter`1"/> before trying to re-use it.
+            </remarks>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.Advance(System.Int32)">
+            <summary>
+            Notifies <see cref="T:System.Buffers.IBufferWriter`1"/> that <paramref name="count"/> amount of data was written to the output <see cref="T:System.Span`1"/>/<see cref="T:System.Memory`1"/>
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="count"/> is negative.
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown when attempting to advance past the end of the underlying buffer.
+            </exception>
+            <remarks>
+            You must request a new buffer after calling Advance to continue writing more data and cannot write to a previously acquired buffer.
+            </remarks>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.GetMemory(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.Memory`1"/> to write to that is at least the requested length (specified by <paramref name="sizeHint"/>).
+            If no <paramref name="sizeHint"/> is provided (or it's equal to <code>0</code>), some non-empty buffer is returned.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="sizeHint"/> is negative.
+            </exception>
+            <remarks>
+            This will never return an empty <see cref="T:System.Memory`1"/>.
+            </remarks>
+            <remarks>
+            There is no guarantee that successive calls will return the same buffer or the same-sized buffer.
+            </remarks>
+            <remarks>
+            You must request a new buffer after calling Advance to continue writing more data and cannot write to a previously acquired buffer.
+            </remarks>
+        </member>
+        <member name="M:Azure.Core.ArrayBufferWriter`1.GetSpan(System.Int32)">
+            <summary>
+            Returns a <see cref="T:System.Span`1"/> to write to that is at least the requested length (specified by <paramref name="sizeHint"/>).
+            If no <paramref name="sizeHint"/> is provided (or it's equal to <code>0</code>), some non-empty buffer is returned.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+            Thrown when <paramref name="sizeHint"/> is negative.
+            </exception>
+            <remarks>
+            This will never return an empty <see cref="T:System.Span`1"/>.
+            </remarks>
+            <remarks>
+            There is no guarantee that successive calls will return the same buffer or the same-sized buffer.
+            </remarks>
+            <remarks>
+            You must request a new buffer after calling Advance to continue writing more data and cannot write to a previously acquired buffer.
+            </remarks>
+        </member>
+        <member name="T:Azure.Core.Pipeline.ActivityExtensions">
+            <summary>
+            HACK HACK HACK. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
+            This type is a temporary workaround to avoid the issue.
+            </summary>
+        </member>
+        <member name="T:Azure.Core.ForwardsClientCallsAttribute">
+            <summary>
+            Marks methods that call methods on other client and don't need their diagnostics verified
+            </summary>
+        </member>
+        <member name="T:Azure.Core.HashCodeBuilder">
+            <summary>
+            Copied from https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/HashCode.cs.
+            </summary>
+        </member>
+    </members>
+</doc>

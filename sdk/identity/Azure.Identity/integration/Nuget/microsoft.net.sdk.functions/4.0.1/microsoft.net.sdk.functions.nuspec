@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.NET.Sdk.Functions</id>
+    <version>4.0.1</version>
+    <authors>Microsoft</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-functions-vs-build-sdk</projectUrl>
+    <description>Build SDK for Azure Functions</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>azurefunctions</tags>
+    <repository type="git" url="https://github.com/Azure/azure-functions-vs-build-sdk" commit="42049bb4fb874fdc682dddea6af12ee93968589c" />
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="Microsoft.Azure.Functions.Analyzers" version="[1.0.0, 2.0.0)" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Azure.WebJobs" version="[3.0.23, 3.1.0)" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Azure.WebJobs.Extensions" version="3.0.6" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Azure.WebJobs.Extensions.Http" version="[3.0.2, 3.1.0)" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Azure.WebJobs.Script.ExtensionsMetadataGenerator" version="4.0.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="11.0.2" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

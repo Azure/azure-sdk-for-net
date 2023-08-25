@@ -1,0 +1,1994 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Security.AccessControl</name>
+  </assembly>
+  <members>
+    <member name="T:System.Security.AccessControl.AccessControlActions">
+      <summary>指定对可保护对象允许的操作。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlActions.Change">
+      <summary>指定只写访问权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlActions.None">
+      <summary>指定无访问权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlActions.View">
+      <summary>指定只读访问权限。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessControlModification">
+      <summary>指定要执行的访问控制修改的类型。此枚举由 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 类及其子类的方法使用。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Add">
+      <summary>将指定的授权规则添加到访问控制列表 (ACL)。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Remove">
+      <summary>从 ACL 移除所含安全性标识符 (SID) 和访问掩码与指定授权规则一样的授权规则。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.RemoveAll">
+      <summary>从 ACL 移除所含 SID 与指定授权规则一样的授权规则。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.RemoveSpecific">
+      <summary>从 ACL 移除与指定的授权规则完全匹配的授权规则。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Reset">
+      <summary>从 ACL 移除所含 SID 与指定授权规则一样的授权规则，然后将指定的授权规则添加到 ACL。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Set">
+      <summary>从 ACL 移除所有授权规则，然后将指定的授权规则添加到 ACL。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessControlSections">
+      <summary>指定要保存或加载安全性说明符的哪些部分。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Access">
+      <summary>自由访问控制列表 (DACL)。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.All">
+      <summary>整个安全性说明符。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Audit">
+      <summary>系统访问控制列表 (SACL)。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Group">
+      <summary>主要组。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.None">
+      <summary>不包括任何部分。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Owner">
+      <summary>所有者。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessControlType">
+      <summary>指定是否使用 <see cref="T:System.Security.AccessControl.AccessRule" /> 对象来允许或拒绝访问。这些值不是标志，不能组合它们。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlType.Allow">
+      <summary>使用 <see cref="T:System.Security.AccessControl.AccessRule" /> 对象来允许访问受保护对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlType.Deny">
+      <summary>使用 <see cref="T:System.Security.AccessControl.AccessRule" /> 对象来拒绝访问受保护对象。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessRule">
+      <summary>表示用户的标识、访问掩码和访问控制类型（允许或拒绝）的组合。<see cref="T:System.Security.AccessControl.AccessRule" /> 对象还包含有关子对象如何继承规则以及如何传播继承的信息。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>使用指定的值初始化 <see cref="T:System.Security.AccessControl.AccessRule" /> 类的一个新实例。</summary>
+      <param name="identity">应用访问规则的标识。此参数必须是可以强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">如果此规则继承自父容器，则为 true。</param>
+      <param name="inheritanceFlags">访问规则的继承属性。</param>
+      <param name="propagationFlags">继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="type">有效的访问控制类型。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> 参数的值不能强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" />，或者 <paramref name="type" /> 参数包含无效值。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> 参数的值为零，或者 <paramref name="inheritanceFlags" /> 或 <paramref name="propagationFlags" /> 参数包含无法识别的标志值。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AccessRule.AccessControlType">
+      <summary>获取与此 <see cref="T:System.Security.AccessControl.AccessRule" /> 对象关联的 <see cref="T:System.Security.AccessControl.AccessControlType" /> 对象。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.AccessRule" /> 对象关联的 <see cref="T:System.Security.AccessControl.AccessControlType" /> 对象。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessRule`1">
+      <summary>表示用户的标识、访问掩码和访问控制类型（允许或拒绝）的组合。AccessRule`1 对象还包含有关子对象如何继承规则以及如何传播继承的信息。</summary>
+      <typeparam name="T">访问规则的访问权限类型。</typeparam>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.AccessControlType)">
+      <summary>使用指定的值初始化 AccessRule’1 类的一个新实例。</summary>
+      <param name="identity">应用访问规则的标识。</param>
+      <param name="rights">访问规则的权限。</param>
+      <param name="type">有效的访问控制类型。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>使用指定的值初始化 AccessRule’1 类的一个新实例。</summary>
+      <param name="identity">应用访问规则的标识。</param>
+      <param name="rights">访问规则的权限。</param>
+      <param name="inheritanceFlags">访问规则的继承属性。</param>
+      <param name="propagationFlags">继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="type">有效的访问控制类型。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.String,`0,System.Security.AccessControl.AccessControlType)">
+      <summary>使用指定的值初始化 AccessRule’1 类的一个新实例。</summary>
+      <param name="identity">应用访问规则的标识。</param>
+      <param name="rights">访问规则的权限。</param>
+      <param name="type">有效的访问控制类型。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.String,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>使用指定的值初始化 AccessRule’1 类的一个新实例。</summary>
+      <param name="identity">应用访问规则的标识。</param>
+      <param name="rights">访问规则的权限。</param>
+      <param name="inheritanceFlags">访问规则的继承属性。</param>
+      <param name="propagationFlags">继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="type">有效的访问控制类型。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.AccessRule`1.Rights">
+      <summary>获取当前实例的权限。</summary>
+      <returns>当前实例的强制转换为类型 &lt;T&gt; 的权利。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AceEnumerator">
+      <summary>提供遍历访问控制列表 (ACL) 中的访问控制项 (ACE) 的能力。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.AceEnumerator.Current">
+      <summary>获取 <see cref="T:System.Security.AccessControl.GenericAce" /> 集合中的当前元素。此属性获取对象的类型易于转换的版本。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.GenericAce" /> 集合中的当前元素。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.AceEnumerator.MoveNext">
+      <summary>将枚举器前进到 <see cref="T:System.Security.AccessControl.GenericAce" /> 集合的下一个元素。</summary>
+      <returns>如果枚举数成功地推进到下一个元素，则为 true；如果枚举数越过集合的结尾，则为 false。</returns>
+      <exception cref="T:System.InvalidOperationException">在创建了枚举数后集合被修改了。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.AceEnumerator.Reset">
+      <summary>将枚举数设置为其初始位置，该位置位于 <see cref="T:System.Security.AccessControl.GenericAce" /> 集合中第一个元素之前。</summary>
+      <exception cref="T:System.InvalidOperationException">在创建了枚举数后集合被修改了。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AceEnumerator.System#Collections#IEnumerator#Current"></member>
+    <member name="T:System.Security.AccessControl.AceFlags">
+      <summary>指定访问控制项 (ACE) 的继承和审核行为。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.AuditFlags">
+      <summary>审核所有访问尝试。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.ContainerInherit">
+      <summary>将访问掩码传播到子容器对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.FailedAccess">
+      <summary>审核失败的访问尝试。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.InheritanceFlags">
+      <summary>
+        <see cref="F:System.Security.AccessControl.AceFlags.ObjectInherit" />、<see cref="F:System.Security.AccessControl.AceFlags.ContainerInherit" />、<see cref="F:System.Security.AccessControl.AceFlags.NoPropagateInherit" /> 和 <see cref="F:System.Security.AccessControl.AceFlags.InheritOnly" /> 的逻辑 OR。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.Inherited">
+      <summary>从父容器继承而不是为对象显式设置 ACE。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.InheritOnly">
+      <summary>仅将访问掩码传播到子对象。这将包括容器子对象和子叶对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.None">
+      <summary>不设置任何 ACE 标志。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.NoPropagateInherit">
+      <summary>访问检查不适用于该对象；它们仅适用于其子对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.ObjectInherit">
+      <summary>将访问掩码传播到子叶对象上。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.SuccessfulAccess">
+      <summary>审核成功的访问尝试。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AceQualifier">
+      <summary>指定访问控制项 (ACE) 的功能。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.AccessAllowed">
+      <summary>允许访问。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.AccessDenied">
+      <summary>拒绝访问。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.SystemAlarm">
+      <summary>导致系统警告。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.SystemAudit">
+      <summary>导致系统审核。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AceType">
+      <summary>定义可用的访问控制项 (ACE) 类型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowed">
+      <summary>允许访问一个由 <see cref="T:System.Security.Principal.IdentityReference" /> 对象标识的特定受信者所对应的对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedCallback">
+      <summary>允许访问一个由 <see cref="T:System.Security.Principal.IdentityReference" /> 对象标识的特定受信者所对应的对象。这种 ACE 类型可包含可选的回调数据。回调数据是未经解释的资源管理器特定的 BLOB。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedCallbackObject">
+      <summary>允许访问对象、属性集或属性。ACE 包含一组访问权限、标识对象类型的 GUID 以及一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象，该对象标识了系统将向其授予访问权限的受信者。ACE 还包含一个 GUID 和一组标志，这些标志控制子对象对 ACE 的继承。这种 ACE 类型可包含可选的回调数据。回调数据是未经解释的资源管理器特定的 BLOB。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedCompound">
+      <summary>已定义但是从未使用。这里包括它是出于完整性的考虑。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedObject">
+      <summary>允许访问对象、属性集或属性。ACE 包含一组访问权限、标识对象类型的 GUID 以及一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象，该对象标识了系统将向其授予访问权限的受信者。ACE 还包含一个 GUID 和一组标志，这些标志控制子对象对 ACE 的继承。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDenied">
+      <summary>拒绝访问一个由 <see cref="T:System.Security.Principal.IdentityReference" /> 对象标识的特定受信者所对应的对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDeniedCallback">
+      <summary>拒绝访问一个由 <see cref="T:System.Security.Principal.IdentityReference" /> 对象标识的特定受信者所对应的对象。这种 ACE 类型可包含可选的回调数据。回调数据是未经解释的资源管理器特定的 BLOB。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDeniedCallbackObject">
+      <summary>拒绝访问对象、属性集或属性。ACE 包含一组访问权限、标识对象类型的 GUID 以及一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象，该对象标识了系统将向其授予访问权限的受信者。ACE 还包含一个 GUID 和一组标志，这些标志控制子对象对 ACE 的继承。这种 ACE 类型可包含可选的回调数据。回调数据是未经解释的资源管理器特定的 BLOB。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDeniedObject">
+      <summary>拒绝访问对象、属性集或属性。ACE 包含一组访问权限、标识对象类型的 GUID 以及一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象，该对象标识了系统将向其授予访问权限的受信者。ACE 还包含一个 GUID 和一组标志，这些标志控制子对象对 ACE 的继承。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.MaxDefinedAceType">
+      <summary>跟踪枚举中定义的最大 ACE 类型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarm">
+      <summary>保留供将来使用。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarmCallback">
+      <summary>保留供将来使用。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarmCallbackObject">
+      <summary>保留供将来使用。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarmObject">
+      <summary>保留供将来使用。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAudit">
+      <summary>导致当指定的受信者尝试获得对某个对象的访问权限时记录一条审核消息。受信者由一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象标识。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAuditCallback">
+      <summary>导致当指定的受信者尝试获得对某个对象的访问权限时记录一条审核消息。受信者由一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象标识。这种 ACE 类型可包含可选的回调数据。回调数据是未经解释的资源管理器特定的 BLOB。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAuditCallbackObject">
+      <summary>导致当指定的受信者尝试获得对某个对象或子对象（如属性集或属性）的访问权限时记录一条审核消息。ACE 包含一组访问权限、标识对象或子对象类型的 GUID 以及一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象，该对象标识了系统将审核其权限的受信者。ACE 还包含一个 GUID 和一组标志，这些标志控制子对象对 ACE 的继承。这种 ACE 类型可包含可选的回调数据。回调数据是未经解释的资源管理器特定的 BLOB。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAuditObject">
+      <summary>导致当指定的受信者尝试获得对某个对象或子对象（如属性集或属性）的访问权限时记录一条审核消息。ACE 包含一组访问权限、标识对象或子对象类型的 GUID 以及一个 <see cref="T:System.Security.Principal.IdentityReference" /> 对象，该对象标识了系统将审核其权限的受信者。ACE 还包含一个 GUID 和一组标志，这些标志控制子对象对 ACE 的继承。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AuditFlags">
+      <summary>指定用于审核对可保护对象的访问尝试的条件。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AuditFlags.Failure">
+      <summary>将审核失败的访问尝试。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AuditFlags.None">
+      <summary>将不审核任何访问尝试。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AuditFlags.Success">
+      <summary>将审核成功的访问尝试。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AuditRule">
+      <summary>表示用户的标识和访问掩码的组合。<see cref="T:System.Security.AccessControl.AuditRule" /> 对象还包含有关子对象如何继承规则、继承如何传播以及规则的审核条件是什么的信息。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>使用指定的值初始化 <see cref="T:System.Security.AccessControl.AuditRule" /> 类的一个新实例。</summary>
+      <param name="identity">审核规则应用到的标识。它必须是可强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">若从父容器继承此规则，则为 true。</param>
+      <param name="inheritanceFlags">审核规则的继承属性。</param>
+      <param name="propagationFlags">继承的审核规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="auditFlags">审核规则的条件。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> 参数的值不能强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" />，否则 <paramref name="auditFlags" /> 参数包含无效值。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> 参数的值为零，或者 <paramref name="inheritanceFlags" /> 或 <paramref name="propagationFlags" /> 参数包含无法识别的标志值。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AuditRule.AuditFlags">
+      <summary>获取此审核规则的审核标志。</summary>
+      <returns>枚举值的按位组合。此组合为此审核规则指定审核条件。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AuditRule`1">
+      <summary>表示用户的标识和访问掩码的组合。</summary>
+      <typeparam name="T"></typeparam>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.AuditFlags)">
+      <summary>使用指定的值初始化 AuditRule’1 类的一个新实例。</summary>
+      <param name="identity">审核规则应用到的标识。</param>
+      <param name="rights">审核规则的权限。</param>
+      <param name="flags">审核规则的条件。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>使用指定的值初始化 AuditRule’1 类的一个新实例。</summary>
+      <param name="identity">审核规则应用到的标识。</param>
+      <param name="rights">审核规则的权限。</param>
+      <param name="inheritanceFlags">审核规则的继承属性。</param>
+      <param name="propagationFlags">继承的审核规则是否自动传播。</param>
+      <param name="flags">审核规则的条件。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.String,`0,System.Security.AccessControl.AuditFlags)">
+      <summary>使用指定的值初始化 AuditRule’1 类的一个新实例。</summary>
+      <param name="identity">审核规则应用到的标识。</param>
+      <param name="rights">审核规则的权限。</param>
+      <param name="flags">审核规则的属性。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.String,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>使用指定的值初始化 AuditRule’1 类的一个新实例。</summary>
+      <param name="identity">审核规则应用到的标识。</param>
+      <param name="rights">审核规则的权限。</param>
+      <param name="inheritanceFlags">审核规则的继承属性。</param>
+      <param name="propagationFlags">继承的审核规则是否自动传播。</param>
+      <param name="flags">审核规则的条件。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.AuditRule`1.Rights">
+      <summary>审核规则的权限。</summary>
+      <returns>返回 <see cref="{0}" />。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AuthorizationRule">
+      <summary>确定对可保护对象的访问权限。派生类 <see cref="T:System.Security.AccessControl.AccessRule" /> 和 <see cref="T:System.Security.AccessControl.AuditRule" /> 提供了用于访问功能和审核功能的规范。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>使用指定的值初始化 <see cref="T:System.Security.AuthorizationControl.AccessRule" /> 类的一个新实例。</summary>
+      <param name="identity">应用访问规则的标识。此参数必须是可以强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">若从父容器继承此规则，则为 true。</param>
+      <param name="inheritanceFlags">访问规则的继承属性。</param>
+      <param name="propagationFlags">继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> 参数的值不能强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> 参数的值为零，或者 <paramref name="inheritanceFlags" /> 或 <paramref name="propagationFlags" /> 参数包含无法识别的标志值。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.AccessMask">
+      <summary>获取此规则的访问掩码。</summary>
+      <returns>此规则的访问掩码。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.IdentityReference">
+      <summary>获取此规则应用到的 <see cref="T:System.Security.Principal.IdentityReference" />。</summary>
+      <returns>此规则应用到的 <see cref="T:System.Security.Principal.IdentityReference" />。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.InheritanceFlags">
+      <summary>获取确定子对象如何继承此规则的标志值。</summary>
+      <returns>枚举值的按位组合。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.IsInherited">
+      <summary>获取指示此规则是显式设置的还是从父容器对象继承的值。</summary>
+      <returns>如果此规则不是显式设置的，而是从父容器继承的，则为 true。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.PropagationFlags">
+      <summary>获取传播标志的值，该值确定如何将此规则的继承传播到子对象。仅当 <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 枚举的值不为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，此属性才有意义。</summary>
+      <returns>枚举值的按位组合。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AuthorizationRuleCollection">
+      <summary>表示 <see cref="T:System.Security.AccessControl.AuthorizationRule" /> 对象集合。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.#ctor">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.AuthorizationRuleCollection" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.AddRule(System.Security.AccessControl.AuthorizationRule)">
+      <summary>将一个 <see cref="T:System.Web.Configuration.AuthorizationRule" /> 对象添加到集合中。</summary>
+      <param name="rule">要添加到集合的 <see cref="T:System.Web.Configuration.AuthorizationRule" /> 对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.CopyTo(System.Security.AccessControl.AuthorizationRule[],System.Int32)">
+      <summary>将该集合的内容复制到数组。</summary>
+      <param name="rules">将集合内容复制到的目标数组。</param>
+      <param name="index">从零开始的索引，从此处开始复制。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.Count"></member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.Item(System.Int32)">
+      <summary>获取集合中指定索引位置的 <see cref="T:System.Security.AccessControl.AuthorizationRule" /> 对象。</summary>
+      <returns>位于指定索引处的 <see cref="T:System.Security.AccessControl.AuthorizationRule" /> 对象。</returns>
+      <param name="index">要获取的 <see cref="T:System.Security.AccessControl.AuthorizationRule" /> 对象的从零开始的索引。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)"></member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#ICollection#IsSynchronized"></member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#ICollection#SyncRoot"></member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#IEnumerable#GetEnumerator"></member>
+    <member name="T:System.Security.AccessControl.CommonAce">
+      <summary>表示一个访问控制项 (ACE)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAce.#ctor(System.Security.AccessControl.AceFlags,System.Security.AccessControl.AceQualifier,System.Int32,System.Security.Principal.SecurityIdentifier,System.Boolean,System.Byte[])">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.CommonAce" /> 类的新实例。</summary>
+      <param name="flags">为新的访问控制项 (ACE) 指定有关继承、继承传播和审核条件的信息的标志。</param>
+      <param name="qualifier">新的 ACE 的使用情况。</param>
+      <param name="accessMask">ACE 的访问掩码。</param>
+      <param name="sid">与新的 ACE 关联的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="isCallback">设置为 true 则指定新的 ACE 为回调类型的 ACE。</param>
+      <param name="opaque">与新的 ACE 关联的不透明数据。只有回调 ACE 类型才允许不透明数据。此数组的长度一定不能大于 <see cref="M:System.Security.AccessControl.CommonAce.MaxOpaqueLength(System.Boolean)" /> 方法的返回值。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAce.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.CommonAce" /> 对象的二进制表示形式的长度（以字节为单位）。将此长度用于 <see cref="M:System.Security.AccessControl.CommonAce.GetBinaryForm(System.Byte[],System.Int32)" /> 方法，以便将 ACL 封送到二进制数组中。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.CommonAce" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.CommonAce" /> 对象的内容从指定的偏移量开始封送到指定的字节数组中。</summary>
+      <param name="binaryForm">将 <see cref="T:System.Security.AccessControl.CommonAce" /> 对象的内容封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.CommonAce" /> 复制到 <paramref name="binaryForm" /> 数组。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAce.MaxOpaqueLength(System.Boolean)">
+      <summary>获取回调访问控制项 (ACE) 的不透明数据 BLOB 的最大允许长度。</summary>
+      <returns>不透明数据 BLOB 的允许长度。</returns>
+      <param name="isCallback">设置为 true 则指定 <see cref="T:System.Security.AccessControl.CommonAce" /> 对象为回调 ACE 类型。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.CommonAcl">
+      <summary>表示访问控制列表 (ACL)，并且是 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 和 <see cref="T:System.Security.AccessControl.SystemAcl" /> 类的基类。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象的二进制表示形式的长度（以字节为单位）。应该在使用 <see cref="M:System.Security.AccessControl.CommonAcl.GetBinaryForm(System.Byte[],System.Int32)" /> 方法将访问控制列表封送到二进制数组中之前使用此长度。</summary>
+      <returns>获取当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.Count">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象中访问控制项 (ACE) 的数量。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象中 ACE 的数量。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAcl.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象的内容从指定的偏移量开始封送到指定的字节数组中。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.CommonAcl" /> 的内容将被封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.IsCanonical">
+      <summary>获取一个布尔值，该值指定当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象中的访问控制项 (ACE) 是否处于规范顺序。</summary>
+      <returns>如果当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象中的 ACE 处于规范顺序，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.IsContainer">
+      <summary>设置 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象是否为一个容器。</summary>
+      <returns>如果当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象是一个容器，则为 true。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.IsDS">
+      <summary>设置当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象是否为一个目录对象的访问控制列表 (ACL)。</summary>
+      <returns>如果当前 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象是一个目录对象的 ACL，则为 true。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.Item(System.Int32)">
+      <summary>获取或设置指定索引处的 <see cref="T:System.Security.AccessControl.CommonAce" />。</summary>
+      <returns>位于指定索引处的 <see cref="T:System.Security.AccessControl.CommonAce" />。</returns>
+      <param name="index">要获取或设置的 <see cref="T:System.Security.AccessControl.CommonAce" /> 的从零开始的索引。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAcl.Purge(System.Security.Principal.SecurityIdentifier)">
+      <summary>移除被此 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象包含并且与指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象关联的所有访问控制项 (ACE)。</summary>
+      <param name="sid">要检查的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAcl.RemoveInheritedAces">
+      <summary>从此 <see cref="T:System.Security.AccessControl.CommonAcl" /> 对象移除所有继承的访问控制项 (ACE)。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.Revision">
+      <summary>获取 <see cref="T:System.Security.AccessControl.CommonAcl" /> 的修订级别。</summary>
+      <returns>一个指定 <see cref="T:System.Security.AccessControl.CommonAcl" /> 的修订级别的字节值。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.CommonObjectSecurity">
+      <summary>无需直接操作访问控制列表 (ACL) 而控制对对象的访问。此类是 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 类的抽象基类。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.#ctor(System.Boolean)">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 类的新实例。</summary>
+      <param name="isContainer">如果新对象是一个容器对象，则为 true。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.AddAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>将指定的访问规则添加到与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的自由访问控制列表 (DACL)。</summary>
+      <param name="rule">要添加的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.AddAuditRule(System.Security.AccessControl.AuditRule)">
+      <summary>将指定的审核规则添加到与该 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的系统访问控制列表 (SACL)。</summary>
+      <param name="rule">要添加的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.GetAccessRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>获取与指定的安全性标识符关联的访问规则的集合。</summary>
+      <returns>与指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象关联的访问规则的集合。</returns>
+      <param name="includeExplicit">若要包括为对象显式设置的访问规则，则为 true。</param>
+      <param name="includeInherited">若要包括继承的访问规则，则为 true。</param>
+      <param name="targetType">指定要为其检索访问规则的安全标识符是属于 T:System.Security.Principal.SecurityIdentifier 类型，还是属于 T:System.Security.Principal.NTAccount 类型。此参数的值所隶属的类型必须要能转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 类型。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.GetAuditRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>获取与指定的安全性标识符关联的审核规则的集合。</summary>
+      <returns>与指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象关联的审核规则的集合。</returns>
+      <param name="includeExplicit">若要包括为对象显式设置的审核规则，则为 true。</param>
+      <param name="includeInherited">若要包括继承的审核规则，则为 true。</param>
+      <param name="targetType">要为其检索审核规则的安全性标识符。这必须是可以强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象的对象。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>将指定修改应用于与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的自由访问控制列表 (DACL)。</summary>
+      <returns>如果成功修改了 DACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 DACL 的修改。</param>
+      <param name="rule">要修改的访问规则。</param>
+      <param name="modified">如果成功修改了 DACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>将指定修改应用于与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的系统访问控制列表 (SACL)。</summary>
+      <returns>如果成功修改了 SACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 SACL 的修改。</param>
+      <param name="rule">要修改的审核规则。</param>
+      <param name="modified">如果成功修改了 SACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全性标识符和访问掩码的访问规则。</summary>
+      <returns>如果访问规则已成功移除，则为 true；否则为 false。</returns>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAccessRuleAll(System.Security.AccessControl.AccessRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全性标识符的所有访问规则。</summary>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.AccessRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则完全匹配的所有访问规则。</summary>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAuditRule(System.Security.AccessControl.AuditRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同安全性标识符和访问掩码的审核规则。</summary>
+      <returns>如果审核规则已成功移除，则为 true；否则为 false。</returns>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAuditRuleAll(System.Security.AccessControl.AuditRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同安全性标识符的所有审核规则。</summary>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.AuditRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则完全匹配的所有审核规则。</summary>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.ResetAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除所有访问规则，然后添加指定的访问规则。</summary>
+      <param name="rule">要重置的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.SetAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全性标识符和限定符的所有访问规则，然后添加指定的访问规则。</summary>
+      <param name="rule">要设置的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.SetAuditRule(System.Security.AccessControl.AuditRule)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同的安全性标识符和限定符所有审核规则，然后添加指定的审核规则。</summary>
+      <param name="rule">要设置的审核规则。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.CommonSecurityDescriptor">
+      <summary>表示安全性说明符。安全性说明符包含所有者、主要组、自由访问控制列表 (DACL) 和系统访问控制列表 (SACL)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.Byte[],System.Int32)">
+      <summary>使用指定的字节值数组初始化 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的安全性说明符与某个容器对象关联，则为 true。</param>
+      <param name="isDS">如果新的安全性说明符与某个目录对象关联，则为 true。</param>
+      <param name="binaryForm">用于创建新的 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的字节值数组。</param>
+      <param name="offset">
+        <paramref name="binaryForm" /> 数组中的偏移量，在此位置开始复制。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.ControlFlags,System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.SystemAcl,System.Security.AccessControl.DiscretionaryAcl)">
+      <summary>使用指定信息初始化 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的安全性说明符与某个容器对象关联，则为 true。</param>
+      <param name="isDS">如果新的安全性说明符与某个目录对象关联，则为 true。</param>
+      <param name="flags">指定新的 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的行为的标志。</param>
+      <param name="owner">新 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的所有者。</param>
+      <param name="group">新 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的主要组。</param>
+      <param name="systemAcl">新的 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的系统访问控制列表 (SACL)。</param>
+      <param name="discretionaryAcl">新的 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的自由访问控制列表 (DACL)。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.RawSecurityDescriptor)">
+      <summary>从指定的 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象初始化 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的安全性说明符与某个容器对象关联，则为 true。</param>
+      <param name="isDS">如果新的安全性说明符与某个目录对象关联，则为 true。</param>
+      <param name="rawSecurityDescriptor">用来从中创建新 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.String)">
+      <summary>使用指定的安全性说明符定义语言 (SDDL) 字符串初始化 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的安全性说明符与某个容器对象关联，则为 true。</param>
+      <param name="isDS">如果新的安全性说明符与某个目录对象关联，则为 true。</param>
+      <param name="sddlForm">用于创建新 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的 SDDL 字符串。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.AddDiscretionaryAcl(System.Byte,System.Int32)">
+      <summary>设置<see cref="P:System.Security.AccessControl.CommonSecurityDescriptor.DiscretionaryAcl" />为此属性<see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" />实例并设置<see cref="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclPresent" />标志。</summary>
+      <param name="revision">新的 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象的修订级别。</param>
+      <param name="trusted">此 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象可包含的访问控制项 (ACE) 的数量。此数量只作为一种提示。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.AddSystemAcl(System.Byte,System.Int32)">
+      <summary>设置<see cref="P:System.Security.AccessControl.CommonSecurityDescriptor.SystemAcl" />为此属性<see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" />实例并设置<see cref="F:System.Security.AccessControl.ControlFlags.SystemAclPresent" />标志。</summary>
+      <param name="revision">新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象的修订级别。</param>
+      <param name="trusted">此 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象可包含的访问控制项 (ACE) 的数量。此数量只作为一种提示。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.ControlFlags">
+      <summary>获取指定 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的行为的值。</summary>
+      <returns>使用逻辑或运算组合的一个或多个 <see cref="T:System.Security.AccessControl.ControlFlags" /> 枚举值。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.DiscretionaryAcl">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的自由访问控制列表 (DACL)。DACL 包含访问规则。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的 DACL。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.Group">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的主要组。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的主要组。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsContainer">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的对象是否为容器对象。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的对象是一个容器对象，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsDiscretionaryAclCanonical">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的自由访问控制列表 (DACL) 是否按规范顺序。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的 DACL 处于规范顺序，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsDS">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的对象是否为目录对象。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的对象是一个目录对象，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsSystemAclCanonical">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的系统访问控制列表 (SACL) 是否按规范顺序。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的 SACL 处于规范顺序，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.Owner">
+      <summary>获取或设置与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的对象所有者。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的对象所有者。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.PurgeAccessControl(System.Security.Principal.SecurityIdentifier)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的自由访问控制列表 (DACL) 中移除指定的安全性标识符的所有访问规则。</summary>
+      <param name="sid">要为其移除访问规则的安全性标识符。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.PurgeAudit(System.Security.Principal.SecurityIdentifier)">
+      <summary>从与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的系统访问控制列表 (SACL) 中移除指定的安全性标识符的所有审核规则。</summary>
+      <param name="sid">要为其移除审核规则的安全性标识符。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.SetDiscretionaryAclProtection(System.Boolean,System.Boolean)">
+      <summary>为与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的自由访问控制列表 (DACL) 设置继承保护。受保护的 DACL 不会从父容器继承访问规则。</summary>
+      <param name="isProtected">若要保护 DACL 不被继承，则为 true。</param>
+      <param name="preserveInheritance">若要在 DACL 中保留继承的访问规则，则为 true；若要从 DACL 中移除继承的访问规则，则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.SetSystemAclProtection(System.Boolean,System.Boolean)">
+      <summary>为与此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象关联的系统访问控制列表 (SACL) 设置继承保护。受保护的 SACL 不会从父容器继承审核规则。</summary>
+      <param name="isProtected">若要保护 SACL 不被继承，则为 true。</param>
+      <param name="preserveInheritance">若要在 SACL 中保留继承的审核规则，则为 true；若要从 SACL 中移除继承的审核规则，则为 false。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.SystemAcl">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的系统访问控制列表 (SACL)。SACL 包含审核规则。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> 对象的 SACL。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.CompoundAce">
+      <summary>表示复合访问控制项 (ACE)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CompoundAce.#ctor(System.Security.AccessControl.AceFlags,System.Int32,System.Security.AccessControl.CompoundAceType,System.Security.Principal.SecurityIdentifier)">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.CompoundAce" /> 类的新实例。</summary>
+      <param name="flags">包含标志，这些标志为新的访问控制项 (ACE) 指定有关继承、继承传播和审核条件的信息。</param>
+      <param name="accessMask">ACE 的访问掩码。</param>
+      <param name="compoundAceType">
+        <see cref="T:System.Security.AccessControl.CompoundAceType" /> 枚举中的一个值。</param>
+      <param name="sid">与新的 ACE 关联的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CompoundAce.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.CompoundAce" /> 对象的二进制表示形式的长度（以字节为单位）。在使用 <see cref="M:System.Security.AccessControl.CompoundAce.GetBinaryForm" /> 方法将 ACL 封送到二进制数组中之前，应使用该长度。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.CompoundAce" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CompoundAce.CompoundAceType">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.CompoundAce" /> 对象的类型。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.CompoundAce" /> 对象的类型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CompoundAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.CompoundAce" /> 对象的内容封送到指定字节数组中，其位置从指定的偏移量开始。</summary>
+      <param name="binaryForm">将 <see cref="T:System.Security.AccessControl.CompoundAce" /> 的内容封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.CompoundAce" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="T:System.Security.AccessControl.CompoundAceType">
+      <summary>指定 <see cref="T:System.Security.AccessControl.CompoundAce" /> 对象的类型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.CompoundAceType.Impersonation">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CompoundAce" /> 对象用于模拟。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.ControlFlags">
+      <summary>这些标志将影响安全性说明符的行为。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclAutoInherited">
+      <summary>指定已自动从父级继承自由访问控制列表 (DACL)。仅由资源管理器设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclAutoInheritRequired">
+      <summary>已忽略。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclDefaulted">
+      <summary>指定 DACL 是通过默认设置机制获得的。仅由资源管理器设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclPresent">
+      <summary>指定 DACL 不为 null。由资源管理器或用户设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclProtected">
+      <summary>指定资源管理器阻止自动继承。由资源管理器或用户设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclUntrusted">
+      <summary>已忽略。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.GroupDefaulted">
+      <summary>指定组 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 是通过默认设置机制获得的。仅由资源管理器设置；不应由调用方设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.None">
+      <summary>无控制标志。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.OwnerDefaulted">
+      <summary>指定所有者 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 是通过默认设置机制获得的。仅由资源管理器设置；不应由调用方设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.RMControlValid">
+      <summary>指定“保留”(Reserved) 字段的内容是有效的。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SelfRelative">
+      <summary>指定安全性说明符二进制表示形式是自相关格式的。总是设置此标志。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.ServerSecurity">
+      <summary>已忽略。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclAutoInherited">
+      <summary>指定已自动从父级继承系统访问控制列表 (SACL)。仅由资源管理器设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclAutoInheritRequired">
+      <summary>已忽略。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclDefaulted">
+      <summary>指定 SACL 是通过默认设置机制获得的。仅由资源管理器设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclPresent">
+      <summary>指定 SACL 不为 null。由资源管理器或用户设置。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclProtected">
+      <summary>指定资源管理器阻止自动继承。由资源管理器或用户设置。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.CustomAce">
+      <summary>表示未由 <see cref="T:System.Security.AccessControl.AceType" /> 枚举的成员之一定义的访问控制项 (ACE)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.#ctor(System.Security.AccessControl.AceType,System.Security.AccessControl.AceFlags,System.Byte[])">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.CustomAce" /> 类的新实例。</summary>
+      <param name="type">新的访问控制项 (ACE) 的类型。该值必须大于 <see cref="F:System.Security.AccessControl.AceType.MaxDefinedAceType" />。</param>
+      <param name="flags">为新的 ACE 指定有关继承、继承传播和审核条件的信息的标志。</param>
+      <param name="opaque">一个包含新的 ACE 的数据的字节值数组。此值可为 null。此数组的长度一定不能大于 <see cref="F:System.Security.AccessControl.CustomAce.MaxOpaqueLength" /> 字段的值，并且必须是四的倍数。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="type" /> 参数的值不大于 <see cref="F:System.Security.AccessControl.AceType.MaxDefinedAceType" />，或者 <paramref name="opaque" /> 数组的长度大于 <see cref="F:System.Security.AccessControl.CustomAce.MaxOpaqueLength" /> 字段的值或不是四的倍数。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.CustomAce.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象的二进制表示形式的长度（以字节为单位）。在使用 <see cref="M:System.Security.AccessControl.CustomAce.GetBinaryForm" /> 方法将 ACL 封送到二进制数组中之前，应使用该长度。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象的内容封送到指定字节数组中，其位置从指定的偏移量开始。</summary>
+      <param name="binaryForm">将 <see cref="T:System.Security.AccessControl.CustomAce" /> 的内容封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.CustomAce" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.GetOpaque">
+      <summary>返回与此 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象关联的不透明数据。</summary>
+      <returns>一个字节值数组，表示与此 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象关联的不透明数据。</returns>
+    </member>
+    <member name="F:System.Security.AccessControl.CustomAce.MaxOpaqueLength">
+      <summary>返回此 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象的不透明数据 Blob 的最大允许长度。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.CustomAce.OpaqueLength">
+      <summary>获取与此 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象关联的不透明数据的长度。</summary>
+      <returns>不透明回调数据的长度。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.SetOpaque(System.Byte[])">
+      <summary>设置与此 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象关联的不透明回调数据。</summary>
+      <param name="opaque">一个字节值数组，表示此 <see cref="T:System.Security.AccessControl.CustomAce" /> 对象的不透明回调数据。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.DiscretionaryAcl">
+      <summary>表示自由访问控制列表 (DACL)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.#ctor(System.Boolean,System.Boolean,System.Byte,System.Int32)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 类的新实例。</summary>
+      <param name="isContainer">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a container.</param>
+      <param name="isDS">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a directory object Access Control List (ACL).</param>
+      <param name="revision">新的 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象的修订级别。</param>
+      <param name="capacity">此 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象可包含的访问控制项 (ACE) 的数量。此数量只作为一种提示。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.#ctor(System.Boolean,System.Boolean,System.Int32)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 类的新实例。</summary>
+      <param name="isContainer">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a container.</param>
+      <param name="isDS">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a directory object Access Control List (ACL).</param>
+      <param name="capacity">此 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象可包含的访问控制项 (ACE) 的数量。此数量只作为一种提示。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.RawAcl)">
+      <summary>使用指定的 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象中的指定值初始化 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 类的新实例。</summary>
+      <param name="isContainer">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a container.</param>
+      <param name="isDS">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a directory object Access Control List (ACL).</param>
+      <param name="rawAcl">The underlying <see cref="T:System.Security.AccessControl.RawAcl" /> object for the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object.指定 null 以创建空的 ACL。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.AddAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>将具有指定设置的访问控制项 (ACE) 添加到当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象。</summary>
+      <param name="accessType">要添加的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其添加 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新 ACE 的访问规则。</param>
+      <param name="inheritanceFlags">指定新 ACE 的继承属性的标志。</param>
+      <param name="propagationFlags">指定新 ACE 的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.AddAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>将具有指定设置的访问控制项 (ACE) 添加到当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象。在指定新 ACE 的对象类型或继承的对象类型时，为目录对象的访问控制列表 (ACL) 使用此方法。</summary>
+      <param name="accessType">要添加的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其添加 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新 ACE 的访问规则。</param>
+      <param name="inheritanceFlags">指定新 ACE 的继承属性的标志。</param>
+      <param name="propagationFlags">指定新 ACE 的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">新 ACE 所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承新 ACE 的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.AddAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>将具有指定设置的访问控制项 (ACE) 添加到当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象。</summary>
+      <param name="accessType">要添加的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其添加 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />为新的访问。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的访问控制规则。</summary>
+      <returns>如果此方法成功移除指定的访问控制规则，则为 true；否则为 false。</returns>
+      <param name="accessType">要移除的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要移除其访问控制规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的规则的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的访问控制规则。在指定对象类型或继承的对象类型时，为目录对象的访问控制列表 (ACL) 使用此方法。</summary>
+      <returns>如果此方法成功移除指定的访问控制规则，则为 true；否则为 false。</returns>
+      <param name="accessType">要移除的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要移除其访问控制规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的访问控制规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的访问控制规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的访问控制规则的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">移除的访问控制规则所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承移除的访问控制规则的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的访问控制规则。</summary>
+      <returns>返回 <see cref="T:System.Boolean" />。</returns>
+      <param name="accessType">要移除的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要移除其访问控制规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />为其删除的访问权限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccessSpecific(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的访问控制项 (ACE)。</summary>
+      <param name="accessType">要移除的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其移除 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的 ACE 的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的 ACE 的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的 ACE 的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccessSpecific(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的访问控制项 (ACE)。在指定要移除的 ACE 的对象类型或继承的对象类型时，为目录对象的访问控制列表 (ACL) 使用此方法。</summary>
+      <param name="accessType">要移除的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其移除 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的 ACE 的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的 ACE 的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的 ACE 的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">移除的 ACE 所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承移除的 ACE 的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccessSpecific(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的访问控制项 (ACE)。</summary>
+      <param name="accessType">要移除的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其移除 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />为其删除的访问权限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.SetAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>为指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象设置指定的访问控制。</summary>
+      <param name="accessType">要设置的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其设置 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新 ACE 的访问规则。</param>
+      <param name="inheritanceFlags">指定新 ACE 的继承属性的标志。</param>
+      <param name="propagationFlags">指定新 ACE 的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.SetAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>为指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象设置指定的访问控制。</summary>
+      <param name="accessType">要设置的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其设置 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新 ACE 的访问规则。</param>
+      <param name="inheritanceFlags">指定新 ACE 的继承属性的标志。</param>
+      <param name="propagationFlags">指定新 ACE 的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">新 ACE 所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承新 ACE 的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.SetAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>为指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象设置指定的访问控制。</summary>
+      <param name="accessType">要设置的访问控制类型（允许或拒绝）。</param>
+      <param name="sid">要为其设置 ACE 的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />为其设置访问权限。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.GenericAce">
+      <summary>表示一个访问控制项 (ACE)，并且是其他所有 ACE 类的基类。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.AceFlags">
+      <summary>获取或设置与此 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象关联的 <see cref="T:System.Security.AccessControl.AceFlags" /> 对象。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象关联的 <see cref="T:System.Security.AccessControl.AceFlags" />。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.AceType">
+      <summary>获取此访问控制项 (ACE) 的类型。</summary>
+      <returns>此 ACE 的类型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.AuditFlags">
+      <summary>获取与此访问控制项 (ACE) 关联的审核信息。</summary>
+      <returns>与此访问控制项 (ACE) 关联的审核信息。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象的二进制表示形式的长度（以字节为单位）。在使用 <see cref="M:System.Security.AccessControl.GenericAce.GetBinaryForm" /> 方法将 ACL 封送到二进制数组中之前，应使用该长度。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.Copy">
+      <summary>创建此访问控制项 (ACE) 的深层副本。</summary>
+      <returns>此方法所创建的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.CreateFromBinaryForm(System.Byte[],System.Int32)">
+      <summary>从指定的二进制数据创建一个 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象。</summary>
+      <returns>此方法创建的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象。</returns>
+      <param name="binaryForm">用于创建新 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象的二进制数据。</param>
+      <param name="offset">开始取消封送的偏移量。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.Equals(System.Object)">
+      <summary>确定指定的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象是否等同于当前的 <see cref="T:System.Security.AccessControl.GenericAce" />。</summary>
+      <returns>如果指定的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象等于当前的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象，则为 true；否则为 false。</returns>
+      <param name="o">要与当前 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象进行比较的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象的内容封送到指定字节数组中，其位置从指定的偏移量开始。</summary>
+      <param name="binaryForm">将 <see cref="T:System.Security.AccessControl.GenericAce" /> 的内容封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.GenericAcl" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.GetHashCode">
+      <summary>用于 <see cref="T:System.Security.AccessControl.GenericAce" /> 类的一个哈希函数。<see cref="M:System.Security.AccessControl.GenericAce.GetHashCode" /> 方法适合在哈希算法和类似哈希表的数据结构中使用。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象的哈希代码。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.InheritanceFlags">
+      <summary>获取指定此访问控制项 (ACE) 的继承属性的标志。</summary>
+      <returns>指定此 ACE 的继承属性的标志。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.IsInherited">
+      <summary>获取一个布尔值，该值指定此访问控制项 (ACE) 是继承的还是显式设置的。</summary>
+      <returns>如果此 ACE 是继承的，则为 true；否则，为 false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.op_Equality(System.Security.AccessControl.GenericAce,System.Security.AccessControl.GenericAce)">
+      <summary>确定指定的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象是否被视为相等。</summary>
+      <returns>如果两个 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象相等，则为 true；否则为 false。</returns>
+      <param name="left">要比较的第一个 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象。</param>
+      <param name="right">要比较的第二个 <see cref="T:System.Security.AccessControl.GenericAce" />。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.op_Inequality(System.Security.AccessControl.GenericAce,System.Security.AccessControl.GenericAce)">
+      <summary>确定指定的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象是否被视为不相等。</summary>
+      <returns>如果两个 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象不相等，则为 true；否则，为 false。</returns>
+      <param name="left">要比较的第一个 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象。</param>
+      <param name="right">要比较的第二个 <see cref="T:System.Security.AccessControl.GenericAce" />。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.PropagationFlags">
+      <summary>获取指定此访问控制项 (ACE) 的继承传播属性的标志。</summary>
+      <returns>指定此 ACE 的继承传播属性的标志。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.GenericAcl">
+      <summary>表示访问控制列表 (ACL)，并且是 <see cref="T:System.Security.AccessControl.CommonAcl" />、<see cref="T:System.Security.AccessControl.DiscretionaryAcl" />、<see cref="T:System.Security.AccessControl.RawAcl" /> 和 <see cref="T:System.Security.AccessControl.SystemAcl" /> 类的基类。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.#ctor">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.GenericAcl" /> 类的新实例。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.GenericAcl.AclRevision">
+      <summary>当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 的修订级别。此值由未与目录服务对象关联的访问控制列表 (ACL) 的 <see cref="P:System.Security.AccessControl.GenericAcl.Revision" /> 属性返回。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.GenericAcl.AclRevisionDS">
+      <summary>当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 的修订级别。此值由与目录服务对象关联的访问控制列表 (ACL) 的 <see cref="P:System.Security.AccessControl.GenericAcl.Revision" /> 属性返回。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 对象的二进制表示形式的长度（以字节为单位）。在使用 <see cref="M:System.Security.AccessControl.GenericAcl.GetBinaryForm" /> 方法将 ACL 封送到二进制数组中之前，应使用该长度。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.CopyTo(System.Security.AccessControl.GenericAce[],System.Int32)">
+      <summary>将当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 的每个 <see cref="T:System.Security.AccessControl.GenericAce" /> 复制到指定的数组中。</summary>
+      <param name="array">存放当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 包含的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象的副本的数组。</param>
+      <param name="index">
+        <paramref name="array" /> 中从零开始的索引，这是开始复制的位置。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.Count">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 对象中访问控制项 (ACE) 的数量。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 对象中 ACE 的数量。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.GenericAcl" /> 对象的内容封送到指定字节数组中，其位置从指定的偏移量开始。</summary>
+      <param name="binaryForm">将 <see cref="T:System.Security.AccessControl.GenericAcl" /> 的内容封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.GenericAcl" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.GetEnumerator">
+      <summary>返回 <see cref="T:System.Security.AccessControl.AceEnumerator" /> 类的新实例。</summary>
+      <returns>此方法返回的 <see cref="T:Security.AccessControl.AceEnumerator" />。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.IsSynchronized">
+      <summary>此属性始终设置为 false。实现此属性只是因为它是 <see cref="T:System.Collections.ICollection" /> 接口的实现所必需的属性。</summary>
+      <returns>始终为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.Item(System.Int32)">
+      <summary>获取或设置指定索引处的 <see cref="T:System.Security.AccessControl.GenericAce" />。</summary>
+      <returns>位于指定索引处的 <see cref="T:System.Security.AccessControl.GenericAce" />。</returns>
+      <param name="index">要获取或设置的 <see cref="T:System.Security.AccessControl.GenericAce" /> 的从零开始的索引。</param>
+    </member>
+    <member name="F:System.Security.AccessControl.GenericAcl.MaxBinaryLength">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAcl" /> 对象的最大允许二进制长度。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.Revision">
+      <summary>获取 <see cref="T:System.Security.AccessControl.GenericAcl" /> 的修订级别。</summary>
+      <returns>一个指定 <see cref="T:System.Security.AccessControl.GenericAcl" /> 的修订级别的字节值。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.SyncRoot">
+      <summary>该属性始终返回 null。实现此属性只是因为它是 <see cref="T:System.Collections.ICollection" /> 接口的实现所必需的属性。</summary>
+      <returns>始终返回 null。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+      <summary>将当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 的每个 <see cref="T:System.Security.AccessControl.GenericAce" /> 复制到指定的数组中。</summary>
+      <param name="array">存放当前 <see cref="T:System.Security.AccessControl.GenericAcl" /> 包含的 <see cref="T:System.Security.AccessControl.GenericAce" /> 对象的副本的数组。</param>
+      <param name="index">
+        <paramref name="array" /> 中从零开始的索引，这是开始复制的位置。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.System#Collections#IEnumerable#GetEnumerator">
+      <summary>返回 <see cref="T:System.Security.AccessControl.AceEnumerator" /> 类的新实例，该实例被强制转换为 <see cref="T:System.Collections.IEnumerator" /> 接口的实例。</summary>
+      <returns>一个新 <see cref="T:System.Security.AccessControl.AceEnumerator" /> 对象，该对象被强制转换为 <see cref="T:System.Collections.IEnumerator" /> 接口的实例。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.GenericSecurityDescriptor">
+      <summary>表示安全性说明符。安全性说明符包含所有者、主要组、自由访问控制列表 (DACL) 和系统访问控制列表 (SACL)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.#ctor">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.GenericSecurity" /> 类的新实例。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象的二进制表示形式的长度（以字节为单位）。在使用 <see cref="M:System.Security.AccessControl.GenericSecurityDescriptor.GetBinaryForm" /> 方法将 ACL 封送到二进制数组中之前，应使用该长度。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.ControlFlags">
+      <summary>获取指定 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象的行为的值。</summary>
+      <returns>使用逻辑或运算组合的一个或多个 <see cref="T:System.Security.AccessControl.ControlFlags" /> 枚举值。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>返回一个表示此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象中包含的信息的字节值数组。</summary>
+      <param name="binaryForm">将 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 的内容封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.GetSddlForm(System.Security.AccessControl.AccessControlSections)">
+      <summary>返回此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象表示的安全性说明符指定区域的安全说明符定义语言 (SDDL) 表示形式。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象关联的安全性说明符指定部分的 SDDL 表示形式。</returns>
+      <param name="includeSections">指定要获取安全性说明符的哪些部分（访问规则、审核规则、主要组、所有者）。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.Group">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象的主要组。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象的主要组。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.IsSddlConversionSupported">
+      <summary>返回一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象关联的安全性说明符是否能够转换为安全性说明符定义语言 (SDDL) 格式。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象关联的安全性说明符能够转换为安全性说明符定义语言 (SDDL) 格式，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.Owner">
+      <summary>获取或设置与此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象关联的对象所有者。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象关联的对象所有者。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.Revision">
+      <summary>获取 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 对象的修订级别。</summary>
+      <returns>一个指定 <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 的修订级别的字节值。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.InheritanceFlags">
+      <summary>继承标志指定访问控制项 (ACE) 的继承语义。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.InheritanceFlags.ContainerInherit">
+      <summary>ACE 由容器子对象继承。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.InheritanceFlags.None">
+      <summary>子对象未继承 ACE。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.InheritanceFlags.ObjectInherit">
+      <summary>ACE 由子叶对象继承。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.KnownAce">
+      <summary>封装 Microsoft Corporation 当前定义的所有访问控制项 (ACE) 类型。所有 <see cref="T:System.Security.AccessControl.KnownAce" /> 对象都包含一个 32 位的访问掩码和一个 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.KnownAce.AccessMask">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.KnownAce" /> 对象的访问掩码。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.KnownAce" /> 对象的访问掩码。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.KnownAce.SecurityIdentifier">
+      <summary>获取或设置与此 <see cref="T:System.Security.AccessControl.KnownAce" /> 对象关联的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.KnownAce" /> 对象关联的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.NativeObjectSecurity">
+      <summary>提供无需直接操作访问控制列表 (ACL) 而控制对本机对象的访问的能力。本机对象类型由 <see cref="T:System.Security.AccessControl.ResourceType" /> 枚举定义。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象类型。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 类的新实例。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象类型。</param>
+      <param name="handle">新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的句柄。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要包括在此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" />  对象中的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 类的新实例。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象类型。</param>
+      <param name="handle">新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的句柄。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要包括在此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" />  对象中的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+      <param name="exceptionFromErrorCode">由提供自定义异常的集成器实现的委托。</param>
+      <param name="exceptionContext">包含有关异常的源或目标的上下文信息的对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>使用指定的值初始化 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 类的一个新实例。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象类型。</param>
+      <param name="exceptionFromErrorCode">由提供自定义异常的集成器实现的委托。</param>
+      <param name="exceptionContext">包含有关异常的源或目标的上下文信息的对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 类的新实例。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="isContainer">如果新 <see cref="T:System.Security.AccessControl.NativObjectSecurity" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象类型。</param>
+      <param name="name">新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的名称。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要包括在此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" />  对象中的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 类的新实例。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象类型。</param>
+      <param name="name">新的 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的名称。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要包括在此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" />  对象中的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+      <param name="exceptionFromErrorCode">由提供自定义异常的集成器实现的委托。</param>
+      <param name="exceptionContext">包含有关异常的源或目标的上下文信息的对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>将与此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象关联的安全说明符的指定部分保存到永久性存储。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="handle">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的句柄。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要保存的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+      <exception cref="T:System.IO.FileNotFoundException">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与之关联的可保护对象是一个目录或一个文件，且该目录或文件未能找到。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections,System.Object)">
+      <summary>将与此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象关联的安全说明符的指定部分保存到永久性存储。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="handle">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的句柄。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要保存的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+      <param name="exceptionContext">包含有关异常的源或目标的上下文信息的对象。</param>
+      <exception cref="T:System.IO.FileNotFoundException">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与之关联的可保护对象是一个目录或一个文件，且该目录或文件未能找到。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>将与此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象关联的安全说明符的指定部分保存到永久性存储。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="name">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的名称。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要保存的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+      <exception cref="T:System.IO.FileNotFoundException">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与之关联的可保护对象是一个目录或一个文件，且该目录或文件未能找到。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.String,System.Security.AccessControl.AccessControlSections,System.Object)">
+      <summary>将与此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象关联的安全说明符的指定部分保存到永久性存储。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="name">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与其相关联的可保护对象的名称。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要保存的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+      <param name="exceptionContext">包含有关异常的源或目标的上下文信息的对象。</param>
+      <exception cref="T:System.IO.FileNotFoundException">此 <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象与之关联的可保护对象是一个目录或一个文件，且该目录或文件未能找到。</exception>
+    </member>
+    <member name="T:System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode">
+      <summary>为集成器提供一种将数字错误代码映射到它们创建的特定异常的方式。</summary>
+      <returns>此委托创建的 <see cref="T:System.Exception" />。</returns>
+      <param name="errorCode">数字错误代码。</param>
+      <param name="name">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象所关联的可保护对象的名称。</param>
+      <param name="handle">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> 对象所关联的可保护对象的句柄。</param>
+      <param name="context">包含有关异常的源或目标的上下文信息的对象。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAccessRule">
+      <summary>表示用户的标识、访问掩码和访问控制类型（允许或拒绝）的组合。<see cref="T:System.Security.AccessControl.ObjectAccessRule" /> 对象还包含与以下内容有关的信息：应用规则的对象的类型、能够继承规则的子对象的类型、子对象继承该规则的方式以及继承的传播方式。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Guid,System.Guid,System.Security.AccessControl.AccessControlType)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.ObjectAccessRule" /> 类的新实例。</summary>
+      <param name="identity">应用访问规则的标识。它必须是可强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">如果此规则继承自父容器，则为 true。</param>
+      <param name="inheritanceFlags">指定访问规则的继承属性。</param>
+      <param name="propagationFlags">指定继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="objectType">应用此规则的对象的类型。</param>
+      <param name="inheritedObjectType">能够继承此规则的子对象的类型。</param>
+      <param name="type">指定此规则是允许还是拒绝访问。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> 参数的值不能强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" />，或者 <paramref name="type" /> 参数包含无效值。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> 参数的值为零，或者 <paramref name="inheritanceFlags" /> 或 <paramref name="propagationFlags" /> 参数包含无法识别的标志值。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAccessRule.InheritedObjectType">
+      <summary>获取能够继承 <see cref="System.Security.AccessControl.ObjectAccessRule" /> 对象的子对象的类型。</summary>
+      <returns>能够继承 <see cref="System.Security.AccessControl.ObjectAccessRule" /> 对象的子对象的类型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAccessRule.ObjectFlags">
+      <summary>获取指定 <see cref="System.Security.AccessControl.ObjectAccessRule" /> 对象的 <see cref="P:System.Security.AccessControl.ObjectAccessRule.ObjectType" /> 和 <see cref="P:System.Security.AccessControl.ObjectAccessRule.InheritedObjectType" /> 属性是否包含有效值的标志。</summary>
+      <returns>
+        <see cref="F:System.Security.AccessControl.ObjectAceFlags.ObjectAceTypePresent" /> 指定 <see cref="P:System.Security.AccessControl.ObjectAccessRule.ObjectType" /> 属性包含有效值。<see cref="F:System.Security.AccessControl.ObjectAceFlags.InheritedObjectAceTypePresent" /> 指定 <see cref="P:System.Security.AccessControl.ObjectAccessRule.InheritedObjectType" /> 属性包含有效值。这些值可以使用逻辑或运算进行组合。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAccessRule.ObjectType">
+      <summary>获取应用 <see cref="System.Security.AccessControl.ObjectAccessRule" /> 的对象的类型。</summary>
+      <returns>应用 <see cref="System.Security.AccessControl.ObjectAccessRule" /> 的对象的类型。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAce">
+      <summary>控制对目录服务对象的访问。此类表示与某个目录对象关联的访问控制项 (ACE)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAce.#ctor(System.Security.AccessControl.AceFlags,System.Security.AccessControl.AceQualifier,System.Int32,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid,System.Boolean,System.Byte[])">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.ObjectAce" /> 类的新实例。</summary>
+      <param name="aceFlags">新的访问控制项 (ACE) 的继承、继承传播和审核条件。</param>
+      <param name="qualifier">使用新的 ACE。</param>
+      <param name="accessMask">ACE 的访问掩码。</param>
+      <param name="sid">与新的 ACE 关联的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="flags">
+        <paramref name="type" /> 和 <paramref name="inheritedType" /> 参数是否包含有效的对象 GUID。</param>
+      <param name="type">一个 GUID，标识新的 ACE 所应用到的对象类型。</param>
+      <param name="inheritedType">一个 GUID，标识能够继承新的 ACE 的对象类型。</param>
+      <param name="isCallback">如果新的 ACE 是回调类型的 ACE，则为 true。</param>
+      <param name="opaque">与新的 ACE 关联的不透明数据。只有回调 ACE 类型才允许不透明数据。此数组的长度一定不能大于 <see cref="M:System.Security.AccessControl.ObjectAceMaxOpaqueLength" /> 方法的返回值。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">qualifier 参数包含无效的值，或者不透明参数的值的长度大于 <see cref="M:System.Security.AccessControl.ObjectAceMaxOpaqueLength" /> 方法的返回值。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.ObjectAce" /> 对象的二进制表示形式的长度（以字节为单位）。在使用 <see cref="M:System.Security.AccessControl.ObjectAce.GetBinaryForm" /> 方法将 ACL 封送到二进制数组中之前，应使用该长度。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.ObjectAce" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.ObjectAce" /> 对象的内容从指定的偏移量开始封送到指定的字节数组中。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.ObjectAce" /> 的内容将被封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果值为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.ObjectAce" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.InheritedObjectAceType">
+      <summary>获取或设置对象类型的 GUID，该对象类型能够继承此 <see cref="T:System.Security.AccessControl.ObjectAce" /> 对象所表示的访问控制项 (ACE)。</summary>
+      <returns>对象类型的 GUID，该对象类型能够继承此 <see cref="T:System.Security.AccessControl.ObjectAce" /> 对象所表示的访问控制项 (ACE)。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAce.MaxOpaqueLength(System.Boolean)">
+      <summary>返回回调访问控制项 (ACE) 的不透明数据 BLOB 的最大允许长度（以字节为单位）。</summary>
+      <returns>回调访问控制项 (ACE) 的不透明数据 BLOB 的最大允许长度（以字节为单位）。</returns>
+      <param name="isCallback">如果 <see cref="T:System.Security.AccessControl.ObjectAce" /> 为回调 ACE 类型，则为 true。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.ObjectAceFlags">
+      <summary>获取或设置标志，这些标志指定了 <see cref="P:System.Security.AccessControl.ObjectAce.ObjectAceType" /> 和 <see cref="P:System.Security.AccessControl.ObjectAce.InheritedObjectAceType" /> 属性是否包含用于标识有效对象类型的值。</summary>
+      <returns>使用逻辑或运算进行组合的一个或多个 <see cref="T:System.Security.AccessControl.ObjectAceFlags" /> 枚举成员。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.ObjectAceType">
+      <summary>获取或设置与此 <see cref="T:System.Security.AccessControl.ObjectAce" /> 对象关联的对象类型的 GUID。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.ObjectAce" /> 对象关联的对象类型的 GUID。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAceFlags">
+      <summary>指定访问控制项 (ACE) 的对象类型的存在性。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ObjectAceFlags.InheritedObjectAceTypePresent">
+      <summary>可继承 ACE 的对象的类型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ObjectAceFlags.None">
+      <summary>不存在任何对象类型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ObjectAceFlags.ObjectAceTypePresent">
+      <summary>存在与 ACE 关联的对象类型。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAuditRule">
+      <summary>表示用户的标识、访问掩码和审核条件的组合。<see cref="T:System.Security.AccessControl.ObjectAuditRule" /> 对象还包含有关规则所应用到的对象的类型、能够继承规则的子对象的类型、子对象如何继承该规则以及继承如何传播的信息。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Guid,System.Guid,System.Security.AccessControl.AuditFlags)">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.ObjectAuditRule" /> 类的新实例。</summary>
+      <param name="identity">应用访问规则的标识。它必须是可强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">如果此规则继承自父容器，则为 true。</param>
+      <param name="inheritanceFlags">指定访问规则的继承属性。</param>
+      <param name="propagationFlags">继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="objectType">应用此规则的对象的类型。</param>
+      <param name="inheritedObjectType">能够继承此规则的子对象的类型。</param>
+      <param name="auditFlags">审核条件。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> 参数的值不能强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" />，或者 <paramref name="type" /> 参数包含无效值。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> 参数的值为零，或者 <paramref name="inheritanceFlags" /> 或 <paramref name="propagationFlags" /> 参数包含无法识别的标志值。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAuditRule.InheritedObjectType">
+      <summary>获取能够继承 <see cref="System.Security.AccessControl.ObjectAuditRule" /> 对象的子对象的类型。</summary>
+      <returns>能够继承 <see cref="System.Security.AccessControl.ObjectAuditRule" /> 对象的子对象的类型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAuditRule.ObjectFlags">
+      <summary>
+        <see cref="System.Security.AccessControl.ObjectAuditRule" /> 对象的 <see cref="P:System.Security.AccessControl.ObjectAuditRule.ObjectType" /> 和 <see cref="P:System.Security.AccessControl.ObjectAuditRule.InheritedObjectType" /> 属性包含有效值。</summary>
+      <returns>
+        <see cref="F:System.Security.AccessControl.ObjectAceFlags.ObjectAceTypePresent" /> 指定 <see cref="P:System.Security.AccessControl.ObjectAuditRule.ObjectType" /> 属性包含有效值。<see cref="F:System.Security.AccessControl.ObjectAceFlags.InheritedObjectAceTypePresent" /> 指定 <see cref="P:System.Security.AccessControl.ObjectAuditRule.InheritedObjectType" /> 属性包含有效值。这些值可以使用逻辑或运算进行组合。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAuditRule.ObjectType">
+      <summary>获取 <see cref="System.Security.AccessControl.ObjectAuditRule" /> 所应用到的对象的类型。</summary>
+      <returns>
+        <see cref="System.Security.AccessControl.ObjectAuditRule" /> 所应用到的对象的类型。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectSecurity">
+      <summary>提供在无需直接操作访问控制列表 (ACL) 的情况下控制对象访问的能力。此类为 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 和 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 类的抽象基类。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.#ctor">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.#ctor(System.Boolean,System.Boolean)">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 类的新实例。</summary>
+      <param name="isContainer">如果新 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象是一个容器对象，则为 true。</param>
+      <param name="isDS">如果新 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象是一个目录对象，则为 true。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.#ctor(System.Security.AccessControl.CommonSecurityDescriptor)">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 类的新实例。</summary>
+      <param name="securityDescriptor">新的 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 实例的 <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" />。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AccessRightType">
+      <summary>Gets the <see cref="T:System.Type" /> of the securable object associated with this <see cref="T:System.Security.AccessControl.ObjectSecurity" /> object.</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的可保护对象的类型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.AccessRule" /> 类的新实例。</summary>
+      <returns>此方法所创建的 <see cref="T:System.Security.AccessControl.AccessRule" /> 对象。</returns>
+      <param name="identityReference">应用访问规则的标识。它必须是可强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">如果此规则继承自父容器，则为 true。</param>
+      <param name="inheritanceFlags">指定访问规则的继承属性。</param>
+      <param name="propagationFlags">指定继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="type">指定有效的访问控制类型。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AccessRulesModified">
+      <summary>获取或设置一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的访问规则是否已被修改。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的访问规则已被修改，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AccessRuleType">
+      <summary>Gets the <see cref="T:System.Type" /> of the object associated with the access rules of this <see cref="T:System.Security.AccessControl.ObjectSecurity" /> object.<see cref="T:System.Type" /> 对象必须是可以强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象的对象。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的访问规则关联的对象的类型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAccessRulesCanonical">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的访问规则是否处于规范顺序。</summary>
+      <returns>如果访问规则处于规范顺序，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAccessRulesProtected">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 是否受到保护。</summary>
+      <returns>如果 DACL 受到保护，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAuditRulesCanonical">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的审核规则是否处于规范顺序。</summary>
+      <returns>如果审核规则处于规范顺序，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAuditRulesProtected">
+      <summary>获取一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 是否受到保护。</summary>
+      <returns>如果 SACL 受到保护，则为 true；否则为 false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.AuditRule" /> 类的新实例。</summary>
+      <returns>此方法所创建的 <see cref="T:System.Security.AccessControl.AuditRule" /> 对象。</returns>
+      <param name="identityReference">审核规则应用到的标识。它必须是可强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">如果此规则继承自父容器，则为 true。</param>
+      <param name="inheritanceFlags">指定审核规则的继承属性。</param>
+      <param name="propagationFlags">指定继承的审核规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="flags">指定对规则进行审核的条件。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AuditRulesModified">
+      <summary>获取或设置一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的审核规则是否已被修改。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的审核规则已被修改，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AuditRuleType">
+      <summary>Gets the <see cref="T:System.Type" /> object associated with the audit rules of this <see cref="T:System.Security.AccessControl.ObjectSecurity" /> object.<see cref="T:System.Type" /> 对象必须是可以强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象的对象。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的审核规则关联的对象的类型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetGroup(System.Type)">
+      <summary>获取与指定的所有者关联的主要组。</summary>
+      <returns>与指定的所有者关联的主要组。</returns>
+      <param name="targetType">要获取其主要组的所有者。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetOwner(System.Type)">
+      <summary>获取与指定的主要组关联的所有者。</summary>
+      <returns>与指定的组关联的所有者。</returns>
+      <param name="targetType">要获取其所有者的主要组。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetSecurityDescriptorBinaryForm">
+      <summary>返回一个字节值数组，表示此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的安全说明符信息。</summary>
+      <returns>一个字节值数组，表示此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的安全说明符。如果此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象中没有安全性信息，则此方法返回 null。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections)">
+      <summary>返回与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符指定部分的安全说明符定义语言 (SDDL) 表示形式。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符指定部分的 SDDL 表示形式。</returns>
+      <param name="includeSections">指定要获取安全性说明符的哪些部分（访问规则、审核规则、主要组、所有者）。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.GroupModified">
+      <summary>获取或设置一个布尔值，该值指定与可保护对象关联的组是否已被修改。 </summary>
+      <returns>如果与可保护对象关联的组已被修改，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.IsContainer">
+      <summary>获取一个布尔值，该值指定此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象是否是一个容器对象。</summary>
+      <returns>如果 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象是一个容器对象，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.IsDS">
+      <summary>获取一个布尔值，该值指定此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象是否是一个目录对象。</summary>
+      <returns>如果 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象是一个目录对象，则为 true；否则为 false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.IsSddlConversionSupported">
+      <summary>返回一个布尔值，该值指定与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符是否能够转换为安全说明符定义语言 (SDDL) 格式。</summary>
+      <returns>如果与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全性说明符能够转换为安全性说明符定义语言 (SDDL) 格式，则为 true；否则为 false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>将指定修改应用于与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的自由访问控制列表 (DACL)。</summary>
+      <returns>如果成功修改了 DACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 DACL 的修改。</param>
+      <param name="rule">要修改的访问规则。</param>
+      <param name="modified">如果成功修改了 DACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAccessRule(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>将指定修改应用于与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的自由访问控制列表 (DACL)。</summary>
+      <returns>如果成功修改了 DACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 DACL 的修改。</param>
+      <param name="rule">要修改的访问规则。</param>
+      <param name="modified">如果成功修改了 DACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>将指定修改应用于与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的系统访问控制列表 (SACL)。</summary>
+      <returns>如果成功修改了 SACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 SACL 的修改。</param>
+      <param name="rule">要修改的审核规则。</param>
+      <param name="modified">如果成功修改了 SACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAuditRule(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>将指定修改应用于与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的系统访问控制列表 (SACL)。</summary>
+      <returns>如果成功修改了 SACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 SACL 的修改。</param>
+      <param name="rule">要修改的审核规则。</param>
+      <param name="modified">如果成功修改了 SACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.OwnerModified">
+      <summary>获取或设置一个布尔值，该值指定可保护对象的所有者是否已被修改。</summary>
+      <returns>如果可保护对象的所有者已被修改，则为 true；否则为 false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.Persist(System.Boolean,System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>将与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符的指定部分保存到永久性存储。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="enableOwnershipPrivilege">若要启用允许调用方取得对象所有权的特权，则为 true。</param>
+      <param name="name">用于检索保持的信息的名称。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要保存的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.Persist(System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>将与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符的指定部分保存到永久性存储。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="handle">用于检索保持的信息的句柄。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要保存的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.Persist(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>将与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符的指定部分保存到永久性存储。建议传递给构造函数和 Persist 方法的 <paramref name="includeSections" /> 参数的值应该相同。有关更多信息，请参见“备注”。</summary>
+      <param name="name">用于检索保持的信息的名称。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值之一，指定要保存的可保护对象的安全说明符（访问规则、审核规则、所有者和主要组）的各个部分。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.PurgeAccessRules(System.Security.Principal.IdentityReference)">
+      <summary>移除与指定的 <see cref="T:System.Security.Principal.IdentityReference" /> 关联的所有访问规则。</summary>
+      <param name="identity">要移除其所有访问规则的 <see cref="T:System.Security.Principal.IdentityReference" />。</param>
+      <exception cref="T:System.InvalidOperationException">所有访问规则的顺序都不规范。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.PurgeAuditRules(System.Security.Principal.IdentityReference)">
+      <summary>移除与指定的 <see cref="T:System.Security.Principal.IdentityReference" /> 关联的所有审核规则。</summary>
+      <param name="identity">要移除其审核规则的 <see cref="T:System.Security.Principal.IdentityReference" />。</param>
+      <exception cref="T:System.InvalidOperationException">所有审核规则的顺序都不规范。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ReadLock">
+      <summary>锁定此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象以进行读访问。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ReadUnlock">
+      <summary>取消此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的锁定以进行读访问。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetAccessRuleProtection(System.Boolean,System.Boolean)">
+      <summary>设置或移除与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的访问规则的保护。受保护的访问规则不会通过继承被父对象修改。</summary>
+      <param name="isProtected">要防止与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的访问规则被继承，则为 true；要允许继承，则为 false。</param>
+      <param name="preserveInheritance">要保留继承的访问规则，则为 true；要移除继承的访问规则，则为 false。如果 <paramref name="isProtected" /> 为 false，则忽略此参数。</param>
+      <exception cref="T:System.InvalidOperationException">此方法尝试从非规范的自由访问控制列表 (DACL) 移除继承的规则。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetAuditRuleProtection(System.Boolean,System.Boolean)">
+      <summary>设置或移除与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的审核规则的保护。受保护的审核规则不会通过继承被父对象修改。</summary>
+      <param name="isProtected">要防止与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的审核规则被继承，则为 true；要允许继承，则为 false。</param>
+      <param name="preserveInheritance">要保留继承的审核规则，则为 true；要移除继承的审核规则，则为 false。如果 <paramref name="isProtected" /> 为 false，则忽略此参数。</param>
+      <exception cref="T:System.InvalidOperationException">此方法尝试从非规范的系统访问控制列表 (SACL) 移除继承的规则。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetGroup(System.Security.Principal.IdentityReference)">
+      <summary>设置与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符的主要组。</summary>
+      <param name="identity">要设置的主要组。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetOwner(System.Security.Principal.IdentityReference)">
+      <summary>设置与此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象关联的安全说明符的所有者。</summary>
+      <param name="identity">要设置的所有者。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorBinaryForm(System.Byte[])">
+      <summary>根据指定的字节值数组设置此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的安全说明符。</summary>
+      <param name="binaryForm">用于设置安全说明符的字节数组。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorBinaryForm(System.Byte[],System.Security.AccessControl.AccessControlSections)">
+      <summary>根据指定的字节值数组设置此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的安全说明符中的指定部分。</summary>
+      <param name="binaryForm">用于设置安全说明符的字节数组。</param>
+      <param name="includeSections">安全说明符中要设置的部分（访问规则、审核规则、所有者、主要组）。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorSddlForm(System.String)">
+      <summary>根据指定的安全说明符定义语言 (SDDL) 字符串为此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象设置安全说明符。</summary>
+      <param name="sddlForm">用于设置安全说明符的 SDDL 字符串。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorSddlForm(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>根据指定的安全说明符定义语言 (SDDL) 字符串为此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象设置安全说明符的指定部分。</summary>
+      <param name="sddlForm">用于设置安全说明符的 SDDL 字符串。</param>
+      <param name="includeSections">安全说明符中要设置的部分（访问规则、审核规则、所有者、主要组）。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.WriteLock">
+      <summary>锁定此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象以进行写访问。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.WriteUnlock">
+      <summary>取消此 <see cref="T:System.Security.AccessControl.ObjectSecurity" /> 对象的锁定以进行写访问。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectSecurity`1">
+      <summary>提供在不直接操作访问控制列表 (ACL) 的情况下控制对对象的访问权限的功能；还提供对访问权限进行类型转换的功能。</summary>
+      <typeparam name="T">对象的访问权限。</typeparam>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType)">
+      <summary>初始化 ObjectSecurity`1 类的新实例。</summary>
+      <param name="isContainer">如果新 <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">资源的类型。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>初始化 ObjectSecurity`1 类的新实例。</summary>
+      <param name="isContainer">如果新 <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">资源的类型。</param>
+      <param name="safeHandle">句柄。</param>
+      <param name="includeSections">要包含的部分。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>初始化 ObjectSecurity`1 类的新实例。</summary>
+      <param name="isContainer">如果新 <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">资源的类型。</param>
+      <param name="safeHandle">句柄。</param>
+      <param name="includeSections">要包含的部分。</param>
+      <param name="exceptionFromErrorCode">由提供自定义异常的集成器实现的委托。</param>
+      <param name="exceptionContext">包含有关异常的源或目标的上下文信息的对象。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>初始化 ObjectSecurity`1 类的新实例。</summary>
+      <param name="isContainer">如果新 <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">资源的类型。</param>
+      <param name="name">新的 <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> 对象与其相关联的可保护对象的名称。</param>
+      <param name="includeSections">要包含的部分。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>初始化 ObjectSecurity`1 类的新实例。</summary>
+      <param name="isContainer">如果新 <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> 对象是一个容器对象，则为 true。</param>
+      <param name="resourceType">资源的类型。</param>
+      <param name="name">新的 <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> 对象与其相关联的可保护对象的名称。</param>
+      <param name="includeSections">要包含的部分。</param>
+      <param name="exceptionFromErrorCode">由提供自定义异常的集成器实现的委托。</param>
+      <param name="exceptionContext">包含有关异常的源或目标的上下文信息的对象。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity`1.AccessRightType">
+      <summary>获取与此 ObjectSecurity`1 对象关联的可保护对象的类型。</summary>
+      <returns>与当前实例关联的可保护对象的类型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>初始化表示相关安全对象的新访问控制规则 ObjectAccessRule 类的新实例。</summary>
+      <returns>使用指定的访问权限、访问控制和标志为指定用户表示新的访问控制规则。</returns>
+      <param name="identityReference">表示用户帐户。</param>
+      <param name="accessMask">访问类型。</param>
+      <param name="isInherited">如果该访问规则是继承的，则为 true；否则为 false。</param>
+      <param name="inheritanceFlags">指定将访问掩码传播到子对象的方法。</param>
+      <param name="propagationFlags">指定如何将访问控制项 (ACE) 传播到子对象。</param>
+      <param name="type">指定是允许还是拒绝访问。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity`1.AccessRuleType">
+      <summary>获取与此 ObjectSecurity`1 对象的访问规则关联的对象的类型。</summary>
+      <returns>与当前实例的访问规则关联的对象的类型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AddAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>将指定的访问规则添加到与此 ObjectSecurity`1 对象关联的自由访问控制列表 (DACL)。</summary>
+      <param name="rule">要添加的规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AddAuditRule(System.Security.AccessControl.AuditRule{`0})">
+      <summary>将指定的审核规则添加到与此 ObjectSecurity`1 对象关联的系统访问控制列表 (SACL)。</summary>
+      <param name="rule">要添加的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.AuditRule" /> 类的新实例，它表示指定用户的指定审核规则。</summary>
+      <returns>返回指定用户的指定审核规则。</returns>
+      <param name="identityReference">表示用户帐户。</param>
+      <param name="accessMask">指定访问类型的整数。</param>
+      <param name="isInherited">如果该访问规则是继承的，则为 true；否则为 false。</param>
+      <param name="inheritanceFlags">指定将访问掩码传播到子对象的方法。</param>
+      <param name="propagationFlags">指定如何将访问控制项 (ACE) 传播到子对象。</param>
+      <param name="flags">描述要执行的审核类型。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity`1.AuditRuleType">
+      <summary>获取与此 ObjectSecurity`1 对象的审核规则关联的类型对象。</summary>
+      <returns>与当前实例的审核规则关联的类型对象。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.Persist(System.Runtime.InteropServices.SafeHandle)">
+      <summary>使用指定句柄将与此 ObjectSecurity`1 对象关联的安全描述符保存到永久性存储。</summary>
+      <param name="handle">与此 ObjectSecurity`1 对象关联的可保护对象的句柄。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.Persist(System.String)">
+      <summary>使用指定名称将与此 ObjectSecurity`1 对象关联的安全描述符保存到永久性存储。</summary>
+      <param name="name">与此 ObjectSecurity`1 对象关联的可保护对象的名称。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全标识符和访问掩码的访问规则。</summary>
+      <returns>如果访问规则已成功移除，则返回 true；否则返回 false。</returns>
+      <param name="rule">要移除的规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAccessRuleAll(System.Security.AccessControl.AccessRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全标识符的所有访问规则。</summary>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAccessRuleSpecific(System.Security.AccessControl.AccessRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则完全匹配的所有访问规则</summary>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAuditRule(System.Security.AccessControl.AuditRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同安全标识符和访问掩码的审核规则。</summary>
+      <returns>如果对象已移除，则返回 true；否则返回 false。</returns>
+      <param name="rule">要移除的审核规则</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAuditRuleAll(System.Security.AccessControl.AuditRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同安全标识符的所有审核规则。</summary>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAuditRuleSpecific(System.Security.AccessControl.AuditRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则完全匹配的所有审核规则</summary>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.ResetAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>移除与此 ObjectSecurity`1 对象关联的自由访问控制列表 (DACL) 中的所有访问规则，然后添加指定的访问规则。</summary>
+      <param name="rule">要重置的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.SetAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全标识符和限定符的所有访问规则，然后添加指定的访问规则。</summary>
+      <param name="rule">要设置的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.SetAuditRule(System.Security.AccessControl.AuditRule{`0})">
+      <summary>从与此 ObjectSecurity`1 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同安全标识符和限定符的所有审核规则，然后添加指定的审核规则。</summary>
+      <param name="rule">要设置的审核规则。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.PrivilegeNotHeldException">
+      <summary>当 <see cref="N:System.Security.AccessControl" /> 命名空间中的方法尝试启用它所不具备的特权时引发的异常。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.PrivilegeNotHeldException.#ctor">
+      <summary>初始化 <see cref="T:System.Security.AccessControl.PrivilegeNotHeldException" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.PrivilegeNotHeldException.#ctor(System.String)">
+      <summary>使用指定的特权初始化 <see cref="T:System.Security.AccessControl.PrivilegeNotHeldException" /> 类的新实例。</summary>
+      <param name="privilege">未启用的特权。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.PrivilegeNotHeldException.#ctor(System.String,System.Exception)">
+      <summary>使用指定的异常初始化 <see cref="T:System.Security.AccessControl.PrivilegeNotHeldException" /> 类的新实例。</summary>
+      <param name="privilege">未启用的特权。</param>
+      <param name="inner">导致当前异常的异常。如果 <paramref name="innerException" /> 参数不是空引用（在 Visual Basic 中为 Nothing），则在处理内部异常的 catch 块中引发当前异常。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.PrivilegeNotHeldException.PrivilegeName">
+      <summary>获取未启用的特权的名称。</summary>
+      <returns>此方法未能启用的特权的名称。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.PropagationFlags">
+      <summary>指定如何将访问面控制项 (ACE) 传播到子对象。仅当存在继承标志时，这些标志才有意义。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.PropagationFlags.InheritOnly">
+      <summary>指定 ACE 仅传播到子对象。这将包括容器子对象和子叶对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.PropagationFlags.None">
+      <summary>指定不设置继承标志。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.PropagationFlags.NoPropagateInherit">
+      <summary>指定 ACE 不传播到子对象。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.QualifiedAce">
+      <summary>表示包含限定符的访问控制项 (ACE)。由 <see cref="T:System.Security.AccessControl.AceQualifier" /> 对象表示的限定符指定 ACE 是允许访问、拒绝访问、导致系统审核或是导致系统警告。<see cref="T:System.Security.AccessControl.QualifiedAce" /> 类为 <see cref="T:System.Security.AccessControl.CommonAce" /> 类和 <see cref="T:System.Security.AccessControl.ObjectAce" /> 类的抽象基类。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.QualifiedAce.AceQualifier">
+      <summary>获取一个指定 ACE 是允许访问、拒绝访问、导致系统审核或是导致系统警告的值。</summary>
+      <returns>一个指定 ACE 是允许访问、拒绝访问、导致系统审核或是导致系统警告的值。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.QualifiedAce.GetOpaque">
+      <summary>返回与此 <see cref="T:System.Security.AccessControl.QualifiedAce" /> 对象关联的不透明回调数据。</summary>
+      <returns>一个字节值数组，表示与此 <see cref="T:System.Security.AccessControl.QualifiedAce" /> 对象关联的不透明回调数据。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.QualifiedAce.IsCallback">
+      <summary>指定此 <see cref="T:System.Security.AccessControl.QualifiedAce" /> 对象是否包含回调数据。</summary>
+      <returns>如果此 <see cref="T:System.Security.AccessControl.QualifiedAce" /> 对象包含回调数据，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.QualifiedAce.OpaqueLength">
+      <summary>获取与此 <see cref="T:System.Security.AccessControl.QualifiedAce" /> 对象关联的不透明回调数据的长度。此属性仅对回调访问控制项 (ACE) 有效。</summary>
+      <returns>不透明回调数据的长度。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.QualifiedAce.SetOpaque(System.Byte[])">
+      <summary>设置与此 <see cref="T:System.Security.AccessControl.QualifiedAce" /> 对象关联的不透明回调数据。</summary>
+      <param name="opaque">一个字节值数组，表示此 <see cref="T:System.Security.AccessControl.QualifiedAce" /> 对象的不透明回调数据。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.RawAcl">
+      <summary>表示访问控制列表 (ACL)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.#ctor(System.Byte,System.Int32)">
+      <summary>使用指定的修订级别初始化 <see cref="T:System.Security.AccessControl.RawAcl" /> 类的新实例。</summary>
+      <param name="revision">新的访问控制列表 (ACL) 的修订级别。</param>
+      <param name="capacity">此 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象可包含的访问控制项 (ACE) 的数量。此数量只作为一种提示。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.#ctor(System.Byte[],System.Int32)">
+      <summary>使用指定的二进制格式初始化 <see cref="T:System.Security.AccessControl.RawAcl" /> 类的新实例。</summary>
+      <param name="binaryForm">表示访问控制列表 (ACL) 的字节值数组。</param>
+      <param name="offset">
+        <paramref name="binaryForm" /> 参数中第一个要取消封送的数据的偏移量。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.BinaryLength">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象的二进制表示形式的长度（以字节为单位）。在使用 <see cref="M:System.Security.AccessControl.RawAcl.GetBinaryForm" /> 方法将 ACL 封送到二进制数组中之前，应使用该长度。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象的二进制表示形式的长度（以字节为单位）。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.Count">
+      <summary>获取当前 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象中访问控制项 (ACE) 的数量。</summary>
+      <returns>当前 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象中 ACE 的数量。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>将 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象的内容封送到指定字节数组中，其位置从指定的偏移量开始。</summary>
+      <param name="binaryForm">将 <see cref="T:System.Security.AccessControl.RawAcl" /> 的内容封送到的字节数组。</param>
+      <param name="offset">开始封送的偏移量。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.RawAcl" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.InsertAce(System.Int32,System.Security.AccessControl.GenericAce)">
+      <summary>在指定的索引处插入指定的访问控制项 (ACE)。</summary>
+      <param name="index">要添加新 ACE 的位置。指定 <see cref="P:System.Security.AccessControl.RawAcl.Count" /> 属性的值，以便在 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象的末尾插入一个 ACE。</param>
+      <param name="ace">要插入的 ACE。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> 如果为负数或过高，则会将整个 <see cref="T:System.Security.AccessControl.GenericAcl" /> 复制到 <paramref name="array" />。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.Item(System.Int32)">
+      <summary>获取或设置指定索引处的访问控制项 (ACE)。</summary>
+      <returns>指定索引处的 ACE。</returns>
+      <param name="index">要获取或设置的 ACE 的从零开始的索引。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.RemoveAce(System.Int32)">
+      <summary>移除指定位置处的访问控制项 (ACE)。</summary>
+      <param name="index">要移除的 ACE 的从零开始的索引。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="index" /> 参数的值大于 <see cref="P:System.Security.AccessControl.RawAcl.Count" /> 属性的值减去一，或者为负值。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.Revision">
+      <summary>获取 <see cref="T:System.Security.AccessControl.RawAcl" /> 的修订级别。</summary>
+      <returns>一个指定 <see cref="T:System.Security.AccessControl.RawAcl" /> 的修订级别的字节值。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.RawSecurityDescriptor">
+      <summary>表示安全性说明符。安全性说明符包含所有者、主要组、自由访问控制列表 (DACL) 和系统访问控制列表 (SACL)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.#ctor(System.Byte[],System.Int32)">
+      <summary>使用指定的字节值数组初始化 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 类的新实例。</summary>
+      <param name="binaryForm">用于创建新的 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的字节值数组。</param>
+      <param name="offset">
+        <paramref name="binaryForm" /> 数组中第一个要复制的元素的偏移量。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.#ctor(System.Security.AccessControl.ControlFlags,System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.RawAcl,System.Security.AccessControl.RawAcl)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 类的新实例。</summary>
+      <param name="flags">指定新的 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的行为的标志。</param>
+      <param name="owner">新 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的所有者。</param>
+      <param name="group">新 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的主要组。</param>
+      <param name="systemAcl">新的 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的系统访问控制列表 (SACL)。</param>
+      <param name="discretionaryAcl">新的 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的自由访问控制列表 (DACL)。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.#ctor(System.String)">
+      <summary>使用指定的安全性说明符定义语言 (SDDL) 字符串初始化 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 类的新实例。</summary>
+      <param name="sddlForm">用于创建新 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的 SDDL 字符串。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.ControlFlags">
+      <summary>获取指定 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的行为的值。</summary>
+      <returns>使用逻辑或运算组合的一个或多个 <see cref="T:System.Security.AccessControl.ControlFlags" /> 枚举值。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.DiscretionaryAcl">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的自由访问控制列表 (DACL)。DACL 包含访问规则。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的 DACL。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.Group">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的主要组。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的主要组。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.Owner">
+      <summary>获取或设置与此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象关联的对象所有者。</summary>
+      <returns>与此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象关联的对象所有者。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.ResourceManagerControl">
+      <summary>获取或设置表示与此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象关联的资源管理器控制位的字节值。</summary>
+      <returns>一个表示与此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象关联的资源管理器控制位的字节值。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.SetFlags(System.Security.AccessControl.ControlFlags)">
+      <summary>将此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的 <see cref="P:System.Security.AccessControl.RawSecurityDescriptor.ControlFlags" /> 属性设置为指定值。</summary>
+      <param name="flags">使用逻辑或运算组合的一个或多个 <see cref="T:System.Security.AccessControl.ControlFlags" /> 枚举值。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.SystemAcl">
+      <summary>获取或设置此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的系统访问控制列表 (SACL)。SACL 包含审核规则。</summary>
+      <returns>此 <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> 对象的 SACL。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ResourceType">
+      <summary>指定已定义的本机对象类型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.DSObject">
+      <summary>目录服务 (DS) 对象或者目录服务对象的属性集或属性。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.DSObjectAll">
+      <summary>目录服务对象及其所有属性集和属性。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.FileObject">
+      <summary>文件或目录。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.KernelObject">
+      <summary>本地内核对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.LMShare">
+      <summary>网络共享。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.Printer">
+      <summary>打印机。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.ProviderDefined">
+      <summary>提供程序定义的对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.RegistryKey">
+      <summary>注册表项。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.RegistryWow6432Key">
+      <summary>WOW64 下的注册表项的对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.Service">
+      <summary>Windows 服务。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.Unknown">
+      <summary>未知的对象类型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.WindowObject">
+      <summary>本地计算机上的窗口站或桌面对象。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.WmiGuidObject">
+      <summary>Windows Management Instrumentation (WMI) 对象。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.SecurityInfos">
+      <summary>指定要查询或设置的安全性说明符的部分。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.DiscretionaryAcl">
+      <summary>指定自由访问控制列表 (DACL)。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.Group">
+      <summary>指定主要组标识符。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.Owner">
+      <summary>指定所有者标识符。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.SystemAcl">
+      <summary>指定系统访问控制列表 (SACL)。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.SystemAcl">
+      <summary>表示系统访问控制列表 (SACL)。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.#ctor(System.Boolean,System.Boolean,System.Byte,System.Int32)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.SystemAcl" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象是一个容器，则为 true。</param>
+      <param name="isDS">如果新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象是一个目录对象的访问控制列表 (ACL)，则为 true。</param>
+      <param name="revision">新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象的修订级别。</param>
+      <param name="capacity">此 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象可包含的访问控制项 (ACE) 的数量。此数量只作为一种提示。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.#ctor(System.Boolean,System.Boolean,System.Int32)">
+      <summary>用指定的值初始化 <see cref="T:System.Security.AccessControl.SystemAcl" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象是一个容器，则为 true。</param>
+      <param name="isDS">如果新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象是一个目录对象的访问控制列表 (ACL)，则为 true。</param>
+      <param name="capacity">此 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象可包含的访问控制项 (ACE) 的数量。此数量只作为一种提示。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.RawAcl)">
+      <summary>使用指定的 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象中的指定值初始化 <see cref="T:System.Security.AccessControl.SystemAcl" /> 类的新实例。</summary>
+      <param name="isContainer">如果新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象是一个容器，则为 true。</param>
+      <param name="isDS">如果新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象是一个目录对象的访问控制列表 (ACL)，则为 true。</param>
+      <param name="rawAcl">新的 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象的基础 <see cref="T:System.Security.AccessControl.RawAcl" /> 对象。指定 null 以创建空的 ACL。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.AddAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>将一个审核规则添加到当前 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象。</summary>
+      <param name="auditFlags">要添加的审核规则的类型。</param>
+      <param name="sid">要为其添加审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新审核规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定新审核规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定新审核规则的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.AddAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>将具有指定设置的审核规则添加到当前 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象。在指定新审核规则的对象类型或继承的对象类型时，为目录对象的访问控制列表 (ACL) 使用此方法。</summary>
+      <param name="auditFlags">要添加的审核规则的类型。</param>
+      <param name="sid">要为其添加审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新审核规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定新审核规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定新审核规则的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">新审核规则所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承新审核规则的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.AddAudit(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>将一个审核规则添加到当前 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象。</summary>
+      <param name="sid">要为其添加审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAuditRule" />新审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象移除指定的审核规则。</summary>
+      <returns>如果此方法成功移除指定的审核规则，则为 true；否则为 false。</returns>
+      <param name="auditFlags">要移除的审核规则的类型。</param>
+      <param name="sid">要为其移除审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的规则的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象移除指定的审核规则。在指定对象类型或继承的对象类型时，为目录对象的访问控制列表 (ACL) 使用此方法。</summary>
+      <returns>如果此方法成功移除指定的审核规则，则为 true；否则为 false。</returns>
+      <param name="auditFlags">要移除的审核规则的类型。</param>
+      <param name="sid">要为其移除审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的规则的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">移除的审核控制规则所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承移除的审核规则的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAudit(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.SystemAcl" /> 对象移除指定的审核规则。</summary>
+      <returns>如果此方法成功移除指定的审核规则，则为 true；否则为 false。</returns>
+      <param name="sid">要为其移除审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">要为其移除审核规则的 <see cref="T:System.Security.AccessControl.ObjectAuditRule" />。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAuditSpecific(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的审核规则。</summary>
+      <param name="auditFlags">要移除的审核规则的类型。</param>
+      <param name="sid">要为其移除审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的规则的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAuditSpecific(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的审核规则。在指定对象类型或继承的对象类型时，为目录对象的访问控制列表 (ACL) 使用此方法。</summary>
+      <param name="auditFlags">要移除的审核规则的类型。</param>
+      <param name="sid">要为其移除审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">要移除的规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定要移除的规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定要移除的规则的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">移除的审核控制规则所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承移除的审核规则的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAuditSpecific(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>从当前 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> 对象移除指定的审核规则。</summary>
+      <param name="sid">要为其移除审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAuditRule" />要删除的规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.SetAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>为指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象设置指定的审核规则。</summary>
+      <param name="auditFlags">要设置的审核条件。</param>
+      <param name="sid">要为其设置审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新审核规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定新审核规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定新审核规则的继承传播属性的标志。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.SetAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>为指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象设置指定的审核规则。在指定对象类型或继承的对象类型时，为目录对象的访问控制列表 (ACL) 使用此方法。</summary>
+      <param name="auditFlags">要设置的审核条件。</param>
+      <param name="sid">要为其设置审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新审核规则的访问掩码。</param>
+      <param name="inheritanceFlags">指定新审核规则的继承属性的标志。</param>
+      <param name="propagationFlags">指定新审核规则的继承传播属性的标志。</param>
+      <param name="objectFlags">指定 <paramref name="objectType" /> 和 <paramref name="inheritedObjectType" /> 参数是否包含非 null 值的标志。</param>
+      <param name="objectType">新审核规则所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承新审核规则的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.SetAudit(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>为指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象设置指定的审核规则。</summary>
+      <param name="sid">要为其设置审核规则的 <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">要为其设置审核规则的 <see cref="T:System.Security.AccessControl.ObjectAuditRule" />。</param>
+    </member>
+  </members>
+</doc>

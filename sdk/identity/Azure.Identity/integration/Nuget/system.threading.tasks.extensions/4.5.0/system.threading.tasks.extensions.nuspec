@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="2.8.6">
+    <id>System.Threading.Tasks.Extensions</id>
+    <version>4.5.0</version>
+    <title>System.Threading.Tasks.Extensions</title>
+    <authors>Microsoft</authors>
+    <owners>microsoft,dotnetframework</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/dotnet/corefx/blob/master/LICENSE.TXT</licenseUrl>
+    <projectUrl>https://dot.net/</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288859</iconUrl>
+    <description>Provides additional types that simplify the work of writing concurrent and asynchronous code.
+
+Commonly Used Types:
+System.Threading.Tasks.ValueTask&lt;TResult&gt;
+ 
+30ab651fcb4354552bd4891619a0bdd81e0ebdbf</description>
+    <releaseNotes>https://go.microsoft.com/fwlink/?LinkID=799421</releaseNotes>
+    <copyright>© Microsoft Corporation.  All rights reserved.</copyright>
+    <serviceable>true</serviceable>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.0" exclude="Compile" />
+      </group>
+      <group targetFramework=".NETCoreApp2.1" />
+      <group targetFramework=".NETStandard1.0">
+        <dependency id="System.Collections" version="4.3.0" exclude="Compile" />
+        <dependency id="System.Runtime" version="4.3.0" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.0" exclude="Compile" />
+        <dependency id="System.Threading.Tasks" version="4.3.0" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.0" exclude="Compile" />
+      </group>
+      <group targetFramework=".NETPortable4.5-Profile259">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.0" exclude="Compile" />
+      </group>
+      <group targetFramework="UAP10.0.16300" />
+      <group targetFramework="Windows8.0">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.0" exclude="Compile" />
+      </group>
+      <group targetFramework="WindowsPhone8.0">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.0" exclude="Compile" />
+      </group>
+      <group targetFramework="WindowsPhoneApp8.1">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.5.0" exclude="Compile" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

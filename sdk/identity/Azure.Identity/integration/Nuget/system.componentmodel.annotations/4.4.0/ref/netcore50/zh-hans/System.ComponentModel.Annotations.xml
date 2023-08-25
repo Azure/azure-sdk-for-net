@@ -1,0 +1,1049 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.ComponentModel.Annotations</name>
+  </assembly>
+  <members>
+    <member name="T:System.ComponentModel.DataAnnotations.AssociationAttribute">
+      <summary>指定某个实体成员表示某种数据关系，如外键关系。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.AssociationAttribute.#ctor(System.String,System.String,System.String)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.AssociationAttribute" /> 类的新实例。</summary>
+      <param name="name">关联的名称。</param>
+      <param name="thisKey">关联的 <paramref name="thisKey" /> 端的键值的属性名称列表（各名称之间用逗号分隔）。</param>
+      <param name="otherKey">关联的 <paramref name="otherKey" /> 端的键值的属性名称列表（各名称之间用逗号分隔）。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.IsForeignKey">
+      <summary>获取或设置一个值，该值指示关联成员是否表示一个外键。</summary>
+      <returns>如果关联表示一个外键，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.Name">
+      <summary>获取关联的名称。</summary>
+      <returns>关联的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey">
+      <summary>获取关联的 OtherKey 端的键值的属性名称。</summary>
+      <returns>一个以逗号分隔的属性名称列表，这些属性名称表示关联的 OtherKey 端的键值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKeyMembers">
+      <summary>获取在 <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" /> 属性中指定的各个键成员的集合。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" /> 属性中指定的各个键成员的集合。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey">
+      <summary>获取关联的 ThisKey 端的键值的属性名称。</summary>
+      <returns>一个以逗号分隔的属性名称列表，这些属性名称表示关联的 ThisKey 端的键值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKeyMembers">
+      <summary>获取在 <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" /> 属性中指定的各个键成员的集合。</summary>
+      <returns>
+        <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" /> 属性中指定的各个键成员的集合。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CompareAttribute">
+      <summary>提供比较两个属性的属性。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.#ctor(System.String)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.CompareAttribute" /> 类的新实例。</summary>
+      <param name="otherProperty">要与当前属性进行比较的属性。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.FormatErrorMessage(System.String)">
+      <summary>基于发生错误的数据字段对错误消息应用格式设置。</summary>
+      <returns>带有格式的错误消息。</returns>
+      <param name="name">导致验证失败的字段的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>确定指定的对象是否有效。</summary>
+      <returns>如果 <paramref name="value" /> 有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的对象。</param>
+      <param name="validationContext">一个对象，该对象包含有关验证请求的信息。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherProperty">
+      <summary>获取要与当前属性进行比较的属性。</summary>
+      <returns>另一属性。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherPropertyDisplayName">
+      <summary>获取其他属性的显示名称。</summary>
+      <returns>其他属性的显示名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.RequiresValidationContext">
+      <summary>获取指示特性是否要求验证上下文的值。</summary>
+      <returns>如果特性需要验证上下文，则为 true；否则为 false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute">
+      <summary>指定某属性将参与开放式并发检查。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CreditCardAttribute">
+      <summary>指定数据字段值是信用卡号码。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.CreditCardAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.IsValid(System.Object)">
+      <summary>确定指定的信用卡号是否有效。</summary>
+      <returns>如果信用卡号码有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的值。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute">
+      <summary>指定自定义的验证方法来验证属性或类的实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.#ctor(System.Type,System.String)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute" /> 类的新实例。</summary>
+      <param name="validatorType">包含执行自定义验证的方法的类型。</param>
+      <param name="method">执行自定义验证的方法。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>设置验证错误消息的格式。</summary>
+      <returns>带有格式的错误消息的实例。</returns>
+      <param name="name">要包括在带有格式的消息中的名称。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.Method">
+      <summary>获取验证方法。</summary>
+      <returns>验证方法的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.ValidatorType">
+      <summary>获取执行自定义验证的类型。</summary>
+      <returns>执行自定义验证的类型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataType">
+      <summary>表示与数据字段和参数关联的数据类型的枚举。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.CreditCard">
+      <summary>表示信用卡号码。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Currency">
+      <summary>表示货币值。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Custom">
+      <summary>表示自定义的数据类型。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Date">
+      <summary>表示日期值。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.DateTime">
+      <summary>表示某个具体时间，以日期和当天的时间表示。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Duration">
+      <summary>表示对象存在的一段连续时间。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.EmailAddress">
+      <summary>表示电子邮件地址。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Html">
+      <summary>表示一个 HTML 文件。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.ImageUrl">
+      <summary>表示图像的 URL。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.MultilineText">
+      <summary>表示多行文本。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Password">
+      <summary>表示密码值。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PhoneNumber">
+      <summary>表示电话号码值。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PostalCode">
+      <summary>表示邮政代码。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Text">
+      <summary>表示所显示的文本。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Time">
+      <summary>表示时间值。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Upload">
+      <summary>表示文件上载数据类型。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Url">
+      <summary>表示 URL 值。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataTypeAttribute">
+      <summary>指定要与数据字段关联的附加类型的名称。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.ComponentModel.DataAnnotations.DataType)">
+      <summary>使用指定的类型名称初始化 <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> 类的新实例。</summary>
+      <param name="dataType">要与数据字段关联的类型的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.String)">
+      <summary>使用指定的字段模板名称初始化 <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" /> 类的新实例。</summary>
+      <param name="customDataType">要与数据字段关联的自定义字段模板的名称。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="customDataType" /> 为 null 或空字符串 ("")。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.CustomDataType">
+      <summary>获取与数据字段关联的自定义字段模板的名称。</summary>
+      <returns>与数据字段关联的自定义字段模板的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DataType">
+      <summary>获取与数据字段关联的类型。</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.DataType" /> 值之一。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DisplayFormat">
+      <summary>获取数据字段的显示格式。</summary>
+      <returns>数据字段的显示格式。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.GetDataTypeName">
+      <summary>返回与数据字段关联的类型的名称。</summary>
+      <returns>与数据字段关联的类型的名称。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.IsValid(System.Object)">
+      <summary>检查数据字段的值是否有效。</summary>
+      <returns>始终为 true。</returns>
+      <param name="value">要验证的数据字段值。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayAttribute">
+      <summary>提供一个通用特性，使您可以为实体分部类的类型和成员指定可本地化的字符串。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.DisplayAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField">
+      <summary>获取或设置一个值，该值指示是否应自动生成用户界面以显示此字段。</summary>
+      <returns>如果应自动生成用户界面以显示此字段，则为 true；否则为 false。</returns>
+      <exception cref="T:System.InvalidOperationException">在设置属性值之前，已尝试获取该属性值。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter">
+      <summary>获取或设置一个值，该值指示是否针对此字段自动显示筛选。</summary>
+      <returns>如果应自动生成用户界面以显示此字段的筛选，则为 true；否则为 false。</returns>
+      <exception cref="T:System.InvalidOperationException">在设置属性值之前，已尝试获取该属性值。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description">
+      <summary>获取或设置一个值，该值用于在用户界面中显示说明。</summary>
+      <returns>用于在用户界面中显示说明的值。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateField">
+      <summary>返回 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" /> 属性的值。</summary>
+      <returns>如果已初始化该属性，则为 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" /> 的值；否则为 null。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateFilter">
+      <summary>返回一个值，该值指示是否应自动生成用户界面以显示此字段的筛选。</summary>
+      <returns>如果已初始化该属性，则为 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter" /> 的值；否则为 null。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetDescription">
+      <summary>返回 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 属性的值。</summary>
+      <returns>如果已指定 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 并且 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 属性表示一个资源键，则为本地化说明；否则为 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 属性的非本地化值。</returns>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性和 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 属性已初始化，但未能找到名称和 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 值相匹配的公共静态 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetGroupName">
+      <summary>返回 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> 属性的值。</summary>
+      <returns>如果已初始化 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" />，则为将用于在用户界面中对字段进行分组的值；否则为 null。如果已指定 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性并且 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> 属性表示一个资源键，则返回本地化字符串；否则返回非本地化字符串。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetName">
+      <summary>返回一个值，该值用于在用户界面中显示字段。</summary>
+      <returns>如果已指定 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性并且 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 属性表示一个资源键，则为 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 属性的本地化字符串；否则为 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 属性的非本地化值。</returns>
+      <exception cref="T:System.InvalidOperationException">
+        <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性和 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 属性已初始化，但未能找到名称和 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> 值相匹配的公共静态 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetOrder">
+      <summary>返回 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" /> 属性的值。</summary>
+      <returns>如果已设置 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" /> 属性，则为该属性的值；否则为 null。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetPrompt">
+      <summary>返回 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 属性的值。</summary>
+      <returns>如果已指定 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性并且 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 属性表示一个资源键，则获取 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 属性的本地化字符串；否则获取 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 属性的非本地化值。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetShortName">
+      <summary>返回 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 属性的值。</summary>
+      <returns>如果已指定 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> 属性并且 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 属性表示一个资源键，则为 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 属性的本地化字符串；否则为 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> 值属性的非本地化值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName">
+      <summary>获取或设置一个值，该值用于在用户界面中对字段进行分组。</summary>
+      <returns>用于在用户界面中对字段进行分组的值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name">
+      <summary>获取或设置一个值，该值用于在用户界面中进行显示。</summary>
+      <returns>用于在用户界面中进行显示的值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order">
+      <summary>获取或设置列的排序权重。</summary>
+      <returns>列的排序权重。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt">
+      <summary>获取或设置一个值，该值将用于为用户界面中的提示设置水印。</summary>
+      <returns>将用于在用户界面中显示水印的值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType">
+      <summary>获取或设置包含 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 和 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 属性的资源的类型。</summary>
+      <returns>包含 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />、<see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> 和 <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> 属性的资源的类型。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName">
+      <summary>获取或设置用于网格列标签的值。</summary>
+      <returns>用于网格列标签的值。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute">
+      <summary>将所引用的表中显示的列指定为外键列。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String)">
+      <summary>使用指定的列初始化 <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> 类的新实例。</summary>
+      <param name="displayColumn">要用作显示列的列的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String)">
+      <summary>使用指定的显示列和排序列初始化 <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> 类的新实例。</summary>
+      <param name="displayColumn">要用作显示列的列的名称。</param>
+      <param name="sortColumn">用于排序的列的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String,System.Boolean)">
+      <summary>使用指定的显示列以及指定的排序列和排序顺序初始化 <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" /> 类的新实例。</summary>
+      <param name="displayColumn">要用作显示列的列的名称。</param>
+      <param name="sortColumn">用于排序的列的名称。</param>
+      <param name="sortDescending">如果按降序排序，则为 true；否则为 false。默认值为 false。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.DisplayColumn">
+      <summary>获取要用作显示字段的列的名称。</summary>
+      <returns>显示列的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortColumn">
+      <summary>获取用于排序的列的名称。</summary>
+      <returns>排序列的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortDescending">
+      <summary>获取一个值，该值指示是按升序还是降序进行排序。</summary>
+      <returns>如果将按降序对列进行排序，则为 true；否则为 false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute">
+      <summary>指定 ASP.NET 动态数据如何显示数据字段以及如何设置数据字段的格式。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ApplyFormatInEditMode">
+      <summary>获取或设置一个值，该值指示数据字段处于编辑模式时，是否将 <see cref="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString" /> 属性指定的格式设置字符串应用于字段值。</summary>
+      <returns>如果在编辑模式中将格式设置字符串应用于字段值，则为 true；否则为 false。默认值为 false。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ConvertEmptyStringToNull">
+      <summary>获取或设置一个值，该值指示在数据源中更新数据字段时是否将空字符串值 ("") 自动转换为 null。</summary>
+      <returns>如果将空字符串值自动转换为 null，则为 true；否则为 false。默认值为 true。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString">
+      <summary>获取或设置字段值的显示格式。</summary>
+      <returns>为数据字段的值指定显示格式的格式设置字符串。默认值为空字符串 ("")，表示尚无特殊格式设置应用于该字段值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.HtmlEncode">
+      <summary>获取或设置一个值，该值指示字段是否应经过 HTML 编码。</summary>
+      <returns>如果字段应经过 HTML 编码，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.NullDisplayText">
+      <summary>获取或设置字段值为 null 时为字段显示的文本。</summary>
+      <returns>字段值为 null 时为字段显示的文本。默认值为空字符串 ("")，表示尚未设置此属性。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EditableAttribute">
+      <summary>指示数据字段是否可编辑。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EditableAttribute.#ctor(System.Boolean)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.EditableAttribute" /> 类的新实例。</summary>
+      <param name="allowEdit">若指定该字段可编辑，则为 true；否则为 false。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowEdit">
+      <summary>获取一个值，该值指示字段是否可编辑。</summary>
+      <returns>如果该字段可编辑，则为 true；否则为 false。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowInitialValue">
+      <summary>获取或设置一个值，该值指示是否启用初始值。</summary>
+      <returns>如果启用初始值，则为 true ；否则为 false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute">
+      <summary>确认一电子邮件地址。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid(System.Object)">
+      <summary>确定指定的值是否与有效的电子邮件地址相匹配。</summary>
+      <returns>如果指定的值有效或 null，则为 true；否则，为 false。</returns>
+      <param name="value">要验证的值。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute">
+      <summary>使 .NET Framework 枚举能够映射到数据列。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.#ctor(System.Type)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute" /> 类的新实例。</summary>
+      <param name="enumType">枚举的类型。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.EnumType">
+      <summary>获取或设置枚举类型。</summary>
+      <returns>枚举类型。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.IsValid(System.Object)">
+      <summary>检查数据字段的值是否有效。</summary>
+      <returns>如果数据字段值有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的数据字段值。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute">
+      <summary>文件扩展名验证</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.Extensions">
+      <summary>获取或设置文件扩展名。</summary>
+      <returns>文件扩展名或者如果属性未设置则默认文件扩展名（“.png”、“.jpg”、“.jpeg” 和 “.gif”）。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.FormatErrorMessage(System.String)">
+      <summary>基于发生错误的数据字段对错误消息应用格式设置。</summary>
+      <returns>带有格式的错误消息。</returns>
+      <param name="name">导致验证失败的字段的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.IsValid(System.Object)">
+      <summary>检查指定的文件扩展名有效。</summary>
+      <returns>如果文件名称扩展有效，则为 true；否则为 false。</returns>
+      <param name="value">逗号分隔了有效文件扩展名列表。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute">
+      <summary>表示一个特性，该特性用于指定列的筛选行为。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String)">
+      <summary>通过使用筛选器 UI 提示来初始化 <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> 类的新实例。</summary>
+      <param name="filterUIHint">用于筛选的控件的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String)">
+      <summary>通过使用筛选器 UI 提示和表示层名称来初始化 <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> 类的新实例。</summary>
+      <param name="filterUIHint">用于筛选的控件的名称。</param>
+      <param name="presentationLayer">支持此控件的表示层的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>通过使用筛选器 UI 提示、表示层名称和控件参数来初始化 <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" /> 类的新实例。</summary>
+      <param name="filterUIHint">用于筛选的控件的名称。</param>
+      <param name="presentationLayer">支持此控件的表示层的名称。</param>
+      <param name="controlParameters">控件的参数列表。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.ControlParameters">
+      <summary>获取用作控件的构造函数中的参数的名称/值对。</summary>
+      <returns>用作控件的构造函数中的参数的名称/值对。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.Equals(System.Object)">
+      <summary>返回一个值，该值指示此特性实例是否与指定的对象相等。</summary>
+      <returns>如果传递的对象等于此特性对象，则为 True；否则为 false。</returns>
+      <param name="obj">要与此特性实例进行比较的对象。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.FilterUIHint">
+      <summary>获取用于筛选的控件的名称。</summary>
+      <returns>用于筛选的控件的名称。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.GetHashCode">
+      <summary>返回此特性实例的哈希代码。</summary>
+      <returns>此特性实例的哈希代码。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.PresentationLayer">
+      <summary>获取支持此控件的表示层的名称。</summary>
+      <returns>支持此控件的表示层的名称。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.IValidatableObject">
+      <summary>提供用于使对象无效的方式。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>确定指定的对象是否有效。</summary>
+      <returns>包含失败的验证信息的集合。</returns>
+      <param name="validationContext">验证上下文。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.KeyAttribute">
+      <summary>表示一个或多个用于唯一标识实体的属性。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.KeyAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.KeyAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute">
+      <summary>指定属性中允许的数组或字符串数据的最大长度。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor(System.Int32)">
+      <summary>初始化基于 <paramref name="length" /> 参数的 <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" /> 类的新实例。</summary>
+      <param name="length">数组或字符串数据的最大允许长度。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>对指定的错误消息应用格式设置。</summary>
+      <returns>用于描述最大可接受长度的本地化字符串。</returns>
+      <param name="name">格式化字符串中要包含的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.IsValid(System.Object)">
+      <summary>确定指定的对象是否有效。</summary>
+      <returns>如果该值为 null，或该值小于或等于指定的最大长度，则为 true；否则，为 false。</returns>
+      <param name="value">要验证的对象。</param>
+      <exception cref="Sytem.InvalidOperationException">长度为零或者小于负一。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MaxLengthAttribute.Length">
+      <summary>获取数组或字符串数据的最大允许长度。</summary>
+      <returns>数组或字符串数据的最大允许长度。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MinLengthAttribute">
+      <summary>指定属性中允许的数组或字符串数据的最小长度。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.#ctor(System.Int32)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.MinLengthAttribute" /> 类的新实例。</summary>
+      <param name="length">数组或字符串数据的长度。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>对指定的错误消息应用格式设置。</summary>
+      <returns>用于描述最小可接受长度的本地化字符串。</returns>
+      <param name="name">格式化字符串中要包含的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.IsValid(System.Object)">
+      <summary>确定指定的对象是否有效。</summary>
+      <returns>如果指定的对象有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的对象。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MinLengthAttribute.Length">
+      <summary>获取或设置数组或字符串数据的最小允许长度。</summary>
+      <returns>数组或字符串数据的最小允许长度。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.PhoneAttribute">
+      <summary>使用电话号码的正则表达式，指定数据字段值是一个格式正确的电话号码。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.PhoneAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.IsValid(System.Object)">
+      <summary>确定指定的电话号码的格式是否有效。</summary>
+      <returns>如果电话号码有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的值。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RangeAttribute">
+      <summary>指定数据字段值的数值范围约束。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,System.Double)">
+      <summary>使用指定的最小值和最大值初始化 <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> 类的一个新实例。</summary>
+      <param name="minimum">指定数据字段值所允许的最小值。</param>
+      <param name="maximum">指定数据字段值所允许的最大值。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Int32,System.Int32)">
+      <summary>使用指定的最小值和最大值初始化 <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> 类的一个新实例。</summary>
+      <param name="minimum">指定数据字段值所允许的最小值。</param>
+      <param name="maximum">指定数据字段值所允许的最大值。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Type,System.String,System.String)">
+      <summary>使用指定的最小值和最大值以及特定类型初始化 <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" /> 类的一个新实例。</summary>
+      <param name="type">指定要测试的对象的类型。</param>
+      <param name="minimum">指定数据字段值所允许的最小值。</param>
+      <param name="maximum">指定数据字段值所允许的最大值。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="type" /> 为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(System.String)">
+      <summary>对范围验证失败时显示的错误消息进行格式设置。</summary>
+      <returns>带有格式的错误消息。</returns>
+      <param name="name">导致验证失败的字段的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)">
+      <summary>检查数据字段的值是否在指定的范围中。</summary>
+      <returns>如果指定的值在此范围中，则为 true；否则为 false。</returns>
+      <param name="value">要验证的数据字段值。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">数据字段值不在允许的范围内。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Maximum">
+      <summary>获取所允许的最大字段值。</summary>
+      <returns>所允许的数据字段最大值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Minimum">
+      <summary>获取所允许的最小字段值。</summary>
+      <returns>所允许的数据字段最小值。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.OperandType">
+      <summary>获取必须验证其值的数据字段的类型。</summary>
+      <returns>必须验证其值的数据字段的类型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute">
+      <summary>指定 ASP.NET 动态数据中的数据字段值必须与指定的正则表达式匹配。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.#ctor(System.String)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute" /> 类的新实例。</summary>
+      <param name="pattern">用于验证数据字段值的正则表达式。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="pattern" /> 为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.FormatErrorMessage(System.String)">
+      <summary>对在正则表达式验证失败的情况下要显示的错误消息进行格式设置。</summary>
+      <returns>带有格式的错误消息。</returns>
+      <param name="name">导致验证失败的字段的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.IsValid(System.Object)">
+      <summary>检查用户输入的值与正则表达式模式是否匹配。</summary>
+      <returns>如果验证成功，则为 true；否则为 false。</returns>
+      <param name="value">要验证的数据字段值。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">数据字段值与正则表达式模式不匹配。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.Pattern">
+      <summary>获取正则表达式模式。</summary>
+      <returns>要匹配的模式。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RequiredAttribute">
+      <summary>指定需要数据字段值。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RequiredAttribute.AllowEmptyStrings">
+      <summary>获取或设置一个值，该值指示是否允许空字符串。</summary>
+      <returns>如果允许空字符串，则为 true；否则为 false。默认值为 false。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.IsValid(System.Object)">
+      <summary>检查必填数据字段的值是否不为空。</summary>
+      <returns>如果验证成功，则为 true；否则为 false。</returns>
+      <param name="value">要验证的数据字段值。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">数据字段值为 null。</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute">
+      <summary>指定类或数据列是否使用基架。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.#ctor(System.Boolean)">
+      <summary>使用 <see cref="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold" /> 属性初始化 <see cref="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute" /> 的新实例。</summary>
+      <param name="scaffold">用于指定是否启用基架的值。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold">
+      <summary>获取或设置用于指定是否启用基架的值。</summary>
+      <returns>如果启用基架，则为 true；否则为 false。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.StringLengthAttribute">
+      <summary>指定数据字段中允许的最小和最大字符长度。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.#ctor(System.Int32)">
+      <summary>使用指定的最大长度初始化 <see cref="T:System.ComponentModel.DataAnnotations.StringLengthAttribute" /> 类的新实例。</summary>
+      <param name="maximumLength">字符串的最大长度。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>对指定的错误消息应用格式设置。</summary>
+      <returns>带有格式的错误消息。</returns>
+      <param name="name">导致验证失败的字段的名称。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="maximumLength" /> 为负数。- 或 -<paramref name="maximumLength" /> 小于 <paramref name="minimumLength" />。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.IsValid(System.Object)">
+      <summary>确定指定的对象是否有效。</summary>
+      <returns>如果指定的对象有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的对象。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="maximumLength" /> 为负数。- 或 -<paramref name="maximumLength" /> 小于 <see cref="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength" />。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MaximumLength">
+      <summary>获取或设置字符串的最大长度。</summary>
+      <returns>字符串的最大长度。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength">
+      <summary>获取或设置字符串的最小长度。</summary>
+      <returns>字符串的最小长度。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.TimestampAttribute">
+      <summary>将列的数据类型指定为行版本。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.TimestampAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.TimestampAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UIHintAttribute">
+      <summary>指定动态数据用来显示数据字段的模板或用户控件。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String)">
+      <summary>使用指定的用户控件初始化 <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 类的新实例。</summary>
+      <param name="uiHint">要用于显示数据字段的用户控件。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String)">
+      <summary>使用指定的用户控件和指定的表示层初始化 <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 类的新实例。</summary>
+      <param name="uiHint">用于显示数据字段的用户控件（字段模板）。</param>
+      <param name="presentationLayer">使用类的表示层。可设置为“HTML”、“Silverlight”、“WPF”或“WinForms”。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>使用指定的用户控件、表示层和控件参数初始化 <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 类的新实例。</summary>
+      <param name="uiHint">用于显示数据字段的用户控件（字段模板）。</param>
+      <param name="presentationLayer">使用类的表示层。可设置为“HTML”、“Silverlight”、“WPF”或“WinForms”。</param>
+      <param name="controlParameters">要用于从任何数据源中检索值的对象。</param>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> 为 null 或者它是一个约束键。- 或 -<see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> 的值不是字符串。</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters">
+      <summary>获取或设置将用于从任何数据源中检索值的 <see cref="T:System.Web.DynamicData.DynamicControlParameter" /> 对象。</summary>
+      <returns>键/值对的集合。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.Equals(System.Object)">
+      <summary>获取一个值，该值指示此实例是否与指定的对象相等。</summary>
+      <returns>如果指定的对象等于此实例，则为 true；否则为 false。</returns>
+      <param name="obj">要与此实例比较的对象，或 null 引用。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.GetHashCode">
+      <summary>获取特性的当前实例的哈希代码。</summary>
+      <returns>特性实例的哈希代码。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.PresentationLayer">
+      <summary>获取或设置使用 <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> 类的表示层。</summary>
+      <returns>此类使用的表示层。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.UIHint">
+      <summary>获取或设置要用于显示数据字段的字段模板的名称。</summary>
+      <returns>用于显示数据字段的字段模板的名称。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UrlAttribute">
+      <summary>提供 URL 验证。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.UrlAttribute" /> 类的一个新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.IsValid(System.Object)">
+      <summary>验证指定 URL 的格式。</summary>
+      <returns>如果 URL 格式有效或 null，则为 true；否则为 false。</returns>
+      <param name="value">要验证的 URI。</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationAttribute">
+      <summary>作为所有验证属性的基类。</summary>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">在设置非本地化 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage" /> 属性错误消息的同时，本地化错误消息的 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> 和 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName" /> 属性也被设置。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.Func{System.String})">
+      <summary>通过使用实现验证资源访问功能的函数，初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 类的新实例。</summary>
+      <param name="errorMessageAccessor">实现验证资源访问的函数。</param>
+      <exception cref="T:System:ArgumentNullException">
+        <paramref name="errorMessageAccessor" /> 为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.String)">
+      <summary>通过使用要与验证控件关联的错误消息，来初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 类的新实例。</summary>
+      <param name="errorMessage">要与验证控件关联的错误消息。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage">
+      <summary>获取或设置一条在验证失败的情况下与验证控件关联的错误消息。</summary>
+      <returns>与验证控件关联的错误消息。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName">
+      <summary>获取或设置错误消息资源的名称，在验证失败的情况下，要使用该名称来查找 <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> 属性值。</summary>
+      <returns>与验证控件关联的错误消息资源。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType">
+      <summary>获取或设置在验证失败的情况下用于查找错误消息的资源类型。</summary>
+      <returns>与验证控件关联的错误消息的类型。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString">
+      <summary>获取本地化的验证错误消息。</summary>
+      <returns>本地化的验证错误消息。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>基于发生错误的数据字段对错误消息应用格式设置。</summary>
+      <returns>带有格式的错误消息的实例。</returns>
+      <param name="name">要包括在带有格式的消息中的名称。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.GetValidationResult(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>检查指定的值对于当前的验证特性是否有效。</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 类的实例。</returns>
+      <param name="value">要验证的值。</param>
+      <param name="validationContext">有关验证操作的上下文信息。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)">
+      <summary>确定对象的指定值是否有效。</summary>
+      <returns>如果指定的值有效，则为 true；否则，为 false。</returns>
+      <param name="value">要验证的对象的值。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>根据当前的验证特性来验证指定的值。</summary>
+      <returns>
+        <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 类的实例。</returns>
+      <param name="value">要验证的值。</param>
+      <param name="validationContext">有关验证操作的上下文信息。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.RequiresValidationContext">
+      <summary>获取指示特性是否要求验证上下文的值。</summary>
+      <returns>如果特性需要验证上下文，则为 true；否则为 false。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>验证指定的对象。</summary>
+      <param name="value">要验证的对象。</param>
+      <param name="validationContext">描述验证检查的执行上下文的 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 对象。此参数不能为 null。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">验证失败。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.String)">
+      <summary>验证指定的对象。</summary>
+      <param name="value">要验证的对象的值。</param>
+      <param name="name">要包括在错误消息中的名称。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> 无效。</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationContext">
+      <summary>描述执行验证检查的上下文。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object)">
+      <summary>使用指定的对象实例初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 类的新实例。</summary>
+      <param name="instance">要验证的对象实例。它不能为 null。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>使用指定的目标对象和一个可选择的属性包初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 类的新实例。</summary>
+      <param name="instance">要验证的对象实例。它不能为 null</param>
+      <param name="items">使用者可访问的、可选的键/值对集合。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.IServiceProvider,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>使用服务提供程序和客户服务字典初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> 类的新实例。</summary>
+      <param name="instance">要验证的对象。此参数是必需的。</param>
+      <param name="serviceProvider">实现 <see cref="T:System.IServiceProvider" /> 接口的对象。此参数可选。</param>
+      <param name="items">要提供给服务使用方的键/值对的字典。此参数可选。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.DisplayName">
+      <summary>获取或设置要验证的成员的名称。</summary>
+      <returns>要验证的成员的名称。</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.GetService(System.Type)">
+      <summary>返回提供自定义验证的服务。</summary>
+      <returns>该服务的实例；如果该服务不可用，则为 null。</returns>
+      <param name="serviceType">用于进行验证的服务的类型。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.InitializeServiceProvider(System.Func{System.Type,System.Object})">
+      <summary>在调用 GetService 时，使用可以按类型返回服务实例的服务提供程序初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" />。</summary>
+      <param name="serviceProvider">服务提供程序。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.Items">
+      <summary>获取与此上下文关联的键/值对的字典。</summary>
+      <returns>此上下文的键/值对的字典。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.MemberName">
+      <summary>获取或设置要验证的成员的名称。</summary>
+      <returns>要验证的成员的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance">
+      <summary>获取要验证的对象。</summary>
+      <returns>要验证的对象。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectType">
+      <summary>获取要验证的对象的类型。</summary>
+      <returns>要验证的对象的类型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationException">
+      <summary>表示在使用 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 类的情况下验证数据字段时发生的异常。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor">
+      <summary>使用系统生成的错误消息初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationResult,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>使用验证结果、验证特性以及当前异常的值初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 类的新实例。</summary>
+      <param name="validationResult">验证结果的列表。</param>
+      <param name="validatingAttribute">引发当前异常的特性。</param>
+      <param name="value">导致特性触发验证错误的对象的值。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String)">
+      <summary>使用指定的错误消息初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 类的新实例。</summary>
+      <param name="message">一条说明错误的指定消息。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>使用指定的错误消息、验证特性以及当前异常的值初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 类的新实例。</summary>
+      <param name="errorMessage">说明错误的消息。</param>
+      <param name="validatingAttribute">引发当前异常的特性。</param>
+      <param name="value">使特性引起验证错误的对象的值。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.Exception)">
+      <summary>使用指定的错误消息和内部异常实例的集合初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" /> 类的新实例。</summary>
+      <param name="message">错误消息。</param>
+      <param name="innerException">验证异常的集合。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationAttribute">
+      <summary>获取触发此异常的 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 类的实例。</summary>
+      <returns>触发此异常的验证特性类型的实例。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult">
+      <summary>获取描述验证错误的 <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> 实例。</summary>
+      <returns>描述验证错误的 <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" /> 实例。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.Value">
+      <summary>获取导致 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 类触发此异常的对象的值。</summary>
+      <returns>使 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 类引起验证错误的对象的值。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationResult">
+      <summary>表示验证请求结果的容器。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.ComponentModel.DataAnnotations.ValidationResult)">
+      <summary>使用 <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 对象初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 类的新实例。</summary>
+      <param name="validationResult">验证结果对象。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String)">
+      <summary>使用错误消息初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 类的新实例。</summary>
+      <param name="errorMessage">错误消息。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>使用错误消息和具有验证错误的成员的列表初始化 <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> 类的新实例。</summary>
+      <param name="errorMessage">错误消息。</param>
+      <param name="memberNames">具有验证错误的成员名称的列表。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.ErrorMessage">
+      <summary>获取验证的错误消息。</summary>
+      <returns>验证的错误消息。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.MemberNames">
+      <summary>获取成员名称的集合，这些成员名称指示具有验证错误的字段。</summary>
+      <returns>成员名称的集合，这些成员名称指示具有验证错误的字段。</returns>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.ValidationResult.Success">
+      <summary>表示验证的成功（如果验证成功，则为 true；否则为 false）。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.ToString">
+      <summary>返回一个表示当前验证结果的字符串表示形式。</summary>
+      <returns>当前验证结果。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Validator">
+      <summary>定义一个帮助器类，在与对象、属性和方法关联的 <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> 特性中包含此类时，可使用此类来验证这些项。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>通过使用验证上下文和验证结果集合，确定指定的对象是否有效。</summary>
+      <returns>如果对象有效，则为 true；否则为 false。</returns>
+      <param name="instance">要验证的对象。</param>
+      <param name="validationContext">用于描述要验证的对象的上下文。</param>
+      <param name="validationResults">用于包含每个失败的验证的集合。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> 为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Boolean)">
+      <summary>通过使用验证上下文、验证结果集合和用于指定是否验证所有属性的值，确定指定的对象是否有效。</summary>
+      <returns>如果对象有效，则为 true；否则为 false。</returns>
+      <param name="instance">要验证的对象。</param>
+      <param name="validationContext">用于描述要验证的对象的上下文。</param>
+      <param name="validationResults">用于包含每个失败的验证的集合。</param>
+      <param name="validateAllProperties">若为 true，则验证所有属性。若为 false，则只需要验证所需的特性。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> 为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>验证属性。</summary>
+      <returns>如果属性有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的值。</param>
+      <param name="validationContext">用于描述要验证的属性的上下文。</param>
+      <param name="validationResults">用于包含每个失败的验证的集合。</param>
+      <exception cref="T:System.ArgumentNullException">不能将 <paramref name="value" /> 分配给该属性。- 或 -<paramref name="value " />为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>返回一个值，该值指示所指定值对所指定特性是否有效。</summary>
+      <returns>如果对象有效，则为 true；否则为 false。</returns>
+      <param name="value">要验证的值。</param>
+      <param name="validationContext">用于描述要验证的对象的上下文。</param>
+      <param name="validationResults">用于包含失败的验证的集合。</param>
+      <param name="validationAttributes">验证特性。</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>使用验证上下文确定指定的对象是否有效。</summary>
+      <param name="instance">要验证的对象。</param>
+      <param name="validationContext">用于描述要验证的对象的上下文。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">对象无效。</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> 为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean)">
+      <summary>通过使用验证上下文和用于指定是否验证所有属性的值，确定指定的对象是否有效。</summary>
+      <param name="instance">要验证的对象。</param>
+      <param name="validationContext">用于描述要验证的对象的上下文。</param>
+      <param name="validateAllProperties">若要验证所有属性，则为 true；否则为 false。</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="instance" /> 无效。</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="instance" /> 为 null。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>验证属性。</summary>
+      <param name="value">要验证的值。</param>
+      <param name="validationContext">用于描述要验证的属性的上下文。</param>
+      <exception cref="T:System.ArgumentNullException">不能将 <paramref name="value" /> 分配给该属性。</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> 参数无效。</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>验证指定的特性。</summary>
+      <param name="value">要验证的值。</param>
+      <param name="validationContext">用于描述要验证的对象的上下文。</param>
+      <param name="validationAttributes">验证特性。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="validationContext" /> 参数为 null。</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> 参数不使用 <paramref name="validationAttributes" /> 参数进行验证。</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute">
+      <summary>表示数据库列属性映射。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor(System.String)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" /> 类的新实例。</summary>
+      <param name="name">属性将映射到的列的名称。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Name">
+      <summary>获取属性映射列的名称。</summary>
+      <returns>属性将映射到的列的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Order">
+      <summary>获取或设置的列从零开始的排序属性映射。</summary>
+      <returns>列的顺序。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.TypeName">
+      <summary>获取或设置的列的数据库提供程序特定数据类型属性映射。</summary>
+      <returns>属性将映射到的列的数据库提供程序特定数据类型。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute">
+      <summary>表示该类是复杂类型。复杂类型是实体类型的非标量属性，实体类型允许在实体内组织标量属性。复杂类型没有键，并且实体框架不能脱离父对象来管理复杂类型。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute">
+      <summary>指定数据库生成属性值的方式。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.#ctor(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute" /> 类的新实例。</summary>
+      <param name="databaseGeneratedOption">数据库生成的选项。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.DatabaseGeneratedOption">
+      <summary>获取或设置用于模式生成属性的值在数据库中。</summary>
+      <returns>数据库生成的选项。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption">
+      <summary>表示使用的模式创建一属性的值在数据库中。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed">
+      <summary>在插入或更新一个行时，数据库会生成一个值。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity">
+      <summary>在插入一个行时，数据库会生成一个值。</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None">
+      <summary>数据库不生成值。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute">
+      <summary>表示关系中用作外键的属性。可以将批注放在外键属性上，然后指定关联的导航属性名称；也可以将批注放在导航属性上，然后指定关联的外键名称。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.#ctor(System.String)">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute" /> 类的新实例。</summary>
+      <param name="name">如果将 ForeigKey 特性添加到外键属性，则应指定关联的导航属性的名称。如果将 ForeigKey 特性添加到导航属性，则应指定关联的外键的名称。如果导航属性具有多个外键，则使用逗号分隔的外键名称列表。有关更多信息，请参见批注。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.Name">
+      <summary>如果将 ForeigKey 特性添加到外键属性，则应指定关联的导航属性的名称。如果将 ForeigKey 特性添加到导航属性，则应指定关联的外键的名称。如果导航属性具有多个外键，则使用逗号分隔的外键名称列表。有关更多信息，请参见批注。</summary>
+      <returns>关联的导航属性或关联的外键属性的名称。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute">
+      <summary>指定表示同一关系的另一端的导航属性的反向属性。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.#ctor(System.String)">
+      <summary>使用指定的属性初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute" />类的新实例。</summary>
+      <param name="property">表示同一关系的另一端的导航属性。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.Property">
+      <summary>获取表示同一关系的另一端。导航属性。</summary>
+      <returns>特性的属性。</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute">
+      <summary>表示应从数据库映射中排除属性或类。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute.#ctor">
+      <summary>初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute" /> 类的新实例。</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute">
+      <summary>指定类将映射到的数据库表。</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.TableAttribute.#ctor(System.String)">
+      <summary>使用指定的表名称初始化 <see cref="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute" /> 类的新实例。</summary>
+      <param name="name">类将映射到的表的名称。</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Name">
+      <summary>获取将映射到的表的类名称。</summary>
+      <returns>类将映射到的表的名称。</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Schema">
+      <summary>获取或设置将类映射到的表的架构。</summary>
+      <returns>类将映射到的表的架构。</returns>
+    </member>
+  </members>
+</doc>

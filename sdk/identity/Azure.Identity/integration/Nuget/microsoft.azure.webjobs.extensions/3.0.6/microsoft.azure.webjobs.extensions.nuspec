@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Azure.WebJobs.Extensions</id>
+    <version>3.0.6</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://go.microsoft.com/fwlink/?linkid=2028464</licenseUrl>
+    <projectUrl>http://go.microsoft.com/fwlink/?LinkID=320972</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/Azure/azure-webjobs-sdk/dev/webjobs.png</iconUrl>
+    <description>This package contains Timers and File triggers. For more information, please visit https://azure.microsoft.com/en-us/documentation/articles/websites-webjobs-resources.</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>Microsoft Azure WebJobs AzureFunctions</tags>
+    <repository type="git" url="https://github.com/Azure/azure-webjobs-sdk-extensions" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.Azure.WebJobs" version="3.0.14" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Azure.WebJobs.Host.Storage" version="3.0.14" exclude="Build,Analyzers" />
+        <dependency id="ncrontab.signed" version="3.3.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

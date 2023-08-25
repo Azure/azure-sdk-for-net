@@ -1,0 +1,2051 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Security.AccessControl</name>
+  </assembly>
+  <members>
+    <member name="T:System.Security.AccessControl.AccessControlActions">
+      <summary>セキュリティ設定できるオブジェクトに許可されたアクションを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlActions.Change">
+      <summary>書き込み専用アクセスを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlActions.None">
+      <summary>アクセス拒否を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlActions.View">
+      <summary>読み取り専用アクセスを指定します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessControlModification">
+      <summary>実行するアクセス制御の変更の種類を指定します。この列挙体は <see cref="T:System.Security.AccessControl.ObjectSecurity" /> クラスとその子孫クラスのメソッドで使用されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Add">
+      <summary>指定した承認規則をアクセス制御リスト (ACL: Access Control List) に追加します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Remove">
+      <summary>指定した承認規則と同じセキュリティ識別子 (SID) とアクセス マスクを含む承認規則を ACL から削除します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.RemoveAll">
+      <summary>指定した承認規則と同じ SID を含む承認規則を ACL から削除します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.RemoveSpecific">
+      <summary>指定した承認規則に完全に一致する承認規則を ACL から削除します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Reset">
+      <summary>指定した承認規則と同じ SID を含む承認規則を ACL から削除し、指定した承認規則を ACL に追加します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlModification.Set">
+      <summary>すべての承認規則を ACL から削除し、指定した承認規則を ACL に追加します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessControlSections">
+      <summary>保存するセキュリティ記述子のセクション、または読み込むセキュリティ記述子のセクションを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Access">
+      <summary>随意アクセス制御リスト (DACL: Discretionary Access Control List)。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.All">
+      <summary>セキュリティ記述子全体。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Audit">
+      <summary>システム アクセス制御リスト (SACL: System Access Control List)。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Group">
+      <summary>プライマリ グループ。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.None">
+      <summary>セクションを指定しません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlSections.Owner">
+      <summary>所有者。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessControlType">
+      <summary>アクセスの許可または拒否に <see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクトを使用するかどうかを指定します。これらの値はフラグではありません。また、これらの値を組み合わせることはできません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlType.Allow">
+      <summary>
+        <see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクトを使用して、セキュリティで保護されたオブジェクトへのアクセスを許可します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AccessControlType.Deny">
+      <summary>
+        <see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクトを使用して、セキュリティで保護されたオブジェクトへのアクセスを拒否します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessRule">
+      <summary>ユーザー ID、アクセス マスク、アクセス制御の種類 (許可または拒否) の組み合わせを表します。<see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクトには、子オブジェクトによる規則の継承方法や継承の反映方法に関する情報も格納されます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>指定した値を使用して、<see cref="T:System.Security.AccessControl.AccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。このパラメーターは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則が親コンテナーから継承される場合は true。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティ。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうか。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="type">有効なアクセス制御の種類。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> パラメーターの値を <see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできません。または、<paramref name="type" /> パラメーターに無効な値が格納されています。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> パラメーターの値がゼロ (0) です。または、<paramref name="inheritanceFlags" /> パラメーターまたは <paramref name="propagationFlags" /> パラメーターに認識されないフラグ値が格納されています。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AccessRule.AccessControlType">
+      <summary>この <see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクトに関連付けられている <see cref="T:System.Security.AccessControl.AccessControlType" /> 値を取得します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクトに関連付けられている <see cref="T:System.Security.AccessControl.AccessControlType" /> 値。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AccessRule`1">
+      <summary>ユーザー ID、アクセス マスク、アクセス制御の種類 (許可または拒否) の組み合わせを表します。AccessRule`1 オブジェクトには、子オブジェクトによる規則の継承方法や継承の反映方法に関する情報も格納されます。</summary>
+      <typeparam name="T">このアクセス規制のアクセス権の種類です。</typeparam>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.AccessControlType)">
+      <summary>指定した値を使用して、AccessRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。</param>
+      <param name="rights">アクセス規則の権利。</param>
+      <param name="type">有効なアクセス制御の種類。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>指定した値を使用して、AccessRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。</param>
+      <param name="rights">アクセス規則の権利。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティ。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうか。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="type">有効なアクセス制御の種類。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.String,`0,System.Security.AccessControl.AccessControlType)">
+      <summary>指定した値を使用して、AccessRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。</param>
+      <param name="rights">アクセス規則の権利。</param>
+      <param name="type">有効なアクセス制御の種類。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AccessRule`1.#ctor(System.String,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>指定した値を使用して、AccessRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。</param>
+      <param name="rights">アクセス規則の権利。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティ。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうか。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="type">有効なアクセス制御の種類。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.AccessRule`1.Rights">
+      <summary>現在のインスタンスの権限を取得します。</summary>
+      <returns>型 &lt;T&gt; にキャストした現在のインスタンスの権限です。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AceEnumerator">
+      <summary>アクセス制御リスト (ACL: Access Control List) 内のアクセス制御エントリ (ACE: Access Control Entry) を反復処理する機能を提供します。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.AceEnumerator.Current">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAce" /> コレクション内の現在の要素を取得します。このプロパティでは、型フレンドリなバージョンのオブジェクトを取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.GenericAce" /> コレクション内の現在の要素。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.AceEnumerator.MoveNext">
+      <summary>列挙子を <see cref="T:System.Security.AccessControl.GenericAce" /> コレクションの次の要素に進めます。</summary>
+      <returns>列挙子が次の要素に正常に進んだ場合は true。列挙子がコレクションの末尾を越えた場合は false。</returns>
+      <exception cref="T:System.InvalidOperationException">列挙子が作成された後に、コレクションが変更されました。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.AceEnumerator.Reset">
+      <summary>列挙子を初期位置、つまり <see cref="T:System.Security.AccessControl.GenericAce" /> コレクションの最初の要素の前に設定します。</summary>
+      <exception cref="T:System.InvalidOperationException">列挙子が作成された後に、コレクションが変更されました。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AceEnumerator.System#Collections#IEnumerator#Current"></member>
+    <member name="T:System.Security.AccessControl.AceFlags">
+      <summary>アクセス制御エントリ (ACE: Access Control Entry) の継承と監査に関する動作を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.AuditFlags">
+      <summary>すべてのアクセス試行が監査されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.ContainerInherit">
+      <summary>アクセス マスクが子コンテナー オブジェクトに反映されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.FailedAccess">
+      <summary>失敗したアクセス試行が監査されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.InheritanceFlags">
+      <summary>
+        <see cref="F:System.Security.AccessControl.AceFlags.ObjectInherit" />、<see cref="F:System.Security.AccessControl.AceFlags.ContainerInherit" />、<see cref="F:System.Security.AccessControl.AceFlags.NoPropagateInherit" />、および <see cref="F:System.Security.AccessControl.AceFlags.InheritOnly" /> の論理 OR。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.Inherited">
+      <summary>ACE がオブジェクトに対して明示的に設定されるのではなく、親コンテナーから継承されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.InheritOnly">
+      <summary>アクセス マスクが子オブジェクトだけに反映されます。この操作には、子コンテナー オブジェクトと子リーフ オブジェクトの両方が含まれます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.None">
+      <summary>ACE フラグは設定されません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.NoPropagateInherit">
+      <summary>アクセス チェックがオブジェクトに適用されず、その子だけに適用されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.ObjectInherit">
+      <summary>アクセス マスクが子リーフ オブジェクトに反映されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceFlags.SuccessfulAccess">
+      <summary>成功したアクセス試行が監査されます。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AceQualifier">
+      <summary>アクセス制御エントリ (ACE: Access Control Entry) の機能を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.AccessAllowed">
+      <summary>アクセスを許可します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.AccessDenied">
+      <summary>アクセスを拒否します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.SystemAlarm">
+      <summary>システム警告を発生させます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceQualifier.SystemAudit">
+      <summary>システム監査を実行します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AceType">
+      <summary>使用可能なアクセス制御エントリ (ACE: Access Control Entry) の型を定義します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowed">
+      <summary>
+        <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトで識別される特定のトラスティのオブジェクトへのアクセスを許可します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedCallback">
+      <summary>
+        <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトで識別される特定のトラスティのオブジェクトへのアクセスを許可します。この ACE 型には、オプションのコールバック データを格納できます。コールバック データは、リソース マネージャー固有の解釈されない BLOB です。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedCallbackObject">
+      <summary>オブジェクト、プロパティ セット、またはプロパティへのアクセスを許可します。ACE には、アクセス権セット、オブジェクトの型を識別する GUID、およびシステムがアクセスを許可するトラスティを識別する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトが格納されます。ACE には、GUID および、子オブジェクトによる ACE の継承を制御する一連のフラグも格納されます。この ACE 型には、オプションのコールバック データを格納できます。コールバック データは、リソース マネージャー固有の解釈されない BLOB です。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedCompound">
+      <summary>定義されていますが、使用されません。ここでは、すべての情報を紹介するために記載します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessAllowedObject">
+      <summary>オブジェクト、プロパティ セット、またはプロパティへのアクセスを許可します。ACE には、アクセス権セット、オブジェクトの型を識別する GUID、およびシステムがアクセスを許可するトラスティを識別する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトが格納されます。ACE には、GUID および、子オブジェクトによる ACE の継承を制御する一連のフラグも格納されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDenied">
+      <summary>
+        <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトで識別される特定のトラスティのオブジェクトへのアクセスを拒否します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDeniedCallback">
+      <summary>
+        <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトで識別される特定のトラスティのオブジェクトへのアクセスを拒否します。この ACE 型には、オプションのコールバック データを格納できます。コールバック データは、リソース マネージャー固有の解釈されない BLOB です。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDeniedCallbackObject">
+      <summary>オブジェクト、プロパティ セット、またはプロパティへのアクセスを拒否します。ACE には、アクセス権セット、オブジェクトの型を識別する GUID、およびシステムがアクセスを許可するトラスティを識別する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトが格納されます。ACE には、GUID および、子オブジェクトによる ACE の継承を制御する一連のフラグも格納されます。この ACE 型には、オプションのコールバック データを格納できます。コールバック データは、リソース マネージャー固有の解釈されない BLOB です。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.AccessDeniedObject">
+      <summary>オブジェクト、プロパティ セット、またはプロパティへのアクセスを拒否します。ACE には、アクセス権セット、オブジェクトの型を識別する GUID、およびシステムがアクセスを許可するトラスティを識別する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトが格納されます。ACE には、GUID および、子オブジェクトによる ACE の継承を制御する一連のフラグも格納されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.MaxDefinedAceType">
+      <summary>列挙体の中で最大の定義された ACE 型を追跡します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarm">
+      <summary>将来使用するために予約されています。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarmCallback">
+      <summary>将来使用するために予約されています。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarmCallbackObject">
+      <summary>将来使用するために予約されています。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAlarmObject">
+      <summary>将来使用するために予約されています。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAudit">
+      <summary>指定したトラスティがオブジェクトへのアクセスを取得しようとした場合に、監査メッセージのログを記録します。トラスティは、<see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトで識別されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAuditCallback">
+      <summary>指定したトラスティがオブジェクトへのアクセスを取得しようとした場合に、監査メッセージのログを記録します。トラスティは、<see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトで識別されます。この ACE 型には、オプションのコールバック データを格納できます。コールバック データは、リソース マネージャー固有の解釈されない BLOB です。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAuditCallbackObject">
+      <summary>指定したトラスティがオブジェクトまたはサブオブジェクト (プロパティ セットやプロパティなど) へのアクセスを取得しようとした場合に、監査メッセージのログを記録します。ACE には、アクセス権セット、オブジェクトまたはサブオブジェクトの型を識別する GUID、およびシステムがアクセスを監査するトラスティを識別する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトが格納されます。ACE には、GUID および、子オブジェクトによる ACE の継承を制御する一連のフラグも格納されます。この ACE 型には、オプションのコールバック データを格納できます。コールバック データは、リソース マネージャー固有の解釈されない BLOB です。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AceType.SystemAuditObject">
+      <summary>指定したトラスティがオブジェクトまたはサブオブジェクト (プロパティ セットやプロパティなど) へのアクセスを取得しようとした場合に、監査メッセージのログを記録します。ACE には、アクセス権セット、オブジェクトまたはサブオブジェクトの型を識別する GUID、およびシステムがアクセスを監査するトラスティを識別する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクトが格納されます。ACE には、GUID および、子オブジェクトによる ACE の継承を制御する一連のフラグも格納されます。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AuditFlags">
+      <summary>セキュリティ設定できるオブジェクトへのアクセス試行を監査する条件を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AuditFlags.Failure">
+      <summary>失敗したアクセス試行を監査します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AuditFlags.None">
+      <summary>アクセス試行を監査しません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.AuditFlags.Success">
+      <summary>成功したアクセス試行を監査します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.AuditRule">
+      <summary>ユーザーの ID とアクセス マスクの組み合わせを表します。<see cref="T:System.Security.AccessControl.AuditRule" /> オブジェクトには、子オブジェクトが規則を継承する方法、継承の反映方法、監査が必要な条件などの情報も格納されます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>指定した値を使用して、<see cref="T:System.Security.AccessControl.AuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">監査規則を適用する ID。このオブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則を親コンテナーから継承する場合は true。</param>
+      <param name="inheritanceFlags">監査規則の継承プロパティ。</param>
+      <param name="propagationFlags">継承した監査規則を自動的に反映させるかどうか。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="auditFlags">規則を監査する条件。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> パラメーターの値を <see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできません。または、<paramref name="auditFlags" /> パラメーターに無効な値が格納されています。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> パラメーターの値がゼロ (0) です。または、<paramref name="inheritanceFlags" /> パラメーターまたは <paramref name="propagationFlags" /> パラメーターに認識されないフラグ値が格納されています。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AuditRule.AuditFlags">
+      <summary>この監査規則の監査フラグを取得します。</summary>
+      <returns>列挙値のビットごとの組み合わせ。この組み合わせにより、この監査規則の監査条件を指定します。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AuditRule`1">
+      <summary>ユーザーの ID とアクセス マスクの組み合わせを表します。</summary>
+      <typeparam name="T"></typeparam>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.AuditFlags)">
+      <summary>指定した値を使用して、AuditRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">この監査規則を適用する識別子。</param>
+      <param name="rights">監査規則の権利。</param>
+      <param name="flags">規則を監査する条件。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.Security.Principal.IdentityReference,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>指定した値を使用して、AuditRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">監査規則を適用する ID。</param>
+      <param name="rights">監査規則の権利。</param>
+      <param name="inheritanceFlags">監査規則の継承プロパティ。</param>
+      <param name="propagationFlags">継承した監査規則を自動的に反映させるかどうか。</param>
+      <param name="flags">規則を監査する条件。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.String,`0,System.Security.AccessControl.AuditFlags)">
+      <summary>指定した値を使用して、AuditRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">監査規則を適用する ID。</param>
+      <param name="rights">監査規則の権利。</param>
+      <param name="flags">監査規則のプロパティ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuditRule`1.#ctor(System.String,`0,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>指定した値を使用して、AuditRule’1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">監査規則を適用する ID。</param>
+      <param name="rights">監査規則の権利。</param>
+      <param name="inheritanceFlags">監査規則の継承プロパティ。</param>
+      <param name="propagationFlags">継承した監査規則を自動的に反映させるかどうか。</param>
+      <param name="flags">規則を監査する条件。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.AuditRule`1.Rights">
+      <summary>監査規則の権利。</summary>
+      <returns>
+        <see cref="{0}" /> を返します。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AuthorizationRule">
+      <summary>セキュリティ設定できるオブジェクトへのアクセスを決定します。<see cref="T:System.Security.AccessControl.AccessRule" /> 派生クラスおよび <see cref="T:System.Security.AccessControl.AuditRule" /> 派生クラスは、アクセスおよび監査に特化した機能を提供します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定した値を使用して、<see cref="T:System.Security.AuthorizationControl.AccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。このパラメーターは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則を親コンテナーから継承する場合は true。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティ。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうか。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> パラメーターの値を <see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできません。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> パラメーターの値がゼロ (0) です。または、<paramref name="inheritanceFlags" /> パラメーターまたは <paramref name="propagationFlags" /> パラメーターに認識されないフラグ値が格納されています。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.AccessMask">
+      <summary>この規則のアクセス マスクを取得します。</summary>
+      <returns>この規則のアクセス マスク。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.IdentityReference">
+      <summary>この規則を適用する <see cref="T:System.Security.Principal.IdentityReference" /> を取得します。</summary>
+      <returns>この規則を適用する <see cref="T:System.Security.Principal.IdentityReference" />。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.InheritanceFlags">
+      <summary>この規則を子オブジェクトが継承する方法を決定するフラグの値を取得します。</summary>
+      <returns>列挙値のビットごとの組み合わせ。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.IsInherited">
+      <summary>この規則を明示的に設定するか、または親コンテナー オブジェクトから継承するかを指定する値を取得します。</summary>
+      <returns>この規則を明示的に設定せず、親コンテナーから継承する場合は true。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRule.PropagationFlags">
+      <summary>反映フラグの値を取得します。このフラグから、この規則を子オブジェクトに反映させる方法を判断します。このプロパティが重要なのは、<see cref="T:System.Security.AccessControl.InheritanceFlags" /> 列挙体の値が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> でない場合だけです。</summary>
+      <returns>列挙値のビットごとの組み合わせ。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.AuthorizationRuleCollection">
+      <summary>
+        <see cref="T:System.Security.AccessControl.AuthorizationRule" /> オブジェクトのコレクションを表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.#ctor">
+      <summary>
+        <see cref="T:System.Security.AccessControl.AuthorizationRuleCollection" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.AddRule(System.Security.AccessControl.AuthorizationRule)">
+      <summary>
+        <see cref="T:System.Web.Configuration.AuthorizationRule" /> オブジェクトをコレクションに追加します。</summary>
+      <param name="rule">コレクションに追加する <see cref="T:System.Web.Configuration.AuthorizationRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.CopyTo(System.Security.AccessControl.AuthorizationRule[],System.Int32)">
+      <summary>コレクションの内容を配列にコピーします。</summary>
+      <param name="rules">コレクションの内容のコピー先の配列。</param>
+      <param name="index">コピーの開始位置となる、0 から始まるインデックス番号。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.Count"></member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.Item(System.Int32)">
+      <summary>コレクションの指定したインデックス位置にある <see cref="T:System.Security.AccessControl.AuthorizationRule" /> オブジェクトを取得します。</summary>
+      <returns>指定したインデックスの位置にある <see cref="T:System.Security.AccessControl.AuthorizationRule" /> オブジェクト。</returns>
+      <param name="index">取得する <see cref="T:System.Security.AccessControl.AuthorizationRule" /> オブジェクトの、0 から始まるインデックス。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)"></member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#ICollection#IsSynchronized"></member>
+    <member name="P:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#ICollection#SyncRoot"></member>
+    <member name="M:System.Security.AccessControl.AuthorizationRuleCollection.System#Collections#IEnumerable#GetEnumerator"></member>
+    <member name="T:System.Security.AccessControl.CommonAce">
+      <summary>アクセス制御エントリ (ACE: Access Control Entry) を表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAce.#ctor(System.Security.AccessControl.AceFlags,System.Security.AccessControl.AceQualifier,System.Int32,System.Security.Principal.SecurityIdentifier,System.Boolean,System.Byte[])">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CommonAce" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="flags">新しいアクセス制御エントリ (ACE: Access Control Entry) の継承、継承の反映、および監査の各条件に関する情報を指定するフラグ。</param>
+      <param name="qualifier">新しい ACE の用途。</param>
+      <param name="accessMask">ACE のアクセス マスク。</param>
+      <param name="sid">新しい ACE に関連付けられている <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="isCallback">新しい ACE がコールバック型の ACE であることを指定する場合は true。</param>
+      <param name="opaque">新しい ACE に関連付けられている非透過データ。非透過データは、コールバック ACE 型だけに使用できます。この配列の長さは <see cref="M:System.Security.AccessControl.CommonAce.MaxOpaqueLength(System.Boolean)" /> メソッドの戻り値以下である必要があります。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAce.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.CommonAce" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。ACL をバイナリ配列にマーシャリングする前に、この長さを <see cref="M:System.Security.AccessControl.CommonAce.GetBinaryForm(System.Byte[],System.Int32)" /> メソッドと共に使用します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CommonAce" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CommonAce" /> オブジェクトのコンテンツを、指定したオフセットから始まる指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.CommonAce" /> オブジェクトの内容のマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.CommonAce" /> 全体を <paramref name="binaryForm" /> 配列にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAce.MaxOpaqueLength(System.Boolean)">
+      <summary>コールバック アクセス制御エントリ (ACE) の非透過データ BLOB の許容最大長を取得します。</summary>
+      <returns>非透過データ BLOB に許容される長さ。</returns>
+      <param name="isCallback">
+        <see cref="T:System.Security.AccessControl.CommonAce" /> オブジェクトがコールバック ACE 型であることを指定する場合は true。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.CommonAcl">
+      <summary>アクセス制御リスト (ACL: Access Control List) を表します。このクラスは、<see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> クラスおよび <see cref="T:System.Security.AccessControl.SystemAcl" /> クラスの基本クラスです。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.CommonAcl.GetBinaryForm(System.Byte[],System.Int32)" /> メソッドを使用してアクセス制御リスト (ACL: Access Control List) をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.Count">
+      <summary>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクト内のアクセス制御エントリ (ACE: Access Control Entry) の数を取得します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクト内の ACE の数。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAcl.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトのコンテンツを、指定したオフセットを開始位置として、指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.CommonAcl" /> のコンテンツのマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.IsCanonical">
+      <summary>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクト内のアクセス制御エントリ (ACE) の順序が正規順序であるかどうかを指定するブール値を取得します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクト内の ACE の順序が正規である場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.IsContainer">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトがコンテナーであるかどうかを設定します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトがコンテナーである場合は true。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.IsDS">
+      <summary>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトがディレクトリ オブジェクトのアクセス制御リスト (ACL: Access Control List) であるかどうかを設定します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトがディレクトリ オブジェクトの ACL である場合は true。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.Item(System.Int32)">
+      <summary>指定したインデックス位置にある <see cref="T:System.Security.AccessControl.CommonAce" /> を取得または設定します。</summary>
+      <returns>指定されたインデックス位置にある <see cref="T:System.Security.AccessControl.CommonAce" />。</returns>
+      <param name="index">取得または設定する <see cref="T:System.Security.AccessControl.CommonAce" /> の、0 から始まるインデックス番号。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAcl.Purge(System.Security.Principal.SecurityIdentifier)">
+      <summary>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトに関連付けられた、この <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトに格納されているすべてのアクセス制御エントリ (ACE) を削除します。</summary>
+      <param name="sid">確認する対象の <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonAcl.RemoveInheritedAces">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonAcl" /> オブジェクトからすべての継承されたアクセス制御エントリ (ACE) を削除します。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonAcl.Revision">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CommonAcl" /> のリビジョン レベルを取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.CommonAcl" /> のリビジョン レベルを示すバイト値。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.CommonObjectSecurity">
+      <summary>アクセス制御リスト (ACL: Access Control List) を直接操作せずにオブジェクトへのアクセスを制御します。このクラスは、<see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> クラスの抽象基本クラスです。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.#ctor(System.Boolean)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しいオブジェクトがコンテナー オブジェクトである場合は true。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.AddAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>指定したアクセス規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) に追加します。</summary>
+      <param name="rule">追加するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.AddAuditRule(System.Security.AccessControl.AuditRule)">
+      <summary>指定した監査規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) に追加します。</summary>
+      <param name="rule">追加する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.GetAccessRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>指定したセキュリティ識別子に関連付けられたアクセス規則のコレクションを取得します。</summary>
+      <returns>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトに関連付けられたアクセス規則のコレクション。</returns>
+      <param name="includeExplicit">オブジェクトに対して明示的に設定されたアクセス規則を含める場合は true。</param>
+      <param name="includeInherited">継承されたアクセス規則を含める場合は true。</param>
+      <param name="targetType">アクセス規則を取得する対象のセキュリティ識別子が、型 T:System.Security.Principal.SecurityIdentifier または型 T:System.Security.Principal.NTAccount かどうかを指定します。このパラメーターの値は、<see cref="T:System.Security.Principal.SecurityIdentifier" /> 型に変換できる型である必要があります。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.GetAuditRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>指定したセキュリティ識別子に関連付けられた監査規則のコレクションを取得します。</summary>
+      <returns>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトに関連付けられた監査規則のコレクション。</returns>
+      <param name="includeExplicit">オブジェクトに対して明示的に設定された監査規則を含める場合は true。</param>
+      <param name="includeInherited">継承された監査規則を含める場合は true。</param>
+      <param name="targetType">監査規則を取得するセキュリティ識別子。このパラメーターは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトとしてキャストできるオブジェクトである必要があります。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>指定した変更を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) に適用します。</summary>
+      <returns>DACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">DACL に適用する変更。</param>
+      <param name="rule">変更するアクセス規則。</param>
+      <param name="modified">DACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>指定した変更を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) に適用します。</summary>
+      <returns>SACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">SACL に適用する変更。</param>
+      <param name="rule">変更する監査規則。</param>
+      <param name="modified">SACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>指定したアクセス規則と同じセキュリティ識別子とアクセス マスクを含むアクセス規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <returns>アクセス規則が正常に削除された場合は true。それ以外の場合は false。</returns>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAccessRuleAll(System.Security.AccessControl.AccessRule)">
+      <summary>指定したアクセス規則と同じセキュリティ識別子を含むすべてのアクセス規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.AccessRule)">
+      <summary>指定したアクセス規則と完全に一致するすべてのアクセス規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAuditRule(System.Security.AccessControl.AuditRule)">
+      <summary>指定した監査規則と同じセキュリティ識別子とアクセス マスクを含む監査規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <returns>監査規則が正常に削除された場合は true。それ以外の場合は false。</returns>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAuditRuleAll(System.Security.AccessControl.AuditRule)">
+      <summary>指定した監査規則と同じセキュリティ識別子を含むすべての監査規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.AuditRule)">
+      <summary>指定した監査規則と完全に一致するすべての監査規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.ResetAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) 内のすべてのアクセス規則を削除し、指定したアクセス規則を追加します。</summary>
+      <param name="rule">リセットするアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.SetAccessRule(System.Security.AccessControl.AccessRule)">
+      <summary>指定したアクセス規則と同じセキュリティ識別子と修飾子を含むすべてのアクセス規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control) から削除し、指定したアクセス規則を追加します。</summary>
+      <param name="rule">設定するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonObjectSecurity.SetAuditRule(System.Security.AccessControl.AuditRule)">
+      <summary>指定した監査規則と同じセキュリティ識別子と修飾子を含むすべての監査規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除し、指定した監査規則を追加します。</summary>
+      <param name="rule">設定する監査規則。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.CommonSecurityDescriptor">
+      <summary>セキュリティ記述子を表します。セキュリティ記述子には、所有者、プライマリ グループ、随意アクセス制御リスト (DACL: Discretionary Access Control List)、システム アクセス制御リスト (SACL: System Access Control List) が含まれます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.Byte[],System.Int32)">
+      <summary>指定したバイト値の配列から <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しいセキュリティ記述子がコンテナー オブジェクトに関連付けられている場合は true。</param>
+      <param name="isDS">新しいセキュリティ記述子がディレクトリ オブジェクトに関連付けられている場合は true。</param>
+      <param name="binaryForm">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの作成元となるバイト値の配列。</param>
+      <param name="offset">コピーの開始位置を示す <paramref name="binaryForm" /> 配列内のオフセット。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.ControlFlags,System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.SystemAcl,System.Security.AccessControl.DiscretionaryAcl)">
+      <summary>指定した情報で <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しいセキュリティ記述子がコンテナー オブジェクトに関連付けられている場合は true。</param>
+      <param name="isDS">新しいセキュリティ記述子がディレクトリ オブジェクトに関連付けられている場合は true。</param>
+      <param name="flags">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの動作を指定するフラグ。</param>
+      <param name="owner">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの所有者。</param>
+      <param name="group">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトのプライマリ グループ。</param>
+      <param name="systemAcl">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの システム アクセス制御リスト (SACL: System Access Control List)。</param>
+      <param name="discretionaryAcl">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの随意アクセス制御リスト (DACL: Discretionary Access Control List)。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.RawSecurityDescriptor)">
+      <summary>指定した <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトから <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しいセキュリティ記述子がコンテナー オブジェクトに関連付けられている場合は true。</param>
+      <param name="isDS">新しいセキュリティ記述子がディレクトリ オブジェクトに関連付けられている場合は true。</param>
+      <param name="rawSecurityDescriptor">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの作成元の <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.#ctor(System.Boolean,System.Boolean,System.String)">
+      <summary>指定した SDDL (Security Descriptor Definition Language) 文字列から <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しいセキュリティ記述子がコンテナー オブジェクトに関連付けられている場合は true。</param>
+      <param name="isDS">新しいセキュリティ記述子がディレクトリ オブジェクトに関連付けられている場合は true。</param>
+      <param name="sddlForm">新しい <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの作成元の SDDL 文字列。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.AddDiscretionaryAcl(System.Byte,System.Int32)">
+      <summary>設定、<see cref="P:System.Security.AccessControl.CommonSecurityDescriptor.DiscretionaryAcl" />プロパティをこの<see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" />インスタンスとセット、<see cref="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclPresent" />フラグ。</summary>
+      <param name="revision">新しい <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトのリビジョン レベル。</param>
+      <param name="trusted">この <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトが格納できるアクセス制御エントリ (ACE: Access Control Entry) の数。この数は単にヒントとして使用されます。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.AddSystemAcl(System.Byte,System.Int32)">
+      <summary>設定、<see cref="P:System.Security.AccessControl.CommonSecurityDescriptor.SystemAcl" />プロパティをこの<see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" />インスタンスとセット、<see cref="F:System.Security.AccessControl.ControlFlags.SystemAclPresent" />フラグ。</summary>
+      <param name="revision">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトのリビジョン レベル。</param>
+      <param name="trusted">この <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトが格納できるアクセス制御エントリ (ACE: Access Control Entry) の数。この数は単にヒントとして使用されます。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.ControlFlags">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの動作を指定する値を取得します。</summary>
+      <returns>論理 OR 操作と結合した <see cref="T:System.Security.AccessControl.ControlFlags" /> 列挙体の 1 つ以上の値。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.DiscretionaryAcl">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの随意アクセス制御リスト (DACL) を取得または設定します。DACL にはアクセス規則が格納されます。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの DACL。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.Group">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトのプライマリ グループを取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトのプライマリ グループ。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsContainer">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられたオブジェクトがコンテナー オブジェクトであるかどうかを指定するブール値を取得します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられたオブジェクトがコンテナー オブジェクトである場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsDiscretionaryAclCanonical">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) で使用する順序が標準の順序であるかどうかを示すブール値を取得します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられた DACL で使用する順序が標準の順序である場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsDS">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられたオブジェクトがディレクトリ オブジェクトであるかどうかを指定するブール値を取得します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられたオブジェクトがディレクトリ オブジェクトである場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.IsSystemAclCanonical">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) で使用する順序が標準の順序であるかどうかを示すブール値を取得します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられた SACL で使用する順序が標準の順序である場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.Owner">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられているオブジェクトの所有者を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられているオブジェクトの所有者。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.PurgeAccessControl(System.Security.Principal.SecurityIdentifier)">
+      <summary>指定したセキュリティ識別子のすべてのアクセス規則を、この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL) から削除します。</summary>
+      <param name="sid">アクセス規則を削除するセキュリティ識別子。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.PurgeAudit(System.Security.Principal.SecurityIdentifier)">
+      <summary>指定したセキュリティ識別子のすべての監査規則を、この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <param name="sid">監査規則を削除するセキュリティ識別子。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.SetDiscretionaryAclProtection(System.Boolean,System.Boolean)">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) の継承保護を設定します。保護された DACL は、親コンテナーからアクセス規則を継承しません。</summary>
+      <param name="isProtected">DACL を継承から保護する場合は true。</param>
+      <param name="preserveInheritance">継承されたアクセス規則を DACL で維持する場合は true。継承されたアクセス規則を DACL から削除する場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.CommonSecurityDescriptor.SetSystemAclProtection(System.Boolean,System.Boolean)">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL) の継承保護を設定します。保護された SACL は、親コンテナーから監査規則を継承しません。</summary>
+      <param name="isProtected">SACL を継承から保護する場合は true。</param>
+      <param name="preserveInheritance">継承された監査規則を SACL で維持する場合は true。継承された監査規則を SACL から削除する場合は false。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CommonSecurityDescriptor.SystemAcl">
+      <summary>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトのシステム アクセス制御リスト (SACL: System Access Control List) を取得または設定します。SACL には監査規則が格納されます。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" /> オブジェクトの SACL。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.CompoundAce">
+      <summary>複合アクセス制御エントリ (ACE: Access Control Entry) を表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CompoundAce.#ctor(System.Security.AccessControl.AceFlags,System.Int32,System.Security.AccessControl.CompoundAceType,System.Security.Principal.SecurityIdentifier)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CompoundAce" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="flags">新しいアクセス制御エントリ (ACE: Access Control Entry) の継承、継承の反映、および監査の各条件に関する情報を指定するフラグを格納します。</param>
+      <param name="accessMask">ACE のアクセス マスク。</param>
+      <param name="compoundAceType">
+        <see cref="T:System.Security.AccessControl.CompoundAceType" /> 列挙体の値。</param>
+      <param name="sid">新しい ACE に関連付けられている <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.CompoundAce.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.CompoundAce" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.CompoundAce.GetBinaryForm" /> メソッドで ACL をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CompoundAce" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.CompoundAce.CompoundAceType">
+      <summary>この <see cref="T:System.Security.AccessControl.CompoundAce" /> オブジェクトの型を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CompoundAce" /> オブジェクトの型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CompoundAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CompoundAce" /> オブジェクトの内容を、指定したオフセットから始まる指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.CompoundAce" /> のコンテンツのマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.CompoundAce" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="T:System.Security.AccessControl.CompoundAceType">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CompoundAce" /> オブジェクトの型を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.CompoundAceType.Impersonation">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CompoundAce" /> オブジェクトは、偽装に使用されます。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.ControlFlags">
+      <summary>これらのフラグは、セキュリティ記述子の動作に影響します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclAutoInherited">
+      <summary>随意アクセス制御リスト (DACL: Discretionary Access Control List) が親から自動的に継承されていることを指定します。設定できるのは、リソース マネージャーだけです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclAutoInheritRequired">
+      <summary>無視されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclDefaulted">
+      <summary>DACL が既定の機構によって取得されたことを指定します。設定できるのは、リソース マネージャーだけです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclPresent">
+      <summary>DACL が null でないことを指定します。設定できるのは、リソース マネージャーまたはユーザーだけです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclProtected">
+      <summary>リソース マネージャーが自動継承を防止することを指定します。設定できるのは、リソース マネージャーまたはユーザーだけです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.DiscretionaryAclUntrusted">
+      <summary>無視されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.GroupDefaulted">
+      <summary>グループ <see cref="T:System.Security.Principal.SecurityIdentifier" /> が既定の機構によって取得されたことを指定します。設定できるのは、リソース マネージャーだけです。呼び出し元で設定しないでください。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.None">
+      <summary>制御フラグがありません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.OwnerDefaulted">
+      <summary>所有者 <see cref="T:System.Security.Principal.SecurityIdentifier" /> が既定の機構によって取得されたことを指定します。設定できるのは、リソース マネージャーだけです。呼び出し元で設定しないでください。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.RMControlValid">
+      <summary>予約済みフィールドの内容が有効であることを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SelfRelative">
+      <summary>セキュリティ記述子のバイナリ表現が自己相対形式であることを指定します。このフラグは、必ず設定されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.ServerSecurity">
+      <summary>無視されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclAutoInherited">
+      <summary>システム アクセス制御リスト (SACL: System Access Control List) が親から自動的に継承されていることを指定します。設定できるのは、リソース マネージャーだけです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclAutoInheritRequired">
+      <summary>無視されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclDefaulted">
+      <summary>SACL が既定の機構によって取得されたことを示します。設定できるのは、リソース マネージャーだけです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclPresent">
+      <summary>SACL が null でないことを指定します。設定できるのは、リソース マネージャーまたはユーザーだけです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ControlFlags.SystemAclProtected">
+      <summary>リソース マネージャーが自動継承を防止することを指定します。設定できるのは、リソース マネージャーまたはユーザーだけです。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.CustomAce">
+      <summary>
+        <see cref="T:System.Security.AccessControl.AceType" /> 列挙体のメンバーによって定義されていないアクセス制御エントリ (ACE: Access Control Entry) を表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.#ctor(System.Security.AccessControl.AceType,System.Security.AccessControl.AceFlags,System.Byte[])">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CustomAce" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="type">新しいアクセス制御エントリ (ACE: Access Control Entry) の型。この値は <see cref="F:System.Security.AccessControl.AceType.MaxDefinedAceType" /> よりも大きくする必要があります。</param>
+      <param name="flags">新しい ACE の継承、継承の反映、および監査の各条件に関する情報を指定するフラグ。</param>
+      <param name="opaque">新しい ACE のデータを格納するバイト値の配列。この値は、null の場合もあります。この配列の長さは、<see cref="F:System.Security.AccessControl.CustomAce.MaxOpaqueLength" /> フィールドの値以下であり、4 の倍数である必要があります。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="type" /> パラメーターの値が <see cref="F:System.Security.AccessControl.AceType.MaxDefinedAceType" /> 以下である、<paramref name="opaque" /> 配列の長さが <see cref="F:System.Security.AccessControl.CustomAce.MaxOpaqueLength" /> フィールドの値を超えている、またはこの長さが 4 の倍数ではないのいずれかです。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.CustomAce.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.CustomAce.GetBinaryForm" /> メソッドで ACL をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトの内容を、指定したオフセットから始まる指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.CustomAce" /> の内容のマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.CustomAce" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.GetOpaque">
+      <summary>この <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトに関連付けられた非透過データを返します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトに関連付けられた非透過データを表すバイト値の配列。</returns>
+    </member>
+    <member name="F:System.Security.AccessControl.CustomAce.MaxOpaqueLength">
+      <summary>この <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトの非透過データ BLOB の許容最大長を返します。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.CustomAce.OpaqueLength">
+      <summary>この <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトに関連付けられた非透過データの長さを取得します。</summary>
+      <returns>非透過コールバック データの長さ。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.CustomAce.SetOpaque(System.Byte[])">
+      <summary>この <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトに関連付けられた非透過コールバック データを設定します。</summary>
+      <param name="opaque">この <see cref="T:System.Security.AccessControl.CustomAce" /> オブジェクトの非透過コールバック データを表すバイト値の配列。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.DiscretionaryAcl">
+      <summary>随意アクセス制御リスト (DACL: Discretionary Access Control List) を表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.#ctor(System.Boolean,System.Boolean,System.Byte,System.Int32)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a container.</param>
+      <param name="isDS">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a directory object Access Control List (ACL).</param>
+      <param name="revision">新しい <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトのリビジョン レベル。</param>
+      <param name="capacity">この <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトが格納できるアクセス制御エントリ (ACE: Access Control Entry) の数。この数は単にヒントとして使用されます。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.#ctor(System.Boolean,System.Boolean,System.Int32)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a container.</param>
+      <param name="isDS">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a directory object Access Control List (ACL).</param>
+      <param name="capacity">この <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトが格納できるアクセス制御エントリ (ACE: Access Control Entry) の数。この数は単にヒントとして使用されます。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.RawAcl)">
+      <summary>指定した <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクトからの指定した値を使用して、 <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a container.</param>
+      <param name="isDS">true if the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object is a directory object Access Control List (ACL).</param>
+      <param name="rawAcl">The underlying <see cref="T:System.Security.AccessControl.RawAcl" /> object for the new <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> object.空の ACL を作成するには、null を指定します。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.AddAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定した設定のアクセス制御エントリ (ACE) を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトに追加します。</summary>
+      <param name="accessType">追加するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を追加する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい ACE のアクセス規則。</param>
+      <param name="inheritanceFlags">新しい ACE の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">新しい ACE の継承反映プロパティを示すフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.AddAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>指定した設定のアクセス制御エントリ (ACE) を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトに追加します。このメソッドは、新しい ACE のオブジェクト型または継承されたオブジェクト型を指定する場合に、ディレクトリ オブジェクトのアクセス制御リスト (ACL) に対して使用します。</summary>
+      <param name="accessType">追加するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を追加する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい ACE のアクセス規則。</param>
+      <param name="inheritanceFlags">新しい ACE の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">新しい ACE の継承反映プロパティを示すフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">新しい ACE を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">新しい ACE を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.AddAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>指定した設定のアクセス制御エントリ (ACE) を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトに追加します。</summary>
+      <param name="accessType">追加するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を追加する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />新しいアクセスするためです。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定したアクセス制御規則を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。</summary>
+      <returns>指定したアクセスがこのメソッドで正しく削除される場合は true。それ以外の場合は false。</returns>
+      <param name="accessType">削除するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">アクセス制御規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除する規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除する規則の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除する規則の継承反映プロパティを示すフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>指定したアクセス制御規則を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。このメソッドはオブジェクト型または継承されたオブジェクト型を指定する場合に、ディレクトリ オブジェクトのアクセス制御リスト (ACL) に対して使用します。</summary>
+      <returns>指定したアクセスがこのメソッドで正しく削除される場合は true。それ以外の場合は false。</returns>
+      <param name="accessType">削除するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">アクセス制御規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除するアクセス制御規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除するアクセス制御規則の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除するアクセス制御規則の継承反映プロパティを示すフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">削除されたアクセス制御規則を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">削除されたアクセス制御規則を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>指定したアクセス制御規則を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。</summary>
+      <returns>
+        <see cref="T:System.Boolean" /> を返します。</returns>
+      <param name="accessType">削除するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">アクセス制御規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />のアクセスを削除します。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccessSpecific(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定したアクセス制御エントリ (ACE) を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。</summary>
+      <param name="accessType">削除するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除する ACE のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除する ACE の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除する ACE の継承反映プロパティを示すフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccessSpecific(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>指定したアクセス制御エントリ (ACE) を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。このメソッドは、削除する ACE のオブジェクト型または継承されたオブジェクト型を指定する場合に、ディレクトリ オブジェクトの アクセス制御リスト (ACL) に対して使用します。</summary>
+      <param name="accessType">削除するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除する ACE のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除する ACE の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除する ACE の継承反映プロパティを示すフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">削除された ACE を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">削除された ACE を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.RemoveAccessSpecific(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>指定したアクセス制御エントリ (ACE) を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。</summary>
+      <param name="accessType">削除するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />のアクセスを削除します。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.SetAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトについて、指定したアクセス制御を設定します。</summary>
+      <param name="accessType">設定するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を設定する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい ACE のアクセス規則。</param>
+      <param name="inheritanceFlags">新しい ACE の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">新しい ACE の継承反映プロパティを示すフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.SetAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトについて、指定したアクセス制御を設定します。</summary>
+      <param name="accessType">設定するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を設定する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい ACE のアクセス規則。</param>
+      <param name="inheritanceFlags">新しい ACE の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">新しい ACE の継承反映プロパティを示すフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">新しい ACE を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">新しい ACE を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DiscretionaryAcl.SetAccess(System.Security.AccessControl.AccessControlType,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAccessRule)">
+      <summary>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトについて、指定したアクセス制御を設定します。</summary>
+      <param name="accessType">設定するアクセス制御の種類 (許可または拒否)。</param>
+      <param name="sid">ACE を設定する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAccessRule" />アクセスを設定します。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.GenericAce">
+      <summary>アクセス制御エントリ (ACE: Access Control Entry) を表します。このクラスは、他のすべての ACE クラスの基本クラスです。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.AceFlags">
+      <summary>この <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトに関連付けられている <see cref="T:System.Security.AccessControl.AceFlags" /> を取得または設定します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトに関連付けられている <see cref="T:System.Security.AccessControl.AceFlags" />。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.AceType">
+      <summary>このアクセス制御エントリ (ACE: Access Control Entry) の型を取得します。</summary>
+      <returns>この ACE の型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.AuditFlags">
+      <summary>このアクセス制御エントリ (ACE: Access Control Entry) に関連付けられた監査情報を取得します。</summary>
+      <returns>このアクセス制御エントリ (ACE: Access Control Entry) に関連付けられた監査情報。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.GenericAce.GetBinaryForm" /> メソッドで ACL をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.Copy">
+      <summary>このアクセス制御エントリ (ACE: Access Control Entry) の詳細コピーを作成します。</summary>
+      <returns>メソッドが作成する <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクト。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.CreateFromBinaryForm(System.Byte[],System.Int32)">
+      <summary>指定したバイナリ データから <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトを作成します。</summary>
+      <returns>このメソッドが作成する <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクト。</returns>
+      <param name="binaryForm">新しい <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトの作成元のバイナリ データ。</param>
+      <param name="offset">マーシャリング解除の開始位置を表すオフセット。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.Equals(System.Object)">
+      <summary>指定した <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトが、現在の <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトと等しいかどうかを判断します。</summary>
+      <returns>指定した <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトが現在の <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトと等しい場合は true。それ以外の場合は false。</returns>
+      <param name="o">現在の <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトと比較する <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトのコンテンツを、指定したオフセットから始まる指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.GenericAce" /> のコンテンツのマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.GenericAcl" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.GetHashCode">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAce" /> クラスのハッシュ関数として機能します。<see cref="M:System.Security.AccessControl.GenericAce.GetHashCode" /> メソッドは、ハッシュ アルゴリズムや、ハッシュ テーブルなどのデータ構造での使用に適しています。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトのハッシュ コード。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.InheritanceFlags">
+      <summary>このアクセス制御エントリ (ACE: Access Control Entry) の継承プロパティを指定するフラグを取得します。</summary>
+      <returns>この ACE の継承プロパティを指定するフラグ。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.IsInherited">
+      <summary>このアクセス制御エントリ (ACE: Access Control Entry) が継承されるか、または明示的に設定されるかを示すブール値を取得します。</summary>
+      <returns>この ACE が継承される場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.op_Equality(System.Security.AccessControl.GenericAce,System.Security.AccessControl.GenericAce)">
+      <summary>指定した <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトが等しいかどうかを判断します。</summary>
+      <returns>2 つの <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトが等しい場合は true。それ以外の場合は false。</returns>
+      <param name="left">比較対象の第 1 <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクト。</param>
+      <param name="right">比較対象の第 2 <see cref="T:System.Security.AccessControl.GenericAce" />。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAce.op_Inequality(System.Security.AccessControl.GenericAce,System.Security.AccessControl.GenericAce)">
+      <summary>指定した <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトが等しくないかどうかを判断します。</summary>
+      <returns>2 つの <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトが等しくない場合は true。それ以外の場合は false。</returns>
+      <param name="left">比較対象の第 1 <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクト。</param>
+      <param name="right">比較対象の第 2 <see cref="T:System.Security.AccessControl.GenericAce" />。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAce.PropagationFlags">
+      <summary>このアクセス制御エントリ (ACE: Access Control Entry) の継承反映プロパティを指定するフラグを取得します。</summary>
+      <returns>この ACE の継承反映プロパティを指定するフラグ。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.GenericAcl">
+      <summary>アクセス制御リスト (ACL: Access Control List) を表します。また、<see cref="T:System.Security.AccessControl.CommonAcl" />、<see cref="T:System.Security.AccessControl.DiscretionaryAcl" />、<see cref="T:System.Security.AccessControl.RawAcl" />、および <see cref="T:System.Security.AccessControl.SystemAcl" /> の各クラスの基本クラスです。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.#ctor">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.GenericAcl.AclRevision">
+      <summary>現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> のリビジョン レベル。この値は、ディレクトリ サービス オブジェクトに関連付けられていないアクセス制御リスト (ACL: Access Control List) の <see cref="P:System.Security.AccessControl.GenericAcl.Revision" /> プロパティから返されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.GenericAcl.AclRevisionDS">
+      <summary>現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> のリビジョン レベル。この値は、ディレクトリ サービス オブジェクトに関連付けられているアクセス制御リスト (ACL: Access Control List) の <see cref="P:System.Security.AccessControl.GenericAcl.Revision" /> プロパティから返されます。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.GenericAcl.GetBinaryForm" /> メソッドで ACL をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> オブジェクトのバイナリ表現の長さ ( バイト単位)。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.CopyTo(System.Security.AccessControl.GenericAce[],System.Int32)">
+      <summary>指定した配列に、現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> の各 <see cref="T:System.Security.AccessControl.GenericAce" /> をコピーします。</summary>
+      <param name="array">現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> が保持している <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトのコピーを格納する配列。</param>
+      <param name="index">コピーの開始位置となる <paramref name="array" /> の、0 から始まるインデックス番号。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.Count">
+      <summary>現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> オブジェクト内のアクセス制御エントリ (ACE: Access Control Entry) の数を取得します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> オブジェクト内の ACE の数。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAcl" />オブジェクトの内容を、指定したオフセットから始まる指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.GenericAcl" /> のコンテンツのマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.GenericAcl" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.GetEnumerator">
+      <summary>
+        <see cref="T:System.Security.AccessControl.AceEnumerator" /> クラスの新しいインスタンスを返します。</summary>
+      <returns>このメソッドが返す <see cref="T:Security.AccessControl.AceEnumerator" /> オブジェクト。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.IsSynchronized">
+      <summary>このプロパティは必ず false に設定されます。このプロパティは、<see cref="T:System.Collections.ICollection" /> インターフェイスを実装するためだけに実装されています。</summary>
+      <returns>常に false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.Item(System.Int32)">
+      <summary>指定したインデックス位置にある <see cref="T:System.Security.AccessControl.GenericAce" /> を取得または設定します。</summary>
+      <returns>指定されたインデックスにある <see cref="T:System.Security.AccessControl.GenericAce" />。</returns>
+      <param name="index">取得または設定する <see cref="T:System.Security.AccessControl.GenericAce" /> の、0 から始まるインデックス。</param>
+    </member>
+    <member name="F:System.Security.AccessControl.GenericAcl.MaxBinaryLength">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAcl" /> オブジェクトのバイナリの許容最大長。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.Revision">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericAcl" /> のリビジョン レベルを取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.GenericAcl" /> のリビジョン レベルを示すバイト値。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericAcl.SyncRoot">
+      <summary>このプロパティは常に null を返します。このプロパティは、<see cref="T:System.Collections.ICollection" /> インターフェイスを実装するためだけに実装されています。</summary>
+      <returns>常に null を返します。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+      <summary>指定した配列に、現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> の各 <see cref="T:System.Security.AccessControl.GenericAce" /> をコピーします。</summary>
+      <param name="array">現在の <see cref="T:System.Security.AccessControl.GenericAcl" /> が保持している <see cref="T:System.Security.AccessControl.GenericAce" /> オブジェクトのコピーを格納する配列。</param>
+      <param name="index">コピーの開始位置となる <paramref name="array" /> の、0 から始まるインデックス番号。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericAcl.System#Collections#IEnumerable#GetEnumerator">
+      <summary>
+        <see cref="T:System.Collections.IEnumerator" /> インターフェイスのインスタンスとしてキャストされる <see cref="T:System.Security.AccessControl.AceEnumerator" /> クラスの新しいインスタンスを返します。</summary>
+      <returns>
+        <see cref="T:System.Collections.IEnumerator" /> インターフェイスのインスタンスとしてキャストされる新しい <see cref="T:System.Security.AccessControl.AceEnumerator" /> オブジェクト。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.GenericSecurityDescriptor">
+      <summary>セキュリティ記述子を表します。セキュリティ記述子には、所有者、プライマリ グループ、随意アクセス制御リスト (DACL: Discretionary Access Control List)、システム アクセス制御リスト (SACL: System Access Control List) が含まれます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.#ctor">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.GenericSecurityDescriptor.GetBinaryForm" /> メソッドで ACL をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.ControlFlags">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトの動作を指定する値を取得します。</summary>
+      <returns>論理 OR 操作と結合した <see cref="T:System.Security.AccessControl.ControlFlags" /> 列挙体の 1 つ以上の値。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトに格納された情報を表すバイト値の配列を返します。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> の内容のマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.GetSddlForm(System.Security.AccessControl.AccessControlSections)">
+      <summary>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトが表すセキュリティ記述子の指定したセクションの SDDL (Security Descriptor Definition Language) 形式を返します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションの SDDL 形式。</returns>
+      <param name="includeSections">取得するセキュリティ記述子のセクション (アクセス規則、監査規則、プライマリ グループ、所有者) を指定します。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.Group">
+      <summary>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトのプライマリ グループを取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトのプライマリ グループ。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.GenericSecurityDescriptor.IsSddlConversionSupported">
+      <summary>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトに関連付けられたセキュリティ記述子を SDDL (Security Descriptor Definition Language) 形式に変換できるかどうかを示すブール値を返します。</summary>
+      <returns>この<see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトに関連付けられたセキュリティ記述子を SDDL (Security Descriptor Definition Language) 形式に変換できる場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.Owner">
+      <summary>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトに関連付けられているオブジェクトの所有者を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトに関連付けられているオブジェクトの所有者。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.GenericSecurityDescriptor.Revision">
+      <summary>
+        <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> オブジェクトのリビジョン レベルを取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.GenericSecurityDescriptor" /> のリビジョン レベルを指定するバイト値。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.InheritanceFlags">
+      <summary>継承フラグでは、アクセス制御エントリ (ACE: Access Control Entry) の継承のセマンティクスを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.InheritanceFlags.ContainerInherit">
+      <summary>ACE は、子コンテナー オブジェクトによって継承されます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.InheritanceFlags.None">
+      <summary>ACE は、子オブジェクトによって継承されません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.InheritanceFlags.ObjectInherit">
+      <summary>ACE は、子リーフ オブジェクトによって継承されます。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.KnownAce">
+      <summary>現在 Microsoft Corporation によって定義されているすべてのアクセス制御エントリ (ACE: Access Control Entry) をカプセル化します。すべての <see cref="T:System.Security.AccessControl.KnownAce" /> オブジェクトには、32 ビットのアクセス マスクと <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトが格納されます。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.KnownAce.AccessMask">
+      <summary>この <see cref="T:System.Security.AccessControl.KnownAce" /> オブジェクトのアクセス マスクを取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.KnownAce" /> オブジェクトのアクセス マスク。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.KnownAce.SecurityIdentifier">
+      <summary>この <see cref="T:System.Security.AccessControl.KnownAce" /> オブジェクトに関連付けられている <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトを取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.KnownAce" /> オブジェクトに関連付けられている <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクト。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.NativeObjectSecurity">
+      <summary>アクセス制御リスト (ACL: Access Control List) を直接操作せずにネイティブなオブジェクトへのアクセスを制御する機能を提供します。ネイティブなオブジェクト型は、<see cref="T:System.Security.AccessControl.ResourceType" /> 列挙体で定義されます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの型。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> クラスの新しいインスタンスを初期化します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの型。</param>
+      <param name="handle">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトのハンドル。</param>
+      <param name="includeSections">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに格納される、セキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> クラスの新しいインスタンスを初期化します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの型。</param>
+      <param name="handle">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトのハンドル。</param>
+      <param name="includeSections">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに格納される、セキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+      <param name="exceptionFromErrorCode">カスタムの例外を提供するインテグレーターによって実装されたデリゲート。</param>
+      <param name="exceptionContext">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>指定した値を使用して、<see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの型。</param>
+      <param name="exceptionFromErrorCode">カスタムの例外を提供するインテグレーターによって実装されたデリゲート。</param>
+      <param name="exceptionContext">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> クラスの新しいインスタンスを初期化します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.NativObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの型。</param>
+      <param name="name">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの名前。</param>
+      <param name="includeSections">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに格納される、セキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> クラスの新しいインスタンスを初期化します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの型。</param>
+      <param name="name">新しい <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの名前。</param>
+      <param name="includeSections">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに格納される、セキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+      <param name="exceptionFromErrorCode">カスタムの例外を提供するインテグレーターによって実装されたデリゲート。</param>
+      <param name="exceptionContext">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションを、永続的なストレージに保存します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="handle">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトのハンドル。</param>
+      <param name="includeSections">保存するセキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+      <exception cref="T:System.IO.FileNotFoundException">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられているセキュリティ設定できるオブジェクトがディレクトリまたはファイルであり、そのディレクトリまたはファイルが見つかりません。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections,System.Object)">
+      <summary>この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションを、永続的なストレージに保存します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="handle">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトのハンドル。</param>
+      <param name="includeSections">保存するセキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+      <param name="exceptionContext">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+      <exception cref="T:System.IO.FileNotFoundException">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられているセキュリティ設定できるオブジェクトがディレクトリまたはファイルであり、そのディレクトリまたはファイルが見つかりません。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションを、永続的なストレージに保存します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="name">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの名前。</param>
+      <param name="includeSections">保存するセキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+      <exception cref="T:System.IO.FileNotFoundException">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられているセキュリティ設定できるオブジェクトがディレクトリまたはファイルであり、そのディレクトリまたはファイルが見つかりません。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.NativeObjectSecurity.Persist(System.String,System.Security.AccessControl.AccessControlSections,System.Object)">
+      <summary>この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションを、永続的なストレージに保存します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="name">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの名前。</param>
+      <param name="includeSections">保存するセキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+      <param name="exceptionContext">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+      <exception cref="T:System.IO.FileNotFoundException">この <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられているセキュリティ設定できるオブジェクトがディレクトリまたはファイルであり、そのディレクトリまたはファイルが見つかりません。</exception>
+    </member>
+    <member name="T:System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode">
+      <summary>インテグレーターが作成した特定の例外に数値エラー コードをマップする方法を提供します。</summary>
+      <returns>このデリゲートで作成する <see cref="T:System.Exception" />。</returns>
+      <param name="errorCode">数値エラー コード。</param>
+      <param name="name">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの名前。</param>
+      <param name="handle">
+        <see cref="T:System.Security.AccessControl.NativeObjectSecurity" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトのハンドル。</param>
+      <param name="context">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAccessRule">
+      <summary>ユーザー ID、アクセス マスク、アクセス制御の種類 (許可または拒否) の組み合わせを表します。<see cref="T:System.Security.AccessControl.ObjectAccessRule" /> オブジェクトにも、規則を適用するオブジェクトの型、その規則を継承できる子オブジェクトの型、子オブジェクトによる規則の継承方法、および継承の反映方法に関する情報が格納されます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Guid,System.Guid,System.Security.AccessControl.AccessControlType)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.ObjectAccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。このオブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則が親コンテナーから継承される場合は true。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティを指定します。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうかを指定します。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="objectType">規則を適用するオブジェクトの型。</param>
+      <param name="inheritedObjectType">規則を継承できる子オブジェクトの型。</param>
+      <param name="type">この規則でアクセスを許可するかどうかを指定します。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> パラメーターの値を <see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできません。または、<paramref name="type" /> パラメーターに無効な値が格納されています。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> パラメーターの値がゼロ (0) です。または、<paramref name="inheritanceFlags" /> パラメーターまたは <paramref name="propagationFlags" /> パラメーターに認識できないフラグ値が含まれています。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAccessRule.InheritedObjectType">
+      <summary>
+        <see cref="System.Security.AccessControl.ObjectAccessRule" /> オブジェクトを継承できる子オブジェクトの型を取得します。</summary>
+      <returns>
+        <see cref="System.Security.AccessControl.ObjectAccessRule" /> オブジェクトを継承できる子オブジェクトの型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAccessRule.ObjectFlags">
+      <summary>
+        <see cref="System.Security.AccessControl.ObjectAccessRule" /> オブジェクトの <see cref="P:System.Security.AccessControl.ObjectAccessRule.ObjectType" /> プロパティおよび <see cref="P:System.Security.AccessControl.ObjectAccessRule.InheritedObjectType" /> プロパティが有効な値を格納していることを指定するフラグを取得します。</summary>
+      <returns>
+        <see cref="F:System.Security.AccessControl.ObjectAceFlags.ObjectAceTypePresent" /> は、<see cref="P:System.Security.AccessControl.ObjectAccessRule.ObjectType" /> プロパティに有効な値が格納されていることを示します。<see cref="F:System.Security.AccessControl.ObjectAceFlags.InheritedObjectAceTypePresent" /> は、<see cref="P:System.Security.AccessControl.ObjectAccessRule.InheritedObjectType" /> プロパティに有効な値が格納されていることを示します。これらの値は論理 OR と組み合わせることができます。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAccessRule.ObjectType">
+      <summary>
+        <see cref="System.Security.AccessControl.ObjectAccessRule" /> を適用するオブジェクトの型を取得します。</summary>
+      <returns>
+        <see cref="System.Security.AccessControl.ObjectAccessRule" /> を適用するオブジェクトの型。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAce">
+      <summary>ディレクトリ サービス オブジェクトへのアクセスを制御します。このクラスは、ディレクトリ オブジェクトに関連付けられたアクセス制御エントリ (ACE: Access Control Entry) を表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAce.#ctor(System.Security.AccessControl.AceFlags,System.Security.AccessControl.AceQualifier,System.Int32,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid,System.Boolean,System.Byte[])">
+      <summary>
+        <see cref="T:System.Security.AccessControl.ObjectAce" /> クラスの新しいインスタンスを開始します。</summary>
+      <param name="aceFlags">新しいアクセス制御エントリ (ACE: Access Control Entry) の継承、継承の反映、および監査の各条件。</param>
+      <param name="qualifier">新しい ACE の用途。</param>
+      <param name="accessMask">ACE のアクセス マスク。</param>
+      <param name="sid">新しい ACE に関連付けられている <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="flags">
+        <paramref name="type" /> パラメーターおよび <paramref name="inheritedType" /> パラメーターに有効なオブジェクト GUID が格納されているかどうか。</param>
+      <param name="type">新しい ACE の適用対象となるオブジェクト型を識別する GUID。</param>
+      <param name="inheritedType">新しい ACE を継承できるオブジェクト型を識別する GUID。</param>
+      <param name="isCallback">新しい ACE がコールバック型の ACE である場合は true。</param>
+      <param name="opaque">新しい ACE に関連付けられている非透過データ。このパラメーターは、コールバック ACE 型だけに使用できます。この配列の長さは <see cref="M:System.Security.AccessControl.ObjectAceMaxOpaqueLength" /> メソッドの戻り値以下である必要があります。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">修飾子パラメーターに無効な値が格納されています。または、非透過パラメーターの値の長さが <see cref="M:System.Security.AccessControl.ObjectAceMaxOpaqueLength" /> メソッドの戻り値を超えています。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.ObjectAce" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.ObjectAce.GetBinaryForm" /> メソッドで、ACL をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.ObjectAce" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAce.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.ObjectAce" /> オブジェクトのコンテンツを、指定したオフセットから始まる指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.ObjectAce" /> のコンテンツのマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.ObjectAce" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.InheritedObjectAceType">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectAce" /> オブジェクトが表すアクセス制御エントリ (ACE: Access Control Entry) を継承できるオブジェクト型の GUID を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectAce" /> オブジェクトが表すアクセス制御エントリ (ACE: Access Control Entry) を継承できるオブジェクト型の GUID。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAce.MaxOpaqueLength(System.Boolean)">
+      <summary>コールバック アクセス制御エントリ (ACE: Access Control Entry) の非透過データ BLOB の許容最大長をバイト単位で返します。</summary>
+      <returns>コールバック アクセス制御エントリ (ACE: Access Control Entry) の非透過データ BLOB の許容最大長 (バイト単位)。</returns>
+      <param name="isCallback">
+        <see cref="T:System.Security.AccessControl.ObjectAce" /> がコールバック ACE 型である場合は true。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.ObjectAceFlags">
+      <summary>
+        <see cref="P:System.Security.AccessControl.ObjectAce.ObjectAceType" /> プロパティおよび <see cref="P:System.Security.AccessControl.ObjectAce.InheritedObjectAceType" /> プロパティに、有効なオブジェクト型を示す値が格納されているかどうかを示すフラグを取得または設定します。</summary>
+      <returns>論理 OR 演算と結合した <see cref="T:System.Security.AccessControl.ObjectAceFlags" /> 列挙体の 1 つ以上のメンバー。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAce.ObjectAceType">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectAce" /> オブジェクトに関連付けられているオブジェクト型の GUID を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectAce" /> オブジェクトに関連付けられているオブジェクト型の GUID。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAceFlags">
+      <summary>アクセス制御エントリ (ACE: Access Control Entry) のオブジェクトの型が存在するかどうかを示します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ObjectAceFlags.InheritedObjectAceTypePresent">
+      <summary>ACE を継承できるオブジェクトの型。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ObjectAceFlags.None">
+      <summary>オブジェクトの型は存在しません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ObjectAceFlags.ObjectAceTypePresent">
+      <summary>ACE に関連付けられたオブジェクトの型が存在します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectAuditRule">
+      <summary>ユーザー ID、アクセス マスク、および監査条件の組み合わせを表します。<see cref="T:System.Security.AccessControl.ObjectAuditRule" /> オブジェクトには、規則を適用するオブジェクトの型、その規則を継承できる子オブジェクトの型、子オブジェクトによる規則の継承方法、および継承の反映方法に関する情報も格納されます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Guid,System.Guid,System.Security.AccessControl.AuditFlags)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.ObjectAuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">アクセス規則を適用する ID。このオブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則が親コンテナーから継承される場合は true。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティを指定します。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうか。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="objectType">規則を適用するオブジェクトの型。</param>
+      <param name="inheritedObjectType">規則を継承できる子オブジェクトの型。</param>
+      <param name="auditFlags">監査条件。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="identity" /> パラメーターの値を <see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできません。または、<paramref name="type" /> パラメーターに無効な値が格納されています。</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="accessMask" /> パラメーターの値がゼロ (0) です。または、<paramref name="inheritanceFlags" /> パラメーターまたは <paramref name="propagationFlags" /> パラメーターに認識できないフラグ値が含まれています。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAuditRule.InheritedObjectType">
+      <summary>
+        <see cref="System.Security.AccessControl.ObjectAuditRule" /> オブジェクトを継承できる子オブジェクトの型を取得します。</summary>
+      <returns>
+        <see cref="System.Security.AccessControl.ObjectAuditRule" /> オブジェクトを継承できる子オブジェクトの型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAuditRule.ObjectFlags">
+      <summary>
+        <see cref="System.Security.AccessControl.ObjectAuditRule" /> オブジェクトの <see cref="P:System.Security.AccessControl.ObjectAuditRule.ObjectType" /> プロパティおよび <see cref="P:System.Security.AccessControl.ObjectAuditRule.InheritedObjectType" /> プロパティに有効な値が格納されます。</summary>
+      <returns>
+        <see cref="F:System.Security.AccessControl.ObjectAceFlags.ObjectAceTypePresent" /> は、<see cref="P:System.Security.AccessControl.ObjectAuditRule.ObjectType" /> プロパティに有効な値が格納されていることを示します。<see cref="F:System.Security.AccessControl.ObjectAceFlags.InheritedObjectAceTypePresent" /> は、<see cref="P:System.Security.AccessControl.ObjectAuditRule.InheritedObjectType" /> プロパティに有効な値が格納されていることを示します。これらの値は論理 OR と組み合わせることができます。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectAuditRule.ObjectType">
+      <summary>
+        <see cref="System.Security.AccessControl.ObjectAuditRule" /> を適用するオブジェクトの型を取得します。</summary>
+      <returns>
+        <see cref="System.Security.AccessControl.ObjectAuditRule" /> を適用するオブジェクトの型。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectSecurity">
+      <summary>アクセス制御リスト (ACL: Access Control List) を直接操作せずにオブジェクトへのアクセスを制御する機能を提供します。このクラスは、<see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> クラスおよび <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> クラスの抽象基本クラスです。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.#ctor">
+      <summary>
+        <see cref="T:System.Security.AccessControl.ObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.#ctor(System.Boolean,System.Boolean)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.ObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="isDS">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトがディレクトリ オブジェクトである場合は true。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.#ctor(System.Security.AccessControl.CommonSecurityDescriptor)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.ObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="securityDescriptor">新しい <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> インスタンスの <see cref="T:System.Security.AccessControl.CommonSecurityDescriptor" />。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AccessRightType">
+      <summary>Gets the <see cref="T:System.Type" /> of the securable object associated with this <see cref="T:System.Security.AccessControl.ObjectSecurity" /> object.</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられている、セキュリティ設定できるオブジェクトの型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.AccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <returns>メソッドが作成する <see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクト。</returns>
+      <param name="identityReference">アクセス規則を適用する ID。このオブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則が親コンテナーから継承される場合は true。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティを指定します。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうかを指定します。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="type">有効なアクセス制御の種類を指定します。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AccessRulesModified">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたアクセス規則が変更されているかどうかを指定するブール値を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたアクセス規則が変更されている場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AccessRuleType">
+      <summary>Gets the <see cref="T:System.Type" /> of the object associated with the access rules of this <see cref="T:System.Security.AccessControl.ObjectSecurity" /> object.<see cref="T:System.Type" /> オブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトとしてキャストできるオブジェクトである必要があります。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのアクセス規則に関連付けられたオブジェクトの型。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAccessRulesCanonical">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたアクセス規則の順序が標準であるかどうかを指定するブール値を取得します。</summary>
+      <returns>アクセス規則の順序が標準である場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAccessRulesProtected">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) が保護されているかどうかを指定するブール値を取得します。</summary>
+      <returns>DACL が保護されている場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAuditRulesCanonical">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた監査規則の順序が標準であるかどうかを指定するブール値を取得します。</summary>
+      <returns>監査規則の順序が標準のである場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AreAuditRulesProtected">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) が保護されているかどうかを指定するブール値を取得します。</summary>
+      <returns>SACL が保護されている場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.AuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <returns>メソッドが作成する <see cref="T:System.Security.AccessControl.AuditRule" /> オブジェクト。</returns>
+      <param name="identityReference">監査規則を適用する ID。このオブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則が親コンテナーから継承される場合は true。</param>
+      <param name="inheritanceFlags">監査規則の継承プロパティを指定します。</param>
+      <param name="propagationFlags">継承した監査規則を自動的に反映させるかどうかを指定します。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="flags">規則を監査する条件を指定します。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AuditRulesModified">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた監査規則が変更されているかどうかを指定するブール値を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた監査規則が変更されている場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.AuditRuleType">
+      <summary>Gets the <see cref="T:System.Type" /> object associated with the audit rules of this <see cref="T:System.Security.AccessControl.ObjectSecurity" /> object.<see cref="T:System.Type" /> オブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトとしてキャストできるオブジェクトである必要があります。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトの監査規則に関連付けられたオブジェクトの型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetGroup(System.Type)">
+      <summary>指定した所有者に関連付けられているプライマリ グループを取得します。</summary>
+      <returns>指定した所有者に関連付けられているプライマリ グループ。</returns>
+      <param name="targetType">プライマリ グループを取得する対象となる所有者。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetOwner(System.Type)">
+      <summary>指定したプライマリ グループに関連付けられている所有者を取得します。</summary>
+      <returns>指定したグループに関連付けられている所有者。</returns>
+      <param name="targetType">所有者を取得する対象となるプライマリ グループ。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetSecurityDescriptorBinaryForm">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのセキュリティ記述子情報を表すバイト値の配列を返します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのセキュリティ記述子を表すバイト値の配列。この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトにセキュリティ情報が格納されていない場合、このメソッドは null を返します。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションの SDDL (Security Descriptor Definition Language) 形式を返します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションの SDDL 形式。</returns>
+      <param name="includeSections">取得するセキュリティ記述子のセクション (アクセス規則、監査規則、プライマリ グループ、所有者) を指定します。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.GroupModified">
+      <summary>セキュリティ設定できるオブジェクトに関連付けられたグループが変更されているかどうかを指定するブール値を取得または設定します。 </summary>
+      <returns>セキュリティ設定できるオブジェクトに関連付けられたグループが変更されている場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.IsContainer">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトがコンテナー オブジェクトであるかどうかを指定するブール値を取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトがコンテナー オブジェクトである場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.IsDS">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトがディレクトリ オブジェクトであるかどうかを指定するブール値を取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトがディレクトリ オブジェクトである場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.IsSddlConversionSupported">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子を SDDL (Security Descriptor Definition Language) 形式に変換できるかどうかを示すブール値を返します。</summary>
+      <returns>この<see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子を SDDL (Security Descriptor Definition Language) 形式に変換できる場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>指定した変更を、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) に適用します。</summary>
+      <returns>DACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">DACL に適用する変更。</param>
+      <param name="rule">変更するアクセス規則。</param>
+      <param name="modified">DACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAccessRule(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>指定した変更を、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) に適用します。</summary>
+      <returns>DACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">DACL に適用する変更。</param>
+      <param name="rule">変更するアクセス規則。</param>
+      <param name="modified">DACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>指定した変更を、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) に適用します。</summary>
+      <returns>SACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">SACL に適用する変更。</param>
+      <param name="rule">変更する監査規則。</param>
+      <param name="modified">SACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ModifyAuditRule(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>指定した変更を、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) に適用します。</summary>
+      <returns>SACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">SACL に適用する変更。</param>
+      <param name="rule">変更する監査規則。</param>
+      <param name="modified">SACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity.OwnerModified">
+      <summary>セキュリティ設定できるオブジェクトの所有者が変更されているかどうかを指定するブール値を取得または設定します。</summary>
+      <returns>セキュリティ設定できるオブジェクトの所有者が変更されている場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.Persist(System.Boolean,System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションを、永続的なストレージに保存します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="enableOwnershipPrivilege">呼び出し元がオブジェクトの所有権を取得できる特権を有効にする場合は true。</param>
+      <param name="name">永続化された情報を取得するための名前。</param>
+      <param name="includeSections">保存するセキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.Persist(System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションを、永続的なストレージに保存します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="handle">永続化された情報を取得するためのハンドル。</param>
+      <param name="includeSections">保存するセキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.Persist(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の指定したセクションを、永続的なストレージに保存します。コンストラクターと Persist メソッドに渡す <paramref name="includeSections" /> パラメーターの値を等しくすることをお勧めします。詳細については、「解説」を参照してください。</summary>
+      <param name="name">永続化された情報を取得するための名前。</param>
+      <param name="includeSections">保存するセキュリティ設定できるオブジェクトのセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ) を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.PurgeAccessRules(System.Security.Principal.IdentityReference)">
+      <summary>指定した <see cref="T:System.Security.Principal.IdentityReference" /> に関連付けられたすべてのアクセス規則を削除します。</summary>
+      <param name="identity">すべてのアクセス規則を削除する対象の <see cref="T:System.Security.Principal.IdentityReference" />。</param>
+      <exception cref="T:System.InvalidOperationException">一部のアクセス規則に標準の順序が適用されていません。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.PurgeAuditRules(System.Security.Principal.IdentityReference)">
+      <summary>指定した <see cref="T:System.Security.Principal.IdentityReference" /> に関連付けられたすべての監査規則を削除します。</summary>
+      <param name="identity">すべての監査規則を削除する対象の <see cref="T:System.Security.Principal.IdentityReference" />。</param>
+      <exception cref="T:System.InvalidOperationException">一部のアクセス規則に標準の順序が適用されていません。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ReadLock">
+      <summary>読み取りアクセスについて、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトをロックします。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.ReadUnlock">
+      <summary>読み取りアクセスについて、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのロックを解除します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetAccessRuleProtection(System.Boolean,System.Boolean)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたアクセス規則の保護を設定または削除します。保護されたアクセス規則を親オブジェクトから継承を通じて変更することはできません。</summary>
+      <param name="isProtected">この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたアクセス規則を継承から保護する場合は true。継承を許可する場合は false。</param>
+      <param name="preserveInheritance">継承されたアクセス規則を保存する場合は true。継承されたアクセス規則を削除する場合は false。<paramref name="isProtected" /> が false の場合、このパラメーターは無視されます。</param>
+      <exception cref="T:System.InvalidOperationException">このメソッドは、継承された規則を標準以外の随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除しようとしています。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetAuditRuleProtection(System.Boolean,System.Boolean)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた監査規則の保護を設定または削除します。保護された監査規則を親オブジェクトから継承を通じて変更することはできません。</summary>
+      <param name="isProtected">この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられた監査規則を継承から保護する場合は true。継承を許可する場合は false。</param>
+      <param name="preserveInheritance">継承された監査規則を保存する場合は true。継承された監査規則を削除する場合は false。<paramref name="isProtected" /> が false の場合、このパラメーターは無視されます。</param>
+      <exception cref="T:System.InvalidOperationException">このメソッドは、継承された規則を標準以外のシステム アクセス制御リスト (SACL: System Access Control List ) から削除しようとしています。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetGroup(System.Security.Principal.IdentityReference)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子のプライマリ グループを設定します。</summary>
+      <param name="identity">設定するプライマリ グループ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetOwner(System.Security.Principal.IdentityReference)">
+      <summary>この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子の所有者を設定します。</summary>
+      <param name="identity">設定する所有者。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorBinaryForm(System.Byte[])">
+      <summary>指定したバイト値の配列からこの <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのセキュリティ記述子を設定します。</summary>
+      <param name="binaryForm">セキュリティ記述子の設定元となるバイト配列。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorBinaryForm(System.Byte[],System.Security.AccessControl.AccessControlSections)">
+      <summary>指定したバイト値の配列からこの <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのセキュリティ記述子の指定したセクションを設定します。</summary>
+      <param name="binaryForm">セキュリティ記述子の設定元となるバイト配列。</param>
+      <param name="includeSections">設定するセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ)。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorSddlForm(System.String)">
+      <summary>指定した SDDL (Security Descriptor Definition Language) 文字列からこの <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのセキュリティ記述子を設定します。</summary>
+      <param name="sddlForm">セキュリティ記述子の設定元となる SDDL 文字列。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.SetSecurityDescriptorSddlForm(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>指定した SDDL (Security Descriptor Definition Language) 文字列からこの <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのセキュリティ記述子の指定したセクションを設定します。</summary>
+      <param name="sddlForm">セキュリティ記述子の設定元となる SDDL 文字列。</param>
+      <param name="includeSections">設定するセキュリティ記述子のセクション (アクセス規則、監査規則、所有者、プライマリ グループ)。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.WriteLock">
+      <summary>書き込みアクセスについて、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトをロックします。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity.WriteUnlock">
+      <summary>書き込みアクセスについて、この <see cref="T:System.Security.AccessControl.ObjectSecurity" /> オブジェクトのロックを解除します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.ObjectSecurity`1">
+      <summary>アクセス制御リスト (ACL) が直接処理をしない、オブジェクトへのアクセスを制御する機能を提供し、型キャスト アクセス権を許可します。</summary>
+      <typeparam name="T">オブジェクトのアクセス権です。</typeparam>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType)">
+      <summary>ObjectSecurity`1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">リソースの種類。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections)">
+      <summary>ObjectSecurity`1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">リソースの種類。</param>
+      <param name="safeHandle">ハンドル。</param>
+      <param name="includeSections">含めるセクション。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.Runtime.InteropServices.SafeHandle,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>ObjectSecurity`1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">リソースの種類。</param>
+      <param name="safeHandle">ハンドル。</param>
+      <param name="includeSections">含めるセクション。</param>
+      <param name="exceptionFromErrorCode">カスタムの例外を提供するインテグレーターによって実装されたデリゲート。</param>
+      <param name="exceptionContext">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>ObjectSecurity`1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">リソースの種類。</param>
+      <param name="name">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの名前。</param>
+      <param name="includeSections">含めるセクション。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.#ctor(System.Boolean,System.Security.AccessControl.ResourceType,System.String,System.Security.AccessControl.AccessControlSections,System.Security.AccessControl.NativeObjectSecurity.ExceptionFromErrorCode,System.Object)">
+      <summary>ObjectSecurity`1 クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> オブジェクトがコンテナー オブジェクトである場合は true。</param>
+      <param name="resourceType">リソースの種類。</param>
+      <param name="name">新しい <see cref="T:System.Security.AccessControl.ObjectSecurity`1" /> オブジェクトが関連付けられている、セキュリティ設定できるオブジェクトの名前。</param>
+      <param name="includeSections">含めるセクション。</param>
+      <param name="exceptionFromErrorCode">カスタムの例外を提供するインテグレーターによって実装されたデリゲート。</param>
+      <param name="exceptionContext">例外の発生元または発生先に関するコンテキスト情報を格納しているオブジェクト。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity`1.AccessRightType">
+      <summary>この ObjectSecurity`1 オブジェクトに関連付けられたセキュリティ保護できるオブジェクトの型を取得します。</summary>
+      <returns>現在のインスタンスに関連付けられているセキュリティ保護可能なオブジェクトの型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>関連するセキュリティ オブジェクトの新しいアクセス制御規則を表す ObjectAccessRule クラスの新しいインスタンスを初期化します。</summary>
+      <returns>アクセス権、アクセス制御、およびフラグを指定して、指定したユーザーに対して新しいアクセス制御規則を表します。</returns>
+      <param name="identityReference">ユーザー アカウントを表します。</param>
+      <param name="accessMask">アクセスの種類。</param>
+      <param name="isInherited">アクセス規則が継承されている場合は true。それ以外の場合は false。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定します。</param>
+      <param name="propagationFlags">アクセス制御エントリ (ACE) を子オブジェクトに伝達する方法を指定します。</param>
+      <param name="type">アクセスを許可または拒否するかどうかを指定します。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity`1.AccessRuleType">
+      <summary>この ObjectSecurity`1 オブジェクトのアクセス規則に関連付けられたオブジェクトの型を取得します。</summary>
+      <returns>現在のインスタンスのアクセス規則に関連付けられているオブジェクトの型。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AddAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>指定したアクセス規則を、この ObjectSecurity`1 オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) に追加します。</summary>
+      <param name="rule">追加する規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AddAuditRule(System.Security.AccessControl.AuditRule{`0})">
+      <summary>指定した監査規則を、この ObjectSecurity`1 オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) に追加します。</summary>
+      <param name="rule">追加する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>指定したユーザーの指定した監査規則を表す <see cref="T:System.Security.AccessControl.AuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <returns>指定したユーザーの指定した監視規則を返します。</returns>
+      <param name="identityReference">ユーザー アカウントを表します。</param>
+      <param name="accessMask">アクセスの種類を指定する整数。</param>
+      <param name="isInherited">アクセス規則が継承されている場合は true。それ以外の場合は false。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定します。</param>
+      <param name="propagationFlags">アクセス制御エントリ (ACE) を子オブジェクトに伝達する方法を指定します。</param>
+      <param name="flags">実行する監査の種類を記述します。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.ObjectSecurity`1.AuditRuleType">
+      <summary>この ObjectSecurity`1 オブジェクトの監査規則に関連付けられた型オブジェクトを取得します。</summary>
+      <returns>現在のインスタンスの監査規則に関連付けられている Type オブジェクト。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.Persist(System.Runtime.InteropServices.SafeHandle)">
+      <summary>この ObjectSecurity`1 オブジェクトに関連付けられたセキュリティ記述子を、指定したハンドルを使用して永続的なストレージに保存します。</summary>
+      <param name="handle">この ObjectSecurity`1 オブジェクトが関連付けられている、セキュリティ保護可能なオブジェクトのハンドル。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.Persist(System.String)">
+      <summary>この ObjectSecurity`1 オブジェクトに関連付けられたセキュリティ記述子を、指定した名前を使用して永続的なストレージに保存します。</summary>
+      <param name="name">この ObjectSecurity`1 オブジェクトが関連付けられている、セキュリティ保護可能なオブジェクトの名前。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>指定したアクセス規則と同じセキュリティ識別子とアクセス マスクを含むアクセス規則を、この ObjectSecurity`1 オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <returns>アクセス規則が正常に削除された場合は true を返します。それ以外の場合は false を返します。</returns>
+      <param name="rule">削除する規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAccessRuleAll(System.Security.AccessControl.AccessRule{`0})">
+      <summary>指定したアクセス規則と同じセキュリティ識別子を含むすべてのアクセス規則を、この ObjectSecurity`1 オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAccessRuleSpecific(System.Security.AccessControl.AccessRule{`0})">
+      <summary>指定したアクセス規則と完全に一致するすべてのアクセス規則を、この ObjectSecurity`1 オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAuditRule(System.Security.AccessControl.AuditRule{`0})">
+      <summary>指定した監査規則と同じセキュリティ識別子とアクセス マスクを含む監査規則を、この ObjectSecurity`1 オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <returns>オブジェクトが削除された場合は true を返します。それ以外の場合は false を返します。</returns>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAuditRuleAll(System.Security.AccessControl.AuditRule{`0})">
+      <summary>指定した監査規則と同じセキュリティ識別子を含むすべての監査規則を、この ObjectSecurity`1 オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.RemoveAuditRuleSpecific(System.Security.AccessControl.AuditRule{`0})">
+      <summary>指定した監査規則と完全に一致するすべての監査規則を、この ObjectSecurity`1 オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.ResetAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>この ObjectSecurity`1 オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) からすべてのアクセス規則を削除し、指定したアクセス規則を追加します。</summary>
+      <param name="rule">リセットするアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.SetAccessRule(System.Security.AccessControl.AccessRule{`0})">
+      <summary>指定したアクセス規則と同じセキュリティ識別子と修飾子を含むすべてのアクセス規則を、この ObjectSecurity`1 オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control) から削除し、指定したアクセス規則を追加します。</summary>
+      <param name="rule">設定するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.ObjectSecurity`1.SetAuditRule(System.Security.AccessControl.AuditRule{`0})">
+      <summary>指定した監査規則と同じセキュリティ識別子と修飾子を含むすべての監査規則を、この ObjectSecurity`1 オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除し、指定した監査規則を追加します。</summary>
+      <param name="rule">設定する監査規則。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.PrivilegeNotHeldException">
+      <summary>この例外は、<see cref="N:System.Security.AccessControl" /> 名前空間のメソッドが、特権がないのに、その特権を有効にしようとした場合にスローされます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.PrivilegeNotHeldException.#ctor">
+      <summary>
+        <see cref="T:System.Security.AccessControl.PrivilegeNotHeldException" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.PrivilegeNotHeldException.#ctor(System.String)">
+      <summary>特権を指定して、<see cref="T:System.Security.AccessControl.PrivilegeNotHeldException" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="privilege">有効にされていない特権。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.PrivilegeNotHeldException.#ctor(System.String,System.Exception)">
+      <summary>例外を指定して、<see cref="T:System.Security.AccessControl.PrivilegeNotHeldException" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="privilege">有効にされていない特権。</param>
+      <param name="inner">現在の例外の原因である例外。<paramref name="innerException" /> パラメーターが null 参照 (Visual Basic の場合は Nothing) でない場合は、内部例外を処理する catch ブロックで現在の例外が発生します。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.PrivilegeNotHeldException.PrivilegeName">
+      <summary>有効にされていない特権の名前を取得します。</summary>
+      <returns>メソッドで有効にできなかった特権の名前。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.PropagationFlags">
+      <summary>アクセス制御エントリ (ACE: Access Control Entry) を子オブジェクトに反映させる方法を指定します。これらのフラグは継承フラグが存在する場合だけに意味を持ちます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.PropagationFlags.InheritOnly">
+      <summary>ACE を子オブジェクトだけに反映させることを指定します。この操作には、子コンテナー オブジェクトと子リーフ オブジェクトの両方が含まれます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.PropagationFlags.None">
+      <summary>継承フラグが設定されていないことを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.PropagationFlags.NoPropagateInherit">
+      <summary>ACE を子オブジェクトに反映させないことを指定します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.QualifiedAce">
+      <summary>修飾子を含むアクセス制御エントリ (ACE: Access Control Entry) を表します。<see cref="T:System.Security.AccessControl.AceQualifier" /> オブジェクトで表される修飾子は、ACE によるアクセス許可、アクセス拒否、システム監査の実行、またはシステム アラームの発生を指定します。<see cref="T:System.Security.AccessControl.QualifiedAce" /> クラスは、<see cref="T:System.Security.AccessControl.CommonAce" /> クラスおよび <see cref="T:System.Security.AccessControl.ObjectAce" /> クラスの抽象基本クラスです。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.QualifiedAce.AceQualifier">
+      <summary>ACE によるアクセス許可、アクセス拒否、システム監査の実行、またはシステム アラームの発生を指定する値を取得します。</summary>
+      <returns>ACE によるアクセス許可、アクセス拒否、システム監査の実行、またはシステム アラームの発生を指定する値。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.QualifiedAce.GetOpaque">
+      <summary>この <see cref="T:System.Security.AccessControl.QualifiedAce" /> オブジェクトに関連付けられた非透過コールバック データを返します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.QualifiedAce" /> オブジェクトに関連付けられた非透過コールバック データを表すバイト値の配列。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.QualifiedAce.IsCallback">
+      <summary>この <see cref="T:System.Security.AccessControl.QualifiedAce" /> オブジェクトにコールバック データが格納されるかどうかを指定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.QualifiedAce" /> オブジェクトにコールバック データが格納される場合は true。それ以外の場合は false。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.QualifiedAce.OpaqueLength">
+      <summary>この <see cref="T:System.Security.AccessControl.QualifiedAce" /> オブジェクトに関連付けられた非透過コールバック データの長さを取得します。このプロパティはコールバックのアクセス制御エントリ (ACE: Access Control Entry) だけに有効です。</summary>
+      <returns>非透過コールバック データの長さ。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.QualifiedAce.SetOpaque(System.Byte[])">
+      <summary>この <see cref="T:System.Security.AccessControl.QualifiedAce" /> オブジェクトに関連付けられた非透過コールバック データを設定します。</summary>
+      <param name="opaque">この <see cref="T:System.Security.AccessControl.QualifiedAce" /> オブジェクトの非透過コールバック データを表すバイト値の配列。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.RawAcl">
+      <summary>アクセス制御リスト (ACL: Access Control List) を表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.#ctor(System.Byte,System.Int32)">
+      <summary>リビジョン レベルを指定して、<see cref="T:System.Security.AccessControl.RawAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="revision">新しいアクセス制御リスト (ACL: Access Control List) のリビジョン レベル。</param>
+      <param name="capacity">この <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクトが格納できるアクセス制御エントリ (ACE: Access Control Entry) の数。この数は単にヒントとして使用されます。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.#ctor(System.Byte[],System.Int32)">
+      <summary>指定したバイナリ形式から <see cref="T:System.Security.AccessControl.RawAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="binaryForm">アクセス制御リスト (ACL: Access Control List) を表すバイト値の配列。</param>
+      <param name="offset">データのマーシャリング解除の開始位置を示す<paramref name="binaryForm" /> パラメーター内のオフセット。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.BinaryLength">
+      <summary>現在の <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクトのバイナリ表現の長さ (バイト単位) を取得します。<see cref="M:System.Security.AccessControl.RawAcl.GetBinaryForm" /> メソッドで ACL をバイナリ配列にマーシャリングする前に、この長さを使用する必要があります。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクトのバイナリ表現の長さ (バイト単位)。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.Count">
+      <summary>現在の <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクト内のアクセス制御エントリ (ACE: Access Control Entry) の数を取得します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクト内の ACE の数。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>
+        <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクトの内容を、指定したオフセットから始まる指定したバイト配列にマーシャリングします。</summary>
+      <param name="binaryForm">
+        <see cref="T:System.Security.AccessControl.RawAcl" /> の内容のマーシャリング先のバイト配列。</param>
+      <param name="offset">マーシャリングの開始位置を表すオフセット。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.RawAcl" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.InsertAce(System.Int32,System.Security.AccessControl.GenericAce)">
+      <summary>指定したインデックス位置に指定したアクセス制御エントリ (ACE: Access Control Entry) を挿入します。</summary>
+      <param name="index">新しい ACE を追加する位置。<see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクトの末尾に ACE を挿入するには、<see cref="P:System.Security.AccessControl.RawAcl.Count" /> プロパティの値を指定します。</param>
+      <param name="ace">挿入する ACE。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="offset" /> が負の値であるか、または <see cref="T:System.Security.AccessControl.GenericAcl" /> 全体を <paramref name="array" /> にコピーするには大きすぎます。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.Item(System.Int32)">
+      <summary>指定したインデックス位置にあるアクセス制御エントリ (ACE: Access Control Entry) を取得または設定します。</summary>
+      <returns>指定したインデックス位置にある ACE。</returns>
+      <param name="index">取得または設定する ACE の、0 から始まるインデックス番号。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawAcl.RemoveAce(System.Int32)">
+      <summary>指定した位置にあるアクセス制御エントリ (ACE: Access Control Entry) を削除します。</summary>
+      <param name="index">削除する ACE の 0 から始まるインデックス。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="index" /> パラメーターの値が <see cref="P:System.Security.AccessControl.RawAcl.Count" /> プロパティの値から 1 を引いた値より大きいか、または負の値です。</exception>
+    </member>
+    <member name="P:System.Security.AccessControl.RawAcl.Revision">
+      <summary>
+        <see cref="T:System.Security.AccessControl.RawAcl" /> のリビジョン レベルを取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.RawAcl" /> のリビジョン レベルを指定するバイト値。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.RawSecurityDescriptor">
+      <summary>セキュリティ記述子を表します。セキュリティ記述子には、所有者、プライマリ グループ、随意アクセス制御リスト (DACL: Discretionary Access Control List)、システム アクセス制御リスト (SACL: System Access Control List) が含まれます。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.#ctor(System.Byte[],System.Int32)">
+      <summary>指定したバイト値の配列から <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="binaryForm">新しい <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの作成元となるバイト値の配列。</param>
+      <param name="offset">コピーの開始位置を示す <paramref name="binaryForm" /> 配列内のオフセット。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.#ctor(System.Security.AccessControl.ControlFlags,System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.RawAcl,System.Security.AccessControl.RawAcl)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="flags">新しい <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの動作を示すフラグ。</param>
+      <param name="owner">新しい <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの所有者。</param>
+      <param name="group">新しい <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトのプライマリ グループ。</param>
+      <param name="systemAcl">新しい <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの システム アクセス制御リスト (SACL)。</param>
+      <param name="discretionaryAcl">新しい <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの随意アクセス制御リスト (DACL)。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.#ctor(System.String)">
+      <summary>指定した SDDL (Security Descriptor Definition Language) 文字列から <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="sddlForm">新しい <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの作成元の SDDL 文字列。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.ControlFlags">
+      <summary>
+        <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの動作を示す値を取得します。</summary>
+      <returns>論理 OR 操作と結合した <see cref="T:System.Security.AccessControl.ControlFlags" /> 列挙体の 1 つ以上の値。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.DiscretionaryAcl">
+      <summary>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの随意アクセス制御リスト (DACL) を取得または設定します。DACL にはアクセス規則が格納されます。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの DACL。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.Group">
+      <summary>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトのプライマリ グループを取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトのプライマリ グループ。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.Owner">
+      <summary>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトに関連付けられているオブジェクトの所有者を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトに関連付けられているオブジェクトの所有者。</returns>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.ResourceManagerControl">
+      <summary>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトに関連付けられたリソース マネージャー コントロール ビットを表すバイト値を取得または設定します。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトに関連付けられたリソース マネージャー コントロール ビットを表すバイト値。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.RawSecurityDescriptor.SetFlags(System.Security.AccessControl.ControlFlags)">
+      <summary>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの <see cref="P:System.Security.AccessControl.RawSecurityDescriptor.ControlFlags" /> プロパティを指定した値に設定します。</summary>
+      <param name="flags">論理 OR 操作と結合した <see cref="T:System.Security.AccessControl.ControlFlags" /> 列挙体の 1 つ以上の値。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.RawSecurityDescriptor.SystemAcl">
+      <summary>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトのシステム アクセス制御リスト (SACL: System Access Control List) を取得または設定します。SACL には監査規則が格納されます。</summary>
+      <returns>この <see cref="T:System.Security.AccessControl.RawSecurityDescriptor" /> オブジェクトの SACL。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.ResourceType">
+      <summary>定義済みのネイティブなオブジェクト型を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.DSObject">
+      <summary>ディレクトリ サービス (DS: Directory Service) オブジェクト、またはディレクトリ サービス オブジェクトのプロパティ セットまたはプロパティ</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.DSObjectAll">
+      <summary>ディレクトリ サービス オブジェクト、およびそのすべてのプロパティ セットとプロパティ</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.FileObject">
+      <summary>ファイルまたはディレクトリ</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.KernelObject">
+      <summary>ローカル カーネル オブジェクト</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.LMShare">
+      <summary>ネットワーク共有</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.Printer">
+      <summary>プリンター</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.ProviderDefined">
+      <summary>プロバイダーによって定義されたオブジェクト</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.RegistryKey">
+      <summary>レジストリ キー</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.RegistryWow6432Key">
+      <summary>WOW64 のレジストリ エントリのオブジェクト</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.Service">
+      <summary>Windows サービス</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.Unknown">
+      <summary>不明なオブジェクト型</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.WindowObject">
+      <summary>ローカル コンピューターのウィンドウ ステーションまたはデスクトップのオブジェクト</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.ResourceType.WmiGuidObject">
+      <summary>WMI (Windows Management Instrumentation) オブジェクト</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.SecurityInfos">
+      <summary>照会または設定するセキュリティ記述子のセクションを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.DiscretionaryAcl">
+      <summary>随意アクセス制御リスト (DACL: Discretionary Access Control List) を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.Group">
+      <summary>プライマリ グループ ID を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.Owner">
+      <summary>所有者 ID を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.SecurityInfos.SystemAcl">
+      <summary>システム アクセス制御リスト (SACL: System Access Control List) を指定します。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.SystemAcl">
+      <summary>システム アクセス制御リスト (SACL: System Access Control List) を表します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.#ctor(System.Boolean,System.Boolean,System.Byte,System.Int32)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.SystemAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトがコンテナーである場合は true。</param>
+      <param name="isDS">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトがディレクトリ オブジェクトのアクセス制御リスト (ACL: Access Control List) である場合は true。</param>
+      <param name="revision">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトのリビジョン レベル。</param>
+      <param name="capacity">この <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトが格納できるアクセス制御エントリ (ACE: Access Control Entry) の数。この数は単にヒントとして使用されます。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.#ctor(System.Boolean,System.Boolean,System.Int32)">
+      <summary>値を指定して、<see cref="T:System.Security.AccessControl.SystemAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトがコンテナーである場合は true。</param>
+      <param name="isDS">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトがディレクトリ オブジェクトのアクセス制御リスト (ACL: Access Control List) である場合は true。</param>
+      <param name="capacity">この <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトが格納できるアクセス制御エントリ (ACE: Access Control Entry) の数。この数は単にヒントとして使用されます。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.#ctor(System.Boolean,System.Boolean,System.Security.AccessControl.RawAcl)">
+      <summary>指定した <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクトからの指定した値を使用して、 <see cref="T:System.Security.AccessControl.SystemAcl" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="isContainer">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトがコンテナーである場合は true。</param>
+      <param name="isDS">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトがディレクトリ オブジェクトのアクセス制御リスト (ACL: Access Control List) である場合は true。</param>
+      <param name="rawAcl">新しい <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトの基になる <see cref="T:System.Security.AccessControl.RawAcl" /> オブジェクト。空の ACL を作成するには、null を指定します。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.AddAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>現在の <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトに監査規則を追加します。</summary>
+      <param name="auditFlags">追加する監査規則の型。</param>
+      <param name="sid">監査規則を追加する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい監査規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">新しい監査規則の継承プロパティを指定するフラグ。</param>
+      <param name="propagationFlags">新しい監査規則の継承反映プロパティを指定するフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.AddAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>設定を指定した監査規則を現在の <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトに追加します。このメソッドは、新しい監査規則のオブジェクト型または継承されたオブジェクト型を指定する場合に、ディレクトリ オブジェクトのアクセス制御リスト (ACL: Access Control List) に対して使用します。</summary>
+      <param name="auditFlags">追加する監査規則の型。</param>
+      <param name="sid">監査規則を追加する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい監査規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">新しい監査規則の継承プロパティを指定するフラグ。</param>
+      <param name="propagationFlags">新しい監査規則の継承反映プロパティを指定するフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">新しい監査規則を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">新しい監査規則を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.AddAudit(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>現在の <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトに監査規則を追加します。</summary>
+      <param name="sid">監査規則を追加する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAuditRule" />新しい監査規則です。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定した監査規則を現在の <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトから削除します。</summary>
+      <returns>指定した監査規則がこのメソッドで正しく削除される場合は true。それ以外の場合は false。</returns>
+      <param name="auditFlags">削除する監査規則の型。</param>
+      <param name="sid">監査規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除する規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除する規則の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除する規則の継承反映プロパティを示すフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>指定した監査規則を現在の <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトから削除します。このメソッドはオブジェクト型または継承されたオブジェクト型を指定する場合に、ディレクトリ オブジェクトのアクセス制御リスト (ACL) に対して使用します。</summary>
+      <returns>指定した監査規則がこのメソッドで正しく削除される場合は true。それ以外の場合は false。</returns>
+      <param name="auditFlags">削除する監査規則の型。</param>
+      <param name="sid">監査規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除する規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除する規則の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除する規則の継承反映プロパティを示すフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">削除された監査制御規則を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">削除された監査規則を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAudit(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>指定した監査規則を現在の <see cref="T:System.Security.AccessControl.SystemAcl" /> オブジェクトから削除します。</summary>
+      <returns>指定した監査規則がこのメソッドで正しく削除される場合は true。それ以外の場合は false。</returns>
+      <param name="sid">監査規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">監査規則を削除する <see cref="T:System.Security.AccessControl.ObjectAuditRule" />。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAuditSpecific(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定した監査規則を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。</summary>
+      <param name="auditFlags">削除する監査規則の型。</param>
+      <param name="sid">監査規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除する規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除する規則の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除する規則の継承反映プロパティを示すフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAuditSpecific(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>指定した監査規則を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。このメソッドはオブジェクト型または継承されたオブジェクト型を指定する場合に、ディレクトリ オブジェクトのアクセス制御リスト (ACL) に対して使用します。</summary>
+      <param name="auditFlags">削除する監査規則の型。</param>
+      <param name="sid">監査規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">削除する規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">削除する規則の継承プロパティを示すフラグ。</param>
+      <param name="propagationFlags">削除する規則の継承反映プロパティを示すフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">削除された監査制御規則を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">削除された監査規則を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.RemoveAuditSpecific(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>指定した監査規則を現在の <see cref="T:System.Security.AccessControl.DiscretionaryAcl" /> オブジェクトから削除します。</summary>
+      <param name="sid">監査規則を削除する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">
+        <see cref="T:System.Security.AccessControl.ObjectAuditRule" /> 、規則を削除するのです。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.SetAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags)">
+      <summary>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトの指定した監査規則を設定します。</summary>
+      <param name="auditFlags">設定する監査条件。</param>
+      <param name="sid">監査規則を設定する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい監査規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">新しい監査規則の継承プロパティを指定するフラグ。</param>
+      <param name="propagationFlags">新しい監査規則の継承反映プロパティを指定するフラグ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.SetAudit(System.Security.AccessControl.AuditFlags,System.Security.Principal.SecurityIdentifier,System.Int32,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.ObjectAceFlags,System.Guid,System.Guid)">
+      <summary>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトの指定した監査規則を設定します。このメソッドはオブジェクト型または継承されたオブジェクト型を指定する場合に、ディレクトリ オブジェクトのアクセス制御リスト (ACL) に対して使用します。</summary>
+      <param name="auditFlags">設定する監査条件。</param>
+      <param name="sid">監査規則を設定する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="accessMask">新しい監査規則のアクセス マスク。</param>
+      <param name="inheritanceFlags">新しい監査規則の継承プロパティを指定するフラグ。</param>
+      <param name="propagationFlags">新しい監査規則の継承反映プロパティを指定するフラグ。</param>
+      <param name="objectFlags">
+        <paramref name="objectType" /> パラメーターおよび <paramref name="inheritedObjectType" /> パラメーターに null 以外の値が格納されているかどうかを示すフラグ。</param>
+      <param name="objectType">新しい監査規則を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">新しい監査規則を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.SystemAcl.SetAudit(System.Security.Principal.SecurityIdentifier,System.Security.AccessControl.ObjectAuditRule)">
+      <summary>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトの指定した監査規則を設定します。</summary>
+      <param name="sid">監査規則を設定する <see cref="T:System.Security.Principal.SecurityIdentifier" />。</param>
+      <param name="rule">監査規則を設定する <see cref="T:System.Security.AccessControl.ObjectAuditRule" />。</param>
+    </member>
+  </members>
+</doc>

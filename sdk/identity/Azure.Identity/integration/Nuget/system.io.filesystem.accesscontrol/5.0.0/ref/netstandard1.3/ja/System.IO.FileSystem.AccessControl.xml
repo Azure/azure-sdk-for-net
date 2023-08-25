@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.IO.FileSystem.AccessControl</name>
+  </assembly>
+  <members>
+    <member name="T:System.IO.FileSystemAclExtensions"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileStream)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileInfo,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileStream,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="T:System.Security.AccessControl.DirectoryObjectSecurity">
+      <summary>[セキュリティ クリティカル] アクセス制御リスト (ACE: Access Control Lists) を直接操作せずにディレクトリ オブジェクトへのアクセスを制御する機能を提供します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor(System.Security.AccessControl.CommonSecurityDescriptor)">
+      <summary>[セキュリティ クリティカル] 指定したセキュリティ記述子を使用して <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="securityDescriptor">新しい <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられたセキュリティ記述子。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType,System.Guid,System.Guid)">
+      <summary>[セキュリティ クリティカル] 値を指定して、<see cref="T:System.Security.AccessControl.AccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <returns>メソッドが作成する <see cref="T:System.Security.AccessControl.AccessRule" /> オブジェクト。</returns>
+      <param name="identityReference">アクセス規則を適用する ID。このオブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則が親コンテナーから継承される場合は true。</param>
+      <param name="inheritanceFlags">アクセス規則の継承プロパティを指定します。</param>
+      <param name="propagationFlags">継承したアクセス規則を自動的に反映させるかどうかを指定します。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="type">有効なアクセス制御の種類を指定します。</param>
+      <param name="objectType">新しいアクセス規則を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">新しいアクセス規則を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[セキュリティ クリティカル] 指定したアクセス規則を、この<see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) に追加します。</summary>
+      <param name="rule">追加するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[セキュリティ クリティカル] 指定した監査規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) に追加します。</summary>
+      <param name="rule">追加する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags,System.Guid,System.Guid)">
+      <summary>[セキュリティ クリティカル] 値を指定して、<see cref="T:System.Security.AccessControl.AuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <returns>このメソッドが作成する <see cref="T:System.Security.AccessControl.AuditRule" /> オブジェクト。</returns>
+      <param name="identityReference">監査規則を適用する ID。このオブジェクトは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> としてキャストできるオブジェクトである必要があります。</param>
+      <param name="accessMask">この規則のアクセス マスク。アクセス マスクは 32 ビットの匿名ビットのコレクションです。アクセス マスクの意味は、各インテグレーターによって定義されます。</param>
+      <param name="isInherited">この規則が親コンテナーから継承される場合は true。</param>
+      <param name="inheritanceFlags">監査規則の継承プロパティを指定します。</param>
+      <param name="propagationFlags">継承した監査規則を自動的に反映させるかどうかを指定します。<paramref name="inheritanceFlags" /> が <see cref="F:System.Security.AccessControl.InheritanceFlags.None" /> に設定されている場合、反映フラグは無視されます。</param>
+      <param name="flags">規則を監査する条件を指定します。</param>
+      <param name="objectType">新しい監査規則を適用するオブジェクトのクラスの ID。</param>
+      <param name="inheritedObjectType">新しい監査規則を継承できる子オブジェクトのクラスの ID。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAccessRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[セキュリティ クリティカル] 指定したセキュリティ識別子に関連付けられたアクセス規則のコレクションを取得します。</summary>
+      <returns>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトに関連付けられたアクセス規則のコレクション。</returns>
+      <param name="includeExplicit">オブジェクトに対して明示的に設定されたアクセス規則を含める場合は true。</param>
+      <param name="includeInherited">継承されたアクセス規則を含める場合は true。</param>
+      <param name="targetType">アクセス規則を取得するセキュリティ識別子。このパラメーターは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトとしてキャストできるオブジェクトである必要があります。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAuditRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[セキュリティ クリティカル] 指定したセキュリティ識別子に関連付けられた監査規則のコレクションを取得します。</summary>
+      <returns>指定した <see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトに関連付けられた監査規則のコレクション。</returns>
+      <param name="includeExplicit">オブジェクトに対して明示的に設定された監査規則を含める場合は true。</param>
+      <param name="includeInherited">継承された監査規則を含める場合は true。</param>
+      <param name="targetType">監査規則を取得するセキュリティ識別子。このパラメーターは、<see cref="T:System.Security.Principal.SecurityIdentifier" /> オブジェクトとしてキャストできるオブジェクトである必要があります。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>[セキュリティ クリティカル] 指定した変更を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) に適用します。</summary>
+      <returns>DACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">DACL に適用する変更。</param>
+      <param name="rule">変更するアクセス規則。</param>
+      <param name="modified">DACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>[セキュリティ クリティカル] 指定した変更を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) に適用します。</summary>
+      <returns>SACL が正常に変更されている場合は true。それ以外の場合は false。</returns>
+      <param name="modification">SACL に適用する変更。</param>
+      <param name="rule">変更する監査規則。</param>
+      <param name="modified">SACL が正常に変更されている場合は true。それ以外の場合は false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[セキュリティ クリティカル] 指定したアクセス規則と同じセキュリティ識別子とアクセス マスクを含むアクセス規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL) から削除します。</summary>
+      <returns>アクセス規則が正常に削除された場合は true。それ以外の場合は false。</returns>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleAll(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[セキュリティ クリティカル] 指定したアクセス規則と同じセキュリティ識別子を含むすべてのアクセス規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[セキュリティ クリティカル] 指定したアクセス規則と完全に一致するすべてのアクセス規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除します。</summary>
+      <param name="rule">削除するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[セキュリティ クリティカル] 指定した監査規則と同じセキュリティ識別子とアクセス マスクを含む監査規則を、この <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <returns>監査規則が正常に削除された場合は true。それ以外の場合は false。</returns>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleAll(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[セキュリティ クリティカル] 指定した監査規則と同じセキュリティ識別子を含むすべての監査規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[セキュリティ クリティカル] 指定した監査規則と完全に一致するすべての監査規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除します。</summary>
+      <param name="rule">削除する監査規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ResetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[セキュリティ クリティカル] この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) 内のすべてのアクセス規則を削除し、指定したアクセス規則を追加します。</summary>
+      <param name="rule">リセットするアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[セキュリティ クリティカル] 指定したアクセス規則と同じセキュリティ識別子と修飾子を含むすべてのアクセス規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられた随意アクセス制御リスト (DACL: Discretionary Access Control List) から削除し、指定したアクセス規則を追加します。</summary>
+      <param name="rule">設定するアクセス規則。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[セキュリティ クリティカル] 指定した監査規則と同じセキュリティ識別子と修飾子を含むすべての監査規則を、この <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> オブジェクトに関連付けられたシステム アクセス制御リスト (SACL: System Access Control List) から削除し、指定した監査規則を追加します。</summary>
+      <param name="rule">設定する監査規則。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.DirectorySecurity">
+      <summary>[セキュリティ クリティカル] ディレクトリのアクセス制御と監査セキュリティを表します。このクラスは継承できません。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.DirectorySecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙体の値を指定して、指定したディレクトリの <see cref="T:System.Security.AccessControl.DirectorySecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="name">
+        <see cref="T:System.Security.AccessControl.DirectorySecurity" /> オブジェクトの作成元ディレクトリの場所。</param>
+      <param name="includeSections">取得するアクセス制御リスト (ACL) 情報の種類を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 値の 1 つ。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSecurity">
+      <summary>[セキュリティ クリティカル] ファイルのアクセス制御および監査セキュリティを表します。このクラスは継承できません。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.FileSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.AccessControlSections" /> 列挙体の値を指定して、指定したファイルの <see cref="T:System.Security.AccessControl.FileSecurity" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="fileName">
+        <see cref="T:System.Security.AccessControl.FileSecurity" /> オブジェクトの作成元ファイルの場所。</param>
+      <param name="includeSections">取得するアクセス制御リスト (ACL) 情報の種類を指定する <see cref="T:System.Security.AccessControl.AccessControlSections" /> 値の 1 つ。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAccessRule">
+      <summary>[セキュリティ クリティカル] ファイルまたはディレクトリのアクセス規則を定義するアクセス制御エントリ (ACE: Access Control Entry) の抽象化を表します。このクラスは継承できません。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウントへの参照、アクセス規則に関連付けられた操作の種類を指定する値、およびその操作を許可するか拒否するかを指定する値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウントへの参照をカプセル化する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクト。</param>
+      <param name="fileSystemRights">アクセス規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値のいずれか。</param>
+      <param name="type">操作を許可するか拒否するかを指定する <see cref="T:System.Security.AccessControl.AccessControlType" /> 値のいずれか。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウントへの参照、アクセス規則に関連付けられた操作の種類を指定する値、権限の継承方法を決定する値、権限の反映方法を決定する値、および操作を許可するか拒否するかを指定する値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウントへの参照をカプセル化する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクト。</param>
+      <param name="fileSystemRights">アクセス規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値のいずれか。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定する <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 値のいずれか。</param>
+      <param name="propagationFlags">子オブジェクトにアクセス制御エントリ (ACE) を反映する方法を指定する <see cref="T:System.Security.AccessControl.PropagationFlags" /> 値のいずれか。</param>
+      <param name="type">操作を許可するか拒否するかを指定する <see cref="T:System.Security.AccessControl.AccessControlType" /> 値のいずれか。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウントの名前、アクセス規則に関連付けられた操作の種類を指定する値、およびその操作を許可するか拒否するかを示す値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウント名。</param>
+      <param name="fileSystemRights">アクセス規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値のいずれか。</param>
+      <param name="type">操作を許可するか拒否するかを指定する <see cref="T:System.Security.AccessControl.AccessControlType" /> 値のいずれか。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウント名、アクセス規則に関連付けられた操作の種類を指定する値、権限の継承方法を決定する値、権限の反映方法を決定する値、および操作を許可するか拒否するかを指定する値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウント名。</param>
+      <param name="fileSystemRights">アクセス規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値のいずれか。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定する <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 値のいずれか。</param>
+      <param name="propagationFlags">子オブジェクトにアクセス制御エントリ (ACE) を反映する方法を指定する <see cref="T:System.Security.AccessControl.PropagationFlags" /> 値のいずれか。</param>
+      <param name="type">操作を許可するか拒否するかを指定する <see cref="T:System.Security.AccessControl.AccessControlType" /> 値のいずれか。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAccessRule.FileSystemRights">
+      <summary>[セキュリティ クリティカル] 現在の <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクトに関連付けられている <see cref="T:System.Security.AccessControl.FileSystemRights" /> フラグを取得します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> に関連付けられている <see cref="T:System.Security.AccessControl.FileSystemRights" /> フラグ。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAuditRule">
+      <summary>[セキュリティ クリティカル] ファイルまたはディレクトリの監査規則を定義するアクセス制御エントリ (ACE: Access Control Entry) の抽象化を表します。このクラスは継承できません。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウントへの参照、監査規則に関連付けられた操作の種類を指定する値、およびいつ監査を実行するのかを指定する値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウントへの参照をカプセル化する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクト。</param>
+      <param name="fileSystemRights">監査規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値の 1 つ。</param>
+      <param name="flags">いつ監査を実行するのかを指定する <see cref="T:System.Security.AccessControl.AuditFlags" /> 値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウントへの参照の名前、監査規則に関連付けられた操作の種類を指定する値、権限の継承方法を決定する値、権限の反映方法を決定する値、およびいつ監査を実行するのかを指定する値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウントへの参照をカプセル化する <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクト。</param>
+      <param name="fileSystemRights">監査規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値の 1 つ。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定する <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 値のいずれか。</param>
+      <param name="propagationFlags">子オブジェクトにアクセス制御エントリ (ACE) を反映する方法を指定する <see cref="T:System.Security.AccessControl.PropagationFlags" /> 値のいずれか。</param>
+      <param name="flags">いつ監査を実行するのかを指定する <see cref="T:System.Security.AccessControl.AuditFlags" /> 値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウント名、監査規則に関連付けられた操作の種類を指定する値、およびいつ監査を実行するのかを指定する値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウント名。</param>
+      <param name="fileSystemRights">監査規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値の 1 つ。</param>
+      <param name="flags">いつ監査を実行するのかを指定する <see cref="T:System.Security.AccessControl.AuditFlags" /> 値の 1 つ。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[セキュリティ クリティカル] ユーザー アカウント名、監査規則に関連付けられた操作の種類を指定する値、権限の継承方法を決定する値、権限の反映方法を決定する値、およびいつ監査を実行するのかを指定する値を使用して、<see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <param name="identity">ユーザー アカウント名。</param>
+      <param name="fileSystemRights">監査規則に関連付けられた操作の種類を指定する <see cref="T:System.Security.AccessControl.FileSystemRights" /> 値の 1 つ。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定する <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 値のいずれか。</param>
+      <param name="propagationFlags">子オブジェクトにアクセス制御エントリ (ACE) を反映する方法を指定する <see cref="T:System.Security.AccessControl.PropagationFlags" /> 値のいずれか。</param>
+      <param name="flags">いつ監査を実行するのかを指定する <see cref="T:System.Security.AccessControl.AuditFlags" /> 値の 1 つ。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAuditRule.FileSystemRights">
+      <summary>[セキュリティ クリティカル] 現在の <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> オブジェクトに関連付けられている <see cref="T:System.Security.AccessControl.FileSystemRights" /> フラグを取得します。</summary>
+      <returns>現在の <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> に関連付けられている <see cref="T:System.Security.AccessControl.FileSystemRights" /> フラグ。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemRights">
+      <summary>[セキュリティ クリティカル] アクセス規則と監査規則の作成時に使用するアクセス権を定義します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.AppendData">
+      <summary>ファイルの末尾にデータを追加する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ChangePermissions">
+      <summary>ファイルまたはフォルダーに関連付けられたセキュリティ規則と監査規則を変更する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateDirectories">
+      <summary>フォルダーを作成する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateFiles">
+      <summary>ファイルを作成する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Delete">
+      <summary>フォルダーまたはファイルを削除する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.DeleteSubdirectoriesAndFiles">
+      <summary>フォルダーおよびそのフォルダー内に格納されているファイルを削除する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ExecuteFile">
+      <summary>アプリケーション ファイルを実行する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.FullControl">
+      <summary>フォルダーまたはファイルに対してフル コントロールを行い、アクセス制御と監査規則を変更する権限を指定します。この値は、ファイルに対してどのような操作でも行うことができる権限を表します。この値は、この列挙体のすべての権限を組み合わせたものです。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ListDirectory">
+      <summary>ディレクトリの内容を読み取る権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Modify">
+      <summary>読み取り、書き込み、フォルダーの内容の一覧表示、フォルダーとファイルの削除、およびアプリケーション ファイルの実行を行う権限を指定します。この権限には、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute" /> 権限、<see cref="F:System.Security.AccessControl.FileSystemRights.Write" /> 権限、および <see cref="F:System.Security.AccessControl.FileSystemRights.Delete" /> 権限が含まれます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Read">
+      <summary>フォルダーまたはファイルを読み取り専用として開いたり、コピーしたりする権限を指定します。この権限には、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadData" /> 権限、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes" /> 権限、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadAttributes" /> 権限、および <see cref="F:System.Security.AccessControl.FileSystemRights.ReadPermissions" /> 権限が含まれます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute">
+      <summary>フォルダーまたはファイルを読み取り専用として開いたりコピーしたりする権限、およびアプリケーション ファイルを実行する権限を指定します。この権限には、<see cref="F:System.Security.AccessControl.FileSystemRights.Read" /> 権限および <see cref="F:System.Security.AccessControl.FileSystemRights.ExecuteFile" /> 権限が含まれます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAttributes">
+      <summary>フォルダーまたはファイルのファイル システム属性を開いたり、コピーしたりする権限を指定します。たとえば、この値は、ファイルの作成日や変更日を表示する権限を指定します。これには、データ、拡張ファイル システム属性、またはアクセス規則や監査規則を読み取る権限は含まれません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadData">
+      <summary>ファイルまたはフォルダーを開いたり、コピーしたりする権限を指定します。これには、ファイル システム属性、拡張ファイル システム属性、またはアクセス規則や監査規則を読み取る権限は含まれません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes">
+      <summary>フォルダーまたはファイルの拡張ファイル システム属性を開いたり、コピーしたりする権限を指定します。たとえば、この値は、作成者や内容に関する情報を表示する権限を指定します。これには、データ、ファイル システム属性、またはアクセス規則や監査規則を読み取る権限は含まれません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadPermissions">
+      <summary>フォルダーまたはファイルのアクセス規則や監査規則を開いたり、コピーしたりする権限を指定します。これには、データ、ファイル システム属性、および拡張ファイル システム属性を読み取る権限は含まれません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Synchronize">
+      <summary>ファイル ハンドルが I/O 操作の完了に同期するまでアプリケーションが待機できるかどうかを指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.TakeOwnership">
+      <summary>フォルダーまたはファイルの所有者を変更する権限を指定します。リソースの所有者は、そのリソースに対してフル アクセス権限を持ちます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Traverse">
+      <summary>フォルダーの内容を一覧表示し、そのフォルダーに格納されているアプリケーションを実行する権限を指定します。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Write">
+      <summary>フォルダーおよびファイルを作成し、ファイルに対してデータの追加または削除を行う権限を指定します。この権限には、<see cref="F:System.Security.AccessControl.FileSystemRights.WriteData" /> 権限、<see cref="F:System.Security.AccessControl.FileSystemRights.AppendData" /> 権限、<see cref="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes" /> 権限、および <see cref="F:System.Security.AccessControl.FileSystemRights.WriteAttributes" /> 権限が含まれます。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteAttributes">
+      <summary>フォルダーまたはファイルのファイル システム属性を開いたり、フォルダーまたはファイルにファイル システム属性を書き込んだりする権限を指定します。これには、データ、拡張属性、またはアクセス規則や監査規則を書き込む権限は含まれません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteData">
+      <summary>ファイルまたはフォルダーを開いたり、ファイルまたはフォルダーに書き込んだりする権限を指定します。これには、ファイル システム属性、拡張ファイル システム属性、またはアクセス規則や監査規則を開いたり書き込んだりする権限は含まれません。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes">
+      <summary>フォルダーまたはファイルの拡張ファイル システム属性を開いたり、フォルダーまたはファイルに拡張ファイル システム属性を書き込んだりする権限を指定します。これには、データ、属性、またはアクセス規則や監査規則を書き込む権限は含まれません。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemSecurity">
+      <summary>[セキュリティ クリティカル] ファイルまたはディレクトリのアクセス制御と監査セキュリティを表します。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRightType">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> クラスでアクセス権を表すために使用する列挙体を取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 列挙体を表す <see cref="T:System.Type" /> オブジェクト。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[セキュリティ クリティカル] アクセス権、アクセス制御、およびフラグを指定して、指定したユーザーの新しいアクセス制御規則を表す <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <returns>アクセス権、アクセス制御、およびフラグを指定して、指定したユーザーの新しいアクセス制御規則を表す新しい <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクト。</returns>
+      <param name="identityReference">ユーザー アカウントを表す <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクト。</param>
+      <param name="accessMask">アクセスの種類を指定する整数。</param>
+      <param name="isInherited">アクセス規則が継承されている場合は true。それ以外の場合は false。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定する <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 値のいずれか。</param>
+      <param name="propagationFlags">子オブジェクトにアクセス制御エントリ (ACE) を反映する方法を指定する <see cref="T:System.Security.AccessControl.PropagationFlags" /> 値のいずれか。</param>
+      <param name="type">アクセスを許可するか拒否するかを指定する <see cref="T:System.Security.AccessControl.AccessControlType" /> 値のいずれか。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRuleType">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> クラスでアクセス規則を表すために使用する列挙体を取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> クラスを表す <see cref="T:System.Type" /> オブジェクト。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[セキュリティ クリティカル] アクセス制御リスト (ACL) の指定したアクセス許可を現在のファイルまたはディレクトリに追加します。</summary>
+      <param name="rule">ファイルまたはディレクトリに追加するアクセス制御リスト (ACL) のアクセス許可を表す <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[セキュリティ クリティカル] 指定した監査規則を現在のファイルまたはディレクトリに追加します。</summary>
+      <param name="rule">ファイルまたはディレクトリに追加する監査規則を表す <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[セキュリティ クリティカル] 指定したユーザーの指定した監査規則を表す <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> クラスの新しいインスタンスを初期化します。</summary>
+      <returns>指定したユーザーの指定した監査規則を表す新しい <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> オブジェクト。</returns>
+      <param name="identityReference">ユーザー アカウントを表す <see cref="T:System.Security.Principal.IdentityReference" /> オブジェクト。</param>
+      <param name="accessMask">アクセスの種類を指定する整数。</param>
+      <param name="isInherited">アクセス規則が継承されている場合は true。それ以外の場合は false。</param>
+      <param name="inheritanceFlags">子オブジェクトにアクセス マスクを反映する方法を指定する <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 値のいずれか。</param>
+      <param name="propagationFlags">子オブジェクトにアクセス制御エントリ (ACE) を反映する方法を指定する <see cref="T:System.Security.AccessControl.PropagationFlags" /> 値のいずれか。</param>
+      <param name="flags">実行する監査の種類を指定する <see cref="T:System.Security.AccessControl.AuditFlags" /> 値のいずれか。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AuditRuleType">
+      <summary>[セキュリティ クリティカル] <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> クラスで監査規則を表すために使用する型を取得します。</summary>
+      <returns>
+        <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> クラスを表す <see cref="T:System.Type" /> オブジェクト。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリから、アクセス制御リスト (ACL) の一致するすべての許可するアクセス許可、または拒否するアクセス許可を削除します。</summary>
+      <returns>アクセス規則が削除された場合は true。それ以外の場合は false。</returns>
+      <param name="rule">ファイルまたはディレクトリから削除するアクセス制御リスト (ACL) のアクセス許可を表す <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleAll(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリから、指定したユーザーのアクセス制御リスト (ACL) のすべてのアクセス許可を削除します。</summary>
+      <param name="rule">ファイルまたはディレクトリから、アクセス制御リスト (ACL) のアクセス許可を削除する必要のあるユーザーを指定する <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリから、アクセス制御リスト (ACL) の一致する単一の許可するアクセス許可、または拒否するアクセス許可を削除します。</summary>
+      <param name="rule">ファイルまたはディレクトリから、アクセス制御リスト (ACL) のアクセス許可を削除する必要のあるユーザーを指定する <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリから、一致するすべての許可する監査規則または拒否する監査規則を削除します。</summary>
+      <returns>監査規則が削除された場合は true。それ以外の場合は false。</returns>
+      <param name="rule">ファイルまたはディレクトリから削除する監査規則を表す <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleAll(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリから、指定したユーザーのすべての監査規則を削除します。</summary>
+      <param name="rule">ファイルまたはディレクトリから、監査規則を削除する必要のあるユーザーを指定する <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリから、一致する単一の許可する監査規則または拒否する監査規則を削除します。</summary>
+      <param name="rule">ファイルまたはディレクトリから削除する監査規則を表す <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.ResetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[セキュリティ クリティカル] アクセス制御リスト (ACL) の指定したアクセス許可を現在のファイルまたはディレクトリに追加し、ACL の一致するすべてのアクセス許可を削除します。</summary>
+      <param name="rule">ファイルまたはディレクトリに追加するアクセス制御リスト (ACL) のアクセス許可を表す <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリに、アクセス制御リスト (ACL) の指定したアクセス許可を設定します。</summary>
+      <param name="rule">ファイルまたはディレクトリに設定するアクセス制御リスト (ACL) のアクセス許可を表す <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> オブジェクト。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[セキュリティ クリティカル] 現在のファイルまたはディレクトリに指定した監査規則を設定します。</summary>
+      <param name="rule">ファイルまたはディレクトリに設定する監査規則を表す <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> オブジェクト。</param>
+    </member>
+  </members>
+</doc>

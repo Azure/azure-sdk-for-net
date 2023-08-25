@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ncrontab.signed</id>
+    <version>3.3.0</version>
+    <title>NCrontab (Signed)</title>
+    <authors>Atif Aziz</authors>
+    <owners>Atif Aziz</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/atifaziz/NCrontab</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NCrontab is crontab for all .NET runtimes supported by .NET Standard 1.0. It provides parsing and formatting of crontab expressions as well as calculation of occurrences of time based on a schedule expressed in the crontab format.</description>
+    <releaseNotes>3.3: Targets .NET Standard 1.0
+3.2: Fixes the following issues:
+     - Wrong schedule when a crontab field is of the form N/1; remaining values of that field were being ignored.
+     - CrontabSchedule.TryParse doesn't throw if given a null string as input.
+3.1: CrontabFieldImpl and CrontabFieldAccumulator are now private.
+3.0: Replaces uses of Converter with Func and therefore requires .NET Framework 3.5 as a minimum.</releaseNotes>
+    <copyright>Copyright © 2008 Atif Aziz. All rights reserved. Portions Copyright © 2001 The OpenSymphony Group. All rights reserved.</copyright>
+    <language>en-US</language>
+    <tags>cron,schedule,time</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework3.5" />
+      <group targetFramework=".NETStandard1.0">
+        <dependency id="System.Collections" version="[4.0.11, )" />
+        <dependency id="System.Diagnostics.Debug" version="[4.0.11, )" />
+        <dependency id="System.Globalization" version="[4.0.11, )" />
+        <dependency id="System.IO" version="[4.1.0, )" />
+        <dependency id="System.Resources.ResourceManager" version="[4.0.1, )" />
+        <dependency id="System.Net.Primitives" version="[4.0.11, )" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

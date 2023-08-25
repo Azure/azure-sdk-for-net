@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.DependencyInjection</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.Extensions.Internal.TypeNameHelper.GetTypeDisplayName(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Pretty print a type name.
+            </summary>
+            <param name="type">The <see cref="T:System.Type"/>.</param>
+            <param name="fullName"><c>true</c> to print a fully qualified name.</param>
+            <param name="includeGenericParameterNames"><c>true</c> to include generic parameter names.</param>
+            <returns>The pretty printed type name.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory">
+            <summary>
+            Default implementation of <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceProviderFactory`1"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory"/> class
+            with default options.
+            </summary>
+            <seealso cref="F:Microsoft.Extensions.DependencyInjection.ServiceProviderOptions.Default"/>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.#ctor(Microsoft.Extensions.DependencyInjection.ServiceProviderOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory"/> class
+            with the specified <paramref name="options"/>.
+            </summary>
+            <param name="options">The options to use for this instance.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateBuilder(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.DefaultServiceProviderFactory.CreateServiceProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.AmbiguousConstructorException">
+            <summary>
+            Unable to activate type '{0}'. The following constructors are ambiguous:
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatAmbiguousConstructorException(System.Object)">
+            <summary>
+            Unable to activate type '{0}'. The following constructors are ambiguous:
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.CannotResolveService">
+            <summary>
+            Unable to resolve service for type '{0}' while attempting to activate '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatCannotResolveService(System.Object,System.Object)">
+            <summary>
+            Unable to resolve service for type '{0}' while attempting to activate '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.CircularDependencyException">
+            <summary>
+            A circular dependency was detected for the service of type '{0}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatCircularDependencyException(System.Object)">
+            <summary>
+            A circular dependency was detected for the service of type '{0}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.UnableToActivateTypeException">
+            <summary>
+            No constructor for type '{0}' can be instantiated using services from the service container and default values.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatUnableToActivateTypeException(System.Object)">
+            <summary>
+            No constructor for type '{0}' can be instantiated using services from the service container and default values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.OpenGenericServiceRequiresOpenGenericImplementation">
+            <summary>
+            Open generic service type '{0}' requires registering an open generic implementation type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatOpenGenericServiceRequiresOpenGenericImplementation(System.Object)">
+            <summary>
+            Open generic service type '{0}' requires registering an open generic implementation type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.TypeCannotBeActivated">
+            <summary>
+            Cannot instantiate implementation type '{0}' for service type '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatTypeCannotBeActivated(System.Object,System.Object)">
+            <summary>
+            Cannot instantiate implementation type '{0}' for service type '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.NoConstructorMatch">
+            <summary>
+            A suitable constructor for type '{0}' could not be located. Ensure the type is concrete and services are registered for all parameters of a public constructor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatNoConstructorMatch(System.Object)">
+            <summary>
+            A suitable constructor for type '{0}' could not be located. Ensure the type is concrete and services are registered for all parameters of a public constructor.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.ScopedInSingletonException">
+            <summary>
+            Cannot consume {2} service '{0}' from {3} '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatScopedInSingletonException(System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Cannot consume {2} service '{0}' from {3} '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.ScopedResolvedFromRootException">
+            <summary>
+            Cannot resolve '{0}' from root provider because it requires {2} service '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatScopedResolvedFromRootException(System.Object,System.Object,System.Object)">
+            <summary>
+            Cannot resolve '{0}' from root provider because it requires {2} service '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.Resources.DirectScopedResolvedFromRootException">
+            <summary>
+            Cannot resolve {1} service '{0}' from root provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.Resources.FormatDirectScopedResolvedFromRootException(System.Object,System.Object)">
+            <summary>
+            Cannot resolve {1} service '{0}' from root provider.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceCollection">
+            <summary>
+            Default implementation of <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.ServiceCollection.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.ServiceCollection.IsReadOnly">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.ServiceCollection.Item(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.Clear">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.Contains(Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.CopyTo(Microsoft.Extensions.DependencyInjection.ServiceDescriptor[],System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.Remove(Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.IndexOf(Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.Insert(System.Int32,Microsoft.Extensions.DependencyInjection.ServiceDescriptor)">
+            <inheritdoc />
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollection.RemoveAt(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions">
+            <summary>
+            Extension methods for building a <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceProvider"/> from an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Creates a <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceProvider"/> containing services from the provided <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> containing service descriptors.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceProvider"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Boolean)">
+            <summary>
+            Creates a <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceProvider"/> containing services from the provided <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
+            optionaly enabling scope validation.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> containing service descriptors.</param>
+            <param name="validateScopes">
+            <c>true</c> to perform check verifying that scoped services never gets resolved from root provider; otherwise <c>false</c>.
+            </param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceProvider"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.DependencyInjection.ServiceProviderOptions)">
+            <summary>
+            Creates a <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceProvider"/> containing services from the provided <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>
+            optionaly enabling scope validation.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> containing service descriptors.</param>
+            <param name="options">
+            Configures various service provider behaviors.
+            </param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.ServiceProvider"/>.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceLookup.IServiceCallSite">
+            <summary>
+            Summary description for IServiceCallSite
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceProvider">
+            <summary>
+            The default IServiceProvider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(System.Type)">
+            <summary>
+            Gets the service object of the specified type.
+            </summary>
+            <param name="serviceType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ServiceProvider.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ServiceProviderOptions">
+            <summary>
+            Options for configuring various behaviors of the default <see cref="T:System.IServiceProvider"/> implementation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.DependencyInjection.ServiceProviderOptions.ValidateScopes">
+            <summary>
+            <c>true</c> to perform check verifying that scoped services never gets resolved from root provider; otherwise <c>false</c>.
+            </summary>
+        </member>
+    </members>
+</doc>

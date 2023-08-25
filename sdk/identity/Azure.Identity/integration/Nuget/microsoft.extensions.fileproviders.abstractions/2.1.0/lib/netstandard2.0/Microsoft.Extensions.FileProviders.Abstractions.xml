@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.FileProviders.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.FileProviders.IDirectoryContents">
+            <summary>
+            Represents a directory's content in the file provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.IDirectoryContents.Exists">
+            <summary>
+            True if a directory was located at the given path.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.FileProviders.IFileInfo">
+            <summary>
+            Represents a file in the given file provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.IFileInfo.Exists">
+            <summary>
+            True if resource exists in the underlying storage system.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.IFileInfo.Length">
+            <summary>
+            The length of the file in bytes, or -1 for a directory or non-existing files.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.IFileInfo.PhysicalPath">
+            <summary>
+            The path to the file, including the file name. Return null if the file is not directly accessible.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.IFileInfo.Name">
+            <summary>
+            The name of the file or directory, not including any path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.IFileInfo.LastModified">
+            <summary>
+            When the file was last modified
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.IFileInfo.IsDirectory">
+            <summary>
+            True for the case TryGetDirectoryContents has enumerated a sub-directory
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.IFileInfo.CreateReadStream">
+            <summary>
+            Return file contents as readonly stream. Caller should dispose stream when complete.
+            </summary>
+            <returns>The file stream</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.FileProviders.IFileProvider">
+            <summary>
+            A read-only file provider abstraction.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.IFileProvider.GetFileInfo(System.String)">
+            <summary>
+            Locate a file at the given path.
+            </summary>
+            <param name="subpath">Relative path that identifies the file.</param>
+            <returns>The file information. Caller must check Exists property.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.IFileProvider.GetDirectoryContents(System.String)">
+            <summary>
+            Enumerate a directory at the given path, if any.
+            </summary>
+            <param name="subpath">Relative path that identifies the directory.</param>
+            <returns>Returns the contents of the directory.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.IFileProvider.Watch(System.String)">
+            <summary>
+            Creates a <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> for the specified <paramref name="filter"/>.
+            </summary>
+            <param name="filter">Filter string used to determine what files or folders to monitor. Example: **/*.cs, *.*, subFolder/**/*.cshtml.</param>
+            <returns>An <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> that is notified when a file matching <paramref name="filter"/> is added, modified or deleted.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.FileProviders.NotFoundDirectoryContents">
+            <summary>
+            Represents a non-existing directory
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundDirectoryContents.Singleton">
+            <summary>
+            A shared instance of <see cref="T:Microsoft.Extensions.FileProviders.NotFoundDirectoryContents"/> 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundDirectoryContents.Exists">
+            <summary>
+            Always false.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NotFoundDirectoryContents.GetEnumerator">
+            <summary>Returns an enumerator that iterates through the collection.</summary>
+            <returns>An enumerator to an empty collection.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NotFoundDirectoryContents.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.Extensions.FileProviders.NotFoundFileInfo">
+            <summary>
+            Represents a non-existing file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NotFoundFileInfo.#ctor(System.String)">
+            <summary>
+            Initializes an instance of <see cref="T:Microsoft.Extensions.FileProviders.NotFoundFileInfo"/>.
+            </summary>
+            <param name="name">The name of the file that could not be found</param>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundFileInfo.Exists">
+            <summary>
+            Always false.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundFileInfo.IsDirectory">
+            <summary>
+            Always false.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundFileInfo.LastModified">
+            <summary>
+            Returns <see cref="F:System.DateTimeOffset.MinValue"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundFileInfo.Length">
+            <summary>
+            Always equals -1.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundFileInfo.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NotFoundFileInfo.PhysicalPath">
+            <summary>
+            Always null.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NotFoundFileInfo.CreateReadStream">
+            <summary>
+            Always throws. A stream cannot be created for non-existing file.
+            </summary>
+            <exception cref="T:System.IO.FileNotFoundException">Always thrown.</exception>
+            <returns>Does not return</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.FileProviders.NullChangeToken">
+            <summary>
+            An empty change token that doesn't raise any change callbacks.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NullChangeToken.Singleton">
+            <summary>
+            A singleton instance of <see cref="T:Microsoft.Extensions.FileProviders.NullChangeToken"/>
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NullChangeToken.HasChanged">
+            <summary>
+            Always false.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.FileProviders.NullChangeToken.ActiveChangeCallbacks">
+            <summary>
+            Always false.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NullChangeToken.RegisterChangeCallback(System.Action{System.Object},System.Object)">
+            <summary>
+            Always returns an empty disposable object. Callbacks will never be called.
+            </summary>
+            <param name="callback">This parameter is ignored</param>
+            <param name="state">This parameter is ignored</param>
+            <returns>A disposable object that noops on dispose.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.FileProviders.NullFileProvider">
+            <summary>
+            An empty file provider with no contents.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NullFileProvider.GetDirectoryContents(System.String)">
+            <summary>
+            Enumerate a non-existent directory.
+            </summary>
+            <param name="subpath">A path under the root directory. This parameter is ignored.</param>
+            <returns>A <see cref="T:Microsoft.Extensions.FileProviders.IDirectoryContents"/> that does not exist and does not contain any contents.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NullFileProvider.GetFileInfo(System.String)">
+            <summary>
+            Locate a non-existent file.
+            </summary>
+            <param name="subpath">A path under the root directory.</param>
+            <returns>A <see cref="T:Microsoft.Extensions.FileProviders.IFileInfo"/> representing a non-existent file at the given path.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.FileProviders.NullFileProvider.Watch(System.String)">
+            <summary>
+            Returns a <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> that monitors nothing.
+            </summary>
+            <param name="filter">Filter string used to determine what files or folders to monitor. This parameter is ignored.</param>
+            <returns>A <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> that does not register callbacks.</returns>
+        </member>
+    </members>
+</doc>

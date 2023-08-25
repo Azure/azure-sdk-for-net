@@ -1,0 +1,1031 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.ComponentModel.Annotations</name>
+  </assembly>
+  <members>
+    <member name="T:System.ComponentModel.DataAnnotations.AssociationAttribute">
+      <summary>Указывает, что член сущности представляет связь данных, например связь внешнего ключа.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.AssociationAttribute.#ctor(System.String,System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.AssociationAttribute" />.</summary>
+      <param name="name">Имя ассоциации. </param>
+      <param name="thisKey">Список разделенных запятыми имен свойств значений ключей со стороны <paramref name="thisKey" /> ассоциации.</param>
+      <param name="otherKey">Список разделенных запятыми имен свойств значений ключей со стороны <paramref name="otherKey" /> ассоциации.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.IsForeignKey">
+      <summary>Получает или задает значение, указывающее, представляет ли член ассоциации внешний ключ.</summary>
+      <returns>Значение true, если ассоциация представляет внешний ключ; в противном случае — значение false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.Name">
+      <summary>Получает имя ассоциации.</summary>
+      <returns>Имя ассоциации.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey">
+      <summary>Получает имена свойств значений ключей со стороны OtherKey ассоциации.</summary>
+      <returns>Список разделенных запятыми имен свойств, представляющих значения ключей со стороны OtherKey ассоциации.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKeyMembers">
+      <summary>Получает коллекцию отдельных членов ключей, заданных в свойстве <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" />.</summary>
+      <returns>Коллекция отдельных членов ключей, заданных в свойстве <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.OtherKey" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey">
+      <summary>Получает имена свойств значений ключей со стороны ThisKey ассоциации.</summary>
+      <returns>Список разделенных запятыми имен свойств, представляющих значения ключей со стороны ThisKey ассоциации.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKeyMembers">
+      <summary>Получает коллекцию отдельных членов ключей, заданных в свойстве <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" />.</summary>
+      <returns>Коллекция отдельных членов ключей, заданных в свойстве <see cref="P:System.ComponentModel.DataAnnotations.AssociationAttribute.ThisKey" />.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CompareAttribute">
+      <summary>Предоставляет атрибут, который сравнивает два свойства.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.CompareAttribute" />.</summary>
+      <param name="otherProperty">Свойство, с которым будет сравниваться текущее свойство.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.FormatErrorMessage(System.String)">
+      <summary>Применяет к сообщению об ошибке форматирование на основе поля данных, в котором произошла ошибка.</summary>
+      <returns>Форматированное сообщение об ошибке.</returns>
+      <param name="name">Имя поля, ставшего причиной сбоя при проверке.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CompareAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Определяет, является ли допустимым заданный объект.</summary>
+      <returns>Значение true, если дескриптор <paramref name="value" /> допустим; в противном случае — значение false.</returns>
+      <param name="value">Проверяемый объект.</param>
+      <param name="validationContext">Объект, содержащий сведения о запросе на проверку.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherProperty">
+      <summary>Получает свойство, с которым будет сравниваться текущее свойство.</summary>
+      <returns>Другое свойство.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.OtherPropertyDisplayName">
+      <summary>Получает отображаемое имя другого свойства.</summary>
+      <returns>Отображаемое имя другого свойства.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CompareAttribute.RequiresValidationContext">
+      <summary>Получает значение, указывающее, требует ли атрибут контекста проверки.</summary>
+      <returns>Значение true, если атрибут требует контекста проверки; в противном случае — значение false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute">
+      <summary>Указывает, что свойство участвует в проверках оптимистичного параллелизма.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ConcurrencyCheckAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CreditCardAttribute">
+      <summary>Указывает, что значение поля данных является номером кредитной карты.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.CreditCardAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CreditCardAttribute.IsValid(System.Object)">
+      <summary>Определяет, является ли заданный номер кредитной карты допустимым. </summary>
+      <returns>Значение true, если номер кредитной карты является допустимым; в противном случае — значение false.</returns>
+      <param name="value">Проверяемое значение.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute">
+      <summary>Определяет настраиваемый метод проверки, используемый для проверки свойства или экземпляра класса.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.#ctor(System.Type,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.CustomValidationAttribute" />.</summary>
+      <param name="validatorType">Тип, содержащий метод, который выполняет пользовательскую проверку.</param>
+      <param name="method">Метод, который выполняет пользовательскую проверку.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.CustomValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>Форматирует сообщение об ошибке проверки.</summary>
+      <returns>Экземпляр форматированного сообщения об ошибке.</returns>
+      <param name="name">Имя, которое должно быть включено в отформатированное сообщение.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.Method">
+      <summary>Получает метод проверки.</summary>
+      <returns>Имя метода проверки.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.CustomValidationAttribute.ValidatorType">
+      <summary>Получает тип, который выполняет пользовательскую проверку.</summary>
+      <returns>Тип, который выполняет пользовательскую проверку.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataType">
+      <summary>Представляет перечисление типов данных, связанных с полями данных и параметрами. </summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.CreditCard">
+      <summary>Представляет номер кредитной карты.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Currency">
+      <summary>Представляет значение валюты.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Custom">
+      <summary>Представляет настраиваемый тип данных.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Date">
+      <summary>Представляет значение даты.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.DateTime">
+      <summary>Представляет момент времени в виде дата и время суток.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Duration">
+      <summary>Представляет непрерывный промежуток времени, на котором существует объект.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.EmailAddress">
+      <summary>Представляет адрес электронной почты.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Html">
+      <summary>Представляет HTML-файл.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.ImageUrl">
+      <summary>Предоставляет URL-адрес изображения.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.MultilineText">
+      <summary>Представляет многострочный текст.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Password">
+      <summary>Представляет значение пароля.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PhoneNumber">
+      <summary>Представляет значение номера телефона.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.PostalCode">
+      <summary>Представляет почтовый индекс.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Text">
+      <summary>Представляет отображаемый текст.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Time">
+      <summary>Представляет значение времени.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Upload">
+      <summary>Представляет тип данных передачи файла.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.DataType.Url">
+      <summary>Возвращает значение URL-адреса.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DataTypeAttribute">
+      <summary>Задает имя дополнительного типа, который необходимо связать с полем данных.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.ComponentModel.DataAnnotations.DataType)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" />, используя указанное имя типа.</summary>
+      <param name="dataType">Имя типа, который необходимо связать с полем данных.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.DataTypeTypeAttribute" />, используя указанное имя шаблона поля.</summary>
+      <param name="customDataType">Имя шаблона настраиваемого поля, который необходимо связать с полем данных.</param>
+      <exception cref="T:System.ArgumentException">Свойство <paramref name="customDataType" /> имеет значение null или является пустой строкой (""). </exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.CustomDataType">
+      <summary>Получает имя шаблона настраиваемого поля, связанного с полем данных.</summary>
+      <returns>Имя шаблона настраиваемого поля, связанного с полем данных.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DataType">
+      <summary>Получает тип, связанный с полем данных.</summary>
+      <returns>Одно из значений <see cref="T:System.ComponentModel.DataAnnotations.DataType" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DataTypeAttribute.DisplayFormat">
+      <summary>Получает формат отображения поля данных.</summary>
+      <returns>Формат отображения поля данных.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.GetDataTypeName">
+      <summary>Возвращает имя типа, связанного с полем данных.</summary>
+      <returns>Имя типа, связанное с полем данных.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DataTypeAttribute.IsValid(System.Object)">
+      <summary>Проверяет, действительно ли значение поля данных является пустым.</summary>
+      <returns>Всегда true.</returns>
+      <param name="value">Значение поля данных, которое нужно проверить.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayAttribute">
+      <summary>Предоставляет атрибут общего назначения, позволяющий указывать локализуемые строки для типов и членов разделяемых классов сущностей.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.DisplayAttribute" />.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField">
+      <summary>Получает или задает значение, указывающее, нужно ли для отображения этого поля автоматически создавать пользовательский интерфейс.</summary>
+      <returns>Значение true, если для отображения этого поля нужно автоматически создавать пользовательский интерфейс; в противном случае — значение false.</returns>
+      <exception cref="T:System.InvalidOperationException">Предпринята попытка получить значение свойства перед тем, как оно было задано.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter">
+      <summary>Получает или задает значение, указывающее, отображается ли пользовательский интерфейс фильтрации для данного поля автоматически. </summary>
+      <returns>Значение true, если для отображения фильтра для этого поля нужно автоматически создавать пользовательский интерфейс; в противном случае — значение false.</returns>
+      <exception cref="T:System.InvalidOperationException">Предпринята попытка получить значение свойства перед тем, как оно было задано.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description">
+      <summary>Получает или задает значение, которое используется для отображения описания пользовательского интерфейса.</summary>
+      <returns>Значение, которое используется для отображения описания пользовательского интерфейса.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateField">
+      <summary>Возвращает значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" />.</summary>
+      <returns>Значение <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateField" />, если свойство было инициализировано; в противном случае — значение null.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetAutoGenerateFilter">
+      <summary>Возвращает значение, указывающее, нужно ли для отображения фильтра для этого поля автоматически создавать пользовательский интерфейс. </summary>
+      <returns>Значение <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.AutoGenerateFilter" />, если свойство было инициализировано; в противном случае — значение null.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetDescription">
+      <summary>Возвращает значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />.</summary>
+      <returns>Локализованное описание, если задано свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />, а свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> представляет ключ ресурса; в противном случае — нелокализованное значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />.</returns>
+      <exception cref="T:System.InvalidOperationException">Свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> и <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" /> инициализированы, но не удалось найти открытое статическое свойство с именем, соответствующим значению <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />, для свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetGroupName">
+      <summary>Возвращает значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" />.</summary>
+      <returns>Значение, которое будет использоваться для группировки полей в пользовательском интерфейсе, если свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> было инициализировано; в противном случае — значение null.Если задано свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />, а свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName" /> представляет ключ ресурса, возвращается локализованная строка; в противном случае возвращается нелокализованная строка.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetName">
+      <summary>Возвращает значение, используемое для отображения поля в пользовательском интерфейсе.</summary>
+      <returns>Локализованная строка для свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, если задано свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />, а свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> представляет ключ ресурса; в противном случае — нелокализованное значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />.</returns>
+      <exception cref="T:System.InvalidOperationException">Свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" /> и <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" /> инициализированы, но не удалось найти открытое статическое свойство с именем, соответствующим значению <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, для свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetOrder">
+      <summary>Возвращает значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" />.</summary>
+      <returns>Значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order" />, если оно было задано; в противном случае — значение null.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetPrompt">
+      <summary>Возвращает значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />.</summary>
+      <returns>Получает локализованную строку для свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />, если задано свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />, а свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> представляет ключ ресурса; в противном случае получает нелокализованное значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" />.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayAttribute.GetShortName">
+      <summary>Возвращает значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />.</summary>
+      <returns>Локализованная строка для свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />, если задано свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType" />, а свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" /> представляет ключ ресурса; в противном случае — нелокализованное значение свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName">
+      <summary>Получает или задает значение, используемое для группировки полей в пользовательском интерфейсе.</summary>
+      <returns>Значение, используемое для группировки полей в пользовательском интерфейсе.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name">
+      <summary>Получает или задает значение, которое используется для отображения в элементе пользовательского интерфейса.</summary>
+      <returns>Значение, которое используется для отображения в элементе пользовательского интерфейса.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Order">
+      <summary>Получает или задает порядковый вес столбца.</summary>
+      <returns>Порядковый вес столбца.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt">
+      <summary>Получает или задает значение, которое будет использоваться для задания подсказки в элементе пользовательского интерфейса.</summary>
+      <returns>Значение, которое будет использоваться для отображения подсказки в элементе пользовательского интерфейса.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ResourceType">
+      <summary>Получает или задает тип, содержащий ресурсы для свойств <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> и <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />.</summary>
+      <returns>Тип ресурса, содержащего свойства <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Name" />, <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt" /> и <see cref="P:System.ComponentModel.DataAnnotations.DisplayAttribute.Description" />.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName">
+      <summary>Получает или задает значение, используемое в качестве метки столбца сетки.</summary>
+      <returns>Значение, используемое в качестве метки столбца сетки.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute">
+      <summary>Задает столбец, в котором указанная в ссылке таблица отображается в виде столбца внешних ключей.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" />, используя заданный столбец. </summary>
+      <param name="displayColumn">Имя столбца, который следует использовать в качестве отображаемого столбца.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" />, используя заданный отображаемый столбец и столбец сортировки. </summary>
+      <param name="displayColumn">Имя столбца, который следует использовать в качестве отображаемого столбца.</param>
+      <param name="sortColumn">Имя столбца, который следует использовать для сортировки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.#ctor(System.String,System.String,System.Boolean)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.DisplayColumnAttribute" />, используя указанный отображаемый столбец, а также заданный столбец для сортировки и порядок сортировки. </summary>
+      <param name="displayColumn">Имя столбца, который следует использовать в качестве отображаемого столбца.</param>
+      <param name="sortColumn">Имя столбца, который следует использовать для сортировки.</param>
+      <param name="sortDescending">Значение true для сортировки в порядка убывания; в противном случае — значение false.Значение по умолчанию — false.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.DisplayColumn">
+      <summary>Получает имя столбца, который следует использовать в качестве отображаемого поля.</summary>
+      <returns>Имя отображаемого столбца.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortColumn">
+      <summary>Получает имя столбца, который следует использовать для сортировки.</summary>
+      <returns>Имя столбца для сортировки.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayColumnAttribute.SortDescending">
+      <summary>Получает значение, указывающее, в каком порядке выполняется сортировка: в порядке возрастания или в порядке убывания.</summary>
+      <returns>Значение true, если столбец будет отсортирован в порядке убывания; в противном случае — значение false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute">
+      <summary>Задает способ отображения и форматирования полей данных в платформе динамических данных ASP.NET.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.DisplayFormatAttribute" />. </summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ApplyFormatInEditMode">
+      <summary>Возвращает или задает значение, указывающее, применимо ли свойство <see cref="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString" /> к значению поля, если поле данных находится в режиме редактирования.</summary>
+      <returns>Значение true, если строка форматирования применяется к значениям поля в режиме редактирования; в противном случае — значение false.Значение по умолчанию — false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.ConvertEmptyStringToNull">
+      <summary>Возвращает или задает значение, показывающее, выполняется ли автоматическое преобразование пустых строковых значений ("")в значения null при обновлении поля данных в источнике данных.</summary>
+      <returns>Значение true, если пустые строковые значения автоматически преобразуются в значения null; в противном случае — значение false.Значение по умолчанию — true.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.DataFormatString">
+      <summary>Возвращает или задает формат отображения значения поля.</summary>
+      <returns>Строка форматирования, определяющая формат отображения поля данных.По умолчанию это пустая строка (""), указывающая на неприменение к значению поля специального форматирования.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.HtmlEncode">
+      <summary>Получает или задает значение, указывающее, должно ли поле кодироваться в формате HTML.</summary>
+      <returns>Значение true, если поле следует кодировать в формате HTML; в противном случае — значение false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.DisplayFormatAttribute.NullDisplayText">
+      <summary>Возвращает или задает текст, отображаемый в поле, значение которого равно null.</summary>
+      <returns>Текст, отображаемый в поле, значение которого равно null.По умолчанию используется пустая строка (""), указывающая, что это свойство не задано.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EditableAttribute">
+      <summary>Указывает, разрешено ли изменение поля данных.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EditableAttribute.#ctor(System.Boolean)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.EditableAttribute" />.</summary>
+      <param name="allowEdit">Значение true, указывающее, что поле можно изменять; в противном случае — значение false.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowEdit">
+      <summary>Получает значение, указывающее, разрешено ли изменение поля.</summary>
+      <returns>Значение true, если поле можно изменять; в противном случае — значение false.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EditableAttribute.AllowInitialValue">
+      <summary>Получает или задает значение, указывающее, включено ли начальное значение.</summary>
+      <returns>Значение true , если начальное значение включено; в противном случае — значение false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute">
+      <summary>Проверяет адрес электронной почты.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.EmailAddressAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EmailAddressAttribute.IsValid(System.Object)">
+      <summary>Определяет, совпадает ли указанное значение с шаблоном допустимых адресов электронной почты.</summary>
+      <returns>Значение true, если указанное значение допустимо или равно null; в противном случае — значение false.</returns>
+      <param name="value">Проверяемое значение.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute">
+      <summary>Позволяет сопоставить перечисление .NET Framework столбцу данных.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.#ctor(System.Type)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute" />.</summary>
+      <param name="enumType">Тип перечисления.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.EnumType">
+      <summary>Получает или задает тип перечисления.</summary>
+      <returns>Перечисляемый тип.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.EnumDataTypeAttribute.IsValid(System.Object)">
+      <summary>Проверяет, действительно ли значение поля данных является пустым.</summary>
+      <returns>Значение true, если значение в поле данных допустимо; в противном случае — значение false.</returns>
+      <param name="value">Значение поля данных, которое нужно проверить.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute">
+      <summary>Проверяет расширения имени файла.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.FileExtensionsAttribute" />.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.Extensions">
+      <summary>Получает или задает расширения имени файла.</summary>
+      <returns>Расширения имен файлов или расширения файлов по умолчанию (PNG, JPG, JPEG и GIF), если свойство не задано.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.FormatErrorMessage(System.String)">
+      <summary>Применяет к сообщению об ошибке форматирование на основе поля данных, в котором произошла ошибка.</summary>
+      <returns>Форматированное сообщение об ошибке.</returns>
+      <param name="name">Имя поля, ставшего причиной сбоя при проверке.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FileExtensionsAttribute.IsValid(System.Object)">
+      <summary>Проверяет, что указанное расширение (-я) имени файла являются допустимыми.</summary>
+      <returns>Значение true, если расширение имени файла допустимо; в противном случае — значение false.</returns>
+      <param name="value">Разделенный запятыми список допустимых расширений файлов.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute">
+      <summary>Представляет атрибут, указывающий правила фильтрации столбца.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" />, используя свойство UIHint фильтра.</summary>
+      <param name="filterUIHint">Имя элемента управления, используемого для фильтрации.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" />, используя свойство UIHint фильтра и имя уровня представления данных.</summary>
+      <param name="filterUIHint">Имя элемента управления, используемого для фильтрации.</param>
+      <param name="presentationLayer">Имя уровня представления данных, поддерживающего данный элемент управления.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.FilterUIHintAttribute" />, используя свойство UIHint фильтра, имя уровня представления данных и параметры элемента управления.</summary>
+      <param name="filterUIHint">Имя элемента управления, используемого для фильтрации.</param>
+      <param name="presentationLayer">Имя уровня представления данных, поддерживающего данный элемент управления.</param>
+      <param name="controlParameters">Список параметров элемента управления.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.ControlParameters">
+      <summary>Получает пары "имя-значение", используемые в качестве параметров конструктора элемента управления.</summary>
+      <returns>Пары "имя-значение", используемые в качестве параметров конструктора элемента управления.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.Equals(System.Object)">
+      <summary>Возвращает значение, показывающее, равен ли экземпляр атрибута заданному объекту.</summary>
+      <returns>Значение True, если переданный объект равен экземпляру атрибута; в противном случае — значение false.</returns>
+      <param name="obj">Объект, сравниваемый с данным экземпляром атрибута.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.FilterUIHint">
+      <summary>Получает имя элемента управления, используемого для фильтрации.</summary>
+      <returns>Имя элемента управления, используемого для фильтрации.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.GetHashCode">
+      <summary>Возвращает хэш-код для экземпляра атрибута.</summary>
+      <returns>Хэш-код экземпляра атрибута.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.FilterUIHintAttribute.PresentationLayer">
+      <summary>Получает имя уровня представления данных, поддерживающего данный элемент управления.</summary>
+      <returns>Имя уровня представления данных, поддерживающего данный элемент управления.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.IValidatableObject">
+      <summary>Предоставляет способ, чтобы сделать объект недопустимым.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.IValidatableObject.Validate(System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Определяет, является ли заданный объект допустимым.</summary>
+      <returns>Коллекция, в которой хранятся сведения о проверках, завершившихся неудачей.</returns>
+      <param name="validationContext">Контекст проверки.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.KeyAttribute">
+      <summary>Обозначает одно или несколько свойств, уникальным образом характеризующих определенную сущность.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.KeyAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.KeyAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute">
+      <summary>Задает максимально допустимый размер массива или длину строки для свойства.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.#ctor(System.Int32)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.MaxLengthAttribute" />, основанный на параметре <paramref name="length" />.</summary>
+      <param name="length">Максимально допустимая длина массива или данных строки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>Применяет форматирование к заданному сообщению об ошибке.</summary>
+      <returns>Локализованная строка, описывающая максимально допустимую длину.</returns>
+      <param name="name">Имя, которое нужно включить в отформатированную строку.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MaxLengthAttribute.IsValid(System.Object)">
+      <summary>Определяет, является ли допустимым заданный объект.</summary>
+      <returns>Значение true, если значение равно NULL либо меньше или равно заданной максимальной длине; в противном случае — значение false.</returns>
+      <param name="value">Проверяемый объект.</param>
+      <exception cref="Sytem.InvalidOperationException">Длина равна нулю или меньше, чем минус один.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MaxLengthAttribute.Length">
+      <summary>Возвращает максимально допустимый размер массива или длину строки.</summary>
+      <returns>Максимально допустимая длина массива или данных строки.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.MinLengthAttribute">
+      <summary>Задает минимально допустимый размер массива или длину строки для свойства.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.#ctor(System.Int32)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.MinLengthAttribute" />.</summary>
+      <param name="length">Длина массива или строковых данных.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>Применяет форматирование к заданному сообщению об ошибке.</summary>
+      <returns>Локализованная строка, описывающая минимально допустимую длину.</returns>
+      <param name="name">Имя, которое нужно включить в отформатированную строку.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.MinLengthAttribute.IsValid(System.Object)">
+      <summary>Определяет, является ли допустимым заданный объект.</summary>
+      <returns>Значение true, если указанные объект допустимый; в противном случае — значение false.</returns>
+      <param name="value">Проверяемый объект.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.MinLengthAttribute.Length">
+      <summary>Получает или задает минимально допустимую длину массива или данных строки.</summary>
+      <returns>Минимально допустимая длина массива или данных строки.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.PhoneAttribute">
+      <summary>Указывает, что значение поля данных является номером телефона с правильным форматом, используя регулярное выражение для телефонных номеров.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.PhoneAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.PhoneAttribute.IsValid(System.Object)">
+      <summary>Определяет, является ли указанный номер телефона в допустимом формате телефонного номера. </summary>
+      <returns>Значение true, если номер телефона допустим; в противном случае — значение false.</returns>
+      <param name="value">Проверяемое значение.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RangeAttribute">
+      <summary>Задает ограничения на числовой диапазон для значения в поле данных. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Double,System.Double)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" />, используя указанное минимальное и максимально значение. </summary>
+      <param name="minimum">Задает минимальное допустимое значение для поля данных.</param>
+      <param name="maximum">Задает максимально допустимое значение для поля данных.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Int32,System.Int32)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" />, используя указанное минимальное и максимально значение.</summary>
+      <param name="minimum">Задает минимальное допустимое значение для поля данных.</param>
+      <param name="maximum">Задает максимально допустимое значение для поля данных.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.#ctor(System.Type,System.String,System.String)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.RangeAttribute" />, используя указанное минимальное и максимально значение, а также определенный тип.</summary>
+      <param name="type">Задает тип тестируемого объекта.</param>
+      <param name="minimum">Задает минимальное допустимое значение для поля данных.</param>
+      <param name="maximum">Задает максимально допустимое значение для поля данных.</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="type" /> имеет значение null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.FormatErrorMessage(System.String)">
+      <summary>Форматирует сообщение об ошибке, отображаемое в случае сбоя при проверке диапазона.</summary>
+      <returns>Форматированное сообщение об ошибке.</returns>
+      <param name="name">Имя поля, ставшего причиной сбоя при проверке. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RangeAttribute.IsValid(System.Object)">
+      <summary>Проверяет, действительно ли значение обязательного поля данных находится в указанном диапазоне.</summary>
+      <returns>Значение true, если указанное значение находится в пределах диапазона, в противном случае — значение false.</returns>
+      <param name="value">Значение поля данных, которое нужно проверить.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Значение поля данных вышло за рамки допустимого диапазона.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Maximum">
+      <summary>Получает максимальное допустимое значение поля.</summary>
+      <returns>Максимально допустимое значение для поля данных.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.Minimum">
+      <summary>Получает минимально допустимое значение поля.</summary>
+      <returns>Минимально допустимое значение для поля данных.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RangeAttribute.OperandType">
+      <summary>Получает тип поля данных, значение которого нужно проверить.</summary>
+      <returns>Тип поля данных, значение которого нужно проверить.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute">
+      <summary>Указывает, что значение поля данных в платформе динамических данных ASP.NET должно соответствовать заданному регулярному выражению.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.RegularExpressionAttribute" />.</summary>
+      <param name="pattern">Регулярное выражение, используемое для проверки значения поля данных. </param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="pattern" /> имеет значение null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.FormatErrorMessage(System.String)">
+      <summary>Форматирует сообщение об ошибке, отображаемое, если во время проверки регулярного выражения произойдет сбой.</summary>
+      <returns>Форматированное сообщение об ошибке.</returns>
+      <param name="name">Имя поля, ставшего причиной сбоя при проверке.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.IsValid(System.Object)">
+      <summary>Проверяет, соответствует ли введенное пользователем значение шаблону регулярного выражения. </summary>
+      <returns>Значение true, если проверка прошла успешно; в противном случае — false.</returns>
+      <param name="value">Значение поля данных, которое нужно проверить.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Значения поля данных не соответствует шаблону регулярного выражения.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RegularExpressionAttribute.Pattern">
+      <summary>Получает шаблон регулярного выражения.</summary>
+      <returns>Сопоставляемый шаблон.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.RequiredAttribute">
+      <summary>Указывает, что требуется значение поля данных.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.RequiredAttribute" />.</summary>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.RequiredAttribute.AllowEmptyStrings">
+      <summary>Получает или задает значение, указывающее на то, разрешена ли пустая строка.</summary>
+      <returns>Значение true, если пустая строка разрешена; в противном случае — значение false.Значение по умолчанию — false.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.RequiredAttribute.IsValid(System.Object)">
+      <summary>Проверяет, действительно ли значение обязательного поля данных не является пустым.</summary>
+      <returns>Значение true, если проверка прошла успешно; в противном случае — false.</returns>
+      <param name="value">Значение поля данных, которое нужно проверить.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Значение поля данных было равно null.</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute">
+      <summary>Указывает, использует ли класс или столбец данных формирование шаблонов.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.#ctor(System.Boolean)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute" />, используя свойство <see cref="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold" />.</summary>
+      <param name="scaffold">Значение, указывающее, включено ли формирование шаблонов.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ScaffoldColumnAttribute.Scaffold">
+      <summary>Возвращает или задает значение, указывающее, включено ли формирование шаблонов.</summary>
+      <returns>Значение true, если формирование шаблонов включено; в противном случае — значение false.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.StringLengthAttribute">
+      <summary>Задает минимально и максимально допустимую длину строки знаков в поле данных.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.#ctor(System.Int32)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.StringLengthAttribute" />, используя заданную максимальную длину.</summary>
+      <param name="maximumLength">Максимальная длина строки. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.FormatErrorMessage(System.String)">
+      <summary>Применяет форматирование к заданному сообщению об ошибке.</summary>
+      <returns>Форматированное сообщение об ошибке.</returns>
+      <param name="name">Имя поля, ставшего причиной сбоя при проверке.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Значение <paramref name="maximumLength" /> отрицательно. – или –<paramref name="maximumLength" /> меньше параметра <paramref name="minimumLength" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.StringLengthAttribute.IsValid(System.Object)">
+      <summary>Определяет, является ли допустимым заданный объект.</summary>
+      <returns>Значение true, если указанные объект допустимый; в противном случае — значение false.</returns>
+      <param name="value">Проверяемый объект.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Значение <paramref name="maximumLength" /> отрицательно.– или –<paramref name="maximumLength" /> меньше параметра <see cref="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength" />.</exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MaximumLength">
+      <summary>Возвращает или задает максимальную длину создаваемых строк.</summary>
+      <returns>Максимальная длина строки. </returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.StringLengthAttribute.MinimumLength">
+      <summary>Получает или задает минимальную длину строки.</summary>
+      <returns>Минимальная длина строки.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.TimestampAttribute">
+      <summary>Задает тип данных столбца в виде версии строки.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.TimestampAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.TimestampAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UIHintAttribute">
+      <summary>Задает шаблон или пользовательский элемент управления, используемый платформой динамических данных для отображения поля данных. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" /> с использованием указанного пользовательского элемента управления. </summary>
+      <param name="uiHint">Пользовательский элемент управления для отображения поля данных. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" />, используя указанный пользовательский элемент управления и указанный уровень представления данных. </summary>
+      <param name="uiHint">Пользовательский элемент управления (шаблон поля), используемый для отображения поля данных.</param>
+      <param name="presentationLayer">Уровень представления данных, использующий данный класс.Может иметь значение "HTML", "Silverlight", "WPF" или "WinForms".</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.#ctor(System.String,System.String,System.Object[])">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" />, используя указанный пользовательский элемент управления, уровень представления данных и параметры элемента управления.</summary>
+      <param name="uiHint">Пользовательский элемент управления (шаблон поля), используемый для отображения поля данных.</param>
+      <param name="presentationLayer">Уровень представления данных, использующий данный класс.Может иметь значение "HTML", "Silverlight", "WPF" или "WinForms".</param>
+      <param name="controlParameters">Объект, используемый для извлечения значений из любых источников данных. </param>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> равно null или является ключом ограничения.– или –Значение <see cref="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters" /> не является строкой. </exception>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.ControlParameters">
+      <summary>Возвращает или задает объект <see cref="T:System.Web.DynamicData.DynamicControlParameter" />, используемый для извлечения значений из любых источников данных.</summary>
+      <returns>Коллекция пар "ключ-значение". </returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.Equals(System.Object)">
+      <summary>Получает значение, указывающее, равен ли данный экземпляр указанному объекту.</summary>
+      <returns>Значение true, если указанный объект равен данному экземпляру; в противном случае — значение false.</returns>
+      <param name="obj">Объект, сравниваемый с данным экземпляром, или ссылка null.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UIHintAttribute.GetHashCode">
+      <summary>Получает хэш-код для текущего экземпляра атрибута.</summary>
+      <returns>Хэш-код текущего экземпляра атрибута.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.PresentationLayer">
+      <summary>Возвращает или задает уровень представления данных, использующий класс <see cref="T:System.ComponentModel.DataAnnotations.UIHintAttribute" />. </summary>
+      <returns>Уровень представления данных, используемый этим классом.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.UIHintAttribute.UIHint">
+      <summary>Возвращает или задает имя шаблона поля, используемого для отображения поля данных.</summary>
+      <returns>Имя шаблона поля, который применяется для отображения поля данных.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.UrlAttribute">
+      <summary>Обеспечивает проверку url-адреса.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.UrlAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.UrlAttribute.IsValid(System.Object)">
+      <summary>Проверяет формат указанного URL-адреса.</summary>
+      <returns>Значение true, если формат URL-адреса является допустимым или имеет значение null; в противном случае — значение false.</returns>
+      <param name="value">Универсальный код ресурса (URI) для проверки.</param>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationAttribute">
+      <summary>Выполняет роль базового класса для всех атрибутов проверки.</summary>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Свойства <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> и <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName" /> для локализованного сообщения об ошибке устанавливаются одновременно с установкой сообщения об ошибке в нелокализованном свойстве <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage" />.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.Func{System.String})">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />, используя функцию, которая позволяет получить доступ к ресурсам проверки.</summary>
+      <param name="errorMessageAccessor">Функция, позволяющая получить доступ к ресурсам проверки.</param>
+      <exception cref="T:System:ArgumentNullException">Параметр <paramref name="errorMessageAccessor" /> имеет значение null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />, используя сообщение об ошибке, связанное с проверяющим элементом управления.</summary>
+      <param name="errorMessage">Сообщение об ошибке, которое необходимо связать с проверяющим элементом управления.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessage">
+      <summary>Получает или задает сообщение об ошибке, которое необходимо связать с проверяющим элементом управления на случай сбоя во время проверки.</summary>
+      <returns>Сообщение об ошибке, связанное с проверяющим элементом управления.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceName">
+      <summary>Получает или задает имя ресурса сообщений об ошибках, используемого для поиска значения свойства <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType" /> в случае сбоя при проверке.</summary>
+      <returns>Ресурс сообщений об ошибках, связанный с проверяющим элементом управления.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageResourceType">
+      <summary>Получает или задает тип ресурса, используемого для поиска сообщения об ошибке в случае сбоя проверки.</summary>
+      <returns>Тип сообщения об ошибке, связанного с проверяющим элементом управления.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString">
+      <summary>Получает локализованное сообщение об ошибке проверки.</summary>
+      <returns>Локализованное сообщение об ошибке проверки.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.FormatErrorMessage(System.String)">
+      <summary>Применяет к сообщению об ошибке форматирование на основе поля данных, в котором произошла ошибка. </summary>
+      <returns>Экземпляр форматированного сообщения об ошибке.</returns>
+      <param name="name">Имя, которое должно быть включено в отформатированное сообщение.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.GetValidationResult(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Проверяет, является ли заданное значение допустимым относительно текущего атрибута проверки.</summary>
+      <returns>Экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />. </returns>
+      <param name="value">Проверяемое значение.</param>
+      <param name="validationContext">Контекстные сведения об операции проверки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)">
+      <summary>Определяет, является ли заданное значение объекта допустимым. </summary>
+      <returns>Значение true, если значение допустимо, в противном случае — значение false.</returns>
+      <param name="value">Значение объекта, который требуется проверить. </param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Проверяет заданное значение относительно текущего атрибута проверки.</summary>
+      <returns>Экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />. </returns>
+      <param name="value">Проверяемое значение.</param>
+      <param name="validationContext">Контекстные сведения об операции проверки.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationAttribute.RequiresValidationContext">
+      <summary>Получает значение, указывающее, требует ли атрибут контекста проверки.</summary>
+      <returns>Значение true, если атрибут требует контекста проверки; в противном случае — значение false.</returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Проверяет указанный объект.</summary>
+      <param name="value">Проверяемый объект.</param>
+      <param name="validationContext">Объект <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" />, описывающий контекст, в котором проводится проверка.Этот параметр не может иметь значение null.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Отказ при проверке.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationAttribute.Validate(System.Object,System.String)">
+      <summary>Проверяет указанный объект.</summary>
+      <param name="value">Значение объекта, который требуется проверить.</param>
+      <param name="name">Имя, которое должно быть включено в сообщение об ошибке.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="value" /> недействителен.</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationContext">
+      <summary>Описывает контекст, в котором проводится проверка.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" />, используя указанный экземпляр объекта.</summary>
+      <param name="instance">Экземпляр объекта для проверки.Не может иметь значение null.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" />, используя указанный объект и необязательный контейнер свойств.</summary>
+      <param name="instance">Экземпляр объекта для проверки.Не может иметь значение null.</param>
+      <param name="items">Необязательный набор пар «ключ — значение», который будет доступен потребителям.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.#ctor(System.Object,System.IServiceProvider,System.Collections.Generic.IDictionary{System.Object,System.Object})">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> с помощью поставщика служб и словаря потребителей службы. </summary>
+      <param name="instance">Объект для проверки.Этот параметр обязателен.</param>
+      <param name="serviceProvider">Объект, реализующий интерфейс <see cref="T:System.IServiceProvider" />.Этот параметр является необязательным.</param>
+      <param name="items">Словарь пар «ключ — значение», который необходимо сделать доступным для потребителей службы.Этот параметр является необязательным.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.DisplayName">
+      <summary>Получает или задает имя проверяемого члена. </summary>
+      <returns>Имя проверяемого члена. </returns>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.GetService(System.Type)">
+      <summary>Возвращает службу, предоставляющую пользовательскую проверку.</summary>
+      <returns>Экземпляр службы или значение null, если служба недоступна.</returns>
+      <param name="serviceType">Тип службы, которая используется для проверки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationContext.InitializeServiceProvider(System.Func{System.Type,System.Object})">
+      <summary>Инициализирует <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" />, используя поставщик служб, который может возвращать экземпляры служб по типу при вызове GetService.</summary>
+      <param name="serviceProvider">Поставщик службы.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.Items">
+      <summary>Получает словарь пар «ключ — значение», связанный с данным контекстом.</summary>
+      <returns>Словарь пар «ключ — значение» для данного контекста.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.MemberName">
+      <summary>Получает или задает имя проверяемого члена. </summary>
+      <returns>Имя проверяемого члена. </returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectInstance">
+      <summary>Получает проверяемый объект.</summary>
+      <returns>Объект для проверки.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationContext.ObjectType">
+      <summary>Получает тип проверяемого объекта.</summary>
+      <returns>Тип проверяемого объекта.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationException">
+      <summary>Представляет исключение, которое происходит во время проверки поля данных при использовании класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />. </summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" />, используя созданное системой сообщение об ошибке.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.ComponentModel.DataAnnotations.ValidationResult,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" />, используя результат проверки, атрибут проверки и значение текущего исключения.</summary>
+      <param name="validationResult">Список результатов проверки.</param>
+      <param name="validatingAttribute">Атрибут, вызвавший текущее исключение.</param>
+      <param name="value">Значение объекта, которое привело к тому, что атрибут вызвал ошибку проверки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" />, используя указанное сообщение об ошибке.</summary>
+      <param name="message">Заданное сообщение, свидетельствующее об ошибке.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.ComponentModel.DataAnnotations.ValidationAttribute,System.Object)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" />, используя указанное сообщение об ошибке, атрибут проверки и значение текущего исключения.</summary>
+      <param name="errorMessage">Сообщение, свидетельствующее об ошибке.</param>
+      <param name="validatingAttribute">Атрибут, вызвавший текущее исключение.</param>
+      <param name="value">Значение объекта, которое привело к тому, что атрибут вызвал ошибку проверки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationException.#ctor(System.String,System.Exception)">
+      <summary>Инициализирует новый экземпляр <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" />, используя указанное сообщение об ошибке и коллекцию внутренних экземпляров исключения.</summary>
+      <param name="message">Сообщение об ошибке. </param>
+      <param name="innerException">Коллекция исключений проверки.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationAttribute">
+      <summary>Получает экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />, который вызвал это исключение.</summary>
+      <returns>Экземпляр типа атрибута проверки, который вызвал это исключение.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult">
+      <summary>Получает экземпляр <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" />, описывающий ошибку проверки.</summary>
+      <returns>Экземпляр <see cref="P:System.ComponentModel.DataAnnotations.ValidationException.ValidationResult" />, описывающий ошибку проверки.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationException.Value">
+      <summary>Получает значение объекта, при котором класс <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> вызвал это исключение.</summary>
+      <returns>Значение объекта, которое привело к тому, что класс <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" /> вызвал ошибку проверки.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.ValidationResult">
+      <summary>Представляет контейнер для результатов запроса на проверку.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.ComponentModel.DataAnnotations.ValidationResult)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> с помощью объекта <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</summary>
+      <param name="validationResult">Объект результата проверки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />, используя указанное сообщение об ошибке.</summary>
+      <param name="errorMessage">Сообщение об ошибке.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.#ctor(System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> с использованием указанного сообщения об ошибке и списка членов, имеющих ошибки проверки.</summary>
+      <param name="errorMessage">Сообщение об ошибке.</param>
+      <param name="memberNames">Список членов, имена которых вызвали ошибки проверки.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.ErrorMessage">
+      <summary>Получает сообщение об ошибке проверки.</summary>
+      <returns>Сообщение об ошибке проверки.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.ValidationResult.MemberNames">
+      <summary>Получает коллекцию имен членов, указывающую поля, которые вызывают ошибки проверки.</summary>
+      <returns>Коллекцию имен членов, указывающая поля, которые вызывают ошибки проверки.</returns>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.ValidationResult.Success">
+      <summary>Представляет результат завершения проверки (true, если проверка прошла успешно; в противном случае – значение false).</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.ValidationResult.ToString">
+      <summary>Возвращает строковое представление текущего результата проверки.</summary>
+      <returns>Текущий результат проверки.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Validator">
+      <summary>Определяет вспомогательный класс, который может использоваться для проверки объектов, свойств и методов в случае его включения в связанные с ними атрибуты <see cref="T:System.ComponentModel.DataAnnotations.ValidationAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>Определяет, является ли указанный объект допустимым, используя контекст проверки и коллекцию результатов проверки.</summary>
+      <returns>Значение true, если проверка объекта завершена успешно; в противном случае — значение false.</returns>
+      <param name="instance">Проверяемый объект.</param>
+      <param name="validationContext">Контекст, описывающий проверяемый объект.</param>
+      <param name="validationResults">Коллекция для хранения всех проверок, завершившихся неудачей.</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="instance" /> имеет значение null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Boolean)">
+      <summary>Определяет, является ли указанный объект допустимым, используя контекст проверки, коллекцию результатов проверки и значение, указывающее, следует ли проверять все свойства.</summary>
+      <returns>Значение true, если проверка объекта завершена успешно; в противном случае — значение false.</returns>
+      <param name="instance">Проверяемый объект.</param>
+      <param name="validationContext">Контекст, описывающий проверяемый объект.</param>
+      <param name="validationResults">Коллекция для хранения всех проверок, завершившихся неудачей.</param>
+      <param name="validateAllProperties">Значение true, если требуется проверять все свойства; значение false, чтобы проверять только требуемые атрибуты.</param>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="instance" /> имеет значение null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult})">
+      <summary>Проверяет свойство.</summary>
+      <returns>Значение true, если проверка свойства завершена успешно; в противном случае — значение false.</returns>
+      <param name="value">Проверяемое значение.</param>
+      <param name="validationContext">Контекст, описывающий проверяемое свойство.</param>
+      <param name="validationResults">Коллекция для хранения всех проверок, завершившихся неудачей. </param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> не может быть присвоено свойству.-или-Значение параметра <paramref name="value " />— null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.TryValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.ICollection{System.ComponentModel.DataAnnotations.ValidationResult},System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>Возвращает значение, указывающее, является ли заданное значение допустимым относительно указанных атрибутов.</summary>
+      <returns>Значение true, если проверка объекта завершена успешно; в противном случае — значение false.</returns>
+      <param name="value">Проверяемое значение.</param>
+      <param name="validationContext">Контекст, описывающий проверяемый объект.</param>
+      <param name="validationResults">Коллекция для хранения проверок, завершившихся неудачей. </param>
+      <param name="validationAttributes">Атрибуты проверки.</param>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Определяет, является ли указанный объект допустимым, используя контекст проверки.</summary>
+      <param name="instance">Проверяемый объект.</param>
+      <param name="validationContext">Контекст, описывающий проверяемый объект.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Недопустимый объект.</exception>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="instance" /> имеет значение null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateObject(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Boolean)">
+      <summary>Определяет, является ли указанный объект допустимым, используя контекст проверки и значение, указывающее, следует ли проверять все свойства.</summary>
+      <param name="instance">Проверяемый объект.</param>
+      <param name="validationContext">Контекст, описывающий проверяемый объект.</param>
+      <param name="validateAllProperties">Значение true, если требуется проверять все свойства, в противном случае — значение false.</param>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">
+        <paramref name="instance" /> недействителен.</exception>
+      <exception cref="T:System.ArgumentNullException">Параметр <paramref name="instance" /> имеет значение null.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateProperty(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)">
+      <summary>Проверяет свойство.</summary>
+      <param name="value">Проверяемое значение.</param>
+      <param name="validationContext">Контекст, описывающий проверяемое свойство.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> не может быть присвоено свойству.</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Параметр <paramref name="value" /> является недопустимым.</exception>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Validator.ValidateValue(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Collections.Generic.IEnumerable{System.ComponentModel.DataAnnotations.ValidationAttribute})">
+      <summary>Проверяет указанные атрибуты.</summary>
+      <param name="value">Проверяемое значение.</param>
+      <param name="validationContext">Контекст, описывающий проверяемый объект.</param>
+      <param name="validationAttributes">Атрибуты проверки.</param>
+      <exception cref="T:System.ArgumentNullException">Значение параметра <paramref name="validationContext" /> — null.</exception>
+      <exception cref="T:System.ComponentModel.DataAnnotations.ValidationException">Параметр <paramref name="value" /> недопустим с параметром <paramref name="validationAttributes" />.</exception>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute">
+      <summary>Представляет столбец базы данных, что соответствует свойству.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" />.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute" />.</summary>
+      <param name="name">Имя столбца, с которым сопоставлено свойство.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Name">
+      <summary>Получает имя столбца свойство соответствует.</summary>
+      <returns>Имя столбца, с которым сопоставлено свойство.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.Order">
+      <summary>Получает или задает отсчитываются от нуля порядка столбцов свойства сопоставляются с.</summary>
+      <returns>Порядковый номер столбца.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ColumnAttribute.TypeName">
+      <summary>Получает или задает тип данных поставщик базы данных определенного столбца свойства сопоставляются с.</summary>
+      <returns>Зависящий от поставщика базы данных тип данных столбца, с которым сопоставлено свойство.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute">
+      <summary>Указывает, что класс представляет сложный тип.Сложные типы — это нескалярные свойства типов сущности, которые позволяют организовать в сущностях скалярные свойства.Сложные типы не имеют ключей и не могут управляться платформой Entity Framework отдельно от их родительских объектов.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute">
+      <summary>Указывает, каким образом база данных создает значения для свойства.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.#ctor(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute" />.</summary>
+      <param name="databaseGeneratedOption">Параметр формирования базы данных.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedAttribute.DatabaseGeneratedOption">
+      <summary>Возвращает или задает шаблон используется для создания значения свойства в базе данных.</summary>
+      <returns>Параметр формирования базы данных.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption">
+      <summary>Представляет шаблон, используемый для получения значения свойства в базе данных.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Computed">
+      <summary>База данных создает значение при вставке или обновлении строки.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity">
+      <summary>База данных создает значение при вставке строки.</summary>
+    </member>
+    <member name="F:System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None">
+      <summary>База данных не создает значений.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute">
+      <summary>Обозначает свойство, используемое в связи в качестве внешнего ключа.Заметка может размещаться в свойстве внешнего ключа и указывать имя связанного свойства навигации или размещаться в свойстве навигации и указывать имя связанного внешнего ключа.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute" />.</summary>
+      <param name="name">При добавлении атрибута ForeignKey к свойству внешнего ключа следует указать имя связанного свойства навигации.При добавлении атрибута ForeignKey к свойству навигации следует указать имя связанного внешнего ключа (или внешних ключей).Если свойство навигации имеет несколько внешних ключей, используйте запятые для разделения списка имен внешних ключей.Дополнительные сведения см. в разделе Заметки к данным Code First.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute.Name">
+      <summary>При добавлении атрибута ForeignKey к свойству внешнего ключа следует указать имя связанного свойства навигации.При добавлении атрибута ForeignKey к свойству навигации следует указать имя связанного внешнего ключа (или внешних ключей).Если свойство навигации имеет несколько внешних ключей, используйте запятые для разделения списка имен внешних ключей.Дополнительные сведения см. в разделе Заметки к данным Code First.</summary>
+      <returns>Имя связанного свойства навигации или связанного свойства внешнего ключа.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute">
+      <summary>Задает инверсию свойства навигации, представляющего другой конец той же связи.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute" /> с помощью заданного свойства.</summary>
+      <param name="property">Свойство навигации, представляющее другой конец той же связи.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.InversePropertyAttribute.Property">
+      <summary>Получает свойство навигации, представляющее конец другой одной связи.</summary>
+      <returns>Свойство атрибута.</returns>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute">
+      <summary>Указывает, что свойство или класс должны быть исключены из сопоставления с базой данных.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute.#ctor">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.NotMappedAttribute" />.</summary>
+    </member>
+    <member name="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute">
+      <summary>Указывает таблицу базы данных, с которой сопоставлен класс.</summary>
+    </member>
+    <member name="M:System.ComponentModel.DataAnnotations.Schema.TableAttribute.#ctor(System.String)">
+      <summary>Инициализирует новый экземпляр класса <see cref="T:System.ComponentModel.DataAnnotations.Schema.TableAttribute" /> с помощью указанного имени таблицы.</summary>
+      <param name="name">Имя таблицы, с которой сопоставлен класс.</param>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Name">
+      <summary>Получает имя таблицы, с которой сопоставлен класс.</summary>
+      <returns>Имя таблицы, с которой сопоставлен класс.</returns>
+    </member>
+    <member name="P:System.ComponentModel.DataAnnotations.Schema.TableAttribute.Schema">
+      <summary>Получает или задает схему таблицы, с которой сопоставлен класс.</summary>
+      <returns>Схема таблицы, с которой сопоставлен класс.</returns>
+    </member>
+  </members>
+</doc>

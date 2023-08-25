@@ -1,0 +1,1279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Diagnostics.TraceSource</name>
+  </assembly>
+  <members>
+    <member name="T:System.Diagnostics.BooleanSwitch">
+      <summary>提供一个简单的 On/Off 开关，用于控制调试和跟踪输出。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.#ctor(System.String,System.String)">
+      <summary>用指定的显示名称和说明初始化 <see cref="T:System.Diagnostics.BooleanSwitch" /> 类的新实例。</summary>
+      <param name="displayName">要显示在用户界面上的名称。</param>
+      <param name="description">开关说明。</param>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.#ctor(System.String,System.String,System.String)">
+      <summary>用指定的显示名称、说明和默认开关值初始化 <see cref="T:System.Diagnostics.BooleanSwitch" /> 类的新实例。</summary>
+      <param name="displayName">要显示在用户界面上的名称。</param>
+      <param name="description">开关说明。</param>
+      <param name="defaultSwitchValue">开关的默认值。</param>
+    </member>
+    <member name="P:System.Diagnostics.BooleanSwitch.Enabled">
+      <summary>获取或设置一个指示开关已启用还是已禁用的值。</summary>
+      <returns>如果启用此开关，则为 true；否则为 false。默认值为 false。</returns>
+      <exception cref="T:System.Security.SecurityException">调用方没有正确的权限。</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.OnValueChanged">
+      <summary>确定 <see cref="P:System.Diagnostics.Switch.Value" /> 属性的新值是否可分析为布尔值。</summary>
+    </member>
+    <member name="T:System.Diagnostics.DefaultTraceListener">
+      <summary>提供用于跟踪的默认输出方法和行为。</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.#ctor">
+      <summary>在将 <see cref="P:System.Diagnostics.TraceListener.Name" /> 属性值设置为其默认值的情况下，初始化 <see cref="T:System.Diagnostics.DefaultTraceListener" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Fail(System.String)">
+      <summary>为总是失败的断言发出或显示消息和堆栈跟踪。</summary>
+      <param name="message">要发出或显示的消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+        <IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Fail(System.String,System.String)">
+      <summary>为总是失败的断言发出或显示详细消息和堆栈跟踪。</summary>
+      <param name="message">要发出或显示的消息。</param>
+      <param name="detailMessage">要发出或显示的详细消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+        <IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Write(System.String)">
+      <summary>将输出写入 OutputDebugString 函数和 <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" /> 方法。</summary>
+      <param name="message">要写入 OutputDebugString 和 <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" /> 的消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.WriteLine(System.String)">
+      <summary>将输出写入 OutputDebugString 函数和 <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" /> 方法，后接回车符和换行符 (\r\n)。</summary>
+      <param name="message">要写入 OutputDebugString 和 <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" /> 的消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.EventTypeFilter">
+      <summary>指示侦听器是否应该基于事件类型进行跟踪。</summary>
+    </member>
+    <member name="M:System.Diagnostics.EventTypeFilter.#ctor(System.Diagnostics.SourceLevels)">
+      <summary>初始化 <see cref="T:System.Diagnostics.EventTypeFilter" /> 类的新实例。</summary>
+      <param name="level">
+        <see cref="T:System.Diagnostics.SourceLevels" /> 值的一个按位组合，指定要跟踪的消息的事件类型。</param>
+    </member>
+    <member name="P:System.Diagnostics.EventTypeFilter.EventType">
+      <summary>获取或设置要跟踪的消息的事件类型。</summary>
+      <returns>
+        <see cref="T:System.Diagnostics.SourceLevels" /> 值的按位组合。</returns>
+    </member>
+    <member name="M:System.Diagnostics.EventTypeFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>确定跟踪侦听器是否应跟踪该事件。</summary>
+      <returns>如果应产生跟踪，则为 true；否则为 false。</returns>
+      <param name="cache">表示跟踪事件的信息缓存的 <see cref="T:System.Diagnostics.TraceEventCache" />。</param>
+      <param name="source">源的名称。</param>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一。</param>
+      <param name="id">跟踪标识符编号。</param>
+      <param name="formatOrMessage">用于编写参数数组的格式，或者要编写的消息。</param>
+      <param name="args">参数对象的数组。</param>
+      <param name="data1">跟踪数据对象。</param>
+      <param name="data">跟踪数据对象的数组。</param>
+    </member>
+    <member name="T:System.Diagnostics.SourceFilter">
+      <summary>指示侦听器是否应基于跟踪源跟踪消息。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.SourceFilter.#ctor(System.String)">
+      <summary>初始化 <see cref="T:System.Diagnostics.SourceFilter" /> 类的新实例，并且指定跟踪源的名称。</summary>
+      <param name="source">跟踪源的名称。</param>
+    </member>
+    <member name="M:System.Diagnostics.SourceFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>确定跟踪侦听器是否应跟踪该事件。</summary>
+      <returns>如果应当产生跟踪，则为 true；否则为 false。</returns>
+      <param name="cache">一个对象，表示跟踪事件的信息缓存。</param>
+      <param name="source">源的名称。</param>
+      <param name="eventType">标识事件类型的枚举值之一。</param>
+      <param name="id">跟踪标识符编号。</param>
+      <param name="formatOrMessage">写入参数数组时要使用的格式，或要写入的消息。</param>
+      <param name="args">参数对象的数组。</param>
+      <param name="data1">跟踪数据对象。</param>
+      <param name="data">跟踪数据对象的数组。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="source" /> 为 null。</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.SourceFilter.Source">
+      <summary>获取或设置跟踪源的名称。</summary>
+      <returns>跟踪源的名称。</returns>
+      <exception cref="T:System.ArgumentNullException">该值为 null。</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.SourceLevels">
+      <summary>指定由源开关和事件类型筛选器筛选的跟踪消息的级别。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.All">
+      <summary>允许所有事件通过。</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Critical">
+      <summary>只允许 <see cref="F:System.Diagnostics.TraceEventType.Critical" /> 事件通过。</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Error">
+      <summary>允许 <see cref="F:System.Diagnostics.TraceEventType.Critical" /> 和 <see cref="F:System.Diagnostics.TraceEventType.Error" /> 事件通过。</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Information">
+      <summary>允许 <see cref="F:System.Diagnostics.TraceEventType.Critical" />、<see cref="F:System.Diagnostics.TraceEventType.Error" />、<see cref="F:System.Diagnostics.TraceEventType.Warning" /> 和 <see cref="F:System.Diagnostics.TraceEventType.Information" /> 事件通过。</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Off">
+      <summary>不允许任何事件通过。</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Verbose">
+      <summary>允许 <see cref="F:System.Diagnostics.TraceEventType.Critical" />、<see cref="F:System.Diagnostics.TraceEventType.Error" />、<see cref="F:System.Diagnostics.TraceEventType.Warning" />、<see cref="F:System.Diagnostics.TraceEventType.Information" /> 和 <see cref="F:System.Diagnostics.TraceEventType.Verbose" /> 事件通过。</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Warning">
+      <summary>允许 <see cref="F:System.Diagnostics.TraceEventType.Critical" />、<see cref="F:System.Diagnostics.TraceEventType.Error" /> 和 <see cref="F:System.Diagnostics.TraceEventType.Warning" /> 事件通过。</summary>
+    </member>
+    <member name="T:System.Diagnostics.SourceSwitch">
+      <summary>提供多级开关，用于控制跟踪和调试输出，而无需重新编译代码。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.#ctor(System.String)">
+      <summary>初始化 <see cref="T:System.Diagnostics.SourceSwitch" /> 类的新实例，并且指定源的名称。</summary>
+      <param name="name">源的名称。</param>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.#ctor(System.String,System.String)">
+      <summary>初始化 <see cref="T:System.Diagnostics.SourceSwitch" /> 类的新实例，并且指定源开关的显示名称和默认值。</summary>
+      <param name="displayName">源开关的名称。</param>
+      <param name="defaultSwitchValue">开关的默认值。</param>
+    </member>
+    <member name="P:System.Diagnostics.SourceSwitch.Level">
+      <summary>获取或设置开关级别。</summary>
+      <returns>
+        <see cref="T:System.Diagnostics.SourceLevels" /> 值之一，表示开关的事件级别。</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.OnValueChanged">
+      <summary>当 <see cref="P:System.Diagnostics.Switch.Value" /> 属性的值发生更改时调用。</summary>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.Diagnostics.Switch.Value" /> 的新值不是 <see cref="T:System.Diagnostics.SourceLevels" /> 值之一。</exception>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.ShouldTrace(System.Diagnostics.TraceEventType)">
+      <summary>确定是否应该根据跟踪事件的类型调用跟踪侦听器。</summary>
+      <returns>如果应该调用跟踪侦听器，则为 True；否则为 false。</returns>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.Switch">
+      <summary>提供一个用于创建新的调试和跟踪开关的抽象基类。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Switch.#ctor(System.String,System.String)">
+      <summary>初始化 <see cref="T:System.Diagnostics.Switch" /> 类的新实例。</summary>
+      <param name="displayName">开关的名称。</param>
+      <param name="description">开关说明。</param>
+    </member>
+    <member name="M:System.Diagnostics.Switch.#ctor(System.String,System.String,System.String)">
+      <summary>通过指定开关的显示名称、说明和默认值来初始化 <see cref="T:System.Diagnostics.Switch" /> 类的新实例。</summary>
+      <param name="displayName">开关的名称。</param>
+      <param name="description">开关说明。</param>
+      <param name="defaultSwitchValue">开关的默认值。</param>
+    </member>
+    <member name="P:System.Diagnostics.Switch.Description">
+      <summary>获取开关说明。</summary>
+      <returns>开关说明。默认值为空字符串 ("")。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.Switch.DisplayName">
+      <summary>获取用于标识该开关的名称。</summary>
+      <returns>用于标识该开关的名称。默认值为空字符串 ("")。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Switch.OnSwitchSettingChanged">
+      <summary>当 <see cref="P:System.Diagnostics.Switch.SwitchSetting" /> 属性更改时调用。</summary>
+    </member>
+    <member name="M:System.Diagnostics.Switch.OnValueChanged">
+      <summary>当 <see cref="P:System.Diagnostics.Switch.Value" /> 属性更改时调用。</summary>
+    </member>
+    <member name="P:System.Diagnostics.Switch.SwitchSetting">
+      <summary>获取或设置此开关的当前设置。</summary>
+      <returns>此开关的当前设置。默认值为零。</returns>
+    </member>
+    <member name="P:System.Diagnostics.Switch.Value">
+      <summary>获取或设置开关的值。</summary>
+      <returns>一个表示开关的值的字符串。</returns>
+      <exception cref="T:System.Configuration.ConfigurationErrorsException">该值为 null。- 或 -该值不是仅由一个可选负号后跟一系列从 0 到 9 的数字组成的。- 或 -该值表示小于 <see cref="F:System.Int32.MinValue" /> 或大于 <see cref="F:System.Int32.MaxValue" /> 的数字。</exception>
+    </member>
+    <member name="T:System.Diagnostics.Trace">
+      <summary>提供一组方法和属性，帮助您跟踪代码的执行。此类不能被继承。</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean)">
+      <summary>检查条件；如果条件为 false，则显示一个消息框，其中会显示调用堆栈。</summary>
+      <param name="condition">要计算的条件表达式。如果条件为 true，则不发送失败消息，并且不显示消息框。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean,System.String)">
+      <summary>检查条件；如果条件为 false，则输出指定消息，并显示一个消息框，其中会显示调用堆栈。</summary>
+      <param name="condition">要计算的条件表达式。如果条件为 true，则不发送指定消息，并且不显示消息框。</param>
+      <param name="message">要发送给 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合的消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean,System.String,System.String)">
+      <summary>检查条件；如果条件为 false，则输出两条指定消息，并显示一个消息框，其中会显示调用堆栈。</summary>
+      <param name="condition">要计算的条件表达式。如果条件为 true，则不发送指定消息，并且不显示消息框。</param>
+      <param name="message">要发送给 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合的消息。</param>
+      <param name="detailMessage">要发送给 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合的详细消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.AutoFlush">
+      <summary>获取或设置是否在每次写入后都在 <see cref="P:System.Diagnostics.Trace.Listeners" /> 上调用 <see cref="M:System.Diagnostics.Trace.Flush" />。</summary>
+      <returns>如果每次写入后都在 <see cref="P:System.Diagnostics.Trace.Listeners" /> 上调用 <see cref="M:System.Diagnostics.Trace.Flush" />，则为 true；否则为 false。</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Close">
+      <summary>刷新输出缓冲区，然后关闭 <see cref="P:System.Diagnostics.Trace.Listeners" />。</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Fail(System.String)">
+      <summary>发出指定的错误消息。</summary>
+      <param name="message">要发出的消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Fail(System.String,System.String)">
+      <summary>发出错误消息和详细错误消息。</summary>
+      <param name="message">要发出的消息。</param>
+      <param name="detailMessage">要发出的详细消息。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Flush">
+      <summary>刷新输出缓冲区，并使放入缓冲区中的数据写入 <see cref="P:System.Diagnostics.Trace.Listeners" />。</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Indent">
+      <summary>将当前的 <see cref="P:System.Diagnostics.Trace.IndentLevel" /> 增加 1。</summary>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.IndentLevel">
+      <summary>获取或设置缩进级别。</summary>
+      <returns>缩进级别。默认值为零。</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.IndentSize">
+      <summary>获取或设置缩进的空格数。</summary>
+      <returns>缩进的空格数。默认值为四。</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.Listeners">
+      <summary>获取监视跟踪输出的侦听器集合。</summary>
+      <returns>
+        <see cref="T:System.Diagnostics.TraceListenerCollection" />，它表示监视跟踪输出的 <see cref="T:System.Diagnostics.TraceListener" /> 类型的集合。</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Refresh">
+      <summary>刷新跟踪配置数据。</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceError(System.String)">
+      <summary>使用指定的消息向 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中写入错误消息。</summary>
+      <param name="message">要写入的信息性消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceError(System.String,System.Object[])">
+      <summary>使用指定的对象数组和格式设置信息向 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中写入错误消息。</summary>
+      <param name="format">包含零个或多个格式项的格式字符串，这些项与 <paramref name="args" /> 数组中的对象相对应。</param>
+      <param name="args">包含零个或多个要格式化的对象的 object 数组。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceInformation(System.String)">
+      <summary>使用指定的消息向 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中写入信息性消息。</summary>
+      <param name="message">要写入的信息性消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceInformation(System.String,System.Object[])">
+      <summary>使用指定的对象数组和格式设置信息向 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中写入信息性消息。</summary>
+      <param name="format">包含零个或多个格式项的格式字符串，这些项与 <paramref name="args" /> 数组中的对象相对应。</param>
+      <param name="args">包含零个或多个要格式化的对象的 object 数组。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceWarning(System.String)">
+      <summary>使用指定的消息向 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中写入警告消息。</summary>
+      <param name="message">要写入的信息性消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceWarning(System.String,System.Object[])">
+      <summary>使用指定的对象数组和格式设置信息向 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中写入警告信息。</summary>
+      <param name="format">包含零个或多个格式项的格式字符串，这些项与 <paramref name="args" /> 数组中的对象相对应。</param>
+      <param name="args">包含零个或多个要格式化的对象的 object 数组。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Unindent">
+      <summary>将当前的 <see cref="P:System.Diagnostics.Trace.IndentLevel" /> 减少 1。</summary>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.UseGlobalLock">
+      <summary>获取或设置一个值，该值指示是否应当使用全局锁。</summary>
+      <returns>如果要使用全局锁，则为 true；否则为 false。默认值为 true。</returns>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.Object)">
+      <summary>将对象的 <see cref="M:System.Object.ToString" /> 方法的值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="value">一个 <see cref="T:System.Object" />，其名称被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.Object,System.String)">
+      <summary>将类别名称和对象的 <see cref="M:System.Object.ToString" /> 方法值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="value">一个 <see cref="T:System.Object" /> 名被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.String)">
+      <summary>将消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="message">要写入的消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.String,System.String)">
+      <summary>将类别名称和消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="message">要写入的消息。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.Object)">
+      <summary>如果条件为 true，则将对象的 <see cref="M:System.Object.ToString" /> 方法值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="value">一个 <see cref="T:System.Object" />，其名称被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.Object,System.String)">
+      <summary>如果条件为 true，则将类别名称和对象的 <see cref="M:System.Object.ToString" /> 方法值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="value">一个 <see cref="T:System.Object" />，其名称被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.String)">
+      <summary>如果条件为 true，则将消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="message">要写入的消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.String,System.String)">
+      <summary>如果条件为 true，则将类别名称和消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="message">要写入的消息。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.Object)">
+      <summary>将对象的 <see cref="M:System.Object.ToString" /> 方法的值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="value">一个 <see cref="T:System.Object" />，其名称被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.Object,System.String)">
+      <summary>将类别名称和对象的 <see cref="M:System.Object.ToString" /> 方法值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="value">一个 <see cref="T:System.Object" />，其名称被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.String)">
+      <summary>将消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="message">要写入的消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.String,System.String)">
+      <summary>将类别名称和消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="message">要写入的消息。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.Object)">
+      <summary>如果条件为 true，则将对象的 <see cref="M:System.Object.ToString" /> 方法值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="value">一个 <see cref="T:System.Object" />，其名称被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.Object,System.String)">
+      <summary>如果条件为 true，则将类别名称和对象的 <see cref="M:System.Object.ToString" /> 方法值写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="value">一个 <see cref="T:System.Object" />，其名称被发送到 <see cref="P:System.Diagnostics.Trace.Listeners" />。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.String)">
+      <summary>如果条件为 true，则将消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="message">要写入的消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.String,System.String)">
+      <summary>如果条件为 true，则将类别名称和消息写入 <see cref="P:System.Diagnostics.Trace.Listeners" /> 集合中的跟踪侦听器。</summary>
+      <param name="condition">若要使消息被写入，则为 true；否则为 false。</param>
+      <param name="message">要写入的消息。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.TraceEventCache">
+      <summary>提供特定于线程和进程的跟踪事件数据。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceEventCache.#ctor">
+      <summary>初始化 <see cref="T:System.Diagnostics.TraceEventCache" /> 类的新实例。</summary>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.DateTime">
+      <summary>获取事件跟踪发生的日期和时间。</summary>
+      <returns>
+        <see cref="T:System.DateTime" /> 结构，其值是以协调通用时间 (UTC) 格式表示的日期和时间。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.ProcessId">
+      <summary>获取当前进程的唯一标识符。</summary>
+      <returns>系统生成的当前进程的唯一标识符。</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.ThreadId">
+      <summary>获取当前托管线程的唯一标识符。</summary>
+      <returns>表示此托管线程的唯一整数标识符的字符串。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.Timestamp">
+      <summary>获取计时器机制中的当前最小时间单位数。</summary>
+      <returns>基础计时器机制的最小时间单位计数值。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceEventType">
+      <summary>标识引起跟踪的事件的类型。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Critical">
+      <summary>错误或应用程序崩溃。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Error">
+      <summary>可恢复的错误。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Information">
+      <summary>信息性消息。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Verbose">
+      <summary>调试跟踪。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Warning">
+      <summary>非关键性问题。</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceFilter">
+      <summary>为跟踪筛选器实现提供基类。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceFilter.#ctor">
+      <summary>初始化 <see cref="T:System.Diagnostics.TraceFilter" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>在派生的类中进行重写时，确定跟踪侦听器是否应跟踪事件。</summary>
+      <returns>若要跟踪指定的事件，则为 true；否则为 false。</returns>
+      <param name="cache">包含跟踪事件的信息的 <see cref="T:System.Diagnostics.TraceEventCache" />。</param>
+      <param name="source">源的名称。</param>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一，指定引发跟踪的事件类型。</param>
+      <param name="id">跟踪标识符编号。</param>
+      <param name="formatOrMessage">写入由 <paramref name="args" /> 参数指定的变量数组时使用的格式，或者要写入的消息。</param>
+      <param name="args">参数对象的数组。</param>
+      <param name="data1">跟踪数据对象。</param>
+      <param name="data">跟踪数据对象的数组。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceLevel">
+      <summary>指定为 <see cref="T:System.Diagnostics.Debug" />、<see cref="T:System.Diagnostics.Trace" /> 和 <see cref="T:System.Diagnostics.TraceSwitch" /> 类输出的消息。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Error">
+      <summary>输出错误处理消息。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Info">
+      <summary>输出信息性消息、警告和错误处理消息。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Off">
+      <summary>不输出跟踪和调试消息。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Verbose">
+      <summary>输出所有调试和跟踪消息。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Warning">
+      <summary>输出警告和错误处理消息。</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceListener">
+      <summary>为监视跟踪和调试输出的侦听器提供 abstract 基类。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.#ctor">
+      <summary>初始化 <see cref="T:System.Diagnostics.TraceListener" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.#ctor(System.String)">
+      <summary>用指定的名称作为侦听器来初始化 <see cref="T:System.Diagnostics.TraceListener" /> 类的新实例。</summary>
+      <param name="name">
+        <see cref="T:System.Diagnostics.TraceListener" /> 的名称。</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Dispose">
+      <summary>释放由 <see cref="T:System.Diagnostics.TraceListener" /> 使用的所有资源。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Dispose(System.Boolean)">
+      <summary>释放由 <see cref="T:System.Diagnostics.TraceListener" /> 占用的非托管资源，还可以另外再释放托管资源。</summary>
+      <param name="disposing">若要释放托管资源和非托管资源，则为 true；若仅释放非托管资源，则为 false。</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Fail(System.String)">
+      <summary>实现 <see cref="T:System.Diagnostics.TraceListener" /> 类时，向所创建的侦听器发出错误信息。</summary>
+      <param name="message">要发出的消息。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Fail(System.String,System.String)">
+      <summary>实现 <see cref="T:System.Diagnostics.TraceListener" /> 类时，向所创建的侦听器发出错误信息和详细错误信息。</summary>
+      <param name="message">要发出的消息。</param>
+      <param name="detailMessage">要发出的详细消息。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.Filter">
+      <summary>获取并设置跟踪侦听器的跟踪筛选器。</summary>
+      <returns>一个派生自 <see cref="T:System.Diagnostics.TraceFilter" /> 基类的对象。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Flush">
+      <summary>在派生类中被重写时，刷新输出缓冲区。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IndentLevel">
+      <summary>获取或设置缩进级别。</summary>
+      <returns>缩进级别。默认值为零。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IndentSize">
+      <summary>获取或设置缩进的空格数。</summary>
+      <returns>缩进的空格数。默认值为 4 个空格。</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">Set 操作失败，因为值小于零。</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IsThreadSafe">
+      <summary>获取一个值，该值指示跟踪侦听器是否是线程安全的。</summary>
+      <returns>如果跟踪侦听器是线程安全的，则为 true；否则为 false。默认值为 false。</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.Name">
+      <summary>获取或设置此 <see cref="T:System.Diagnostics.TraceListener" /> 的名称。</summary>
+      <returns>此 <see cref="T:System.Diagnostics.TraceListener" /> 的名称。默认值为空字符串 ("")。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.NeedIndent">
+      <summary>获取或设置一个值，该值指示是否缩进输出。</summary>
+      <returns>如果应缩进输出，则为 true；否则为 false。</returns>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+      <summary>向特定于侦听器的输出中写入跟踪信息、数据对象和事件信息。</summary>
+      <param name="eventCache">包含当前进程 ID、线程 ID 以及堆栈跟踪信息的 <see cref="T:System.Diagnostics.TraceEventCache" /> 对象。</param>
+      <param name="source">标识输出时使用的名称，通常为生成跟踪事件的应用程序的名称。</param>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一，指定引发跟踪的事件类型。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="data">要发出的跟踪数据。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object[])">
+      <summary>向特定于侦听器的输出中写入跟踪信息、数据对象的数组和事件信息。</summary>
+      <param name="eventCache">包含当前进程 ID、线程 ID 以及堆栈跟踪信息的 <see cref="T:System.Diagnostics.TraceEventCache" /> 对象。</param>
+      <param name="source">标识输出时使用的名称，通常为生成跟踪事件的应用程序的名称。</param>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一，指定引发跟踪的事件类型。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="data">要作为数据发出的对象数组。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32)">
+      <summary>向特定于侦听器的输出写入跟踪和事件信息。</summary>
+      <param name="eventCache">包含当前进程 ID、线程 ID 以及堆栈跟踪信息的 <see cref="T:System.Diagnostics.TraceEventCache" /> 对象。</param>
+      <param name="source">标识输出时使用的名称，通常为生成跟踪事件的应用程序的名称。</param>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一，指定引发跟踪的事件类型。</param>
+      <param name="id">事件的数值标识符。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)">
+      <summary>向特定于侦听器的输出中写入跟踪信息、消息和事件信息。</summary>
+      <param name="eventCache">包含当前进程 ID、线程 ID 以及堆栈跟踪信息的 <see cref="T:System.Diagnostics.TraceEventCache" /> 对象。</param>
+      <param name="source">标识输出时使用的名称，通常为生成跟踪事件的应用程序的名称。</param>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一，指定引发跟踪的事件类型。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="message">要写入的消息。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+      <summary>向特定于侦听器的输出中写入跟踪信息、格式化对象数组和事件信息。</summary>
+      <param name="eventCache">包含当前进程 ID、线程 ID 以及堆栈跟踪信息的 <see cref="T:System.Diagnostics.TraceEventCache" /> 对象。</param>
+      <param name="source">标识输出时使用的名称，通常为生成跟踪事件的应用程序的名称。</param>
+      <param name="eventType">
+        <see cref="T:System.Diagnostics.TraceEventType" /> 值之一，指定引发跟踪的事件类型。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="format">一个格式字符串，其中包含零个或多个格式项，它们对应于 <paramref name="args" /> 数组中的对象。</param>
+      <param name="args">包含零个或多个要格式化的对象的 object 数组。</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.TraceOutputOptions">
+      <summary>获取或设置跟踪输出选项。</summary>
+      <returns>枚举值的按位组合。默认值为 <see cref="F:System.Diagnostics.TraceOptions.None" />。</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">Set 操作失败，因为值无效。</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.Object)">
+      <summary>实现 <see cref="M:System.Object.ToString" /> 类时，向所创建的侦听器写入对象的 <see cref="T:System.Diagnostics.TraceListener" /> 方法值。</summary>
+      <param name="o">要为其编写完全限定类名的 <see cref="T:System.Object" />。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.Object,System.String)">
+      <summary>实现 <see cref="T:System.Diagnostics.TraceListener" /> 类时，向所创建的侦听器写入类别名称和对象的 <see cref="M:System.Object.ToString" /> 方法值。</summary>
+      <param name="o">要为其编写完全限定类名的 <see cref="T:System.Object" />。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.String)">
+      <summary>在派生类中被重写时，向在该派生类中所创建的侦听器写入指定消息。</summary>
+      <param name="message">要写入的消息。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.String,System.String)">
+      <summary>实现 <see cref="T:System.Diagnostics.TraceListener" /> 类时，向所创建的侦听器写入类别名称和消息。</summary>
+      <param name="message">要写入的消息。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteIndent">
+      <summary>实现此类时，向所创建的侦听器写入缩进，并将 <see cref="P:System.Diagnostics.TraceListener.NeedIndent" /> 属性重置为 false。</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.Object)">
+      <summary>实现 <see cref="T:System.Diagnostics.TraceListener" /> 类时，向所创建的侦听器写入对象的 <see cref="M:System.Object.ToString" /> 方法值，后跟行结束符。</summary>
+      <param name="o">要为其编写完全限定类名的 <see cref="T:System.Object" />。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.Object,System.String)">
+      <summary>实现 <see cref="T:System.Diagnostics.TraceListener" /> 类时，向所创建的侦听器写入类别名称和对象的 <see cref="M:System.Object.ToString" /> 方法值，后跟行结束符。</summary>
+      <param name="o">要为其编写完全限定类名的 <see cref="T:System.Object" />。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.String)">
+      <summary>在派生类中被重写时，向在该派生类中所创建的侦听器写入消息，后跟行结束符。</summary>
+      <param name="message">要写入的消息。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.String,System.String)">
+      <summary>实现 <see cref="T:System.Diagnostics.TraceListener" /> 类时，向所创建的侦听器写入类别名称和消息，后跟行结束符。</summary>
+      <param name="message">要写入的消息。</param>
+      <param name="category">用于组织输出的类别名称。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceListenerCollection">
+      <summary>提供 <see cref="T:System.Diagnostics.TraceListener" /> 对象的线程安全列表。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Add(System.Diagnostics.TraceListener)">
+      <summary>将 <see cref="T:System.Diagnostics.TraceListener" /> 添加到列表。</summary>
+      <returns>插入新侦听器的位置。</returns>
+      <param name="listener">要添加到列表的 <see cref="T:System.Diagnostics.TraceListener" />。</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.AddRange(System.Diagnostics.TraceListener[])">
+      <summary>将 <see cref="T:System.Diagnostics.TraceListener" /> 对象的数组添加到列表。</summary>
+      <param name="value">要添加到列表的 <see cref="T:System.Diagnostics.TraceListener" /> 对象的数组。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> 为 null。</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.AddRange(System.Diagnostics.TraceListenerCollection)">
+      <summary>将另一个 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 的内容添加到列表。</summary>
+      <param name="value">内容被添加到列表的另一个 <see cref="T:System.Diagnostics.TraceListenerCollection" />。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> 为 null。</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Clear">
+      <summary>从列表中清除所有侦听器。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Contains(System.Diagnostics.TraceListener)">
+      <summary>检查列表是否包含指定的侦听器。</summary>
+      <returns>如果列表包含该侦听器，则为 true；否则为 false。</returns>
+      <param name="listener">要在列表中查找的 <see cref="T:System.Diagnostics.TraceListener" />。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.CopyTo(System.Diagnostics.TraceListener[],System.Int32)">
+      <summary>将当前 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 列表的一部分复制到指定索引处的指定数组。</summary>
+      <param name="listeners">将元素复制到其中的 <see cref="T:System.Array" /> 类型的数组。</param>
+      <param name="index">当前列表中要进行复制的起始索引号。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Count">
+      <summary>获取列表中的侦听器数。</summary>
+      <returns>该列表中的侦听器数。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.GetEnumerator">
+      <summary>获取此列表的枚举数。</summary>
+      <returns>
+        <see cref="T:System.Collections.IEnumerator" /> 类型的枚举数。</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.IndexOf(System.Diagnostics.TraceListener)">
+      <summary>获取指定侦听器的索引。</summary>
+      <returns>侦听器的索引（如果可在列表中找到）；否则为 -1。</returns>
+      <param name="listener">要在列表中查找的 <see cref="T:System.Diagnostics.TraceListener" />。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Insert(System.Int32,System.Diagnostics.TraceListener)">
+      <summary>将侦听器插入指定的索引位置。</summary>
+      <param name="index">列表中要插入新 <see cref="T:System.Diagnostics.TraceListener" /> 的位置。</param>
+      <param name="listener">要插入列表的 <see cref="T:System.Diagnostics.TraceListener" />。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="index" /> 不是列表中的有效索引。</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="listener" /> 为 null。</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Item(System.Int32)">
+      <summary>获取或设置指定索引处的 <see cref="T:System.Diagnostics.TraceListener" />。</summary>
+      <returns>具有指定索引的 <see cref="T:System.Diagnostics.TraceListener" />。</returns>
+      <param name="i">从列表获取的 <see cref="T:System.Diagnostics.TraceListener" /> 的从零开始的索引。</param>
+      <exception cref="T:System.ArgumentNullException">该值为 null。</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Item(System.String)">
+      <summary>获取列表中具有指定名称的第一个 <see cref="T:System.Diagnostics.TraceListener" />。</summary>
+      <returns>列表中具有给定 <see cref="P:System.Diagnostics.TraceListener.Name" /> 的第一个 <see cref="T:System.Diagnostics.TraceListener" />。如果找不到任何具有给定名称的 <see cref="T:System.Diagnostics.TraceListener" />，则此项返回 null。</returns>
+      <param name="name">要从列表中获取的 <see cref="T:System.Diagnostics.TraceListener" /> 的名称。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Remove(System.Diagnostics.TraceListener)">
+      <summary>从集合中移除指定的 <see cref="T:System.Diagnostics.TraceListener" />。</summary>
+      <param name="listener">要从列表中移除的 <see cref="T:System.Diagnostics.TraceListener" />。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Remove(System.String)">
+      <summary>从集合中移除具有指定名称的第一个 <see cref="T:System.Diagnostics.TraceListener" />。</summary>
+      <param name="name">要从列表中移除的 <see cref="T:System.Diagnostics.TraceListener" /> 的名称。</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.RemoveAt(System.Int32)">
+      <summary>从集合中移除指定索引处的 <see cref="T:System.Diagnostics.TraceListener" />。</summary>
+      <param name="index">要从列表中移除的 <see cref="T:System.Diagnostics.TraceListener" /> 的从零开始的索引。</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="index" /> 不是列表中的有效索引。</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+      <summary>将当前 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 的一部分复制到指定的 <see cref="T:System.Diagnostics.TraceListener" /> 对象数组中。</summary>
+      <param name="array">
+        <see cref="T:System.Diagnostics.TraceListener" /> 对象的一维数组，是从 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 复制的元素的目标数组。该数组的索引必须从零开始。</param>
+      <param name="index">
+        <paramref name="array" /> 中从零开始的索引，从此索引处开始进行复制。</param>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#IsSynchronized">
+      <summary>获取一个值，该值指示是否同步对 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 的访问（线程安全）。</summary>
+      <returns>始终为 true。</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#SyncRoot">
+      <summary>获取可用于同步对 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 的访问的对象。</summary>
+      <returns>当前的 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 对象。</returns>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Add(System.Object)">
+      <summary>向 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中添加一个跟踪侦听器。</summary>
+      <returns>新跟踪侦听器的插入位置。</returns>
+      <param name="value">要添加到 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 的对象。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="value" /> 为 null。- 或 -<paramref name="value" /> 不是 <see cref="T:System.Diagnostics.TraceListener" />。</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Contains(System.Object)">
+      <summary>确定 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 是否包含特定对象。</summary>
+      <returns>如果在 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中找到 <see cref="T:System.Object" />，则为 true；否则为 false。</returns>
+      <param name="value">要在 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中定位的对象。</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IndexOf(System.Object)">
+      <summary>确定 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中特定对象的索引。</summary>
+      <returns>如果在 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中找到，则为 <paramref name="value" /> 的索引；否则为 -1。</returns>
+      <param name="value">要在 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中定位的对象。</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Insert(System.Int32,System.Object)">
+      <summary>在 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中的指定位置插入一个 <see cref="T:System.Diagnostics.TraceListener" /> 对象。</summary>
+      <param name="index">从零开始的索引，应在该位置插入 <paramref name="value" />。</param>
+      <param name="value">要插入到 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中的 <see cref="T:System.Diagnostics.TraceListener" /> 对象。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="value" /> 不是 <see cref="T:System.Diagnostics.TraceListener" /> 对象。</exception>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IsFixedSize">
+      <summary>获取一个值，该值指示 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 是否具有固定大小。</summary>
+      <returns>始终为 false。</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IsReadOnly">
+      <summary>获取一个值，该值指示 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 是否为只读</summary>
+      <returns>始终为 false。</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Item(System.Int32)">
+      <summary>获取或设置 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 的指定索引处的 <see cref="T:System.Diagnostics.TraceListener" />。</summary>
+      <returns>位于指定索引处的 <see cref="T:System.Diagnostics.TraceListener" />。</returns>
+      <param name="index">要获取的 <paramref name="value" /> 的从零开始的索引。</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Remove(System.Object)">
+      <summary>从 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中移除一个对象。</summary>
+      <param name="value">要从 <see cref="T:System.Diagnostics.TraceListenerCollection" /> 中移除的对象。</param>
+    </member>
+    <member name="T:System.Diagnostics.TraceOptions">
+      <summary>指定要写入跟踪输出中的跟踪数据选项。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.DateTime">
+      <summary>写入日期和时间。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.None">
+      <summary>不写入任何元素。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.ProcessId">
+      <summary>写入进程标识，该标识由 <see cref="P:System.Diagnostics.Process.Id" /> 属性的返回值表示。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.ThreadId">
+      <summary>写入线程标识，该标识由当前线程的 <see cref="P:System.Threading.Thread.ManagedThreadId" /> 属性的返回值表示。</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.Timestamp">
+      <summary>写入时间戳，该时间戳由 <see cref="M:System.Diagnostics.Stopwatch.GetTimestamp" /> 方法的返回值表示。</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceSource">
+      <summary>提供一组方法和属性，利用这些方法和属性，应用程序可以跟踪代码的执行并将跟踪消息和它们的源关联起来。</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.#ctor(System.String)">
+      <summary>使用指定的源名称初始化 <see cref="T:System.Diagnostics.TraceSource" /> 类的新实例。</summary>
+      <param name="name">源的名称（通常为应用程序的名称）。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="name" /> 为 null。</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="name" /> 为空字符串 ("")。</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.#ctor(System.String,System.Diagnostics.SourceLevels)">
+      <summary>使用源的指定名称和执行跟踪的默认源级别初始化 <see cref="T:System.Diagnostics.TraceSource" /> 类的新实例。</summary>
+      <param name="name">源的名称，通常为应用程序的名称。</param>
+      <param name="defaultLevel">枚举的按位组合，指定要跟踪的默认源级别。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="name" /> 为 null。</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="name" /> 为空字符串 ("")。</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.Close">
+      <summary>关闭跟踪侦听器集合中的所有跟踪侦听器。</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.Flush">
+      <summary>刷新跟踪侦听器集合中的所有跟踪侦听器。</summary>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Listeners">
+      <summary>获取跟踪源的跟踪侦听器集合。</summary>
+      <returns>包含与源关联的活动跟踪侦听器的 <see cref="T:System.Diagnostics.TraceListenerCollection" />。</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Name">
+      <summary>获取跟踪源的名称。</summary>
+      <returns>跟踪源的名称。</returns>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Switch">
+      <summary>获取或设置源开关的值。</summary>
+      <returns>表示源开关值的 <see cref="T:System.Diagnostics.SourceSwitch" /> 对象。</returns>
+      <exception cref="T:System.ArgumentNullException">将 <see cref="P:System.Diagnostics.TraceSource.Switch" /> 设置为 null。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+      <summary>使用指定的事件类型、事件标识符和跟踪数据，将跟踪数据写入 <see cref="P:System.Diagnostics.TraceSource.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="eventType">指定跟踪数据的事件类型的其中一个枚举值。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="data">跟踪数据。</param>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])">
+      <summary>使用指定的事件类型、事件标识符和跟踪数据数组，将跟踪数据写入 <see cref="P:System.Diagnostics.TraceSource.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="eventType">指定跟踪数据的事件类型的其中一个枚举值。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="data">包含跟踪数据的对象数组。</param>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32)">
+      <summary>使用指定的事件类型和事件标识符，将跟踪事件消息写入 <see cref="P:System.Diagnostics.TraceSource.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="eventType">指定跟踪数据的事件类型的其中一个枚举值。</param>
+      <param name="id">事件的数值标识符。</param>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)">
+      <summary>使用指定的事件类型、事件标识符和消息，将跟踪事件消息写入 <see cref="P:System.Diagnostics.TraceSource.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="eventType">指定跟踪数据的事件类型的其中一个枚举值。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="message">要写入的跟踪消息。</param>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+      <summary>使用指定的事件类型、事件标识符以及参数数组和格式，将跟踪事件写入 <see cref="P:System.Diagnostics.TraceSource.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="eventType">指定跟踪数据的事件类型的其中一个枚举值。</param>
+      <param name="id">事件的数值标识符。</param>
+      <param name="format">一个包含与零个或多个格式项混合的文本的复合格式字符串（请参见“备注”），它与 <paramref name="args" /> 数组中的对象相对应。</param>
+      <param name="args">包含零个或多个要格式化的对象的 object 数组。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="format" /> 为 null。 </exception>
+      <exception cref="T:System.FormatException">
+        <paramref name="format" /> 无效。- 或 -表示要设置格式的参数的数字小于零，或者大于等于要设置格式的指定对象的数目。</exception>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceInformation(System.String)">
+      <summary>使用指定消息，将信息性消息写入 <see cref="P:System.Diagnostics.TraceSource.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="message">要写入的信息性消息。</param>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceInformation(System.String,System.Object[])">
+      <summary>使用指定的对象数组和格式化信息，将信息性消息写入 <see cref="P:System.Diagnostics.TraceSource.Listeners" /> 集合中的跟踪侦听器中。</summary>
+      <param name="format">一个包含与零个或多个格式项混合的文本的复合格式字符串（请参见“备注”），它与 <paramref name="args" /> 数组中的对象相对应。</param>
+      <param name="args">包含零个或多个要格式化的对象的数组。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="format" /> 为 null。 </exception>
+      <exception cref="T:System.FormatException">
+        <paramref name="format" /> 无效。- 或 -表示要设置格式的参数的数字小于零，或者大于等于要设置格式的指定对象的数目。</exception>
+      <exception cref="T:System.ObjectDisposedException">终止期间尝试跟踪事件。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.TraceSwitch">
+      <summary>提供多级开关，用于控制跟踪和调试输出，而无需重新编译代码。</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String)">
+      <summary>使用指定的显示名称和说明初始化 <see cref="T:System.Diagnostics.TraceSwitch" /> 类的新实例。</summary>
+      <param name="displayName">要显示在用户界面上的名称。</param>
+      <param name="description">开关说明。</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String,System.String)">
+      <summary>使用开关的指定显示名称、说明和默认值来初始化 <see cref="T:System.Diagnostics.TraceSwitch" /> 类的新实例。</summary>
+      <param name="displayName">要显示在用户界面上的名称。</param>
+      <param name="description">开关说明。</param>
+      <param name="defaultSwitchValue">开关的默认值。</param>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.Level">
+      <summary>获取或设置跟踪级别，它将确定开关所允许的消息。</summary>
+      <returns>
+        <see cref="T:System.Diagnostics.TraceLevel" /> 值之一，它指定开关所允许的消息的级别。</returns>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.Diagnostics.TraceSwitch.Level" /> 设置为非 <see cref="T:System.Diagnostics.TraceLevel" /> 值。</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.OnSwitchSettingChanged">
+      <summary>更新并更正此开关的级别。</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.OnValueChanged">
+      <summary>将 <see cref="P:System.Diagnostics.Switch.SwitchSetting" /> 属性设置为 <see cref="P:System.Diagnostics.Switch.Value" /> 属性的整数等效值。</summary>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceError">
+      <summary>获取一个值，它指示开关是否允许错误处理消息。</summary>
+      <returns>如果 <see cref="P:System.Diagnostics.TraceSwitch.Level" /> 设置为 <see cref="F:System.Diagnostics.TraceLevel.Error" />、<see cref="F:System.Diagnostics.TraceLevel.Warning" />、<see cref="F:System.Diagnostics.TraceLevel.Info" /> 或 <see cref="F:System.Diagnostics.TraceLevel.Verbose" />，则为 true；否则为 false。</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceInfo">
+      <summary>获取一个值，它指示开关是否允许信息性消息。</summary>
+      <returns>如果 <see cref="P:System.Diagnostics.TraceSwitch.Level" /> 属性设置为 <see cref="F:System.Diagnostics.TraceLevel.Info" /> 或 <see cref="F:System.Diagnostics.TraceLevel.Verbose" />，则为 true；否则为 false。</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceVerbose">
+      <summary>获取一个值，它指示开关是否允许所有消息。</summary>
+      <returns>如果 <see cref="P:System.Diagnostics.TraceSwitch.Level" /> 属性设置为 <see cref="F:System.Diagnostics.TraceLevel.Verbose" />，则为 true；否则为 false。</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceWarning">
+      <summary>获取一个值，它指示开关是否允许警告消息。</summary>
+      <returns>如果 <see cref="P:System.Diagnostics.TraceSwitch.Level" /> 属性设置为 <see cref="F:System.Diagnostics.TraceLevel.Warning" />、<see cref="F:System.Diagnostics.TraceLevel.Info" /> 或 <see cref="F:System.Diagnostics.TraceLevel.Verbose" />，则为 true；否则为 false。</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+  </members>
+</doc>

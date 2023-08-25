@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.IO.FileSystem.AccessControl</name>
+  </assembly>
+  <members>
+    <member name="T:System.IO.FileSystemAclExtensions"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileInfo,System.Security.AccessControl.AccessControlSections)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.GetAccessControl(System.IO.FileStream)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.DirectoryInfo,System.Security.AccessControl.DirectorySecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileInfo,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="M:System.IO.FileSystemAclExtensions.SetAccessControl(System.IO.FileStream,System.Security.AccessControl.FileSecurity)"></member>
+    <member name="T:System.Security.AccessControl.DirectoryObjectSecurity">
+      <summary>[SECURITY CRITICAL] 提供无需直接操作访问控制列表 (ACL) 而控制对目录对象的访问的能力。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor">
+      <summary>[SECURITY CRITICAL] 初始化 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.#ctor(System.Security.AccessControl.CommonSecurityDescriptor)">
+      <summary>[SECURITY CRITICAL] 使用指定的安全性说明符初始化 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 类的新实例。</summary>
+      <param name="securityDescriptor">将与新的 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的安全性说明符。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType,System.Guid,System.Guid)">
+      <summary>[SECURITY CRITICAL] 用指定的值初始化 <see cref="T:System.Security.AccessControl.AccessRule" /> 类的新实例。</summary>
+      <returns>此方法所创建的 <see cref="T:System.Security.AccessControl.AccessRule" /> 对象。</returns>
+      <param name="identityReference">应用访问规则的标识。它必须是可强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">如果此规则继承自父容器，则为 true。</param>
+      <param name="inheritanceFlags">指定访问规则的继承属性。</param>
+      <param name="propagationFlags">指定继承的访问规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="type">指定有效的访问控制类型。</param>
+      <param name="objectType">新访问规则所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承新访问规则的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] 将指定的访问规则添加到与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的自由访问控制列表 (DACL)。</summary>
+      <param name="rule">要添加的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AddAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] 将指定的审核规则添加到与该 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的系统访问控制列表 (SACL)。</summary>
+      <param name="rule">要添加的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags,System.Guid,System.Guid)">
+      <summary>[SECURITY CRITICAL] 用指定的值初始化 <see cref="T:System.Security.AccessControl.AuditRule" /> 类的新实例。</summary>
+      <returns>此方法所创建的 <see cref="T:System.Security.AccessControl.AuditRule" /> 对象。</returns>
+      <param name="identityReference">审核规则应用到的标识。它必须是可强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的对象。</param>
+      <param name="accessMask">此规则的访问掩码。访问掩码是一个 32 位的匿名位集合，其含义是由每个集成器定义的。</param>
+      <param name="isInherited">如果此规则继承自父容器，则为 true。</param>
+      <param name="inheritanceFlags">指定审核规则的继承属性。</param>
+      <param name="propagationFlags">指定继承的审核规则是否自动传播。如果 <paramref name="inheritanceFlags" /> 设置为 <see cref="F:System.Security.AccessControl.InheritanceFlags.None" />，则将忽略传播标志。</param>
+      <param name="flags">指定对规则进行审核的条件。</param>
+      <param name="objectType">新审核规则所应用到的对象的类标识。</param>
+      <param name="inheritedObjectType">可以继承新审核规则的子对象的类标识。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAccessRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[SECURITY CRITICAL] 获取与指定的安全性标识符关联的访问规则的集合。</summary>
+      <returns>与指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象关联的访问规则的集合。</returns>
+      <param name="includeExplicit">若要包括为对象显式设置的访问规则，则为 true。</param>
+      <param name="includeInherited">若要包括继承的访问规则，则为 true。</param>
+      <param name="targetType">要为其检索访问规则的安全性标识符。这必须是可以强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象的对象。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.GetAuditRules(System.Boolean,System.Boolean,System.Type)">
+      <summary>[SECURITY CRITICAL] 获取与指定的安全性标识符关联的审核规则的集合。</summary>
+      <returns>与指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象关联的审核规则的集合。</returns>
+      <param name="includeExplicit">若要包括为对象显式设置的审核规则，则为 true。</param>
+      <param name="includeInherited">若要包括继承的审核规则，则为 true。</param>
+      <param name="targetType">要为其检索审核规则的安全性标识符。这必须是可以强制转换为 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 对象的对象。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAccess(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AccessRule,System.Boolean@)">
+      <summary>[SECURITY CRITICAL] 将指定修改应用于与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的自由访问控制列表 (DACL)。</summary>
+      <returns>如果成功修改了 DACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 DACL 的修改。</param>
+      <param name="rule">要修改的访问规则。</param>
+      <param name="modified">如果成功修改了 DACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ModifyAudit(System.Security.AccessControl.AccessControlModification,System.Security.AccessControl.AuditRule,System.Boolean@)">
+      <summary>[SECURITY CRITICAL] 将指定修改应用于与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的系统访问控制列表 (SACL)。</summary>
+      <returns>如果成功修改了 SACL，则为 true；否则为 false。</returns>
+      <param name="modification">要应用于 SACL 的修改。</param>
+      <param name="rule">要修改的审核规则。</param>
+      <param name="modified">如果成功修改了 SACL，则为 true；否则为 false。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全性标识符和访问掩码的访问规则。</summary>
+      <returns>如果访问规则已成功移除，则为 true；否则为 false。</returns>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleAll(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全性标识符的所有访问规则。</summary>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则完全匹配的所有访问规则。</summary>
+      <param name="rule">要移除的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.CommonObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同安全性标识符和访问掩码的审核规则。</summary>
+      <returns>如果审核规则已成功移除，则为 true；否则为 false。</returns>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleAll(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同安全性标识符的所有审核规则。</summary>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则完全匹配的所有审核规则。</summary>
+      <param name="rule">要移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.ResetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除所有访问规则，然后添加指定的访问规则。</summary>
+      <param name="rule">要重置的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAccessRule(System.Security.AccessControl.ObjectAccessRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的自由访问控制列表 (DACL) 中移除与指定的访问规则具有相同安全性标识符和限定符的所有访问规则，然后添加指定的访问规则。</summary>
+      <param name="rule">要设置的访问规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectoryObjectSecurity.SetAuditRule(System.Security.AccessControl.ObjectAuditRule)">
+      <summary>[SECURITY CRITICAL] 从与此 <see cref="T:System.Security.AccessControl.DirectoryObjectSecurity" /> 对象关联的系统访问控制列表 (SACL) 中移除与指定的审核规则具有相同的安全性标识符和限定符所有审核规则，然后添加指定的审核规则。</summary>
+      <param name="rule">要设置的审核规则。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.DirectorySecurity">
+      <summary>[SECURITY CRITICAL] 表示目录的访问控制和审核安全。此类不能被继承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor">
+      <summary>[SECURITY CRITICAL] 初始化 <see cref="T:System.Security.AccessControl.DirectorySecurity" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.DirectorySecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[SECURITY CRITICAL] 使用指定的 <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举值从指定目录初始化 <see cref="T:System.Security.AccessControl.DirectorySecurity" /> 类的新实例。</summary>
+      <param name="name">一个目录位置，将从该目录创建 <see cref="T:System.Security.AccessControl.DirectorySecurity" /> 对象。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 值之一，该值指定要检索的访问控制列表 (ACL) 信息的类型。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSecurity">
+      <summary>[SECURITY CRITICAL] 表示文件的访问控制和审核安全。此类不能被继承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor">
+      <summary>[SECURITY CRITICAL] 初始化 <see cref="T:System.Security.AccessControl.FileSecurity" /> 类的新实例。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSecurity.#ctor(System.String,System.Security.AccessControl.AccessControlSections)">
+      <summary>[SECURITY CRITICAL] 使用 <see cref="T:System.Security.AccessControl.AccessControlSections" /> 枚举的指定值从指定文件初始化 <see cref="T:System.Security.AccessControl.FileSecurity" /> 类的新实例。</summary>
+      <param name="fileName">一个文件的位置，<see cref="T:System.Security.AccessControl.FileSecurity" /> 对象将从该文件创建。</param>
+      <param name="includeSections">
+        <see cref="T:System.Security.AccessControl.AccessControlSections" /> 值之一，该值指定要检索的访问控制列表 (ACL) 信息的类型。</param>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAccessRule">
+      <summary>[SECURITY CRITICAL] 表示定义文件或目录的访问规则的访问控制项 (ACE) 的抽象。此类不能被继承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 类的新实例：对用户帐户的引用、指定与访问规则关联的操作的类型的值，以及指定是允许还是拒绝该操作的值。</summary>
+      <param name="identity">封装对用户帐户的引用的 <see cref="T:System.Security.Principal.IdentityReference" /> 对象。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与访问规则关联的操作的类型。</param>
+      <param name="type">
+        <see cref="T:System.Security.AccessControl.AccessControlType" /> 值之一，该值指定是允许还是拒绝该操作。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 类的新实例：对用户帐户的引用、指定与访问规则关联的操作的类型的值、确定如何继承权限的值、确定如何传播权限的值，以及指定是允许还是拒绝该操作的值。</summary>
+      <param name="identity">封装对用户帐户的引用的 <see cref="T:System.Security.Principal.IdentityReference" /> 对象。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与访问规则关联的操作的类型。</param>
+      <param name="inheritanceFlags">
+        <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值之一，该值指定访问掩码如何传播到子对象。</param>
+      <param name="propagationFlags">
+        <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值之一，该值指定访问控制项 (ACE) 如何传播到子对象。</param>
+      <param name="type">
+        <see cref="T:System.Security.AccessControl.AccessControlType" /> 值之一，该值指定是允许还是拒绝该操作。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 类的新实例：用户帐户的名称、指定与访问规则关联的操作的类型的值，以及描述是允许还是拒绝该操作的值。</summary>
+      <param name="identity">用户帐户的名称。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与访问规则关联的操作的类型。</param>
+      <param name="type">
+        <see cref="T:System.Security.AccessControl.AccessControlType" /> 值之一，该值指定是允许还是拒绝该操作。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAccessRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 类的新实例：用户帐户的名称、指定与访问规则关联的操作的类型的值、确定如何继承权限的值、确定如何传播权限的值，以及指定是允许还是拒绝该操作的值。</summary>
+      <param name="identity">用户帐户的名称。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与访问规则关联的操作的类型。</param>
+      <param name="inheritanceFlags">
+        <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值之一，该值指定访问掩码如何传播到子对象。</param>
+      <param name="propagationFlags">
+        <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值之一，该值指定访问控制项 (ACE) 如何传播到子对象。</param>
+      <param name="type">
+        <see cref="T:System.Security.AccessControl.AccessControlType" /> 值之一，该值指定是允许还是拒绝该操作。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAccessRule.FileSystemRights">
+      <summary>[SECURITY CRITICAL] 获取与当前 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象关联的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 标志。</summary>
+      <returns>与当前 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象关联的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 标志。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemAuditRule">
+      <summary>[SECURITY CRITICAL] 表示定义文件或目录的审核规则的访问控制项 (ACE) 的抽象。此类不能被继承。</summary>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 类的新实例：对用户帐户的引用、指定与审核规则关联的操作的类型的值，以及指定何时执行审核的值。</summary>
+      <param name="identity">封装对用户帐户的引用的 <see cref="T:System.Security.Principal.IdentityReference" /> 对象。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与审核规则关联的操作的类型。</param>
+      <param name="flags">
+        <see cref="T:System.Security.AccessControl.AuditFlags" /> 值之一，该值指定何时执行审核。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.Security.Principal.IdentityReference,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 类的新实例：对用户帐户的引用的名称、指定与审核规则关联的操作的类型的值、确定如何继承权限的值、确定如何传播权限的值，以及指定何时执行审核的值。</summary>
+      <param name="identity">封装对用户帐户的引用的 <see cref="T:System.Security.Principal.IdentityReference" /> 对象。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与审核规则关联的操作的类型。</param>
+      <param name="inheritanceFlags">
+        <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值之一，该值指定访问掩码如何传播到子对象。</param>
+      <param name="propagationFlags">
+        <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值之一，该值指定访问控制项 (ACE) 如何传播到子对象。</param>
+      <param name="flags">
+        <see cref="T:System.Security.AccessControl.AuditFlags" /> 值之一，该值指定何时执行审核。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 类的新实例：用户帐户名称、指定与审核规则关联的操作的类型的值，以及指定何时执行审核的值。</summary>
+      <param name="identity">用户帐户的名称。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与审核规则关联的操作的类型。</param>
+      <param name="flags">
+        <see cref="T:System.Security.AccessControl.AuditFlags" /> 值之一，该值指定何时执行审核。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemAuditRule.#ctor(System.String,System.Security.AccessControl.FileSystemRights,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] 使用以下内容初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 类的新实例：用户帐户的名称、指定与审核规则关联的操作的类型的值、确定如何继承权限的值、确定如何传播权限的值，以及指定何时执行审核的值。</summary>
+      <param name="identity">用户帐户的名称。</param>
+      <param name="fileSystemRights">
+        <see cref="T:System.Security.AccessControl.FileSystemRights" /> 值之一，该值指定与审核规则关联的操作的类型。</param>
+      <param name="inheritanceFlags">
+        <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值之一，该值指定访问掩码如何传播到子对象。</param>
+      <param name="propagationFlags">
+        <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值之一，该值指定访问控制项 (ACE) 如何传播到子对象。</param>
+      <param name="flags">
+        <see cref="T:System.Security.AccessControl.AuditFlags" /> 值之一，该值指定何时执行审核。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemAuditRule.FileSystemRights">
+      <summary>[SECURITY CRITICAL] 获取与当前 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象关联的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 标志。</summary>
+      <returns>与当前 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象关联的 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 标志。</returns>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemRights">
+      <summary>[SECURITY CRITICAL] 定义要在创建访问和审核规则时使用的访问权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.AppendData">
+      <summary>指定将数据追加到文件末尾的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ChangePermissions">
+      <summary>指定更改与文件或文件夹关联的安全和审核规则的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateDirectories">
+      <summary>指定创建文件夹的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.CreateFiles">
+      <summary>指定创建文件的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Delete">
+      <summary>指定删除文件夹或文件的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.DeleteSubdirectoriesAndFiles">
+      <summary>指定删除文件夹和该文件夹中包含的所有文件的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ExecuteFile">
+      <summary>指定运行应用程序文件的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.FullControl">
+      <summary>指定对文件夹或文件进行完全控制以及修改访问控制和审核规则的权限。此值表示对文件进行任何操作的权限，并且是此枚举中的所有权限的组合。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ListDirectory">
+      <summary>指定读取目录内容的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Modify">
+      <summary>指定读、写、列出文件夹内容、删除文件夹和文件以及运行应用程序文件的权限。此权限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute" /> 权限、<see cref="F:System.Security.AccessControl.FileSystemRights.Write" /> 权限和 <see cref="F:System.Security.AccessControl.FileSystemRights.Delete" /> 权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Read">
+      <summary>指定以只读方式打开和复制文件夹或文件的权限。此权限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.ReadData" /> 权限、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes" /> 权限、<see cref="F:System.Security.AccessControl.FileSystemRights.ReadAttributes" /> 权限和 <see cref="F:System.Security.AccessControl.FileSystemRights.ReadPermissions" /> 权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAndExecute">
+      <summary>指定以只读方式打开和复制文件夹或文件以及运行应用程序文件的权限。此权限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.Read" /> 权限和 <see cref="F:System.Security.AccessControl.FileSystemRights.ExecuteFile" /> 权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadAttributes">
+      <summary>指定从文件夹或文件打开和复制文件系统特性的权限。例如，此值指定查看文件创建日期或修改日期的权限。这不包括读取数据、扩展文件系统特性或访问和审核规则的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadData">
+      <summary>指定打开和复制文件或文件夹的权限。这不包括读取文件系统特性、扩展文件系统特性或访问和审核规则的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadExtendedAttributes">
+      <summary>指定从文件夹或文件打开和复制扩展文件系统特性的权限。例如，此值指定查看作者和内容信息的权限。这不包括读取数据、文件系统特性或访问和审核规则的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.ReadPermissions">
+      <summary>指定从文件夹或文件打开和复制访问和审核规则的权限。这不包括读取数据、文件系统特性或扩展文件系统特性的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Synchronize">
+      <summary>指定应用程序是否能够等待文件句柄，以便与 I/O 操作的完成保持同步。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.TakeOwnership">
+      <summary>指定更改文件夹或文件的所有者的权限。请注意：资源的所有者对该资源拥有完全权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Traverse">
+      <summary>指定列出文件夹的内容以及运行该文件夹中所包含的应用程序的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.Write">
+      <summary>指定创建文件夹和文件以及向文件添加数据或从文件移除数据的权限。此权限包括 <see cref="F:System.Security.AccessControl.FileSystemRights.WriteData" /> 权限、<see cref="F:System.Security.AccessControl.FileSystemRights.AppendData" /> 权限、<see cref="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes" /> 权限和 <see cref="F:System.Security.AccessControl.FileSystemRights.WriteAttributes" /> 权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteAttributes">
+      <summary>指定打开文件系统特性以及将文件系统特性写入文件夹或文件的权限。这不包括写入数据、扩展特性以及写入访问和审核规则的功能。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteData">
+      <summary>指定打开和写入文件或文件夹的权限。这不包括打开和写入文件系统特性、扩展文件系统特性或访问和审核规则的权限。</summary>
+    </member>
+    <member name="F:System.Security.AccessControl.FileSystemRights.WriteExtendedAttributes">
+      <summary>指定打开文件夹或文件的扩展文件系统特性以及将扩展文件系统特性写入文件夹或文件的权限。这不包括写入数据、特性或访问和审核规则的功能。</summary>
+    </member>
+    <member name="T:System.Security.AccessControl.FileSystemSecurity">
+      <summary>[SECURITY CRITICAL] 表示文件或目录的访问控制和审核安全。</summary>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRightType">
+      <summary>[SECURITY CRITICAL] 获取 <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> 类用于表示访问权限的枚举。</summary>
+      <returns>一个 <see cref="T:System.Type" /> 对象，表示 <see cref="T:System.Security.AccessControl.FileSystemRights" /> 枚举。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AccessRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AccessControlType)">
+      <summary>[SECURITY CRITICAL] 使用指定的访问权限、访问控制和标志初始化 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 类的新实例，该实例表示指定用户的新的访问控制规则。</summary>
+      <returns>表示指定用户的新访问控制规则的新的 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象，具有指定的访问权限、访问控制和标志。</returns>
+      <param name="identityReference">表示用户帐户的 <see cref="T:System.Security.Principal.IdentityReference" /> 对象。</param>
+      <param name="accessMask">指定访问类型的整数。</param>
+      <param name="isInherited">如果该访问规则是继承的，则为 true；否则为 false。</param>
+      <param name="inheritanceFlags">
+        <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值之一，指定如何将访问掩码传播到子对象。</param>
+      <param name="propagationFlags">
+        <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值之一，指定如何将访问控制项 (ACE) 传播到子对象。</param>
+      <param name="type">
+        <see cref="T:System.Security.AccessControl.AccessControlType" /> 值之一，指定允许还是拒绝访问。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AccessRuleType">
+      <summary>[SECURITY CRITICAL] 获取 <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> 类用于表示访问规则的枚举。</summary>
+      <returns>一个 <see cref="T:System.Type" /> 对象，表示 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 类。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] 将指定的访问控制列表 (ACL) 权限添加到当前文件或目录。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象，表示要添加到文件或目录的访问控制列表 (ACL) 权限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AddAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] 将指定的审核规则添加到当前文件或目录。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象，表示要添加到文件或目录的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.AuditRuleFactory(System.Security.Principal.IdentityReference,System.Int32,System.Boolean,System.Security.AccessControl.InheritanceFlags,System.Security.AccessControl.PropagationFlags,System.Security.AccessControl.AuditFlags)">
+      <summary>[SECURITY CRITICAL] 初始化 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 类的新实例，它表示指定用户的指定审核规则。</summary>
+      <returns>新的 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象，表示指定用户的指定审核规则。</returns>
+      <param name="identityReference">表示用户帐户的 <see cref="T:System.Security.Principal.IdentityReference" /> 对象。</param>
+      <param name="accessMask">指定访问类型的整数。</param>
+      <param name="isInherited">如果该访问规则是继承的，则为 true；否则为 false。</param>
+      <param name="inheritanceFlags">
+        <see cref="T:System.Security.AccessControl.InheritanceFlags" /> 值之一，指定如何将访问掩码传播到子对象。</param>
+      <param name="propagationFlags">
+        <see cref="T:System.Security.AccessControl.PropagationFlags" /> 值之一，指定如何将访问控制项 (ACE) 传播到子对象。</param>
+      <param name="flags">
+        <see cref="T:System.Security.AccessControl.AuditFlags" /> 值之一，指定要执行的审核的类型。</param>
+    </member>
+    <member name="P:System.Security.AccessControl.FileSystemSecurity.AuditRuleType">
+      <summary>[SECURITY CRITICAL] 获取 <see cref="T:System.Security.AccessControl.FileSystemSecurity" /> 类用于表示审核规则的类型。</summary>
+      <returns>一个 <see cref="T:System.Type" /> 对象，表示 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 类。</returns>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] 从当前文件或目录移除所有匹配的允许或拒绝访问控制列表 (ACL) 权限。</summary>
+      <returns>如果访问规则已移除，则为 true；否则为 false。</returns>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象，表示要从文件或目录中移除的访问控制列表 (ACL) 权限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleAll(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] 从当前文件或目录移除指定用户的所有访问控制列表 (ACL) 权限。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象，该对象指定应该从文件或目录移除其访问控制列表 (ACL) 权限的用户。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAccessRuleSpecific(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] 从当前文件或目录移除单个匹配的允许或拒绝访问控制列表 (ACL) 权限。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象，该对象指定应该从文件或目录移除其访问控制列表 (ACL) 权限的用户。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] 从当前文件或目录移除所有匹配的允许或拒绝审核规则。</summary>
+      <returns>true（如果审核规则已移除）；否则为 false</returns>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象，表示要从文件或目录移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleAll(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] 从当前文件或目录移除指定用户的所有审核规则。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象，该对象指定应该从文件或目录删除其审核规则的用户。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.RemoveAuditRuleSpecific(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] 从当前文件或目录移除单个匹配的允许或拒绝审核规则。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象，表示要从文件或目录移除的审核规则。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.ResetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] 将指定的访问控制列表 (ACL) 权限添加到当前文件或目录，并移除所有匹配的 ACL 权限。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象，表示要添加到文件或目录的访问控制列表 (ACL) 权限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAccessRule(System.Security.AccessControl.FileSystemAccessRule)">
+      <summary>[SECURITY CRITICAL] 设置当前文件或目录的指定访问控制列表 (ACL) 权限。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAccessRule" /> 对象，表示要为文件或目录设置的访问控制列表 (ACL) 权限。</param>
+    </member>
+    <member name="M:System.Security.AccessControl.FileSystemSecurity.SetAuditRule(System.Security.AccessControl.FileSystemAuditRule)">
+      <summary>[SECURITY CRITICAL] 设置当前文件或目录的指定审核规则。</summary>
+      <param name="rule">一个 <see cref="T:System.Security.AccessControl.FileSystemAuditRule" /> 对象，表示要为文件或目录设置的审核规则。</param>
+    </member>
+  </members>
+</doc>

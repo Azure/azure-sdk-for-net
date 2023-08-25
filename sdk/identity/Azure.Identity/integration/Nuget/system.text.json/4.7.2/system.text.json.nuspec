@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="2.12">
+    <id>System.Text.Json</id>
+    <version>4.7.2</version>
+    <title>System.Text.Json</title>
+    <authors>Microsoft</authors>
+    <owners>microsoft,dotnetframework</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>Icon.png</icon>
+    <projectUrl>https://github.com/dotnet/corefx</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288859</iconUrl>
+    <description>Provides high-performance and low-allocating types that serialize objects to JavaScript Object Notation (JSON) text and deserialize JSON text to objects, with UTF-8 support built-in. Also provides types to read and write JSON text encoded as UTF-8, and to create an in-memory document object model (DOM), that is read-only, for random access of the JSON elements within a structured view of the data.
+
+Commonly Used Types:
+System.Text.Json.JsonSerializer
+System.Text.Json.JsonDocument
+System.Text.Json.JsonElement
+System.Text.Json.Utf8JsonWriter
+System.Text.Json.Utf8JsonReader
+ 
+When using NuGet 3.x this package requires at least version 3.4.</description>
+    <releaseNotes>https://go.microsoft.com/fwlink/?LinkID=799421</releaseNotes>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <serviceable>true</serviceable>
+    <dependencies>
+      <group targetFramework="MonoAndroid1.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+      <group targetFramework="MonoTouch1.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+      <group targetFramework=".NETFramework4.6.1">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Memory" version="4.5.4" />
+        <dependency id="System.Numerics.Vectors" version="4.5.0" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+        <dependency id="System.Threading.Tasks.Extensions" version="4.5.4" />
+        <dependency id="System.ValueTuple" version="4.5.0" />
+      </group>
+      <group targetFramework=".NETCoreApp2.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Memory" version="4.5.4" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+        <dependency id="System.Threading.Tasks.Extensions" version="4.5.4" />
+      </group>
+      <group targetFramework=".NETCoreApp2.1">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+      <group targetFramework=".NETCoreApp3.0">
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+      <group targetFramework=".NETCoreApp3.1" />
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Memory" version="4.5.4" />
+        <dependency id="System.Numerics.Vectors" version="4.5.0" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+        <dependency id="System.Threading.Tasks.Extensions" version="4.5.4" />
+      </group>
+      <group targetFramework="UAP10.0.16299">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Memory" version="4.5.4" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+        <dependency id="System.Threading.Tasks.Extensions" version="4.5.4" />
+      </group>
+      <group targetFramework="Xamarin.iOS1.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+      <group targetFramework="Xamarin.Mac2.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+      <group targetFramework="Xamarin.TVOS1.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+      <group targetFramework="Xamarin.WatchOS1.0">
+        <dependency id="Microsoft.Bcl.AsyncInterfaces" version="1.1.0" />
+        <dependency id="System.Buffers" version="4.5.1" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="4.7.1" />
+        <dependency id="System.Text.Encodings.Web" version="4.7.1" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="mscorlib" targetFramework=".NETFramework4.6.1" />
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.6.1" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.6.1" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

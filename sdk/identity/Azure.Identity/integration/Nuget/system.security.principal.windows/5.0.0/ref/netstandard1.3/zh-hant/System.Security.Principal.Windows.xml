@@ -1,0 +1,744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Security.Principal.Windows</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle">
+      <summary>[安全性關鍵] 將安全控制代碼提供給 Windows 執行緒或處理序存取語彙基元。如需詳細資訊，請參閱存取語彙基元</summary>
+    </member>
+    <member name="M:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle.#ctor(System.IntPtr)">
+      <summary>[安全性關鍵] 初始化 <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" /> 類別的新執行個體。</summary>
+      <param name="handle">
+        <see cref="T:System.IntPtr" /> 物件，代表所要使用之已存在的控制代碼。使用 <see cref="F:System.IntPtr.Zero" /> 傳回無效的控制代碼。</param>
+    </member>
+    <member name="P:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle.InvalidHandle">
+      <summary>[安全性關鍵] 傳回由 <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" /> 物件和 <see cref="F:System.IntPtr.Zero" /> 具現化的無效控制代碼。</summary>
+      <returns>傳回 <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" /> 物件。</returns>
+    </member>
+    <member name="P:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle.IsInvalid">
+      <summary>[安全性關鍵] 取得值，表示控制代碼是否無效。</summary>
+      <returns>如果控制代碼無效，則為 true；否則為 false。</returns>
+    </member>
+    <member name="T:System.Security.Principal.IdentityNotMappedException">
+      <summary>表示主體的例外狀況，該主體的識別 (Identity) 無法對應至已知的識別。</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityNotMappedException.#ctor">
+      <summary>初始化 <see cref="T:System.Security.Principal.IdentityNotMappedException" /> 類別的新執行個體。</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityNotMappedException.#ctor(System.String)">
+      <summary>使用指定的錯誤訊息，初始化 <see cref="T:System.Security.Principal.IdentityNotMappedException" /> 類別的新執行個體。</summary>
+      <param name="message">解釋例外狀況原因的錯誤訊息。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityNotMappedException.#ctor(System.String,System.Exception)">
+      <summary>使用指定的錯誤訊息和內部例外狀況，初始化 <see cref="T:System.Security.Principal.IdentityNotMappedException" /> 類別的新執行個體。</summary>
+      <param name="message">解釋例外狀況原因的錯誤訊息。</param>
+      <param name="inner">導致目前例外狀況的例外。如果 <paramref name="inner" /> 不是 null，則目前的例外狀況會在處理內部例外狀況的 catch 區塊中引發。</param>
+    </member>
+    <member name="P:System.Security.Principal.IdentityNotMappedException.UnmappedIdentities">
+      <summary>表示 <see cref="T:System.Security.Principal.IdentityNotMappedException" /> 例外狀況的未對應識別之集合。</summary>
+      <returns>未對應識別之集合。</returns>
+    </member>
+    <member name="T:System.Security.Principal.IdentityReference">
+      <summary>表示識別 (Identity)，且為 <see cref="T:System.Security.Principal.NTAccount" /> 和 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別的基底類別。這個類別不提供公用建構函式 (Constructor)，因此無法繼承。</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.Equals(System.Object)">
+      <summary>傳回值，指出指定物件是否等於此 <see cref="T:System.Security.Principal.IdentityReference" /> 類別執行個體。</summary>
+      <returns>如果 <paramref name="o" /> 是與這個 <see cref="T:System.Security.Principal.IdentityReference" /> 執行個體具有相同基礎型別和值的物件，則為 true，否則為 false。</returns>
+      <param name="o">要與這個 <see cref="T:System.Security.Principal.IdentityReference" /> 執行個體比較的物件，或 null 參考。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.GetHashCode">
+      <summary>做為 <see cref="T:System.Security.Principal.IdentityReference" /> 的雜湊函式。<see cref="M:System.Security.Principal.IdentityReference.GetHashCode" /> 適用於雜湊演算法和雜湊資料表這類的資料結構。</summary>
+      <returns>這個 <see cref="T:System.Security.Principal.IdentityReference" /> 物件的雜湊程式碼。</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.IsValidTargetType(System.Type)">
+      <summary>傳回值，指出指定型別是否為 <see cref="T:System.Security.Principal.IdentityReference" /> 類別的有效轉譯型別。</summary>
+      <returns>如果 <paramref name="targetType" /> 是 <see cref="T:System.Security.Principal.IdentityReference" /> 類別的有效轉譯型別，則為 true，否則為 false。</returns>
+      <param name="targetType">正在查詢是否可有效做為 <see cref="T:System.Security.Principal.IdentityReference" /> 的轉換目標之型別。下列是有效的目標型別：<see cref="T:System.Security.Principal.NTAccount" /><see cref="T:System.Security.Principal.SecurityIdentifier" /></param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.op_Equality(System.Security.Principal.IdentityReference,System.Security.Principal.IdentityReference)">
+      <summary>比較兩個 <see cref="T:System.Security.Principal.IdentityReference" /> 物件，判斷它們是否相等。如果它們的正式名稱表示與 <see cref="P:System.Security.Principal.IdentityReference.Value" /> 屬性所傳回的相同，或兩者都是 null，則會將它們視為相等。</summary>
+      <returns>如果 <paramref name="left" /> 和 <paramref name="right" /> 相等，則為 true，否則為 false。</returns>
+      <param name="left">用於相等比較的左 <see cref="T:System.Security.Principal.IdentityReference" /> 運算元。這個參數可以是 null。</param>
+      <param name="right">用於相等比較的右 <see cref="T:System.Security.Principal.IdentityReference" /> 運算元。這個參數可以是 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.op_Inequality(System.Security.Principal.IdentityReference,System.Security.Principal.IdentityReference)">
+      <summary>比較兩個 <see cref="T:System.Security.Principal.IdentityReference" /> 物件，判斷它們是否不相等。如果它們的正式名稱表示與 <see cref="P:System.Security.Principal.IdentityReference.Value" /> 屬性所傳回的不同，或其中一個物件為 null 而另一個不是，則會將它們視為不相等。</summary>
+      <returns>如果 <paramref name="left" /> 和 <paramref name="right" /> 不相等，則為 true，否則為 false。</returns>
+      <param name="left">用於不相等比較的左 <see cref="T:System.Security.Principal.IdentityReference" /> 運算元。這個參數可以是 null。</param>
+      <param name="right">用於不相等比較的右 <see cref="T:System.Security.Principal.IdentityReference" /> 運算元。這個參數可以是 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.ToString">
+      <summary>傳回由 <see cref="T:System.Security.Principal.IdentityReference" /> 物件表示的識別之字串表示。</summary>
+      <returns>字串格式的識別。</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReference.Translate(System.Type)">
+      <summary>將 <see cref="T:System.Security.Principal.IdentityReference" /> 物件所表示的帳戶名稱轉譯為另一個 <see cref="T:System.Security.Principal.IdentityReference" /> 衍生型別。</summary>
+      <returns>轉換的識別。</returns>
+      <param name="targetType">從 <see cref="T:System.Security.Principal.IdentityReference" /> 轉換成的目標型別。</param>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReference.Value">
+      <summary>取得由 <see cref="T:System.Security.Principal.IdentityReference" /> 物件表示的識別之字串值。</summary>
+      <returns>由 <see cref="T:System.Security.Principal.IdentityReference" /> 物件表示的識別之字串值。</returns>
+    </member>
+    <member name="T:System.Security.Principal.IdentityReferenceCollection">
+      <summary>代表 <see cref="T:System.Security.Principal.IdentityReference" /> 物件的集合，並提供將多組 <see cref="T:System.Security.Principal.IdentityReference" /> 衍生物件轉換成 <see cref="T:System.Security.Principal.IdentityReference" /> 衍生型別的方法。</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.#ctor">
+      <summary>使用集合中的零個項目，初始化 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 類別的新執行個體。</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.#ctor(System.Int32)">
+      <summary>使用指定的初始大小，初始化 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 類別的新執行個體。</summary>
+      <param name="capacity">集合中的初始項目數。<paramref name="capacity" /> 的值僅供提示之用，不一定是已建立項目的最大數目。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Add(System.Security.Principal.IdentityReference)">
+      <summary>將 <see cref="T:System.Security.Principal.IdentityReference" /> 物件新增到 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合。</summary>
+      <param name="identity">要新增到集合的 <see cref="T:System.Security.Principal.IdentityReference" /> 物件。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Clear">
+      <summary>從 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合清除所有的 <see cref="T:System.Security.Principal.IdentityReference" /> 物件。</summary>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Contains(System.Security.Principal.IdentityReference)">
+      <summary>指出 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合是否含有指定的 <see cref="T:System.Security.Principal.IdentityReference" /> 物件。</summary>
+      <returns>如果集合包含指定的物件則為 true。</returns>
+      <param name="identity">要檢查的 <see cref="T:System.Security.Principal.IdentityReference" /> 物件。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.CopyTo(System.Security.Principal.IdentityReference[],System.Int32)">
+      <summary>從指定的索引處開始，將 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合複製到 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 陣列。</summary>
+      <param name="array">
+        <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 陣列物件，<see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合將複製到該物件。</param>
+      <param name="offset">
+        <paramref name="array" /> 中以零起始的索引，<see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合將複製到該處。</param>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReferenceCollection.Count">
+      <summary>取得 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合中的項目數目。</summary>
+      <returns>
+        <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合中的 <see cref="T:System.Security.Principal.IdentityReference" /> 物件數目。</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.GetEnumerator">
+      <summary>取得列舉值，可用來逐一查看 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合。</summary>
+      <returns>
+        <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合的列舉。</returns>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReferenceCollection.Item(System.Int32)">
+      <summary>取得或設定位在 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合中指定索引處的節點。</summary>
+      <returns>位在集合中指定索引處的 <see cref="T:System.Security.Principal.IdentityReference" />。如果 <paramref name="index" /> 大於或等於集合中的節點數，則傳回值為 null。</returns>
+      <param name="index">
+        <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合中以零起始的索引。</param>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Remove(System.Security.Principal.IdentityReference)">
+      <summary>從集合中移除指定的 <see cref="T:System.Security.Principal.IdentityReference" /> 物件。</summary>
+      <returns>如果已從集合中移除指定的物件則為 true。</returns>
+      <param name="identity">要移除的 <see cref="T:System.Security.Principal.IdentityReference" /> 物件。</param>
+    </member>
+    <member name="P:System.Security.Principal.IdentityReferenceCollection.System#Collections#Generic#ICollection{T}#IsReadOnly"></member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.System#Collections#IEnumerable#GetEnumerator">
+      <summary>取得列舉值，可用來逐一查看 <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合。</summary>
+      <returns>
+        <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合的列舉。</returns>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Translate(System.Type)">
+      <summary>將集合中的物件轉換成指定的型別。呼叫這個方法與呼叫第二個參數設定為 false 的 <see cref="M:System.Security.Principal.IdentityReferenceCollection.Translate(System.Type,System.Boolean)" /> 相同，這表示轉換失敗的項目將不會擲回例外狀況。</summary>
+      <returns>
+        <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合，代表原始集合的轉換內容。</returns>
+      <param name="targetType">集合中的項目要轉換成的型別。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.Principal.IdentityReferenceCollection.Translate(System.Type,System.Boolean)">
+      <summary>將集合中的物件轉換成指定的型別，並使用指定的預設容錯來處理或忽略與沒有轉換對應的型別相關聯之錯誤。</summary>
+      <returns>
+        <see cref="T:System.Security.Principal.IdentityReferenceCollection" /> 集合，代表原始集合的轉換內容。</returns>
+      <param name="targetType">集合中的項目要轉換成的型別。</param>
+      <param name="forceSuccess">布林值，可決定處理轉換錯誤的方式。如果 <paramref name="forceSuccess" /> 為 true，則由於找不到轉譯的對應而發生的轉換錯誤，會導致轉換失敗並擲回例外狀況。如果 <paramref name="forceSuccess" /> 為 false，則由於找不到轉譯的對應而無法轉換的型別，會在沒有轉換的情況下複製到要傳回的集合中。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Security.Principal.NTAccount">
+      <summary>代表使用者或群組帳戶。</summary>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.#ctor(System.String)">
+      <summary>使用指定的名稱，初始化 <see cref="T:System.Security.Principal.NTAccount" /> 類別的新執行個體。</summary>
+      <param name="name">用來建立 <see cref="T:System.Security.Principal.NTAccount" /> 物件的名稱。這個參數不可以是 null 或空字串。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="name" /> 為 null。</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="name" /> 為空字串。-或-<paramref name="name" /> 太長。</exception>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.#ctor(System.String,System.String)">
+      <summary>使用指定的網域名稱和帳戶名稱，初始化 <see cref="T:System.Security.Principal.NTAccount" /> 類別的新執行個體。</summary>
+      <param name="domainName">網域名稱。這個參數可以是 null 或空字串。如果網域名稱為 null 值，則會將其視為空字串。</param>
+      <param name="accountName">帳戶名稱。這個參數不可以是 null 或空字串。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="accountName" /> 為 null。</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="accountName" /> 為空字串。-或-<paramref name="accountName" /> 太長。-或-<paramref name="domainName" /> 太長。</exception>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.Equals(System.Object)">
+      <summary>傳回值，指出這個 <see cref="T:System.Security.Principal.NTAccount" /> 物件是否等於指定的物件。</summary>
+      <returns>如果 <paramref name="o" /> 是與這個 <see cref="T:System.Security.Principal.NTAccount" /> 物件具有相同基礎型別和值的物件則為 true，否則為 false。</returns>
+      <param name="o">與這個 <see cref="T:System.Security.Principal.NTAccount" /> 物件相比較的物件，或 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.GetHashCode">
+      <summary>做為目前 <see cref="T:System.Security.Principal.NTAccount" /> 物件的雜湊函式。<see cref="M:System.Security.Principal.NTAccount.GetHashCode" /> 方法適用於雜湊演算法和雜湊資料表這類的資料結構。</summary>
+      <returns>目前 <see cref="T:System.Security.Principal.NTAccount" /> 物件的雜湊值 (Hash Value)。</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.IsValidTargetType(System.Type)">
+      <summary>傳回值，指出指定型別是否為 <see cref="T:System.Security.Principal.NTAccount" /> 類別的有效轉譯型別。</summary>
+      <returns>如果 <paramref name="targetType" /> 是 <see cref="T:System.Security.Principal.NTAccount" /> 類別的有效轉譯型別則為 true，否則為 false。</returns>
+      <param name="targetType">正在查詢是否可有效做為 <see cref="T:System.Security.Principal.NTAccount" /> 的轉換目標之型別。下列是有效的目標型別：- <see cref="T:System.Security.Principal.NTAccount" />- <see cref="T:System.Security.Principal.SecurityIdentifier" /></param>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.op_Equality(System.Security.Principal.NTAccount,System.Security.Principal.NTAccount)">
+      <summary>比較兩個 <see cref="T:System.Security.Principal.NTAccount" /> 物件，判斷它們是否相等。如果它們的正式名稱表示與 <see cref="P:System.Security.Principal.NTAccount.Value" /> 屬性所傳回的相同，或兩者都是 null，則會將它們視為相等。</summary>
+      <returns>如果 <paramref name="left" /> 和 <paramref name="right" /> 相等則為 true，否則為 false。</returns>
+      <param name="left">用於相等比較的左運算元。這個參數可以是 null。</param>
+      <param name="right">用於相等比較的右運算元。這個參數可以是 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.op_Inequality(System.Security.Principal.NTAccount,System.Security.Principal.NTAccount)">
+      <summary>比較兩個 <see cref="T:System.Security.Principal.NTAccount" /> 物件，判斷它們是否不相等。如果它們的正式名稱表示與 <see cref="P:System.Security.Principal.NTAccount.Value" /> 屬性所傳回的不同，或其中一個物件為 null 而另一個不是，則會將它們視為不相等。</summary>
+      <returns>如果 <paramref name="left" /> 和 <paramref name="right" /> 不相等則為 true，否則為 false。</returns>
+      <param name="left">用於不相等比較的左運算元。這個參數可以是 null。</param>
+      <param name="right">用於不相等比較的右運算元。這個參數可以是 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.ToString">
+      <summary>傳回 <see cref="T:System.Security.Principal.NTAccount" /> 物件所表示的帳戶之帳戶名稱，格式為 Domain\Account。</summary>
+      <returns>帳戶名稱，格式為 Domain\Account。</returns>
+    </member>
+    <member name="M:System.Security.Principal.NTAccount.Translate(System.Type)">
+      <summary>將 <see cref="T:System.Security.Principal.NTAccount" /> 物件所表示的帳戶名稱轉譯為另一個 <see cref="T:System.Security.Principal.IdentityReference" /> 衍生型別。</summary>
+      <returns>轉換的識別。</returns>
+      <param name="targetType">從 <see cref="T:System.Security.Principal.NTAccount" /> 轉換成的目標型別。目標型別必須是 <see cref="M:System.Security.Principal.NTAccount.IsValidTargetType(System.Type)" /> 方法視為有效的型別。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="targetType " />為 null。</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="targetType " />不是 <see cref="T:System.Security.Principal.IdentityReference" /> 型別。</exception>
+      <exception cref="T:System.Security.Principal.IdentityNotMappedException">無法轉譯某些或所有識別參考。</exception>
+      <exception cref="T:System.SystemException">來源帳戶名稱太長。-或-已傳回 Win32 錯誤碼。</exception>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Security.Principal.NTAccount.Value">
+      <summary>傳回這個 <see cref="T:System.Security.Principal.NTAccount" /> 物件的大寫字串表示。</summary>
+      <returns>這個 <see cref="T:System.Security.Principal.NTAccount" /> 物件的大寫字串表示。</returns>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Security.Principal.SecurityIdentifier">
+      <summary>代表安全識別項 (SID)，並為 SID 提供封送處理 (Marshaling) 和比較作業。</summary>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.Byte[],System.Int32)">
+      <summary>使用指定的安全識別項 (SID) 二進位表示，初始化 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別的新執行個體。</summary>
+      <param name="binaryForm">表示 SID 的位元組陣列。</param>
+      <param name="offset">用來做為 <paramref name="binaryForm" /> 中的起始索引之位元組位移。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.IntPtr)">
+      <summary>使用表示安全識別項 (SID) 之二進位格式的整數，初始化 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別的新執行個體。</summary>
+      <param name="binaryForm">整數，表示 SID 的二進位格式。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.Security.Principal.WellKnownSidType,System.Security.Principal.SecurityIdentifier)">
+      <summary>使用指定的已知安全識別項 (SID) 型別和網域 SID，初始化 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別的新執行個體。</summary>
+      <param name="sidType">其中一個列舉值。這個值不可以是 <see cref="F:System.Security.Principal.WellKnownSidType.LogonIdsSid" />。</param>
+      <param name="domainSid">網域 SID。下列 <see cref="T:System.Security.Principal.WellKnownSidType" /> 值需要這個值。任何其他 <see cref="T:System.Security.Principal.WellKnownSidType" /> 值會忽略這個參數。- <see cref="F:System.Security.Principal.WellKnownSidType.AccountAdministratorSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountGuestSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountKrbtgtSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountDomainAdminsSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountDomainUsersSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountDomainGuestsSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountComputersSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountControllersSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountCertAdminsSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountSchemaAdminsSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountEnterpriseAdminsSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountPolicyAdminsSid" />- <see cref="F:System.Security.Principal.WellKnownSidType.AccountRasAndIasServersSid" /></param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.#ctor(System.String)">
+      <summary>使用安全性描述元定義語言 (SDDL) 格式的指定安全識別項 (SID)，初始化 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別的新執行個體。</summary>
+      <param name="sddlForm">用來建立 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件之 SID 的 SDDL 字串。</param>
+    </member>
+    <member name="P:System.Security.Principal.SecurityIdentifier.AccountDomainSid">
+      <summary>如果 SID 代表 Windows 帳戶 SID，則傳回 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的 SID 之帳戶網域安全識別項 (SID) 部分。如果 SID 不代表 Windows 帳戶 SID，則這個屬性會傳回 <see cref="T:System.ArgumentNullException" />。</summary>
+      <returns>如果 SID 代表 Windows 帳戶 SID，則傳回 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的 SID 之帳戶網域 SID 部分，否則傳回 <see cref="T:System.ArgumentNullException" />。</returns>
+    </member>
+    <member name="P:System.Security.Principal.SecurityIdentifier.BinaryLength">
+      <summary>傳回 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的安全識別項 (SID) 之長度，以位元組為單位。</summary>
+      <returns>傳回 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的 SID 之長度，以位元組為單位。</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.CompareTo(System.Security.Principal.SecurityIdentifier)">
+      <summary>將目前的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件與指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件相比較。</summary>
+      <returns>帶正負號的數字，指出這個執行個體與 <paramref name="sid" /> 的相對值。傳回值說明小於零這個執行個體小於 <paramref name="sid" />。Zero這個執行個體等於 <paramref name="sid" />。大於零這個執行個體大於 <paramref name="sid" />。</returns>
+      <param name="sid">要與目前物件比較的物件。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.Equals(System.Object)">
+      <summary>傳回值，指出這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件是否等於指定的物件。</summary>
+      <returns>如果 <paramref name="o" /> 是與這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件具有相同基礎型別和值的物件則為 true，否則為 false。</returns>
+      <param name="o">與這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件相比較的物件，或 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.Equals(System.Security.Principal.SecurityIdentifier)">
+      <summary>指出指定的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件是否等於目前的 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件。</summary>
+      <returns>如果 <paramref name="sid" /> 的值和目前 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件的值相等則為 true。</returns>
+      <param name="sid">要與目前物件比較的物件。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.GetBinaryForm(System.Byte[],System.Int32)">
+      <summary>將 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別所表示的指定安全識別項 (SID) 之二進位表示，複製到位元組陣列。</summary>
+      <param name="binaryForm">接收複製的 SID 之位元組陣列。</param>
+      <param name="offset">用來做為 <paramref name="binaryForm" /> 中的起始索引之位元組位移。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.GetHashCode">
+      <summary>做為目前 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件的雜湊函式。<see cref="M:System.Security.Principal.SecurityIdentifier.GetHashCode" /> 方法適用於雜湊演算法和雜湊資料表這類的資料結構。</summary>
+      <returns>目前 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件的雜湊值 (Hash Value)。</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsAccountSid">
+      <summary>傳回值，指出這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的安全識別項 (SID) 是否為有效的 Windows 帳戶 SID。</summary>
+      <returns>如果這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的 SID 是有效的 Windows 帳戶 SID 則為 true，否則為 false。</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsEqualDomainSid(System.Security.Principal.SecurityIdentifier)">
+      <summary>傳回值，指出這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的安全識別項 (SID) 是否與指定的 SID 來自相同網域。</summary>
+      <returns>如果這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的 SID 與 <paramref name="sid" /> SID 位在相同網域則為 true，否則為 false。</returns>
+      <param name="sid">要與這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件比較的 SID。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsValidTargetType(System.Type)">
+      <summary>傳回值，指出指定型別是否為 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別的有效轉譯型別。</summary>
+      <returns>如果 <paramref name="targetType" /> 是 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 類別的有效轉譯型別則為 true，否則為 false。</returns>
+      <param name="targetType">正在查詢是否可有效做為 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 的轉換目標之型別。下列是有效的目標型別：- <see cref="T:System.Security.Principal.NTAccount" />- <see cref="T:System.Security.Principal.SecurityIdentifier" /></param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.IsWellKnown(System.Security.Principal.WellKnownSidType)">
+      <summary>傳回值，指出 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件是否符合指定的已知安全識別項 (SID) 型別。</summary>
+      <returns>如果 <paramref name="type" /> 是 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件的 SID 型別則為 true，否則為 false。</returns>
+      <param name="type">要與 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件比較的值。</param>
+    </member>
+    <member name="F:System.Security.Principal.SecurityIdentifier.MaxBinaryLength">
+      <summary>傳回安全識別項之二進位表示的最大值，以位元組為單位。</summary>
+    </member>
+    <member name="F:System.Security.Principal.SecurityIdentifier.MinBinaryLength">
+      <summary>傳回安全識別項之二進位表示的最小值，以位元組為單位。</summary>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.op_Equality(System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier)">
+      <summary>比較兩個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件，判斷它們是否相等。如果它們的正式名稱表示與 <see cref="P:System.Security.Principal.SecurityIdentifier.Value" /> 屬性所傳回的相同，或兩者都是 null，則會將它們視為相等。</summary>
+      <returns>如果 <paramref name="left" /> 和 <paramref name="right" /> 相等，則為 true，否則為 false。</returns>
+      <param name="left">用於相等比較的左運算元。這個參數可以是 null。</param>
+      <param name="right">用於相等比較的右運算元。這個參數可以是 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.op_Inequality(System.Security.Principal.SecurityIdentifier,System.Security.Principal.SecurityIdentifier)">
+      <summary>比較兩個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件，判斷它們是否不相等。如果它們的正式名稱表示與 <see cref="P:System.Security.Principal.SecurityIdentifier.Value" /> 屬性所傳回的不同，或其中一個物件為 null 而另一個不是，則會將它們視為不相等。</summary>
+      <returns>如果 <paramref name="left" /> 和 <paramref name="right" /> 不相等，則為 true，否則為 false。</returns>
+      <param name="left">用於不相等比較的左運算元。這個參數可以是 null。</param>
+      <param name="right">用於不相等比較的右運算元。這個參數可以是 null。</param>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.ToString">
+      <summary>以安全性描述元定義語言 (SDDL) 格式，傳回 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的帳戶之安全識別項 (SID)。SDDL 格式範例為 S-1-5-9。</summary>
+      <returns>
+        <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的帳戶之 SID，採用 SDDL 格式。</returns>
+    </member>
+    <member name="M:System.Security.Principal.SecurityIdentifier.Translate(System.Type)">
+      <summary>將 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的帳戶名稱轉譯為另一個 <see cref="T:System.Security.Principal.IdentityReference" /> 衍生型別 (Derived Type)。</summary>
+      <returns>轉換的識別。</returns>
+      <param name="targetType">從 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 轉換成的目標型別。目標型別必須是 <see cref="M:System.Security.Principal.SecurityIdentifier.IsValidTargetType(System.Type)" /> 方法視為有效的型別。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="targetType " />為 null。</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="targetType " />不是 <see cref="T:System.Security.Principal.IdentityReference" /> 型別。</exception>
+      <exception cref="T:System.Security.Principal.IdentityNotMappedException">無法轉譯某些或所有識別參考。</exception>
+      <exception cref="T:System.SystemException">已傳回 Win32 錯誤碼。</exception>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Security.Principal.SecurityIdentifier.Value">
+      <summary>傳回這個 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的安全識別項 (SID) 之大寫安全性描述元定義語言 (SDDL) 字串。</summary>
+      <returns>傳回 <see cref="T:System.Security.Principal.SecurityIdentifier" /> 物件所表示的 SID 之大寫 SDDL 字串。</returns>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Security.Principal.TokenAccessLevels">
+      <summary>定義與存取語彙基元 (Token) 關聯的使用者帳戶之權限。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustDefault">
+      <summary>使用者可以變更語彙基元的預設擁有人、主要群組或任意存取控制清單 (DACL)。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustGroups">
+      <summary>使用者可以變更語彙基元中群組的屬性 (Attribute)。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustPrivileges">
+      <summary>使用者可以啟用或停用語彙基元中的權限。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AdjustSessionId">
+      <summary>使用者可以調整語彙基元的工作階段識別項。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AllAccess">
+      <summary>使用者擁有對語彙基元的所有可能存取。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.AssignPrimary">
+      <summary>使用者可以附加主要語彙基元至處理序。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Duplicate">
+      <summary>使用者可以複製語彙基元。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Impersonate">
+      <summary>使用者可以模擬用戶端。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.MaximumAllowed">
+      <summary>可為 <see cref="T:System.Security.Principal.TokenAccessLevels" /> 列舉型別 (Enumeration) 指派的最大值。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Query">
+      <summary>使用者可以查詢語彙基元。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.QuerySource">
+      <summary>使用者可以查詢語彙基元的來源。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Read">
+      <summary>使用者擁有標準讀取權，以及語彙基元的 <see cref="F:System.Security.Principal.TokenAccessLevels.Query" /> 權限。</summary>
+    </member>
+    <member name="F:System.Security.Principal.TokenAccessLevels.Write">
+      <summary>使用者擁有標準寫入權，以及語彙基元的 <see cref="F:System.Security.Principal.TokenAccessLevels.AdjustPrivileges,F:System.Security.Principal.TokenAccessLevels.AdjustGroups" /> 和 <see cref="F:System.Security.Principal.TokenAccessLevels.AdjustDefault" /> 權限。</summary>
+    </member>
+    <member name="T:System.Security.Principal.WellKnownSidType">
+      <summary>定義常用的安全識別項 (SID) 集合。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountAdministratorSid">
+      <summary>指出符合帳戶系統管理員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountCertAdminsSid">
+      <summary>指出符合憑證系統管理員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountComputersSid">
+      <summary>指出符合帳戶電腦群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountControllersSid">
+      <summary>指出符合帳戶控制站群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountDomainAdminsSid">
+      <summary>指出符合帳戶網域系統管理員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountDomainGuestsSid">
+      <summary>指出符合帳戶網域來賓群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountDomainUsersSid">
+      <summary>指出符合帳戶網域使用者群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountEnterpriseAdminsSid">
+      <summary>指出符合企業系統管理員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountGuestSid">
+      <summary>指出符合帳戶來賓群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountKrbtgtSid">
+      <summary>指出符合帳戶 Kerberos 目標群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountPolicyAdminsSid">
+      <summary>指出符合原則系統管理員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountRasAndIasServersSid">
+      <summary>指出符合 RAS 和 IAS 伺服器帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AccountSchemaAdminsSid">
+      <summary>指出符合結構描述系統管理員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AnonymousSid">
+      <summary>指出匿名帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.AuthenticatedUserSid">
+      <summary>指出已驗證使用者的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BatchSid">
+      <summary>指出批次處理的 SID。這個 SID 會在登入為批次工作時加入語彙基元 (Token) 的處理序。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinAccountOperatorsSid">
+      <summary>指出符合帳戶操作員帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinAdministratorsSid">
+      <summary>指出符合系統管理員帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinAuthorizationAccessSid">
+      <summary>指出符合 Windows 授權存取群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinBackupOperatorsSid">
+      <summary>指出符合備份操作員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinDomainSid">
+      <summary>指出符合網域帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinGuestsSid">
+      <summary>指出符合來賓帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinIncomingForestTrustBuildersSid">
+      <summary>指出可讓使用者建立連入樹系信任的 SID。它會加入使用者的語彙基元中，該使用者為樹系根網域中 Incoming Forest Trust Builders 內建群組的成員。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinNetworkConfigurationOperatorsSid">
+      <summary>指出符合網路操作員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPerformanceLoggingUsersSid">
+      <summary>指出符合使用者群組的 SID，這些使用者可以從遠端存取來監視電腦。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPerformanceMonitoringUsersSid">
+      <summary>指出符合使用者群組的 SID，這些使用者可以從遠端存取這部電腦的效能計數器排程記錄。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPowerUsersSid">
+      <summary>指出符合進階使用者 (Power User) 群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPreWindows2000CompatibleAccessSid">
+      <summary>指出符合 pre-Windows 2000 相容帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinPrintOperatorsSid">
+      <summary>指出符合列印操作員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinRemoteDesktopUsersSid">
+      <summary>指出符合遠端桌面使用者的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinReplicatorSid">
+      <summary>指出符合複寫器帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinSystemOperatorsSid">
+      <summary>指出符合系統操作員群組的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.BuiltinUsersSid">
+      <summary>指出符合內建使用者帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorGroupServerSid">
+      <summary>指出建立者群組伺服器 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorGroupSid">
+      <summary>指出符合物件的建立者群組之 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorOwnerServerSid">
+      <summary>指出建立者擁有者伺服器 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.CreatorOwnerSid">
+      <summary>指出符合物件的擁有者或建立者之 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.DialupSid">
+      <summary>指出撥號帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.DigestAuthenticationSid">
+      <summary>指出當 Microsoft Digest 驗證封裝驗證用戶端時所存在的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.EnterpriseControllersSid">
+      <summary>指出企業控制站的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.InteractiveSid">
+      <summary>指出互動式帳戶的 SID。這個 SID 會在進行互動式登入時加入語彙基元的處理序。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LocalServiceSid">
+      <summary>指出符合本機服務的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LocalSid">
+      <summary>指出本機 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LocalSystemSid">
+      <summary>指出符合本機系統的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.LogonIdsSid">
+      <summary>指出符合登入 ID 的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.MaxDefined">
+      <summary>指出 <see cref="T:System.Security.Principal.WellKnownSidType" /> 列舉型別中所定義的最大 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NetworkServiceSid">
+      <summary>指出符合網路服務的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NetworkSid">
+      <summary>指出網路帳戶的 SID。這個 SID 會在透過網路登入時加入語彙基元的處理序。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NTAuthoritySid">
+      <summary>指出符合 Windows NT Authority 的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NtlmAuthenticationSid">
+      <summary>指出當 Microsoft NTLM 驗證封裝驗證用戶端時所存在的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.NullSid">
+      <summary>指出 null SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.OtherOrganizationSid">
+      <summary>指出當使用者在啟用選擇性驗證選項的情況下透過樹系驗證時所存在的 SID。如果有這個 SID，則 <see cref="F:System.Security.Principal.WellKnownSidType.ThisOrganizationSid" /> 不能存在。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.ProxySid">
+      <summary>指出 Proxy SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.RemoteLogonIdSid">
+      <summary>指出符合遠端登入的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.RestrictedCodeSid">
+      <summary>指出設限代碼的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.SChannelAuthenticationSid">
+      <summary>指出當安全通道 (SSL/TLS) 驗證封裝驗證用戶端時所存在的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.SelfSid">
+      <summary>指出自己的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.ServiceSid">
+      <summary>指出服務的 SID。這個 SID 會在登入為服務時加入語彙基元的處理序。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.TerminalServerSid">
+      <summary>指出符合終端伺服器帳戶的 SID。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.ThisOrganizationSid">
+      <summary>指出當使用者從樹系內或透過沒有啟用選擇性驗證選項的信任來驗證時，所存在的 SID。如果有這個 SID，則 <see cref="F:System.Security.Principal.WellKnownSidType.OtherOrganizationSid" /> 不能存在。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WinBuiltinTerminalServerLicenseServersSid">
+      <summary>指出 SID 存在於可核發終端伺服器授權的伺服器中。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WellKnownSidType.WorldSid">
+      <summary>指出符合所有人的 SID。</summary>
+    </member>
+    <member name="T:System.Security.Principal.WindowsBuiltInRole">
+      <summary>指定與 <see cref="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.String)" /> 搭配使用的通用角色。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.AccountOperator">
+      <summary>帳戶操作員管理電腦或網域上的使用者帳戶。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.Administrator">
+      <summary>管理員已完成並解除電腦或網域的存取限制。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.BackupOperator">
+      <summary>備份操作員可以覆寫專供備份或還原檔案使用的安全性限制。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.Guest">
+      <summary>Guest 的限制多於使用者。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.PowerUser">
+      <summary>進階使用者 (Power User) 除了部分限制外擁有大部分的管理使用權限。因此，除了已認證的應用程式之外，進階使用者也可以執行舊版的應用程式。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.PrintOperator">
+      <summary>列印操作員可以取得印表機的控制。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.Replicator">
+      <summary>複寫器支援網域中的檔案複寫。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.SystemOperator">
+      <summary>系統操作員管理特定的電腦。</summary>
+    </member>
+    <member name="F:System.Security.Principal.WindowsBuiltInRole.User">
+      <summary>使用者無法執行無意或有意的系統級變更。因此，使用者可以執行已認證的應用程式，但無法執行大部分的舊版應用程式。</summary>
+    </member>
+    <member name="T:System.Security.Principal.WindowsIdentity">
+      <summary>表示 Windows 使用者。</summary>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.IntPtr)">
+      <summary>為指定 Windows 帳戶語彙基元所表示的使用者，初始化 <see cref="T:System.Security.Principal.WindowsIdentity" /> 類別的新執行個體。</summary>
+      <param name="userToken">使此程式碼為其執行之使用者的帳戶語彙基元。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="userToken" /> is 0.-or-<paramref name="userToken" /> is duplicated and invalid for impersonation.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions. -or-A Win32 error occurred.</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.#ctor(System.IntPtr,System.String)">
+      <summary>為指定 Windows 帳戶語彙基元和指定驗證 (Authentication) 類型所表示的使用者，初始化 <see cref="T:System.Security.Principal.WindowsIdentity" /> 類別的新執行個體。</summary>
+      <param name="userToken">使此程式碼為其執行之使用者的帳戶語彙基元。</param>
+      <param name="type">(僅供內部使用。) 用來識別使用者的驗證類型。如需詳細資訊，請參閱＜備註＞。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="userToken" /> is 0.-or-<paramref name="userToken" /> is duplicated and invalid for impersonation.</exception>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions. -or-A Win32 error occurred.</exception>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.AccessToken">
+      <summary>[安全性關鍵] 取得這個 <see cref="T:System.Security.Principal.WindowsIdentity" /> 執行個體的這個 <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" />。</summary>
+      <returns>傳回 <see cref="T:Microsoft.Win32.SafeHandles.SafeAccessTokenHandle" />。</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.Dispose">
+      <summary>釋放 <see cref="T:System.Security.Principal.WindowsIdentity" /> 所使用的所有資源。</summary>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.Dispose(System.Boolean)">
+      <summary>釋放 <see cref="T:System.Security.Principal.WindowsIdentity" /> 所使用的 Unmanaged 資源，並選擇性釋放 Managed 資源。</summary>
+      <param name="disposing">true 表示釋放 Managed 和 Unmanaged 資源，false 則表示只釋放 Unmanaged 資源。</param>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetAnonymous">
+      <summary>傳回可在程式碼中用來做為代表匿名使用者之 Sentinel 值的 <see cref="T:System.Security.Principal.WindowsIdentity" /> 物件。屬性值不代表 Windows 作業系統所使用的內建匿名識別。</summary>
+      <returns>物件，表示匿名使用者。</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetCurrent">
+      <summary>傳回表示目前 Windows 使用者的 <see cref="T:System.Security.Principal.WindowsIdentity" /> 物件。</summary>
+      <returns>物件，表示目前的使用者。</returns>
+      <exception cref="T:System.Security.SecurityException">The caller does not have the correct permissions. </exception>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlPrincipal" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetCurrent(System.Boolean)">
+      <summary>傳回表示執行緒或處理程序之 Windows 識別的 <see cref="T:System.Security.Principal.WindowsIdentity" /> 物件，視 <paramref name="ifImpersonating" /> 參數的值而定。</summary>
+      <returns>物件，表示 Windows 使用者。</returns>
+      <param name="ifImpersonating">true 表示只有當執行緒目前正在模擬時才會傳回 <see cref="T:System.Security.Principal.WindowsIdentity" />；false 則表示如果執行緒目前正在模擬時，會傳回執行緒的 <see cref="T:System.Security.Principal.WindowsIdentity" />，或執行緒目前不是正在模擬時，則會傳回處理程序的 <see cref="T:System.Security.Principal.WindowsIdentity" />。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlPrincipal" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.GetCurrent(System.Security.Principal.TokenAccessLevels)">
+      <summary>使用指定所要的語彙基元存取層級，傳回代表目前 Windows 使用者的 <see cref="T:System.Security.Principal.WindowsIdentity" /> 物件。</summary>
+      <returns>物件，表示目前的使用者。</returns>
+      <param name="desiredAccess">列舉值的位元組合。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlPrincipal" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.Groups">
+      <summary>取得目前 Windows 使用者所屬的群組。</summary>
+      <returns>物件，表示目前 Windows 使用者所屬的群組。</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.ImpersonationLevel">
+      <summary>設定使用者的模擬層級。</summary>
+      <returns>其中一個列舉值，這個值指定模擬層級。</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.IsAnonymous">
+      <summary>取得值，指出使用者帳戶是否已經由系統識別為匿名帳戶。</summary>
+      <returns>如果使用者帳戶是匿名帳戶，則為 true；否則為 false。</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.IsGuest">
+      <summary>取得值，指出使用者帳戶是否由系統識別為 <see cref="F:System.Security.Principal.WindowsAccountType.Guest" /> 帳戶。</summary>
+      <returns>如果使用者帳戶是 <see cref="F:System.Security.Principal.WindowsAccountType.Guest" /> 帳戶，則為 true；否則為 false。</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.IsSystem">
+      <summary>取得值，指出使用者帳戶是否由系統識別為 <see cref="F:System.Security.Principal.WindowsAccountType.System" /> 帳戶。</summary>
+      <returns>如果使用者帳戶是 <see cref="F:System.Security.Principal.WindowsAccountType.System" /> 帳戶，則為 true；否則為 false。</returns>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.Owner">
+      <summary>取得語彙基元擁有人的安全識別項 (SID)。</summary>
+      <returns>語彙基元擁有人的物件。</returns>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)">
+      <summary>以模擬的 Windows 身分識別執行指定的動作。您可以使用 <see cref="M:System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)" /> 並提供您的函式做為參數，而不需要使用個人化的方法呼叫並在 <see cref="T:System.Security.Principal.WindowsImpersonationContext" /> 中執行您的函式。</summary>
+      <param name="safeAccessTokenHandle">模擬之 Windows 身分識別的 SafeAccessTokenHandle。</param>
+      <param name="action">要執行的 System.Action。</param>
+    </member>
+    <member name="M:System.Security.Principal.WindowsIdentity.RunImpersonated``1(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Func{``0})">
+      <summary>以模擬的 Windows 身分識別執行指定的函式。您可以使用 <see cref="M:System.Security.Principal.WindowsIdentity.RunImpersonated(Microsoft.Win32.SafeHandles.SafeAccessTokenHandle,System.Action)" /> 並提供您的函式做為參數，而不需要使用個人化的方法呼叫並在 <see cref="T:System.Security.Principal.WindowsImpersonationContext" /> 中執行您的函式。</summary>
+      <returns>傳回函式的結果。</returns>
+      <param name="safeAccessTokenHandle">模擬之 Windows 身分識別的 SafeAccessTokenHandle。</param>
+      <param name="func">要執行的 System.Func。</param>
+      <typeparam name="T">函式使用的物件類型與傳回的物件類型。</typeparam>
+    </member>
+    <member name="P:System.Security.Principal.WindowsIdentity.User">
+      <summary>取得使用者的安全識別項 (SID)。</summary>
+      <returns>使用者的物件。</returns>
+    </member>
+    <member name="T:System.Security.Principal.WindowsPrincipal">
+      <summary>可讓程式碼檢查 Windows 使用者的 Windows 群組成員資格。</summary>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.#ctor(System.Security.Principal.WindowsIdentity)">
+      <summary>使用指定的 <see cref="T:System.Security.Principal.WindowsIdentity" /> 物件，初始化 <see cref="T:System.Security.Principal.WindowsPrincipal" /> 類別的新執行個體。</summary>
+      <param name="ntIdentity">物件，做為建構 <see cref="T:System.Security.Principal.WindowsPrincipal" /> 之新執行個體的來源。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="ntIdentity" /> 為 null。</exception>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.Int32)">
+      <summary>判斷目前的主體是否屬於具有指定相關識別元 (RID) 的 Windows 使用者群組。</summary>
+      <returns>如果目前主體是指定之 Windows 使用者群組的成員 (也就是，有特定角色)，則為 true，否則為 false。</returns>
+      <param name="rid">Windows 使用者群組的 RID 是用來檢查主體的成員狀態。</param>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.Security.Principal.SecurityIdentifier)">
+      <summary>判斷目前的主體是否屬於具有指定安全性識別碼 (SID) 的 Windows 使用者群組。</summary>
+      <returns>如果目前的主體是指定 Windows 使用者群組的成員，則為 true，否則為 false。</returns>
+      <param name="sid">
+        <see cref="T:System.Security.Principal.SecurityIdentifier" />，可唯一識別 Windows 使用者群組。</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="sid" /> 為 null。</exception>
+      <exception cref="T:System.Security.SecurityException">Windows 會傳回 Win32 錯誤。</exception>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Security.Principal.WindowsPrincipal.IsInRole(System.Security.Principal.WindowsBuiltInRole)">
+      <summary>判斷目前的主體是否屬於具有指定 <see cref="T:System.Security.Principal.WindowsBuiltInRole" /> 的 Windows 使用者群組。</summary>
+      <returns>如果目前的主體是指定 Windows 使用者群組的成員，則為 true，否則為 false。</returns>
+      <param name="role">其中一個 <see cref="T:System.Security.Principal.WindowsBuiltInRole" /> 值。</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="role" /> 不是有效的 <see cref="T:System.Security.Principal.WindowsBuiltInRole" /> 值。</exception>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.ReflectionPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="MemberAccess" />
+      </PermissionSet>
+    </member>
+  </members>
+</doc>

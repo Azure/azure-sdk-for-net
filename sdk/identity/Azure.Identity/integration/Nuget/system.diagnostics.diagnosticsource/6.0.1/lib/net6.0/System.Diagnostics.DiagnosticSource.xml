@@ -1,0 +1,1568 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Diagnostics.DiagnosticSource</name>
+  </assembly>
+  <members>
+    <member name="T:System.Diagnostics.Activity">
+      <summary>Represents an operation with context to be used for logging.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Activity.#ctor(System.String)">
+      <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.Activity" /> class.</summary>
+      <param name="operationName">The name of the operation.</param>
+    </member>
+    <member name="M:System.Diagnostics.Activity.AddBaggage(System.String,System.String)">
+      <summary>Updates the <see cref="T:System.Diagnostics.Activity" /> to have a new baggage item with the specified key and value.</summary>
+      <param name="key">The baggage key.</param>
+      <param name="value">The baggage value.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.AddEvent(System.Diagnostics.ActivityEvent)">
+      <summary>Adds the specified activity event to the events list.</summary>
+      <param name="e">The activity event to add.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.AddTag(System.String,System.Object)">
+      <summary>Updates the activity to have a tag with an additional <paramref name="key" /> and <paramref name="value" />.</summary>
+      <param name="key">The tag key name.</param>
+      <param name="value">The tag value mapped to the input key.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.AddTag(System.String,System.String)">
+      <summary>Updates the <see cref="T:System.Diagnostics.Activity" /> to have a new tag with the provided <paramref name="key" /> and <paramref name="value" />.</summary>
+      <param name="key">The tag key.</param>
+      <param name="value">The tag value.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.Dispose">
+      <summary>Stops the activity if it is already started and notifies any event listeners. Nothing will happen otherwise.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Activity.Dispose(System.Boolean)">
+      <summary>When overriden by a derived type, this method releases any allocated resources.</summary>
+      <param name="disposing">
+        <see langword="false" /> if the method is being called from the finalizer; <see langword="true" /> if calling from user code.</param>
+    </member>
+    <member name="M:System.Diagnostics.Activity.GetBaggageItem(System.String)">
+      <summary>Returns the value of a key-value pair added to the activity with <see cref="M:System.Diagnostics.Activity.AddBaggage(System.String,System.String)" />.</summary>
+      <param name="key">The baggage key.</param>
+      <returns>The value of the key-value-pair item if it exists, or <see langword="null" /> if it does not exist.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.GetCustomProperty(System.String)">
+      <summary>Returns the object mapped to the specified property name.</summary>
+      <param name="propertyName">The name associated to the object.</param>
+      <returns>The object mapped to the property name, if one is found; otherwise, <see langword="null" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.GetTagItem(System.String)">
+      <summary>Returns the value of the Activity tag mapped to the input key/&gt;.
+            Returns <see langword="null" /> if that key does not exist.</summary>
+      <param name="key">The tag key string.</param>
+      <returns>The tag value mapped to the input key.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetBaggage(System.String,System.String)">
+      <summary>Add or update the Activity baggage with the input key and value.
+            If the input value is <see langword="null" /> - if the collection has any baggage with the same key, then this baggage will get removed from the collection.
+                - otherwise, nothing will happen and the collection will not change.
+            If the input value is not <see langword="null" /> - if the collection has any baggage with the same key, then the value mapped to this key will get updated with the new input value.
+                - otherwise, the key and value will get added as a new baggage to the collection.
+            Baggage item will be updated/removed only if it was originaly added to the current activity. Items inherited from the parents will not be changed/removed, new item would be added to current activity baggage instead.</summary>
+      <param name="key">The baggage key name</param>
+      <param name="value">The baggage value mapped to the input key</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetCustomProperty(System.String,System.Object)">
+      <summary>Attaches any custom object to this activity. If the specified <paramref name="propertyName" /> was previously associated with another object, the property will be updated to be associated with the new <paramref name="propertyValue" /> instead. It is recommended to use a unique property name to avoid conflicts with anyone using the same value.</summary>
+      <param name="propertyName">The name to associate the value with.</param>
+      <param name="propertyValue">The object to attach and map to the property name.</param>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetEndTime(System.DateTime)">
+      <summary>Updates the <see cref="T:System.Diagnostics.Activity" /> to set its <see cref="P:System.Diagnostics.Activity.Duration" /> as the difference between <see cref="P:System.Diagnostics.Activity.StartTimeUtc" /> and the specified stop time.</summary>
+      <param name="endTimeUtc">The UTC stop time.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetIdFormat(System.Diagnostics.ActivityIdFormat)">
+      <summary>Sets the ID format on this <see cref="T:System.Diagnostics.Activity" /> before it is started.</summary>
+      <param name="format">One of the enumeration values that specifies the format of the <see cref="P:System.Diagnostics.Activity.Id" /> property.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetParentId(System.Diagnostics.ActivityTraceId,System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivityTraceFlags)">
+      <summary>Sets the parent ID using the W3C convention of a TraceId and a SpanId.</summary>
+      <param name="traceId">The parent activity's TraceId.</param>
+      <param name="spanId">The parent activity's SpanId.</param>
+      <param name="activityTraceFlags">One of the enumeration values that specifies flags defined by the W3C standard that are associated with an activity.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetParentId(System.String)">
+      <summary>Updates this <see cref="T:System.Diagnostics.Activity" /> to indicate that the <see cref="T:System.Diagnostics.Activity" /> with an ID of <paramref name="parentId" /> caused this <see cref="T:System.Diagnostics.Activity" />.</summary>
+      <param name="parentId">The ID of the parent operation.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetStartTime(System.DateTime)">
+      <summary>Sets the start time of this <see cref="T:System.Diagnostics.Activity" />.</summary>
+      <param name="startTimeUtc">The <see cref="T:System.Diagnostics.Activity" /> start time in UTC.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetStatus(System.Diagnostics.ActivityStatusCode,System.String)">
+      <summary>Sets the status code and description on the current activity object.</summary>
+      <param name="code">The status code</param>
+      <param name="description">The error status description</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.SetTag(System.String,System.Object)">
+      <summary>Adds or update the activity tag with the input key and value.</summary>
+      <param name="key">The tag key name.</param>
+      <param name="value">The tag value mapped to the input key.</param>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.Start">
+      <summary>Starts the activity.</summary>
+      <returns>
+        <see langword="this" /> for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Activity.Stop">
+      <summary>Stops the activity.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Activity.ActivityTraceFlags">
+      <summary>Gets or sets the flags (defined by the W3C ID specification) associated with the activity.</summary>
+      <returns>the flags associated with the activity.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Baggage">
+      <summary>Gets a collection of key/value pairs that represents information that is passed to children of this <see cref="T:System.Diagnostics.Activity" />.</summary>
+      <returns>Information that's passed to children of this <see cref="T:System.Diagnostics.Activity" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Context">
+      <summary>Gets the context of the activity. Context becomes valid only if the activity has been started.</summary>
+      <returns>The context of the activity, if the activity has been started; otherwise, returns the default context.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Current">
+      <summary>Gets or sets the current operation (<see cref="T:System.Diagnostics.Activity" />) for the current thread. This flows across async calls.</summary>
+      <returns>The current operation for the current thread.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.DefaultIdFormat">
+      <summary>Gets or sets the default ID format for the <see cref="T:System.Diagnostics.Activity" />.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Activity.DisplayName">
+      <summary>Gets or sets the display name of the activity.</summary>
+      <returns>A string that represents the activity display name.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Duration">
+      <summary>Gets the duration of the operation.</summary>
+      <returns>The delta between <see cref="P:System.Diagnostics.Activity.StartTimeUtc" /> and the end time if the <see cref="T:System.Diagnostics.Activity" /> has ended (<see cref="M:System.Diagnostics.Activity.Stop" /> or <see cref="M:System.Diagnostics.Activity.SetEndTime(System.DateTime)" /> was called), or <see cref="F:System.TimeSpan.Zero" /> if the <see cref="T:System.Diagnostics.Activity" /> has not ended and <see cref="M:System.Diagnostics.Activity.SetEndTime(System.DateTime)" /> was not called.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Events">
+      <summary>Gets the list of all the activity events attached to this activity.</summary>
+      <returns>An enumeration of activity events attached to this activity. If the activity has no events, returns an empty enumeration.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.ForceDefaultIdFormat">
+      <summary>Gets or sets a value that detrmines if the <see cref="P:System.Diagnostics.Activity.DefaultIdFormat" /> is always used to define the default ID format.</summary>
+      <returns>
+        <see langword="true" /> to always use the <see cref="P:System.Diagnostics.Activity.DefaultIdFormat" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Id">
+      <summary>Gets an identifier that is specific to a particular request.</summary>
+      <returns>The activity ID.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.IdFormat">
+      <summary>Gets the format for the <see cref="P:System.Diagnostics.Activity.Id" />.</summary>
+      <returns>The format for the <see cref="P:System.Diagnostics.Activity.Id" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.IsAllDataRequested">
+      <summary>Gets or sets a value that indicates whether this activity should be populated with all the propagation information, as well as all the other properties, such as links, tags, and events.</summary>
+      <returns>
+        <see langword="true" /> if the activity should be populated; <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Kind">
+      <summary>Gets the relationship between the activity, its parents, and its children in a trace.</summary>
+      <returns>One of the enumeration values that indicate relationship between the activity, its parents, and its children in a trace.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Links">
+      <summary>Gets the list of all the activity links attached to this activity.</summary>
+      <returns>An enumeration of activity links attached to this activity. If the activity has no links, returns an empty enumeration.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.OperationName">
+      <summary>Gets the operation name.</summary>
+      <returns>The name of the operation.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Parent">
+      <summary>Gets the parent <see cref="T:System.Diagnostics.Activity" /> that created this activity.</summary>
+      <returns>The parent of this <see cref="T:System.Diagnostics.Activity" />, if it is from the same process, or <see langword="null" /> if this instance has no parent (it is a root activity) or if the parent is from outside the process.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.ParentId">
+      <summary>Gets the ID of this activity's parent.</summary>
+      <returns>The parent ID, if one exists, or <see langword="null" /> if it does not.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.ParentSpanId">
+      <summary>Gets the parent's <see cref="P:System.Diagnostics.Activity.SpanId" />.</summary>
+      <returns>The parent's <see cref="P:System.Diagnostics.Activity.SpanId" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Recorded">
+      <summary>Gets a value that indicates whether the W3CIdFlags.Recorded flag is set.</summary>
+      <returns>
+        <see langword="true" /> if the W3CIdFlags.Recorded flag is set; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.RootId">
+      <summary>Gets the root ID of this <see cref="T:System.Diagnostics.Activity" />.</summary>
+      <returns>The root ID, or <see langword="null" /> if the current instance has either a <see cref="P:System.Diagnostics.Activity.ParentId" /> or an <see cref="P:System.Diagnostics.Activity.Id" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Source">
+      <summary>Gets the activity source associated with this activity.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Activity.SpanId">
+      <summary>Gets the SPAN part of the <see cref="P:System.Diagnostics.Activity.Id" />.</summary>
+      <returns>The ID for the SPAN part of <see cref="P:System.Diagnostics.Activity.Id" />, if the <see cref="T:System.Diagnostics.Activity" /> has the W3C format; otherwise, a zero <see langword="SpanId" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.StartTimeUtc">
+      <summary>Gets the time when the operation started.</summary>
+      <returns>The UTC time that the operation started.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Status">
+      <summary>Gets status code of the current activity object.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Activity.StatusDescription">
+      <summary>Gets the status description of the current activity object.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Activity.TagObjects">
+      <summary>Gets the list of tags that represent information to log along with the activity. This information is not passed on to the children of this activity.</summary>
+      <returns>A key-value pair enumeration of tags and objects.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.Tags">
+      <summary>Gets a collection of key/value pairs that represent information that will be logged along with the <see cref="T:System.Diagnostics.Activity" /> to the logging system.</summary>
+      <returns>Information that will be logged along with the <see cref="T:System.Diagnostics.Activity" /> to the logging system.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.TraceId">
+      <summary>Gets the TraceId part of the <see cref="P:System.Diagnostics.Activity.Id" />.</summary>
+      <returns>The ID for the TraceId part of the <see cref="P:System.Diagnostics.Activity.Id" />, if the ID has the W3C format; otherwise, a zero TraceId.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Activity.TraceIdGenerator">
+      <summary>When starting an Activity which does not have a parent context, the Trace Id will automatically be generated using random numbers.
+            TraceIdGenerator can be used to override the runtime's default Trace Id generation algorithm.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Activity.TraceStateString">
+      <summary>Gets or sets the W3C <see langword="tracestate" /> header.</summary>
+      <returns>The W3C <see langword="tracestate" /> header.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivityContext">
+      <summary>A representation that conforms to the W3C TraceContext specification. It contains two identifiers: a TraceId and a SpanId,  along with a set of common TraceFlags and system-specific TraceState values.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.#ctor(System.Diagnostics.ActivityTraceId,System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivityTraceFlags,System.String,System.Boolean)">
+      <summary>Construct a new activity context instance using the specified arguments.</summary>
+      <param name="traceId">A trace identifier.</param>
+      <param name="spanId">A span identifier.</param>
+      <param name="traceFlags">Contain details about the trace.</param>
+      <param name="traceState">Carries system-specific configuration data.</param>
+      <param name="isRemote">Indicates if the context is propagated from a remote parent.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.Equals(System.Diagnostics.ActivityContext)">
+      <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+      <param name="value">The object to compare to this instance.</param>
+      <returns>
+        <see langword="true" /> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.Equals(System.Object)">
+      <summary>Determines whether this instance and a specified <see langword="ActivityContext" /> object have the same value.</summary>
+      <param name="obj">The object to compare to this instance.</param>
+      <returns>
+        <see langword="true" /> if the current object is equal to the <paramref name="obj" /> parameter; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.GetHashCode">
+      <summary>Provides a hash function for the current <see langword="ActivityContext" /> that's suitable for hashing algorithms and data structures, such as hash tables.</summary>
+      <returns>A hash code for the current <see langword="ActivityContext" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.op_Equality(System.Diagnostics.ActivityContext,System.Diagnostics.ActivityContext)">
+      <summary>Determines whether two specified <see langword="ActivityContext" /> values are equal.</summary>
+      <param name="left">The first value to compare.</param>
+      <param name="right">The second value to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.op_Inequality(System.Diagnostics.ActivityContext,System.Diagnostics.ActivityContext)">
+      <summary>Determines whether two specified <see langword="ActivityContext" /> values are not equal.</summary>
+      <param name="left">The first value to compare.</param>
+      <param name="right">The second value to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are not equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.Parse(System.String,System.String)">
+      <summary>Parses a W3C trace context headers to an <see cref="T:System.Diagnostics.ActivityContext" /> object.</summary>
+      <param name="traceParent">The W3C trace parent header.</param>
+      <param name="traceState">The trace state.</param>
+      <exception cref="T:System.ArgumentException">The trace parent is invalid.</exception>
+      <returns>The <see cref="T:System.Diagnostics.ActivityContext" /> object created from the parsing operation.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityContext.TryParse(System.String,System.String,System.Diagnostics.ActivityContext@)">
+      <summary>Tries to parse the W3C trace context headers to an <see cref="T:System.Diagnostics.ActivityContext" /> object.</summary>
+      <param name="traceParent">The W3C trace parent header.</param>
+      <param name="traceState">The W3C trace state.</param>
+      <param name="context">When this method returns <see langword="true" />, the <see cref="T:System.Diagnostics.ActivityContext" /> object created from the parsing operation.</param>
+      <returns>
+        <see langword="true" /> if the parsing was successful; <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityContext.IsRemote">
+      <summary>Indicates if the activity context was propagated from a remote parent.</summary>
+      <returns>
+        <see langword="true" /> if it was propagated from a remote parent; <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityContext.SpanId">
+      <summary>The Id of the request as known by the caller.</summary>
+      <returns>The Span Id in the context.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityContext.TraceFlags">
+      <summary>The flags defined by the W3C standard along with the ID for the activity.</summary>
+      <returns>The context tracing flags.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityContext.TraceId">
+      <summary>The trace identifier.</summary>
+      <returns>The tracing identifier in the context.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityContext.TraceState">
+      <summary>Holds the W3C 'tracestate' header.</summary>
+      <returns>A string representing the W3C 'tracestate' header.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivityCreationOptions`1">
+      <summary>Encapsulates all the information that is sent to the activity listener, to make decisions about the creation of the activity instance, as well as its state.
+
+The possible generic type parameters are <see cref="T:System.Diagnostics.ActivityContext" /> or <see cref="T:System.String" />.</summary>
+      <typeparam name="T">The type of the <see langword="Parent" /> property. Should be either <see cref="T:System.String" /> or <see langword="ActivityContext" />.</typeparam>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.Kind">
+      <summary>Gets the activity kind which the activity will be created with.</summary>
+      <returns>One of the enumeration values that represent an activity kind.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.Links">
+      <summary>Gets the enumeration of activity links that the activity will be created with.</summary>
+      <returns>An enumeration of activity links.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.Name">
+      <summary>Gets the name to use as OperationName of the activity that will get created.</summary>
+      <returns>A string representing the activity name.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.Parent">
+      <summary>Gets the parent context or parent Id that the activity will get created with.</summary>
+      <returns>The parent of the activity, represented either as a <see cref="T:System.String" /> or as an <see cref="T:System.Diagnostics.ActivityContext" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.SamplingTags">
+      <summary>Gets the collection that is used to add more tags during the sampling process. The added tags are also added to the created Activity if it is decided that it should be created by the <see cref="T:System.Diagnostics.ActivityListener" /> callbacks.</summary>
+      <returns>The Activity tags collection.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.Source">
+      <summary>Gets the activity source that creates the activity.</summary>
+      <returns>An activity source object.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.Tags">
+      <summary>Gets the tags that the activity will be created with.</summary>
+      <returns>A key-value pair enumeration of tags associated with the activity.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityCreationOptions`1.TraceId">
+      <summary>Gets the trace Id to use in the Activity object if it is decided that it should be created by <see cref="T:System.Diagnostics.ActivityListener" /> callbacks.</summary>
+      <returns>The trace Id.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivityEvent">
+      <summary>Represents an event containing a name and a timestamp, as well as an optional list of tags.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityEvent.#ctor(System.String)">
+      <summary>Initializes a new activity event instance using the specified name and the current time as the event timestamp.</summary>
+      <param name="name">The event name.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivityEvent.#ctor(System.String,System.DateTimeOffset,System.Diagnostics.ActivityTagsCollection)">
+      <summary>Initializes a new activity event instance using the specified name, timestamp and tags.</summary>
+      <param name="name">The event name.</param>
+      <param name="timestamp">The event timestamp. Timestamp must only be used for the events that happened in the past, not at the moment of this call.</param>
+      <param name="tags">The event tags.</param>
+    </member>
+    <member name="P:System.Diagnostics.ActivityEvent.Name">
+      <summary>Gets the activity event name.</summary>
+      <returns>A string representing the activity event name.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityEvent.Tags">
+      <summary>Gets the collection of tags associated with the event.</summary>
+      <returns>A key-value pair enumeration containing the tags associated with the event.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityEvent.Timestamp">
+      <summary>Gets the activity event timestamp.</summary>
+      <returns>A datetime offset representing the activity event timestamp.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivityIdFormat">
+      <summary>Specifies the format of the <see cref="P:System.Diagnostics.Activity.Id" /> property.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityIdFormat.Hierarchical">
+      <summary>The hierarchical format.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityIdFormat.Unknown">
+      <summary>An unknown format.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityIdFormat.W3C">
+      <summary>The W3C format.</summary>
+    </member>
+    <member name="T:System.Diagnostics.ActivityKind">
+      <summary>Describes the relationship between the activity, its parents and its children in a trace.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityKind.Client">
+      <summary>Outgoing request to the external component.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityKind.Consumer">
+      <summary>Output received from an external component.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityKind.Internal">
+      <summary>Internal operation within an application, as opposed to operations with remote parents or children. This is the default value.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityKind.Producer">
+      <summary>Output provided to external components.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityKind.Server">
+      <summary>Requests incoming from external component.</summary>
+    </member>
+    <member name="T:System.Diagnostics.ActivityLink">
+      <summary>Activities may be linked to zero or more activity context instances that are causally related.
+
+Activity links can point to activity contexts inside a single trace or across different traces.
+
+Activity links can be used to represent batched operations where an activity was initiated by multiple initiating activities, each representing a single incoming item being processed in the batch.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityLink.#ctor(System.Diagnostics.ActivityContext,System.Diagnostics.ActivityTagsCollection)">
+      <summary>Constructs a new activity link, which can be linked to an activity.</summary>
+      <param name="context">The trace activity context.</param>
+      <param name="tags">The key-value pair list of tags associated to the activity context.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivityLink.Equals(System.Diagnostics.ActivityLink)">
+      <summary>Indicates whether the current activity link is equal to another activity link.</summary>
+      <param name="value">The activity link to compare.</param>
+      <returns>
+        <see langword="true" /> if the current activity link is equal to <paramref name="other" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityLink.Equals(System.Object)">
+      <summary>Indicates whether the current activity link is equal to another object.</summary>
+      <param name="obj">The object to compare.</param>
+      <returns>
+        <see langword="true" /> if the current activity link is equal to <paramref name="obj" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityLink.GetHashCode">
+      <summary>Provides a hash function for the current <see langword="ActivityLink" /> that's suitable for hashing algorithms and data structures, such as hash tables.</summary>
+      <returns>A hash code for the current <see langword="ActivityLink" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityLink.op_Equality(System.Diagnostics.ActivityLink,System.Diagnostics.ActivityLink)">
+      <summary>Determines whether two specified <see langword="ActivityLink" /> values are equal.</summary>
+      <param name="left">The first value to compare.</param>
+      <param name="right">The second value to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityLink.op_Inequality(System.Diagnostics.ActivityLink,System.Diagnostics.ActivityLink)">
+      <summary>Determines whether two specified <see langword="ActivityLink" /> values are not equal.</summary>
+      <param name="left">The first value to compare.</param>
+      <param name="right">The second value to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="left" /> and <paramref name="right" /> are not equal; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityLink.Context">
+      <summary>Retrieves the activity context inside this activity link.</summary>
+    </member>
+    <member name="P:System.Diagnostics.ActivityLink.Tags">
+      <summary>Retrieves the key-value pair enumeration of tags attached to the activity context.</summary>
+      <returns>An enumeration of tags attached to the activity context.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivityListener">
+      <summary>Allows listening to the start and stop activity events and gives the opportunity to decide creating an activity for sampling scenarios.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityListener.#ctor">
+      <summary>Construct a new activity listener object to start listeneing to the activity events.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityListener.Dispose">
+      <summary>Unregisters this activity listener object from listening to activity events.</summary>
+    </member>
+    <member name="P:System.Diagnostics.ActivityListener.ActivityStarted">
+      <summary>Gets or sets the callback used to listen to the activity start event.</summary>
+      <returns>An activity callback instance used to listen to the activity start event.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityListener.ActivityStopped">
+      <summary>Gets or sets the callback used to listen to the activity stop event.</summary>
+      <returns>An activity callback instance used to listen to the activity stop event.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityListener.Sample">
+      <summary>Gets or sets the callback that is used to decide if creating <see cref="T:System.Diagnostics.Activity" /> objects with a specific data state is allowed.</summary>
+      <returns>A sample activity instance.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityListener.SampleUsingParentId">
+      <summary>Gets or sets the callback that is used to decide if creating <see cref="T:System.Diagnostics.Activity" /> objects with a specific data state is allowed.</summary>
+      <returns>A sample activity instance.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityListener.ShouldListenTo">
+      <summary>Gets or sets the callback that allows deciding if activity object events that were created using the activity source object should be listened or not.</summary>
+      <returns>
+        <see langword="true" /> to listen events; <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivitySamplingResult">
+      <summary>Enumeration values used by <see cref="T:System.Diagnostics.ActivityListener" /> to indicate the amount of data to collect for the related <see cref="T:System.Diagnostics.Activity" />. Requesting more data causes a greater performance overhead.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivitySamplingResult.AllData">
+      <summary>The activity object should be populated with all the propagation information and also all other properties such as Links, Tags, and Events. Using this value causes <see cref="P:System.Diagnostics.Activity.IsAllDataRequested" /> to return <see langword="true" />.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivitySamplingResult.AllDataAndRecorded">
+      <summary>The activity object should be populated the same as the <see cref="F:System.Diagnostics.ActivitySamplingResult.AllData" /> case. Additionally, Activity.Recorded is set to <see langword="true" />. For activities using the W3C trace ids, this sets a flag bit in the ID that will be propagated downstream requesting that the trace is recorded everywhere.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivitySamplingResult.None">
+      <summary>The activity object does not need to be created.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivitySamplingResult.PropagationData">
+      <summary>The activity object needs to be created. It will have a Name, a Source, an Id and Baggage. Other properties are unnecessary and will be ignored by this listener.</summary>
+    </member>
+    <member name="T:System.Diagnostics.ActivitySource">
+      <summary>Provides APIs to create and start <see cref="T:System.Diagnostics.Activity" /> objects and to register <see cref="T:System.Diagnostics.ActivityListener" /> objects to listen to the <see cref="T:System.Diagnostics.Activity" /> events.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.#ctor(System.String,System.String)">
+      <summary>Constructs an activity source object with the specified <paramref name="name" />.</summary>
+      <param name="name">The name of the activity source object.</param>
+      <param name="version">The version of the component publishing the tracing info.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.AddActivityListener(System.Diagnostics.ActivityListener)">
+      <summary>Adds a listener to the activity starting and stopping events.</summary>
+      <param name="listener">The activity listener object to use for listening to the activity events.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.CreateActivity(System.String,System.Diagnostics.ActivityKind)">
+      <summary>Creates a new <see cref="T:System.Diagnostics.Activity" /> object if there is any listener to the Activity, returns <see langword="null" /> otherwise.</summary>
+      <param name="name">The operation name of the Activity</param>
+      <param name="kind">The <see cref="T:System.Diagnostics.ActivityKind" /></param>
+      <returns>The created <see cref="T:System.Diagnostics.Activity" /> object or <see langword="null" /> if there is no any event listener.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.CreateActivity(System.String,System.Diagnostics.ActivityKind,System.Diagnostics.ActivityContext,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Collections.Generic.IEnumerable{System.Diagnostics.ActivityLink},System.Diagnostics.ActivityIdFormat)">
+      <summary>Creates a new <see cref="T:System.Diagnostics.Activity" /> object if there is any listener to the Activity, returns <see langword="null" /> otherwise.
+            If the Activity object is created, it will not automatically start. Callers will need to call <see cref="M:System.Diagnostics.Activity.Start" /> to start it.</summary>
+      <param name="name">The operation name of the Activity.</param>
+      <param name="kind">The <see cref="T:System.Diagnostics.ActivityKind" /></param>
+      <param name="parentContext">The parent <see cref="T:System.Diagnostics.ActivityContext" /> object to initialize the created Activity object with.</param>
+      <param name="tags">The optional tags list to initialize the created Activity object with.</param>
+      <param name="links">The optional <see cref="T:System.Diagnostics.ActivityLink" /> list to initialize the created Activity object with.</param>
+      <param name="idFormat">The default Id format to use.</param>
+      <returns>The created <see cref="T:System.Diagnostics.Activity" /> object or <see langword="null" /> if there is no any listener.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.CreateActivity(System.String,System.Diagnostics.ActivityKind,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Collections.Generic.IEnumerable{System.Diagnostics.ActivityLink},System.Diagnostics.ActivityIdFormat)">
+      <summary>Creates a new <see cref="T:System.Diagnostics.Activity" /> object if there is any listener to the Activity, returns <see langword="null" /> otherwise.</summary>
+      <param name="name">The operation name of the Activity.</param>
+      <param name="kind">The <see cref="T:System.Diagnostics.ActivityKind" /></param>
+      <param name="parentId">The parent Id to initialize the created Activity object with.</param>
+      <param name="tags">The optional tags list to initialize the created Activity object with.</param>
+      <param name="links">The optional <see cref="T:System.Diagnostics.ActivityLink" /> list to initialize the created Activity object with.</param>
+      <param name="idFormat">The default Id format to use.</param>
+      <returns>The created <see cref="T:System.Diagnostics.Activity" /> object or <see langword="null" /> if there is no any listener.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.Dispose">
+      <summary>Disposes the activity source object, removes the current instance from the global list, and empties the listeners list.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.HasListeners">
+      <summary>Checks if there are any listeners for this activity source.</summary>
+      <returns>
+        <see langword="true" /> if there is a listener registered for this activity source; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.StartActivity(System.Diagnostics.ActivityKind,System.Diagnostics.ActivityContext,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Collections.Generic.IEnumerable{System.Diagnostics.ActivityLink},System.DateTimeOffset,System.String)">
+      <summary>Creates and starts a new <see cref="T:System.Diagnostics.Activity" /> object if there is any listener to the Activity events, returns <see langword="null" /> otherwise.</summary>
+      <param name="kind">The <see cref="T:System.Diagnostics.ActivityKind" /></param>
+      <param name="parentContext">The parent <see cref="T:System.Diagnostics.ActivityContext" /> object to initialize the created Activity object with.</param>
+      <param name="tags">The optional tags list to initialize the created Activity object with.</param>
+      <param name="links">The optional <see cref="T:System.Diagnostics.ActivityLink" /> list to initialize the created Activity object with.</param>
+      <param name="startTime">The optional start timestamp to set on the created Activity object.</param>
+      <param name="name">The operation name of the Activity.</param>
+      <returns>The created <see cref="T:System.Diagnostics.Activity" /> object or <see langword="null" /> if there is no any listener.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.StartActivity(System.String,System.Diagnostics.ActivityKind)">
+      <summary>Creates a new activity if there are active listeners for it, using the specified name and activity kind.</summary>
+      <param name="name">The operation name of the activity.</param>
+      <param name="kind">The activity kind.</param>
+      <returns>The created activity object, if it had active listeners, or <see langword="null" /> if it has no event listeners.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.StartActivity(System.String,System.Diagnostics.ActivityKind,System.Diagnostics.ActivityContext,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Collections.Generic.IEnumerable{System.Diagnostics.ActivityLink},System.DateTimeOffset)">
+      <summary>Creates a new activity if there are active listeners for it, using the specified name, activity kind, parent activity context, tags, optional activity link and optional start time.</summary>
+      <param name="name">The operation name of the activity.</param>
+      <param name="kind">The activity kind.</param>
+      <param name="parentContext">The parent <see cref="T:System.Diagnostics.ActivityContext" /> object to initialize the created activity object with.</param>
+      <param name="tags">The optional tags list to initialize the created activity object with.</param>
+      <param name="links">The optional <see cref="T:System.Diagnostics.ActivityLink" /> list to initialize the created activity object with.</param>
+      <param name="startTime">The optional start timestamp to set on the created activity object.</param>
+      <returns>The created activity object, if it had active listeners, or <see langword="null" /> if it has no event listeners.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySource.StartActivity(System.String,System.Diagnostics.ActivityKind,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Collections.Generic.IEnumerable{System.Diagnostics.ActivityLink},System.DateTimeOffset)">
+      <summary>Creates a new activity if there are active listeners for it, using the specified name, activity kind, parent Id, tags, optional activity links and optional start time.</summary>
+      <param name="name">The operation name of the activity.</param>
+      <param name="kind">The activity kind.</param>
+      <param name="parentId">The parent Id to initialize the created activity object with.</param>
+      <param name="tags">The optional tags list to initialize the created activity object with.</param>
+      <param name="links">The optional <see cref="T:System.Diagnostics.ActivityLink" /> list to initialize the created activity object with.</param>
+      <param name="startTime">The optional start timestamp to set on the created activity object.</param>
+      <returns>The created activity object, if it had active listeners, or <see langword="null" /> if it has no event listeners.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivitySource.Name">
+      <summary>Returns the activity source name.</summary>
+      <returns>A string that represents the activity source name.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivitySource.Version">
+      <summary>Returns the activity source version.</summary>
+      <returns>A string that represents the activity source version.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivitySpanId">
+      <summary>Represents a <see cref="P:System.Diagnostics.Activity.SpanId" /> formatted based on a W3C standard.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.CopyTo(System.Span{System.Byte})">
+      <summary>Copies the 8 bytes of the current <see cref="T:System.Diagnostics.ActivitySpanId" /> to a specified span.</summary>
+      <param name="destination">The span to which the 8 bytes of the SpanID are to be copied.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.CreateFromBytes(System.ReadOnlySpan{System.Byte})">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> value from a read-only span of eight bytes.</summary>
+      <param name="idData">A read-only span of eight bytes.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="idData" /> does not contain eight bytes.</exception>
+      <returns>The new span ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.CreateFromString(System.ReadOnlySpan{System.Char})">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> value from a read-only span of 16 hexadecimal characters.</summary>
+      <param name="idData">A span that contains 16 hexadecimal characters.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="idData" /> does not contain 16 hexadecimal characters.
+
+-or-
+          
+The characters in <paramref name="idData" /> are not all lower-case hexadecimal characters or all zeros.</exception>
+      <returns>The new span ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.CreateFromUtf8String(System.ReadOnlySpan{System.Byte})">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> value from a read-only span of UTF8-encoded bytes.</summary>
+      <param name="idData">A read-only span of UTF8-encoded bytes.</param>
+      <returns>The new span ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.CreateRandom">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivitySpanId" /> based on a random number (that is very likely to be unique).</summary>
+      <returns>The new span ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.Equals(System.Diagnostics.ActivitySpanId)">
+      <summary>Determines whether this instance and the specified <see cref="T:System.Diagnostics.ActivitySpanId" /> instance have the same value.</summary>
+      <param name="spanId">The instance to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="spanId" /> has the same hex value as the current instance; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.Equals(System.Object)">
+      <summary>the current instance and a specified object, which also must be an <see cref="T:System.Diagnostics.ActivitySpanId" /> instance, have the same value.</summary>
+      <param name="obj">The object to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="obj" /> is an instance of <see cref="T:System.Diagnostics.ActivitySpanId" /> and has the same hex value as the current instance; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.GetHashCode">
+      <summary>Returns the hash code of the SpanId.</summary>
+      <returns>The hash code of the SpanId.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.op_Equality(System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivitySpanId)">
+      <summary>Determines whether two specified <see cref="T:System.Diagnostics.ActivitySpanId" /> instances have the same value.</summary>
+      <param name="spanId1">The first instance to compare.</param>
+      <param name="spandId2">The second instance to compare.</param>
+      <returns>
+        <see langword="true" /> if the SpanId of <paramref name="spanId1" /> is the same as the SpanId of <paramref name="spandId2" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.op_Inequality(System.Diagnostics.ActivitySpanId,System.Diagnostics.ActivitySpanId)">
+      <summary>Determine whether two specified <see cref="T:System.Diagnostics.ActivitySpanId" /> instances have unequal values.</summary>
+      <param name="spanId1">The first instance to compare.</param>
+      <param name="spandId2">The second instance to compare.</param>
+      <returns>
+        <see langword="true" /> if the SpanId of <paramref name="spanId1" /> is different from the SpanId of <paramref name="spandId2" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.ToHexString">
+      <summary>Returns a 16-character hexadecimal string that represents this span ID.</summary>
+      <returns>The 16-character hexadecimal string representation of this span ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivitySpanId.ToString">
+      <summary>Returns a 16-character hexadecimal string that represents this span ID.</summary>
+      <returns>The 16-character hexadecimal string representation of this span ID.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivityStatusCode">
+      <summary>Define the status code of the Activity which indicate the status of the instrumented operation.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityStatusCode.Error">
+      <summary>Status code indicating an error is encountered during the operation.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityStatusCode.Ok">
+      <summary>Status code indicating the operation has been validated and completed successfully.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityStatusCode.Unset">
+      <summary>Unset status code is the default value indicating the status code is not initialized.</summary>
+    </member>
+    <member name="T:System.Diagnostics.ActivityTagsCollection">
+      <summary>ActivityTagsCollection is a collection class used to store tracing tags.
+
+This collection will be used with classes like <see cref="T:System.Diagnostics.ActivityEvent" /> and <see cref="T:System.Diagnostics.ActivityLink" />.
+
+This collection behaves as follows:
+- The collection items will be ordered according to how they are added.
+- Don't allow duplication of items with the same key.
+- When using the indexer to store an item in the collection:
+    - If the item has a key that previously existed in the collection and the value is <see langword="null" />, the collection item matching the key will be removed from the collection.
+    - If the item has a key that previously existed in the collection and the value is not <see langword="null" />, the new item value will replace the old value stored in the collection.
+    - Otherwise, the item will be added to the collection.
+- Add method will add a new item to the collection if an item doesn't already exist with the same key. Otherwise, it will throw an exception.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.#ctor">
+      <summary>Create a new instance of the collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Create a new instance of the collection and store the input list items in the collection.</summary>
+      <param name="list">Initial list to store in the collection.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Add(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Adds an item to the collection.</summary>
+      <param name="item">Key and value pair of the tag to add to the collection.</param>
+      <exception cref="T:System.InvalidOperationException">
+        <paramref name="item" /> already exists in the list.</exception>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="item" /> is <see langword="null" />.</exception>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Add(System.String,System.Object)">
+      <summary>Adds a tag with the provided key and value to the collection. This collection doesn't allow adding two tags with the same key.</summary>
+      <param name="key">The tag key.</param>
+      <param name="value">The tag value.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Clear">
+      <summary>Removes all items from the collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Contains(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Determines whether the <see cref="T:System.Collections.Generic.ICollection`1" /> contains a specific value.</summary>
+      <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="item" /> is found in the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.ContainsKey(System.String)">
+      <summary>Determines whether the collection contains an element with the specified key.</summary>
+      <param name="key">The key to locate in the <see cref="T:System.Collections.Generic.IDictionary`2" />.</param>
+      <returns>
+        <see langword="true" /> if the collection contains tag with that key. <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.CopyTo(System.Collections.Generic.KeyValuePair{System.String,System.Object}[],System.Int32)">
+      <summary>Copies the elements of the collection to an array, starting at a particular array index.</summary>
+      <param name="array">The array that is the destination of the elements copied from collection.</param>
+      <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.GetEnumerator">
+      <summary>Returns an enumerator that iterates through the collection.</summary>
+      <returns>An enumerator for the <see langword="ActivityTagsCollection" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Remove(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Removes the first occurrence of a specific item from the collection.</summary>
+      <param name="item">The tag key value pair to remove.</param>
+      <returns>
+        <see langword="true" /> if item was successfully removed from the collection; otherwise, <see langword="false" />. This method also returns <see langword="false" /> if item is not found in the original collection.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Remove(System.String)">
+      <summary>Removes the tag with the specified key from the collection.</summary>
+      <param name="key">The tag key.</param>
+      <returns>
+        <see langword="true" /> if the item existed and removed. <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.System#Collections#Generic#IEnumerable{System#Collections#Generic#KeyValuePair{System#String@System#Object}}#GetEnumerator">
+      <summary>Returns an enumerator that iterates through the collection.</summary>
+      <returns>An enumerator that can be used to iterate through the collection.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.System#Collections#IEnumerable#GetEnumerator">
+      <summary>Returns an enumerator that iterates through the collection.</summary>
+      <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.TryGetValue(System.String,System.Object@)">
+      <summary>Gets the value associated with the specified key.</summary>
+      <param name="key">The tag key.</param>
+      <param name="value">The tag value.</param>
+      <returns>When this method returns, the value associated with the specified key, if the key is found; otherwise, the default value for the type of the value parameter. This parameter is passed uninitialized.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityTagsCollection.Count">
+      <summary>Gets the number of elements contained in the collection.</summary>
+    </member>
+    <member name="P:System.Diagnostics.ActivityTagsCollection.IsReadOnly">
+      <summary>Gets a value indicating whether the collection is read-only. This always returns <see langword="false" />.</summary>
+      <returns>Always returns <see langword="false" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityTagsCollection.Item(System.String)">
+      <summary>Gets or sets a specified collection item.
+        
+        When setting a value to this indexer property, the following behavior is observed:
+- If the key previously existed in the collection and the value is <see langword="null" />, the collection item matching the key will get removed from the collection.
+- If the key previously existed in the collection and the value is not <see langword="null" />, the value will replace the old value stored in the collection.
+- Otherwise, a new item will get added to the collection.</summary>
+      <param name="key">The key of the value to get or set.</param>
+      <returns>The object mapped to the key.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityTagsCollection.Keys">
+      <summary>Get the list of the keys of all stored tags.</summary>
+    </member>
+    <member name="P:System.Diagnostics.ActivityTagsCollection.Values">
+      <summary>Get the list of the values of all stored tags.</summary>
+    </member>
+    <member name="T:System.Diagnostics.ActivityTagsCollection.Enumerator">
+      <summary>Enumerates the elements of an <see langword="ActivityTagsCollection" />.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Enumerator.Dispose">
+      <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Enumerator.MoveNext">
+      <summary>Advances the enumerator to the next element of the collection.</summary>
+      <returns>
+        <see langword="true" /> if the enumerator was successfully advanced to the next element; <see langword="false" /> if the enumerator has passed the end of the collection.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTagsCollection.Enumerator.System#Collections#IEnumerator#Reset">
+      <summary>Sets the enumerator to its initial position, which is before the first element in the collection.</summary>
+    </member>
+    <member name="P:System.Diagnostics.ActivityTagsCollection.Enumerator.Current">
+      <summary>Gets the element in the collection at the current position of the enumerator.</summary>
+      <returns>The element in the collection at the current position of the enumerator.</returns>
+    </member>
+    <member name="P:System.Diagnostics.ActivityTagsCollection.Enumerator.System#Collections#IEnumerator#Current">
+      <summary>Gets the element in the collection at the current position of the enumerator.</summary>
+      <returns>The element in the collection at the current position of the enumerator.</returns>
+    </member>
+    <member name="T:System.Diagnostics.ActivityTraceFlags">
+      <summary>Specifies flags defined by the W3C standard that are associated with an activity.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityTraceFlags.None">
+      <summary>The activity has not been marked.</summary>
+    </member>
+    <member name="F:System.Diagnostics.ActivityTraceFlags.Recorded">
+      <summary>The activity (or more likely its parents) has been marked as useful to record.</summary>
+    </member>
+    <member name="T:System.Diagnostics.ActivityTraceId">
+      <summary>Represents a <see cref="P:System.Diagnostics.Activity.TraceId" /> whose format is based on a W3C standard.</summary>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.CopyTo(System.Span{System.Byte})">
+      <summary>Copies the 16 bytes of the current <see cref="T:System.Diagnostics.ActivityTraceId" /> to a specified span.</summary>
+      <param name="destination">The span to which the 16 bytes of the trace ID are to be copied.</param>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.CreateFromBytes(System.ReadOnlySpan{System.Byte})">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivityTraceId" /> value from a read-only span of 16 bytes.</summary>
+      <param name="idData">A read-only span of 16 bytes.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="idData" /> does not contain eight bytes.</exception>
+      <returns>The new trace ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.CreateFromString(System.ReadOnlySpan{System.Char})">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivityTraceId" /> value from a read-only span of 32 hexadecimal characters.</summary>
+      <param name="idData">A span that contains 32 hexadecimal characters.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="idData" /> does not contain 16 hexadecimal characters.
+
+-or-
+
+The characters in <paramref name="idData" /> are not all lower-case hexadecimal characters or all zeros.</exception>
+      <returns>The new trace ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.CreateFromUtf8String(System.ReadOnlySpan{System.Byte})">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivityTraceId" /> value from a read-only span of UTF8-encoded bytes.</summary>
+      <param name="idData">A read-only span of UTF8-encoded bytes.</param>
+      <returns>The new trace ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.CreateRandom">
+      <summary>Creates a new <see cref="T:System.Diagnostics.ActivityTraceId" /> based on a random number (that is very likely to be unique).</summary>
+      <returns>The new <see cref="T:System.Diagnostics.ActivityTraceId" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.Equals(System.Diagnostics.ActivityTraceId)">
+      <summary>Determines whether the current instance and a specified <see cref="T:System.Diagnostics.ActivityTraceId" /> are equal.</summary>
+      <param name="traceId">The instance to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="traceId" /> has the same hex value as the current instance; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.Equals(System.Object)">
+      <summary>Determines whether this instance and a specified object, which must also be an <see cref="T:System.Diagnostics.ActivityTraceId" /> instance, have the same value.</summary>
+      <param name="obj">The object to compare.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="obj" /> is an instance of <see cref="T:System.Diagnostics.ActivityTraceId" /> and has the same hex value as the current instance; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.GetHashCode">
+      <summary>Returns the hash code of the TraceId.</summary>
+      <returns>The hash code of the TraceId.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.op_Equality(System.Diagnostics.ActivityTraceId,System.Diagnostics.ActivityTraceId)">
+      <summary>Determines whether two specified <see cref="T:System.Diagnostics.ActivityTraceId" /> instances have the same value.</summary>
+      <param name="traceId1">The first instance to compare.</param>
+      <param name="traceId2">The second instance to compare.</param>
+      <returns>
+        <see langword="true" /> if the TraceId of <paramref name="traceId1" /> is the same as the TraceId of <paramref name="traceId2" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.op_Inequality(System.Diagnostics.ActivityTraceId,System.Diagnostics.ActivityTraceId)">
+      <summary>Determines whether two specified <see cref="T:System.Diagnostics.ActivityTraceId" /> instances have the same value.</summary>
+      <param name="traceId1">The first instance to compare.</param>
+      <param name="traceId2">The second instance to compare.</param>
+      <returns>
+        <see langword="true" /> if the TraceId of <paramref name="traceId1" /> is different from the TraceId of <paramref name="traceId2" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.ToHexString">
+      <summary>Returns a 16-character hexadecimal string that represents this span ID.</summary>
+      <returns>The 32-character hexadecimal string representation of this trace ID.</returns>
+    </member>
+    <member name="M:System.Diagnostics.ActivityTraceId.ToString">
+      <summary>Returns a 32-character hexadecimal string that represents this trace ID.</summary>
+      <returns>The 32-character hexadecimal string representation of this trace ID.</returns>
+    </member>
+    <member name="T:System.Diagnostics.DiagnosticListener">
+      <summary>Provides an implementation of the abstract <see cref="T:System.Diagnostics.DiagnosticSource" /> class that represents a named place to which a source sends its information (events).</summary>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.#ctor(System.String)">
+      <summary>Creates a new <see cref="T:System.Diagnostics.DiagnosticListener" />.</summary>
+      <param name="name">The name of this <see cref="T:System.Diagnostics.DiagnosticListener" />.</param>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.Dispose">
+      <summary>Disposes the NotificationListeners.</summary>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.IsEnabled">
+      <summary>Determines whether there are any registered subscribers.</summary>
+      <returns>
+        <see langword="true" /> if there are any registered subscribers, <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.IsEnabled(System.String)">
+      <summary>Checks whether the <see cref="T:System.Diagnostics.DiagnosticListener" /> is enabled.</summary>
+      <param name="name">The name of the event to check.</param>
+      <returns>
+        <see langword="true" /> if notifications are enabled; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.IsEnabled(System.String,System.Object,System.Object)">
+      <summary>Checks if any subscriber to the diagnostic events is interested in receiving events with this name. Subscribers indicate their interest using a delegate provided in <see cref="Overload:System.Diagnostics.DiagnosticListener.Subscribe" />.</summary>
+      <param name="name">The name of the event to check.</param>
+      <param name="arg1">The object that represents a context.</param>
+      <param name="arg2">The object that represents a context.</param>
+      <returns>
+        <see langword="true" /> if it is enabled, <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.OnActivityExport(System.Diagnostics.Activity,System.Object)">
+      <summary>Invokes the OnActivityExport method of all the subscribers.</summary>
+      <param name="activity">The activity affected by an external event.</param>
+      <param name="payload">An object that represents the outgoing request.</param>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.OnActivityImport(System.Diagnostics.Activity,System.Object)">
+      <summary>Invokes the OnActivityImport method of all the subscribers.</summary>
+      <param name="activity">The activity affected by an external event.</param>
+      <param name="payload">An object that represents the incoming request.</param>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.Subscribe(System.IObserver{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Adds a subscriber.</summary>
+      <param name="observer">A subscriber.</param>
+      <returns>A reference to an interface that allows the listener to stop receiving notifications before the <see cref="T:System.Diagnostics.DiagnosticSource" /> has finished sending them.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.Subscribe(System.IObserver{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Func{System.String,System.Object,System.Object,System.Boolean})">
+      <summary>Adds a subscriber, and optionally filters events based on their name and up to two context objects.</summary>
+      <param name="observer">A subscriber.</param>
+      <param name="isEnabled">A delegate that filters events based on their name and up to two context objects (which can be <see langword="null" />), or <see langword="null" /> to if an event filter is not desirable.</param>
+      <returns>A reference to an interface that allows the listener to stop receiving notifications before the <see cref="T:System.Diagnostics.DiagnosticSource" /> has finished sending them.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.Subscribe(System.IObserver{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Func{System.String,System.Object,System.Object,System.Boolean},System.Action{System.Diagnostics.Activity,System.Object},System.Action{System.Diagnostics.Activity,System.Object})">
+      <summary>Adds a subscriber, optionally filters events based on their name and up to two context objects, and specifies methods to call when providers import or export activites from outside the process.</summary>
+      <param name="observer">A subscriber.</param>
+      <param name="isEnabled">A delegate that filters events based on their name and up to two context objects (which can be <see langword="null" />), or <see langword="null" /> if an event filter is not desirable.</param>
+      <param name="onActivityImport">An action delegate that receives the activity affected by an external event and an object that represents the incoming request.</param>
+      <param name="onActivityExport">An action delegate that receives the activity affected by an external event and an object that represents the outgoing request.</param>
+      <returns>A reference to an interface that allows the listener to stop receiving notifications before the <see cref="T:System.Diagnostics.DiagnosticSource" /> has finished sending them.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.Subscribe(System.IObserver{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.Predicate{System.String})">
+      <summary>Adds a subscriber, and optionally filters events based on their name.</summary>
+      <param name="observer">A subscriber.</param>
+      <param name="isEnabled">A delegate that filters events based on their name (<see cref="T:System.String" />). The delegate should return <see langword="true" /> if the event is enabled.</param>
+      <returns>A reference to an interface that allows the listener to stop receiving notifications before the <see cref="T:System.Diagnostics.DiagnosticSource" /> has finished sending them.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.ToString">
+      <summary>Returns a string with the name of this DiagnosticListener.</summary>
+      <returns>The name of this DiagnosticListener.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticListener.Write(System.String,System.Object)">
+      <summary>Logs a notification.</summary>
+      <param name="name">The name of the event to log.</param>
+      <param name="value">An object that represents the payload for the event.</param>
+    </member>
+    <member name="P:System.Diagnostics.DiagnosticListener.AllListeners">
+      <summary>Gets the collection of listeners for this <see cref="T:System.Diagnostics.DiagnosticListener" />.</summary>
+    </member>
+    <member name="P:System.Diagnostics.DiagnosticListener.Name">
+      <summary>Gets the name of this <see cref="T:System.Diagnostics.DiagnosticListener" />.</summary>
+      <returns>The name of the <see cref="T:System.Diagnostics.DiagnosticListener" />.</returns>
+    </member>
+    <member name="T:System.Diagnostics.DiagnosticSource">
+      <summary>An abstract class that allows code to be instrumented for production-time logging of rich data payloads for consumption within the process that was instrumented.</summary>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.#ctor">
+      <summary>Initializes an instance of the <see cref="T:System.Diagnostics.DiagnosticSource" /> class.</summary>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.IsEnabled(System.String)">
+      <summary>Verifies if the notification event is enabled.</summary>
+      <param name="name">The name of the event being written.</param>
+      <returns>
+        <see langword="true" /> if the notification event is enabled, <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.IsEnabled(System.String,System.Object,System.Object)">
+      <summary>Verifies it the notification event is enabled.</summary>
+      <param name="name">The name of the event being written.</param>
+      <param name="arg1">An object that represents the additional context for IsEnabled. Consumers should expect to receive <see langword="null" /> which may indicate that producer called pure IsEnabled(string) to check if consumer wants to get notifications for such events at all. Based on that, producer may call IsEnabled(string, object, object) again with non-<see langword="null" /> context.</param>
+      <param name="arg2">Optional. An object that represents the additional context for IsEnabled. <see langword="null" /> by default. Consumers should expect to receive <see langword="null" /> which may indicate that producer called pure IsEnabled(string) or producer passed all necessary context in <paramref name="arg1" />.</param>
+      <returns>
+        <see langword="true" /> if the notification event is enabled, <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.OnActivityExport(System.Diagnostics.Activity,System.Object)">
+      <summary>Transfers state from an activity to some event or operation, such as an outgoing HTTP request, that will occur outside the process.</summary>
+      <param name="activity">The activity affected by an external event.</param>
+      <param name="payload">An object that represents the outgoing request.</param>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.OnActivityImport(System.Diagnostics.Activity,System.Object)">
+      <summary>Transfers state to an activity from some event or operation, such as an incoming request, that occurred outside the process.</summary>
+      <param name="activity">The activity affected by an external event.</param>
+      <param name="payload">A payload that represents the incoming request.</param>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.StartActivity(System.Diagnostics.Activity,System.Object)">
+      <summary>Starts an <see cref="T:System.Diagnostics.Activity" /> and writes a start event.</summary>
+      <param name="activity">The <see cref="T:System.Diagnostics.Activity" /> to be started.</param>
+      <param name="args">An object that represent the value being passed as a payload for the event.</param>
+      <returns>The started activity for convenient chaining.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.StopActivity(System.Diagnostics.Activity,System.Object)">
+      <summary>Stops the given <see cref="T:System.Diagnostics.Activity" />, maintains the global <see cref="P:System.Diagnostics.Activity.Current" /> activity, and notifies consumers that the <see cref="T:System.Diagnostics.Activity" /> was stopped.</summary>
+      <param name="activity">The activity to be stopped.</param>
+      <param name="args">An object that represents the value passed as a payload for the event.</param>
+    </member>
+    <member name="M:System.Diagnostics.DiagnosticSource.Write(System.String,System.Object)">
+      <summary>Provides a generic way of logging complex payloads.</summary>
+      <param name="name">The name of the event being written.</param>
+      <param name="value">An object that represents the value being passed as a payload for the event. This is often an anonymous type which contains several sub-values.</param>
+    </member>
+    <member name="T:System.Diagnostics.DistributedContextPropagator">
+      <summary>An implementation of <see cref="T:System.Diagnostics.DistributedContextPropagator" /> determines if and how distributed context information is encoded and decoded as it traverses the network.
+            The encoding can be transported over any network protocol that supports string key-value pairs. For example, when using HTTP, each key-value pair is an HTTP header.
+            <see cref="T:System.Diagnostics.DistributedContextPropagator" /> injects values into and extracts values from carriers as string key-value pairs.</summary>
+    </member>
+    <member name="M:System.Diagnostics.DistributedContextPropagator.#ctor">
+      <summary>Initializes an instance of the <see cref="T:System.Diagnostics.DistributedContextPropagator" /> class. This constructor is protected and only meant to be called from parent classes.</summary>
+    </member>
+    <member name="M:System.Diagnostics.DistributedContextPropagator.CreateDefaultPropagator">
+      <summary>Returns the default propagator object that <see cref="P:System.Diagnostics.DistributedContextPropagator.Current" /> will be initialized with.</summary>
+      <returns>An instance of the <see cref="T:System.Diagnostics.DistributedContextPropagator" /> class.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DistributedContextPropagator.CreateNoOutputPropagator">
+      <summary>Returns a propagator that does not transmit any distributed context information in outbound network messages.</summary>
+      <returns>An instance of the <see cref="T:System.Diagnostics.DistributedContextPropagator" /> class.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DistributedContextPropagator.CreatePassThroughPropagator">
+      <summary>Returns a propagator that attempts to act transparently, emitting the same data on outbound network requests that was received on the inbound request.
+            When encoding the outbound message, this propagator uses information from the request's root Activity, ignoring any intermediate Activities that may have been created while processing the request.</summary>
+      <returns>An instance of the <see cref="T:System.Diagnostics.DistributedContextPropagator" /> class.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DistributedContextPropagator.ExtractBaggage(System.Object,System.Diagnostics.DistributedContextPropagator.PropagatorGetterCallback)">
+      <summary>Extracts the baggage key-value pair list from an incoming request represented by the carrier. For example, from the headers of an HTTP request.</summary>
+      <param name="carrier">The medium from which values will be read.</param>
+      <param name="getter">The callback method to invoke to get the propagation baggage list from the carrier.</param>
+      <returns>Returns the extracted key-value pair list from the carrier.</returns>
+    </member>
+    <member name="M:System.Diagnostics.DistributedContextPropagator.ExtractTraceIdAndState(System.Object,System.Diagnostics.DistributedContextPropagator.PropagatorGetterCallback,System.String@,System.String@)">
+      <summary>Extracts the trace ID and trace state from an incoming request represented by the carrier. For example, from the headers of an HTTP request.</summary>
+      <param name="carrier">The medium from which values will be read.</param>
+      <param name="getter">The callback method to invoke to get the propagation trace ID and state from the carrier.</param>
+      <param name="traceId">When this method returns, contains the trace ID extracted from the carrier.</param>
+      <param name="traceState">When this method returns, contains the trace state extracted from the carrier.</param>
+    </member>
+    <member name="M:System.Diagnostics.DistributedContextPropagator.Inject(System.Diagnostics.Activity,System.Object,System.Diagnostics.DistributedContextPropagator.PropagatorSetterCallback)">
+      <summary>Injects the trace values stroed in the <see cref="T:System.Diagnostics.Activity" /> object into a carrier. For example, into the headers of an HTTP request.</summary>
+      <param name="activity">The Activity object has the distributed context to inject to the carrier.</param>
+      <param name="carrier">The medium in which the distributed context will be stored.</param>
+      <param name="setter">The callback method to invoke to set a named key-value pair on the carrier.</param>
+    </member>
+    <member name="P:System.Diagnostics.DistributedContextPropagator.Current">
+      <summary>Get or set the process-wide propagator object to use as the current selected propagator.</summary>
+      <returns>The currently selected process-wide propagator object.</returns>
+    </member>
+    <member name="P:System.Diagnostics.DistributedContextPropagator.Fields">
+      <summary>Gets the set of field names this propagator is likely to read or write.</summary>
+      <returns>The list of fields that will be used by the <code>DistributedContextPropagator</code>.</returns>
+    </member>
+    <member name="T:System.Diagnostics.DistributedContextPropagator.PropagatorGetterCallback">
+      <summary>Represents the callback method that's used in the extract methods of propagators. The callback is invoked to look up the value of a named field.</summary>
+      <param name="carrier">The medium used by propagators to read values from.</param>
+      <param name="fieldName">The propagation field name.</param>
+      <param name="fieldValue">When this method returns, contains the value that corresponds to <paramref name="fieldName" />. The value is non-<see langword="null" /> if there is only one value for the input field name.</param>
+      <param name="fieldValues">When this method returns, contains a collection of values that correspond to <paramref name="fieldName" />. The value is non-<see langword="null" /> if there is more than one value for the input field name.</param>
+    </member>
+    <member name="T:System.Diagnostics.DistributedContextPropagator.PropagatorSetterCallback">
+      <summary>Represents the callback method that's used in propagators' inject methods. This callback is invoked to set the value of a named field.
+            Propagators may invoke it multiple times in order to set multiple fields.</summary>
+      <param name="carrier">The medium used by propagators to write values to.</param>
+      <param name="fieldName">The propagation field name.</param>
+      <param name="fieldValue">The value corresponding to <paramref name="fieldName" />.</param>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.Counter`1">
+      <summary>Represents an instrument that supports adding non-negative values. For example, you might call counter.Add(1) each time a request is processed to track the total number of requests. Most metric viewers display counters using a rate (requests/sec), by default, but can also display a cumulative total.</summary>
+      <typeparam name="T">The type that the counter represents.</typeparam>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Counter`1.Add(`0)">
+      <summary>Record the increment value of the measurement.</summary>
+      <param name="delta">The increment measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Counter`1.Add(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record the increment value of the measurement.</summary>
+      <param name="delta">The increment measurement.</param>
+      <param name="tag">A key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Counter`1.Add(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record the increment value of the measurement.</summary>
+      <param name="delta">The increment measurement.</param>
+      <param name="tag1">A first key-value pair tag associated with the measurement.</param>
+      <param name="tag2">A second key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Counter`1.Add(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record the increment value of the measurement.</summary>
+      <param name="delta">The increment measurement.</param>
+      <param name="tag1">A first key-value pair tag associated with the measurement.</param>
+      <param name="tag2">A second key-value pair tag associated with the measurement.</param>
+      <param name="tag3">A third key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Counter`1.Add(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+      <summary>Record the increment value of the measurement.</summary>
+      <param name="delta">The increment measurement.</param>
+      <param name="tags">A list of key-value pair tags associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Counter`1.Add(`0,System.Diagnostics.TagList@)">
+      <summary>Adds the increment value of the measurement.</summary>
+      <param name="delta">The measurement value.</param>
+      <param name="tagList">The tags associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Counter`1.Add(`0,System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Record the increment value of the measurement.</summary>
+      <param name="delta">The increment measurement.</param>
+      <param name="tags">A span of key-value pair tags associated with the measurement.</param>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.Histogram`1">
+      <summary>Represents a metrics Instrument that can be used to report arbitrary values that are likely to be statistically meaningful.
+            e.g. the request duration.
+            Use <see cref="M:System.Diagnostics.Metrics.Meter.CreateHistogram``1(System.String,System.String,System.String)" /> method to create the Histogram object.</summary>
+      <typeparam name="T">The type that the histogram represents.</typeparam>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Histogram`1.Record(`0)">
+      <summary>Record a measurement value.</summary>
+      <param name="value">The measurement value.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Histogram`1.Record(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record a measurement value.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tag">A key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Histogram`1.Record(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record a measurement value.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tag1">A first key-value pair tag associated with the measurement.</param>
+      <param name="tag2">A second key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Histogram`1.Record(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record a measurement value.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tag1">A first key-value pair tag associated with the measurement.</param>
+      <param name="tag2">A second key-value pair tag associated with the measurement.</param>
+      <param name="tag3">A third key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Histogram`1.Record(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+      <summary>Record a measurement value.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tags">A list of key-value pair tags associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Histogram`1.Record(`0,System.Diagnostics.TagList@)">
+      <summary>Records a measurement value.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tagList">The tags associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Histogram`1.Record(`0,System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Record a measurement value.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tags">A span of key-value pair tags associated with the measurement.</param>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.Instrument">
+      <summary>Base class of all Metrics Instrument classes</summary>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument.#ctor(System.Diagnostics.Metrics.Meter,System.String,System.String,System.String)">
+      <summary>Protected constructor to initialize the common instrument properties like the meter, name, description, and unit.
+            All classes extending Instrument need to call this constructor when constructing object of the extended class.</summary>
+      <param name="meter">The meter that created the instrument.</param>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument.Publish">
+      <summary>Publish is activating the instrument to start recording measurements and to allow listeners to start listening to such measurements.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Instrument.Description">
+      <summary>Gets the instrument description.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Instrument.Enabled">
+      <summary>Checks if there is any listeners for this instrument.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Instrument.IsObservable">
+      <summary>A property tells if the instrument is an observable instrument.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Instrument.Meter">
+      <summary>Gets the Meter which created the instrument.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Instrument.Name">
+      <summary>Gets the instrument name.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Instrument.Unit">
+      <summary>Gets the instrument unit of measurements.</summary>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.Instrument`1">
+      <summary>The base class for all non-observable instruments.</summary>
+      <typeparam name="T">The type that the instrument represents.</typeparam>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument`1.#ctor(System.Diagnostics.Metrics.Meter,System.String,System.String,System.String)">
+      <summary>Create the metrics instrument using the properties meter, name, description, and unit.
+            All classes extending Instrument{T} need to call this constructor when constructing object of the extended class.</summary>
+      <param name="meter">The meter that created the instrument.</param>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument`1.RecordMeasurement(`0)">
+      <summary>Record the measurement by notifying all <see cref="T:System.Diagnostics.Metrics.MeterListener" /> objects which listening to this instrument.</summary>
+      <param name="measurement">The measurement value.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument`1.RecordMeasurement(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record the measurement by notifying all <see cref="T:System.Diagnostics.Metrics.MeterListener" /> objects which listening to this instrument.</summary>
+      <param name="measurement">The measurement value.</param>
+      <param name="tag">A key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument`1.RecordMeasurement(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record the measurement by notifying all <see cref="T:System.Diagnostics.Metrics.MeterListener" /> objects which listening to this instrument.</summary>
+      <param name="measurement">The measurement value.</param>
+      <param name="tag1">A first key-value pair tag associated with the measurement.</param>
+      <param name="tag2">A second key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument`1.RecordMeasurement(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object},System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Record the measurement by notifying all <see cref="T:System.Diagnostics.Metrics.MeterListener" /> objects which listening to this instrument.</summary>
+      <param name="measurement">The measurement value.</param>
+      <param name="tag1">A first key-value pair tag associated with the measurement.</param>
+      <param name="tag2">A second key-value pair tag associated with the measurement.</param>
+      <param name="tag3">A third key-value pair tag associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument`1.RecordMeasurement(`0,System.Diagnostics.TagList@)">
+      <summary>Records a measurement by notifying all <see cref="T:System.Diagnostics.Metrics.MeterListener" /> objects that are listening to this instrument.</summary>
+      <param name="measurement">The measurement value.</param>
+      <param name="tagList">The tags associated with the measurement.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Instrument`1.RecordMeasurement(`0,System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Record the measurement by notifying all <see cref="T:System.Diagnostics.Metrics.MeterListener" /> objects which listening to this instrument.</summary>
+      <param name="measurement">The measurement value.</param>
+      <param name="tags">A span of key-value pair tags associated with the measurement.</param>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.Measurement`1">
+      <summary>Stores one observed metrics value and its associated tags. This type is used by an Observable instrument's Observe() method when reporting current measurements.
+            with the associated tags.</summary>
+      <typeparam name="T">The type that the measurement represents.</typeparam>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Measurement`1.#ctor(`0)">
+      <summary>Initializes a new instance of the Measurement using the value and the list of tags.</summary>
+      <param name="value">The measurement value.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Measurement`1.#ctor(`0,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Initializes a new instance of the Measurement using the value and the list of tags.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tags">The measurement associated tags list.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Measurement`1.#ctor(`0,System.Collections.Generic.KeyValuePair{System.String,System.Object}[])">
+      <summary>Initializes a new instance of the Measurement using the value and the list of tags.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tags">The measurement associated tags list.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Measurement`1.#ctor(`0,System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Initializes a new instance of the Measurement using the value and the list of tags.</summary>
+      <param name="value">The measurement value.</param>
+      <param name="tags">The measurement associated tags list.</param>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Measurement`1.Tags">
+      <summary>Gets the measurement tags list.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Measurement`1.Value">
+      <summary>Gets the measurement value.</summary>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.MeasurementCallback`1">
+      <summary>A delegate to represent the Meterlistener callbacks used in measurements recording operation.</summary>
+      <param name="instrument">The <see cref="T:System.Diagnostics.Metrics.Instrument" /> that was responsible for sending the measurement.</param>
+      <param name="measurement">The measurement value.</param>
+      <param name="tags">A span of key-value pair tags associated with the measurement.</param>
+      <param name="state">The state object originally passed to <see cref="M:System.Diagnostics.Metrics.MeterListener.EnableMeasurementEvents(System.Diagnostics.Metrics.Instrument,System.Object)" /> method.</param>
+      <typeparam name="T">The type that the measurement represents.</typeparam>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.Meter">
+      <summary>Meter is the class responsible for creating and tracking the Instruments.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.#ctor(System.String)">
+      <summary>Initializes a new instance of the Meter using the meter name.</summary>
+      <param name="name">The Meter name.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.#ctor(System.String,System.String)">
+      <summary>Initializes a new instance of the Meter using the meter name and version.</summary>
+      <param name="name">The Meter name.</param>
+      <param name="version">The optional Meter version.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateCounter``1(System.String,System.String,System.String)">
+      <summary>Create a metrics Counter object.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement.</typeparam>
+      <returns>A new counter.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateHistogram``1(System.String,System.String,System.String)">
+      <summary>Creates a Histogram, which is an instrument that can be used to report arbitrary values that are likely to be statistically meaningful. It is intended for statistics such as histograms, summaries, and percentile.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement.</typeparam>
+      <returns>A new histogram.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateObservableCounter``1(System.String,System.Func{``0},System.String,System.String)">
+      <summary>Creates an ObservableCounter, which is an instrument that reports monotonically increasing values when the instrument is being observed.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="observeValue">The callback to call to get the measurements when <code>ObservableCounter{T}.Observe()</code> is called by <see cref="M:System.Diagnostics.Metrics.MeterListener.RecordObservableInstruments" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement..</typeparam>
+      <returns>A new observable counter.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateObservableCounter``1(System.String,System.Func{System.Collections.Generic.IEnumerable{System.Diagnostics.Metrics.Measurement{``0}}},System.String,System.String)">
+      <summary>Creates an ObservableCounter, which is an instrument that reports monotonically increasing values when the instrument is being observed.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="observeValues">The callback to call to get the measurements when <code>ObservableCounter{T}.Observe()</code> is called by <see cref="M:System.Diagnostics.Metrics.MeterListener.RecordObservableInstruments" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement.</typeparam>
+      <returns>A new observable counter.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateObservableCounter``1(System.String,System.Func{System.Diagnostics.Metrics.Measurement{``0}},System.String,System.String)">
+      <summary>Creates an ObservableCounter, which is an instrument that reports monotonically increasing values when the instrument is being observed.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="observeValue">The callback to call to get the measurements when <code>ObservableCounter{T}.Observe()</code> is called by <see cref="M:System.Diagnostics.Metrics.MeterListener.RecordObservableInstruments" /></param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement.</typeparam>
+      <returns>A new observable counter.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateObservableGauge``1(System.String,System.Func{``0},System.String,System.String)">
+      <summary>Creates an ObservableGauge, which is an asynchronous instrument that reports non-additive values when the instrument is being observed. An example of a non-additive value is the room temperature - it makes no sense to report the temperature value from multiple rooms and sum them up.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="observeValue">The callback to call to get the measurements when <code>ObservableCounter{T}.Observe()</code> is called by <see cref="M:System.Diagnostics.Metrics.MeterListener.RecordObservableInstruments" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement.</typeparam>
+      <returns>A new observable gauge.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateObservableGauge``1(System.String,System.Func{System.Collections.Generic.IEnumerable{System.Diagnostics.Metrics.Measurement{``0}}},System.String,System.String)">
+      <summary>Creates an ObservableGauge, which is an asynchronous instrument that reports non-additive values when the instrument is being observed. An example of a non-additive value is the room temperature - it makes no sense to report the temperature value from multiple rooms and sum them up.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="observeValues">The callback to call to get the measurements when <code>ObservableCounter{T}.Observe()</code> is called by <see cref="M:System.Diagnostics.Metrics.MeterListener.RecordObservableInstruments" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement.</typeparam>
+      <returns>A new observable gauge.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.CreateObservableGauge``1(System.String,System.Func{System.Diagnostics.Metrics.Measurement{``0}},System.String,System.String)">
+      <summary>Creates an ObservableGauge, which is an asynchronous instrument that reports non-additive values when the instrument is being observed. An example of a non-additive value is the room temperature - it makes no sense to report the temperature value from multiple rooms and sum them up.</summary>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="observeValue">The callback to call to get the measurements when <code>ObservableCounter{T}.Observe()</code> is called by <see cref="M:System.Diagnostics.Metrics.MeterListener.RecordObservableInstruments" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+      <typeparam name="T">The numerical type of the measurement.</typeparam>
+      <returns>A new observable gauge.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.Meter.Dispose">
+      <summary>Dispose the Meter which will disable all instruments created by this meter.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Meter.Name">
+      <summary>Gets the Meter name.</summary>
+      <returns>The Meter name</returns>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.Meter.Version">
+      <summary>Gets the Meter version.</summary>
+      <returns>The Meter version.</returns>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.MeterListener">
+      <summary>MeterListener is class used to listen to the metrics instrument measurements recording.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.MeterListener.#ctor">
+      <summary>Creates a MeterListener object.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.MeterListener.DisableMeasurementEvents(System.Diagnostics.Metrics.Instrument)">
+      <summary>Stop listening to a specific instrument measurement recording.</summary>
+      <param name="instrument">The instrument to stop listening to.</param>
+      <returns>The state object originally passed to <see cref="M:System.Diagnostics.Metrics.MeterListener.EnableMeasurementEvents(System.Diagnostics.Metrics.Instrument,System.Object)" /> method.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.MeterListener.Dispose">
+      <summary>Disposes the listeners which will stop it from listening to any instrument.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.MeterListener.EnableMeasurementEvents(System.Diagnostics.Metrics.Instrument,System.Object)">
+      <summary>Start listening to a specific instrument measurement recording.</summary>
+      <param name="instrument">The instrument to listen to.</param>
+      <param name="state">A state object which will be passed back to the callback getting measurements events.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.MeterListener.RecordObservableInstruments">
+      <summary>Calls all Observable instruments which the listener is listening to then calls <see cref="M:System.Diagnostics.Metrics.MeterListener.SetMeasurementEventCallback``1(System.Diagnostics.Metrics.MeasurementCallback{``0})" /> with every collected measurement.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.MeterListener.SetMeasurementEventCallback``1(System.Diagnostics.Metrics.MeasurementCallback{``0})">
+      <summary>Sets a callback for a specific numeric type to get the measurement recording notification from all instruments which enabled listening and was created with the same specified numeric type.
+            If a measurement of type T is recorded and a callback of type T is registered, that callback will be used.</summary>
+      <param name="measurementCallback">The callback which can be used to get measurement recording of numeric type T.</param>
+      <typeparam name="T">The type of the numeric measurement.</typeparam>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.MeterListener.Start">
+      <summary>Enable the listener to start listening to instruments measurement recording.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.MeterListener.InstrumentPublished">
+      <summary>Gets or sets the callback to get notified when an instrument is published.</summary>
+      <returns>The callback to get notified when an instrument is published.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.MeterListener.MeasurementsCompleted">
+      <summary>Gets or sets the callback to get notified when the measurement is stopped on some instrument.
+            This can happen when the Meter or the Listener is disposed or calling <see cref="M:System.Diagnostics.Metrics.MeterListener.Dispose" /> on the listener.</summary>
+      <returns>The callback to get notified when the measurement is stopped on some instrument.</returns>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.ObservableCounter`1">
+      <summary>ObservableCounter is a metrics observable Instrument which reports monotonically increasing value(s) when the instrument is being observed.
+            e.g. CPU time (for different processes, threads, user mode or kernel mode).
+            Use Meter.CreateObservableCounter methods to create the observable counter object.</summary>
+      <typeparam name="T">The type that the observable counter represents.</typeparam>
+    </member>
+    <member name="T:System.Diagnostics.Metrics.ObservableGauge`1">
+      <summary>ObservableGauge is an observable Instrument that reports non-additive value(s) when the instrument is being observed.
+            e.g. the current room temperature Use Meter.CreateObservableGauge methods to create the observable counter object.</summary>
+      <typeparam name="T" />
+    </member>
+    <member name="T:System.Diagnostics.Metrics.ObservableInstrument`1">
+      <summary>ObservableInstrument{T} is the base class from which all metrics observable instruments will inherit from.</summary>
+      <typeparam name="T">The type that the observable instrument represents.</typeparam>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.ObservableInstrument`1.#ctor(System.Diagnostics.Metrics.Meter,System.String,System.String,System.String)">
+      <summary>Create the metrics observable instrument using the properties meter, name, description, and unit.
+            All classes extending ObservableInstrument{T} need to call this constructor when constructing object of the extended class.</summary>
+      <param name="meter">The meter that created the instrument.</param>
+      <param name="name">The instrument name. cannot be <see langword="null" />.</param>
+      <param name="unit">Optional instrument unit of measurements.</param>
+      <param name="description">Optional instrument description.</param>
+    </member>
+    <member name="M:System.Diagnostics.Metrics.ObservableInstrument`1.Observe">
+      <summary>Fetches the current measurements being tracked by this instrument. All classes extending ObservableInstrument{T} need to implement this method.</summary>
+      <returns>The current measurements tracked by this instrument.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Metrics.ObservableInstrument`1.IsObservable">
+      <summary>Gets a value that indicates if the instrument is an observable instrument.</summary>
+      <returns>
+        <see langword="true" /> if the instrument is metrics-observable; <see langword="false" /> otherwise.</returns>
+    </member>
+    <member name="T:System.Diagnostics.SampleActivity`1">
+      <summary>A delegate that defines the signature of the <see cref="T:System.Diagnostics.ActivityListener" /> callbacks used in the sampling process.</summary>
+      <param name="options">The Activity creation options used by <see cref="T:System.Diagnostics.ActivityListener" /> callbacks to decide creating the Activity object or not.</param>
+      <typeparam name="T">The type of the requested parent to create the Activity object with. Should be either a string or an <see cref="T:System.Diagnostics.ActivityContext" /> instance.</typeparam>
+      <returns>An object containing the sampling results, which indicate the amount of data to collect for the related <see cref="T:System.Diagnostics.Activity" />.</returns>
+    </member>
+    <member name="T:System.Diagnostics.TagList">
+      <summary>Represents a list of tags that can be accessed by index. Provides methods to search, sort, and manipulate lists.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TagList.#ctor(System.ReadOnlySpan{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Initializes a new instance of <see cref="T:System.Diagnostics.TagList" /> using the specified <paramref name="tagList" />.</summary>
+      <param name="tagList">A span of tags to initialize the list with.</param>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Add(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Adds a tag to the list.</summary>
+      <param name="tag">The key-value pair of the tag to add to the list.</param>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Add(System.String,System.Object)">
+      <summary>Adds a tag with the specified <paramref name="key" /> and <paramref name="value" /> to the list.</summary>
+      <param name="key">The tag key.</param>
+      <param name="value">The tag value.</param>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Clear">
+      <summary>Removes all elements from the <see cref="T:System.Diagnostics.TagList" />.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Contains(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Determines whether a tag is in the <see cref="T:System.Diagnostics.TagList" />.</summary>
+      <param name="item">The tag to locate in the <see cref="T:System.Diagnostics.TagList" />.</param>
+      <returns>
+        <see langword="true" /> if item is found in the <see cref="T:System.Diagnostics.TagList" />; otherwise, <see langword="false" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TagList.CopyTo(System.Collections.Generic.KeyValuePair{System.String,System.Object}[],System.Int32)">
+      <summary>Copies the entire <see cref="T:System.Diagnostics.TagList" /> to a compatible one-dimensional array, starting at the specified index of the target array.</summary>
+      <param name="array">The one-dimensional Array that is the destination of the elements copied from <see cref="T:System.Diagnostics.TagList" />. The Array must have zero-based indexing.</param>
+      <param name="arrayIndex">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="array" /> is <see langword="null" />.</exception>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="arrayIndex " /> is less than 0 or greater than or equal to the <paramref name="array" /> length.</exception>
+    </member>
+    <member name="M:System.Diagnostics.TagList.CopyTo(System.Span{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+      <summary>Copies the contents of this <see cref="T:System.Diagnostics.TagList" /> into a destination <paramref name="tags" /> span.</summary>
+      <param name="tags">The destination <see cref="T:System.Span`1" /> object.</param>
+      <exception cref="T:System.ArgumentException">
+          The number of elements in the source <see cref="T:System.Diagnostics.TagList" /> is greater than the number of elements that the destination span.</exception>
+    </member>
+    <member name="M:System.Diagnostics.TagList.GetEnumerator">
+      <summary>Returns an enumerator that iterates through the <see cref="T:System.Diagnostics.TagList" />.</summary>
+      <returns>An enumerator that iterates through the <see cref="T:System.Diagnostics.TagList" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TagList.IndexOf(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Searches for the specified tag and returns the zero-based index of the first occurrence within the entire <see cref="T:System.Diagnostics.TagList" />.</summary>
+      <param name="item">The tag to locate in the <see cref="T:System.Diagnostics.TagList" />.</param>
+      <returns>The zero-based index of the first ocurrence of <paramref name="item" /> in the tag list.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Insert(System.Int32,System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Inserts an element into the <see cref="T:System.Diagnostics.TagList" /> at the specified index.</summary>
+      <param name="index">The zero-based index at which the item should be inserted.</param>
+      <param name="item">The tag to insert.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="index" /> is less than 0 or <paramref name="index" /> is greater than <see cref="M:System.Diagnostics.TagList.Count" />.</exception>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Remove(System.Collections.Generic.KeyValuePair{System.String,System.Object})">
+      <summary>Removes the first occurrence of a specific object from the <see cref="T:System.Diagnostics.TagList" />.</summary>
+      <param name="item">The tag to remove from the <see cref="T:System.Diagnostics.TagList" />.</param>
+      <returns>
+        <see langword="true" /> if <paramref name="item" /> is successfully removed; otherwise, <see langword="false" />. This method also returns <see langword="false" /> if <paramref name="item" /> was not found in the <see cref="T:System.Diagnostics.TagList" />.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TagList.RemoveAt(System.Int32)">
+      <summary>Removes the element at the specified index of the <see cref="T:System.Diagnostics.TagList" />.</summary>
+      <param name="index">The zero-based index of the element to remove.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="index" /> index is less than 0 or <paramref name="index" /> is greater than <see cref="M:System.Diagnostics.TagList.Count" />.</exception>
+    </member>
+    <member name="M:System.Diagnostics.TagList.System#Collections#IEnumerable#GetEnumerator">
+      <summary>Returns an enumerator that iterates through the <see cref="T:System.Diagnostics.TagList" />.</summary>
+      <returns>An enumerator that iterates through the <see cref="T:System.Diagnostics.TagList" />.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TagList.Count">
+      <summary>Gets the number of tags contained in the <see cref="T:System.Diagnostics.TagList" />.</summary>
+    </member>
+    <member name="P:System.Diagnostics.TagList.IsReadOnly">
+      <summary>Gets a value indicating whether the <see cref="T:System.Diagnostics.TagList" /> is read-only. This property will always return <see langword="false" />.</summary>
+    </member>
+    <member name="P:System.Diagnostics.TagList.Item(System.Int32)">
+      <summary>Gets or sets the tags at the specified index.</summary>
+      <param name="index">The item index.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">
+        <paramref name="index" /> is not a valid index in the <see cref="T:System.Diagnostics.TagList" />.</exception>
+    </member>
+    <member name="T:System.Diagnostics.TagList.Enumerator">
+      <summary>An enumerator for traversing a tag list collection.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Enumerator.Dispose">
+      <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Enumerator.MoveNext">
+      <summary>Advances the enumerator to the next element of the collection.</summary>
+      <returns>
+        <see langword="true" /> if the enumerator was successfully advanced to the next element; <see langword="false" /> if the enumerator has passed the end of the collection.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TagList.Enumerator.Reset">
+      <summary>Sets the enumerator to its initial position, which is before the first element in the collection.</summary>
+    </member>
+    <member name="P:System.Diagnostics.TagList.Enumerator.Current">
+      <summary>Gets the element in the collection at the current position of the enumerator.</summary>
+      <returns>The element in the collection at the current position of the enumerator.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TagList.Enumerator.System#Collections#IEnumerator#Current">
+      <summary>Gets the element in the collection at the current position of the enumerator.</summary>
+      <returns>The element in the collection at the current position of the enumerator.</returns>
+    </member>
+  </members>
+</doc>

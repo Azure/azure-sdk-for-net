@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.Configuration.Abstractions</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationExtensions">
+            <summary>
+            Extension methods for configuration classes./>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationExtensions.Add``1(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{``0})">
+            <summary>
+            Adds a new configuration source.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="configureSource">Configures the source secrets.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationExtensions.GetConnectionString(Microsoft.Extensions.Configuration.IConfiguration,System.String)">
+            <summary>
+            Shorthand for GetSection("ConnectionStrings")[name].
+            </summary>
+            <param name="configuration">The configuration.</param>
+            <param name="name">The connection string key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationExtensions.AsEnumerable(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Get the enumeration of key value pairs within the <see cref="T:Microsoft.Extensions.Configuration.IConfiguration" />
+            </summary>
+            <param name="configuration">The <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> to enumerate.</param>
+            <returns>An enumeration of key value pairs.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationExtensions.AsEnumerable(Microsoft.Extensions.Configuration.IConfiguration,System.Boolean)">
+            <summary>
+            Get the enumeration of key value pairs within the <see cref="T:Microsoft.Extensions.Configuration.IConfiguration" />
+            </summary>
+            <param name="configuration">The <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> to enumerate.</param>
+            <param name="makePathsRelative">If true, the child keys returned will have the current configuration's Path trimmed from the front.</param>
+            <returns>An enumeration of key value pairs.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationExtensions.Exists(Microsoft.Extensions.Configuration.IConfigurationSection)">
+            <summary>
+            Determines whether the section has a <see cref="P:Microsoft.Extensions.Configuration.IConfigurationSection.Value"/> or has children 
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationPath">
+            <summary>
+            Utility methods and constants for manipulating Configuration paths
+            </summary>
+        </member>
+        <member name="F:Microsoft.Extensions.Configuration.ConfigurationPath.KeyDelimiter">
+            <summary>
+            The delimiter ":" used to separate individual keys in a path.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationPath.Combine(System.String[])">
+            <summary>
+            Combines path segments into one path.
+            </summary>
+            <param name="pathSegments">The path segments to combine.</param>
+            <returns>The combined path.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationPath.Combine(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Combines path segments into one path.
+            </summary>
+            <param name="pathSegments">The path segments to combine.</param>
+            <returns>The combined path.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationPath.GetSectionKey(System.String)">
+            <summary>
+            Extracts the last path segment from the path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>The last path segment of the path.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationPath.GetParentPath(System.String)">
+            <summary>
+            Extracts the path corresponding to the parent node for a given path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>The original path minus the last individual segment found in it. Null if the original path corresponds to a top level node.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.IConfiguration">
+            <summary>
+            Represents a set of key/value application configuration properties.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.IConfiguration.Item(System.String)">
+            <summary>
+            Gets or sets a configuration value.
+            </summary>
+            <param name="key">The configuration key.</param>
+            <returns>The configuration value.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfiguration.GetSection(System.String)">
+            <summary>
+            Gets a configuration sub-section with the specified key.
+            </summary>
+            <param name="key">The key of the configuration section.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSection"/>.</returns>
+            <remarks>
+                This method will never return <c>null</c>. If no matching sub-section is found with the specified key,
+                an empty <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSection"/> will be returned.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfiguration.GetChildren">
+            <summary>
+            Gets the immediate descendant configuration sub-sections.
+            </summary>
+            <returns>The configuration sub-sections.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfiguration.GetReloadToken">
+            <summary>
+            Returns a <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> that can be used to observe when this configuration is reloaded.
+            </summary>
+            <returns>A <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/>.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.IConfigurationBuilder">
+            <summary>
+            Represents a type used to build application configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.IConfigurationBuilder.Properties">
+            <summary>
+            Gets a key/value collection that can be used to share data between the <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>
+            and the registered <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSource"/>s.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.IConfigurationBuilder.Sources">
+            <summary>
+            Gets the sources used to obtain configuration values
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationBuilder.Add(Microsoft.Extensions.Configuration.IConfigurationSource)">
+            <summary>
+            Adds a new configuration source.
+            </summary>
+            <param name="source">The configuration source to add.</param>
+            <returns>The same <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationBuilder.Build">
+            <summary>
+            Builds an <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> with keys and values from the set of sources registered in
+            <see cref="P:Microsoft.Extensions.Configuration.IConfigurationBuilder.Sources"/>.
+            </summary>
+            <returns>An <see cref="T:Microsoft.Extensions.Configuration.IConfigurationRoot"/> with keys and values from the registered sources.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.IConfigurationProvider">
+            <summary>
+            Provides configuration key/values for an application.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationProvider.TryGet(System.String,System.String@)">
+            <summary>
+            Tries to get a configuration value for the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns><c>True</c> if a value for the specified key was found, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationProvider.Set(System.String,System.String)">
+            <summary>
+            Sets a configuration value for the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationProvider.GetReloadToken">
+            <summary>
+            Returns a change token if this provider supports change tracking, null otherwise.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationProvider.Load">
+            <summary>
+            Loads configuration values from the source represented by this <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationProvider.GetChildKeys(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Returns the immediate descendant configuration keys for a given parent path based on this
+            <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>'s data and the set of keys returned by all the preceding
+            <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>s.
+            </summary>
+            <param name="earlierKeys">The child keys returned by the preceding providers for the same parent path.</param>
+            <param name="parentPath">The parent path.</param>
+            <returns>The child keys.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.IConfigurationRoot">
+            <summary>
+            Represents the root of an <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> hierarchy.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationRoot.Reload">
+            <summary>
+            Force the configuration values to be reloaded from the underlying <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>s.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.IConfigurationRoot.Providers">
+            <summary>
+            The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>s for this configuration.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.IConfigurationSection">
+            <summary>
+            Represents a section of application configuration values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.IConfigurationSection.Key">
+            <summary>
+            Gets the key this section occupies in its parent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.IConfigurationSection.Path">
+            <summary>
+            Gets the full path to this section within the <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.IConfigurationSection.Value">
+            <summary>
+            Gets or sets the section value.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.IConfigurationSource">
+            <summary>
+            Represents a source of configuration key/values for an application.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.IConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Builds the <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/> for this source.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</param>
+            <returns>An <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/></returns>
+        </member>
+    </members>
+</doc>

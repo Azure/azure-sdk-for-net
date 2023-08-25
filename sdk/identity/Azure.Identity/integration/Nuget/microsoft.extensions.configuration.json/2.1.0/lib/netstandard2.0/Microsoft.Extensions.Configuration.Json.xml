@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.Configuration.Json</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Configuration.JsonConfigurationExtensions">
+            <summary>
+            Extension methods for adding <see cref="T:Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.JsonConfigurationExtensions.AddJsonFile(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String)">
+            <summary>
+            Adds the JSON configuration provider at <paramref name="path"/> to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="path">Path relative to the base path stored in 
+            <see cref="P:Microsoft.Extensions.Configuration.IConfigurationBuilder.Properties"/> of <paramref name="builder"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.JsonConfigurationExtensions.AddJsonFile(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String,System.Boolean)">
+            <summary>
+            Adds the JSON configuration provider at <paramref name="path"/> to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="path">Path relative to the base path stored in 
+            <see cref="P:Microsoft.Extensions.Configuration.IConfigurationBuilder.Properties"/> of <paramref name="builder"/>.</param>
+            <param name="optional">Whether the file is optional.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.JsonConfigurationExtensions.AddJsonFile(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Adds the JSON configuration provider at <paramref name="path"/> to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="path">Path relative to the base path stored in 
+            <see cref="P:Microsoft.Extensions.Configuration.IConfigurationBuilder.Properties"/> of <paramref name="builder"/>.</param>
+            <param name="optional">Whether the file is optional.</param>
+            <param name="reloadOnChange">Whether the configuration should be reloaded if the file changes.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.JsonConfigurationExtensions.AddJsonFile(Microsoft.Extensions.Configuration.IConfigurationBuilder,Microsoft.Extensions.FileProviders.IFileProvider,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Adds a JSON configuration source to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="provider">The <see cref="T:Microsoft.Extensions.FileProviders.IFileProvider"/> to use to access the file.</param>
+            <param name="path">Path relative to the base path stored in 
+            <see cref="P:Microsoft.Extensions.Configuration.IConfigurationBuilder.Properties"/> of <paramref name="builder"/>.</param>
+            <param name="optional">Whether the file is optional.</param>
+            <param name="reloadOnChange">Whether the configuration should be reloaded if the file changes.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.JsonConfigurationExtensions.AddJsonFile(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Action{Microsoft.Extensions.Configuration.Json.JsonConfigurationSource})">
+            <summary>
+            Adds a JSON configuration source to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="configureSource">Configures the source.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider">
+            <summary>
+            A JSON file based <see cref="T:Microsoft.Extensions.Configuration.FileConfigurationProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider.#ctor(Microsoft.Extensions.Configuration.Json.JsonConfigurationSource)">
+            <summary>
+            Initializes a new instance with the specified source.
+            </summary>
+            <param name="source">The source settings.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider.Load(System.IO.Stream)">
+            <summary>
+            Loads the JSON data from a stream.
+            </summary>
+            <param name="stream">The stream to read.</param>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.Json.JsonConfigurationSource">
+            <summary>
+            Represents a JSON file as an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSource"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Json.JsonConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Builds the <see cref="T:Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider"/> for this source.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</param>
+            <returns>A <see cref="T:Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider"/></returns>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.Json.Resources.Error_InvalidFilePath">
+            <summary>
+            File path must be a non-empty string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Json.Resources.FormatError_InvalidFilePath">
+            <summary>
+            File path must be a non-empty string.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.Json.Resources.Error_JSONParseError">
+            <summary>
+            Could not parse the JSON file. Error on line number '{0}': '{1}'.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Json.Resources.FormatError_JSONParseError(System.Object,System.Object)">
+            <summary>
+            Could not parse the JSON file. Error on line number '{0}': '{1}'.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.Json.Resources.Error_KeyIsDuplicated">
+            <summary>
+            A duplicate key '{0}' was found.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Json.Resources.FormatError_KeyIsDuplicated(System.Object)">
+            <summary>
+            A duplicate key '{0}' was found.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.Json.Resources.Error_UnsupportedJSONToken">
+            <summary>
+            Unsupported JSON token '{0}' was found. Path '{1}', line {2} position {3}.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Json.Resources.FormatError_UnsupportedJSONToken(System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Unsupported JSON token '{0}' was found. Path '{1}', line {2} position {3}.
+            </summary>
+        </member>
+    </members>
+</doc>

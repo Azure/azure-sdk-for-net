@@ -1,0 +1,401 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Extensions.Configuration</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Extensions.Configuration.ChainedBuilderExtensions">
+            <summary>
+            IConfigurationBuilder extension methods for the chaind configuration provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedBuilderExtensions.AddConfiguration(Microsoft.Extensions.Configuration.IConfigurationBuilder,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Adds an existing configuration to <paramref name="configurationBuilder"/>.
+            </summary>
+            <param name="configurationBuilder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="config">The <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> to add.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ChainedConfigurationProvider">
+            <summary>
+            Chained implementation of <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedConfigurationProvider.#ctor(Microsoft.Extensions.Configuration.ChainedConfigurationSource)">
+            <summary>
+            Initialize a new instance from the source configuration.
+            </summary>
+            <param name="source">The source configuration.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedConfigurationProvider.TryGet(System.String,System.String@)">
+            <summary>
+            Tries to get a configuration value for the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns><c>True</c> if a value for the specified key was found, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedConfigurationProvider.Set(System.String,System.String)">
+            <summary>
+            Sets a configuration value for the specified key.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedConfigurationProvider.GetReloadToken">
+            <summary>
+            Returns a change token if this provider supports change tracking, null otherwise.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedConfigurationProvider.Load">
+            <summary>
+            Loads configuration values from the source represented by this <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedConfigurationProvider.GetChildKeys(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Returns the immediate descendant configuration keys for a given parent path based on this
+            <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>'s data and the set of keys returned by all the preceding
+            <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>s.
+            </summary>
+            <param name="earlierKeys">The child keys returned by the preceding providers for the same parent path.</param>
+            <param name="parentPath">The parent path.</param>
+            <returns>The child keys.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ChainedConfigurationSource">
+            <summary>
+            Represents a chained IConfiguration as an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSource"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ChainedConfigurationSource.Configuration">
+            <summary>
+            The chained configuration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ChainedConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Builds the <see cref="T:Microsoft.Extensions.Configuration.ChainedConfigurationProvider"/> for this source.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</param>
+            <returns>A <see cref="T:Microsoft.Extensions.Configuration.ChainedConfigurationProvider"/></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationBuilder">
+            <summary>
+            Used to build key/value based configuration settings for use in an application.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationBuilder.Sources">
+            <summary>
+            Returns the sources used to obtain configuration values.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationBuilder.Properties">
+            <summary>
+            Gets a key/value collection that can be used to share data between the <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>
+            and the registered <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>s.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationBuilder.Add(Microsoft.Extensions.Configuration.IConfigurationSource)">
+            <summary>
+            Adds a new configuration source.
+            </summary>
+            <param name="source">The configuration source to add.</param>
+            <returns>The same <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationBuilder.Build">
+            <summary>
+            Builds an <see cref="T:Microsoft.Extensions.Configuration.IConfiguration"/> with keys and values from the set of providers registered in
+            <see cref="P:Microsoft.Extensions.Configuration.ConfigurationBuilder.Sources"/>.
+            </summary>
+            <returns>An <see cref="T:Microsoft.Extensions.Configuration.IConfigurationRoot"/> with keys and values from the registered providers.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationKeyComparer">
+            <summary>
+            IComparer implementation used to order configuration keys.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationKeyComparer.Instance">
+            <summary>
+            The default instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationKeyComparer.Compare(System.String,System.String)">
+            <summary>
+            Compares two strings.
+            </summary>
+            <param name="x">First string.</param>
+            <param name="y">Second string.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationProvider">
+            <summary>
+            Base helper class for implementing an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationProvider.#ctor">
+            <summary>
+            Initializes a new <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationProvider.Data">
+            <summary>
+            The configuration key value pairs for this provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationProvider.TryGet(System.String,System.String@)">
+            <summary>
+            Attempts to find a value with the given key, returns true if one is found, false otherwise.
+            </summary>
+            <param name="key">The key to lookup.</param>
+            <param name="value">The value found at key if one is found.</param>
+            <returns>True if key has a value, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationProvider.Set(System.String,System.String)">
+            <summary>
+            Sets a value for a given key.
+            </summary>
+            <param name="key">The configuration key to set.</param>
+            <param name="value">The value to set.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationProvider.Load">
+            <summary>
+            Loads (or reloads) the data for this provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationProvider.GetChildKeys(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Returns the list of keys that this provider has.
+            </summary>
+            <param name="earlierKeys">The earlier keys that other providers contain.</param>
+            <param name="parentPath">The path for the parent IConfiguration.</param>
+            <returns>The list of keys for this provider.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationProvider.GetReloadToken">
+            <summary>
+            Returns a <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> that can be used to listen when this provider is reloaded.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationProvider.OnReload">
+            <summary>
+            Triggers the reload change token and creates a new one.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationReloadToken">
+            <summary>
+            Implements <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/>
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationReloadToken.ActiveChangeCallbacks">
+            <summary>
+            Indicates if this token will proactively raise callbacks. Callbacks are still guaranteed to be invoked, eventually.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationReloadToken.HasChanged">
+            <summary>
+            Gets a value that indicates if a change has occurred.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationReloadToken.RegisterChangeCallback(System.Action{System.Object},System.Object)">
+            <summary>
+            Registers for a callback that will be invoked when the entry has changed. <see cref="P:Microsoft.Extensions.Primitives.IChangeToken.HasChanged"/>
+            MUST be set before the callback is invoked.
+            </summary>
+            <param name="callback">The callback to invoke.</param>
+            <param name="state">State to be passed into the callback.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationReloadToken.OnReload">
+            <summary>
+            Used to trigger the change token when a reload occurs.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationRoot">
+            <summary>
+            The root node for a configuration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationRoot.#ctor(System.Collections.Generic.IList{Microsoft.Extensions.Configuration.IConfigurationProvider})">
+            <summary>
+            Initializes a Configuration root with a list of providers.
+            </summary>
+            <param name="providers">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>s for this configuration.</param>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationRoot.Providers">
+            <summary>
+            The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>s for this configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationRoot.Item(System.String)">
+            <summary>
+            Gets or sets the value corresponding to a configuration key.
+            </summary>
+            <param name="key">The configuration key.</param>
+            <returns>The configuration value.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationRoot.GetChildren">
+            <summary>
+            Gets the immediate children sub-sections.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationRoot.GetReloadToken">
+            <summary>
+            Returns a <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> that can be used to observe when this configuration is reloaded.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationRoot.GetSection(System.String)">
+            <summary>
+            Gets a configuration sub-section with the specified key.
+            </summary>
+            <param name="key">The key of the configuration section.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSection"/>.</returns>
+            <remarks>
+                This method will never return <c>null</c>. If no matching sub-section is found with the specified key,
+                an empty <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSection"/> will be returned.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationRoot.Reload">
+            <summary>
+            Force the configuration values to be reloaded from the underlying sources.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.ConfigurationSection">
+            <summary>
+            Represents a section of application configuration values.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationSection.#ctor(Microsoft.Extensions.Configuration.ConfigurationRoot,System.String)">
+            <summary>
+            Initializes a new instance.
+            </summary>
+            <param name="root">The configuration root.</param>
+            <param name="path">The path to this section.</param>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationSection.Path">
+            <summary>
+            Gets the full path to this section from the <see cref="T:Microsoft.Extensions.Configuration.IConfigurationRoot"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationSection.Key">
+            <summary>
+            Gets the key this section occupies in its parent.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationSection.Value">
+            <summary>
+            Gets or sets the section value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.ConfigurationSection.Item(System.String)">
+            <summary>
+            Gets or sets the value corresponding to a configuration key.
+            </summary>
+            <param name="key">The configuration key.</param>
+            <returns>The configuration value.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationSection.GetSection(System.String)">
+            <summary>
+            Gets a configuration sub-section with the specified key.
+            </summary>
+            <param name="key">The key of the configuration section.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSection"/>.</returns>
+            <remarks>
+                This method will never return <c>null</c>. If no matching sub-section is found with the specified key,
+                an empty <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSection"/> will be returned.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationSection.GetChildren">
+            <summary>
+            Gets the immediate descendant configuration sub-sections.
+            </summary>
+            <returns>The configuration sub-sections.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.ConfigurationSection.GetReloadToken">
+            <summary>
+            Returns a <see cref="T:Microsoft.Extensions.Primitives.IChangeToken"/> that can be used to observe when this configuration is reloaded.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.MemoryConfigurationBuilderExtensions">
+            <summary>
+            IConfigurationBuilder extension methods for the MemoryConfigurationProvider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.MemoryConfigurationBuilderExtensions.AddInMemoryCollection(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Adds the memory configuration provider to <paramref name="configurationBuilder"/>.
+            </summary>
+            <param name="configurationBuilder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.MemoryConfigurationBuilderExtensions.AddInMemoryCollection(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Adds the memory configuration provider to <paramref name="configurationBuilder"/>.
+            </summary>
+            <param name="configurationBuilder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/> to add to.</param>
+            <param name="initialData">The data to add to memory configuration provider.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationProvider">
+            <summary>
+            In-memory implementation of <see cref="T:Microsoft.Extensions.Configuration.IConfigurationProvider"/>
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationProvider.#ctor(Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource)">
+            <summary>
+            Initialize a new instance from the source.
+            </summary>
+            <param name="source">The source settings.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationProvider.Add(System.String,System.String)">
+            <summary>
+            Add a new key and value pair.
+            </summary>
+            <param name="key">The configuration key.</param>
+            <param name="value">The configuration value.</param>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationProvider.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>An enumerator that can be used to iterate through the collection.</returns>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationProvider.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>An enumerator that can be used to iterate through the collection.</returns>
+        </member>
+        <member name="T:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource">
+            <summary>
+            Represents in-memory data as an <see cref="T:Microsoft.Extensions.Configuration.IConfigurationSource"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource.InitialData">
+            <summary>
+            The initial key value configuration pairs.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationSource.Build(Microsoft.Extensions.Configuration.IConfigurationBuilder)">
+            <summary>
+            Builds the <see cref="T:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationProvider"/> for this source.
+            </summary>
+            <param name="builder">The <see cref="T:Microsoft.Extensions.Configuration.IConfigurationBuilder"/>.</param>
+            <returns>A <see cref="T:Microsoft.Extensions.Configuration.Memory.MemoryConfigurationProvider"/></returns>
+        </member>
+        <member name="P:Microsoft.Extensions.Configuration.Resources.Error_NoSources">
+            <summary>
+            A configuration source is not registered. Please register one before setting a value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Configuration.Resources.FormatError_NoSources">
+            <summary>
+            A configuration source is not registered. Please register one before setting a value.
+            </summary>
+        </member>
+    </members>
+</doc>

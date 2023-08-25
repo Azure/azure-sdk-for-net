@@ -1,0 +1,1259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>System.Diagnostics.TraceSource</name>
+  </assembly>
+  <members>
+    <member name="T:System.Diagnostics.BooleanSwitch">
+      <summary>Stellt einen einfachen An-Aus-Schalter bereit, der die Debugausgabe und die Ausgabe der Ablaufverfolgung steuert.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.#ctor(System.String,System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.BooleanSwitch" />-Klasse mit dem angegebenen Anzeigenamen und der angegebenen Beschreibung.</summary>
+      <param name="displayName">Der auf einer Benutzeroberfläche anzuzeigende Name. </param>
+      <param name="description">Die Beschreibung des Schalters. </param>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.#ctor(System.String,System.String,System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.BooleanSwitch" />-Klasse mit dem angegebenen Anzeigenamen, der angegebenen Beschreibung und dem Standardschalterwert. </summary>
+      <param name="displayName">Der auf der Benutzeroberfläche anzuzeigende Name. </param>
+      <param name="description">Die Beschreibung des Schalters. </param>
+      <param name="defaultSwitchValue">Der Standardwert des Schalters.</param>
+    </member>
+    <member name="P:System.Diagnostics.BooleanSwitch.Enabled">
+      <summary>Ruft einen Wert ab, der angibt, ob der Schalter aktiviert ist, oder legt diesen fest.</summary>
+      <returns>true, wenn der Schalter aktiviert ist, andernfalls false.Die Standardeinstellung ist false.</returns>
+      <exception cref="T:System.Security.SecurityException">Der Aufrufer verfügt nicht über die erforderliche Berechtigung.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.BooleanSwitch.OnValueChanged">
+      <summary>Bestimmt, ob der neue Wert der <see cref="P:System.Diagnostics.Switch.Value" />-Eigenschaft als boolescher Wert analysiert werden kann.</summary>
+    </member>
+    <member name="T:System.Diagnostics.DefaultTraceListener">
+      <summary>Stellt die Standardausgabemethoden und Verhalten für die Ablaufverfolgung bereit.</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.#ctor">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.DefaultTraceListener" />-Klasse, wobei ihr <see cref="P:System.Diagnostics.TraceListener.Name" />-Eigenschaftswert "Default" lautet.</summary>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Fail(System.String)">
+      <summary>Gibt eine Meldung und eine Stapelüberwachung für eine Assertion aus, die immer fehlschlägt, oder zeigt diese an.</summary>
+      <param name="message">Die auszugebende oder anzuzeigende Meldung. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+        <IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Fail(System.String,System.String)">
+      <summary>Gibt eine detaillierte Meldung und eine Stapelüberwachung für eine Assertion aus, die immer fehlschlägt, oder zeigt diese an.</summary>
+      <param name="message">Die auszugebende oder anzuzeigende Meldung. </param>
+      <param name="detailMessage">Die detaillierte Meldung, die ausgegeben oder angezeigt werden soll. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+        <IPermission class="System.Security.Permissions.UIPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.Write(System.String)">
+      <summary>Schreibt die Ausgabe in die OutputDebugString-Funktion und die <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" />-Methode.</summary>
+      <param name="message">Die in OutputDebugString und <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" /> zu schreibende Meldung. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.DefaultTraceListener.WriteLine(System.String)">
+      <summary>Schreibt die Ausgabe in die OutputDebugString-Funktion und die <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" />-Methode, gefolgt von einem Wagenrücklauf und einem Zeilenvorschub (\r\n).</summary>
+      <param name="message">Die in OutputDebugString und <see cref="M:System.Diagnostics.Debugger.Log(System.Int32,System.String,System.String)" /> zu schreibende Meldung. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.EventTypeFilter">
+      <summary>Gibt an, ob ein Listener die Ablaufverfolgung auf Grundlage des Ereignistyps durchführen sollte.</summary>
+    </member>
+    <member name="M:System.Diagnostics.EventTypeFilter.#ctor(System.Diagnostics.SourceLevels)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.EventTypeFilter" />-Klasse. </summary>
+      <param name="level">Eine bitweise Kombination der <see cref="T:System.Diagnostics.SourceLevels" />-Werte, die den Ereignistyp der zu verfolgenden Mitteilungen angibt. </param>
+    </member>
+    <member name="P:System.Diagnostics.EventTypeFilter.EventType">
+      <summary>Ruft den Ereignistyp der zu verfolgenden Meldungen ab oder legt diesen fest.</summary>
+      <returns>Eine bitweise Kombination der <see cref="T:System.Diagnostics.SourceLevels" />-Werte.</returns>
+    </member>
+    <member name="M:System.Diagnostics.EventTypeFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>Bestimmt, ob der Ablaufverfolgungslistener das Ereignis verfolgen soll. </summary>
+      <returns>true, wenn die Ablaufverfolgung durchgeführt werden soll, andernfalls false.</returns>
+      <param name="cache">Ein <see cref="T:System.Diagnostics.TraceEventCache" />, der den Informationscache für das Ablaufverfolgungsereignis darstellt.</param>
+      <param name="source">Der Name der Quelle.</param>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte. </param>
+      <param name="id">Eine Ablaufverfolgungs-Bezeichnernummer.</param>
+      <param name="formatOrMessage">Das für das Schreiben eines Arrays von Argumenten zu verwendende Format oder eine Meldung, die geschrieben werden soll.</param>
+      <param name="args">Ein Array von Argumentobjekten.</param>
+      <param name="data1">Ein Ablaufverfolgungs-Datenobjekt.</param>
+      <param name="data">Ein Array von Ablaufverfolgungs-Datenobjekten.</param>
+    </member>
+    <member name="T:System.Diagnostics.SourceFilter">
+      <summary>Gibt an, ob ein Listener auf Grundlage der Quelle einer Ablaufverfolgung eine Meldung verfolgen soll.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.SourceFilter.#ctor(System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.SourceFilter" />-Klasse und gibt den Namen der Ablaufverfolgungsquelle an. </summary>
+      <param name="source">Der Name der Ablaufverfolgungsquelle.</param>
+    </member>
+    <member name="M:System.Diagnostics.SourceFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>Bestimmt, ob der Ablaufverfolgungslistener das Ereignis verfolgen soll.</summary>
+      <returns>true, wenn die Ablaufverfolgung durchgeführt werden soll, andernfalls false. </returns>
+      <param name="cache">Ein Objekt, das den Cache für die Informationen des Ablaufverfolgungsereignisses darstellt.</param>
+      <param name="source">Der Name der Quelle.</param>
+      <param name="eventType">Einer der Enumerationswerte, die den Ereignistyp angeben. </param>
+      <param name="id">Eine Ablaufverfolgungs-Bezeichnernummer.</param>
+      <param name="formatOrMessage">Das für das Schreiben eines Arrays von Argumenten zu verwendende Format oder eine Meldung, die geschrieben werden soll.</param>
+      <param name="args">Ein Array von Argumentobjekten.</param>
+      <param name="data1">Ein Ablaufverfolgungs-Datenobjekt.</param>
+      <param name="data">Ein Array von Ablaufverfolgungs-Datenobjekten.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="source" /> ist null. </exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.SourceFilter.Source">
+      <summary>Ruft den Namen der Ablaufverfolgungsquelle ab oder legt diesen fest.</summary>
+      <returns>Der Name der Ablaufverfolgungsquelle.</returns>
+      <exception cref="T:System.ArgumentNullException">Der Wert ist null. </exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.SourceLevels">
+      <summary>Gibt die Ebenen der Ablaufverfolgungsmeldungen an, die vom Quellschalter und dem Ereignistypfilter gefiltert werden.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.All">
+      <summary>Lässt alle Ereignisse zu.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Critical">
+      <summary>Lässt nur <see cref="F:System.Diagnostics.TraceEventType.Critical" />-Ereignisse zu.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Error">
+      <summary>Lässt das <see cref="F:System.Diagnostics.TraceEventType.Critical" />-Ereignis und das <see cref="F:System.Diagnostics.TraceEventType.Error" />-Ereignis zu.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Information">
+      <summary>Lässt das <see cref="F:System.Diagnostics.TraceEventType.Critical" />-Ereignis, das <see cref="F:System.Diagnostics.TraceEventType.Error" />-Ereignis, das <see cref="F:System.Diagnostics.TraceEventType.Warning" />-Ereignis und das <see cref="F:System.Diagnostics.TraceEventType.Information" />-Ereignis zu.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Off">
+      <summary>Lässt keine Ereignisse zu.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Verbose">
+      <summary>Lässt das <see cref="F:System.Diagnostics.TraceEventType.Critical" />-Ereignis, das <see cref="F:System.Diagnostics.TraceEventType.Error" />-Ereignis, das <see cref="F:System.Diagnostics.TraceEventType.Warning" />-Ereignis, das <see cref="F:System.Diagnostics.TraceEventType.Information" />-Ereignis und das <see cref="F:System.Diagnostics.TraceEventType.Verbose" />-Ereignis zu.</summary>
+    </member>
+    <member name="F:System.Diagnostics.SourceLevels.Warning">
+      <summary>Lässt das <see cref="F:System.Diagnostics.TraceEventType.Critical" />-Ereignis, das <see cref="F:System.Diagnostics.TraceEventType.Error" />-Ereignis und das <see cref="F:System.Diagnostics.TraceEventType.Warning" />-Ereignis zu.</summary>
+    </member>
+    <member name="T:System.Diagnostics.SourceSwitch">
+      <summary>Stellt einen Schalter bereit, mit dem mehrere Ebenen ausgewählt und so Ablaufverfolgungs- und Debugausgabe gesteuert werden können, ohne dass der Code hierfür neu kompiliert werden muss.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.#ctor(System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.SourceSwitch" />-Klasse und gibt den Namen der Quelle an.</summary>
+      <param name="name">Der Name der Quelle.</param>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.#ctor(System.String,System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.SourceSwitch" />-Klasse und gibt den Anzeigenamen und den Standardwert für den Quellschalter an.</summary>
+      <param name="displayName">Der Name des Quellschalters. </param>
+      <param name="defaultSwitchValue">Der Standardwert des Schalters. </param>
+    </member>
+    <member name="P:System.Diagnostics.SourceSwitch.Level">
+      <summary>Ruft die Ebene des Schalters ab oder legt diese fest.</summary>
+      <returns>Einer der <see cref="T:System.Diagnostics.SourceLevels" />-Werte, der die Ereignisebene des Schalters darstellt.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.OnValueChanged">
+      <summary>Wird aufgerufen, wenn sich der Wert der <see cref="P:System.Diagnostics.Switch.Value" />-Eigenschaft ändert.</summary>
+      <exception cref="T:System.ArgumentException">Der neue Wert von <see cref="P:System.Diagnostics.Switch.Value" /> ist keiner der <see cref="T:System.Diagnostics.SourceLevels" />-Werte.</exception>
+    </member>
+    <member name="M:System.Diagnostics.SourceSwitch.ShouldTrace(System.Diagnostics.TraceEventType)">
+      <summary>Bestimmt, ob Ablaufverfolgungslistener auf Grundlage des Typs des Ablaufverfolgungsereignisses aufgerufen werden sollen.</summary>
+      <returns>True, wenn die Ablaufverfolgungslistener aufgerufen werden sollen, andernfalls false.</returns>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte.</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.Switch">
+      <summary>Stellt eine abstrakte Basisklasse zum Erstellen neuer Schalter für Debuggen und Ablaufverfolgung bereit.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Switch.#ctor(System.String,System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.Switch" />-Klasse.</summary>
+      <param name="displayName">Der Name des Schalters. </param>
+      <param name="description">Die Beschreibung für den Schalter. </param>
+    </member>
+    <member name="M:System.Diagnostics.Switch.#ctor(System.String,System.String,System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.Switch" />-Klasse und gibt den Anzeigenamen, die Beschreibung und den Standardwert für den Schalter an. </summary>
+      <param name="displayName">Der Name des Schalters. </param>
+      <param name="description">Die Beschreibung des Schalters. </param>
+      <param name="defaultSwitchValue">Der Standardwert des Schalters.</param>
+    </member>
+    <member name="P:System.Diagnostics.Switch.Description">
+      <summary>Ruft eine Beschreibung des Schalters ab.</summary>
+      <returns>Die Beschreibung des Schalters.Der Standardwert ist eine leere Zeichenfolge ("").</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.Switch.DisplayName">
+      <summary>Ruft einen Namen zum Bezeichnen des Schalters ab.</summary>
+      <returns>Der Name für die Identifikation des Schalters.Der Standardwert ist eine leere Zeichenfolge ("").</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Switch.OnSwitchSettingChanged">
+      <summary>Wird aufgerufen, wenn die <see cref="P:System.Diagnostics.Switch.SwitchSetting" />-Eigenschaft geändert wird.</summary>
+    </member>
+    <member name="M:System.Diagnostics.Switch.OnValueChanged">
+      <summary>Wird aufgerufen, wenn die <see cref="P:System.Diagnostics.Switch.Value" />-Eigenschaft geändert wird.</summary>
+    </member>
+    <member name="P:System.Diagnostics.Switch.SwitchSetting">
+      <summary>Ruft die aktuelle Einstellung des Schalters ab oder legt diese fest.</summary>
+      <returns>Die aktuelle Einstellung für diesen Schalter.Der Standardwert ist 0.</returns>
+    </member>
+    <member name="P:System.Diagnostics.Switch.Value">
+      <summary>Ruft den Wert des Schalters ab oder legt diesen fest.</summary>
+      <returns>Eine Zeichenfolge, die den Wert des Schalters darstellt.</returns>
+      <exception cref="T:System.Configuration.ConfigurationErrorsException">Der Wert ist null.- oder -Der Wert besteht nicht ausschließlich aus einem optionalen Minuszeichen und einer Folge von Ziffern zwischen 0 und 9.- oder -Der Wert stellt eine Zahl dar, die kleiner als <see cref="F:System.Int32.MinValue" /> oder größer als <see cref="F:System.Int32.MaxValue" /> ist.</exception>
+    </member>
+    <member name="T:System.Diagnostics.Trace">
+      <summary>Stellt eine Reihe von Methoden und Eigenschaften für das Verfolgen der Ausführung von Code bereit.Diese Klasse kann nicht vererbt werden.</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean)">
+      <summary>Überprüft eine Bedingung. Wenn die Bedingung false ist, wird ein Meldungsfeld mit der Aufrufliste angezeigt.</summary>
+      <param name="condition">Der bedingte Ausdruck, der ausgewertet werden soll.Wenn die Bedingung true ist, wird keine Fehlermeldung gesendet und kein Meldungsfeld angezeigt.</param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean,System.String)">
+      <summary>Überprüft eine Bedingung. Wenn die Bedingung false ist, wird eine bestimmte Meldung ausgegeben, und ein Meldungsfeld mit der Aufrufliste wird angezeigt.</summary>
+      <param name="condition">Der bedingte Ausdruck, der ausgewertet werden soll.Wenn die Bedingung true ist, wird keine Meldung gesendet und kein Meldungsfeld angezeigt.</param>
+      <param name="message">Die Nachricht, die an die <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung gesendet werden soll. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Assert(System.Boolean,System.String,System.String)">
+      <summary>Überprüft eine Bedingung. Wenn die Bedingung false ist, werden zwei angegebene Meldungen ausgegeben, und ein Meldungsfeld mit der Aufrufliste wird angezeigt.</summary>
+      <param name="condition">Der bedingte Ausdruck, der ausgewertet werden soll.Wenn die Bedingung true ist, werden die angegebenen Meldungen nicht gesendet, und das Meldungsfeld wird nicht angezeigt.</param>
+      <param name="message">Die Nachricht, die an die <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung gesendet werden soll. </param>
+      <param name="detailMessage">Die detaillierte Nachricht, die an die <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung gesendet werden soll. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.AutoFlush">
+      <summary>Ruft ab oder legt fest, ob für <see cref="P:System.Diagnostics.Trace.Listeners" /> nach jeder Ausgabe <see cref="M:System.Diagnostics.Trace.Flush" /> aufgerufen werden soll.</summary>
+      <returns>true, wenn <see cref="M:System.Diagnostics.Trace.Flush" /> nach jeder Schreiben in <see cref="P:System.Diagnostics.Trace.Listeners" /> aufgerufen wird, andernfalls false.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Close">
+      <summary>Entleert den Ausgabepuffer und schließt daraufhin die <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Fail(System.String)">
+      <summary>Gibt die angegebene Fehlermeldung aus.</summary>
+      <param name="message">Eine auszugebende Meldung. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Fail(System.String,System.String)">
+      <summary>Gibt eine Fehlermeldung sowie eine detaillierte Fehlermeldung aus.</summary>
+      <param name="message">Eine auszugebende Meldung. </param>
+      <param name="detailMessage">Eine detaillierte Meldung, die ausgegeben werden soll. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Flush">
+      <summary>Entleert den Ausgabepuffer und veranlasst das Schreiben der gepufferten Daten in die <see cref="P:System.Diagnostics.Trace.Listeners" />.</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Indent">
+      <summary>Erhöht den aktuellen <see cref="P:System.Diagnostics.Trace.IndentLevel" /> um eins.</summary>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.IndentLevel">
+      <summary>Ruft die Einzugsebene ab oder legt diese fest.</summary>
+      <returns>Die Einzugebene.Der Standardwert ist 0.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.IndentSize">
+      <summary>Ruft die Anzahl der Leerzeichen in einem Einzug ab oder legt diese fest.</summary>
+      <returns>Die Anzahl der Leerzeichen in einem Einzug.Der Standardwert ist vier.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.Listeners">
+      <summary>Ruft die Auflistung der Listener für die Überwachung der Ausgabe der Ablaufverfolgung ab.</summary>
+      <returns>Eine <see cref="T:System.Diagnostics.TraceListenerCollection" />, die eine Auflistung vom Typ <see cref="T:System.Diagnostics.TraceListener" /> darstellt und die Ausgabe der Ablaufverfolgung überwacht.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Refresh">
+      <summary>Aktualisiert die Konfigurationsdaten der Ablaufverfolgung.</summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceError(System.String)">
+      <summary>Schreibt eine Fehlermeldung unter Verwendung der angegebenen Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="message">Die zu schreibende Informationsmeldung.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceError(System.String,System.Object[])">
+      <summary>Schreibt eine Fehlermeldung unter Verwendung des angegebenen Objektarrays und der Formatierungsinformationen in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="format">Eine Formatzeichenfolge mit 0 oder mehr Formatelementen, die Objekten im <paramref name="args" />-Array entsprechen.</param>
+      <param name="args">Ein object-Array mit 0 oder mehr zu formatierenden Objekten.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceInformation(System.String)">
+      <summary>Schreibt eine Informationsmeldung unter Verwendung der angegebenen Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="message">Die zu schreibende Informationsmeldung.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceInformation(System.String,System.Object[])">
+      <summary>Schreibt eine Informationsmeldung unter Verwendung des angegebenen Objektarrays und der Formatierungsinformationen in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="format">Eine Formatzeichenfolge mit 0 oder mehr Formatelementen, die Objekten im <paramref name="args" />-Array entsprechen.</param>
+      <param name="args">Ein object-Array mit 0 oder mehr zu formatierenden Objekten.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceWarning(System.String)">
+      <summary>Schreibt eine Warnmeldung unter Verwendung der angegebenen Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="message">Die zu schreibende Informationsmeldung.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.TraceWarning(System.String,System.Object[])">
+      <summary>Schreibt eine Warnmeldung unter Verwendung des angegebenen Objektarrays und der Formatierungsinformationen in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="format">Eine Formatzeichenfolge mit 0 oder mehr Formatelementen, die Objekten im <paramref name="args" />-Array entsprechen.</param>
+      <param name="args">Ein object-Array mit 0 oder mehr zu formatierenden Objekten.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Unindent">
+      <summary>Verringert den aktuellen <see cref="P:System.Diagnostics.Trace.IndentLevel" /> um eins.</summary>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.Trace.UseGlobalLock">
+      <summary>Ruft einen Wert ab, der angibt, ob die globale Sperre verwendet werden soll, oder legt diesen fest.  </summary>
+      <returns>true, wenn die globale Sperre verwendet werden soll, andernfalls false.Die Standardeinstellung ist true.</returns>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.Object)">
+      <summary>Schreibt den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="value">Ein <see cref="T:System.Object" />, dessen Name an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet wird. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.Object,System.String)">
+      <summary>Schreibt einen Kategorienamen und den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="value">Ein <see cref="T:System.Object" />-Name wird an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.String)">
+      <summary>Schreibt eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.Write(System.String,System.String)">
+      <summary>Schreibt einen Kategorienamen und eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.Object)">
+      <summary>Schreibt den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="value">Ein <see cref="T:System.Object" />, dessen Name an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet wird. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.Object,System.String)">
+      <summary>Schreibt einen Kategorienamen und den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="value">Ein <see cref="T:System.Object" />, dessen Name an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet wird. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.String)">
+      <summary>Schreibt eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteIf(System.Boolean,System.String,System.String)">
+      <summary>Schreibt einen Kategorienamen und eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.Object)">
+      <summary>Schreibt den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="value">Ein <see cref="T:System.Object" />, dessen Name an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet wird. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.Object,System.String)">
+      <summary>Schreibt einen Kategorienamen und den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="value">Ein <see cref="T:System.Object" />, dessen Name an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet wird. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.String)">
+      <summary>Schreibt eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLine(System.String,System.String)">
+      <summary>Schreibt einen Kategorienamen und eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.Object)">
+      <summary>Schreibt den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="value">Ein <see cref="T:System.Object" />, dessen Name an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet wird. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.Object,System.String)">
+      <summary>Schreibt einen Kategorienamen und den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="value">Ein <see cref="T:System.Object" />, dessen Name an die <see cref="P:System.Diagnostics.Trace.Listeners" /> gesendet wird. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.String)">
+      <summary>Schreibt eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.Trace.WriteLineIf(System.Boolean,System.String,System.String)">
+      <summary>Schreibt einen Kategorienamen und eine Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.Trace.Listeners" />-Auflistung, wenn eine Bedingung true ist.</summary>
+      <param name="condition">true, damit eine Meldung geschrieben wird, andernfalls false. </param>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.TraceEventCache">
+      <summary>Stellt für einen Thread und einen Prozess spezifische Daten für Ablaufverfolgungsereignisse bereit.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceEventCache.#ctor">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceEventCache" />-Klasse. </summary>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.DateTime">
+      <summary>Ruft das Datum und die Uhrzeit ab, an dem die Ereignisablaufverfolgung aufgetreten ist.</summary>
+      <returns>Eine <see cref="T:System.DateTime" />-Struktur, deren Wert ein in koordinierter Weltzeit (Coordinated Universal Time, UTC) ausgedrücktes Datum und eine entsprechende Uhrzeit ist.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.ProcessId">
+      <summary>Ruft den eindeutigen Bezeichner des aktuellen Prozesses ab.</summary>
+      <returns>Der vom System generierte eindeutige Bezeichner des aktuellen Prozesses.</returns>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.ThreadId">
+      <summary>Ruft einen eindeutigen Bezeichner für den aktuellen verwalteten Thread ab.  </summary>
+      <returns>Eine Zeichenfolge, die einen eindeutigen ganzzahligen Bezeichner für diesen verwalteten Thread darstellt.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceEventCache.Timestamp">
+      <summary>Ruft die aktuelle Anzahl der Ticks im Zeitgebermechanismus ab.</summary>
+      <returns>Der Teilstrichzählerwert des zugrunde liegenden Zeitgebermechanismus.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceEventType">
+      <summary>Bezeichnet den Typ des Ereignisses, das die Ablaufverfolgung verursacht hat.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Critical">
+      <summary>Schwerwiegender Fehler oder Anwendungsabsturz.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Error">
+      <summary>Behebbarer Fehler.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Information">
+      <summary>Informationsmeldung.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Verbose">
+      <summary>Debuggen der Ablaufverfolgung.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceEventType.Warning">
+      <summary>Nicht kritisches Problem.</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceFilter">
+      <summary>Stellt die Basisklasse für Implementierungen von Ablaufverfolgungsfiltern bereit.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceFilter.#ctor">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceFilter" />-Klasse. </summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceFilter.ShouldTrace(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[],System.Object,System.Object[])">
+      <summary>Bestimmt beim Überschreiben in einer abgeleiteten Klasse, ob der Ablaufverfolgungslistener eine Ablaufverfolgung für das Ereignis durchführen soll.</summary>
+      <returns>true, um das angegebene Ereignis zu verfolgen, andernfalls false. </returns>
+      <param name="cache">Der <see cref="T:System.Diagnostics.TraceEventCache" />, der Informationen für das Ablaufverfolgungsereignis enthält.</param>
+      <param name="source">Der Name der Quelle.</param>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte, der den Typ des Ereignisses angibt, das die Ablaufverfolgung verursacht hat.</param>
+      <param name="id">Eine Ablaufverfolgungs-Bezeichnernummer.</param>
+      <param name="formatOrMessage">Entweder das Format, das für das Schreiben eines Arrays von Argumenten verwendet werden soll, die vom <paramref name="args" />-Parameter angegeben werden, oder eine zu schreibende Meldung.</param>
+      <param name="args">Ein Array von Argumentobjekten.</param>
+      <param name="data1">Ein Ablaufverfolgungs-Datenobjekt.</param>
+      <param name="data">Ein Array von Ablaufverfolgungs-Datenobjekten.</param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceLevel">
+      <summary>Gibt die auszugebenden Meldungen für die <see cref="T:System.Diagnostics.Debug" />-Klasse, die <see cref="T:System.Diagnostics.Trace" />-Klasse und die <see cref="T:System.Diagnostics.TraceSwitch" />-Klasse an.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Error">
+      <summary>Ausgabe der Meldungen zur Fehlerbehandlung.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Info">
+      <summary>Ausgabe der informativen Meldungen, Warnungen und Meldungen zur Fehlerbehandlung.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Off">
+      <summary>Ausgabe keiner Ablaufverfolgungs- oder Debugmeldungen.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Verbose">
+      <summary>Ausgabe aller Debug- oder Ablaufverfolgungsmeldungen.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceLevel.Warning">
+      <summary>Ausgabe der Warnungen und Meldungen zur Fehlerbehandlung.</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceListener">
+      <summary>Stellt die abstract-Basisklasse für die Listener bereit, die die Ablaufverfolgung und die Debugausgabe überwachen.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.#ctor">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceListener" />-Klasse.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.#ctor(System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceListener" />-Klasse unter Verwendung des angegebenen Namens als Listener.</summary>
+      <param name="name">Der Name des <see cref="T:System.Diagnostics.TraceListener" />. </param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Dispose">
+      <summary>Gibt alle vom <see cref="T:System.Diagnostics.TraceListener" /> verwendeten Ressourcen frei.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Dispose(System.Boolean)">
+      <summary>Gibt die von <see cref="T:System.Diagnostics.TraceListener" /> verwendeten nicht verwalteten Ressourcen und optional die verwalteten Ressourcen frei.</summary>
+      <param name="disposing">true, um sowohl verwaltete als auch nicht verwaltete Ressourcen freizugeben, false, um ausschließlich nicht verwaltete Ressourcen freizugeben. </param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Fail(System.String)">
+      <summary>Gibt eine Fehlermeldung an den Listener aus, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="message">Eine auszugebende Meldung. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Fail(System.String,System.String)">
+      <summary>Gibt eine Fehlermeldung sowie eine detaillierte Fehlermeldung an den Listener aus, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="message">Eine auszugebende Meldung. </param>
+      <param name="detailMessage">Eine detaillierte Meldung, die ausgegeben werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.Filter">
+      <summary>Ruft den Ablaufverfolgungsfilter für den Ablaufverfolgungslistener ab und legt diesen fest.</summary>
+      <returns>Ein von der <see cref="T:System.Diagnostics.TraceFilter" />-Basisklasse abgeleitetes Objekt.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Flush">
+      <summary>Entleert beim Überschreiben in einer abgeleiteten Klasse den Ausgabepuffer.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IndentLevel">
+      <summary>Ruft die Einzugsebene ab oder legt diese fest.</summary>
+      <returns>Die Einzugebene.Der Standardwert ist 0.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IndentSize">
+      <summary>Ruft die Anzahl der Leerzeichen in einem Einzug ab oder legt diese fest.</summary>
+      <returns>Die Anzahl der Leerzeichen in einem Einzug.Der Standardwert beträgt vier Leerzeichen.</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">Fehler bei der Set-Operation, da der Wert kleiner als 0 (null) ist.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.IsThreadSafe">
+      <summary>Ruft einen Wert ab, der angibt, ob der Ablaufverfolgungslistener threadsicher ist. </summary>
+      <returns>true, wenn der Ablaufverfolgungslistener threadsicher ist, andernfalls false.Die Standardeinstellung ist false.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.Name">
+      <summary>Ruft einen Namen für diesen <see cref="T:System.Diagnostics.TraceListener" /> ab oder legt diesen fest.</summary>
+      <returns>Ein Name für diesen <see cref="T:System.Diagnostics.TraceListener" />.Der Standardwert ist eine leere Zeichenfolge ("").</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.NeedIndent">
+      <summary>Ruft einen Wert ab, der einen Einzug für die Ausgabe angibt, oder legt diesen fest.</summary>
+      <returns>true, wenn die Ausgabe einen Einzug hat, andernfalls false.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+      <summary>Schreibt Ablaufverfolgungsinformationen, ein Datenobjekt und Ereignisinformationen in die spezifische Ausgabe des Listeners.</summary>
+      <param name="eventCache">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</param>
+      <param name="source">Ein Name, der verwendet wird, um die Ausgabe zu bezeichnen, i. d. R. der Name der Anwendung, die das Ablaufverfolgungsereignis generiert hat.</param>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte, der den Typ des Ereignisses angibt, das die Ablaufverfolgung verursacht hat.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="data">Die auszugebenden Ablaufverfolgungsdaten.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object[])">
+      <summary>Schreibt Ablaufverfolgungsinformationen, ein Array von Datenobjekten und Ereignisinformationen in die spezifische Ausgabe des Listeners.</summary>
+      <param name="eventCache">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</param>
+      <param name="source">Ein Name, der verwendet wird, um die Ausgabe zu bezeichnen, i. d. R. der Name der Anwendung, die das Ablaufverfolgungsereignis generiert hat.</param>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte, der den Typ des Ereignisses angibt, das die Ablaufverfolgung verursacht hat.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="data">Ein Objektarray, das in Form von Daten ausgegeben werden soll.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32)">
+      <summary>Schreibt Ablaufverfolgungs- und Ereignisinformationen in die spezifische Ausgabe des Listeners.</summary>
+      <param name="eventCache">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</param>
+      <param name="source">Ein Name, der verwendet wird, um die Ausgabe zu bezeichnen, i. d. R. der Name der Anwendung, die das Ablaufverfolgungsereignis generiert hat.</param>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte, der den Typ des Ereignisses angibt, das die Ablaufverfolgung verursacht hat.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String)">
+      <summary>Schreibt Ablaufverfolgungsinformationen, eine Meldung und Ereignisinformationen in die spezifische Ausgabe des Listeners.</summary>
+      <param name="eventCache">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</param>
+      <param name="source">Ein Name, der verwendet wird, um die Ausgabe zu bezeichnen, i. d. R. der Name der Anwendung, die das Ablaufverfolgungsereignis generiert hat.</param>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte, der den Typ des Ereignisses angibt, das die Ablaufverfolgung verursacht hat.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="message">Eine zu schreibende Meldung.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.TraceEvent(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+      <summary>Schreibt Ablaufverfolgungsinformationen, ein formatiertes Array von Objekten und Ereignisinformationen in die spezifische Ausgabe des Listeners.</summary>
+      <param name="eventCache">Ein <see cref="T:System.Diagnostics.TraceEventCache" />-Objekt mit der aktuellen Prozess-ID, Thread-ID und den aktuellen Stapelüberwachungsinformationen.</param>
+      <param name="source">Ein Name, der verwendet wird, um die Ausgabe zu bezeichnen, i. d. R. der Name der Anwendung, die das Ablaufverfolgungsereignis generiert hat.</param>
+      <param name="eventType">Einer der <see cref="T:System.Diagnostics.TraceEventType" />-Werte, der den Typ des Ereignisses angibt, das die Ablaufverfolgung verursacht hat.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="format">Eine Formatzeichenfolge mit 0 oder mehr Formatelementen, die Objekten im <paramref name="args" />-Array entsprechen.</param>
+      <param name="args">Ein object-Array mit 0 oder mehr zu formatierenden Objekten.</param>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceListener.TraceOutputOptions">
+      <summary>Ruft die Optionen für die Ablaufverfolgungsausgabe ab oder legt diese fest.</summary>
+      <returns>Eine bitweise Kombination der Enumerationswerte.Die Standardeinstellung ist <see cref="F:System.Diagnostics.TraceOptions.None" />.</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">Fehler bei der Set-Operation, da der Wert ungültig ist.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.Object)">
+      <summary>Schreibt den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts in den Listener, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="o">Ein <see cref="T:System.Object" />, dessen voll qualifizierter Klassenname geschrieben werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.Object,System.String)">
+      <summary>Schreibt einen Kategorienamen und den Wert der <see cref="M:System.Object.ToString" />-Methode eines Objekts in den Listener, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="o">Ein <see cref="T:System.Object" />, dessen voll qualifizierter Klassenname geschrieben werden soll. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.String)">
+      <summary>Schreibt beim Überschreiben in einer abgeleiteten Klasse die angegebene Meldung in den Listener, den Sie in der abgeleiteten Klasse erstellen.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.Write(System.String,System.String)">
+      <summary>Schreibt einen Kategorienamen und eine Meldung in den Listener, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteIndent">
+      <summary>Schreibt den Einzug in den Listener, den sie bei der Implementierung dieser Klasse erstellen, und setzt die <see cref="P:System.Diagnostics.TraceListener.NeedIndent" />-Eigenschaft auf false zurück.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.Object)">
+      <summary>Schreibt den Wert der <see cref="M:System.Object.ToString" />-Methode des Objekts gefolgt von einem Zeilenabschluss in den Listener, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="o">Ein <see cref="T:System.Object" />, dessen voll qualifizierter Klassenname geschrieben werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.Object,System.String)">
+      <summary>Schreibt einen Kategorienamen und den Wert der <see cref="M:System.Object.ToString" />-Methode eines Objekts gefolgt von einem Zeilenabschluss in den Listener, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="o">Ein <see cref="T:System.Object" />, dessen voll qualifizierter Klassenname geschrieben werden soll. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.String)">
+      <summary>Schreibt beim Überschreiben in einer abgeleiteten Klasse eine Meldung gefolgt von einem Zeilenabschluss in den Listener, den Sie in der abgeleiteten Klasse erstellen.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListener.WriteLine(System.String,System.String)">
+      <summary>Schreibt einen Kategorienamen und eine Meldung gefolgt von einem Zeilenabschluss in den Listener, den Sie beim Implementieren der <see cref="T:System.Diagnostics.TraceListener" />-Klasse erstellen.</summary>
+      <param name="message">Eine zu schreibende Meldung. </param>
+      <param name="category">Ein Kategoriename für die Anordnung der Ausgabe. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="T:System.Diagnostics.TraceListenerCollection">
+      <summary>Stellt eine threadsichere Liste von <see cref="T:System.Diagnostics.TraceListener" />-Objekten bereit.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Add(System.Diagnostics.TraceListener)">
+      <summary>Fügt der Liste einen <see cref="T:System.Diagnostics.TraceListener" /> hinzu.</summary>
+      <returns>Die Position, an der der neue Listener eingefügt wurde.</returns>
+      <param name="listener">Ein <see cref="T:System.Diagnostics.TraceListener" />, der der Liste hinzugefügt werden soll. </param>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.AddRange(System.Diagnostics.TraceListener[])">
+      <summary>Fügt der Liste ein Array von <see cref="T:System.Diagnostics.TraceListener" />-Objekten hinzu.</summary>
+      <param name="value">Ein Array von <see cref="T:System.Diagnostics.TraceListener" />-Objekten, die der Liste hinzugefügt werden sollen. </param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> ist null.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.AddRange(System.Diagnostics.TraceListenerCollection)">
+      <summary>Fügt der Liste den Inhalt einer anderen <see cref="T:System.Diagnostics.TraceListenerCollection" /> hinzu.</summary>
+      <param name="value">Eine andere <see cref="T:System.Diagnostics.TraceListenerCollection" />, deren Inhalt der Liste hinzugefügt wird. </param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="value" /> ist null.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Clear">
+      <summary>Löscht alle Listener aus der Liste.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Contains(System.Diagnostics.TraceListener)">
+      <summary>Überprüft, ob die Liste den angegebenen Listener enthält.</summary>
+      <returns>true, wenn der Listener in der Liste vorhanden ist, andernfalls false.</returns>
+      <param name="listener">Ein <see cref="T:System.Diagnostics.TraceListener" />, der in der Liste gesucht werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.CopyTo(System.Diagnostics.TraceListener[],System.Int32)">
+      <summary>Kopiert einen Abschnitt der aktuellen <see cref="T:System.Diagnostics.TraceListenerCollection" />-Liste am angegebenen Index in das angegebene Array.</summary>
+      <param name="listeners">Ein Array vom Typ <see cref="T:System.Array" />, in das die Elemente kopiert werden sollen. </param>
+      <param name="index">Die Indexnummer in der aktuellen Liste, ab der kopiert werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Count">
+      <summary>Ruft die Anzahl der Listener in der Liste ab.</summary>
+      <returns>Die Anzahl der Listener in der Liste.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.GetEnumerator">
+      <summary>Ruft einen Enumerator für diese Liste ab.</summary>
+      <returns>Ein Enumerator vom Typ <see cref="T:System.Collections.IEnumerator" />.</returns>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.IndexOf(System.Diagnostics.TraceListener)">
+      <summary>Ruft den Index des angegebenen Listeners ab.</summary>
+      <returns>Der Index des Listeners, sofern dieser in der Liste gefunden werden kann, andernfalls -1.</returns>
+      <param name="listener">Ein <see cref="T:System.Diagnostics.TraceListener" />, der in der Liste gesucht werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Insert(System.Int32,System.Diagnostics.TraceListener)">
+      <summary>Fügt den Listener am angegebenen Index ein.</summary>
+      <param name="index">Die Position in der Liste, an der der neue <see cref="T:System.Diagnostics.TraceListener" /> eingefügt werden soll. </param>
+      <param name="listener">Ein <see cref="T:System.Diagnostics.TraceListener" />, der in die Liste eingefügt werden soll. </param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="index" /> ist kein gültiger Index in der Liste. </exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="listener" /> ist null.</exception>
+      <filterpriority>2</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Item(System.Int32)">
+      <summary>Ruft den <see cref="T:System.Diagnostics.TraceListener" /> am angegebenen Index ab oder legt diesen fest.</summary>
+      <returns>Ein <see cref="T:System.Diagnostics.TraceListener" /> mit dem angegebenen Index.</returns>
+      <param name="i">Der nullbasierte Index des <see cref="T:System.Diagnostics.TraceListener" />, der aus der Liste abgerufen werden soll. </param>
+      <exception cref="T:System.ArgumentNullException">Der Wert ist null.</exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.Item(System.String)">
+      <summary>Ruft den ersten <see cref="T:System.Diagnostics.TraceListener" /> in der Liste mit dem angegebenen Namen ab.</summary>
+      <returns>Der erste <see cref="T:System.Diagnostics.TraceListener" /> in der Liste mit dem angegebenen <see cref="P:System.Diagnostics.TraceListener.Name" />.Dieses Element gibt null zurück, wenn kein <see cref="T:System.Diagnostics.TraceListener" /> mit dem angegebenen Namen gefunden wird.</returns>
+      <param name="name">Der Name des <see cref="T:System.Diagnostics.TraceListener" />, der aus der Liste abgerufen werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Remove(System.Diagnostics.TraceListener)">
+      <summary>Entfernt den angegebenen <see cref="T:System.Diagnostics.TraceListener" /> aus der Auflistung.</summary>
+      <param name="listener">Ein <see cref="T:System.Diagnostics.TraceListener" />, der aus der Liste entfernt werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.Remove(System.String)">
+      <summary>Entfernt den ersten <see cref="T:System.Diagnostics.TraceListener" /> mit dem angegebenen Namen aus der Auflistung.</summary>
+      <param name="name">Der Name des <see cref="T:System.Diagnostics.TraceListener" />, der aus der Liste entfernt werden soll. </param>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.RemoveAt(System.Int32)">
+      <summary>Entfernt den <see cref="T:System.Diagnostics.TraceListener" /> am angegebenen Index aus der Auflistung.</summary>
+      <param name="index">Der nullbasierte Index des <see cref="T:System.Diagnostics.TraceListener" />, der aus der Liste entfernt werden soll. </param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Der <paramref name="index" /> ist kein gültiger Index in der Liste. </exception>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#CopyTo(System.Array,System.Int32)">
+      <summary>Kopiert einen Abschnitt der aktuellen <see cref="T:System.Diagnostics.TraceListenerCollection" /> in das angegebene Array von <see cref="T:System.Diagnostics.TraceListener" />-Objekten. </summary>
+      <param name="array">Das eindimensionale Array von <see cref="T:System.Diagnostics.TraceListener" />-Objekten, das das Ziel der aus der <see cref="T:System.Diagnostics.TraceListenerCollection" /> kopierten Elemente ist.Für das Array muss eine nullbasierte Indizierung verwendet werden.</param>
+      <param name="index">Der nullbasierte Index im <paramref name="array" />, bei dem der Kopiervorgang beginnt.</param>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#IsSynchronized">
+      <summary>Ruft einen Wert ab, der angibt, ob der Zugriff auf <see cref="T:System.Diagnostics.TraceListenerCollection" /> synchronisiert (threadsicher) ist.</summary>
+      <returns>Immer true.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#ICollection#SyncRoot">
+      <summary>Ruft ein Objekt ab, mit dem der Zugriff auf <see cref="T:System.Diagnostics.TraceListenerCollection" /> synchronisiert werden kann.</summary>
+      <returns>Das aktuelle <see cref="T:System.Diagnostics.TraceListenerCollection" />-Objekt.</returns>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Add(System.Object)">
+      <summary>Fügt der <see cref="T:System.Diagnostics.TraceListenerCollection" /> einen Ablaufverfolgungslistener hinzu.</summary>
+      <returns>Die Position, an der der neue Ablaufverfolgungslistener eingefügt wurde.</returns>
+      <param name="value">Das Objekt, das <see cref="T:System.Diagnostics.TraceListenerCollection" /> hinzugefügt werden soll.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="value" /> ist null. - oder -<paramref name="value" /> ist kein <see cref="T:System.Diagnostics.TraceListener" />.</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Contains(System.Object)">
+      <summary>Bestimmt, ob die <see cref="T:System.Diagnostics.TraceListenerCollection" /> ein bestimmtes Objekt enthält.</summary>
+      <returns>true, wenn <see cref="T:System.Object" /> in <see cref="T:System.Diagnostics.TraceListenerCollection" /> gefunden wird, andernfalls false.</returns>
+      <param name="value">Das im <see cref="T:System.Diagnostics.TraceListenerCollection" /> zu suchende Objekt.</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IndexOf(System.Object)">
+      <summary>Bestimmt den Index eines angegebenen Objekts in der <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <returns>Der Index von <paramref name="value" />, sofern dieser in der <see cref="T:System.Diagnostics.TraceListenerCollection" /> gefunden wird, andernfalls -1.</returns>
+      <param name="value">Das im <see cref="T:System.Diagnostics.TraceListenerCollection" /> zu suchende Objekt.</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Insert(System.Int32,System.Object)">
+      <summary>Fügt ein <see cref="T:System.Diagnostics.TraceListener" />-Objekt an der angegebenen Position in die <see cref="T:System.Diagnostics.TraceListenerCollection" /> ein.</summary>
+      <param name="index">Der nullbasierte Index, an dem <paramref name="value" /> eingefügt werden soll.</param>
+      <param name="value">Das <see cref="T:System.Diagnostics.TraceListener" />-Objekt, das in die <see cref="T:System.Diagnostics.TraceListenerCollection" /> eingefügt werden soll.</param>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="value" /> ist kein <see cref="T:System.Diagnostics.TraceListener" />-Objekt.</exception>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IsFixedSize">
+      <summary>Ruft einen Wert ab, der angibt, ob <see cref="T:System.Diagnostics.TraceListenerCollection" /> eine feste Größe hat.</summary>
+      <returns>Immer false.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#IsReadOnly">
+      <summary>Ruft einen Wert ab, der angibt, ob die <see cref="T:System.Diagnostics.TraceListenerCollection" /> schreibgeschützt ist.</summary>
+      <returns>Immer false.</returns>
+    </member>
+    <member name="P:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Item(System.Int32)">
+      <summary>Ruft den <see cref="T:System.Diagnostics.TraceListener" /> am angegebenen Index in der <see cref="T:System.Diagnostics.TraceListenerCollection" /> ab oder legt diesen fest.</summary>
+      <returns>Der <see cref="T:System.Diagnostics.TraceListener" /> am angegebenen Index.</returns>
+      <param name="index">Der nullbasierte Index des abzurufenden <paramref name="value" />.</param>
+    </member>
+    <member name="M:System.Diagnostics.TraceListenerCollection.System#Collections#IList#Remove(System.Object)">
+      <summary>Entfernt ein Objekt aus der <see cref="T:System.Diagnostics.TraceListenerCollection" />.</summary>
+      <param name="value">Das aus dem <see cref="T:System.Diagnostics.TraceListenerCollection" /> zu entfernende Objekt.</param>
+    </member>
+    <member name="T:System.Diagnostics.TraceOptions">
+      <summary>Gibt Optionen für Ablaufverfolgungsdaten an, die in die Ablaufverfolgungsausgabe geschrieben werden sollen.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.DateTime">
+      <summary>Schreiben des Datum und der Uhrzeit. </summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.None">
+      <summary>Es werden keine Elemente geschrieben.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.ProcessId">
+      <summary>Schreiben der Prozessidentität, die durch den Rückgabewert der <see cref="P:System.Diagnostics.Process.Id" />-Eigenschaft dargestellt wird.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.ThreadId">
+      <summary>Schreiben der Threadidentität, die durch den Rückgabewert der <see cref="P:System.Threading.Thread.ManagedThreadId" />-Eigenschaft für den aktuellen Thread dargestellt wird.</summary>
+    </member>
+    <member name="F:System.Diagnostics.TraceOptions.Timestamp">
+      <summary>Schreiben des Zeitstempels, der durch den Rückgabewert der <see cref="M:System.Diagnostics.Stopwatch.GetTimestamp" />-Methode dargestellt wird.</summary>
+    </member>
+    <member name="T:System.Diagnostics.TraceSource">
+      <summary>Stellt eine Gruppe von Methoden und Eigenschaften bereit, mit denen Anwendungen die Ausführung von Code verfolgen und Ablaufverfolgungsmeldungen ihrer jeweiligen Quelle zuordnen können. </summary>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.#ctor(System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceSource" />-Klasse, wobei der angegebene Namen der Quelle verwendet wird. </summary>
+      <param name="name">Der Name der Quelle (i. d. R. der Name der Anwendung).</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="name" /> ist null.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="name" /> ist eine leere Zeichenfolge ("").</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.#ctor(System.String,System.Diagnostics.SourceLevels)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceSource" />-Klasse, wobei der angegebene Name der Quelle und die Standardebene der Quelle verwendet werden, auf der die Ablaufverfolgung durchgeführt werden soll.  </summary>
+      <param name="name">Der Name der Quelle, i. d. R. der Name der Anwendung.</param>
+      <param name="defaultLevel">Eine bitweise Kombination der Enumerationswerte, die die Standardebene der Quelle angibt, auf der die Ablaufverfolgung durchgeführt werden soll.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="name" /> ist null.</exception>
+      <exception cref="T:System.ArgumentException">
+        <paramref name="name" /> ist eine leere Zeichenfolge ("").</exception>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.Close">
+      <summary>Schließt alle Ablaufverfolgungslistener in der Auflistung der Ablaufverfolgungslistener.</summary>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.Flush">
+      <summary>Entfernt alle Ablaufverfolgungslistener aus der Auflistung der Ablaufverfolgungslistener.</summary>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Listeners">
+      <summary>Ruft die Auflistung der Ablaufverfolgungslistener für die Ablaufverfolgungsquelle ab.</summary>
+      <returns>Eine <see cref="T:System.Diagnostics.TraceListenerCollection" />, die die aktiven Ablaufverfolgungslistener enthält, die der Quelle zugeordnet sind. </returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Name">
+      <summary>Ruft den Namen der Ablaufverfolgungsquelle ab.</summary>
+      <returns>Der Name der Ablaufverfolgungsquelle.</returns>
+      <filterpriority>1</filterpriority>
+    </member>
+    <member name="P:System.Diagnostics.TraceSource.Switch">
+      <summary>Ruft den Wert des Quellschalters ab oder legt diesen fest.</summary>
+      <returns>Ein <see cref="T:System.Diagnostics.SourceSwitch" />-Objekt, das den Wert des Quellschalters darstellt.</returns>
+      <exception cref="T:System.ArgumentNullException">
+        <see cref="P:System.Diagnostics.TraceSource.Switch" /> ist auf null festgelegt.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+      <summary>Schreibt Ablaufverfolgungsdaten in die Ablaufverfolgungslistener der <see cref="P:System.Diagnostics.TraceSource.Listeners" />-Auflistung. Hierbei werden der angegebene Ereignistyp, der Ereignisbezeichner und die angegebenen Ablaufverfolgungsdaten verwendet.</summary>
+      <param name="eventType">Einer der Enumerationswerte, der den Ereignistyp der Ablaufverfolgungsdaten angibt.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="data">Die Ablaufverfolgungsdaten.</param>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceData(System.Diagnostics.TraceEventType,System.Int32,System.Object[])">
+      <summary>Schreibt Ablaufverfolgungsdaten in die Ablaufverfolgungslistener der <see cref="P:System.Diagnostics.TraceSource.Listeners" />-Auflistung. Hierbei werden der angegebene Ereignistyp, der Ereignisbezeichner und das Array von Ablaufverfolgungsdaten verwendet.</summary>
+      <param name="eventType">Einer der Enumerationswerte, der den Ereignistyp der Ablaufverfolgungsdaten angibt.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="data">Ein Objektarray, das die Ablaufverfolgungsdaten enthält.</param>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32)">
+      <summary>Schreibt eine Meldung eines Ablaufverfolgungsereignisses in die Ablaufverfolgungslistener der <see cref="P:System.Diagnostics.TraceSource.Listeners" />-Auflistung. Hierbei werden der angegebene Ereignistyp und Ereignisbezeichner verwendet.</summary>
+      <param name="eventType">Einer der Enumerationswerte, der den Ereignistyp der Ablaufverfolgungsdaten angibt.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String)">
+      <summary>Schreibt eine Meldung eines Ablaufverfolgungsereignisses in die Ablaufverfolgungslistener der <see cref="P:System.Diagnostics.TraceSource.Listeners" />-Auflistung. Hierbei werden der angegebene Ereignistyp, der Ereignisbezeichner und die angegebene Meldung verwendet.</summary>
+      <param name="eventType">Einer der Enumerationswerte, der den Ereignistyp der Ablaufverfolgungsdaten angibt.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="message">Die zu schreibende Ablaufverfolgungsmeldung.</param>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceEvent(System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+      <summary>Schreibt ein Ablaufverfolgungsereignis in die Ablaufverfolgungslistener der <see cref="P:System.Diagnostics.TraceSource.Listeners" />-Auflistung. Hierbei werden der angegebene Ereignistyp, der Ereignisbezeichner sowie das angegebene Argumentarray und Format verwendet.</summary>
+      <param name="eventType">Einer der Enumerationswerte, der den Ereignistyp der Ablaufverfolgungsdaten angibt.</param>
+      <param name="id">Ein numerischer Bezeichner für das Ereignis.</param>
+      <param name="format">Eine zusammengesetzte Formatzeichenfolge (siehe Hinweise) mit Text, der 0 oder mehr Formatelemente enthält, die Objekten im <paramref name="args" />-Array entsprechen.</param>
+      <param name="args">Ein object-Array mit 0 oder mehr zu formatierenden Objekten.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="format" /> ist null. </exception>
+      <exception cref="T:System.FormatException">
+        <paramref name="format" /> ist ungültig.- oder - Die Zahl, die ein zu formatierendes Argument angibt, ist kleiner als 0 (null) bzw. größer oder gleich der Anzahl der angegebenen zu formatierenden Objekte. </exception>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceInformation(System.String)">
+      <summary>Schreibt eine Informationsmeldung unter Verwendung der angegebenen Meldung in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.TraceSource.Listeners" />-Auflistung.</summary>
+      <param name="message">Die zu schreibende Informationsmeldung.</param>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSource.TraceInformation(System.String,System.Object[])">
+      <summary>Schreibt eine Informationsmeldung unter Verwendung des angegebenen Objektarrays und der Formatierungsinformationen in die Ablaufverfolgungslistener in der <see cref="P:System.Diagnostics.TraceSource.Listeners" />-Auflistung.</summary>
+      <param name="format">Eine zusammengesetzte Formatzeichenfolge (siehe Hinweise) mit Text, der 0 oder mehr Formatelemente enthält, die Objekten im <paramref name="args" />-Array entsprechen.</param>
+      <param name="args">Ein Array mit 0 oder mehr zu formatierenden Objekten.</param>
+      <exception cref="T:System.ArgumentNullException">
+        <paramref name="format" /> ist null. </exception>
+      <exception cref="T:System.FormatException">
+        <paramref name="format" /> ist ungültig.- oder - Die Zahl, die ein zu formatierendes Argument angibt, ist kleiner als 0 (null) bzw. größer oder gleich der Anzahl der angegebenen zu formatierenden Objekte. </exception>
+      <exception cref="T:System.ObjectDisposedException">Es wurde versucht, während des Abschlusses ein Ereignis nachzuverfolgen.</exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.EnvironmentPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="T:System.Diagnostics.TraceSwitch">
+      <summary>Stellt einen Schalter bereit, mit dem mehrere Ebenen ausgewählt und so Ablaufverfolgungs- und Debugausgabe gesteuert werden können, ohne dass der Code hierfür neu kompiliert werden muss.</summary>
+      <filterpriority>2</filterpriority>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceSwitch" />-Klasse unter Verwendung des angegebenen Anzeigenamens und der angegebenen Beschreibung.</summary>
+      <param name="displayName">Der auf einer Benutzeroberfläche anzuzeigende Name. </param>
+      <param name="description">Die Beschreibung des Schalters. </param>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.#ctor(System.String,System.String,System.String)">
+      <summary>Initialisiert eine neue Instanz der <see cref="T:System.Diagnostics.TraceSwitch" />-Klasse unter Verwendung des angegebenen Anzeigenamens, der angegebenen Beschreibung und des Standardwerts für den Schalter. </summary>
+      <param name="displayName">Der auf einer Benutzeroberfläche anzuzeigende Name. </param>
+      <param name="description">Die Beschreibung des Schalters. </param>
+      <param name="defaultSwitchValue">Der Standardwert des Schalters.</param>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.Level">
+      <summary>Ruft die Ablaufverfolgungsebene ab, die die Meldungen bestimmt, die der Schalter zulässt, oder legt diese fest.</summary>
+      <returns>Einer der <see cref="T:System.Diagnostics.TraceLevel" />-Werte, der die Ebene der vom Schalter zugelassenen Meldungen angibt.</returns>
+      <exception cref="T:System.ArgumentException">
+        <see cref="P:System.Diagnostics.TraceSwitch.Level" /> wird auf einen Wert festgelegt, der mit keinem der <see cref="T:System.Diagnostics.TraceLevel" />-Werte übereinstimmt. </exception>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="UnmanagedCode, ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.OnSwitchSettingChanged">
+      <summary>Aktualisiert und korrigiert die Ebene für diesen Schalter.</summary>
+    </member>
+    <member name="M:System.Diagnostics.TraceSwitch.OnValueChanged">
+      <summary>Legt die <see cref="P:System.Diagnostics.Switch.SwitchSetting" />-Eigenschaft auf eine ganzzahlige Entsprechung der <see cref="P:System.Diagnostics.Switch.Value" />-Eigenschaft fest.</summary>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceError">
+      <summary>Ruft einen Wert ab, der angibt, ob der Schalter Meldungen zur Fehlerbehandlung zulässt.</summary>
+      <returns>true, wenn die <see cref="P:System.Diagnostics.TraceSwitch.Level" />-Eigenschaft auf <see cref="F:System.Diagnostics.TraceLevel.Error" />, <see cref="F:System.Diagnostics.TraceLevel.Warning" />, <see cref="F:System.Diagnostics.TraceLevel.Info" /> oder <see cref="F:System.Diagnostics.TraceLevel.Verbose" /> festgelegt ist, andernfalls false.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceInfo">
+      <summary>Ruft einen Wert ab, der angibt, ob der Schalter Informationsmeldungen zulässt.</summary>
+      <returns>true, wenn die <see cref="P:System.Diagnostics.TraceSwitch.Level" />-Eigenschaft auf <see cref="F:System.Diagnostics.TraceLevel.Info" /> oder <see cref="F:System.Diagnostics.TraceLevel.Verbose" /> festgelegt ist, andernfalls false.  </returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceVerbose">
+      <summary>Ruft einen Wert ab, der angibt, ob der Schalter alle Meldungen zulässt.</summary>
+      <returns>true, wenn die <see cref="P:System.Diagnostics.TraceSwitch.Level" />-Eigenschaft auf <see cref="F:System.Diagnostics.TraceLevel.Verbose" /> festgelegt ist, andernfalls false.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+    <member name="P:System.Diagnostics.TraceSwitch.TraceWarning">
+      <summary>Ruft einen Wert ab, der angibt, ob der Schalter Warnmeldungen zulässt.</summary>
+      <returns>true, wenn die <see cref="P:System.Diagnostics.TraceSwitch.Level" />-Eigenschaft auf <see cref="F:System.Diagnostics.TraceLevel.Warning" />, <see cref="F:System.Diagnostics.TraceLevel.Info" /> oder <see cref="F:System.Diagnostics.TraceLevel.Verbose" /> festgelegt ist, andernfalls false.</returns>
+      <filterpriority>1</filterpriority>
+      <PermissionSet>
+        <IPermission class="System.Security.Permissions.FileIOPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Unrestricted="true" />
+        <IPermission class="System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.3600.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" version="1" Flags="ControlEvidence" />
+      </PermissionSet>
+    </member>
+  </members>
+</doc>

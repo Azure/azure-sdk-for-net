@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Azure.Functions.Analyzers</id>
+    <version>1.0.0</version>
+    <authors>Microsoft</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>functions.png</icon>
+    <projectUrl>http://go.microsoft.com/fwlink/?LinkID=320972</projectUrl>
+    <description>This package provides development time code analysis for C# Azure Functions.</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <tags>Azure Functions, analyzers</tags>
+    <repository type="git" url="https://github.com/Azure/azure-functions-host" />
+  </metadata>
+</package>

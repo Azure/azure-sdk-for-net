@@ -33,7 +33,7 @@ resource blobRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 
 resource blobRoleFunc 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: sa
-  name: guid(resourceGroup().id, blobContributor)
+  name: guid(resourceGroup().id, blobContributor, 'azfunc')
   properties: {
     principalId: azfunc.identity.principalId
     roleDefinitionId: blobContributor
@@ -96,11 +96,11 @@ resource farm 'Microsoft.Web/serverfarms@2021-03-01' = {
     capacity: 1
   }
   properties: { }
-  kind: 'linux'
+  kind: 'app'
 }
 
 resource azfunc 'Microsoft.Web/sites@2021-03-01' = {
-  name: '${baseName}-func'
+  name: '${baseName}func'
   location: location
   kind: 'functionapp'
   identity: {
@@ -115,6 +115,7 @@ resource azfunc 'Microsoft.Web/sites@2021-03-01' = {
     httpsOnly: true
     keyVaultReferenceIdentity: 'SystemAssigned'
     siteConfig: {
+      alwaysOn: true
       netFrameworkVersion: 'v6.0'
       http20Enabled: true
       minTlsVersion: '1.2'
@@ -148,20 +149,34 @@ resource azfunc 'Microsoft.Web/sites@2021-03-01' = {
           value: '~4'
         }
         {
-          name: 'WEBSITE_NODE_DEFAULT_VERSION'
-          value: '~14'
-        }
-        {
           name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: functionWorkerRuntime
+          value: 'dotnet'
         }
       ]
     }
   }
 }
 
+// resource func 'Microsoft.Web/sites/functions@2022-09-01' = {
+//   parent: azfunc
+//   name: 'Function1'
+//   properties:{
+//     config:{
+//       bindings:[
+//         {
+//           type: 'httpTrigger'
+//           methods: ['get']
+//           authLevel: 'anonymous'
+//           name: 'req'
+//         }
+//       ]
+//       disabled: false
+//     }
+//   }
+// }
+
 resource web 'Microsoft.Web/sites@2021-03-01' = {
-  name: '${baseName}-webapp'
+  name: '${baseName}webapp'
   location: location
   kind: 'app'
   identity: {
@@ -201,7 +216,28 @@ resource web 'Microsoft.Web/sites@2021-03-01' = {
   }
 }
 
+resource scmweb 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-09-01' = {
+  kind: 'app'
+  parent: web
+  name: 'scm'
+  properties: {
+    allow: true
+  }
+}
+
+resource scmfunc 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-09-01' = {
+  kind: 'functionapp'
+  parent: azfunc
+  name: 'scm'
+  properties: {
+    allow: true
+  }
+}
+
 output IDENTITY_WEBAPP_NAME string = web.name
 output IDENTITY_WEBAPP_USER_DEFINED_IDENTITY string = usermgdid.id
 output IDENTITY_STORAGE_NAME_1 string = sa.name
 output IDENTITY_STORAGE_NAME_2 string = sa2.name
+output IDENTITY_FUNCTION_NAME string = azfunc.name
+#disable-next-line outputs-should-not-contain-secrets
+// output IDENTITY_FUNCTION_KEY string = func.listsecrets().key
