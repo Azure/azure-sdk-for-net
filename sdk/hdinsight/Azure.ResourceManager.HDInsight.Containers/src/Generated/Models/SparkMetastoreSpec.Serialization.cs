@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ThriftUri))
             {
                 writer.WritePropertyName("thriftUrl"u8);
-                writer.WriteStringValue(ThriftUri.AbsoluteUri);
+                writer.WriteStringValue(ThriftUri);
             }
             writer.WriteEndObject();
         }
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string dbUserName = default;
             string dbPasswordSecretName = default;
             string keyVaultId = default;
-            Optional<Uri> thriftUrl = default;
+            Optional<string> thriftUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dbServerHost"u8))
@@ -75,11 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("thriftUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    thriftUrl = new Uri(property.Value.GetString());
+                    thriftUrl = property.Value.GetString();
                     continue;
                 }
             }

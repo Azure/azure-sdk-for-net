@@ -25,8 +25,9 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
-  '*Uri': 'Uri'
-  '*Uris': 'Uri'
+  # TODO, service will fix the Uri before GA
+  #'*Uri': 'Uri'
+  #'*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu

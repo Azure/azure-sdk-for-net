@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="uri"> Url of the script file. </param>
         /// <param name="services"> List of services to apply the script action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptActionProfileType"/>, <paramref name="name"/>, <paramref name="uri"/> or <paramref name="services"/> is null. </exception>
-        public ScriptActionProfile(string scriptActionProfileType, string name, Uri uri, IEnumerable<string> services)
+        public ScriptActionProfile(string scriptActionProfileType, string name, string uri, IEnumerable<string> services)
         {
             Argument.AssertNotNull(scriptActionProfileType, nameof(scriptActionProfileType));
             Argument.AssertNotNull(name, nameof(name));
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="services"> List of services to apply the script action. </param>
         /// <param name="timeoutInMinutes"> Timeout duration for the script action in minutes. </param>
         /// <param name="shouldPersist"> Specify if the script should persist on the cluster. </param>
-        internal ScriptActionProfile(string scriptActionProfileType, string name, Uri uri, string parameters, IList<string> services, int? timeoutInMinutes, bool? shouldPersist)
+        internal ScriptActionProfile(string scriptActionProfileType, string name, string uri, string parameters, IList<string> services, int? timeoutInMinutes, bool? shouldPersist)
         {
             ScriptActionProfileType = scriptActionProfileType;
             Name = name;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Script name. </summary>
         public string Name { get; set; }
         /// <summary> Url of the script file. </summary>
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
         /// <summary> Additional parameters for the script action. It should be space-separated list of arguments required for script execution. </summary>
         public string Parameters { get; set; }
         /// <summary> List of services to apply the script action. </summary>
