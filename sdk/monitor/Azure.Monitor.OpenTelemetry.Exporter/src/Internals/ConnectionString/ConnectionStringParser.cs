@@ -41,6 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 return new ConnectionVars(
                     instrumentationKey: connString.GetInstrumentationKey(),
                     ingestionEndpoint: connString.GetIngestionEndpoint(),
+                    liveEndpoint: connString.GetLiveEndpoint(),
                     aadAudience: connString.GetAADAudience());
             }
             catch (Exception ex)
@@ -87,6 +88,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
             else
             {
                 return Constants.DefaultIngestionEndpoint;
+            }
+
+            return uri.AbsoluteUri;
+        }
+
+        /// <summary>
+        /// Evaluate connection string and return the requested endpoint.
+        /// </summary>
+        /// <remarks>
+        /// Parsing the connection string MUST follow these rules:
+        ///     1. check for explicit endpoint (location is ignored)
+        ///     2. check for endpoint suffix (location is optional)
+        ///     3. use default endpoint (location is ignored)
+        /// This behavior is required by the Connection String Specification.
+        /// </remarks>
+        internal static string GetLiveEndpoint(this AzureCoreConnectionString connectionString)
+        {
+            // Passing the user input values through the Uri constructor will verify that we've built a valid endpoint.
+            Uri? uri;
+
+            if (connectionString.TryGetNonRequiredValue(Constants.LiveExplicitEndpointKey, out string? explicitEndpoint))
+            {
+                if (!Uri.TryCreate(explicitEndpoint, UriKind.Absolute, out uri))
+                {
+                    throw new ArgumentException($"The value for {Constants.LiveExplicitEndpointKey} is invalid. '{explicitEndpoint}'");
+                }
+            }
+            else if (connectionString.TryGetNonRequiredValue(Constants.EndpointSuffixKey, out string? endpointSuffix))
+            {
+                var location = connectionString.GetNonRequired(Constants.LocationKey);
+                if (!TryBuildUri(prefix: Constants.LivePrefix, suffix: endpointSuffix, location: location, uri: out uri))
+                {
+                    throw new ArgumentException($"The value for {Constants.EndpointSuffixKey} is invalid. '{endpointSuffix}'");
+                }
+            }
+            else
+            {
+                return Constants.DefaultLiveEndpoint;
             }
 
             return uri.AbsoluteUri;
