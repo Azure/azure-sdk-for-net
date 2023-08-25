@@ -114,14 +114,14 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
         void UpdateCheckpointError(string partitionId,
                                    string fullyQualifiedNamespace,
                                    string eventHubName,
                                    string consumerGroup,
-                                   string processorAuthorIdentifier,
+                                   string clientIdentifier,
                                    string exception);
 
         /// <summary>
@@ -132,13 +132,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         ///
         void UpdateCheckpointComplete(string partitionId,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
                                       string consumerGroup,
-                                      string processorAuthorIdentifier);
+                                      string clientIdentifier);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -148,13 +148,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
-        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         ///
         void UpdateCheckpointStart(string partitionId,
                                    string fullyQualifiedNamespace,
                                    string eventHubName,
                                    string consumerGroup,
-                                   string processorAuthorIdentifier);
+                                   string clientIdentifier);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.

@@ -2184,8 +2184,8 @@ namespace Azure.Messaging.EventHubs.Primitives
             /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
             /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
             /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-            /// <param name="replicationGroupEpoch">The replication group epoch associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
-            /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+            /// <param name="replicationSegment">The replication segment associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
+            /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
             /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
             ///
             public async override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
@@ -2194,8 +2194,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                              string partitionId,
                                                              long offset,
                                                              long? sequenceNumber,
-                                                             string replicationGroupEpoch,
-                                                             string processorAuthorIdentifier,
+                                                             string replicationSegment,
+                                                             string clientIdentifier,
                                                              CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken).ConfigureAwait(false);
         }
 

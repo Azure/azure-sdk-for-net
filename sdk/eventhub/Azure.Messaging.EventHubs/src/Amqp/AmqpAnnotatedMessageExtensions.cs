@@ -217,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <returns>The replication group epoch, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
         public static string GetReplicationGroupEpoch(this AmqpAnnotatedMessage instance,
-                                     string defaultValue = "")
+                                     string defaultValue = null)
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.ReplicationGroupEpoch.ToString(), out var value)))

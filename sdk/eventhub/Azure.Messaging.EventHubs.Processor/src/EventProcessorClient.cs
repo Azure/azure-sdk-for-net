@@ -896,7 +896,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-               return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, "", Identifier, cancellationToken);
+               return CheckpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, null, Identifier, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1278,7 +1278,7 @@ namespace Azure.Messaging.EventHubs
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = partitionId,
                 StartingPosition = PartitionStartingPositionDefaults.TryGetValue(partitionId, out EventPosition position) ? position : DefaultStartingPosition,
-                CheckpointAuthorIdentifier = Identifier
+                ClientAuthorIdentifier = Identifier
             };
         }
 

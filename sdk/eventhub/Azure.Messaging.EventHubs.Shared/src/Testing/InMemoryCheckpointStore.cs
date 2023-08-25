@@ -192,7 +192,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubName = data.EventHubName,
                     ConsumerGroup = data.ConsumerGroup,
                     PartitionId = data.PartitionId,
-                    CheckpointAuthorIdentifier = "Id",
+                    ClientAuthorIdentifier = "Id",
                     StartingPosition = EventPosition.FromOffset(data.Offset, false)
                 };
 
@@ -221,8 +221,8 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
         /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
-        /// <param name="replicationGroupEpoch">The replication group epoch associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
-        /// <param name="processorAuthorIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+        /// <param name="replicationSegment">The replication group epoch associated with this checkpoint. Used in conjunction with the sequence number if using a geo replication enabled Event Hubs namespace.</param>
+        /// <param name="clientIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
@@ -231,8 +231,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                    string partitionId,
                                                    long offset,
                                                    long? sequenceNumber,
-                                                   string replicationGroupEpoch,
-                                                   string processorAuthorIdentifier,
+                                                   string replicationSegment,
+                                                   string clientIdentifier,
                                                    CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)

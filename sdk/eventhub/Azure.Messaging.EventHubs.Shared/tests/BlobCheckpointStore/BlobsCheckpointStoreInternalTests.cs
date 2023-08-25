@@ -525,7 +525,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 EventHubName = EventHubName,
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = PartitionId,
-                CheckpointAuthorIdentifier = "Id"
+                ClientAuthorIdentifier = "Id"
             };
 
             var blobInfo = BlobsModelFactory.BlobInfo(new ETag($@"""{MatchingEtag}"""), DateTime.UtcNow);
@@ -570,7 +570,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 EventHubName = EventHubName,
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = PartitionId,
-                CheckpointAuthorIdentifier = "Id"
+                ClientAuthorIdentifier = "Id"
             };
 
             var blobList = new List<BlobItem>
@@ -609,7 +609,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 EventHubName = EventHubName,
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = PartitionId,
-                CheckpointAuthorIdentifier = "Id"
+                ClientAuthorIdentifier = "Id"
             };
 
             var expectedException = new DllNotFoundException("BOOM!");
@@ -642,7 +642,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 EventHubName = EventHubName,
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = PartitionId,
-                CheckpointAuthorIdentifier = "Id"
+                ClientAuthorIdentifier = "Id"
             };
 
             var expectedException = new DllNotFoundException("BOOM!");

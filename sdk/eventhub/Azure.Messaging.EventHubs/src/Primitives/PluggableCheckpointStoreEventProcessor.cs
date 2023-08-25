@@ -224,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                       long offset,
                                                       long? sequenceNumber,
                                                       CancellationToken cancellationToken) =>
-            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, "", Identifier, cancellationToken);
+            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, null, Identifier, cancellationToken);
 
         /// <summary>
         ///   Requests a list of the ownership assignments for partitions between each of the cooperating event processor

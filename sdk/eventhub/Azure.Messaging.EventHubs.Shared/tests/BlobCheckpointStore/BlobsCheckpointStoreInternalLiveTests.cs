@@ -728,7 +728,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubName = "eventHubName",
                     ConsumerGroup = "consumerGroup",
                     PartitionId = "partitionId",
-                    CheckpointAuthorIdentifier = "Id"
+                    ClientAuthorIdentifier = "Id"
                 };
 
                 var mockEvent = new MockEventData(
@@ -757,7 +757,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 Assert.That(storedCheckpoint, Is.Not.Null);
                 Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
-                Assert.That(storedCheckpoint.CheckpointAuthorIdentifier, Is.EqualTo("Id"));
+                Assert.That(storedCheckpoint.ClientAuthorIdentifier, Is.EqualTo("Id"));
 
                 // There should be a single blob in the container.
 
@@ -797,7 +797,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     EventHubName = "eventHubName",
                     ConsumerGroup = "consumerGroup",
                     PartitionId = "partitionId",
-                    CheckpointAuthorIdentifier = "Id"
+                    ClientAuthorIdentifier = "Id"
                 };
 
                 var mockEvent = new MockEventData(
@@ -825,7 +825,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(blobCount, Is.EqualTo(1));
                 Assert.That(storedCheckpoint, Is.Not.Null);
                 Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
-                Assert.That(storedCheckpoint.CheckpointAuthorIdentifier, Is.EqualTo("Id"));
+                Assert.That(storedCheckpoint.ClientAuthorIdentifier, Is.EqualTo("Id"));
 
                 // Calling update again should update the existing checkpoint.
 
@@ -852,7 +852,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(blobCount, Is.EqualTo(1));
                 Assert.That(storedCheckpoint, Is.Not.Null);
                 Assert.That(storedCheckpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset(mockEvent.Offset, false)));
-                Assert.That(storedCheckpoint.CheckpointAuthorIdentifier, Is.EqualTo("Id"));
+                Assert.That(storedCheckpoint.ClientAuthorIdentifier, Is.EqualTo("Id"));
             }
         }
 

@@ -21,8 +21,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <summary>The token that represents the last event in the stream of a partition.</summary>
         private const string EndOfStreamOffset = "@latest";
 
-        /// <summary>The token that represents the default latest epoch.</summary>
-        private const string LatestEpoch = "";
+        /// <summary>The token that represents the default unkown replication segment.</summary>
+        private const string UnknownReplicationSegment = "-1";
 
         /// <summary>
         ///   Corresponds to the location of the first event present in the partition.  Use this
@@ -49,13 +49,13 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal string Offset { get; set; }
 
         /// <summary>
-        ///   The replication group epoch of the event identified by this position. Needs to be accompanied by a sequence number when
+        ///   The replication segment of the event identified by this position. Needs to be accompanied by a sequence number when
         ///   using a geo replication enabled Event Hubs namespace.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the Event Hub does not support geo replication.</value>
         ///
-        internal string ReplicationGroupEpoch { get; set; }
+        internal string ReplicationSegment { get; set; }
 
         /// <summary>
         ///   Indicates if the specified offset is inclusive of the event which it identifies.  This
@@ -198,6 +198,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
                 _ when (SequenceNumber.HasValue) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
+                _ when (!string.IsNullOrEmpty(ReplicationSegment)) => $"Replication Segment: [{ReplicationSegment}]",
                 _ => base.ToString()
             };
 
