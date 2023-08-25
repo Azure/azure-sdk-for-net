@@ -659,7 +659,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion
 
                 Assert.IsTrue(await destinationAppendBlobClient.ExistsAsync());
-                Assert.AreEqual(dataTransfer.TransferStatus, DataTransferStatus.TransferState.Completed);
+                Assert.AreEqual(DataTransferStatus.TransferState.Completed, dataTransfer.TransferStatus.State);
             }
             finally
             {
