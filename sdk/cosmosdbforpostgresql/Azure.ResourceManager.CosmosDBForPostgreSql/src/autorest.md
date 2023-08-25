@@ -17,7 +17,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-#mgmt-debug: 
+# mgmt-debug: 
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -53,24 +53,27 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  NameAvailability: CosmosDBForPostgreSqlClusterNameAvailabilityResult
-  NameAvailability.nameAvailable: IsNameAvailable
-  NameAvailability.type: -|resource-type
+  Configuration.properties.requiresRestart: IsRestartRequired
   CheckNameAvailabilityResourceType: CosmosDBForPostgreSqlNameAvailabilityResourceType
   CheckNameAvailabilityResourceType.Microsoft.DBforPostgreSQL/serverGroupsv2: ServerGroupsV2
-  NameAvailabilityRequest: CosmosDBForPostgreSqlClusterNameAvailabilityContent
   Cluster.properties.enableShardsOnCoordinator: IsShardsOnCoordinatorEnabled
   Cluster.properties.enableHa: IsHAEnabled
   Cluster.properties.coordinatorEnablePublicIpAccess: IsCoordinatorPublicIPAccessEnabled
   Cluster.properties.nodeEnablePublicIpAccess: IsNodePublicIPAccessEnabled
-  ClusterServer.properties.enableHa: IsHAEnabled
-  ClusterServer.properties.enablePublicIpAccess: IsPublicIPAccessEnabled
-  Configuration.properties.requiresRestart: IsRestartRequired
-  ServerConfiguration.properties.requiresRestart: IsRestartRequired
   ClusterForUpdate.properties.enableShardsOnCoordinator: IsShardsOnCoordinatorEnabled
   ClusterForUpdate.properties.enableHa: IsHAEnabled
   ClusterForUpdate.properties.coordinatorEnablePublicIpAccess: IsCoordinatorPublicIPAccessEnabled
   ClusterForUpdate.properties.nodeEnablePublicIpAccess: IsNodePublicIPAccessEnabled
+  ClusterServer.properties.enableHa: IsHAEnabled
+  ClusterServer.properties.enablePublicIpAccess: IsPublicIPAccessEnabled
+  FirewallRule.properties.startIpAddress: -|ip-address
+  FirewallRule.properties.endIpAddress: -|ip-address
+  NameAvailability: CosmosDBForPostgreSqlClusterNameAvailabilityResult
+  NameAvailability.nameAvailable: IsNameAvailable
+  NameAvailability.type: -|resource-type
+  NameAvailabilityRequest: CosmosDBForPostgreSqlClusterNameAvailabilityContent
+  ProvisioningState: ClusterProvisioningState
+  ServerConfiguration.properties.requiresRestart: IsRestartRequired
 
 prepend-rp-prefix:
 - Cluster
@@ -89,6 +92,9 @@ prepend-rp-prefix:
 - ServerRole
 - ServerRoleGroupConfiguration
 - SimplePrivateEndpointConnection
+- ServerConfiguration
+- ServerNameItem
+- ServerConfigurationListResult
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}
