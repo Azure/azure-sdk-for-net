@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (2023-08-25)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Number Lookup API public preview
+- API version `2023-05-01-preview` is the default
 
 ## 1.2.0-beta.1 (2023-08-08)
 
