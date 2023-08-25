@@ -66,4 +66,18 @@ directive:
     transform: >
       delete $.AksClusterProfile.properties.aksClusterAgentPoolIdentityProfile.allOf;
       $.AksClusterProfile.properties.aksClusterAgentPoolIdentityProfile['$ref'] = '#/definitions/IdentityProfile';
+      delete $.ClusterPoolResourceProperties.properties.clusterPoolProfile.allOf;
+      $.ClusterPoolResourceProperties.properties.clusterPoolProfile['$ref'] = '#/definitions/ClusterPoolProfile';
+      delete $.ClusterPoolResourceProperties.properties.computeProfile.allOf;
+      $.ClusterPoolResourceProperties.properties.computeProfile['$ref'] = '#/definitions/ClusterPoolComputeProfile';
+      delete $.ClusterPoolResourceProperties.properties.aksClusterProfile.allOf;
+      $.ClusterPoolResourceProperties.properties.aksClusterProfile['$ref'] = '#/definitions/AksClusterProfile';
+      delete $.ClusterPoolResourceProperties.properties.networkProfile.allOf;
+      $.ClusterPoolResourceProperties.properties.networkProfile['$ref'] = '#/definitions/ClusterPoolNetworkProfile';
+      delete $.ClusterPoolResourceProperties.properties.logAnalyticsProfile.allOf;
+      $.ClusterPoolResourceProperties.properties.logAnalyticsProfile['$ref'] = '#/definitions/ClusterPoolLogAnalyticsProfile';
+      delete $.ConnectivityProfile.properties.web.allOf;
+      $.ConnectivityProfile.properties.web['$ref'] = '#/definitions/WebConnectivityEndpoint';
+      delete $.ClusterInstanceViewProperties.properties.status.allOf;
+      $.ClusterInstanceViewProperties.properties.status['$ref'] = '#/definitions/ClusterInstanceViewStatus';
 ```

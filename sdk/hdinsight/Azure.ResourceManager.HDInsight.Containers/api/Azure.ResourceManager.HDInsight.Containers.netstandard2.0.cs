@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
     public partial class HDInsightClusterPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public HDInsightClusterPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesAksClusterProfile AksClusterProfile { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile { get { throw null; } }
         public string AksManagedResourceGroupName { get { throw null; } }
         public string ClusterPoolVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesComputeProfile ComputeProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ComputeProfile { get { throw null; } set { } }
         public string DeploymentId { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile LogAnalyticsProfile { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? ProvisioningState { get { throw null; } }
@@ -139,13 +139,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     {
         public static Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile(Azure.Core.ResourceIdentifier aksClusterResourceId = null, Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentsItem ClusterComponentsItem(string name = null, string version = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewPropertiesStatus ClusterInstanceViewPropertiesStatus(string ready = null, string reason = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewPropertiesStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ServiceStatus> serviceStatuses = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus status = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ServiceStatus> serviceStatuses = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus ClusterInstanceViewStatus(string ready = null, string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterJob ClusterJob(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterJobProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile ClusterPoolComputeProfile(string vmSize = null, int? count = default(int?)) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesAksClusterProfile ClusterPoolResourcePropertiesAksClusterProfile(Azure.Core.ResourceIdentifier aksClusterResourceId = null, Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesComputeProfile ClusterPoolResourcePropertiesComputeProfile(string vmSize = null, int? count = default(int?)) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion ClusterPoolVersion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterPoolVersionValue = null, string aksVersion = null, bool? isPreview = default(bool?)) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile(string clusterVersion = null, string ossVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComponentsItem> components = null, Azure.ResourceManager.HDInsight.Containers.Models.IdentityProfile identityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AuthorizationProfile authorizationProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SecretsProfile secretsProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterServiceConfigsProfile> serviceConfigsProfiles = null, Azure.ResourceManager.HDInsight.Containers.Models.ConnectivityProfile connectivityProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterLogAnalyticsProfile logAnalyticsProfile = null, bool? prometheusProfileEnabled = default(bool?), Azure.ResourceManager.HDInsight.Containers.Models.SshProfile sshProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterAutoscaleProfile autoscaleProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> kafkaProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.TrinoProfile trinoProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> llapProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkProfile flinkProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.SparkProfile sparkProfile = null, System.Collections.Generic.IDictionary<string, System.BinaryData> stubProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.ScriptActionProfile> scriptActionProfiles = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ClusterResizeData ClusterResizeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? targetWorkerNodeCount = default(int?)) { throw null; }
@@ -154,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobProperties FlinkJobProperties(string jobName = null, string jobJarDirectory = null, string jarName = null, string entryClass = null, string args = null, string savePointName = null, Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobAction? action = default(Azure.ResourceManager.HDInsight.Containers.Models.FlinkJobAction?), System.Collections.Generic.IDictionary<string, string> flinkConfiguration = null, string jobId = null, string status = null, string jobOutput = null, string actionResult = null, string lastSavePoint = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterData HDInsightClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus?), string clusterType = null, string deploymentId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HDInsight.Containers.Models.NodeProfile> computeNodes = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile clusterProfile = null, string status = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.HDInsightClusterPatch HDInsightClusterPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile clusterProfile = null) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData HDInsightClusterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus?), string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesComputeProfile computeProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesAksClusterProfile aksClusterProfile = null, Azure.Core.ResourceIdentifier networkSubnetId = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolResourcePropertiesLogAnalyticsProfile logAnalyticsProfile = null, string status = null) { throw null; }
+        public static Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolData HDInsightClusterPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus? provisioningState = default(Azure.ResourceManager.HDInsight.Containers.Models.ProvisioningStatus?), string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile computeProfile = null, Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile aksClusterProfile = null, Azure.Core.ResourceIdentifier networkSubnetId = null, Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.NameAvailabilityResult NameAvailabilityResult(bool? nameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultValueEntity ServiceConfigListResultValueEntity(string value = null, string description = null) { throw null; }
         public static Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigResult ServiceConfigResult(string serviceName = null, string fileName = null, string content = null, string componentName = null, string serviceConfigListResultPropertiesType = null, string path = null, System.Collections.Generic.IReadOnlyDictionary<string, string> customKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HDInsight.Containers.Models.ServiceConfigListResultValueEntity> defaultKeys = null) { throw null; }
@@ -210,16 +207,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string Path { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Values { get { throw null; } }
     }
-    public partial class ClusterInstanceViewPropertiesStatus : Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus
-    {
-        internal ClusterInstanceViewPropertiesStatus() { }
-    }
     public partial class ClusterInstanceViewResult
     {
         internal ClusterInstanceViewResult() { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HDInsight.Containers.Models.ServiceStatus> ServiceStatuses { get { throw null; } }
-        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewPropertiesStatus Status { get { throw null; } }
+        public Azure.ResourceManager.HDInsight.Containers.Models.ClusterInstanceViewStatus Status { get { throw null; } }
     }
     public partial class ClusterInstanceViewStatus
     {
@@ -261,18 +254,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public ClusterPoolLogAnalyticsProfile(bool enabled) { }
         public bool Enabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WorkspaceId { get { throw null; } set { } }
-    }
-    public partial class ClusterPoolResourcePropertiesAksClusterProfile : Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile
-    {
-        internal ClusterPoolResourcePropertiesAksClusterProfile() { }
-    }
-    public partial class ClusterPoolResourcePropertiesComputeProfile : Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolComputeProfile
-    {
-        public ClusterPoolResourcePropertiesComputeProfile(string vmSize) : base (default(string)) { }
-    }
-    public partial class ClusterPoolResourcePropertiesLogAnalyticsProfile : Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolLogAnalyticsProfile
-    {
-        public ClusterPoolResourcePropertiesLogAnalyticsProfile(bool enabled) : base (default(bool)) { }
     }
     public partial class ClusterPoolVersion : Azure.ResourceManager.Models.ResourceData
     {

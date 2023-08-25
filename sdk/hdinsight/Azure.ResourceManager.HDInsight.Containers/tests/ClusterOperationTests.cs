@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HDInsightOnAks.Tests
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
             string clusterPoolVmSize = "Standard_E4s_v3";
-            clusterPoolData.ComputeProfile = new ClusterPoolResourcePropertiesComputeProfile(clusterPoolVmSize);
+            clusterPoolData.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
 
             HDInsightClusterPoolCollection clusterPoolCollection = ResourceGroup.GetHDInsightClusterPools();
             var clusterPoolResult = await clusterPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, clusterPoolData).ConfigureAwait(false);

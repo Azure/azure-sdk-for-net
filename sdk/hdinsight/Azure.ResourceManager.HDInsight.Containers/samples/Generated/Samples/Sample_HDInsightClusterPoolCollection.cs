@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
             HDInsightClusterPoolData data = new HDInsightClusterPoolData(new AzureLocation("West US 2"))
             {
                 ClusterPoolVersion = "1.2",
-                ComputeProfile = new ClusterPoolResourcePropertiesComputeProfile("Standard_D3_v2"),
+                ComputeProfile = new ClusterPoolComputeProfile("Standard_D3_v2"),
             };
             ArmOperation<HDInsightClusterPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterPoolName, data);
             HDInsightClusterPoolResource result = lro.Value;

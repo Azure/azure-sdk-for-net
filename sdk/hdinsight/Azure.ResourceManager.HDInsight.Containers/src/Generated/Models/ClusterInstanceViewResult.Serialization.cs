@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string name = default;
-            ClusterInstanceViewPropertiesStatus status = default;
+            ClusterInstanceViewStatus status = default;
             IReadOnlyList<ServiceStatus> serviceStatuses = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         if (property0.NameEquals("status"u8))
                         {
-                            status = ClusterInstanceViewPropertiesStatus.DeserializeClusterInstanceViewPropertiesStatus(property0.Value);
+                            status = ClusterInstanceViewStatus.DeserializeClusterInstanceViewStatus(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceStatuses"u8))

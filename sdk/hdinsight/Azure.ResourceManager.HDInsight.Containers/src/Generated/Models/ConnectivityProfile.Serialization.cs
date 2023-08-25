@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            ConnectivityProfileWeb web = default;
+            WebConnectivityEndpoint web = default;
             Optional<IReadOnlyList<SshConnectivityEndpoint>> ssh = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("web"u8))
                 {
-                    web = ConnectivityProfileWeb.DeserializeConnectivityProfileWeb(property.Value);
+                    web = WebConnectivityEndpoint.DeserializeWebConnectivityEndpoint(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ssh"u8))

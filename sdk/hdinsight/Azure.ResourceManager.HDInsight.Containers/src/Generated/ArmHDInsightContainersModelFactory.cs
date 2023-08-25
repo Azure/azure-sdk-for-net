@@ -35,20 +35,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="logAnalyticsProfile"> Cluster pool log analytics profile to enable OMS agent for AKS cluster. </param>
         /// <param name="status"> Business status of the resource. </param>
         /// <returns> A new <see cref="Containers.HDInsightClusterPoolData"/> instance for mocking. </returns>
-        public static HDInsightClusterPoolData HDInsightClusterPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningStatus? provisioningState = null, string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, ClusterPoolResourcePropertiesComputeProfile computeProfile = null, ClusterPoolResourcePropertiesAksClusterProfile aksClusterProfile = null, ResourceIdentifier networkSubnetId = null, ClusterPoolResourcePropertiesLogAnalyticsProfile logAnalyticsProfile = null, string status = null)
+        public static HDInsightClusterPoolData HDInsightClusterPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningStatus? provisioningState = null, string deploymentId = null, string managedResourceGroupName = null, string aksManagedResourceGroupName = null, string clusterPoolVersion = null, ClusterPoolComputeProfile computeProfile = null, AksClusterProfile aksClusterProfile = null, ResourceIdentifier networkSubnetId = null, ClusterPoolLogAnalyticsProfile logAnalyticsProfile = null, string status = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HDInsightClusterPoolData(id, name, resourceType, systemData, tags, location, provisioningState, deploymentId, managedResourceGroupName, aksManagedResourceGroupName, clusterPoolVersion != null ? new ClusterPoolResourcePropertiesClusterPoolProfile(clusterPoolVersion) : null, computeProfile, aksClusterProfile, networkSubnetId != null ? new ClusterPoolResourcePropertiesNetworkProfile(networkSubnetId) : null, logAnalyticsProfile, status);
-        }
-
-        /// <summary> Initializes a new instance of ClusterPoolResourcePropertiesComputeProfile. </summary>
-        /// <param name="vmSize"> The virtual machine SKU. </param>
-        /// <param name="count"> The number of virtual machines. </param>
-        /// <returns> A new <see cref="Models.ClusterPoolResourcePropertiesComputeProfile"/> instance for mocking. </returns>
-        public static ClusterPoolResourcePropertiesComputeProfile ClusterPoolResourcePropertiesComputeProfile(string vmSize = null, int? count = null)
-        {
-            return new ClusterPoolResourcePropertiesComputeProfile(vmSize, count);
+            return new HDInsightClusterPoolData(id, name, resourceType, systemData, tags, location, provisioningState, deploymentId, managedResourceGroupName, aksManagedResourceGroupName, clusterPoolVersion != null ? new ClusterPoolProfile(clusterPoolVersion) : null, computeProfile, aksClusterProfile, networkSubnetId != null ? new ClusterPoolNetworkProfile(networkSubnetId) : null, logAnalyticsProfile, status);
         }
 
         /// <summary> Initializes a new instance of ClusterPoolComputeProfile. </summary>
@@ -58,16 +49,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static ClusterPoolComputeProfile ClusterPoolComputeProfile(string vmSize = null, int? count = null)
         {
             return new ClusterPoolComputeProfile(vmSize, count);
-        }
-
-        /// <summary> Initializes a new instance of ClusterPoolResourcePropertiesAksClusterProfile. </summary>
-        /// <param name="aksClusterResourceId"> ARM Resource ID of the AKS cluster. </param>
-        /// <param name="aksClusterAgentPoolIdentityProfile"> Identity properties of the AKS cluster agentpool MSI. </param>
-        /// <param name="aksVersion"> AKS control plane and default node pool version of this ClusterPool. </param>
-        /// <returns> A new <see cref="Models.ClusterPoolResourcePropertiesAksClusterProfile"/> instance for mocking. </returns>
-        public static ClusterPoolResourcePropertiesAksClusterProfile ClusterPoolResourcePropertiesAksClusterProfile(ResourceIdentifier aksClusterResourceId = null, IdentityProfile aksClusterAgentPoolIdentityProfile = null, string aksVersion = null)
-        {
-            return new ClusterPoolResourcePropertiesAksClusterProfile(aksClusterResourceId, aksClusterAgentPoolIdentityProfile, aksVersion);
         }
 
         /// <summary> Initializes a new instance of AksClusterProfile. </summary>
@@ -152,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             ssh ??= new List<SshConnectivityEndpoint>();
 
-            return new ConnectivityProfile(webFqdn != null ? new ConnectivityProfileWeb(webFqdn) : null, ssh?.ToList());
+            return new ConnectivityProfile(webFqdn != null ? new WebConnectivityEndpoint(webFqdn) : null, ssh?.ToList());
         }
 
         /// <summary> Initializes a new instance of SshConnectivityEndpoint. </summary>
@@ -268,21 +249,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="status"> Status of the instance view. </param>
         /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>
         /// <returns> A new <see cref="Models.ClusterInstanceViewResult"/> instance for mocking. </returns>
-        public static ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, ClusterInstanceViewPropertiesStatus status = null, IEnumerable<ServiceStatus> serviceStatuses = null)
+        public static ClusterInstanceViewResult ClusterInstanceViewResult(string name = null, ClusterInstanceViewStatus status = null, IEnumerable<ServiceStatus> serviceStatuses = null)
         {
             serviceStatuses ??= new List<ServiceStatus>();
 
             return new ClusterInstanceViewResult(name, status, serviceStatuses?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ClusterInstanceViewPropertiesStatus. </summary>
-        /// <param name="ready"> The cluster ready status. </param>
-        /// <param name="reason"> The status reason. </param>
-        /// <param name="message"> The additional message. </param>
-        /// <returns> A new <see cref="Models.ClusterInstanceViewPropertiesStatus"/> instance for mocking. </returns>
-        public static ClusterInstanceViewPropertiesStatus ClusterInstanceViewPropertiesStatus(string ready = null, string reason = null, string message = null)
-        {
-            return new ClusterInstanceViewPropertiesStatus(ready, reason, message);
         }
 
         /// <summary> Initializes a new instance of ClusterInstanceViewStatus. </summary>

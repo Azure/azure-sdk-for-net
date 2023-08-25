@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="status"> Status of the instance view. </param>
         /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="status"/> or <paramref name="serviceStatuses"/> is null. </exception>
-        internal ClusterInstanceViewResult(string name, ClusterInstanceViewPropertiesStatus status, IEnumerable<ServiceStatus> serviceStatuses)
+        internal ClusterInstanceViewResult(string name, ClusterInstanceViewStatus status, IEnumerable<ServiceStatus> serviceStatuses)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(status, nameof(status));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="name"> Name of the instance view. </param>
         /// <param name="status"> Status of the instance view. </param>
         /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>
-        internal ClusterInstanceViewResult(string name, ClusterInstanceViewPropertiesStatus status, IReadOnlyList<ServiceStatus> serviceStatuses)
+        internal ClusterInstanceViewResult(string name, ClusterInstanceViewStatus status, IReadOnlyList<ServiceStatus> serviceStatuses)
         {
             Name = name;
             Status = status;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Name of the instance view. </summary>
         public string Name { get; }
         /// <summary> Status of the instance view. </summary>
-        public ClusterInstanceViewPropertiesStatus Status { get; }
+        public ClusterInstanceViewStatus Status { get; }
         /// <summary> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </summary>
         public IReadOnlyList<ServiceStatus> ServiceStatuses { get; }
     }

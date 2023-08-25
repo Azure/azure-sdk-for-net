@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.HDInsight.Containers
             Optional<string> deploymentId = default;
             Optional<string> managedResourceGroupName = default;
             Optional<string> aksManagedResourceGroupName = default;
-            Optional<ClusterPoolResourcePropertiesClusterPoolProfile> clusterPoolProfile = default;
-            Optional<ClusterPoolResourcePropertiesComputeProfile> computeProfile = default;
-            Optional<ClusterPoolResourcePropertiesAksClusterProfile> aksClusterProfile = default;
-            Optional<ClusterPoolResourcePropertiesNetworkProfile> networkProfile = default;
-            Optional<ClusterPoolResourcePropertiesLogAnalyticsProfile> logAnalyticsProfile = default;
+            Optional<ClusterPoolProfile> clusterPoolProfile = default;
+            Optional<ClusterPoolComputeProfile> computeProfile = default;
+            Optional<AksClusterProfile> aksClusterProfile = default;
+            Optional<ClusterPoolNetworkProfile> networkProfile = default;
+            Optional<ClusterPoolLogAnalyticsProfile> logAnalyticsProfile = default;
             Optional<string> status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            clusterPoolProfile = ClusterPoolResourcePropertiesClusterPoolProfile.DeserializeClusterPoolResourcePropertiesClusterPoolProfile(property0.Value);
+                            clusterPoolProfile = ClusterPoolProfile.DeserializeClusterPoolProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("computeProfile"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            computeProfile = ClusterPoolResourcePropertiesComputeProfile.DeserializeClusterPoolResourcePropertiesComputeProfile(property0.Value);
+                            computeProfile = ClusterPoolComputeProfile.DeserializeClusterPoolComputeProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("aksClusterProfile"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            aksClusterProfile = ClusterPoolResourcePropertiesAksClusterProfile.DeserializeClusterPoolResourcePropertiesAksClusterProfile(property0.Value);
+                            aksClusterProfile = AksClusterProfile.DeserializeAksClusterProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            networkProfile = ClusterPoolResourcePropertiesNetworkProfile.DeserializeClusterPoolResourcePropertiesNetworkProfile(property0.Value);
+                            networkProfile = ClusterPoolNetworkProfile.DeserializeClusterPoolNetworkProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("logAnalyticsProfile"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                             {
                                 continue;
                             }
-                            logAnalyticsProfile = ClusterPoolResourcePropertiesLogAnalyticsProfile.DeserializeClusterPoolResourcePropertiesLogAnalyticsProfile(property0.Value);
+                            logAnalyticsProfile = ClusterPoolLogAnalyticsProfile.DeserializeClusterPoolLogAnalyticsProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))

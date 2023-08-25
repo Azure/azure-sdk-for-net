@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of ConnectivityProfile. </summary>
         /// <param name="web"> Web connectivity endpoint details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="web"/> is null. </exception>
-        internal ConnectivityProfile(ConnectivityProfileWeb web)
+        internal ConnectivityProfile(WebConnectivityEndpoint web)
         {
             Argument.AssertNotNull(web, nameof(web));
 
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of ConnectivityProfile. </summary>
         /// <param name="web"> Web connectivity endpoint details. </param>
         /// <param name="ssh"> List of SSH connectivity endpoints. </param>
-        internal ConnectivityProfile(ConnectivityProfileWeb web, IReadOnlyList<SshConnectivityEndpoint> ssh)
+        internal ConnectivityProfile(WebConnectivityEndpoint web, IReadOnlyList<SshConnectivityEndpoint> ssh)
         {
             Web = web;
             Ssh = ssh;
         }
 
         /// <summary> Web connectivity endpoint details. </summary>
-        internal ConnectivityProfileWeb Web { get; }
+        internal WebConnectivityEndpoint Web { get; }
         /// <summary> Web connectivity endpoint. </summary>
         public string WebFqdn
         {
