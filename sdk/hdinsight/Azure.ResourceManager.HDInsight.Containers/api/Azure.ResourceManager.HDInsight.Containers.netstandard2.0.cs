@@ -533,8 +533,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ScaleActionType(string value) { throw null; }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType Scaledown { get { throw null; } }
-        public static Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType Scaleup { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType ScaleDown { get { throw null; } }
+        public static Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType ScaleUp { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HDInsight.Containers.Models.ScaleActionType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

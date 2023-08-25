@@ -24,6 +24,8 @@ rename-mapping:
   AutoscaleProfile: ClusterAutoscaleProfile
   Cluster: HDInsightCluster
   ClusterPool: HDInsightClusterPool
+  ScaleActionType.scaleup: ScaleUp
+  ScaleActionType.scaledown: ScaleDown
   # TODO, remove these when service fix the Uri format before GA
   FlinkHiveCatalogOption.metastoreDbConnectionURL: MetastoreDBConnectionUriString
   FlinkStorageProfile.storageUri: StorageUriString

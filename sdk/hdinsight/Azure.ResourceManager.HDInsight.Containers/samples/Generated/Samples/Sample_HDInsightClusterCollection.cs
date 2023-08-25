@@ -179,7 +179,7 @@ ScheduleDay.Sunday
             }),
                         LoadBasedConfig = new LoadBasedConfig(10, 20, new ScalingRule[]
             {
-new ScalingRule(ScaleActionType.Scaleup,3,"cpu",new ComparisonRule(ComparisonOperator.GreaterThan,90)),new ScalingRule(ScaleActionType.Scaledown,3,"cpu",new ComparisonRule(ComparisonOperator.LessThan,20))
+new ScalingRule(ScaleActionType.ScaleUp,3,"cpu",new ComparisonRule(ComparisonOperator.GreaterThan,90)),new ScalingRule(ScaleActionType.ScaleDown,3,"cpu",new ComparisonRule(ComparisonOperator.LessThan,20))
             })
                         {
                             PollInterval = 60,

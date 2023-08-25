@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ScaleupValue = "scaleup";
-        private const string ScaledownValue = "scaledown";
+        private const string ScaleUpValue = "scaleup";
+        private const string ScaleDownValue = "scaledown";
 
         /// <summary> scaleup. </summary>
-        public static ScaleActionType Scaleup { get; } = new ScaleActionType(ScaleupValue);
+        public static ScaleActionType ScaleUp { get; } = new ScaleActionType(ScaleUpValue);
         /// <summary> scaledown. </summary>
-        public static ScaleActionType Scaledown { get; } = new ScaleActionType(ScaledownValue);
+        public static ScaleActionType ScaleDown { get; } = new ScaleActionType(ScaleDownValue);
         /// <summary> Determines if two <see cref="ScaleActionType"/> values are the same. </summary>
         public static bool operator ==(ScaleActionType left, ScaleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleActionType"/> values are not the same. </summary>
