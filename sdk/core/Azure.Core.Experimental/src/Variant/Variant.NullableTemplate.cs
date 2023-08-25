@@ -3,8 +3,9 @@
 
 using System.Runtime.InteropServices;
 
-namespace Azure {
-    public readonly partial struct Value
+namespace Azure
+{
+    public readonly partial struct Variant
     {
         [StructLayout(LayoutKind.Sequential)]
         private readonly struct NullableTemplate<T> where T : unmanaged

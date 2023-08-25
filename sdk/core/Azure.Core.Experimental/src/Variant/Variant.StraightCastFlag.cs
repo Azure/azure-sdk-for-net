@@ -3,14 +3,15 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Azure {
-    public readonly partial struct Value
+namespace Azure
+{
+    public readonly partial struct Variant
     {
         private sealed class StraightCastFlag<T> : TypeFlag<T>
         {
             public static StraightCastFlag<T> Instance { get; } = new();
 
-            public override T To(in Value value)
+            public override T To(in Variant value)
                 => Unsafe.As<Union, T>(ref Unsafe.AsRef(value._union));
         }
     }

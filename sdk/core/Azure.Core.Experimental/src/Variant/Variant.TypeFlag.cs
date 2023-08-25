@@ -4,8 +4,9 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Azure {
-    public readonly partial struct Value
+namespace Azure
+{
+    public readonly partial struct Variant
     {
         private abstract class TypeFlag
         {
@@ -15,7 +16,7 @@ namespace Azure {
                 get;
             }
 
-            public abstract object ToObject(in Value value);
+            public abstract object ToObject(in Variant value);
         }
 
         private abstract class TypeFlag<T> : TypeFlag
@@ -26,8 +27,8 @@ namespace Azure {
                 get => typeof(T);
             }
 
-            public override object ToObject(in Value value) => To(value)!;
-            public abstract T To(in Value value);
+            public override object ToObject(in Variant value) => To(value)!;
+            public abstract T To(in Variant value);
         }
     }
 }
