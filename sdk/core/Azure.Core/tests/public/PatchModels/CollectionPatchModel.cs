@@ -69,7 +69,7 @@ namespace Azure.Core.Tests.PatchModels
                 _children ??=
                     new MergePatchDictionary<ChildPatchModel>(
                         ChildPatchModel.Deserialize,
-                        (w, n, m) => m.SerializePatchProperty(w, n),
+                        (w, m) => m.SerializePatch(w),
                         c => c.HasChanges);
                 return _children;
             }

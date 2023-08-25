@@ -29,7 +29,7 @@ namespace Azure.Core.Tests.PatchModels
                     variables = MergePatchDictionary<string>.Deserialize(
                         property.Value,
                         e => e.GetString()!,
-                        (w, n, s) => w.WriteString(n, s));
+                        (w, s) => w.WriteStringValue(s));
                 }
 
                 if (property.NameEquals("children"))
@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.PatchModels
                     children = MergePatchDictionary<ChildPatchModel>.Deserialize(
                         property.Value,
                         ChildPatchModel.Deserialize,
-                        (w, n, m) => m.SerializePatchProperty(w, n),
+                        (w, m) => m.SerializePatch(w),
                         c => c.HasChanges);
                 }
             }

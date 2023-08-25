@@ -14,13 +14,13 @@ namespace Azure.Core.Serialization
     internal partial class MergePatchDictionary<T> : IDictionary<string, T>
     {
         public static MergePatchDictionary<string> GetStringDictionary(Dictionary<string, string>? d = default)
-            => new(e => e.GetString()!, (w, n, s) => w.WriteString(n, s), default, d);
+            => new(e => e.GetString()!, (w, s) => w.WriteStringValue(s), default, d);
 
         private readonly Dictionary<string, bool> _changed;
         private readonly Dictionary<string, T> _dictionary;
 
         private readonly Func<JsonElement, T> _deserializeItem;
-        private readonly Action<Utf8JsonWriter, string, T> _serializeItem;
+        private readonly Action<Utf8JsonWriter, T> _serializeItem;
         private readonly Func<T, bool>? _itemHasChanges;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         public MergePatchDictionary(
             Func<JsonElement, T> deserializeItem,
-            Action<Utf8JsonWriter, string, T> serializeItem,
+            Action<Utf8JsonWriter, T> serializeItem,
             Func<T, bool>? hasChanges = default,
             Dictionary<string, T>? dictionary = default)
         {

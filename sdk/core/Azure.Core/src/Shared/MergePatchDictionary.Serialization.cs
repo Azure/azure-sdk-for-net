@@ -46,7 +46,8 @@ namespace Azure.Core.Serialization
                 }
                 else
                 {
-                    _serializeItem(writer, kvp.Key, kvp.Value);
+                    writer.WritePropertyName(kvp.Key);
+                    _serializeItem(writer, kvp.Value);
                 }
             }
 
@@ -66,9 +67,10 @@ namespace Azure.Core.Serialization
                         writer.WritePropertyName(kvp.Key);
                         writer.WriteNullValue();
                     }
-                    else
+                    else if (_itemHasChanges == null || _itemHasChanges(value))
                     {
-                        _serializeItem(writer, kvp.Key, value);
+                        writer.WritePropertyName(kvp.Key);
+                        _serializeItem(writer, value);
                     }
                 }
             }
@@ -81,7 +83,7 @@ namespace Azure.Core.Serialization
 
         public static MergePatchDictionary<T> Deserialize(JsonElement element,
             Func<JsonElement, T> deserializeItem,
-            Action<Utf8JsonWriter, string, T> serializeItem,
+            Action<Utf8JsonWriter, T> serializeItem,
             Func<T, bool>? itemHasChanges = default)
         {
             Dictionary<string, T> values = new();
