@@ -23,9 +23,9 @@ namespace Azure.Core.Serialization
         private readonly Action<Utf8JsonWriter, T?> _serializeItem;
         private readonly Func<T?, bool>? _itemHasChanges;
 
-        /// <summary>
-        /// Deserialization constructor.
-        /// </summary>
+        private bool _checkChanges;
+        private bool _hasChanges;
+
         public MergePatchDictionary(
             Func<JsonElement, T?> deserializeItem,
             Action<Utf8JsonWriter, T?> serializeItem,
@@ -41,8 +41,31 @@ namespace Azure.Core.Serialization
             _itemHasChanges = hasChanges;
         }
 
-        private bool _checkChanges;
-        private bool _hasChanges;
+        /// <summary>
+        /// Deserialization constructor
+        /// </summary>
+        internal MergePatchDictionary(
+            JsonElement element,
+            Func<JsonElement, T?> deserializeItem,
+            Action<Utf8JsonWriter, T?> serializeItem,
+            Func<T?, bool>? hasChanges = default)
+        {
+            // TODO: How to size it?
+            _changes = new(100);
+            _indexes = new Dictionary<string, int>();
+            _values = new T?[100];
+
+            _deserializeItem = deserializeItem;
+            _serializeItem = serializeItem;
+            _itemHasChanges = hasChanges;
+
+            // Deserialize the values from the JsonElement
+            foreach (JsonProperty property in element.EnumerateObject())
+            {
+                Add(property.Name, deserializeItem(property.Value));
+            }
+        }
+
         public bool HasChanges => _hasChanges || ItemsChanged();
 
         private bool ItemsChanged()
@@ -84,11 +107,15 @@ namespace Azure.Core.Serialization
             set
             {
                 _hasChanges = true;
-
-                // TODO: check if it's new to reallocate if needed
-                _changes.SetChanged(_indexes[key]);
-
-                _dictionary[key] = value;
+                if (_indexes.TryGetValue(key, out int index))
+                {
+                    _changes.SetChanged(index);
+                    _values[index] = value;
+                }
+                else
+                {
+                    Add(key, value);
+                }
             }
         }
 

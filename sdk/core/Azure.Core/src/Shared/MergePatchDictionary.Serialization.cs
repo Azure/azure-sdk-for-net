@@ -86,17 +86,7 @@ namespace Azure.Core.Serialization
             Action<Utf8JsonWriter, T?> serializeItem,
             Func<T?, bool>? itemHasChanges = default)
         {
-            Dictionary<string, T?> values = new();
-            foreach (JsonProperty property in element.EnumerateObject())
-            {
-                values.Add(property.Name, deserializeItem(property.Value));
-            }
-
-            return new MergePatchDictionary<T>(
-                deserializeItem,
-                serializeItem,
-                itemHasChanges,
-                values);
+            return new MergePatchDictionary<T>(element, deserializeItem, serializeItem, itemHasChanges);
         }
 
         MergePatchDictionary<T> IModelJsonSerializable<MergePatchDictionary<T>>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
