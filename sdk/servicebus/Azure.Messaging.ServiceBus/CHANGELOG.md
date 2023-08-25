@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+- The reference for the AMQP transport library, `Microsoft.Azure.Amqp`, has been bumped to 2.6.3. This fixes an issue with timeout duration calculations during link creation and includes several efficiency improvements.
+
+## 7.16.1 (2023-08-15)
+
+### Bugs Fixed
+
+- Fixed race condition that could lead to an `ObjectDisposedException` when using the `ServiceBusSessionProcessor`.
+
 ## 7.16.0 (2023-08-07)
 
 ### Acknowledgments
