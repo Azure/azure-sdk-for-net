@@ -58,12 +58,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset.Value;
            }
 
-            if (!string.IsNullOrEmpty(replicationGroupEpoch))
-            {
-                instance.MessageAnnotations[AmqpProperty.ReplicationGroupEpoch.ToString()] = replicationGroupEpoch;
-            }
+           if (replicationGroupEpoch != null)
+           {
+               instance.MessageAnnotations[AmqpProperty.ReplicationGroupEpoch.ToString()] = replicationGroupEpoch;
+           }
 
-            if (enqueuedTime.HasValue)
+           if (enqueuedTime.HasValue)
            {
                instance.MessageAnnotations[AmqpProperty.EnqueuedTime.ToString()] = enqueuedTime.Value;
            }
