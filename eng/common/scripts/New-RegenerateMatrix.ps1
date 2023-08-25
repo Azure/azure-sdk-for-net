@@ -38,7 +38,7 @@ function Split-Items([array]$Items) {
 # ensure the output directory exists
 New-Item -ItemType Directory -Path $OutputDirectory -Force | Out-Null
 
-$pattern = "^$($RepoRoot.Path.Replace("\", "/"))/(sdk/(.*?)/.*)"
+$pattern = "^$($RepoRoot.Path.Replace("\", "/"))/sdk/((.*?)/.*)"
 Push-Location "$RepoRoot/sdk"
 [array]$packageFolders = Get-ChildItem -Directory -Recurse
 | ForEach-Object {
@@ -47,7 +47,7 @@ Push-Location "$RepoRoot/sdk"
 | Where-Object { $_ -match $pattern }
 | ForEach-Object {
   [ordered]@{
-    "SdkFolder"   = $Matches[1]
+    "PackageFolder"   = $Matches[1]
     "ServiceArea" = $Matches[2]
   }
 }
@@ -62,7 +62,7 @@ for ($i = 0; $i -lt $batches.Length; $i++) {
   $lastPrefix = $batch[-1].ServiceArea.Substring(0, 2)
   $key = "Batch_$i`_$firstPrefix`_$lastPrefix"
   $fileName = "$i.json"
-  $batch.SdkFolder | ConvertTo-Json -AsArray | Out-File "$OutputDirectory/$fileName"
+  $batch.PackageFolder | ConvertTo-Json -AsArray | Out-File "$OutputDirectory/$fileName"
   $matrix[$key] = [ordered]@{ "JobKey" = $key; "FolderList" = $fileName }
 }
 
