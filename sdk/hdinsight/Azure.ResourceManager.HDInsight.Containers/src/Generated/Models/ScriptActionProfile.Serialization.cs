@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
+            writer.WriteStringValue(Uri);
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
