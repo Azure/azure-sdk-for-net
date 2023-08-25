@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement
         internal static JobPartPlanHeader GetJobPartPlanHeader(this JobPartPlanFileName fileName)
         {
             JobPartPlanHeader result;
-            int bufferSize = DataMovementConstants.PlanFile.JobPartHeaderSizeInBytes;
+            int bufferSize = DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes;
 
             using MemoryMappedFile memoryMappedFile = MemoryMappedFile.CreateFromFile(fileName.ToString());
             using (MemoryMappedViewStream stream = memoryMappedFile.CreateViewStream(0, bufferSize, MemoryMappedFileAccess.Read))
@@ -51,8 +51,8 @@ namespace Azure.Storage.DataMovement
             string transferId,
             CancellationToken cancellationToken)
         {
-            int startIndex = DataMovementConstants.PlanFile.SourcePathLengthIndex;
-            int readLength = DataMovementConstants.PlanFile.DestinationExtraQueryLengthIndex - startIndex;
+            int startIndex = DataMovementConstants.JobPartPlanFile.SourcePathLengthIndex;
+            int readLength = DataMovementConstants.JobPartPlanFile.DestinationExtraQueryLengthIndex - startIndex;
 
             int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
             string storedSourcePath = default;
@@ -69,22 +69,22 @@ namespace Azure.Storage.DataMovement
                     BinaryReader reader = new BinaryReader(stream);
 
                     // Read Source Path Length
-                    byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                    byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
                     ushort pathLength = pathLengthBuffer.ToUShort();
 
                     // Read Source Path
-                    byte[] pathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrNumBytes);
+                    byte[] pathBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
                     string sourcePath = pathBuffer.ToString(pathLength);
 
                     // Set the stream position to the start of the destination path
-                    reader.BaseStream.Position = DataMovementConstants.PlanFile.DestinationPathLengthIndex - startIndex;
+                    reader.BaseStream.Position = DataMovementConstants.JobPartPlanFile.DestinationPathLengthIndex - startIndex;
 
                     // Read Destination Path Length
-                    pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                    pathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
                     pathLength = pathLengthBuffer.ToUShort();
 
                     // Read Destination Path
-                    pathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrNumBytes);
+                    pathBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
                     string destPath = pathBuffer.ToString(pathLength);
 
                     if (string.IsNullOrEmpty(storedSourcePath))
@@ -138,8 +138,8 @@ namespace Azure.Storage.DataMovement
             string transferId,
             CancellationToken cancellationToken)
         {
-            int startIndex = DataMovementConstants.PlanFile.SourceResourceIdLengthIndex;
-            int readLength = DataMovementConstants.PlanFile.DestinationPathLengthIndex - startIndex;
+            int startIndex = DataMovementConstants.JobPartPlanFile.SourceResourceIdLengthIndex;
+            int readLength = DataMovementConstants.JobPartPlanFile.DestinationPathLengthIndex - startIndex;
 
             string sourceResourceId;
             string destinationResourceId;
@@ -153,22 +153,22 @@ namespace Azure.Storage.DataMovement
                 BinaryReader reader = new BinaryReader(stream);
 
                 // Read Source Length
-                byte[] sourceLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                byte[] sourceLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
                 ushort sourceLength = sourceLengthBuffer.ToUShort();
 
                 // Read Source
-                byte[] sourceBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ResourceIdNumBytes);
+                byte[] sourceBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
                 sourceResourceId = sourceBuffer.ToString(sourceLength);
 
                 // Set the stream position to the start of the destination resource id
-                reader.BaseStream.Position = DataMovementConstants.PlanFile.DestinationResourceIdLengthIndex - startIndex;
+                reader.BaseStream.Position = DataMovementConstants.JobPartPlanFile.DestinationResourceIdLengthIndex - startIndex;
 
                 // Read Destination Length
-                byte[] destLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                byte[] destLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
                 ushort destLength = destLengthBuffer.ToUShort();
 
                 // Read Destination
-                byte[] destBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ResourceIdNumBytes);
+                byte[] destBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
                 destinationResourceId = destBuffer.ToString(destLength);
             }
 
@@ -224,7 +224,7 @@ namespace Azure.Storage.DataMovement
                 BinaryReader reader = new BinaryReader(stream);
 
                 // Read Path Length
-                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
                 ushort pathLength = pathLengthBuffer.ToUShort();
 
                 // Read Path
@@ -253,7 +253,7 @@ namespace Azure.Storage.DataMovement
                 BinaryReader reader = new BinaryReader(stream);
 
                 // Read Path Length
-                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.LongSizeInBytes);
+                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
                 long pathLength = pathLengthBuffer.ToLong();
 
                 // Read Path
@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: DataMovementConstants.PlanFile.OneByte,
+                readSize: DataMovementConstants.OneByte,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);

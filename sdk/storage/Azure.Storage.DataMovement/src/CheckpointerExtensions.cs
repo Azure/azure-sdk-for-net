@@ -16,18 +16,18 @@ namespace Azure.Storage.DataMovement
         {
             DataTransferStatus.TransferState transferState = (DataTransferStatus.TransferState) await checkpointer.GetByteValue(
                 transferId,
-                DataMovementConstants.PlanFile.AtomicJobStatusStateIndex,
+                DataMovementConstants.JobPartPlanFile.AtomicJobStatusStateIndex,
                 cancellationToken).ConfigureAwait(false);
 
             byte hasFailedItemsByte = await checkpointer.GetByteValue(
                 transferId,
-                DataMovementConstants.PlanFile.AtomicJobStatusHasFailedIndex,
+                DataMovementConstants.JobPartPlanFile.AtomicJobStatusHasFailedIndex,
                 cancellationToken).ConfigureAwait(false);
             bool hasFailedItems = Convert.ToBoolean(hasFailedItemsByte);
 
             byte hasSkippedItemsByte = await checkpointer.GetByteValue(
                 transferId,
-                DataMovementConstants.PlanFile.AtomicJobStatusHasSkippedIndex,
+                DataMovementConstants.JobPartPlanFile.AtomicJobStatusHasSkippedIndex,
                 cancellationToken).ConfigureAwait(false);
             bool hasSkippedItems = Convert.ToBoolean(hasSkippedItemsByte);
 

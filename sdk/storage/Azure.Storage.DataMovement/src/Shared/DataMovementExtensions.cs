@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement
             string destinationPath = destinationUriBuilder.Uri.AbsoluteUri;
 
             return new JobPartPlanHeader(
-                version: DataMovementConstants.PlanFile.SchemaVersion,
+                version: DataMovementConstants.JobPartPlanFile.SchemaVersion,
                 startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
                 transferId: jobPart._dataTransfer.Id,
                 partNumber: (uint)jobPart.PartNumber,
